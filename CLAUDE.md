@@ -8,23 +8,65 @@ Custom CSS for the Super.so site at https://encapsulate.xyz.
 
 ## Back up before every change
 
-**Before editing any `.css` file, copy it into the repo directory first, then make the change.**
+**Before editing any `.css` file, copy it into `backups/` first, then make the change.**
 
 ```bash
-cp main.css main.css.bak-$(date +%Y%m%d-%H%M%S)
+cp main.css backups/main.css.bak-$(date +%Y%m%d-%H%M%S)
 ```
 
 Same for `network.css`. One backup per editing session is enough — no need to re-copy between
 consecutive edits to the same file in the same turn.
 
-Why this matters here: the repo has **no git history**, both files are large and hand-tuned, and
-work has already been lost several times this way. Backups in `/tmp` are not good enough — they are
-session-scoped and vanish. Keep them in the working directory where they survive.
+Backups live in `backups/`, which is gitignored. Keep them out of the project root — they were
+piling up there and made it hard to see the four files that actually matter.
+
+Why this matters here: both files are large and hand-tuned, and work has already been lost several
+times this way. Backups in `/tmp` are not good enough — they are session-scoped and vanish. Keep
+them in the working tree where they survive.
 
 When reverting, say which backup is being restored and what will be lost.
 
-Backups are gitignored (`*.bak-*`), so they will not clutter commits. Delete old ones when a change
-is confirmed good.
+Delete old ones when a change is confirmed good — `backups/` grows fast (25 copies, 2.1MB, in one
+working session).
+
+## Paste `dist/`, not the source
+
+Super's Custom CSS box has a size limit. Saving an oversized stylesheet fails with
+*"The code snippets you're trying to save are too large."*
+
+These files are heavily commented on purpose — the comments are the record of why each rule
+exists and what was measured — but Super does not need them. So:
+
+```bash
+python3 build.py          # writes dist/main.css and dist/network.css
+```
+
+**Edit `main.css` / `network.css`. Paste `dist/main.css` / `dist/network.css`.**
+
+The build only removes comments and blank-line runs; it is string- and `url()`-aware, so a `/*`
+inside a data URI or font name is never mistaken for a comment. Declaration counts are asserted
+equal before and after. Roughly: main.css 95KB → 39KB, network.css 38KB → 22KB.
+
+## Open items
+
+- **Button sizing.** Buttons stretch to their column's full width — Notion block behaviour, not a
+  decision. A fit-content version was built and reverted on 2026-09-13; the working approach and the
+  trap are both recorded in the `TODO — BUTTON SIZING` comment in `main.css` section 07. Short
+  version: `width: fit-content` alone collapses every button to 66px, because the label sits inside
+  an absolutely-positioned anchor and so contributes no intrinsic width.
+- **Both hero buttons point at `/networks`,** including "Book a Call". Content fix, in Notion.
+- **Stat card says 28 networks; the fork panel says 38.** One of them is wrong.
+
+## SVGs are hosted, not inlined
+
+Every SVG the CSS references lives at `validator-website/svg/` on the DigitalOcean CDN, with the
+editable source in `svg/`. Change a drawing there, re-upload under the same name, and no CSS
+changes.
+
+They were briefly inlined as `data:` URIs — nicer in that there is no upload step and no flash of
+an undrawn background — but eight drawings came to 13KB encoded and that contributed to blowing
+the size limit above. If a new drawing is small (under ~500 bytes) inlining it is still fine;
+anything bigger goes on the CDN.
 
 ## The deploy step is manual
 

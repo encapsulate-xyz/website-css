@@ -1,0 +1,766 @@
+/*********************************************/
+/* SCREEN RESPONSIVENESS
+/*********************************************/
+/*
+This block primarily targets two aspects:
+1. Specific element on the page identified by its unique ID 'block-1e65deb110984db593da3b4d64f2e11d' and adjusts its text alignment.
+2. The layout and design of page elements when viewed on devices with a screen width of up to 1024px. Specifically, it modifies the layout of elements in the .notion-column-list and .notion-column classes, ensuring images in these elements are properly centered and responsive.
+The last block identifies the heading callout which says: Others Trust, We Validate! and centers its text.
+*/
+
+@media (max-width: 1024px) {
+  .notion-column-list:first-of-type {
+    flex-direction: initial !important;
+  }
+  .notion-column {
+    width: 100% !important;
+    -webkit-margin-start: 0 !important;
+    margin-inline-start: 0 !important;
+  }
+  .notion-column .notion-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    text-align: center !important;
+  }
+
+
+}
+/*********************************************/
+/*********************************************/
+/* TAG LINE FORMATTING: Others Trust,
+We Validate!
+/*********************************************/
+/* The hero line's type ("We keep blockchains online.") is set in main.css
+   section 06, not here. This file used to style it — Arial Black at
+   calc(14px + 2vw), pale green, 1px black stroke — and every one of those
+   declarations was being overridden by main.css purely because main.css loads
+   after this file. The losing declarations have been removed so the rule lives
+   in one place instead of two. Removed 2026-09-13; verified no computed style
+   on the hero changed. */
+
+#block-803c66b0c67043d691a03f4f9e8bdc15 {
+    margin-bottom: 0px!important;
+    padding-bottom: 0px!important;
+
+}
+
+/* "We Validate!" (#block-13d3d381…) was removed from the Notion page — the
+   hero is one line now. Its rules are deleted rather than left as dead
+   selectors. Removed 2026-09-13. */
+/*********************************************/
+/*********************************************/
+/* HORIZONTAL LINES ABOVE AND BELOW: Earn Rewards from unused tokens in your wallet
+/*********************************************/
+
+#block-0dea66c8640e43628360c627219fdb79:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin: 4px 0;
+    background: linear-gradient(to right, black, rgba(204, 204, 204, 0));
+}
+
+#block-0dea66c8640e43628360c627219fdb79:after {
+    content: "";
+    display: block;
+    height: 1px;
+    margin: 4px 0;
+    background: linear-gradient(to right, black, rgba(204, 204, 204, 0));
+}
+/*********************************************/
+/*********************************************/
+/* WHY STAKE WITH KINGSUPER
+/*********************************************/
+#block-test-home-new-why-stake-with-kingsuper {
+    @media (min-width: 1200px) {
+    .notion-collection-gallery {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+}
+
+
+    .notion-collection-card__cover {
+    border: none!important;
+  }
+
+    /* Adjusting the font-size of the title span */
+    .notion-property__title notion-semantic-string {
+      font-size: 22px;
+    }
+
+    /* Adjusting the font-size, padding, and color of the text span */
+    .notion-property__text {
+        font-size: 15px;
+        padding: 3px 2px !important;
+        color: black !important;
+    }
+
+     /*Setting background color for the nth-child of the collection card */
+    .notion-collection-card:nth-child(4n + 1) {
+        background-color: rgb(251, 243, 219, 0.4) !important;
+    }
+
+    .notion-collection-card:nth-child(4n + 2) {
+        background-color: rgba(221,237,226, 0.4) !important;
+    }
+
+    .notion-collection-card:nth-child(4n + 3) {
+          background-color: rgba(221,235,255, 0.4) !important;
+    }
+
+    .notion-collection-card:nth-child(4n + 4) {
+        background-color: rgb(250, 235, 221, 0.4) !important;
+    }
+}
+/*********************************************/
+/*********************************************/
+/* NETWORK PAGE RELATED */
+/*********************************************/
+
+/* Apply styles to the specified block. This includes adjusting the border radius of the pill element within small collection gallery, adding hover effects to collection cards, hiding the title property's icon wrapper, overriding the hover cursor style, and making cards unclickable. */
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 {
+  .notion-collection-gallery .notion-property__title__icon-wrapper {
+    display: none !important;
+  }
+
+  /* Adjust the font size, border radius, padding, background color, and border of the notion pill. */
+  .notion-pill {
+    font-size: 14px !important;
+    background-color: transparent;
+    color: black;
+    padding: 4px 7px!important;
+  }
+}
+
+/*********************************************/
+
+/*********************************************/
+/* CONVERTS THE TABLE INTO CARD LAYOUT
+/*********************************************/
+
+@media (max-width: 1150px) {
+
+#block-4529386b39be4a9aa44d2dbac56537bd {
+  /* Adjustments to the overall table properties */
+  .notion-collection-table {
+    border-collapse: collapse;
+    table-layout: auto!important;
+  }
+
+  /* Styles for the table wrapper */
+  .notion-collection-table__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-x: auto;
+    border: none!important;
+  }
+
+  /* Styles for cells wrapper */
+  .wrap-cells {
+    display: flex;
+    flex-wrap: wrap!important;
+    border: none!important;
+  }
+
+  /* Styles for table head and body */
+  .notion-collection-table__head,
+  .notion-collection-table__body {
+    width: 100%;
+  }
+
+  /* Styles for table body rows */
+  .notion-collection-table__body tr {
+    display: flex!important;
+    flex-direction: column!important;
+    margin: 4px!important;
+    margin-bottom: 10px!important;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.3)!important;
+    padding: 20px!important;
+    border-radius: 10px;
+
+  }
+
+  .notion-collection-table__body tr:hover {
+    border: 1px solid black!important;
+  }
+
+  /* Styles for table body cells */
+  .notion-collection-table__cell {
+    height: auto!important;
+    margin: 0px!important;
+    border: none!important;
+    border-bottom: 1px solid #ccc!important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    padding: 0px!important;
+  }
+
+  /* Styles for notion-pill span */
+  .notion-pill span {
+    margin-bottom: 10px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  /* Hiding the table header */
+  .notion-collection-table__head {
+    display: none!important;
+  }
+
+  /* Styles for notion-pill */
+  .notion-pill {
+    font-size: 13px!important;
+    border-radius: 18px!important;
+    padding: 8px 8px!important;
+    border: 1px solid black;
+    display: inline-block!important;
+    justify-content: normal!important;
+  }
+
+  /* Limits the display of elements in governance record collection to first 10 elements */
+.notion-collection-table__body tr:nth-child(n+5) {
+  display: none!important;
+}
+}
+}
+/*********************************************/
+/*********************************************/
+/* LIMITS PREVIEW
+/*********************************************/
+
+/* Limits the display of elements in network collection to first 8 elements */
+.notion-collection-gallery.small .notion-collection-card:nth-child(n+10) {
+  display: none;
+}
+
+/* Limits the display of elements in governance record collection to first 10 elements */
+.notion-collection-table__body tr:nth-child(n+7) {
+  display: none;
+}
+
+/* Limits the display of elements in blog posts collection to first 3 elements */
+#block-67d891d07f914f4699b81d1765e1f04f .notion-collection-gallery.large .notion-collection-card:nth-child(n+4) {
+  display: none;
+}
+/*********************************************/
+/*********************************************/
+/* GOVERNANCE TABLE: ADJUSTMENTS FOR COLLECTION TABLE AND NOTION-PILL
+/*********************************************/
+
+/* Making table flexible */
+.notion-collection-table {
+    table-layout: auto !important;
+}
+
+/* Adjusting the font-size, border-radius, padding, border, display, and justification of the notion-pill within the collection table body */
+.notion-collection-table__body .notion-pill {
+    font-size: 13px !important;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+/*********************************************/
+/* CODE FONT FOR NUMBERS */
+/*********************************************/
+#block-7c60fb1ac5db40e5b728673e64c2c369,
+#block-5a0aab755b8e46faa72c1be176e0eb9f,
+#block-d037b468382b4576b931199899b3e0e4,
+#block-afe3621c2b544900b51ad4d40f37a455 {
+  font-family: 'Monaco', monospace;
+}
+/*********************************************/
+/*********************************************/
+/* FOR TEAM
+/*********************************************/
+
+#block-6a8e93a3b7ed4648ba82d58ee6546962 {
+
+/* centers the image and prevents from fitting to the size available */
+.notion-collection-card__cover {
+  object-fit: contain !important;
+}
+
+/* quote styling -> there are two text property which is why property-64664c63 is used */
+.notion-property.notion-property__text.property-64664c63 {
+  font-size: 18px;
+  padding: 4px;
+}
+
+
+/* add a horizontal line after quote */
+.notion-property.notion-property__text.property-64664c63::after {
+  content: "";
+  display: block;
+  height: 1px;
+  background: #ccc;
+  margin-top: 10px;
+}
+
+
+/* adds margin */
+.notion-collection-card__cover {
+  margin: 20px;
+}
+
+/* notion pill styling */
+.notion-pill {
+  font-size: 12px!important;
+  padding: 6px 14px!important;
+  margin: 4px;
+}
+
+/* name styling -> there are two text property which is why property-78553e7a is used */
+.notion-property.notion-property__text.property-78553e7a {
+  font-size: 18px;
+  padding: 4px;
+}
+
+/* aligns everything to bottom */
+.notion-collection-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.notion-collection-gallery .notion-collection-card:nth-child(n+4) {
+  display: none;
+}
+}
+/*********************************************/
+/*********************************************/
+/* HIDES OTHER PAGES
+/*********************************************/
+.notion-page {
+    display: none !important;
+}
+/*********************************************/
+/*********************************************/
+/* FOR OUR VOTING MECHANISM DATABASE  */
+/*********************************************/
+
+#block-3b97079327e74e15848fb366e3adcbea {
+  /* Styling for notion-collection-gallery */
+  .notion-collection-gallery {
+  margin-top: 28px;
+    padding: 0px!important;
+    /* Styling for notion-collection-card */
+    .notion-collection-card {
+      margin-bottom: 18px;
+      padding: 0px!important;
+      display: flex!important;
+      flex-direction: row!important;
+      overflow: visible!important;
+    }
+
+    /* Styling for notion-collection-card__content */
+    .notion-collection-card__content {
+      display: flex!important;
+      flex-direction: row!important;
+            overflow: visible!important;
+    }
+
+ .notion-property.notion-property__title {
+    border: 2px solid #444444;
+    border-radius: 50%;
+    font-size: 48px!important;
+    font-family: "Arial Black", sans-serif;
+    color: #444444;
+    -webkit-text-stroke: 2px #FFFEFC;
+    text-stroke: 2px #FFFEFC!important;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 1);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center!important;
+    justify-content: center!important;
+    background-color: var(--color-bg-default) !important;
+    transform: translateY(-40px);
+
+
+
+
+    @media (max-width: 1370px) {
+        font-size: calc(32px + 1vw) !important;
+    }
+}
+
+    /* Styling for notion-collection-card__content */
+    .notion-collection-card__content {
+      padding: 8px;
+    }
+
+
+    /* Adjusting the font-size of the title span */
+    .notion-property__title {
+      font-size: 22px;
+      padding: 4px 0px;
+    }
+
+    /* Styling for notion-collection-card__property-list */
+    .notion-collection-card__property-list {
+      display: flex;
+      align-items: center;
+    }
+
+    /* Adjusting the font-size, padding, and color of the text span */
+    .notion-property__text {
+      font-size: 15px;
+      padding: 1px 0px !important;
+      color: black !important;
+    }
+    .notion-property__text {
+      max-width: 100%;
+    }
+
+    /* Setting border-radius and padding for collection card */
+    .notion-collection-card {
+      border-radius: var(--callout-border-radius) !important;
+      padding: var(--callout-padding);
+    }
+
+    /* Setting background color for the nth-child of the collection card */
+    .notion-collection-card:nth-child(4n + 1) {
+      background-color: var(--color-bg-yellow) !important;
+    }
+
+    .notion-collection-card:nth-child(4n + 2) {
+      background-color: var(--color-bg-blue) !important;
+    }
+
+    .notion-collection-card:nth-child(4n + 3) {
+      background-color: var(--color-bg-green) !important;
+    }
+
+    .notion-collection-card:nth-child(4n + 4) {
+      background-color: var(--color-bg-orange) !important;
+    }
+  }
+}
+/*********************************************/
+/*********************************************/
+/* Hides proposal title text */
+/*********************************************/
+  .notion-collection-table__head-cell.title {
+      display: none!important;
+  }
+  .notion-collection-table__cell.title {
+    display: none!important;
+  }
+/*********************************************/
+/*********************************************/
+/* CONTACT US */
+/*********************************************/
+
+#block-5b2c372af21945b391bcc114aafaff68 {
+  /*@media (min-width: 800px) {*/
+  .notion-collection-gallery {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Making the first child of the collection card to span two columns. */
+  .notion-collection-card:first-child {
+    grid-column-start: span 1 !important;
+  }
+  /*}*/
+
+  /* Set the width and flex properties to center-align the content within the collection card. */
+  .notion-collection-card__content {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* Set the width of the collection card cover. */
+  .notion-collection-card__cover {
+    width: 14%;
+    border: none!important;
+  }
+
+  /* Display the collection card as a flex container. */
+  .notion-collection-card {
+    display: flex;
+    border: 1px solid black !important;
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  /* no box shadow on hover */
+  .notion-collection-card:hover {
+    box-shadow: none !important;
+  }
+
+  /* enable clicks for this */
+  .notion-collection-card.gallery a {
+    pointer-events: auto !important;
+  }
+
+  /* Media query for max width 1024px */
+  /* Adjusting the grid layout, margin, and gap of the collection gallery, as well as the height of the collection card when the viewport width is 1000px or less. The first child of the collection card no longer spans two columns. */
+  @media (max-width: 1024px) {
+    .notion-collection-gallery {
+      grid-template-columns: 1fr !important;
+    }
+
+    .notion-collection-card:first-child {
+      grid-column-start: auto !important;
+    }
+  }
+}
+/*********************************************/
+/*********************************************/
+/* ALL BACKGROUND IMAGES */
+/*********************************************/
+/* PILLAR IMAGE */
+#block-f983f663c3e542d3a3f859f6eec33532 {
+  z-index: -1;
+  position: absolute;
+  width: 500px;
+  transform: translate(-150px, 90px)!important;
+
+  @media (max-width: 1024px) {
+     display: none!important;
+    }
+}
+
+/* NETWORKS IMAGE */
+#block-dc0be2e247f04ffd91e3bf4f5b2fb58a {
+  z-index: -1;
+  position: absolute;
+  width: 500px;
+  transform: translate(-150px, 290px);
+
+    @media (max-width: 1024px) {
+     display: none!important;
+    }
+
+}
+/* SERVICES IMAGE */
+#block-8b802c7f592842d88f00ff5ca1499567 {
+  z-index: -1;
+  position: absolute;
+  width: 500px;
+  transform: translate(200px, 290px);
+
+    @media (max-width: 1024px) {
+     display: none!important;
+    }
+}
+/*********************************************/
+/*********************************************
+FOR BLOG POST
+*********************************************/
+#block-67d891d07f914f4699b81d1765e1f04f {
+
+    /* Setting up a grid layout for the collection gallery with two equal columns */
+    .notion-collection-gallery {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+
+    /* Making the first child of the collection card to span two columns. */
+    .notion-collection-card:first-child {
+        grid-column-start: span 2 !important;
+    }
+
+    /* Adjusting the font-size of the title in the collection card inside the gallery. */
+    .notion-collection-card.gallery .notion-property__title {
+    }
+
+    /* Adjusting the font-size, border-radius, padding and border of the notion pill. */
+    .notion-pill {
+        font-size: 12px!important;
+    }
+
+  .notion-collection-gallery .notion-collection-card:nth-child(n+3) {
+  display: none;
+  }
+
+  .notion-collection-card.gallery a {
+  pointer-events: auto!important;
+}
+
+  .notion-collection-card:hover {
+      .notion-collection-card__content {
+    /*border-top: 1px solid black;*/
+  }
+  }
+
+
+/* Media query for max width 1024px */
+/* Adjusting the grid layout, margin, and gap of the collection gallery, as well as the height of the collection card when the viewport width is 1000px or less. The first child of the collection card no longer spans two columns. */
+@media (max-width: 1024px) {
+
+    .notion-collection-gallery {
+        grid-template-columns: 1fr !important;
+    }
+
+    .notion-collection-card:first-child {
+        grid-column-start: auto !important;
+    }
+}
+
+/* DATE STYLING */
+.date {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 10px!important;
+  font-size: 18px!important;
+}
+}
+/*********************************************/
+/* BACKGROUND IMAGE OF CURVED LINES
+/*********************************************/
+/*body {*/
+/*    background-image: url('https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/homepage/background.png');*/
+/*    background-repeat: no-repeat;*/
+/*    background-position: top center;*/
+/*}*/
+
+body {
+    /*background-image: url('https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/homepage/encapsulate-background.png');*/
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: 100% auto;
+}
+/*********************************************/
+/* TO USE MOST OF THE PAGE */
+/*********************************************/
+.super-content {
+  margin-top: 0px!important;
+   padding-top: 0px!important;
+}
+/*********************************************/
+/* FORMATTING FOR: Earn Rewards from unused tokens in your wallet */
+/*********************************************/
+#block-eb15a09351d343568d0cf39bbfa1e20e {
+      background-image: url('https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/homepage/highlight.png');
+          background-position: top center;
+           background-repeat: no-repeat;
+        background-size: cover;
+  z-index: 1;
+  text-align: center;
+      font-size: calc(28px + 1.4vw) !important;
+font-family: 'Allerta Stencil', sans-serif;
+}
+/*********************************************/
+#block-8cd1bdc3d2e148d2a6a4c7919db679a1 {
+  position: absolute;
+  top: 790px;
+  left: 0px;
+  display: none;
+}
+/*********************************************/
+/* Announcement Banner
+/*********************************************/
+#block-23ee800a513880fc9850ed3d16bfd5da {
+  margin-top: 10px!important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: calc(100% + var(--padding-left) + var(--padding-right));
+  left: calc(-1 * var(--padding-left));
+
+    background-color: #00ACED;
+    color: white;
+    padding: 8px!important;
+    text-align: center;
+    border: 1px dashed black!important;
+    border-radius: 0px!important;
+}
+/*********************************************/
+/* WISTIA VIDEO CODE TO MAKE IT AT BOTTOM RIGHT
+/*********************************************/
+#block-1ee04e9fd50a4439990b8229161f34cc {
+   z-index: -1 !important;
+   position: absolute !important;
+   object-fit: cover !important;
+   object-position: bottom right !important;
+   top: -40px !important;
+   right: 0 !important;
+}
+
+  @media (max-width: 1728px) {
+    #block-1ee04e9fd50a4439990b8229161f34cc {
+  top: 90px !important;
+   width: 1728px;
+  }
+}
+/*********************************************/
+/*********************************************/
+/* TESTIMONIAL GALLERY BLOCK */
+/*********************************************/
+#block-f853251f87b0400d9d5b7e3fe71e57e5 {
+/*********************************************/
+/* TESTIMONIAL TEX CSS */
+/*********************************************/
+.property-3f46544e {
+    font-size: 28px !important;
+    line-height: 1.2!important;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: "Give You Glory", cursive;
+    padding-bottom: 40px;
+}
+
+
+@media (min-width: 1400px) {
+  /* Setting up a grid layout for the collection gallery with three equal columns, a gap of 30px between grid items, and no border or padding. Also, it sets a vertical margin of 80px. */
+.notion-collection-gallery {
+    grid-template-columns: repeat(3, 1fr) !important;
+}
+
+/* Making the first child of the collection card to span two columns. */
+.notion-collection-card:first-child {
+    grid-column-start: span 2 !important;
+}
+}
+
+/*********************************************/
+/* NOTION PILL */
+/*********************************************/
+.notion-pill {
+  margin-top: 8px;
+  border: 1px dashed #4444;
+  padding: 2px 8px!important;
+}
+
+/*********************************************/
+/* TESTIMONIAL CARD CSS */
+/*********************************************/
+.notion-collection-card {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+
+.notion-collection-card__content {
+    display: flex;
+    flex-direction: column-reverse;
+    padding-bottom: 180px;
+}
+
+.notion-collection-card__cover {
+    position: absolute;
+    bottom: 80px;
+    right: 10px;
+    width: 250px!important;
+    height: 250px!important;
+    border: none!important;
+    /*border-radius: 50%!important; */
+    overflow: hidden
+}
+
+.notion-collection-card__cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover!important;
+}
+/*********************************************/
+}
+/*********************************************/

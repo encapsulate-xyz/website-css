@@ -50,17 +50,26 @@
 .notion-root #block-3dae800a513880b493f9e17a6928281c {
   width: 100vw !important;
   margin-inline: calc(50% - 50vw) !important;
-  padding: 56px max(48px, calc(50vw - 864px)) 60px !important;
+  padding: 28px max(48px, calc(50vw - 864px)) 32px !important;
 
-  /* Ink ground + variant 5o, "Twin fans": the same construction as 5k with the
-     origin doubled — one behind each figure — so the two fields meet in the
-     middle. Symmetrical rather than directional. preserveAspectRatio="none"
-     plus `background-size: 100% 100%` lets it stretch across the full bleed. */
+  /* Ink ground + variant 9c, "Inverted horizons": eleven nested arcs HANGING
+     from the top edge (sweep-flag 0, both endpoints at y=0) rather than rising
+     from the base, fading as they widen. The stats sit under the curve — a
+     vault, not a hill. preserveAspectRatio="none" plus `background-size:
+     100% 100%` lets it stretch across the full bleed at any viewport width.
+     Served from the CDN at validator-website/svg/ — see the note on
+     asset hosting at the top of section 00b.
+     Vertical padding is deliberately tight — roughly half what it was — so the
+     band stays slim; the heading's own 40px bottom margin carries the rest of
+     the gap down to the cards. */
   background-color: #3A3D38 !important;
-  background-image: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/banners/5o-twin-fans.svg") !important;
-  background-size: 100% 100% !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
+
+  /* NO FIELD ON THE BAND. This carried variant 9c's inverted arcs until each
+     stat panel gained its own geometry in section 00b — two line fields over
+     one another read as noise, and the band's arcs won because they sat on
+     the larger box. The ink ground stays; the drawing moved down a level.
+     svg/9c-inverted-horizons.svg is kept in the repo as the source, unused. */
+  background-image: none !important;
   border: 0 !important;
   border-radius: 0 !important; /* nothing to round once it reaches the edges */
   color: #FAFAF8 !important; /* paper, inherited by the heading */
@@ -75,6 +84,17 @@
    or it inherits the section's paper white. That bug is already live without
    this: "Uptime 99.96 %" and "Soft Slashing Protection 100 %" both compute
    rgb(255,255,255) on rgb(221,237,226) — near invisible. */
+/* Equal-height stat cards within a row. Notion already stretches the
+   `.notion-column`s to the tallest one in the row (they measure 203px each),
+   but the `.notion-callout` inside sits at `flex: 0 1 auto`, so each card only
+   grows to its own content — which is why "Staked Assets Under Management"
+   (169px) towered over "Number of Networks Supported". Letting the callout
+   grow into the column it already has makes every card in a row match.
+   Row 2 was already even, so this changes nothing there. */
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-column > .notion-callout {
+  flex: 1 1 auto !important;
+}
+
 .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout {
   color: var(--brand-ink, #000) !important;
 }
@@ -83,7 +103,9 @@
 .notion-root #block-eb15a09351d343568d0cf39bbfa1e20e {
   width: auto !important;
   margin-inline: 0 !important;
-  margin-block: 0 0 40px !important;
+  margin-block: 0 40px !important; /* 3 values is invalid on margin-block — that
+                                      dropped the declaration and let the older
+                                      rule's `margin-block: 40px` apply instead. */
   padding: 0 !important;
   background: none !important;
   color: #FAFAF8 !important;
@@ -95,6 +117,371 @@
   line-height: 1 !important;
   text-align: center !important; /* sits above the stat grid, not a text column */
   text-wrap: balance !important;
+}
+
+
+/*********************************************/
+/* 00b. STAT FIGURES — BIG PASTEL NUMERALS ON INK */
+/*********************************************/
+
+/* The figure treatment from artifact 8837593e ("by the numbers"), lifted onto
+   the five stat callouts that already live in the band above.
+
+   WHAT WAS TAKEN AND WHAT WAS NOT. That artifact is a full-screen scroll-snap
+   deck: one 100vh panel per metric, an IntersectionObserver tracking the
+   active panel, and a fixed dot rail. None of that is here, deliberately —
+   `scroll-snap-type` has to sit on the scroll container, which on a Super page
+   is the document, so it would snap the whole site including nav and footer,
+   and the rail needs JS. What IS here is the part that carries the look: the
+   ink ground, the oversized numeral in that metric's pastel, and a different
+   field geometry behind each one.
+
+   KEYED OFF NOTION'S OWN COLOUR CLASSES, not block ids. Each callout already
+   carries bg-blue-light / bg-pink-light / bg-yellow-light / bg-green-light /
+   bg-orange-light from Notion, and those map one-to-one onto the artifact's
+   five pastels. Recolouring a card in Notion therefore moves its whole
+   treatment with it, and adding a sixth stat needs one new rule, not five.
+
+     bg-blue-light    #D2E3F6   Staked assets        arcs
+     bg-pink-light    #F7DCE7   Networks supported   rings
+     bg-yellow-light  #F8E8B3   Total customers      dots
+     bg-green-light   #DCEEC7   Uptime               fan
+     bg-orange-light  #F8DDC6   Soft slashing        zip
+
+   EACH COLOUR SETS `--stat-field` RATHER THAN `background-image`. The property
+   is composed one rule later, and again in section 00c where the progress rail
+   is layered on top of it. Two reasons: a per-colour `background-image` is
+   (1,3,1) and would outrank any generic rule trying to add a layer to it, and
+   keeping the field in a variable means the layer ORDER lives in exactly one
+   place instead of being duplicated across five colours.
+
+   ASSET HOSTING — applies to every SVG this file references. They were briefly
+   inlined as data URIs, which was tidier (no upload, no half-dressed paint)
+   but pushed the stylesheet past the size limit on Super's Custom CSS box:
+   "The code snippets you're trying to save are too large." The eight drawings
+   came to 13KB encoded. They are therefore served from
+     validator-website/svg/
+   and the local files in svg/ are the editable sources. Change a drawing there,
+   re-upload, and the URL does not move.
+
+   THE FIELDS are svg/stat-field-*.svg, generated from the artifact's own
+   decorEl() geometry — same radii, same opacity ramps, same stroke weights.
+   The dots field was briefly the exception: at 240 circles it came to 17KB, so
+   it was drawn as a tiled radial-gradient with an ink-to-transparent wash over
+   the top, reproducing the artifact's downward density ramp in ~200
+   bytes instead of a 25KB file. That constraint is gone now the fields are
+   hosted rather than inlined, so the dots are the artifact's real 240-circle
+   grid again — a 13KB file costs the stylesheet nothing. */
+
+/* The card becomes a window onto the ink band: no pastel fill, no Notion
+   border, and a stacking context for the field behind the numerals. */
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  background-color: transparent !important;
+  border: 1px solid rgba(250, 250, 248, 0.14) !important;
+  border-radius: 10px !important;
+  padding: 26px 24px 22px !important;
+}
+
+/* The field. ::before rather than a background on the card so the gradient
+   wash for the dots can layer without fighting the card's own background. */
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+  background-image: var(--stat-field) !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: cover !important; /* = the artifact's preserveAspectRatio="slice" */
+}
+
+/* Content sits above the field. Figure first, label under it — the artifact's
+   order, which is the reverse of Notion's. */
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout__content {
+  position: relative !important;
+  z-index: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+
+/* THE FIGURE. Sizes are the artifact's proportions brought down to a card:
+   its clamp(58px, 13vw, 168px) is for a 100vh panel. line-height, tracking and
+   tabular-nums are unchanged — tabular figures are what keep the five numerals
+   optically aligned when they differ in width. */
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout h1,
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout h2 {
+  order: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: clamp(40px, 5.2vw, 84px) !important;
+  line-height: 0.88 !important;
+  letter-spacing: -0.05em !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+/* THE UNIT. The artifact subordinates "$" and "%" to 0.44em / weight 500 so
+   the numerals hold one scale across all five cards. Notion cannot mark up a
+   substring, so this hangs off a <strong>: BOLD JUST THE "$" IN "$ 66,338,287"
+   AND JUST THE "%" IN "99.96 %" in Notion and they drop into place. Until
+   that is done the figure simply renders at one weight — nothing breaks. */
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout h1 strong,
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout h2 strong {
+  font-size: 0.44em !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* THE LABEL. */
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout__content
+  > span.notion-semantic-string {
+  order: 2 !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 15px !important;
+  line-height: 1.3 !important;
+  letter-spacing: -0.015em !important;
+  color: #FAFAF8 !important;
+  max-width: 24ch !important;
+}
+
+/* --- Per-metric pastel + field ------------------------------------------- */
+
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-blue-light h1,
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-blue-light h2 {
+  color: #D2E3F6 !important;
+}
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-blue-light::before {
+  --stat-field: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/svg/stat-field-blue.svg") !important;
+}
+
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-pink-light h1,
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-pink-light h2 {
+  color: #F7DCE7 !important;
+}
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-pink-light::before {
+  --stat-field: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/svg/stat-field-pink.svg") !important;
+}
+
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-green-light h1,
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-green-light h2 {
+  color: #DCEEC7 !important;
+}
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-green-light::before {
+  --stat-field: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/svg/stat-field-green.svg") !important;
+}
+
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-orange-light h1,
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-orange-light h2 {
+  color: #F8DDC6 !important;
+}
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-orange-light::before {
+  --stat-field: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/svg/stat-field-orange.svg") !important;
+}
+
+/* Dots, as gradients rather than 240 inlined circles. The radial-gradient is
+   the grid at the artifact's 52x54 pitch; the linear-gradient washes ink over
+   the top so the field reads as thinning upward, which is what the artifact
+   gets from ramping each row's radius and opacity. */
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-yellow-light h1,
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-yellow-light h2 {
+  color: #F8E8B3 !important;
+}
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-yellow-light::before {
+  --stat-field: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/svg/stat-field-yellow.svg") !important;
+}
+
+/* The band is already a full-bleed grid of these; below the two-column point
+   the numerals need to come down or they overrun a phone card. */
+@media (max-width: 700px) {
+  .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout {
+    padding: 20px 18px 18px !important;
+  }
+  .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout h1,
+  .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout h2 {
+    font-size: clamp(34px, 11vw, 56px) !important;
+  }
+}
+
+/*********************************************/
+/* 00c. STAT DECK — ONE FIGURE PER SCREEN */
+/*********************************************/
+
+/* The five stats stop being a grid of cards and become five full-viewport
+   panels, one figure at a time, driven by ORDINARY PAGE SCROLL. Section 00b
+   supplies the type and the fields; this supplies the geometry. Delete this
+   section and 00b still works as a normal card grid, which is also what the
+   narrow-screen fallback at the bottom falls back to.
+
+   WHY NOT SCROLL-SNAP. Two versions were built and measured before this one.
+
+   1. `scroll-snap-type` on the DOCUMENT. `proximity` never engaged — a scroll
+      landing 300px off a panel just stayed there. `mandatory` is worse than
+      useless: with five snap points on a 9,500px page, a scroll anywhere else
+      on the site gets yanked into the stats, because the browser must snap to
+      SOME snap area and these are the only ones.
+
+   2. The band as its own 100vh scroll container with `mandatory` inside it.
+      This snapped perfectly — 300px past a panel landed exactly on that
+      panel's top, off by 0 — and was still wrong, which is the interesting
+      part. A nested scroller snaps its panels to ITS OWN top edge, and nothing
+      aligns that edge to the viewport. Measured on the live page: when the
+      reader first meets the band it sits at y=496 with its bottom 496px below
+      the fold, so a "correctly snapped" panel was half off-screen and no
+      figure ever filled the display. The mechanism was working; the premise
+      was broken.
+
+   WHAT THIS DOES INSTEAD. Every panel is `position: sticky; top: 0` and one
+   viewport tall, inside a container five viewports tall. Panel 1 pins to the
+   top of the screen and holds while the page scrolls; panel 2 then slides up
+   over it and pins in turn. Verified live at 0/1/2/3/4 viewports into the band:
+
+     0vh  tops = [0, 992, 1984, 2976, 3968]   panel 0 pinned, the rest below
+     1vh  tops = [0, 0,   992,  1984, 2976]   panel 1 now over panel 0
+     4vh  tops = [0, 0,   0,    0,    0]      panel 4 over everything
+
+   No scroll container, no snapping, no hijack, and nothing to get stuck in —
+   the page scrolls the way it always did.
+
+   THE OPAQUE GROUND IS LOAD-BEARING. Sticky panels stack rather than replace,
+   so a transparent panel would show every earlier one through it. The ink goes
+   on the ::before from section 00b rather than on the panel: that pseudo sits
+   at `z-index: -1` inside the panel's isolated stacking context, so painting
+   the ground there keeps it behind this panel's own numerals while still
+   covering the panels underneath. Putting `background-color` on the panel
+   itself instead would bury the field image, which is drawn at -1. */
+
+.notion-root #block-3dae800a513880b493f9e17a6928281c {
+  display: block !important; /* the callout is a flex row; panels must stack */
+  height: auto !important;
+  overflow: visible !important;
+  padding: 0 !important; /* the panels carry the gutter now */
+}
+
+/* Dissolve the wrappers so the five callouts become children of the band and
+   can stick against it. `display: contents` on the band's own content div —
+   direct child only, so each stat card's identically-classed content wrapper
+   is left alone for section 00b to lay out. */
+.notion-root #block-3dae800a513880b493f9e17a6928281c > .notion-callout__content,
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-column-list,
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-column {
+  display: contents !important;
+}
+
+/* The panels. */
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout {
+  position: sticky !important;
+  top: 0 !important;
+  height: 100vh !important;
+  height: 100dvh !important; /* mobile browser chrome makes 100vh overshoot */
+  min-height: 0 !important; /* 00b's card min-height must not fight this */
+  margin: 0 !important;
+  padding: 0 max(48px, calc(50vw - 864px)) !important; /* the site gutter */
+  border: 0 !important;
+  border-radius: 0 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  gap: 24px !important;
+}
+
+/* The ground, on the field pseudo — see the note above on why not the panel —
+   plus the progress rail, layered over the field.
+
+   THE RAIL NEEDS NO JAVASCRIPT, which it would have under any of the scroll-
+   snap designs. The artifact drives its rail with an IntersectionObserver
+   tracking the active panel. Sticky stacking makes that unnecessary: EVERY
+   panel draws the whole rail with its own dot active, and because the topmost
+   panel is opaque and covers the ones beneath, the visible rail is always the
+   current panel's. The stacking order does the observer's job.
+
+   Five inactive dots ride as a background layer here (a 307-byte inline SVG —
+   small enough that hosting it would cost more in latency than it saves in
+   bytes). The active marker is ::after rather than a sixth background layer,
+   because a background layer cannot have rounded ends and the marker is a
+   pill. Geometry: 9px dots on a 19px pitch, so the run is 5x9 + 4x10 = 85px,
+   and each panel offsets its pill by its own index. */
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout::before {
+  background-color: #3A3D38 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%229%22 height=%2285%22 viewBox=%220 0 9 85%22%3E%3Cg fill=%22%23FAFAF8%22 fill-opacity=%220.4%22%3E%3Ccircle cx=%224.5%22 cy=%224.5%22 r=%224.5%22/%3E%3Ccircle cx=%224.5%22 cy=%2223.5%22 r=%224.5%22/%3E%3Ccircle cx=%224.5%22 cy=%2242.5%22 r=%224.5%22/%3E%3Ccircle cx=%224.5%22 cy=%2261.5%22 r=%224.5%22/%3E%3Ccircle cx=%224.5%22 cy=%2280.5%22 r=%224.5%22/%3E%3C/g%3E%3C/svg%3E"), var(--stat-field) !important;
+  background-repeat: no-repeat, no-repeat !important;
+  background-position: right 40px center, center !important;
+  background-size: 9px 85px, cover !important;
+}
+
+/* The active marker. `right: 31.5px` centres the 26px pill on the 9px dot
+   column at right: 40px. */
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout::after {
+  content: "" !important;
+  position: absolute !important;
+  right: 31.5px !important;
+  top: calc(50% - 42.5px + var(--rail-i, 0) * 19px) !important;
+  width: 26px !important;
+  height: 9px !important;
+  border-radius: 999px !important;
+  background: #FAFAF8 !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+.notion-root #block-3dae800a513880b493f9e17a6928281c .bg-blue-light   { --rail-i: 0; }
+.notion-root #block-3dae800a513880b493f9e17a6928281c .bg-pink-light   { --rail-i: 1; }
+.notion-root #block-3dae800a513880b493f9e17a6928281c .bg-yellow-light { --rail-i: 2; }
+.notion-root #block-3dae800a513880b493f9e17a6928281c .bg-green-light  { --rail-i: 3; }
+.notion-root #block-3dae800a513880b493f9e17a6928281c .bg-orange-light { --rail-i: 4; }
+
+/* Full-screen panels can carry the artifact's real numeral scale, which the
+   card version had to shrink from. */
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout h1,
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout h2 {
+  font-size: clamp(58px, 13vw, 168px) !important;
+}
+
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout__content
+  > span.notion-semantic-string {
+  font-size: clamp(19px, 2.2vw, 30px) !important;
+  max-width: 24ch !important;
+}
+
+/* NARROW SCREENS FALL BACK TO CARDS. Five viewport-tall panels is a lot of
+   thumb on a phone, and `100vh` fights the browser chrome. Everything here is
+   unwound and section 00b's card grid takes over. */
+@media (max-width: 700px) {
+  .notion-root #block-3dae800a513880b493f9e17a6928281c {
+    padding: 28px max(20px, calc(50vw - 864px)) 32px !important;
+  }
+  /* No rail: with the panels stacked as cards there is nothing to track. */
+  .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout::after {
+    display: none !important;
+  }
+  .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout::before {
+    background-image: var(--stat-field) !important;
+    background-position: center !important;
+    background-size: cover !important;
+  }
+  .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout {
+    position: static !important;
+    height: auto !important;
+    padding: 20px 18px 18px !important;
+    margin-bottom: 12px !important;
+    border: 1px solid rgba(250, 250, 248, 0.14) !important;
+    border-radius: 10px !important;
+  }
+  .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout h1,
+  .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout h2 {
+    font-size: clamp(34px, 11vw, 56px) !important;
+  }
+  .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout__content
+    > span.notion-semantic-string {
+    font-size: 15px !important;
+  }
 }
 
 
@@ -625,51 +1012,146 @@ h1.notion-heading strong {
   text-shadow: 3px 3px 0px rgb(0, 0, 0);
 }
 
-/* "Others Trust," is styled by the HOMEPAGE's own page-level CSS, not by this
-   file:
+/* HERO LINE — "We keep blockchains online."
 
-     #block-803c66b0c67043d691a03f4f9e8bdc15 strong {
-       -webkit-text-stroke: 1px black !important;
-       font-size: calc(14px + 2vw) !important;
-     }
+   Type spec lifted verbatim from design variant 11a (artifact 424c4fde):
+     font-family: 'Outfit', sans-serif;  font-weight: 600;
+     font-size: 104px;  line-height: 0.94;  letter-spacing: -0.05em;
+     color: #000000;  max-width: 16ch;  margin: 0;
+   11a and 11b are identical apart from the fill (#000000 on paper, #FAFAF8 on
+   ink). The homepage hero is paper, so this takes the black.
 
-   An ID selector with !important outranks `h1.notion-heading strong`, so the
-   rule above cannot reach it. This override matches that specificity and wins
-   only because Super injects the site-level stylesheet AFTER the page-level
-   one (verified on the live site: page CSS is sheet 13, this file is sheet 14).
+   WHAT CHANGED IN NOTION. This used to be a two-block couplet, "Others Trust,"
+   (803c66b0…) and "We Validate!" (13d3d381…). The copy is now one line living
+   in 803c66b0… alone; 13d3d381… no longer exists on the page (confirmed live —
+   getElementById returns null), so every rule that referenced it has been
+   deleted rather than left to rot as a dead selector.
 
-   The stroke was already pure black, so "darker" here means heavier — a
-   thicker black outline against the pale green fill. 0.04em is ~2.1px at that
-   heading's 52px, up from a flat 1px.
+   FLAT, NOT OUTLINED. The old couplet was an outlined display treatment:
+   `h1.notion-heading strong` hands down `-webkit-text-stroke: 0.045em white`
+   and a 3px black shadow, and the page CSS adds its own 1px black stroke.
+   None of that is in 11a, so both are zeroed here. The `:has(strong)` rule
+   further down adds padding to stop a stroke being clipped — with no stroke
+   left there is nothing to clip, so padding and the compensating negative
+   margin are zeroed too, which is what puts the line flush with the column.
 
-   CLEANER ALTERNATIVE: change the 1px in the page-level rule itself, in
-   Super > the homepage > Code. Then this block can be deleted. It is only here
-   because the override has to out-order a rule this file does not own. */
-#block-803c66b0c67043d691a03f4f9e8bdc15 strong {
-  color: var(--brand-green-pale) !important; /* was #D9ECDA, an off-palette green */
-  -webkit-text-stroke: 0.04em black !important;
-  text-shadow: 2px 2px 0px rgb(0, 0, 0) !important;
+   THE STRONG IS THE WHOLE LINE. Notion has the entire sentence bold, so the
+   size properties are set on BOTH the h1 and its `strong` — the strong would
+   otherwise keep taking `font-size: calc(40px + 3.5vw)` from
+   `h1.notion-heading strong`. `line-height` and `max-width` only do anything
+   on the h1: `strong` is inline, so a max-width on it is ignored.
+
+   Outfit must be loaded from Super > Settings > Code > Head — @import is
+   stripped and Outfit is NOT among the faces linked there today:
+     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+   Without that link this falls back to the generic sans-serif.
+
+   WHY ID + !important. The page-level rule `#block-803c… strong { font-size:
+   calc(14px + 2vw) !important }` is (1,0,1). This matches it and wins on
+   ORDER: verified live that the homepage page CSS is a <style> in a DIV in the
+   body and this file is the sheet immediately after it. The same rule placed
+   in <head> LOSES — a position failure, not a specificity one. That is exactly
+   how it failed the first time this was tried.
+
+   Measured live at 1920px after the change: Outfit 600, 104px, line-height
+   97.76px, tracking -5.2px, no stroke, no shadow — wrapping to two lines in an
+   854px column. */
+#block-803c66b0c67043d691a03f4f9e8bdc15 {
+  display: block !important;
+  max-width: 16ch !important;
+  padding: 0 !important;
+  margin-left: 0 !important;
 }
 
-/* "We Validate!" — the page CSS fills this with --color-bg-blue, which is one
-   of Notion's palette colours and the only blue in the hero. Swapped for the
-   kit green at full strength, so the two lines read as one brand gradient:
-   pale green on the setup, the real colour on the payoff. Both keep their
-   existing stroke and shadow — legibility here comes from the outline, not the
-   fill, so the swap is safe. */
-/* "We Validate!" — solid ink, flat.
+#block-803c66b0c67043d691a03f4f9e8bdc15,
+#block-803c66b0c67043d691a03f4f9e8bdc15 strong {
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 104px !important;
+  line-height: 0.94 !important;
+  letter-spacing: -0.05em !important;
+  color: #000000 !important;
 
-   The stroke and shadow are zeroed deliberately. This inherits
-   `-webkit-text-stroke: 0.045em white` and a 3px black shadow from
-   `h1.notion-heading strong`, both of which existed to separate a PALE fill
-   from its drop shadow. On a black fill they work against it: a white outline
-   eats into the letterform on a white page, and a black shadow behind black
-   letters just smears the edges into a heavier blob. Flat is the right
-   treatment once the fill is ink. */
-#block-13d3d381ac0144b4869744e014c2b5f7 strong {
-  color: var(--brand-ink) !important;
+  /* Inherited from the old outlined treatment; 11a is flat. */
   -webkit-text-stroke: 0 !important;
   text-shadow: none !important;
+}
+
+/* 104px is the desktop figure from the artifact. Left flat it overflows a
+   phone column, so below 900px it scales and only reaches 104px again where
+   there is room for it. */
+@media (max-width: 900px) {
+  #block-803c66b0c67043d691a03f4f9e8bdc15,
+  #block-803c66b0c67043d691a03f4f9e8bdc15 strong {
+    font-size: clamp(40px, 10vw, 104px) !important;
+  }
+}
+
+/* HAND-DRAWN CIRCLE AROUND ONE WORD ("online")
+
+   Taken verbatim from the hero in artifact 424c4fde (variants 11a/11b, which
+   carry an identical circle). The artifact wraps the word in a span and drops
+   an inline SVG inside it:
+
+     <span style="position:relative;display:inline-block;white-space:nowrap;
+                  isolation:isolate;">online
+       <svg viewBox="0 0 100 46" preserveAspectRatio="none" fill="none"
+            style="position:absolute;left:-14.3%;top:-25.5%;width:127%;
+                   height:143%;overflow:visible;pointer-events:none;
+                   z-index:-1;">
+         <path d="…" stroke="#99CC66" stroke-width="2.1" stroke-linecap="round"
+               vector-effect="non-scaling-stroke"/>
+       </svg></span>
+
+   Notion cannot emit that span, so the same geometry is rebuilt here: the <em>
+   plays the span and ::after plays the SVG (served from the CDN — see the note
+   on asset hosting at the top of section 00b). Every number below is the
+   artifact's own — left/top/width/height, the z-index, the path, the 2.1
+   stroke, the green. The path is a SINGLE loop that overshoots past its own
+   start, which is what makes it read as one pen stroke rather than a shape.
+
+   HOW TO MARK THE WORD IN NOTION: select just that word in the heading and
+   press Cmd/Ctrl+I. Notion emits an <em> and this turns it into the circle —
+   the text is NOT italicised (font-style is reset); the italic is only a hook,
+   because Notion offers no way to add a class.
+
+   WHY NOT UNDERLINE. <u> is already spoken for: `h1.notion-heading:has(u)`
+   further down draws 2px black rules above and below the WHOLE heading.
+
+   WHY ::after AND NOT A BACKGROUND ON THE <em>. The artifact positions the
+   drawing in PERCENTAGES OF THE WORD (127% wide, 143% tall, offset up and
+   left). Percentage padding on an inline box resolves against the containing
+   block's width, not the element's own — so a background could not reproduce
+   those offsets. An absolutely positioned child resolves its percentages
+   against the positioned ancestor, which is exactly the artifact's own model.
+
+   `vector-effect="non-scaling-stroke"` is why the line stays an even 2.1px:
+   preserveAspectRatio="none" stretches a 100x46 viewBox to roughly 380x140,
+   which would otherwise squash the stroke thinner on the verticals.
+
+   `isolation: isolate` is load-bearing with `z-index: -1` — it keeps the
+   circle behind the letterforms without dropping it behind the page itself. */
+#block-803c66b0c67043d691a03f4f9e8bdc15 em {
+  font-style: normal !important; /* the <em> is a hook, not a typographic italic */
+  position: relative !important;
+  display: inline-block !important;
+  white-space: nowrap !important;
+  isolation: isolate !important;
+}
+
+#block-803c66b0c67043d691a03f4f9e8bdc15 em::after {
+  content: "" !important;
+  position: absolute !important;
+  left: -14.3% !important;
+  top: -25.5% !important;
+  width: 127% !important;
+  height: 143% !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+  background-image: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/svg/circle-online.svg") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: 100% 100% !important;
 }
 
 /* The stroke and shadow are drawn outside the text box, so a heading sitting
@@ -721,6 +1203,19 @@ h1.notion-heading:has(u)::after {
    "Total Customers", "Staked Assets Under Management" — carry Notion's
    bg-blue-light / bg-green-light / bg-orange-light / bg-yellow-light and hold
    content, not actions. They keep their own colours. */
+/* TODO — BUTTON SIZING, REVISIT. Buttons currently stretch to the full width
+   of their column, which is Notion's block behaviour, not a decision. A
+   fit-content version was built and reverted; the finding worth keeping is
+   that `width: fit-content` ALONE DOES NOT WORK here. The label lives inside
+   the anchor, and the anchor is absolutely positioned at `inset: 2px` (below)
+   so the whole box is clickable. Out of flow it contributes no intrinsic
+   width, so fit-content collapses every button to 66px — padding around
+   nothing, whatever the label says.
+
+   The version that worked: bring the anchor into flow (`position: static`) and
+   move the padding onto it, so the callout sizes to the anchor and the anchor
+   still covers the button. Add `min-width` for a floor and `fit-content` grows
+   past it. Measured then: 200x44, growing to 315px for a long label. */
 .notion-callout:has(.notion-link) {
   min-height: 45px !important;
   border-radius: var(--radius-sm) !important;
@@ -740,11 +1235,17 @@ h1.notion-heading:has(u)::after {
   display: flex;
   align-items: center;
   justify-content: center;
+
   position: absolute !important;
   inset: 2px !important; /* sits just inside the 1px border */
-  /* Flat colour only — no gradient. Type is left exactly as Super sets it
-     (Inter 400, 16px): a bolder weight was tried to lift the black off the
-     green and rejected; the lighter green does that job instead. */
+  /* Flat colour only — no gradient. The lighter green is what lifts the black
+     off the fill; a bolder weight was tried for that and rejected.
+
+     Size comes from design variant 11a (artifact 424c4fde), whose buttons are
+     15px — one step down from Super's default 16px. WEIGHT IS DELIBERATELY NOT
+     TAKEN FROM 11a: it specifies 500, and heavier button text was tried here
+     before and rejected, so this stays at Super's 400. */
+  font-size: 15px !important;
   background-color: var(--brand-green-tint) !important;
   text-decoration: none;
   transition: background-color 0.3s var(--ease) !important;
@@ -757,6 +1258,223 @@ h1.notion-heading:has(u)::after {
   background-color: var(--brand-green) !important;
 }
 
+
+/* --- SECONDARY BUTTON ---------------------------------------------------- */
+
+/* Everything above is the PRIMARY button: filled green, hard border, hard
+   shadow. This adds the secondary variant — same shape and frame, outline
+   instead of fill — so the two read as a pair rather than competing.
+
+   HOW A BUTTON IS MARKED SECONDARY IN NOTION: set the callout's background
+   colour to GRAY. Any other colour, including the default, stays primary.
+
+     Primary    any colour   filled --brand-green-tint -> --brand-green
+     Secondary  Gray         outline, transparent, stays transparent on hover
+
+   WHY COLOUR AND NOT SOMETHING ELSE. This was first keyed to a single block
+   id, which was wrong the moment a second pair of buttons appeared: there are
+   now four button callouts on the homepage (two in the hero, two in the fork
+   panels) and the id covered exactly one of them. The obvious alternative,
+   `:has(.notion-link[href$="/networks"])`, cannot work either — every button
+   currently points at /networks, so it matches the primary too. (That shared
+   href is a content bug worth fixing: "Book a Call" should almost certainly
+   not go to the networks page.)
+
+   Background colour is the right hook because it is the one property an author
+   sets deliberately, per block, from the Notion UI, and it is visible in Notion
+   itself — the editor shows you which buttons are secondary without anyone
+   having to remember a rule. Adding a sixth button needs no CSS at all.
+
+   BOTH LAYERS AGAIN: the callout is the frame and the stretched link sits 2px
+   inside it. Colouring only the callout leaves a green rectangle floating in
+   the middle of an outline button, because the link keeps the fill it
+   inherits from the primary rule above. */
+
+.notion-callout.bg-gray-light:has(.notion-link),
+.notion-callout.bg-gray-light:has(.notion-link) .notion-callout__content
+  .notion-semantic-string .notion-link {
+  background-color: transparent !important;
+}
+
+/* Same pressed-in gesture as the primary — the shadow collapses — but no
+   colour change: any green fill would make the secondary read as a second
+   primary at the moment the cursor is on it, which is the one state where the
+   hierarchy matters most. */
+.notion-callout.bg-gray-light:has(.notion-link):hover,
+.notion-callout.bg-gray-light:has(.notion-link):hover .notion-callout__content
+  .notion-semantic-string .notion-link {
+  background-color: transparent !important;
+}
+
+.notion-callout.bg-gray-light:has(.notion-link):hover {
+  box-shadow: none !important;
+}
+
+
+/*********************************************/
+/* 07b. AUDIENCE FORK — "FOR NEW CHAIN TEAMS" / "FOR DELEGATORS" */
+/*********************************************/
+
+/* Built from the fork panels in artifact 424c4fde (variants 11a/11b). Every
+   value below — colours, sizes, tracking, padding, the arc watermarks and
+   their opacities — is the artifact's own.
+
+   THE MARKUP IT IS MAPPED ONTO. One Notion column-list, two columns, each:
+     p.notion-text   (1st)  eyebrow, "For new chain teams" / "For delegators"
+     h1.notion-heading      "Add us to your genesis set" / "Stake where…"
+     p.notion-text   (2nd)  the standfirst
+     ul.notion-bulleted-list
+
+   Selectors key off POSITION WITHIN THE COLUMN, not per-block ids: both
+   paragraphs are the same class, so the eyebrow is `p:nth-of-type(1)` and the
+   standfirst `p:nth-of-type(2)`. Only the row id is hard-coded, so editing or
+   reordering the text in Notion does not break this — per CLAUDE.md, block ids
+   are positional-ish and worth avoiding where structure will do.
+
+   FONTS. This section wants three faces that are NOT yet linked in
+   Super > Settings > Code > Head. Until they are, each falls back and the
+   panel will look wrong in the type but correct in the layout:
+     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Hanken+Grotesk:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+   THE WATERMARKS are svg/fork-arcs-left.svg and -right.svg: eight nested arcs
+   rising from the bottom edge, origin at x=120 on the left panel and x=480 on
+   the right, so the two fields lean away from each other. Both are served
+   from the CDN — see the note on asset hosting at the top of section 00b. */
+
+/* --- The card ------------------------------------------------------------ */
+
+#block-3dae800a51388006a57be06b8ebea78e {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 0 !important; /* beats --column-spacing: 20px; the panels must meet */
+  align-items: stretch !important;
+  margin-block: 40px !important;
+  border: 1px solid #E2E2DB !important;
+  border-radius: 4px !important;
+  overflow: hidden !important; /* clips the arcs and the panel corners */
+}
+
+/* --- Both panels --------------------------------------------------------- */
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column {
+  /* Notion writes the column geometry INLINE, as
+       width: calc((100% - var(--column-spacing) * 1) * 0.5);
+     plus `margin-inline-start: var(--column-spacing)` on the second one. That
+     is correct for its own flex row, but inside the grid above the `100%`
+     resolves against the GRID CELL — so each panel came out at half the width
+     of the cell it sits in, leaving the ground painted across only the left
+     half of each half. That is the stripe effect.
+
+     A stylesheet `!important` outranks a non-important inline style, which is
+     what lets these two lines beat it without touching Notion. */
+  width: 100% !important;
+  max-width: none !important;
+  margin-inline: 0 !important;
+
+  padding: 52px 44px 48px !important;
+  background-repeat: no-repeat !important;
+  background-position: bottom center !important;
+  background-size: 100% 100% !important;
+}
+
+/* Panel one: brand pale green, arcs leaning left. */
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column:first-child {
+  background-color: #DCEEC7 !important;
+  background-image: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/svg/fork-arcs-left.svg") !important;
+}
+
+/* Panel two: paper, arcs leaning right, divided by a hairline rather than a
+   gap — the two grounds meeting is what makes it read as one card. */
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column:last-child {
+  background-color: #FAFAF8 !important;
+  background-image: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/svg/fork-arcs-right.svg") !important;
+  border-left: 1px solid #E2E2DB !important;
+}
+
+/* --- Type ---------------------------------------------------------------- */
+
+/* Eyebrow. */
+#block-3dae800a51388006a57be06b8ebea78e .notion-column > p.notion-text:nth-of-type(1) {
+  margin: 0 0 20px !important;
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #3A3D38 !important;
+}
+
+/* The right eyebrow is a step lighter in the artifact — the green panel can
+   carry more contrast than the paper one. */
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column:last-child > p.notion-text:nth-of-type(1) {
+  color: #6B6F68 !important;
+}
+
+/* Heading. Notion emits an h1 here, so this has to beat both
+   `h1.notion-heading` (0,1,1) and `.notion-column .notion-column h1…` — the
+   row id carries it. */
+#block-3dae800a51388006a57be06b8ebea78e h1.notion-heading {
+  margin: 0 0 20px !important;
+  padding: 0 !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 44px !important;
+  line-height: 1 !important;
+  letter-spacing: -0.038em !important;
+  color: #000000 !important;
+  max-width: 16ch !important;
+  text-wrap: balance !important;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column:last-child h1.notion-heading {
+  max-width: 17ch !important; /* "Stake where we are already running." wants one more */
+}
+
+/* Standfirst. */
+#block-3dae800a51388006a57be06b8ebea78e .notion-column > p.notion-text:nth-of-type(2) {
+  margin: 0 0 20px !important;
+  font-family: "Hanken Grotesk", sans-serif !important;
+  font-size: 17px !important;
+  line-height: 1.6 !important;
+  color: #3A3D38 !important;
+  max-width: 42ch !important;
+}
+
+/* Bullets. */
+#block-3dae800a51388006a57be06b8ebea78e .notion-bulleted-list {
+  margin: 0 !important;
+  padding-left: 1.15em !important;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e .notion-bulleted-list li {
+  margin: 0 0 10px !important;
+  font-family: "Hanken Grotesk", sans-serif !important;
+  font-size: 15.5px !important;
+  line-height: 1.5 !important;
+  color: #3A3D38 !important;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e .notion-bulleted-list li:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Below the two-column breakpoint Notion stops laying columns side by side;
+   stack the panels and swap the vertical divider for a horizontal one. */
+@media (max-width: 800px) {
+  #block-3dae800a51388006a57be06b8ebea78e {
+    grid-template-columns: 1fr !important;
+  }
+  #block-3dae800a51388006a57be06b8ebea78e > .notion-column {
+    padding: 40px 28px 36px !important;
+  }
+  #block-3dae800a51388006a57be06b8ebea78e > .notion-column:last-child {
+    border-left: 0 !important;
+    border-top: 1px solid #E2E2DB !important;
+  }
+  #block-3dae800a51388006a57be06b8ebea78e h1.notion-heading {
+    font-size: 34px !important;
+  }
+}
 
 /*********************************************/
 /* 08. DATABASES AND PROPERTIES */
@@ -838,14 +1556,153 @@ h1.notion-heading:has(u)::after {
   transition: var(--transition) !important;
 }
 
-/* Testimonials are deliberately left exactly as they were: that gallery
-   positions its 1140x250 cover itself (it sits at L:-9 / R:11 by design), so
-   the centring above must not reach it. Re-asserting the three properties
-   restores its original values. Verified byte-identical before/after. */
+/* --- TESTIMONIALS — rebuilt ---------------------------------------------- */
+
+/* This gallery previously kept Super's and the page CSS's own arrangement,
+   which did not survive contact with other screen sizes. What was actually
+   there, measured live:
+
+     .notion-collection-gallery  grid-template-columns: 556px 556px 556px
+                                 — FIXED pixel tracks, so the row could not
+                                   reflow and overflowed narrow viewports
+     .notion-collection-card:first-child  grid-column: span 2
+                                 — the page CSS promotes the first card of a
+                                   gallery to a featured hero. At 2 tracks wide
+                                   it measured 1142px against 556px siblings.
+     .notion-collection-card     flex-direction: column-REVERSE
+     .notion-collection-card__content  padding-bottom: 180px
+     .notion-collection-card__cover    position: absolute; top: 166px;
+                                       LEFT: 880px
+                                 — the avatar was parked at a hard-coded pixel
+                                   offset computed for the 1142px hero card.
+                                   At any other card width it lands in the
+                                   wrong place or off the card entirely. That
+                                   180px of bottom padding was the hole it sat
+                                   in.
+
+   Card heights came out 499 / 499 / 599 — ragged — and the quote was set at
+   28px, which is display size for body copy.
+
+   REBUILT rather than patched, because every one of those values is load-
+   bearing for the others. The card is now a plain flex column and the content
+   wrapper is `display: contents`, which dissolves it so its four properties
+   become flex children of the card alongside the cover. That is what allows
+   the avatar — a SIBLING of the content, not a child — to be ordered in among
+   the name and company without absolute positioning:
+
+     order 1  cover     56px round avatar
+     order 2  quote     flex: 1, so every card's attribution block bottoms out
+                        at the same line and the cards end up equal height
+     order 3  title     the name
+     order 4  company
+     order 5  select    the pill
+
+   The property hashes (property-3f46544e etc.) are Super's stable per-property
+   class names — the only way to tell the quote from the company, since both
+   are `p.notion-property__text`.
+
+   Fonts: Outfit / Hanken Grotesk / JetBrains Mono, same three this file now
+   wants elsewhere. They need the <link> in Super > Settings > Code > Head. */
+
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-gallery {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+}
+
+/* Drop the page CSS's featured-hero span. */
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card:first-child {
+  grid-column: auto / auto !important;
+}
+
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card {
+  display: flex !important;
+  flex-direction: column !important; /* was column-reverse */
+  height: 100% !important; /* equal heights across the row */
+  padding: 28px !important;
+  gap: 16px !important;
+  border: 1px solid #E2E2DB !important;
+  border-radius: var(--radius-card) !important;
+}
+
+/* Dissolve the wrapper so the properties and the cover share one flex line.
+   This also drops its 9.6px/180px padding. */
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card__content {
+  display: contents !important;
+}
+
+/* The avatar. `min-height: 0` is required: Super floors covers with
+   `min-height` (200px here), so a smaller height is otherwise ignored no
+   matter how important it is. */
 #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card__cover {
-  border: 0 !important;
-  margin-inline: 0 !important;
+  order: 1 !important;
+  position: static !important; /* was absolute at left: 880px */
+  flex: 0 0 auto !important;
+  width: 56px !important;
+  height: 56px !important;
+  min-height: 0 !important;
   max-width: none !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  object-fit: cover !important;
+  object-position: center !important; /* beats Super's inline object-position */
+}
+
+/* The quote. */
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__text.property-3f46544e {
+  order: 2 !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  font-family: "Hanken Grotesk", sans-serif !important;
+  font-size: 16px !important; /* was 28px */
+  line-height: 1.6 !important;
+  color: #3A3D38 !important;
+}
+
+/* The name. */
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__title {
+  order: 3 !important;
+  margin: 0 !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 17px !important;
+  line-height: 1.2 !important;
+  color: #000000 !important;
+}
+
+/* The company. */
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__text.property-6a4f7163 {
+  order: 4 !important;
+  margin: 0 !important;
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-size: 11px !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #6B6F68 !important;
+}
+
+/* The role pill. */
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__select {
+  order: 5 !important;
+  margin: 0 !important;
+}
+
+/* Reflow. Three tracks hold a readable measure down to about 1200px; below
+   that the quote gets too narrow before the card does, so drop a column at a
+   time rather than letting tracks shrink indefinitely. */
+@media (max-width: 1200px) {
+  #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 700px) {
+  #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-gallery {
+    grid-template-columns: 1fr !important;
+  }
+  #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card {
+    padding: 24px !important;
+  }
 }
 
 /* `.no-click` is Super's own class for a card whose link is disabled — it
@@ -992,6 +1849,28 @@ h1.notion-heading:has(u)::after {
 }
 
 
+/* --- GOVERNANCE STEPS — 2x2 ---------------------------------------------- */
+
+/* "On Chain Governance": four numbered pillars, which Super laid out on three
+   fixed 264px tracks — so the row broke 3 + 1 and the fourth pillar sat alone
+   under the first, reading as an afterthought rather than the fourth of four.
+
+   Two tracks divide four cards evenly, and the set is a list of equal steps,
+   so an even split is what the content wants. Measured after: two rows of two,
+   every card 415x96.
+
+   Fixed px tracks were the actual fault — they cannot reflow — so the columns
+   are fractions here, and there is a single-column fallback for phones. */
+#block-3b97079327e74e15848fb366e3adcbea .notion-collection-gallery {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+}
+
+@media (max-width: 640px) {
+  #block-3b97079327e74e15848fb366e3adcbea .notion-collection-gallery {
+    grid-template-columns: 1fr !important;
+  }
+}
 /*********************************************/
 /* 10. PILLS */
 /*********************************************/
@@ -1111,7 +1990,9 @@ h1.notion-heading:has(u)::after {
    page-level CSS caps the section with
 
      …gallery.large .notion-collection-card:nth-child(n+4) { display: none }
+     …gallery       .notion-collection-card:nth-child(n+4) { display: none }
      …gallery       .notion-collection-card:nth-child(n+3) { display: none }
+                    (the second is nested inside #block-67d891d0… in home.css)
 
    and NEITHER carries !important. A `display: … !important` on
    `.notion-collection-card` in this file therefore outranks both and unhides
@@ -1163,9 +2044,25 @@ h1.notion-heading:has(u)::after {
   grid-column: auto / auto !important; /* drop the featured hero span */
 }
 
-/* Reveal the third post. The page CSS hides :nth-child(n+3), so without this
-   only two show; 4+ remain hidden by that same page rule. Read the guard note
-   at the top of this section before touching it. */
+/* Reveal the third post. KEEP THIS — it was deleted once on 2026-09-13 on the
+   mistaken belief that it had become redundant, and put straight back:
+   removing it live took the visible count from 3 to 2.
+
+   The reason it is needed is that home.css hides the blog cards TWICE, with
+   two different thresholds:
+
+     top level              .notion-collection-gallery.large …:nth-child(n+4)
+     nested in #block-67d…  .notion-collection-gallery      …:nth-child(n+3)
+
+   The n+3 rule is the binding one, so home.css alone shows two posts. This
+   rule brings the third back; 4+ stay hidden by n+4.
+
+   The nested rule is easy to miss — home.css uses CSS nesting, so grepping for
+   the block id does not find it and grepping for the selector does not show
+   what scopes it. Parse the braces before concluding a rule is not there.
+
+   Read the guard note at the top of this section before touching any
+   `display` rule here. */
 #block-67d891d07f914f4699b81d1765e1f04f .notion-collection-gallery .notion-collection-card:nth-child(3) {
   display: block !important;
 }
