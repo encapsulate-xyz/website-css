@@ -1,0 +1,1123 @@
+
+:root {
+  --picker-border-radius: 8px !important;
+}
+
+/*********************************************/
+/* MOVE THE IMAGE TO THE SIDE: COLLECTION CARD CONTENT STYLING */
+/*********************************************/
+
+/* Set the width and flex properties to center-align the content within the collection card. */
+.notion-collection-card__content {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Set the width of the collection card cover. */
+
+.notion-collection-card__cover {
+  width: 40%;
+}
+
+
+/* Display the collection card as a flex container. */
+.notion-collection-card {
+  display: flex;
+  background-color: var(--color-bg-default);
+}
+/*********************************************
+For viewport
+*********************************************/
+/*
+This block defines styles to be applied when the viewport's width is 920 pixels or less, often used for responsiveness on smaller screens or devices.
+
+1. For the first element with class .notion-column-list, it sets the flex direction to its initial value.
+2. For the elements with class .notion-column, it sets their width to 100% and their start margin (both -webkit-margin-start and margin-inline-start for cross-browser compatibility) to 0, effectively making them occupy the full width of their container.
+3. For images within elements with class .notion-column, it ensures they are fully visible within their parent container. It sets their maximum width to 100%, their height to auto (maintaining aspect ratio), makes them block elements, and centers them horizontally.
+*/
+@media (max-width: 1024px) {
+  .notion-column-list:first-of-type {
+    flex-direction: initial !important;
+  }
+  .notion-column {
+    width: 100% !important;
+    -webkit-margin-start: 0 !important;
+    margin-inline-start: 0 !important;
+  }
+  .notion-column .notion-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    text-align: center !important;
+  }
+
+  .notion-column .notion-divider {
+    display: none!important;
+  }
+}
+/********************************************/
+/*********************************************/
+/* NOTION PILL STYLING */
+/*********************************************/
+
+/* Adjust the font size, border radius, padding, background color, and border of the notion pill. */
+.notion-pill {
+  font-size: 16px!important;
+  padding:4px 8px!important;
+  background-color: var(--color-bg-default);
+  color: black;
+}
+
+/*********************************************/
+/* PROPERTY STYLING */
+/*********************************************/
+
+/* Adjust the font size of the title within the collection card. */
+.notion-property__title {
+  font-size: 22px!important;
+}
+
+/* Adjust the font size of the property text within the collection card. */
+.notion-property__text {
+  margin-top: 4px;
+  font-size: 15px;
+}
+
+
+
+/*********************************************
+For the cover
+*********************************************/
+
+.direct-parent {
+  position: relative;
+}
+
+.super-content {
+  padding-top: 0px!important;
+}
+
+#block-93e89f7e8c0a4366bf2342c01b787d6f {
+background-color: var(--color-bg-default)!important;
+  width: calc(100% + var(--padding-left) + var(--padding-right));
+  left: calc(-1 * var(--padding-left));
+  margin-top: 0px!important;
+  height: auto;
+  border-radius: 0px!important;
+  border-bottom: 2px solid black!important;
+  margin-right: 0px!important;
+  padding-right: 0px!important;
+  overflow: visible !important;
+  background-color: transparent;
+  margin-bottom: 12px!important;
+  color: black;
+  border-top: none!important;
+  /* styling for page cover */
+  padding-top: 24vh!important;
+  min-height: 90vh;
+  overflow: auto!important;
+  background-image: url('https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/page-covers/new/2b-closed-circles.png');
+  background-repeat: no-repeat;
+  background-position: right 40px;
+  background-size: contain;
+  background-attachment: fixed;
+/*******************/
+
+  @media (max-width: 546px) {
+    padding-top: 14vh!important;
+    width: calc(100% + var(--padding-left-mobile) + var(--padding-right-mobile));
+    left: calc(-1 * var(--padding-left-mobile));
+  }
+
+
+
+/* boxing the text */
+.notion-column-list > .notion-column:first-child {
+  /*padding: 20px!important;*/
+  /*border: 2px solid black !important;*/
+  /*background-color: var(--color-bg-default);*/
+  /*  box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.4)!important;*/
+  /*  border-radius: 4px!important;*/
+  }
+}
+/********************************************/
+
+/*********************************************/
+/* FOR 3D IMAGE - right now its  display: none;
+/*********************************************/
+#block-83e8ea69481b473dae21efe2d8398927  {
+  height: 280px!important;
+  position: absolute;
+  right: 0;
+  top: 40px;
+  margin: 0px!important;
+  padding: 0px!important;
+  width: 348px!important;
+  height: auto!important;
+
+
+  @media (max-width: 1050px) {
+    display: none;
+  }
+  display: none;
+}
+/*********************************************/
+/*#block-83e8ea69481b473dae21efe2d8398927 span img  {*/
+/*    opacity: 0.2;*/
+
+/*}*/
+
+/********************************************/
+/*********************************************/
+/* DATABASE VIEW PICKER */
+/*********************************************/
+@media (min-width: 576px) {
+/* Stretch the button group to the full page width */
+  .notion-dropdown__option-list {
+      margin-left: auto !important;
+    width: 40%;
+    display: flex;
+    justify-content: space-around;
+    /*border: 1px solid black!important;*/
+    border-radius: 45px !important;
+  }
+
+  /* Add rounded corners to buttons */
+  .notion-dropdown__option {
+    margin: 5px!important;
+    flex: 1;
+    border-radius: 25px!important;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+    justify-content: center;
+  }
+
+    .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:nth-child(n) {
+        border-radius: 25px!important;
+        border: 1px solid black!important;
+  }
+
+  .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:nth-child(2).active {
+    background: var(--color-bg-pink) !important;
+  }
+
+
+  .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:nth-child(1).active {
+    background: var(--color-bg-green) !important;
+  }
+
+
+  .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:nth-child(n):hover {
+    border: 1px solid black!important;
+  }
+
+
+
+
+  .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option.active {
+   border: 1px solid black!important;
+   pointer-events: none;
+  }
+
+  .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option p {
+    font-size: 18px!important;
+     font-family: Verdana, sans-serif;
+  }
+
+/* New view switcher code */
+  :root {
+    --picker-active-bg-color: #d9ecda!important;
+    --picker-active-text-color: rgb(70, 70, 70) !important;
+    --picker-border-color: rgb(255,255,255) !important;
+    --picker-text-color: rgb(70, 70, 70) !important;
+    --picker-border-radius: 25px !important;
+    --picker-hover-bg-color: transparent !important;
+    /*  --picker-hover-bg-color: rgb(244, 223, 235)!important;*/
+    /*--picker-hover-text-color: rgb(70, 70, 70) !important;*/
+    --picker-hover-border-color: transparent !important;
+
+  }
+}
+/*********************************************/
+/*********************************************/
+/* FOR PAGE HEADING
+/*********************************************/
+#block-52c2528ddf394ab1acae527ece879455 strong {
+  color: var(--color-bg-pink)!important;
+  line-height: 1;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  font-size: calc(1px + 9vw) !important;
+  font-weight: 200 !important;
+  font-family: Arial Black, sans-serif;
+  text-shadow: 4px 4px 0px rgba(0, 0, 0, 1) !important;
+  display: flex;
+      -webkit-text-stroke: 2px black;
+    text-stroke: 2px black !important;
+}
+
+#block-52c2528ddf394ab1acae527ece879455:after {
+  margin-top: 40px!important;
+    content: "";
+    display: block;
+    height: 2px!important;
+    margin: 4px 0;
+    width: calc(100% + 40px);
+    transform: translateX(-20px);
+}
+
+#block-52c2528ddf394ab1acae527ece879455:before {
+  background: none!important
+}
+/*********************************************/
+/********************************************/
+/* FOR PAGE SUB HEADING
+/********************************************/
+#block-ae41de7b0b114923b1fad98a9d96af76, #block-880ddf85b0914bab978e9f055059f86e {
+  font-size: 22px!important;
+  font-family: Georgia;
+  @media (max-width: 800px) {
+    font-size: 18px!important;
+  }
+}
+/********************************************/
+/*********************************************
+STYLING DROPDOWN MENU
+*********************************************/
+@media (max-width: 576px) {
+  /* Hiding menu header and first svg within dropdown button */
+  .notion-dropdown__menu-header {
+    display: none;
+  }
+  .notion-dropdown__button svg:first-of-type {
+    display: none;
+  }
+
+  /* Styling the dropdown button, including hover state */
+  .notion-dropdown__button {
+    padding: 10px 40px;
+    margin-bottom: 10px;
+    border: 1px solid var(--color-border-default);
+    border-radius: 50px;
+    background-color: #f8f9fa;
+    color: #495057;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .notion-dropdown__button:hover {
+    background-color: #e9ecef;
+  }
+
+  /* Styling the dropdown menu and its list */
+  .notion-dropdown__menu {
+    border-radius: 20px !important;
+  }
+  .notion-dropdown__option-list {
+    max-height: 750px;
+    overflow-y: auto;
+  }
+
+  /* Adds a divider to separate type select and chain select in dropdown */
+  .notion-dropdown__option:nth-child(6) {
+    border-bottom: 5px solid #ddd !important;
+  }
+
+  /* Styling each dropdown option, including hover and active states */
+  .notion-dropdown__option {
+    padding: 10px 15px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .notion-dropdown__option:last-child {
+    border-bottom: none;
+  }
+  .notion-dropdown__option:hover {
+    background-color: #f8f9fa;
+    border: 1px solid black !important;
+    border-radius: 20px !important;
+  }
+  .notion-dropdown__option:active {
+    background-color: #e9ecef;
+  }
+
+  /* Hiding svg within dropdown option */
+  .notion-dropdown__option svg {
+    display: none;
+  }
+}
+/*********************************************/
+/*********************************************/
+/* HIDES OTHER PAGES
+/*********************************************/
+.notion-page {
+    display: none !important;
+}
+/*********************************************/
+/*********************************************/
+/* DISPLAY MAINNET AND TETSNET COUNTS */
+/*********************************************/
+/* number of mainnet and tetsnet */
+#block-833ca930370a47b1b25ae3ab3452d188,
+#block-07e139d4db514840b6ce951a6bd8b092
+{
+  /*.notion-semantic-string strong {*/
+    line-height: 1;
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+    font-size: calc(108px + 9.5vw) !important;
+    font-weight: 200 !important;
+    font-family: Arial Black, sans-serif;
+    color: var(--color-bg-green);
+    -webkit-text-stroke: 2px black;
+    text-stroke: 2px black !important;
+    text-shadow: 4px 4px 0px rgba(0, 0, 0, 1) !important;
+  /*}*/
+}
+
+#block-07e139d4db514840b6ce951a6bd8b092 {
+  /*.notion-semantic-string strong {*/
+    color: var(--color-bg-pink);
+  /*}*/
+}
+
+
+/* column stylings */
+.notion-column {
+  position: relative;
+  direction: flex;
+  justify-content: center;
+}
+
+.notion-column:has( strong) {
+  position: relative;
+  direction: flex;
+  justify-content: center;
+
+  .notion-image {
+    display: none;
+    position: absolute;
+    top: -10px;
+    left: -80px;
+    width: 100%;
+    height: 100%;
+
+    @media (min-width: 348px) and (max-width: 1380px) {
+      display: none!important;
+    }
+  }
+}
+
+/* the texts like "Networks Secured…" and "….And Helping Test" and "More" */
+#block-947958362276433ca15bab673be88d93,
+#block-d919416a3ad241848b3e0a202f808279,
+#block-4b388a7c9f1e415f87b9ac319a5bb965  {
+    /*.notion-semantic-string span {*/
+    line-height: 1;
+    /*font-weight: bold;*/
+    /*font-family: 'Allerta Stencil', sans-serif;*/
+
+             /*font-weight: bold !important;*/
+    font-size: calc(28px + 2.5vw) !important;
+    vertical-align: middle !important;
+  /*}*/
+}
+
+
+#block-947958362276433ca15bab673be88d93:before,
+#block-d919416a3ad241848b3e0a202f808279:before,
+#block-4b388a7c9f1e415f87b9ac319a5bb965:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin: 4px 0;
+    background: linear-gradient(to right, black, rgba(204, 204, 204, 0));
+}
+
+#block-947958362276433ca15bab673be88d93:after,
+#block-d919416a3ad241848b3e0a202f808279:after,
+#block-4b388a7c9f1e415f87b9ac319a5bb965:after
+{
+    content: "";
+    display: block;
+    height: 1px;
+    margin: 4px 0;
+    background: linear-gradient(to right, black, rgba(204, 204, 204, 0));
+}
+
+
+
+/* the image */
+#block-3c762e6c38b94858aa36ca17c50f69e2 {
+  position: relative;
+  z-index: -2!important;
+  position: absolute;
+  width: 700px;
+  transform: translate(700px, 920px);
+    @media (max-width: 1024px) {
+     display: none!important;
+    }
+}
+/*********************************************/
+/*********************************************/
+/* ENABLE HOVER AS YOU COMPLETE THE INTERNAL PAGES
+/*********************************************/
+#block-networks-mainnet-sui a,
+#block-networks-mainnet-axelar a,
+#block-networks-mainnet-agoric a,
+#block-networks-mainnet-gravity-bridge a,
+#block-networks-mainnet-quicksilver a,
+#block-networks-mainnet-terra a,
+#block-networks-mainnet-osmosis a,
+#block-networks-mainnet-umee a,
+#block-networks-mainnet-juno a,
+#block-networks-mainnet-stargaze a,
+#block-networks-mainnet-evmos a,
+#block-networks-mainnet-sommelier-finance a,
+#block-networks-mainnet-omniflix a,
+#block-networks-mainnet-regen-network a,
+#block-networks-mainnet-ixo a,
+#block-networks-mainnet-paloma a,
+#block-networks-mainnet-asset-mantle a,
+#block-networks-mainnet-planq a,
+#block-networks-mainnet-archway a,
+#block-networks-mainnet-passage a,
+#block-networks-mainnet-gitopia a,
+#block-networks-mainnet-stride a,
+#block-networks-mainnet-humans a,
+#block-networks-mainnet-qwoyn a,
+#block-networks-mainnet-crescent a,
+#block-networks-mainnet-injective a,
+#block-networks-mainnet-avalanche a,
+#block-networks-mainnet-solana a,
+#block-networks-mainnet-mina a,
+#block-networks-mainnet-vara a,
+#block-networks-mainnet-celestia a,
+#block-networks-mainnet-dydx a,
+#block-networks-mainnet-althea a,
+/* quicksilver */
+#block-72fc5c0fdf424f91a50692396397ab0c a
+{
+    pointer-events: auto!important;
+}
+
+/*********************************************/
+/* MODERN NETWORK CARD + PASTEL LOGO TILES */
+/*********************************************/
+
+/* SUPERSEDES the "MOVE THE IMAGE TO THE SIDE" block at the top of this file.
+   Those rules (.notion-collection-card display:flex, __cover width:40%,
+   __content width:90%) still sit above; these come later in the same file and
+   win. Delete the old block once you are happy with this.
+
+   Palette and scramble match the homepage gallery in main.css — same four
+   brand pastels, no pink, and the same trick of a fixed one-off shuffle rather
+   than a repeating cycle. Counts here are 8/8/7/7 over 30 indices, with no
+   card repeating the colour of the one before it or the one directly above it
+   at the 4-up layout below. Indices run to 30 so the database can grow to 26
+   without leaving cards untinted.
+
+   NEEDS TRANSPARENT ARTWORK, same as the homepage: a background on an <img>
+   paints behind the image, so it only shows where the PNG is transparent. */
+
+:root {
+  --pastel-green: #E8F4DB;
+  --pastel-yellow: #FAF0CE;
+  --pastel-blue: #E2EDF9;
+  --pastel-orange: #FAE9DA;
+}
+
+/* --- Grid ---------------------------------------------------------------- */
+
+/* Horizontal cards need more room than the old 5-up 322px columns gave them.
+   auto-fill means the count follows the viewport instead of being pinned. */
+.notion-collection-gallery {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)) !important;
+  gap: 18px !important;
+}
+
+/* --- Card ---------------------------------------------------------------- */
+
+.notion-collection-card {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 12px !important;
+  border: 1px solid rgba(32, 32, 32, 0.12) !important;
+  border-radius: 16px !important;
+  background-color: var(--color-bg-default) !important;
+  box-shadow: none !important;
+}
+
+/* REMOVED: a hover lift (translateY(-4px) + border darken + drop shadow) that
+   came in with the "more modern" pass but was never asked for. The card no
+   longer moves or changes on hover; the only hover effect on this page is the
+   glyph recolour below. */
+
+/* THE LOGO TILE — the tall pill.
+
+   TWO THINGS FIGHT US HERE, both found by inspecting the live page.
+
+   1. Super writes the crop INLINE on every cover:
+        style="color:transparent;object-fit:cover;object-position:center 14.92%"
+      That percentage is Notion's cover-crop position. Inline styles beat any
+      stylesheet rule that is not !important, which is why the mark sat high in
+      the pill however the padding was set. `object-position: center` with
+      !important is the fix, and it is the whole reason the glyph was never
+      vertically centred. `object-fit: contain` likewise has to be !important.
+
+   2. main.css carries a global `.notion-collection-card__cover` rule with
+      !important (border, radius, max-width). Site CSS loads AFTER page CSS, so
+      at equal specificity it wins. Every rule here is therefore written as
+      `.notion-collection-card .notion-collection-card__cover` (0,2,0) to
+      outrank it — a plain `.notion-collection-card__cover` silently loses.
+
+   The pill is 92px wide, matching what Super's `width: 40%` produced, so the
+   shape is unchanged — just pinned rather than fluid.
+
+   SLIMMER PILL, SAME MARK. These two pull against each other, because
+   `contain` fits the image to the narrow axis — so a narrower pill renders a
+   smaller glyph. Scaling compensates.
+
+   The artwork is 600x600 but its ink box is only 210x274, i.e. the mark fills
+   about 35% of the canvas width; the rest is transparent margin. So:
+
+     pill 92, padding 6  -> image 80px  -> mark 80 x 0.35   = 28px
+     pill 80, padding 0  -> image 80px  -> mark 80 x 0.35   = 28px
+                         x 1.43 scale   -> image 114px -> mark = 40px
+
+   NOTE: --logo-scale was calibrated at 1.43 for a 56px pill, where it held the
+   mark at its original 28px. At 80px that same scale renders the mark at about
+   40px. To pin it back to the original 28px use --logo-scale: 1.0 (at this
+   width the unscaled image already gives 28px). The rule is
+   scale = 28 / (pill-w x 0.35).
+
+   The scaled image overflows the pill and the wrapper's `overflow: hidden`
+   clips it, but the clipped band is transparent margin, never the mark: it is
+   centred and occupies only the middle 35% of the canvas.
+
+   Three knobs: --pill-w, --pill-h, --logo-scale. Narrowing the pill further
+   means raising the scale by the same ratio to hold the mark steady. */
+
+.notion-collection-card {
+  --pill-w: 80px; /* was 70px */
+  --pill-h: 180px; /* was 200px */
+  --logo-scale: 1.43; /* holds the mark at its current size; see the maths below */
+  --pill-radius: 18px; /* was 999px, which made the ends fully semicircular */
+}
+
+/* Super ships this wrapper as `display: contents`; promoting it to a block
+   gives the pill a real box, which the hover ink layer needs — an <img> cannot
+   carry a pseudo-element. Dimensions match the tile exactly, so the shape is
+   identical to before. */
+.notion-collection-card > span {
+  display: block !important;
+  position: relative !important;
+  isolation: isolate !important; /* contains the blend */
+  flex: 0 0 auto !important;
+  align-self: center !important; /* vertical centring of the pill in the card */
+  width: var(--pill-w) !important;
+  height: var(--pill-h) !important;
+  min-height: 0 !important;
+  border-radius: var(--pill-radius) !important;
+  overflow: hidden !important;
+
+  /* Transparent at rest, coloured on hover. Declaring the border here rather
+     than only in :hover is what stops the tile twitching — `box-sizing:
+     border-box` is global, so a border that appears on hover would shrink the
+     content box by 2px and nudge the glyph. Reserving it up front keeps the
+     geometry identical in both states, and only the colour animates. */
+  border: 1px solid transparent !important;
+  transition: border-color 0.22s ease !important;
+}
+
+.notion-collection-card .notion-collection-card__cover {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  padding: 0 !important; /* the scale below does the sizing instead */
+  box-sizing: border-box !important;
+  border-radius: var(--pill-radius) !important;
+  object-fit: contain !important; /* beats the inline `cover` */
+  object-position: center !important; /* beats the inline `center 14.92%` */
+  transform: scale(var(--logo-scale)) !important;
+  border: 0 !important;
+  margin: 0 !important;
+  max-width: none !important;
+  transition: background-color 0.22s ease !important;
+}
+
+/* --- Content ------------------------------------------------------------- */
+
+/* Reordered so the rate reads as the headline. Notion emits title, then the
+   "Expected Reward Rate" label, then the rate pill — which puts the number
+   last, the opposite of how a stat card should scan. */
+.notion-collection-card__content {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  width: auto !important;
+  flex: 1 1 auto !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  min-width: 0 !important;
+}
+
+.notion-property__title {
+  order: 0 !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.2 !important;
+  opacity: 0.72 !important;
+}
+
+.notion-property__select {
+  order: 1 !important;
+  margin-top: 8px !important;
+}
+
+.notion-property__text {
+  order: 2 !important;
+  margin-top: 2px !important;
+  font-size: 10.5px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.09em !important;
+  text-transform: uppercase !important;
+  opacity: 0.45 !important;
+  line-height: 1.3 !important;
+}
+
+/* The rate itself — pill chrome stripped so the number carries the card. */
+.notion-pill {
+  font-size: 26px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #111 !important;
+}
+
+/* --- Pastel logo tiles --------------------------------------------------- */
+
+/* green — 8 cards */
+.notion-collection-card:nth-child(1) .notion-collection-card__cover,
+.notion-collection-card:nth-child(6) .notion-collection-card__cover,
+.notion-collection-card:nth-child(11) .notion-collection-card__cover,
+.notion-collection-card:nth-child(14) .notion-collection-card__cover,
+.notion-collection-card:nth-child(17) .notion-collection-card__cover,
+.notion-collection-card:nth-child(24) .notion-collection-card__cover,
+.notion-collection-card:nth-child(26) .notion-collection-card__cover,
+.notion-collection-card:nth-child(29) .notion-collection-card__cover {
+  background-color: var(--pastel-green) !important;
+}
+
+/* yellow — 8 cards */
+.notion-collection-card:nth-child(2) .notion-collection-card__cover,
+.notion-collection-card:nth-child(7) .notion-collection-card__cover,
+.notion-collection-card:nth-child(10) .notion-collection-card__cover,
+.notion-collection-card:nth-child(13) .notion-collection-card__cover,
+.notion-collection-card:nth-child(20) .notion-collection-card__cover,
+.notion-collection-card:nth-child(23) .notion-collection-card__cover,
+.notion-collection-card:nth-child(25) .notion-collection-card__cover,
+.notion-collection-card:nth-child(30) .notion-collection-card__cover {
+  background-color: var(--pastel-yellow) !important;
+}
+
+/* blue — 7 cards */
+.notion-collection-card:nth-child(3) .notion-collection-card__cover,
+.notion-collection-card:nth-child(5) .notion-collection-card__cover,
+.notion-collection-card:nth-child(8) .notion-collection-card__cover,
+.notion-collection-card:nth-child(16) .notion-collection-card__cover,
+.notion-collection-card:nth-child(19) .notion-collection-card__cover,
+.notion-collection-card:nth-child(22) .notion-collection-card__cover,
+.notion-collection-card:nth-child(27) .notion-collection-card__cover {
+  background-color: var(--pastel-blue) !important;
+}
+
+/* orange — 7 cards */
+.notion-collection-card:nth-child(4) .notion-collection-card__cover,
+.notion-collection-card:nth-child(9) .notion-collection-card__cover,
+.notion-collection-card:nth-child(12) .notion-collection-card__cover,
+.notion-collection-card:nth-child(15) .notion-collection-card__cover,
+.notion-collection-card:nth-child(18) .notion-collection-card__cover,
+.notion-collection-card:nth-child(21) .notion-collection-card__cover,
+.notion-collection-card:nth-child(28) .notion-collection-card__cover {
+  background-color: var(--pastel-orange) !important;
+}
+
+@media (max-width: 640px) {
+  .notion-collection-gallery {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+/* --- Hover: brand-coloured glyph ----------------------------------------
+   Same mechanism as the homepage gallery. `mix-blend-mode: lighten` takes the
+   per-channel maximum, so over a WHITE tile:
+
+     glyph  max(#000000, brand) = brand
+     tile   max(#FFFFFF, brand) = #FFFFFF
+
+   which recolours a transparent black PNG exactly, with no image URL — which
+   matters because Super serves these through the Next.js optimizer and any
+   hardcoded URL breaks on re-upload.
+
+   Keyed by href slug, verified on this page (/sui, /gravity-bridge, ...), so
+   it survives reordering the database. A card with no matching rule keeps
+   --net-brand unset, the layer resolves to transparent, and nothing happens. */
+
+.notion-collection-card > span::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  background: var(--net-brand, transparent) !important;
+  mix-blend-mode: lighten !important;
+  opacity: 0 !important;
+  transition: opacity 0.22s ease !important;
+}
+
+.notion-collection-card:hover > span::after {
+  opacity: 1 !important;
+}
+
+/* Border on the tile on hover. Same gallery prefix as the white-tile rule
+   above, so it cannot be outranked by the pastel tints. Swap #111 for
+   var(--net-brand, #111) if you would rather the border picked up the
+   network's brand colour along with the glyph. */
+.notion-collection-gallery .notion-collection-card:hover > span {
+  border-color: #111 !important;
+}
+
+/* WHITE TILE ON HOVER — load-bearing, and deliberately over-specific.
+
+   The blend only reads as "coloured glyph" if the backdrop is white, because
+   lighten takes the per-channel maximum:
+
+     over white    max(#FFFFFF, brand) = #FFFFFF   -> tile unchanged
+     over pastel   max(#FAE9DA, #FF603B) = #FFE9DA -> the whole tile washes
+
+   That second case is the orange glow bleeding across the tile. It happens
+   whenever this rule loses to the pastel tint, and the two were TIED on
+   specificity — both 0,3,0:
+
+     .notion-collection-card:nth-child(N) .notion-collection-card__cover
+     .notion-collection-card:hover        .notion-collection-card__cover
+
+   A tie is settled by source order alone, so any reshuffle of this file (or a
+   paste that lands the tints last) silently brings the wash back. Prefixing
+   the gallery takes this to 0,4,0 so it wins outright, whatever the order. */
+.notion-collection-gallery .notion-collection-card:hover .notion-collection-card__cover {
+  background-color: #FFFFFF !important;
+}
+
+.notion-collection-card:has(a[href$="/avail"]) {
+  --net-brand: #2E9BF5;
+}
+
+.notion-collection-card:has(a[href$="/monad"]) {
+  --net-brand: #836EF9;
+}
+
+.notion-collection-card:has(a[href$="/sui"]) {
+  --net-brand: #4DA2FF;
+}
+
+.notion-collection-card:has(a[href$="/zilliqa"]) {
+  --net-brand: #29A8A3;
+}
+
+.notion-collection-card:has(a[href$="/near"]) {
+  --net-brand: #00B383;
+}
+
+.notion-collection-card:has(a[href$="/axelar"]) {
+  --net-brand: #1F9BEA;
+}
+
+.notion-collection-card:has(a[href$="/althea"]) {
+  --net-brand: #3B5BDB;
+}
+
+.notion-collection-card:has(a[href$="/iota"]) {
+  --net-brand: #00A899;
+}
+
+.notion-collection-card:has(a[href$="/terra"]) {
+  --net-brand: #FF6F03;
+}
+
+.notion-collection-card:has(a[href$="/vara"]) {
+  --net-brand: #00B78C;
+}
+
+.notion-collection-card:has(a[href$="/ika"]) {
+  --net-brand: #6D5BFF;
+}
+
+.notion-collection-card:has(a[href$="/espresso-systems"]) {
+  --net-brand: #C2622A;
+}
+
+.notion-collection-card:has(a[href$="/espresso"]) {
+  --net-brand: #C2622A;
+}
+
+.notion-collection-card:has(a[href$="/starknet"]) {
+  --net-brand: #EC796B;
+}
+
+.notion-collection-card:has(a[href$="/supra"]) {
+  --net-brand: #DD1438;
+}
+
+.notion-collection-card:has(a[href$="/gravity-bridge"]) {
+  --net-brand: #6B4CF6;
+}
+
+.notion-collection-card:has(a[href$="/agoric"]) {
+  --net-brand: #BB2D40;
+}
+
+.notion-collection-card:has(a[href$="/humans"]) {
+  --net-brand: #3D5AFE;
+}
+
+.notion-collection-card:has(a[href$="/ixo"]) {
+  --net-brand: #009FD1;
+}
+
+.notion-collection-card:has(a[href$="/gitopia"]) {
+  --net-brand: #F17A2B;
+}
+
+.notion-collection-card:has(a[href$="/chain4energy"]) {
+  --net-brand: #1FA85B;
+}
+
+.notion-collection-card:has(a[href$="/passage"]) {
+  --net-brand: #7A4EE6;
+}
+
+.notion-collection-card:has(a[href$="/sommelier"]) {
+  --net-brand: #E23D65;
+}
+
+.notion-collection-card:has(a[href$="/sommelier-finance"]) {
+  --net-brand: #E23D65;
+}
+
+.notion-collection-card:has(a[href$="/lumera"]) {
+  --net-brand: #2A9D8F;
+}
+
+.notion-collection-card:has(a[href$="/mina"]) {
+  --net-brand: #FF603B;
+}
+
+.notion-collection-card:has(a[href$="/avalanche"]) {
+  --net-brand: #E84142;
+}
+
+.notion-collection-card:has(a[href$="/ethereum"]) {
+  --net-brand: #627EEA;
+}
+
+
+/*********************************************/
+/* MAINNET / TESTNET STAT BAND  (variant 5e) */
+/*********************************************/
+
+/* From the `Networks Pastel` project, variant 5e — "Ink ground": the palette
+   inverted. Ink field, pastel figures, paper labels. Highest contrast of the
+   eight, and the one meant to hold up as a full-bleed band between two white
+   sections.
+
+   The two stats are Notion CALLOUTS, one per column, inside column-list
+   3d9e800a…. Per panel: span (icon, hidden site-wide), p label,
+   h1 number, p caption.
+
+   The dark ground belongs to the BAND, not the panels — so the column-list
+   carries the background and padding, and each callout is stripped back to
+   transparent with no border, radius or padding of its own.
+
+   THE DIVIDER. 5e sets the band as `grid-template-columns: 1fr 1px 1fr` with a
+   third element between the stats. Notion emits exactly two columns and no
+   middle child, so the hairline is drawn as a pseudo-element on the second
+   column instead, pulled back half the 48px gap to sit centred in it. It is
+   200px tall and vertically centred, not full height — matching the variant.
+
+   FONTS: Outfit (numbers, caption) and JetBrains Mono (label); neither is in
+   the site Head, so Archivo and the system mono catch them. For exact type:
+     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"> */
+
+/* FULL-BLEED BAND.
+   `width: 100vw` plus `margin-inline: calc(50% - 50vw)` breaks the band out of
+   the page's content column and runs it edge to edge — the same technique the
+   footer uses in main.css. The 100vw overshoots by the scrollbar width, which
+   `overflow-x: hidden` on body (main.css) absorbs.
+
+   The horizontal padding then pulls the TEXT back into line with the rest of
+   the page: `calc(50vw - 864px)` is the gutter between the viewport edge and
+   the 1728px content column, so the labels and figures sit on the same left
+   edge as everything above and below, while the ink itself still reaches the
+   screen edges. `max()` keeps a sane 48px minimum on narrower viewports.
+
+   Border and radius are dropped — the artifact's 1px frame and 4px corners
+   were its demo chrome, and neither makes sense once the band is full-bleed.
+   The ink does the separating. */
+#block-3d9e800a513880228c52d46a421865c3 {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 48px !important;
+  align-items: center !important;
+  /* Ink ground + variant 5k, "Fan and rings": rays from a single origin off
+     the left edge, crossed by concentric rings from that same origin, every
+     fourth ray heavier. The SVG carries preserveAspectRatio="none" and is
+     sized 100% 100%, so it stretches to whatever width the band ends up —
+     which is what makes it work on a full-bleed element. */
+  background-color: #3A3D38 !important;
+  background-image: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/banners/5k-fan-and-rings.svg") !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+
+  width: 100vw !important;
+  margin-inline: calc(50% - 50vw) !important;
+  padding: 40px max(48px, calc(50vw - 864px)) 36px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+}
+
+#block-3d9e800a513880228c52d46a421865c3 > .notion-column {
+  margin: 0 !important;
+  width: auto !important;
+  padding: 0 !important;
+  position: relative !important; /* anchors the divider below */
+}
+
+/* The hairline between the two stats. */
+#block-3d9e800a5138800099c0db8197beb565::before {
+  content: "" !important;
+  position: absolute !important;
+  left: -24px !important; /* half the 48px gap */
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 1px !important;
+  height: 128px !important;
+  background: rgba(250, 250, 248, 0.22) !important;
+}
+
+/* Panels: no card of their own, the band is the surface. */
+#block-3d9e800a513880228c52d46a421865c3 .notion-callout {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+/* SLIMMER, VIA LAYOUT RATHER THAN SHRINKING.
+   The variant stacks label / number / caption in a column, which spends three
+   full rows of height. Setting the caption on the NUMBER's baseline collapses
+   one of those rows entirely — so the figure can grow while the band gets
+   shorter:
+
+     was  150px figure, 22px gaps, 60/56 padding  ->  ~326px tall
+     now  176px figure, 14px gaps, 40/36 padding  ->  ~260px tall
+
+   `align-items: baseline` on the second row is what makes it read as one
+   typographic unit instead of two stacked things. */
+#block-3d9e800a513880228c52d46a421865c3 .notion-callout__content {
+  display: grid !important;
+  grid-template-columns: auto 1fr !important;
+  grid-template-areas:
+    "label label"
+    "figure caption" !important;
+  align-items: baseline !important;
+  column-gap: 20px !important;
+  row-gap: 14px !important;
+  padding: 0 !important;
+}
+
+/* Label — mono, uppercase, wide tracking, muted against the ink. */
+#block-3d9e800a513880228c52d46a421865c3 .notion-callout__content > p:first-of-type {
+  grid-area: label !important;
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #A5A5A5 !important;
+  line-height: 1.2 !important;
+}
+
+/* The figures. `tabular-nums` is what holds the two numbers to one rhythm —
+   proportional digits would set them at different widths across the divider. */
+#block-3d9e800a513880228c52d46a421865c3 h1.notion-heading {
+  font-family: "Outfit", "Archivo", sans-serif !important;
+  grid-area: figure !important;
+  font-weight: 600 !important;
+  font-size: 176px !important;
+  line-height: 0.78 !important;
+  letter-spacing: -0.05em !important;
+  font-variant-numeric: tabular-nums !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-wrap: nowrap !important;
+}
+
+/* Pastel figures, one per side. */
+#block-3d9e800a51388034b5b5e191ce077377 h1.notion-heading {
+  color: #DCEEC7 !important; /* green */
+}
+
+#block-3d9e800a5138805bb980ea0d1ec63b22 h1.notion-heading {
+  color: #D2E3F6 !important; /* blue */
+}
+
+/* Caption — paper white. */
+#block-3d9e800a513880228c52d46a421865c3 .notion-callout__content > p:last-of-type {
+  grid-area: caption !important;
+  font-family: "Outfit", "Archivo", sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 24px !important;
+  letter-spacing: -0.02em !important;
+  color: #FAFAF8 !important;
+  line-height: 1.2 !important;
+}
+
+@media (max-width: 900px) {
+  #block-3d9e800a513880228c52d46a421865c3 {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+    padding: 44px 32px 40px !important; /* the max() gutter collapses here anyway */
+  }
+  #block-3d9e800a5138800099c0db8197beb565::before {
+    left: 0 !important;
+    top: -20px !important;
+    transform: none !important;
+    width: 100% !important;
+    height: 1px !important;
+  }
+  #block-3d9e800a513880228c52d46a421865c3 h1.notion-heading {
+    font-size: 104px !important;
+  }
+}

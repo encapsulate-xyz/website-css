@@ -1,0 +1,1596 @@
+/*********************************************/
+/* ENCAPSULATE — SUPER.SO / NOTION STYLESHEET */
+/*********************************************/
+/* CONTENTS
+     01. FONTS
+     02. DESIGN TOKENS
+     03. GENERAL PAGE LAYOUT
+     04. NAVIGATION BAR
+     05. NAVBAR MENU (SLIDE-OUT)
+     06. HEADINGS
+     07. CALLOUTS AS BUTTONS
+     08. DATABASES AND PROPERTIES
+     09. COLLECTION CARDS
+     10. PILLS
+     11. COLUMN DIVIDERS
+     12. CODE BLOCKS
+     13. LINK PREVIEWS (BOOKMARKS / EXTERNAL OBJECTS)
+     14. BLOG GALLERY (HOMEPAGE)
+     15. NETWORKS GALLERY (HOMEPAGE)
+     16. FOOTER
+     17. REDUCED MOTION
+
+   Class names verified against Super's live runtime stylesheet and
+   https://docs.super.so/super-css-classes (checked 2026-09-12).
+   Anything still unverified is marked  VERIFY:  inline.
+*/
+/*********************************************/
+
+
+/*********************************************/
+/* 00. STATS SECTION — FULL-BLEED INK BAND */
+/*********************************************/
+
+/* Added at the TOP of the file, so note the specificity: there is an older
+   rule for the heading further down (~line 505) that gives it its own
+   full-bleed dark band. At equal specificity the LATER rule wins, so every
+   selector here is prefixed with `.notion-root` — taking them to (1,1,1)
+   against that rule's (1,0,1) — and these win wherever they sit in the file.
+   Delete the older block when convenient; until then this supersedes it.
+
+   WHAT THIS IS. The heading and both rows of stat cards are ONE Notion callout
+   (3dae800a…). The band is that callout, so the callout is what bleeds.
+
+   WHY THE HEADING MUST NOT BLEED ITSELF. Given its own `width: 100vw` and
+   `margin-inline: calc(50% - 50vw)` it reaches 1920px starting at x=4, but the
+   callout's content box starts at x=125 and hides overflow — so the first
+   letter gets sliced off. That was the missing "Y". A child cannot bleed past
+   an ancestor that clips; the ancestor has to do it. */
+
+.notion-root #block-3dae800a513880b493f9e17a6928281c {
+  width: 100vw !important;
+  margin-inline: calc(50% - 50vw) !important;
+  padding: 56px max(48px, calc(50vw - 864px)) 60px !important;
+
+  /* Ink ground + variant 5o, "Twin fans": the same construction as 5k with the
+     origin doubled — one behind each figure — so the two fields meet in the
+     middle. Symmetrical rather than directional. preserveAspectRatio="none"
+     plus `background-size: 100% 100%` lets it stretch across the full bleed. */
+  background-color: #3A3D38 !important;
+  background-image: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/banners/5o-twin-fans.svg") !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  border: 0 !important;
+  border-radius: 0 !important; /* nothing to round once it reaches the edges */
+  color: #FAFAF8 !important; /* paper, inherited by the heading */
+}
+
+/* Was `hidden` — this is what clipped the heading. */
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout__content {
+  overflow: visible !important;
+}
+
+/* The stat cards keep their pastel fills, so their text has to go back to ink
+   or it inherits the section's paper white. That bug is already live without
+   this: "Uptime 99.96 %" and "Soft Slashing Protection 100 %" both compute
+   rgb(255,255,255) on rgb(221,237,226) — near invisible. */
+.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout {
+  color: var(--brand-ink, #000) !important;
+}
+
+/* An ordinary heading again — the section supplies the ground. */
+.notion-root #block-eb15a09351d343568d0cf39bbfa1e20e {
+  width: auto !important;
+  margin-inline: 0 !important;
+  margin-block: 0 0 40px !important;
+  padding: 0 !important;
+  background: none !important;
+  color: #FAFAF8 !important;
+
+  font-family: "Archivo", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: clamp(28px, 3.2vw, 60px) !important;
+  letter-spacing: -0.04em !important;
+  line-height: 1 !important;
+  text-align: center !important; /* sits above the stat grid, not a text column */
+  text-wrap: balance !important;
+}
+
+
+/*********************************************/
+/* 01. FONTS */
+/*********************************************/
+
+/* No @import here on purpose. Every font this file uses is loaded by a <link>
+   in Super > Settings > Code > Head, which is both faster and actually works:
+   the @import that used to live here never took effect. Checked on the live
+   site — no CSSImportRule for Anton existed in any stylesheet, so Super does
+   not preserve it (an @import has to be the first statement in a sheet, and
+   Super wraps this file).
+
+   That is why `h1.notion-heading` has been asking for Anton and silently
+   falling back: measured `Anton, serif` and plain `serif` at exactly the same
+   613px, and Anton was absent from document.fonts.
+
+   The Head must therefore carry:
+     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500..700&display=swap" rel="stylesheet">
+   alongside the existing Allerta Stencil / Manrope / Inter links.
+
+   Only ONE font is needed from this family: Archivo, variable 500-700.
+   Archivo Black was used briefly for the display h2 and has been dropped — it
+   ships a single black weight, so `font-weight` cannot touch it and the
+   heading could not be lightened. Nothing in this file references it any more,
+   so the Head link does not need it.
+
+   Anton is gone from this file entirely. It was declared on h1 for a long time
+   and never once rendered — the @import never survived, so every h1 fell back
+   to the GENERIC `sans-serif`, which resolves differently per platform
+   (Helvetica on macOS, Arial on Windows). */
+
+
+/*********************************************/
+/* 02. DESIGN TOKENS */
+/*********************************************/
+
+/* Two kinds of custom property live here:
+
+   (a) Super's own tokens, which its stylesheet already consumes. Overriding
+       these is the cleanest way to restyle a block — no selector, no
+       !important arms race. Verified to exist in Super's runtime CSS:
+         --callout-border-radii   (NOT --callout-border-radius — the old name
+                                   in this file was a typo and never applied)
+         --callout-padding
+         --callout-border
+         --callout-shadow
+         --callout-icon-display
+         --column-spacing
+         --color-bg-*  /  --color-pill-*  /  --color-border-*
+
+   (b) This site's own tokens, prefixed nothing in particular but only read by
+       the rules below.
+
+   !important on a custom property declaration is kept only where we need to
+   beat Super's own :root block; it is dropped on site-local tokens, where it
+   just prevents per-block overrides. */
+
+:root {
+  /* --- Super tokens ------------------------------------------------------ */
+  --callout-border-radii: 20px !important;
+  --callout-padding: 20px !important;
+  --callout-icon-display: none !important; /* replaces hiding .notion-callout__icon by hand */
+  --column-spacing: 20px !important;
+
+  --color-bg-green: rgb(221, 237, 226) !important;
+  --color-bg-blue: rgb(221, 235, 255) !important;
+  --color-border-default: rgba(32, 32, 32, 0.2) !important;
+
+  /* --- Brand ------------------------------------------------------------- */
+  /* From the Encapsulate brand kit: Colors/green_99CC66.png and
+     Colors/black_000000.png. The same green the design project uses for its
+     "Book a call" button. */
+  /* The kit colours, plus two tints derived from the green. --brand-green is
+     the real kit value; the tints are mixes toward white:
+       --brand-green       #99CC66  Colors/green_99CC66.png
+       --brand-green-tint  #BDDE9C  +35% white, black on it 14.1:1
+       --brand-green-pale  #DCEEC7  +65% white, the palest step
+       --brand-ink         #000000  Colors/black_000000.png */
+  --brand-green: #99CC66;
+  --brand-green-tint: #BDDE9C;
+  --brand-green-pale: #DCEEC7;
+  --brand-ink: #000000;
+
+  /* --- Site tokens ------------------------------------------------------- */
+  /* The black border + hard offset shadow treatment, in one place. */
+  --hard-border: 1px solid black;
+  --hard-shadow: 8px 8px 0px rgba(0, 0, 0, 0.4);
+  --hard-shadow-lg: 12px 12px 0px rgba(0, 0, 0, 0.4);
+  --hover-lift: -5px;
+
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Explicit property list rather than `all`: `all` makes the browser watch
+     every animatable property on every one of these elements. */
+  --transition:
+    transform 0.3s var(--ease),
+    box-shadow 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    background-color 0.3s var(--ease);
+
+  --radius-card: 20px;
+  --radius-nav: 20px;
+  --radius-sm: 4px;
+
+  /* Thin white strip pinned to the top of the viewport */
+  --top-strip-height: 6px;
+
+  /* Slide-out menu */
+  --nav-icon-size: 48px;
+  --nav-icon-gutter: 70px;
+  --nav-close-width: 60px;
+  --nav-icon-fade: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
+
+
+/*********************************************/
+/* 03. GENERAL PAGE LAYOUT */
+/*********************************************/
+
+/* Hide the Notion page header (icon, cover, title) for a cleaner look. */
+.notion-header {
+  display: none !important;
+}
+
+/* Zero top margin so a page cover image isn't cropped.
+   (The old file set 10px here and 0px further down; only 0px ever applied.) */
+.super-content {
+  margin-top: 0 !important;
+}
+
+/* Horizontal scrolling shall not occur. Also absorbs the 100vw overshoot from
+   the full-bleed footer in section 14 when a classic scrollbar is present. */
+body {
+  overflow-x: hidden;
+}
+
+/* Thin white strip across the top of the viewport. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto 0; /* top / right / bottom / left */
+  height: var(--top-strip-height); /* was 1% — a fixed value is predictable */
+  background-color: white;
+  z-index: 10;
+  pointer-events: none; /* never let the strip swallow a click on the navbar */
+}
+
+
+/*********************************************/
+/* 04. NAVIGATION BAR */
+/*********************************************/
+
+/* Floating pill navbar: transparent, outlined, slightly inset from the edges.
+   The nav also carries a style modifier from Super (currently `.simple`). */
+nav.super-navbar {
+  /* was width: 99.4% — a magic number that drifts with viewport width.
+     An explicit inline margin says the same thing and stays put. */
+  margin: 10px auto 0;
+  width: auto;
+  margin-inline: 8px;
+
+  background-color: transparent !important;
+  border: 1px solid var(--color-border-default) !important;
+  border-radius: var(--radius-nav) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+.super-navbar__content {
+  border-radius: var(--radius-nav) !important;
+}
+
+.super-navbar__item {
+  height: 38px !important;
+  transition: background-color 0.2s var(--ease) !important;
+}
+
+.super-navbar__item:hover {
+  background-color: #f4f4f4;
+  border-radius: var(--radius-nav) !important;
+}
+
+/* Dropdown group triggers — "Staking", "Services", "About Us" — with a caret.
+   These are `.super-navbar__list`, not buttons. */
+nav.super-navbar .super-navbar__list {
+  position: relative;
+  display: flex;
+  padding-right: 30px; /* room for the caret */
+  font-size: 16px;
+}
+
+nav.super-navbar .super-navbar__list::before {
+  content: "\25BE"; /* down-pointing triangle */
+  position: absolute;
+  right: 10px;
+}
+
+/* REMOVED — verified dead against the live site on 2026-09-12:
+     .super-navbar__actions.hide
+       Super no longer puts a `.hide` class on the actions row.
+     nav.super-navbar .super-navbar__item-list > li > button::before
+     nav.super-navbar .super-navbar__item-list > li > button:hover::before
+       There are no <button> elements in the item list any more; the group
+       triggers are .super-navbar__list, handled above. */
+
+/* Below 1220px the inline links collapse into the hamburger. */
+@media (max-width: 1220px) {
+  nav.super-navbar .super-navbar__item-list {
+    display: none;
+  }
+
+  nav.super-navbar .super-navbar__button {
+    display: flex;
+  }
+}
+
+
+/*********************************************/
+/* 05. NAVBAR MENU (SLIDE-OUT) */
+/*********************************************/
+
+/* REBUILT 2026-09-12. Super replaced the slide-out menu wholesale; every
+   selector this section used to rely on now matches nothing:
+
+     was                                    now
+     .super-navbar__menu .super-navbar__item
+                                            .super-navigation-menu__item
+     (icon/caption by :nth-child(2..9))      selected by href
+     .super-navbar__menu-close               .super-navbar__button.super-navbar__menu-open
+
+   The live markup for one entry is:
+
+     a.notion-link.super-navigation-menu__item[href]   flex row, gap 8px
+       svg                                             Super's own 16px glyph
+       div.super-navigation-menu__item-content
+         p.super-navigation-menu__item-title
+
+   Collapsible groups are .super-navigation-menu__list with .open / .closed and
+   a .super-navigation-menu__list-header. The open panel is
+   .super-navbar__menu-wrapper, which cycles .enter / .enter-active /
+   .enter-done / .exit / .exit-active.
+
+   Entries are now selected by href instead of position, so adding, removing or
+   reordering a link in Super no longer shifts every icon onto the wrong row.
+   An entry with no block below simply keeps Super's default look: the ::before
+   resolves to `content: none`, the gutter collapses to Super's own 8px, and
+   Super's glyph stays visible. */
+
+/* --- Which entries carry custom artwork ----------------------------------
+   Add an href here and give it a --nav-icon / --nav-desc block below.
+   Exact matches, so [href="/services"] does not also catch
+   /services/celestia. */
+.super-navbar__menu .super-navigation-menu__item:is(
+    [href="/networks"],
+    [href="/services"],
+    [href="/snapshots"],
+    [href="/governance-record"],
+    [href="/rewards-calculator"],
+    [href="/blog"],
+    [href="/team"],
+    [href="/contact-us"]
+  ) {
+  --nav-icon-guard: "";
+  --nav-gutter: var(--nav-icon-gutter);
+  --nav-svg-display: none;
+  min-height: var(--nav-icon-size); /* 36px default is too short for 48px art */
+}
+
+/* --- Shared layout ------------------------------------------------------- */
+.super-navbar__menu .super-navigation-menu__item {
+  position: relative; /* Super ships `static`; the artwork is absolute */
+  padding-left: var(--nav-gutter, 8px);
+  font-family: "Manrope", sans-serif;
+  font-weight: bold;
+}
+
+/* Super's 16px glyph, hidden only on entries that supply their own artwork. */
+.super-navbar__menu .super-navigation-menu__item > svg {
+  display: var(--nav-svg-display, block);
+}
+
+.super-navbar__menu .super-navigation-menu__item::before {
+  content: var(--nav-icon-guard, none);
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--nav-icon-size);
+  height: var(--nav-icon-size);
+  background-image: var(--nav-icon-fade), var(--nav-icon);
+  background-size: cover;
+}
+
+/* On hover the white fade is dropped so the artwork reads at full contrast. */
+.super-navbar__menu .super-navigation-menu__item:hover::before {
+  background-image: var(--nav-icon);
+}
+
+/* The caption goes under the label, inside the item's own content column —
+   the entry itself is a flex row, so an ::after there would land beside the
+   text rather than beneath it. --nav-desc is set on the <a> and inherits. */
+.super-navbar__menu .super-navigation-menu__item-title {
+  margin: 0;
+}
+
+.super-navbar__menu .super-navigation-menu__item-content::after {
+  content: var(--nav-desc, none);
+  display: block;
+  margin-top: 2px;
+  font-family: "Manrope", sans-serif;
+  font-size: 0.9em;
+  font-weight: normal;
+  color: #666;
+}
+
+/* --- One block per entry ------------------------------------------------- */
+
+.super-navbar__menu .super-navigation-menu__item[href="/networks"] {
+  --nav-icon: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/navbar/networks.png");
+  --nav-desc: "Choose a network and start earning rewards";
+}
+
+.super-navbar__menu .super-navigation-menu__item[href="/services"] {
+  --nav-icon: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/navbar/services1.png");
+  --nav-desc: "View our community services";
+}
+
+.super-navbar__menu .super-navigation-menu__item[href="/snapshots"] {
+  --nav-icon: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/navbar/snapshots.png");
+  --nav-desc: "Sync in hours with our snapshots";
+}
+
+.super-navbar__menu .super-navigation-menu__item[href="/governance-record"] {
+  --nav-icon: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/navbar/governance.png");
+  --nav-desc: "View our voting principles and history";
+}
+
+.super-navbar__menu .super-navigation-menu__item[href="/rewards-calculator"] {
+  --nav-icon: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/navbar/calculator.png");
+  --nav-desc: "Calculate staking rewards";
+}
+
+.super-navbar__menu .super-navigation-menu__item[href="/blog"] {
+  --nav-icon: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/navbar/blog.png");
+  --nav-desc: "Read things we are interested in";
+}
+
+.super-navbar__menu .super-navigation-menu__item[href="/team"] {
+  --nav-icon: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/navbar/team.png");
+  --nav-desc: "Curious to know us ?";
+}
+
+.super-navbar__menu .super-navigation-menu__item[href="/contact-us"] {
+  --nav-icon: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/navbar/contact.png");
+  --nav-desc: "Feel free to reach out to us";
+}
+
+/* Entries with no artwork yet: /eigen-layer, /services/celestia, /investments,
+   /guides, /brand, /security. They render with Super's default glyph. */
+
+/* --- Menu close tab: REMOVED ---------------------------------------------
+   The old `.super-navbar__menu-close` rules styled a 60px full-height strip
+   down the right edge of the viewport. That element no longer exists, so the
+   rules had been dead for a long time and the site has been running without
+   the strip.
+
+   Re-pointing them at the live close control (.super-navbar__button
+   .super-navbar__menu-open) brought the strip back — a 60px x ~930px grey bar
+   pinned to the right edge, which is wrong for the menu Super ships now: a
+   compact 280x291 dropdown in the top-right corner, not a full-height panel.
+
+   So the strip is gone rather than resurrected. Closing the menu works the way
+   Super intends: click the hamburger again, or click outside the panel. If you
+   do want a custom close affordance, style
+   `.super-navbar__button.super-navbar__menu-open` — but size it to the
+   dropdown, not the viewport. */
+
+
+/*********************************************/
+/* 06. HEADINGS */
+/*********************************************/
+
+/* CHANGED: was "Anton", which never loaded — see section 01. Archivo Black is
+   the site's display face, shared with the "You Earn Rewards" h2 and matching
+   the Arial Black used by `h1 strong` below. */
+/* WHY EVERY HEADING LOOKED SO BOLD — two causes, stacked.
+
+   1. Super's theme sets `font-weight: 800` on headings (--heading-weight).
+      That was already true before any change here.
+   2. Archivo Black was briefly used for h1. It ships ONE weight, a black, so
+      `font-weight` has nothing to select and the 800 could not be dialled
+      back. Every section heading shouted at display strength.
+
+   Fixed by moving h1 to Archivo, the variable-weight member of the same
+   family, and setting the weight explicitly to 600. The typographic voice
+   stays (it still pairs with the Archivo Black h2 and the Arial Black hero),
+   but section headings read as headings again rather than billboards.
+
+   Verified live across all eleven homepage h1s: weight 800 -> 600, and no
+   heading changed height — except "Services and Tools", which came back from
+   153px to 78px, because the lighter, narrower face no longer overflows its
+   640px column. Raise the weight toward 700 if the headings feel too soft. */
+h1.notion-heading {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  font-family: "Archivo", sans-serif !important;
+  font-weight: 600 !important; /* overrides Super's --heading-weight: 800 */
+  font-size: calc(48px + 1.4vw) !important;
+  --h1-line-height: 1 !important;
+
+  /* Kept as insurance: if a heading in a narrow column ever does wrap, this
+     splits it into two even lines instead of stranding one orphan word. */
+  text-wrap: balance;
+}
+
+@media (max-width: 1370px) {
+  h1.notion-heading {
+    font-size: calc(32px + 1vw) !important;
+  }
+}
+
+/* "You Earn Rewards While We Secure Networks" — the homepage h2 sitting on the
+   highlight.png graphic, the only element on the page rendering in Allerta
+   Stencil.
+
+   Anton was tried here and read far too dense. Measured at the live 54.88px,
+   same string: Anton 985px wide in an 83px line box, against Allerta Stencil's
+   1261px in 71px — the same words crammed into 78% of the width and a TALLER
+   line. The container is 1728px, so nothing forced that; it was purely the
+   face. Widths of the other candidates: Bebas Neue 819, Barlow Condensed 891,
+   Oswald 969, Space Grotesk 1176, Archivo 800 1235, Archivo Black 1377.
+
+   Archivo Black is the pick. It is the most open of the set, closest to the
+   Allerta Stencil width already in place so the block's visual weight barely
+   shifts, and it sits in a shorter 60px line box. It also matches the hero:
+   `h1.notion-heading strong` is set in Arial Black, and Archivo Black is
+   effectively its web-font counterpart, so the two display treatments agree.
+
+   letter-spacing is reset because the heading inherits -0.5px, which was
+   tightening an already cramped face. Verified live: one line, box 1728x67.
+
+   Scoped to the block, not `h2.notion-heading` — that would repoint every
+   second-level heading on the site, and only this one is display type.
+   Needs the Archivo Black <link> in Head; see section 01. */
+/* INK BAND — the same treatment as the Mainnet/Testnet stats on /networks
+   (variant 5e, "ink ground"): a full-bleed dark field with paper-white type,
+   used to break the page between two white sections.
+
+   FULL-BLEED. This h2 is a direct child of the article and sits 1728px wide
+   inside a 1920px parent, so `width: 100vw` with
+   `margin-inline: calc(50% - 50vw)` pulls it out to the screen edges — the
+   percentage resolves against the 1728px content box, giving -96px a side.
+   Same technique the footer uses. `overflow-x: hidden` on body absorbs the
+   scrollbar overshoot.
+
+   The horizontal padding is the mirror of that: `calc(50vw - 864px)` is the
+   gutter back to the content column, so the type never runs closer to the
+   screen edge than the rest of the page. `max()` keeps a 48px floor on
+   narrow viewports.
+
+   The page CSS paints highlight.png behind this heading; that is switched off
+   here, since a decorative wash and an ink ground fight each other.
+
+   SLIMMER. The height is padding, not type — so the band is cut from roughly
+   193px to 128px by halving the vertical padding (60/64 -> 32/36) and pulling
+   the line-height to a flat 1, while the figure only drops 64px -> 60px. Tight
+   tracking at -0.04em keeps it feeling large in less space; loose tracking is
+   what makes big type read as dated.
+
+   LEFT-ALIGNED. Changed from centred, which is the single biggest lever here:
+   a full-bleed band with the type landing on the same left edge as every other
+   section reads as editorial rather than as a banner, and it matches how 5e
+   sets its own content. Revert with `text-align: center` if you disagree —
+   it is one line. */
+#block-eb15a09351d343568d0cf39bbfa1e20e {
+  width: 100vw !important;
+  margin-inline: calc(50% - 50vw) !important;
+  margin-block: 40px !important;
+  padding: 32px max(48px, calc(50vw - 864px)) 36px !important;
+
+  background-color: #3A3D38 !important; /* ink ground */
+  background-image: none !important; /* was highlight.png */
+  color: #FAFAF8 !important; /* paper */
+
+  font-family: "Archivo", sans-serif !important;
+  font-weight: 600 !important; /* Super's theme sets 800; Archivo Black ignored it */
+  font-size: clamp(28px, 3.2vw, 60px) !important;
+  letter-spacing: -0.04em !important;
+  line-height: 1 !important;
+  text-align: left !important; /* see note above */
+  text-wrap: balance !important;
+}
+
+/* A heading nested two columns deep is a sub-heading; don't let it shout. */
+.notion-column .notion-column h1.notion-heading {
+  font-size: 48px !important;
+}
+
+/* Bold runs inside an H1 become the outlined display treatment.
+   Arial Black ships a single weight, so font-weight: 200 is inert on most
+   systems — it only does anything for the sans-serif fallback. */
+h1.notion-heading strong {
+  font-family: "Arial Black", sans-serif;
+  font-size: calc(40px + 3.5vw);
+  font-weight: 200;
+
+  /* Fall back to black: an unresolved var() invalidates the whole declaration
+     and the fill would inherit instead. --color-bg-black is not one of
+     Super's tokens, so the fallback is what actually renders. */
+  color: var(--color-bg-black, #000);
+
+  /* paint-order puts the stroke behind the fill. Without it -webkit-text-stroke
+     is centred on the glyph edge and painted over the fill, so half the stroke
+     width eats into the letterform — which is why the letters looked thin and
+     gnawed and the counters closed up. */
+  paint-order: stroke fill;
+
+  /* In em, so the outline scales with the heading instead of looking heavy on
+     a phone and thin on a 1080p hero. 0.045em is ~4.8px at the 107px hero and
+     ~2.4px where the heading is half that size; the old flat 3px was ~0.028em
+     at the hero. Raise this number to thicken the outline further. */
+  -webkit-text-stroke: 0.045em white;
+
+  text-shadow: 3px 3px 0px rgb(0, 0, 0);
+}
+
+/* "Others Trust," is styled by the HOMEPAGE's own page-level CSS, not by this
+   file:
+
+     #block-803c66b0c67043d691a03f4f9e8bdc15 strong {
+       -webkit-text-stroke: 1px black !important;
+       font-size: calc(14px + 2vw) !important;
+     }
+
+   An ID selector with !important outranks `h1.notion-heading strong`, so the
+   rule above cannot reach it. This override matches that specificity and wins
+   only because Super injects the site-level stylesheet AFTER the page-level
+   one (verified on the live site: page CSS is sheet 13, this file is sheet 14).
+
+   The stroke was already pure black, so "darker" here means heavier — a
+   thicker black outline against the pale green fill. 0.04em is ~2.1px at that
+   heading's 52px, up from a flat 1px.
+
+   CLEANER ALTERNATIVE: change the 1px in the page-level rule itself, in
+   Super > the homepage > Code. Then this block can be deleted. It is only here
+   because the override has to out-order a rule this file does not own. */
+#block-803c66b0c67043d691a03f4f9e8bdc15 strong {
+  color: var(--brand-green-pale) !important; /* was #D9ECDA, an off-palette green */
+  -webkit-text-stroke: 0.04em black !important;
+  text-shadow: 2px 2px 0px rgb(0, 0, 0) !important;
+}
+
+/* "We Validate!" — the page CSS fills this with --color-bg-blue, which is one
+   of Notion's palette colours and the only blue in the hero. Swapped for the
+   kit green at full strength, so the two lines read as one brand gradient:
+   pale green on the setup, the real colour on the payoff. Both keep their
+   existing stroke and shadow — legibility here comes from the outline, not the
+   fill, so the swap is safe. */
+/* "We Validate!" — solid ink, flat.
+
+   The stroke and shadow are zeroed deliberately. This inherits
+   `-webkit-text-stroke: 0.045em white` and a 3px black shadow from
+   `h1.notion-heading strong`, both of which existed to separate a PALE fill
+   from its drop shadow. On a black fill they work against it: a white outline
+   eats into the letterform on a white page, and a black shadow behind black
+   letters just smears the edges into a heavier blob. Flat is the right
+   treatment once the fill is ink. */
+#block-13d3d381ac0144b4869744e014c2b5f7 strong {
+  color: var(--brand-ink) !important;
+  -webkit-text-stroke: 0 !important;
+  text-shadow: none !important;
+}
+
+/* The stroke and shadow are drawn outside the text box, so a heading sitting
+   flush left or hard against the top of its block gets its outline clipped.
+   The padding gives it somewhere to go; the negative margin keeps the heading
+   optically aligned with the rest of the column. */
+h1.notion-heading:has(strong) {
+  display: inline-block;
+  padding: 6px 8px;
+  margin-left: -8px;
+}
+
+/* Underlining an H1 in Notion draws rules above and below it instead. */
+h1.notion-heading u {
+  text-decoration: none;
+}
+
+h1.notion-heading:has(u)::before,
+h1.notion-heading:has(u)::after {
+  content: "";
+  display: block;
+  height: 2px;
+  background: black;
+}
+
+
+/*********************************************/
+/* 07. CALLOUTS AS BUTTONS */
+/*********************************************/
+
+/* A callout containing a link becomes one fully clickable button: the callout
+   is the frame, and the link is stretched to fill it so the whole box is the
+   hit target. The icon is hidden globally via --callout-icon-display in
+   section 02. */
+.notion-callout {
+  position: relative !important;
+}
+
+/* BRAND GREEN. These were pink (--color-bg-pink, #F4DFEB), which is one of
+   Notion's own palette colours rather than anything of yours. Buttons now use
+   the brand green from the kit.
+
+   Both layers have to be set: the callout is the frame and the stretched link
+   sits 2px inside it, so colouring only one leaves a pink hairline around the
+   green.
+
+   Scope note: this rule is `:has(.notion-link)`, so it only catches callouts
+   that ARE buttons. The stat callouts on the homepage — "Uptime 99.96 %",
+   "Total Customers", "Staked Assets Under Management" — carry Notion's
+   bg-blue-light / bg-green-light / bg-orange-light / bg-yellow-light and hold
+   content, not actions. They keep their own colours. */
+.notion-callout:has(.notion-link) {
+  min-height: 45px !important;
+  border-radius: var(--radius-sm) !important;
+  border: var(--hard-border) !important;
+  box-shadow: var(--hard-shadow) !important;
+  background-color: var(--brand-green-tint) !important;
+  transition: var(--transition) !important;
+}
+
+/* Pressed-in look: the shadow collapses and the green deepens. */
+.notion-callout:has(.notion-link):hover {
+  box-shadow: none !important;
+  background-color: var(--brand-green) !important;
+}
+
+.notion-callout .notion-callout__content .notion-semantic-string .notion-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute !important;
+  inset: 2px !important; /* sits just inside the 1px border */
+  /* Flat colour only — no gradient. Type is left exactly as Super sets it
+     (Inter 400, 16px): a bolder weight was tried to lift the black off the
+     green and rejected; the lighter green does that job instead. */
+  background-color: var(--brand-green-tint) !important;
+  text-decoration: none;
+  transition: background-color 0.3s var(--ease) !important;
+}
+
+.notion-callout:has(.notion-link):hover
+  .notion-callout__content
+  .notion-semantic-string
+  .notion-link {
+  background-color: var(--brand-green) !important;
+}
+
+
+/*********************************************/
+/* 08. DATABASES AND PROPERTIES */
+/*********************************************/
+
+/* Drop the database title and the title-property icon. */
+.notion-collection__header,
+.notion-property__title__icon-wrapper {
+  display: none !important;
+}
+
+.notion-collection-gallery {
+  padding-bottom: 10px !important;
+}
+
+
+/*********************************************/
+/* 09. COLLECTION CARDS */
+/*********************************************/
+
+/* SCOPING NOTE — read before touching anything here.
+   `.notion-collection-card` is shared by every gallery on the site. The
+   homepage alone has seven, and their covers are nothing alike:
+
+     block-bd1e4d48…  4 cards   320x200   "Why Stake With Encapsulate"
+     block-f853251f…  5 cards   250x250   Testimonials (square avatars)
+     block-d07ab52b…  35 cards  189x128   Networks
+     block-3b970793…  4 cards   no cover  Governance steps
+     block-6a8e93a3…  3 cards   334x200   Team (object-fit: contain)
+     block-67d891d0…  40 cards  1140x200  Blog banners
+     block-5b2c372a…  4 cards   114x128   Contact (object-fit: contain)
+
+   So a global `width: 100%` + `object-fit: cover` on the cover is destructive:
+   it stretches the square testimonial avatars over their quote text and pulls
+   the team portraits off-centre, because those covers rely on `contain` and on
+   Super's own sizing. Anything that assumes a particular cover shape belongs
+   in a per-collection block, not up here. */
+
+/* --- Global: applies to every gallery ------------------------------------ */
+
+/* Cards are transparent by default, which lets the page background image show
+   through — so an explicit background is required, not cosmetic. */
+.notion-collection-card {
+  padding: 8px;
+  border-radius: var(--radius-card) !important;
+  background-color: var(--color-bg-default) !important;
+  transition: var(--transition) !important;
+}
+
+.notion-collection-card:hover {
+  transform: translateY(var(--hover-lift));
+  border: var(--hard-border) !important;
+  box-shadow: var(--hard-shadow-lg) !important;
+  background-color: var(--color-bg-default) !important;
+  cursor: default !important;
+}
+
+/* THE DOUBLE BORDER, everywhere.
+   This rule used to put a 1px border on the cover. Combined with Super's own
+   1px border on the card, that drew two nested frames — a box inside a box.
+   Measured on /team before the fix: cover border 1px, and because the cover
+   also carries `margin: 20px` from that page's own CSS, the image sat at
+   L:29 / R:-11 — pushed off centre and overflowing the card's right edge.
+
+   `border: 0` removes the inner frame. `margin-inline: auto` overrides only
+   the horizontal half of that 20px margin, so the image centres (L:9 / R:9)
+   while keeping its 20px of vertical breathing room. `max-width: 100%` stops
+   any cover from spilling past its card again.
+
+   Verified against every gallery: geometry is unchanged everywhere the cover
+   was already full-bleed (Why Stake, Networks, Team quotes, Blog) — only the
+   invisible 3px transparent border goes to 0 — and the contact-form icon does
+   not move. */
+.notion-collection-card__cover {
+  border: 0 !important;
+  margin-inline: auto !important;
+  max-width: 100% !important;
+  border-radius: var(--radius-card) !important;
+  transition: var(--transition) !important;
+}
+
+/* Testimonials are deliberately left exactly as they were: that gallery
+   positions its 1140x250 cover itself (it sits at L:-9 / R:11 by design), so
+   the centring above must not reach it. Re-asserting the three properties
+   restores its original values. Verified byte-identical before/after. */
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card__cover {
+  border: 0 !important;
+  margin-inline: 0 !important;
+  max-width: none !important;
+}
+
+/* `.no-click` is Super's own class for a card whose link is disabled — it
+   should not pretend to be interactive.
+   CHANGED: was `.notion-collection-card.gallery.no-click`; Super applies
+   `.no-click` to the card regardless of view, so `.gallery` only narrowed it
+   for no reason. */
+.notion-collection-card.no-click:hover {
+  transform: none !important;
+  border: var(--hard-border) !important;
+  box-shadow: none !important;
+  cursor: default !important;
+}
+
+/* TEMP: make cards genuinely unclickable.
+   CHANGED: Super now wraps the card in `a.notion-collection-card__anchor`
+   rather than a bare descendant <a>, so the old `.gallery a` selector would
+   no longer match. */
+/*.notion-collection-card__anchor {*/
+/*  pointer-events: none !important;*/
+/*}*/
+
+
+/* --- "Why Stake With Encapsulate" only ------------------------------------
+   THE DOUBLE BORDER: these cards drew two nested frames — Super's own 1px on
+   the card, plus the 1px this file puts on .notion-collection-card__cover
+   above. With 8px of card padding between them, a box inside a box.
+
+   (That is not fallout from the class rename — .notion-collection-card__cover
+   is still a current Super class. The cover border has been in this file all
+   along; the inner frame is just what it draws.)
+
+   Fixed here by dropping the card's padding and the cover's own frame, so the
+   image runs edge to edge and the card's single border is the only one, with
+   overflow: hidden rounding the corners. Scoped to this one collection so the
+   testimonial and team galleries keep their own cover treatment.
+
+   The id is the Notion block. If the block is ever deleted and re-added the id
+   changes; the collection class on the wrapper
+   (.collection-59b828ace5fa4244abdadf99687f52b2) is the alternative hook. */
+
+/* LAYOUT — four equal cards in one row.
+
+   Replaces an earlier bento (one card spanning 2x2): with only four cards the
+   large tile dominated the section instead of leading it.
+
+   Equal cards also fix the original problem, which was Super's default gallery
+   flowing 3 + 1 and stranding the fourth card alone on a second row.
+
+   The cover carries a fixed `aspect-ratio` rather than the grid carrying a
+   fixed row height. That keeps the image at the same 16:10 crop no matter how
+   wide the column gets, so one rule covers every breakpoint instead of a
+   hand-tuned row height per breakpoint. Measured at 4, 2 and 1 columns: the
+   ratio holds at 1.60 in all three.
+
+   `flex: 0 0 auto` on the cover is what prevents runaway growth — its height
+   comes from the aspect-ratio, not from the image's intrinsic size. An earlier
+   attempt using `flex: 1` with auto rows produced 1200px-tall cards.
+
+   The content takes `flex: 1 1 auto` so it absorbs any leftover height, which
+   keeps every card in a row the same height with the text top-aligned. */
+
+#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-gallery {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  grid-template-rows: none !important;
+  grid-auto-rows: auto !important;
+  gap: 20px !important;
+  padding-bottom: 0 !important;
+}
+
+@media (max-width: 1100px) {
+  #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-gallery {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0 !important; /* cover goes edge to edge; the text below is padded */
+  border: 1px solid var(--color-border-default) !important;
+  overflow: hidden !important; /* clips the cover to the card's rounded corners */
+}
+
+/* The cover carries the aspect-ratio itself, so the artwork sits centred in a
+   16:10 box with `object-fit: cover` doing the crop.
+
+   REVERTED: this briefly promoted the wrapping `span` (which Super ships as
+   `display: contents`) into a crop frame, then scaled the image past 100% with
+   a per-card `transform-origin` so the artwork bled off the top and sides.
+   That treatment is gone — no frame, no zoom, no `--card-img-zoom` /
+   `--card-img-focus` tokens. The images are centred and whole again.
+
+   `flex: 0 0 auto` is what keeps the height honest: it comes from the
+   aspect-ratio, not from the image's intrinsic size. An earlier version using
+   `flex: 1` with auto grid rows produced 1200px-tall cards. */
+#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card__cover {
+  display: block;
+  flex: 0 0 auto !important; /* height from aspect-ratio, not the image */
+  aspect-ratio: 16 / 10 !important; /* same crop at every column count */
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-width: none !important;
+  margin: 0 !important;
+  border: 0 !important; /* the card's border is the only frame */
+  border-radius: 0 !important; /* the card's overflow does the rounding */
+  object-fit: cover;
+}
+
+/* Room to breathe and a clear title/description hierarchy — Super's 9.6px box
+   left the text crowded into the bottom-left corner. */
+#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card__content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto; /* absorbs leftover height so cards in a row match */
+  gap: 6px;
+  padding: 14px 16px 16px !important;
+}
+
+#block-bd1e4d485a0d424394add746d8e3cd35 .notion-property__title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+#block-bd1e4d485a0d424394add746d8e3cd35 .notion-property__text {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(17, 17, 17, 0.66); /* muted, so the title leads */
+}
+
+/* These four cards are all .no-click, so they stay put; the border still
+   darkens to signal the hover. */
+#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card:hover {
+  border-color: rgba(32, 32, 32, 0.55) !important;
+}
+
+
+/*********************************************/
+/* 10. PILLS */
+/*********************************************/
+
+.notion-pill {
+  padding: 8px 14px !important;
+  border: var(--hard-border);
+  border-radius: 18px !important;
+}
+
+/* Wrap pills onto the next line instead of cropping them. */
+.notion-property {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px; /* keeps spacing on the wrapped rows — remove if too loose */
+}
+
+
+/*********************************************/
+/* 11. COLUMN DIVIDERS */
+/*********************************************/
+
+/* `visibility: hidden` keeps the divider's height, preserving column rhythm. */
+.notion-column .notion-divider {
+  visibility: hidden;
+}
+
+/* Once the columns stack, that reserved space is just a gap — remove it. */
+@media (max-width: 1024px) {
+  .notion-column .notion-divider {
+    display: none !important;
+  }
+}
+
+
+/*********************************************/
+/* 12. CODE BLOCKS */
+/*********************************************/
+
+/* The caption is lifted onto the top border of the block as a pill, so the
+   wrapper is positioned and padded to make room for it. */
+.notion-code {
+  position: relative;
+  padding-top: 10px;
+}
+
+.notion-code > pre {
+  background-color: white !important;
+  border: var(--hard-border);
+  overflow-x: auto !important; /* was hidden — long commands were unreachable */
+}
+
+.notion-code code,
+.notion-code pre,
+.language-bash {
+  font-family: monospace;
+  background-color: white !important;
+}
+
+/* Validator address caption. */
+.notion-code .notion-caption {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  padding: 2px 8px;
+  font-size: 14px;
+  color: black;
+  background-color: var(--color-bg-blue);
+  border: var(--hard-border);
+  border-radius: var(--radius-sm);
+}
+
+/* Copy button. Super reveals it on hover of the block. */
+.notion-code__copy-button {
+  padding: 2px;
+  font-size: 14px;
+  border: var(--hard-border);
+  background-color: var(--color-bg-yellow) !important;
+  transform: translate(-4px, -10px);
+}
+
+.notion-icon__copy {
+  padding: 2px;
+  transform: scale(1.4);
+}
+
+
+/*********************************************/
+/* 13. LINK PREVIEWS (BOOKMARKS / EXTERNAL OBJECTS) */
+/*********************************************/
+
+.notion-external-object,
+.notion-bookmark {
+  border-radius: 8px !important;
+  border: 1px solid var(--color-border-default);
+  background-color: transparent !important;
+  transition: var(--transition) !important;
+}
+
+.notion-external-object:hover,
+.notion-bookmark:hover {
+  transform: translateY(var(--hover-lift));
+  border: var(--hard-border);
+  box-shadow: var(--hard-shadow-lg) !important;
+}
+
+.notion-external-object__attributes {
+  background-color: transparent !important;
+}
+
+
+/*********************************************/
+/* 14. BLOG GALLERY (HOMEPAGE) */
+/*********************************************/
+
+/* NEVER PUT A BLANKET `display` RULE ON THESE CARDS. The homepage's own
+   page-level CSS caps the section with
+
+     …gallery.large .notion-collection-card:nth-child(n+4) { display: none }
+     …gallery       .notion-collection-card:nth-child(n+3) { display: none }
+
+   and NEITHER carries !important. A `display: … !important` on
+   `.notion-collection-card` in this file therefore outranks both and unhides
+   all 40 posts on the homepage. That happened once already.
+
+   The single `display` rule below is deliberately narrow — it names
+   `:nth-child(3)` and nothing else, so posts 4+ stay hidden by the page CSS's
+   own rules. Keep it that specific.
+
+   This file can override that page CSS at all because Super injects the
+   site-level stylesheet AFTER the page-level one — verified on the live page:
+   page CSS is sheet 16, this file is sheet 17. Same ordering the "Others
+   Trust," heading override in section 06 relies on. */
+
+/* UNCROPPED COVERS.
+   The post images are 1080x608 (16:9). The cover box was 5.62:1 on the
+   featured card and 2.69:1 on the rest, so `object-fit: cover` was discarding
+   most of every image — and the page CSS was hand-picking which band survived
+   with per-card `object-position` values (50% 40%, 50% 9.11%), a sign the crop
+   was being fought rather than fixed.
+
+   Matching the BOX to the source ratio leaves `cover` nothing to crop, which
+   beats `object-fit: contain` because there are no letterbox bars either. */
+#block-67d891d07f914f4699b81d1765e1f04f .notion-collection-card__cover {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 9 !important; /* = the 1080x608 source */
+  object-fit: cover !important;
+  object-position: 50% 50% !important; /* nothing to bias any more */
+  max-width: none !important;
+}
+
+/* THREE EQUAL COLUMNS, three posts, one row.
+   The page CSS spans the first card across two of three columns as a featured
+   hero. Combined with an uncropped 16:9 cover that made the hero 1124x632,
+   and because grid rows stretch, the card beside it inherited a 759px height
+   with 339px of dead white space under its content.
+
+   Three equal cards fill the row exactly at a far more reasonable size, so the
+   hero span is dropped. Measured after: all three 556x430, covers 538x303 at
+   ratio 1.78 (identical to source), 9px below the content, identical heights,
+   single row. Compare the two-column version: 849x595 cards with 831x467
+   covers — uncropped but twice the height. */
+#block-67d891d07f914f4699b81d1765e1f04f .notion-collection-gallery {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+#block-67d891d07f914f4699b81d1765e1f04f .notion-collection-gallery .notion-collection-card:first-child {
+  grid-column: auto / auto !important; /* drop the featured hero span */
+}
+
+/* Reveal the third post. The page CSS hides :nth-child(n+3), so without this
+   only two show; 4+ remain hidden by that same page rule. Read the guard note
+   at the top of this section before touching it. */
+#block-67d891d07f914f4699b81d1765e1f04f .notion-collection-gallery .notion-collection-card:nth-child(3) {
+  display: block !important;
+}
+
+/* The page CSS already collapses to one column here; this keeps the pair in
+   step with it. */
+@media (max-width: 1024px) {
+  #block-67d891d07f914f4699b81d1765e1f04f .notion-collection-gallery {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+/*********************************************/
+/* 15. NETWORKS GALLERY (HOMEPAGE) */
+/*********************************************/
+
+/* Pastel tile behind each network logo, from the four brand pastels only —
+   green, yellow, blue, orange. No pink.
+
+   REQUIRES TRANSPARENT ARTWORK. A background on an <img> paints behind the
+   image content, so it only shows where the PNG is transparent. The previous
+   artwork had the pastel baked in and was fully opaque (alpha 255 on every one
+   of the 34 that loaded), in six slightly different shades — #FBF3DC, #DDEDE2,
+   #FBEBDC, #DDEAF0, #DDEDEA, #DCEBFE — which no CSS could repaint. These rules
+   assume the images have been re-exported with transparent backgrounds.
+
+   WHY FIXED INDICES RATHER THAN RANDOM. CSS cannot randomise, and rolling the
+   colours in JS on each load would make them change between visits. This is a
+   one-off scramble, kept as a constant: counts are balanced (9/9/9/8 across
+   35 cards) and no card repeats the colour of the one before it OR the one
+   directly above it in the 4-up desktop grid — both verified. It reads as
+   random but never moves.
+
+   The order is positional. Reordering the Notion database reshuffles which
+   network gets which colour; it stays balanced either way. Adding cards past
+   35 leaves them untinted until an index is added below.
+
+   Column count changes with viewport (the grid is auto-fill), so the
+   no-vertical-repeat guarantee holds at the 4-up desktop layout only. */
+
+/* --- Layout: the pastel wells ------------------------------------------- */
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-gallery {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
+  grid-template-rows: none !important;
+  grid-auto-rows: auto !important;
+  gap: 40px 22px !important;
+  padding-bottom: 0 !important;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 12px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+  transform: none !important;
+}
+
+/* Super ships this wrapper as `display: contents`. Promoting it to a block
+   gives the circle a real box — needed for the hover ink layer below, since an
+   <img> cannot carry a pseudo-element. `isolation` keeps the blend contained
+   so it never reaches the page behind. */
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card > span {
+  display: block !important;
+  position: relative !important;
+  isolation: isolate !important;
+  flex: 0 0 auto !important;
+  width: 126px !important;
+  height: 126px !important;
+  border-radius: 999px !important;
+  overflow: hidden !important;
+  border: 1px solid #A5A5A5 !important;
+  transition: border-color 0.22s ease !important;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:hover > span {
+  border-color: #111 !important;
+}
+
+/* The glyph artwork.
+   The design insets a 126px circle by 18px, giving a 90px mark. This drops the
+   padding and scales instead, so the mark reads half again as large:
+
+     126px box (padding 0) x 1.07  ~=  135px  =  1.5x the design's 90px
+
+   (Removing the padding alone already gets 126px, i.e. 1.4x; the 1.07 tops it
+   up to 1.5x. For 2x it would be 1.43.)
+
+   --glyph-scale is the one number to turn. The circle clips anything past its
+   edge, so how far this can go depends on how much empty margin each PNG
+   carries around its mark — which I could not measure, since the new artwork
+   was not live yet. If any marks look cropped, walk it back toward 1.15; if
+   they still look small, push past 1.43. `contain` keeps the aspect ratio
+   whatever the value. */
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card {
+  --glyph-scale: 1.07;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card__cover {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  object-fit: contain !important;
+  transform: scale(var(--glyph-scale)) !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  margin: 0 !important;
+  max-width: none !important;
+  aspect-ratio: auto !important;
+  transition: background-color 0.22s ease !important;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card__content {
+  display: block !important;
+  flex: 0 0 auto !important;
+  padding: 0 !important;
+  border: 0 !important;
+  text-align: center !important;
+}
+
+/* Outfit is the design's face; it is NOT in the site Head, so Archivo catches
+   it. Add it alongside Archivo if you want the exact design type:
+   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet"> */
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-property__title {
+  font-family: "Outfit", "Archivo", system-ui, sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 17px !important;
+  letter-spacing: -0.015em !important;
+  line-height: 1.2 !important;
+  color: #111 !important;
+  opacity: 1 !important;
+  display: block !important;
+  text-align: center !important;
+}
+
+/* The design shows the name only. */
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-property__text,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-property__select {
+  display: none !important;
+}
+
+
+/* --- Pastel tiles --------------------------------------------------------
+   Lightened from the original four by mixing ~35% toward white, so the marks
+   sit on a softer ground:
+
+     green   #DCEEC7 -> #E8F4DB
+     yellow  #F8E8B3 -> #FAF0CE
+     blue    #D2E3F6 -> #E2EDF9
+     orange  #F8DDC6 -> #FAE9DA
+
+   Kept as variables so a further tweak is one line each rather than a hunt
+   through 35 selectors. The originals are above if you want them back. */
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 {
+  --pastel-green: #E8F4DB;
+  --pastel-yellow: #FAF0CE;
+  --pastel-blue: #E2EDF9;
+  --pastel-orange: #FAE9DA;
+}
+
+/* green — 8 cards */
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(2) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(5) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(11) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(13) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(19) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(24) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(27) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(32) .notion-collection-card__cover {
+  background-color: var(--pastel-green) !important;
+}
+
+/* yellow — 9 cards */
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(3) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(8) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(10) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(16) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(18) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(21) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(26) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(29) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(35) .notion-collection-card__cover {
+  background-color: var(--pastel-yellow) !important;
+}
+
+/* blue — 9 cards */
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(4) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(7) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(12) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(15) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(17) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(22) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(28) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(30) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(33) .notion-collection-card__cover {
+  background-color: var(--pastel-blue) !important;
+}
+
+/* orange — 9 cards */
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(1) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(6) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(9) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(14) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(20) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(23) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(25) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(31) .notion-collection-card__cover,
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:nth-child(34) .notion-collection-card__cover {
+  background-color: var(--pastel-orange) !important;
+}
+
+
+
+
+/* --- Hover: white well, brand-coloured glyph -----------------------------
+   The design switches the ink from #111 to the network's own brand colour on
+   hover, over a white well.
+
+   RECOLOURING A RASTER GLYPH IN PURE CSS. The artwork is a transparent PNG, so
+   there is no fill to restyle and `filter` can only approximate a target hue.
+   `mix-blend-mode: lighten` does it exactly instead, because lighten takes the
+   per-channel maximum:
+
+     glyph  max(#000000, brand) = brand   -> the mark takes the brand colour
+     well   max(#FFFFFF, brand) = #FFFFFF -> the background stays white
+
+   which is why the well must flip to WHITE on hover for this to read cleanly —
+   over a pastel the maximum would wash toward the pastel instead. Anti-aliased
+   glyph edges are mid-greys, so they land slightly lighter than the brand
+   colour, which softens the edge rather than fringing it.
+
+   No image URL is involved. That matters here: Super serves these through the
+   Next.js optimizer (/_next/image?url=…&w=&q=), so any hardcoded URL would
+   break the moment the artwork is re-uploaded. A `mask-image` approach would
+   have needed exactly that.
+
+   KEYED BY SLUG, NOT POSITION. Each card links to /networks/<net>/<slug>, so
+   `:has(a[href$="/slug"])` survives reordering the Notion database — unlike the
+   pastel indices above, which are positional by design. A network with no
+   matching rule simply keeps the default ink: --net-brand is unset, the layer
+   resolves to transparent, and lighten does nothing. */
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card > span::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  background: var(--net-brand, transparent) !important;
+  mix-blend-mode: lighten !important;
+  opacity: 0 !important;
+  transition: opacity 0.22s ease !important;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:hover > span::after {
+  opacity: 1 !important;
+}
+
+/* White well on hover — required for the blend above to hold. */
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:hover .notion-collection-card__cover {
+  background-color: #FFFFFF !important;
+}
+
+/* Brand colours, verbatim from Networks Pastel.dc.html. Slugs are the last
+   path segment of each card's link — verify any that do not light up. */
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/avail"]) {
+  --net-brand: #2E9BF5;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/monad"]) {
+  --net-brand: #836EF9;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/sui"]) {
+  --net-brand: #4DA2FF;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/zilliqa"]) {
+  --net-brand: #29A8A3;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/near"]) {
+  --net-brand: #00B383;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/axelar"]) {
+  --net-brand: #1F9BEA;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/althea"]) {
+  --net-brand: #3B5BDB;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/iota"]) {
+  --net-brand: #00A899;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/terra"]) {
+  --net-brand: #FF6F03;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/vara"]) {
+  --net-brand: #00B78C;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/ika"]) {
+  --net-brand: #6D5BFF;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/espresso-systems"]) {
+  --net-brand: #C2622A;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/espresso"]) {
+  --net-brand: #C2622A;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/starknet"]) {
+  --net-brand: #EC796B;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/supra"]) {
+  --net-brand: #DD1438;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/gravity-bridge"]) {
+  --net-brand: #6B4CF6;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/agoric"]) {
+  --net-brand: #BB2D40;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/humans"]) {
+  --net-brand: #3D5AFE;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/ixo"]) {
+  --net-brand: #009FD1;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/gitopia"]) {
+  --net-brand: #F17A2B;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/chain4energy"]) {
+  --net-brand: #1FA85B;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/passage"]) {
+  --net-brand: #7A4EE6;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/sommelier"]) {
+  --net-brand: #E23D65;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/lumera"]) {
+  --net-brand: #2A9D8F;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/mina"]) {
+  --net-brand: #FF603B;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/avalanche"]) {
+  --net-brand: #E84142;
+}
+
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/ethereum"]) {
+  --net-brand: #627EEA;
+}
+
+
+/*********************************************/
+/* 16. FOOTER */
+/*********************************************/
+
+/* Full-bleed across the viewport, escaping the page's max-width.
+   The 100vw / 50vw pair overshoots by the scrollbar width; `overflow-x: hidden`
+   on body (section 03) absorbs it. */
+.super-footer {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw) !important;
+  padding: 10px 10px 180px;
+  border-radius: 0 !important;
+  outline: 2px solid black;
+  background-color: rgba(235, 236, 237, 0.4) !important;
+  background-image: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/foooter.gif");
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+/*********************************************/
+/* 17. REDUCED MOTION */
+/*********************************************/
+
+/* Respect the OS setting: keep the colour and shadow changes, drop the
+   movement. */
+@media (prefers-reduced-motion: reduce) {
+  .notion-collection-card,
+  .notion-collection-card__cover,
+  .notion-callout:has(.notion-link),
+  .notion-external-object,
+  .notion-bookmark,
+  .super-navbar__item {
+    transition: none !important;
+  }
+
+  .notion-collection-card:hover,
+  .notion-external-object:hover,
+  .notion-bookmark:hover {
+    transform: none;
+  }
+}
+/*********************************************/
