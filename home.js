@@ -568,7 +568,7 @@
    Homepage networks — design "Networks Section", 21b "Columns · paper".
 
    The right half of the section becomes five vertical columns of pastel glyph discs, drifting
-   alternately up and down; the left half is the copy (kicker, heading, one sentence, buttons).
+   alternately up and down; the left half is the copy (heading, one sentence, buttons).
 
    BUILT FROM NOTION. The discs are read from the networks gallery that is already on the page
    (#block-d07ab52b…): each card's cover is the glyph, its title the name, its link the target.
