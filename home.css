@@ -2739,18 +2739,17 @@ body {
 
 
 /*********************************************/
-/* 15a. NETWORKS SECTION — ITS OWN GROUND */
+/* 15a. NETWORKS SECTION — RULED OFF, FULL WIDTH */
 /*********************************************/
 
 /* The section sits in a Notion callout so it can be treated as one object.
-   Rather than a callout box it becomes a full-width band on paper 2
-   (#F2F2ED) — the section ground every design file places its sections on
-   ("section ground stays paper 2", Card System). Coming straight after the
-   ink testimonials it reads as its own chapter without adding a colour; the
-   page's off-white (#FFFEFC) resumes below. Same full-bleed construction as
-   the stats band (section 00): 100vw wide, pulled out by the difference, and
-   padded back in to the site gutter. The callout's icon, border, corner,
-   padding and Notion tint go. The column geometry is home-dial.css, 21b. */
+   It stays on the page's own ground — a paper-2 band was tried and read as a
+   colour used nowhere else — and is set apart by full-width hairlines top and
+   bottom instead, in the Card System's ring colour (#D9D9D2). Same full-bleed
+   construction as the stats band (section 00): 100vw wide, pulled out by the
+   difference, padded back in to the site gutter, so the rules run edge to
+   edge. The callout's icon, fill, border, corner and padding go. The column
+   geometry is home-dial.css, 21b. */
 .notion-root #block-3dbe800a51388059870bfa97563baa3f {
   display: block !important;
   width: 100vw !important;
@@ -2758,9 +2757,11 @@ body {
   margin: 0 0 0 calc(50% - 50vw) !important;
   padding: 0 max(48px, calc(50vw - 864px)) !important;
   border: 0 !important;
+  border-top: 1px solid #D9D9D2 !important;
+  border-bottom: 1px solid #D9D9D2 !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-  background: #F2F2ED !important;
+  background: transparent !important;
   overflow: hidden !important; /* the discs' fade stays inside the band */
 }
 

@@ -465,7 +465,7 @@
    list [data-enc-net]; everything here is scoped to that, so without the
    script the gallery (home.css §15) shows as before.
 
-   Section: 600px tall. Left, the copy as Notion has it (heading, sentence,
+   Section: 800px tall (the design's 600px, raised on request). Left, the copy as Notion has it (heading, sentence,
    buttons), vertically centred in a 400px column; the text itself is not
    restyled. Right, 36px away, five columns that share the rest of the width
    equally, 14px apart; the discs are as wide as their column (so they grow
@@ -475,7 +475,7 @@
    discs ever read too large on very wide screens. */
 
 [data-enc-net] {
-  --net-h: 600px;
+  --net-h: 800px; /* design 600px; taller at the user's request (2026-09-15) */
   --net-cols-max: none;
   align-items: stretch !important;
   gap: 36px !important;
