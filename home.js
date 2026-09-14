@@ -685,9 +685,8 @@
    Homepage governance table — design "Governance", 37h.
 
    Each row's chain gets its glyph in a tinted well in front of the name, and the vote pill's
-   "YES" is written "Yes". Glyph and tint come from the homepage networks gallery, the same
-   source and the same tint order as the networks columns, so a chain is the same colour in both
-   sections. A chain with no card in that gallery keeps just its name. Styles: home.css §09
+   "YES" is written "Yes". The glyph comes from the homepage networks gallery; the well's tint
+   cycles the pastels by row (design 37h, revised). A chain with no card in that gallery keeps just its name. Styles: home.css §09
    (governance) and home-dial.css ("GOVERNANCE CHAIN MARKS"). */
 (function () {
   var TABLE = "block-4529386b39be4a9aa44d2dbac56537bd";
@@ -720,10 +719,12 @@
     if (!table) return;
     var chainCol = column(table, "chain"), voteCol = column(table, "vote option");
     var map = null;
+    var rowIndex = -1;
     table.querySelectorAll("tbody tr").forEach(function (tr) {
       // only the rows on show (home.css keeps six): the table holds the whole voting record, and
       // marking every row fetched a glyph image for hundreds of hidden votes
       if (!tr.offsetParent) return;
+      rowIndex++;
       var cells = tr.children;
       var chainPill = chainCol >= 0 && cells[chainCol] && cells[chainCol].querySelector(".notion-pill");
       if (chainPill && !chainPill.querySelector(".enc-chain")) {
@@ -732,7 +733,7 @@
         if (c) {
           var well = document.createElement("span");
           well.className = "enc-chain";
-          well.style.background = c.tint;
+          well.style.background = TINTS[rowIndex % TINTS.length]; // 37h: tint by row, not by chain
           var img = document.createElement("img");
           img.alt = "";
           img.src = c.src;

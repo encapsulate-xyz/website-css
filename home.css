@@ -1891,15 +1891,16 @@ body {
 #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card {
   display: flex !important;
   flex-direction: column !important;
-  margin: 0 !important;
-  padding: 20px !important;
+  margin: 0 0 -1px !important; /* the 2px hover rule sits over the band's bottom hairline */
+  padding: 20px 20px 18px !important;
   border: 0 !important;
   border-left: 1px solid #E2E2DB !important;
+  border-bottom: 2px solid transparent !important;
   border-radius: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
   overflow: visible !important;
-  transition: background-color 0.16s ease !important;
+  transition: background-color 0.16s ease, border-color 0.16s ease !important;
 }
 
 #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:first-child {
@@ -1907,8 +1908,16 @@ body {
   border-left: 0 !important;
 }
 
+/* Hover: the track becomes a pastel field — green ground, its divider a step
+   of the green, and a 2px green rule along its foot. */
 #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:hover {
-  background: #F2F2ED !important;
+  background: #DCEEC7 !important;
+  border-left-color: #B4D98F !important;
+  border-bottom-color: #99CC66 !important;
+}
+
+#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:first-child:hover {
+  border-left-color: transparent !important;
 }
 
 #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card__content {
@@ -2001,112 +2010,194 @@ body {
   flex: 1 1 auto !important;
 }
 
-/* The table */
+/* The table — rebuilt as grid rows so the columns can be reordered to the
+   design without touching Notion:
+
+     Network (1.5fr) | Proposal (92px) | Our vote (1fr) … date | arrow (30px)
+
+   Notion's cells, in its order: number, title (hidden), Chain, Vote Option,
+   Voted On, Voting Proof. `order` places them. No rule under the header; each
+   row has a hairline on top; an ink rule closes the table. Rows 16px tall
+   padding, hover the pastel field (#DCEEC7). Header labels are Notion's column
+   names — the design's are Network, Proposal, Our vote, and none over the date
+   and the arrow. */
 #block-4529386b39be4a9aa44d2dbac56537bd .notion-collection-table__wrapper {
   overflow: visible !important;
   border: 0 !important;
 }
 
-#block-4529386b39be4a9aa44d2dbac56537bd table {
+#block-4529386b39be4a9aa44d2dbac56537bd table,
+#block-4529386b39be4a9aa44d2dbac56537bd thead,
+#block-4529386b39be4a9aa44d2dbac56537bd tbody {
+  display: block !important;
   width: 100% !important;
-  table-layout: fixed !important;
-  border-collapse: collapse !important;
-  border: 0 !important; /* Notion's 1px frame drew lines down both sides and along the top */
+  border: 0 !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd tbody {
+  border-bottom: 1px solid #000000 !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd tr {
+  position: relative !important; /* the row link's ::after is stretched over this */
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.5fr) 92px minmax(0, 1fr) auto 30px !important;
+  column-gap: 20px !important;
+  align-items: center !important;
+  height: auto !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd tbody tr {
+  border-top: 1px solid #E2E2DB !important;
+  transition: background-color 0.16s ease !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd tbody tr:hover {
+  background: #DCEEC7 !important;
 }
 
 #block-4529386b39be4a9aa44d2dbac56537bd th,
 #block-4529386b39be4a9aa44d2dbac56537bd td {
+  display: block !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
   height: auto !important;
-  padding: 14px 20px 14px 0 !important;
+  padding: 16px 0 !important;
   border: 0 !important;
-  border-bottom: 1px solid #E2E2DB !important;
   background: transparent !important;
-  vertical-align: middle !important;
   text-align: left !important;
+  overflow: visible !important;
 }
 
+#block-4529386b39be4a9aa44d2dbac56537bd th.title,
+#block-4529386b39be4a9aa44d2dbac56537bd td.title {
+  display: none !important;
+}
+
+/* order: Chain, number, Vote Option, Voted On, Voting Proof */
+#block-4529386b39be4a9aa44d2dbac56537bd th.select:nth-of-type(3), #block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(3) { order: 1 !important; }
+#block-4529386b39be4a9aa44d2dbac56537bd th.number, #block-4529386b39be4a9aa44d2dbac56537bd td.number { order: 2 !important; }
+#block-4529386b39be4a9aa44d2dbac56537bd th.select:nth-of-type(4), #block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(4) { order: 3 !important; }
+#block-4529386b39be4a9aa44d2dbac56537bd th.date, #block-4529386b39be4a9aa44d2dbac56537bd td.date { order: 4 !important; justify-self: end !important; }
+#block-4529386b39be4a9aa44d2dbac56537bd th.text, #block-4529386b39be4a9aa44d2dbac56537bd td.text { order: 5 !important; justify-self: end !important; }
+
 #block-4529386b39be4a9aa44d2dbac56537bd th {
-  padding: 0 20px 12px 0 !important;
-  border-bottom-color: #000000 !important;
+  padding: 0 0 12px !important;
   font-family: var(--type-mono) !important;
-  font-size: 10.5px !important;
+  font-size: 10px !important;
   font-weight: 400 !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
   color: #6B6F68 !important;
 }
 
-#block-4529386b39be4a9aa44d2dbac56537bd th *,
-#block-4529386b39be4a9aa44d2dbac56537bd td > div {
+#block-4529386b39be4a9aa44d2dbac56537bd th * {
   padding: 0 !important;
   font: inherit !important;
   color: inherit !important;
   letter-spacing: inherit !important;
 }
 
-/* Super writes a width inline on every th; with every column fixed, a fixed
-   table shares the spare width out between all of them. The chain column is
-   the one that takes the rest. */
-#block-4529386b39be4a9aa44d2dbac56537bd .number { width: 116px !important; } /* 84px in the design, whose label is "Proposal"; "Proposal Id" needs more */
-#block-4529386b39be4a9aa44d2dbac56537bd th.select:nth-of-type(3) { width: auto !important; }
-#block-4529386b39be4a9aa44d2dbac56537bd th.select:nth-of-type(4),
-#block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(4) { width: 92px !important; }
-#block-4529386b39be4a9aa44d2dbac56537bd .date { width: 168px !important; }
-
+/* the date and the arrow have no header label in the design */
 #block-4529386b39be4a9aa44d2dbac56537bd th.date,
+#block-4529386b39be4a9aa44d2dbac56537bd th.text {
+  font-size: 0 !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd td > div,
+#block-4529386b39be4a9aa44d2dbac56537bd td > p {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Network: glyph well + name, Outfit 600 */
+#block-4529386b39be4a9aa44d2dbac56537bd td.select .notion-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  text-transform: none !important;
+  white-space: nowrap !important;
+  color: #000000 !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(3) .notion-pill {
+  gap: 13px !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-family: var(--type-display) !important;
+  font-weight: 600 !important;
+  font-size: 16.5px !important;
+  letter-spacing: -0.018em !important;
+}
+
+/* Proposal: mono 12.5 */
+#block-4529386b39be4a9aa44d2dbac56537bd td.number {
+  font-family: var(--type-mono) !important;
+  font-size: 12.5px !important;
+  letter-spacing: 0.04em !important;
+  font-variant-numeric: tabular-nums !important;
+  color: #3A3D38 !important;
+}
+
+/* Our vote: green dot + the word (home.js writes YES as Yes) */
+#block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(4) .notion-pill {
+  gap: 9px !important;
+  font-family: var(--type-body) !important;
+  font-weight: 500 !important;
+  font-size: 14.5px !important;
+  letter-spacing: 0 !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(4) .notion-pill::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #99CC66;
+}
+
+/* the date, at the far end of the vote column: mono 11 */
 #block-4529386b39be4a9aa44d2dbac56537bd td.date {
-  text-align: right !important;
+  font-family: var(--type-mono) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.06em !important;
+  color: #6B6F68 !important;
+  white-space: nowrap !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd td.date .date {
+  position: static !important;
+  width: auto !important;
+  margin: 0 !important;
+  font-size: inherit !important;
 }
 
 /* THE ROW LINK — Notion's "Voting Proof" text property, whose cells are links
-   ("View Tx Hash") to the transaction on Mintscan, already opening in a new
-   tab. Pure CSS, no script:
-     - the cell becomes the design's 20px arrow column (label hidden visually,
-       still the link's accessible name), drawn as the up-right badge — the
-       out-of-site arrow, distinct from the tertiary's straight one;
-     - the link's ::after is stretched over the whole row (the row is the
-       positioned ancestor), so a click anywhere on the row opens the explorer;
-     - hover shades the row paper 2 and nudges the badge up and right. */
-#block-4529386b39be4a9aa44d2dbac56537bd th.text,
-#block-4529386b39be4a9aa44d2dbac56537bd td.text {
-  width: 20px !important;
-  padding-right: 0 !important;
-}
-
-#block-4529386b39be4a9aa44d2dbac56537bd th.text {
-  font-size: 0 !important; /* the design's arrow column has no header label */
-}
-
-#block-4529386b39be4a9aa44d2dbac56537bd tbody tr {
-  position: relative !important;
-}
-
-#block-4529386b39be4a9aa44d2dbac56537bd tbody td {
-  transition: background-color 0.14s ease !important;
-}
-
-#block-4529386b39be4a9aa44d2dbac56537bd tbody tr:hover td {
-  background: #F2F2ED !important;
-}
-
-/* overflow: visible on the cell and the property — Super clips both, which cut
-   off the badge when it nudged up and right on hover. */
-#block-4529386b39be4a9aa44d2dbac56537bd td.text {
-  overflow: visible !important;
-}
-
+   ("View Tx Hash") to the transaction on Mintscan, opening in a new tab. Pure
+   CSS: the label is hidden visually (still the link's accessible name), the
+   badge is the link's ::before (the up-right out-of-site arrow), and the link's
+   ::after is stretched over the whole row so a click anywhere opens it. The link
+   itself is never transformed — that would make it the containing block of its
+   ::after and shrink the click area to the badge while hovered. */
 #block-4529386b39be4a9aa44d2dbac56537bd td.text .notion-property,
 #block-4529386b39be4a9aa44d2dbac56537bd td.text .highlighted-color {
-  overflow: visible !important;
   display: block !important;
+  overflow: visible !important;
   margin: 0 !important;
   padding: 0 !important;
   background: transparent !important;
 }
 
-/* The link itself is never transformed: a transform would make it the
-   containing block of its ::after and shrink the row-wide click area to the
-   badge — exactly while the row is hovered. The badge is the ::before. */
 #block-4529386b39be4a9aa44d2dbac56537bd td.text a.notion-link {
   display: block !important;
   width: 20px !important;
@@ -2148,72 +2239,6 @@ body {
   outline-offset: -3px !important;
 }
 
-#block-4529386b39be4a9aa44d2dbac56537bd td.number {
-  font-family: var(--type-mono) !important;
-  font-size: 14.5px !important;
-  font-variant-numeric: tabular-nums !important;
-  color: #000000 !important;
-}
-
-#block-4529386b39be4a9aa44d2dbac56537bd td.select .notion-pill {
-  display: inline-flex !important;
-  align-items: center !important;
-  width: auto !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  text-transform: none !important;
-  white-space: nowrap !important;
-  color: #000000 !important;
-}
-
-/* Chain: Outfit 500. home.js puts the glyph well in front of the name. */
-#block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(3) .notion-pill {
-  gap: 11px !important;
-  font-family: var(--type-display) !important;
-  font-weight: 500 !important;
-  font-size: 15.5px !important;
-  letter-spacing: -0.014em !important;
-}
-
-/* Vote: the word with one green dot. home.js writes "YES" as "Yes". */
-#block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(4) .notion-pill {
-  gap: 8px !important;
-  font-family: var(--type-body) !important;
-  font-weight: 400 !important;
-  font-size: 15px !important;
-  letter-spacing: 0 !important;
-}
-
-#block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(4) .notion-pill::before {
-  content: "";
-  flex: none;
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: #99CC66;
-}
-
-#block-4529386b39be4a9aa44d2dbac56537bd td.date {
-  font-family: var(--type-body) !important;
-  font-size: 14.5px !important;
-  color: #3A3D38 !important;
-  white-space: nowrap !important;
-}
-
-#block-4529386b39be4a9aa44d2dbac56537bd td.date > .notion-property {
-  justify-content: flex-end !important;
-}
-
-#block-4529386b39be4a9aa44d2dbac56537bd td.date .date {
-  position: static !important;
-  width: auto !important;
-  margin: 0 !important;
-  font-size: inherit !important;
-}
-
 /* Narrow: everything stacks, the band goes two by two, the table scrolls. */
 @media (max-width: 900px) {
   #block-e99ac68f4a5848d091bc204578c1ec55 {
@@ -2236,7 +2261,7 @@ body {
     overflow-x: auto !important;
   }
   #block-4529386b39be4a9aa44d2dbac56537bd table {
-    min-width: 560px !important;
+    min-width: 600px !important;
   }
 }
 
