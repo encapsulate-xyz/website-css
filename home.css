@@ -2776,7 +2776,16 @@ body {
   overflow: visible !important;
 }
 
-.notion-root #block-3dbe800a51388059870bfa97563baa3f > .notion-callout__content > .notion-semantic-string:empty {
+.notion-root #block-3dbe800a51388059870bfa97563baa3f > .notion-callout__content > .notion-semantic-string:empty,
+.notion-root #block-3dbe800a51388059870bfa97563baa3f > .notion-callout__content > .notion-text:empty {
+  display: none !important;
+}
+
+/* TEMPORARY — the old, now empty networks column list left behind below the
+   band when the section moved into the callout: six dividers, the atom
+   watermark and an empty line (210px of blank space). Delete the block in
+   Notion, then delete this rule. */
+.notion-root #block-c2b0cf429b3a4162bd2c1ec9922f16ed {
   display: none !important;
 }
 
