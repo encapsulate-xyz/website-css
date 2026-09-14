@@ -579,13 +579,13 @@
      Loop: each column holds its discs twice with the spacing on the discs, so translating by
      exactly -50% lands on an identical frame — the seam cannot show.
 
-   The kicker ("25 networks · mainnet and testnet") is written here so the count stays true.
+   No kicker above the heading: the design's "25 networks · mainnet and testnet" line was added
+   here at first and removed at the user's request (2026-09-14).
    The gallery itself stays in the page, hidden, as the no-JavaScript fallback and as the glyph
    source for the institutional staking listbox above. Styles: home-dial.css, "NETWORKS COLUMNS".
    Reduced motion: the columns stand still. */
 (function () {
   var GALLERY = "block-d07ab52b60ba4788bd8df0c9e74c5ad4";
-  var HEADING = "block-a78830dc0f674404810b08c2ec735847";
   var PER_COL = 5, COLS = 5;
   var SPEEDS = [25, 21, 17, 14, 11];
   var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
@@ -661,16 +661,6 @@
     }
     column.insertBefore(box, gallery);
 
-    var heading = document.getElementById(HEADING);
-    if (heading && !(heading.previousElementSibling && heading.previousElementSibling.classList.contains("enc-net__kicker"))) {
-      var k = document.createElement("p");
-      k.className = "enc-net__kicker";
-      heading.parentElement.insertBefore(k, heading);
-    }
-    var kicker = heading && heading.previousElementSibling;
-    if (kicker && kicker.classList.contains("enc-net__kicker")) {
-      kicker.textContent = list.length + " networks · mainnet and testnet";
-    }
     row.setAttribute("data-enc-net", "");
   }
 
