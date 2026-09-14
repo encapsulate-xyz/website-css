@@ -2041,7 +2041,7 @@ body {
 #block-4529386b39be4a9aa44d2dbac56537bd tr {
   position: relative !important; /* the row link's ::after is stretched over this */
   display: grid !important;
-  grid-template-columns: minmax(0, 1.5fr) 92px minmax(0, 1fr) auto 30px !important;
+  grid-template-columns: minmax(0, 1.5fr) 92px minmax(0, 1fr) 140px 30px !important; /* the date column is fixed so the header and every row share the same tracks */
   column-gap: 20px !important;
   align-items: center !important;
   height: auto !important;
