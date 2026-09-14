@@ -611,7 +611,12 @@
     if (n.href) el.setAttribute("href", n.href);
     if (copy) { el.setAttribute("aria-hidden", "true"); el.setAttribute("tabindex", "-1"); }
     else el.setAttribute("aria-label", n.name);
-    el.title = n.name;
+    // The name shows as a styled label on hover (home-dial.css), not a native title tooltip —
+    // the browser's grey box looked dated and trailed behind the moving disc.
+    var label = document.createElement("span");
+    label.className = "enc-net__name";
+    label.setAttribute("aria-hidden", "true");
+    label.textContent = n.name;
     var img = document.createElement("img");
     img.alt = "";
     img.src = n.src;
@@ -619,6 +624,7 @@
     img.setAttribute("sizes", "66px");
     img.decoding = "async";
     el.appendChild(img);
+    el.appendChild(label);
     return el;
   }
 

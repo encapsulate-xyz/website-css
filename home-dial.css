@@ -571,6 +571,54 @@
   outline-offset: 2px;
 }
 
+/* HOVER. The columns pause while the pointer is over them, so a disc can be read
+   and clicked instead of chased. The disc under the pointer stays at full
+   strength while the rest of the field steps back, and its name rises in as an
+   ink label on the disc — the design's ink pill (dial, card buttons on a green
+   field): #000 ground, paper type. Nothing on the disc itself moves or scales. */
+.enc-net__disc {
+  position: relative;
+  transition: opacity 0.2s ease;
+}
+
+.enc-net:hover .enc-net__track {
+  animation-play-state: paused;
+}
+
+.enc-net:has(.enc-net__disc:hover) .enc-net__disc:not(:hover) {
+  opacity: 0.45;
+}
+
+.enc-net__name {
+  position: absolute;
+  left: 50%;
+  bottom: 14%;
+  transform: translate(-50%, 6px);
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #000000;
+  color: #FAFAF8;
+  font-family: var(--type-body), sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.004em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.enc-net__disc:hover .enc-net__name,
+.enc-net__disc:focus-visible .enc-net__name {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enc-net__name { transition: opacity 0.01ms; transform: translate(-50%, 0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .enc-net__track { animation: none !important; }
 }

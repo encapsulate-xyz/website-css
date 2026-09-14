@@ -2739,49 +2739,12 @@ body {
 
 
 /*********************************************/
-/* 15a. NETWORKS SECTION — RULED OFF, FULL WIDTH */
+/* 15a. NETWORKS SECTION — LEFTOVER */
 /*********************************************/
 
-/* The section sits in a Notion callout so it can be treated as one object.
-   It stays on the page's own ground — a paper-2 band was tried and read as a
-   colour used nowhere else — with no border (see the note in the rule). Same full-bleed
-   construction as the stats band (section 00): 100vw wide, pulled out by the
-   difference, padded back in to the site gutter, so the rules run edge to
-   edge. The callout's icon, fill, border, corner and padding go. The column
-   geometry is home-dial.css, 21b. */
-.notion-root #block-3dbe800a51388059870bfa97563baa3f {
-  display: block !important;
-  width: 100vw !important;
-  max-width: none !important;
-  margin: 0 0 0 calc(50% - 50vw) !important;
-  padding: 0 max(48px, calc(50vw - 864px)) !important;
-  border: 0 !important;
-  /* Top and bottom hairlines were tried here (2026-09-15) and removed to see the
-     section without them. To bring them back, use the design's divider
-     colour: border-top / border-bottom: 1px solid #E2E2DB. */
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  background: transparent !important;
-  overflow: hidden !important; /* the discs' fade stays inside the band */
-}
-
-.notion-root #block-3dbe800a51388059870bfa97563baa3f > .notion-callout__icon {
-  display: none !important;
-}
-
-.notion-root #block-3dbe800a51388059870bfa97563baa3f > .notion-callout__content {
-  display: block !important;
-  width: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: visible !important;
-}
-
-.notion-root #block-3dbe800a51388059870bfa97563baa3f > .notion-callout__content > .notion-semantic-string:empty,
-.notion-root #block-3dbe800a51388059870bfa97563baa3f > .notion-callout__content > .notion-text:empty {
-  display: none !important;
-}
-
+/* The section was briefly wrapped in a Notion callout (drawn as a paper-2 band,
+   then as a plain band with and without hairlines) and is back on the page
+   without one, which read better. Only this remains: */
 /* TEMPORARY — the old, now empty networks column list left behind below the
    band when the section moved into the callout: six dividers, the atom
    watermark and an empty line (210px of blank space). Delete the block in
