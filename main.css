@@ -842,8 +842,15 @@ h4.notion-heading {
 }
 
 /* An explicit fill is required, not cosmetic: cards are transparent by
-   default and the page background would show through. */
-.notion-collection-card {
+   default and the page background would show through.
+
+   `.notion-collection-gallery` in the selector is load-bearing. Several pages'
+   own Code panels (/guides, /investments) still carry old unscoped
+   `.notion-collection-card { padding: 0 / border-radius: 20px !important }`
+   rules, and page CSS is placed after this file, so at equal specificity the
+   old look won. (0,2,0) beats them; block-id rules in page CSS still out-rank
+   this, which is how the homepage's own treatments survive. */
+.notion-collection-gallery .notion-collection-card {
   position: relative;
   display: flex !important;
   flex-direction: column !important;

@@ -22,10 +22,10 @@
 }
 
 
-/* Display the collection card as a flex container. */
+/* Display the collection card as a flex container. (Fill, ring and shadow
+   come from the Card System, main.css §09.) */
 .notion-collection-card {
   display: flex;
-  background-color: var(--color-bg-default);
 }
 /*********************************************
 For viewport
@@ -513,16 +513,16 @@ STYLING DROPDOWN MENU
 
 /* --- Card ---------------------------------------------------------------- */
 
-.notion-collection-card {
-  display: flex !important;
+/* CARD SYSTEM (main.css §09, 2026-09-14): the fill, 1px ring, highlight,
+   12px corner, lift and hover/press states all come from main.css now — this
+   used to draw its own (#FFFEFC, a 12% ring, 16px corner, no shadow). What
+   stays here is the horizontal layout. The logo tile is the card's media, so
+   the card takes the 6px bleed padding and the tile the derived 6px corner
+   (12 − 6), with the text column padded to the density's 16px. */
+.notion-collection-gallery .notion-collection-card {
   flex-direction: row !important;
   align-items: center !important;
-  gap: 12px !important;
-  padding: 12px !important;
-  border: 1px solid rgba(32, 32, 32, 0.12) !important;
-  border-radius: 16px !important;
-  background-color: var(--color-bg-default) !important;
-  box-shadow: none !important;
+  gap: 16px !important;
 }
 
 /* REMOVED: a hover lift (translateY(-4px) + border darken + drop shadow) that
@@ -579,7 +579,7 @@ STYLING DROPDOWN MENU
   --pill-w: 80px; /* was 70px */
   --pill-h: 180px; /* was 200px */
   --logo-scale: 1.43; /* holds the mark at its current size; see the maths below */
-  --pill-radius: 18px; /* was 999px, which made the ends fully semicircular */
+  --pill-radius: var(--card-media-radius); /* Card System: card corner minus the 6px bleed. Was 18px, and 999px before that */
 }
 
 /* Super ships this wrapper as `display: contents`; promoting it to a block
@@ -637,7 +637,7 @@ STYLING DROPDOWN MENU
   width: auto !important;
   flex: 1 1 auto !important;
   gap: 0 !important;
-  padding: 0 !important;
+  padding: 10px 16px 10px 0 !important; /* the tile side is padded by the gap */
   min-width: 0 !important;
 }
 
