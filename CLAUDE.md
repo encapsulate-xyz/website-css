@@ -297,8 +297,9 @@ in home-dial.css). Lessons, each learned the hard way:
 - **Cache the stops.** Measuring layout on every scroll frame adds stutter; invalidate on resize
   and on DOM mutation.
 - **Trackpad momentum lasts seconds.** Treating every wheel event within a short gap as one gesture
-  swallowed new swipes for 4–5 s (v9). A new gesture = a 250ms pause, or a rising delta after the
-  deltas have started to fall. The gesture logic is testable in Node with a stubbed window — the
+  swallowed new swipes for 4–5 s (v9). A new gesture = a 250ms pause, or — at least 450ms after the
+  page turned and once deltas fell below half their peak — a delta 4× the smallest since (≥20).
+  "Any rise after any dip" (v10) fired on a swipe's own jitter and turned two panels at once. The gesture logic is testable in Node with a stubbed window — the
   automation tab is hidden, so neither rAF nor smooth scrolling runs there.
 - The CSS proximity snap on Who we are was removed: a CSS snap on html fights scripted scrolling.
 
