@@ -428,19 +428,20 @@ nav.super-navbar .super-navbar__list::before {
    are defined below for sections to use). Body copy still comes from Super's
    theme.
 
-   HOW NOTION HEADINGS MAP ONTO THE SCALE. The design allows one h1 per page.
-   On this site every page opens with a Heading 1 written bold (and usually
-   underlined) — Blog, Team, Services, Guides, Contact Us — which is the page
-   title; every later Heading 1 is a section heading. So:
-     Heading 1 containing bold   → h1   (the page title)
-     any other Heading 1         → h2   (section headings)
-     Heading 2                   → h3
-     Heading 3                   → h4
-   The bold and underline are only the marker: they no longer change the look
-   (they used to draw an outlined Arial Black with black rules above and below,
-   which the design replaces). Sections with their own heading treatment —
-   the homepage hero, stat figures, fork panels, /networks — keep it, because
-   their rules are scoped to a block id and out-rank these.
+   HOW NOTION HEADINGS MAP ONTO THE SCALE. One to one — Notion has four
+   heading blocks and Super emits them as real h1–h4:
+     Heading 1 → h1   (the page title; one per page, e.g. "We keep blockchains online.")
+     Heading 2 → h2   (section headings)
+     Heading 3 → h3
+     Heading 4 → h4
+   Bold and underline mean nothing to the size. (An earlier version used bold
+   as the page-title marker so section Heading 1s could stay as they were; it
+   was replaced by re-levelling the headings in Notion, which is easier to
+   reason about.) They used to draw an outlined Arial Black with black rules
+   above and below, which the design replaces. Sections with their own heading
+   treatment — the homepage hero, stat figures, fork panels, the 11px kickers,
+   /networks — keep it, because their rules are scoped to a block id and
+   out-rank these.
 
    Content rule from the design that CSS cannot enforce: sentence case, not
    Title Case On Every Word ("Latest blog posts", not "Latest Blog Posts"). */
@@ -453,7 +454,8 @@ nav.super-navbar .super-navbar__list::before {
 
 h1.notion-heading,
 h2.notion-heading,
-h3.notion-heading {
+h3.notion-heading,
+h4.notion-heading {
   margin-top: 0 !important;
   padding-top: 0 !important;
   font-family: var(--type-display) !important;
@@ -461,19 +463,9 @@ h3.notion-heading {
   text-wrap: balance !important;
 }
 
-/* h2 — section headings (every Heading 1 that is not the page title) */
+/* h1 — the page title (Notion Heading 1) */
 h1.notion-heading {
   font-weight: 600 !important;
-  font-size: clamp(30px, 4.2vw, 54px) !important;
-  line-height: 1.02 !important;
-  --h1-line-height: 1.02 !important;
-  letter-spacing: -0.038em !important;
-  max-width: 22ch !important;
-  margin-bottom: 16px !important; /* h2 → body */
-}
-
-/* h1 — the page title: the Heading 1 that contains bold */
-h1.notion-heading:has(strong, b) {
   font-size: clamp(40px, 6.2vw, 92px) !important;
   line-height: 0.96 !important;
   --h1-line-height: 0.96 !important;
@@ -482,28 +474,39 @@ h1.notion-heading:has(strong, b) {
   margin-bottom: 20px !important; /* h1 → lead */
 }
 
-/* h3 — Notion Heading 2 */
+/* h2 — section headings (Notion Heading 2) */
 h2.notion-heading {
+  font-weight: 600 !important;
+  font-size: clamp(30px, 4.2vw, 54px) !important;
+  line-height: 1.02 !important;
+  --h2-line-height: 1.02 !important;
+  letter-spacing: -0.038em !important;
+  max-width: 22ch !important;
+  margin-bottom: 16px !important; /* h2 → body */
+}
+
+/* h3 — Notion Heading 3 */
+h3.notion-heading {
   font-weight: 600 !important;
   font-size: clamp(22px, 2.4vw, 30px) !important;
   line-height: 1.14 !important;
-  --h2-line-height: 1.14 !important;
+  --h3-line-height: 1.14 !important;
   letter-spacing: -0.026em !important;
   max-width: 30ch !important;
 }
 
-/* h4 — Notion Heading 3 */
-h3.notion-heading {
+/* h4 — Notion Heading 4 */
+h4.notion-heading {
   font-weight: 500 !important;
   font-size: clamp(18px, 1.6vw, 21px) !important;
   line-height: 1.24 !important;
-  --h3-line-height: 1.24 !important;
+  --h4-line-height: 1.24 !important;
   letter-spacing: -0.018em !important;
   max-width: 40ch !important;
 }
 
-/* The bold and underline are markers, not styling. */
-:is(h1, h2, h3).notion-heading :is(strong, b, u) {
+/* Bold and underline don't change a heading's look. */
+:is(h1, h2, h3, h4).notion-heading :is(strong, b, u) {
   font: inherit !important;
   letter-spacing: inherit !important;
   color: inherit !important;
