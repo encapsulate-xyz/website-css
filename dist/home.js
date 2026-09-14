@@ -721,6 +721,9 @@
     var chainCol = column(table, "chain"), voteCol = column(table, "vote option");
     var map = null;
     table.querySelectorAll("tbody tr").forEach(function (tr) {
+      // only the rows on show (home.css keeps six): the table holds the whole voting record, and
+      // marking every row fetched a glyph image for hundreds of hidden votes
+      if (!tr.offsetParent) return;
       var cells = tr.children;
       var chainPill = chainCol >= 0 && cells[chainCol] && cells[chainCol].querySelector(".notion-pill");
       if (chainPill && !chainPill.querySelector(".enc-chain")) {
