@@ -562,3 +562,124 @@
   window.addEventListener("load", invalidate);
   paintRail();
 })();
+
+
+/* ─────────────────────────────────────────────────────────────────────────────────────────────
+   Homepage networks — design "Networks Section", 21b "Columns · paper".
+
+   The right half of the section becomes five vertical columns of pastel glyph discs, drifting
+   alternately up and down; the left half is the copy (kicker, heading, one sentence, buttons).
+
+   BUILT FROM NOTION. The discs are read from the networks gallery that is already on the page
+   (#block-d07ab52b…): each card's cover is the glyph, its title the name, its link the target.
+   Adding, removing or reordering networks in Notion changes the columns; nothing is listed here.
+
+     Column = tier: the gallery order is read in fives, so the first five sit in column one.
+     Speed carries the same signal: leftmost slowest (25s), rightmost fastest (11s).
+     Loop: each column holds its discs twice with the spacing on the discs, so translating by
+     exactly -50% lands on an identical frame — the seam cannot show.
+
+   The kicker ("25 networks · mainnet and testnet") is written here so the count stays true.
+   The gallery itself stays in the page, hidden, as the no-JavaScript fallback and as the glyph
+   source for the institutional staking listbox above. Styles: home-dial.css, "NETWORKS COLUMNS".
+   Reduced motion: the columns stand still. */
+(function () {
+  var GALLERY = "block-d07ab52b60ba4788bd8df0c9e74c5ad4";
+  var HEADING = "block-a78830dc0f674404810b08c2ec735847";
+  var PER_COL = 5, COLS = 5;
+  var SPEEDS = [25, 21, 17, 14, 11];
+  var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
+
+  function networks(gallery) {
+    return Array.prototype.map.call(gallery.querySelectorAll(".notion-collection-card"), function (card) {
+      var img = card.querySelector("img.notion-collection-card__cover");
+      var title = card.querySelector(".notion-property__title");
+      var link = card.querySelector("a[href]");
+      return {
+        name: title ? title.textContent.trim() : "",
+        href: link ? link.getAttribute("href") : null,
+        src: img ? img.getAttribute("src") : null,
+        srcset: img ? img.getAttribute("srcset") : null
+      };
+    }).filter(function (n) { return n.src; });
+  }
+
+  function disc(n, i, copy) {
+    var el = document.createElement(n.href ? "a" : "span");
+    el.className = "enc-net__disc";
+    el.style.background = TINTS[i % TINTS.length];
+    if (n.href) el.setAttribute("href", n.href);
+    if (copy) { el.setAttribute("aria-hidden", "true"); el.setAttribute("tabindex", "-1"); }
+    else el.setAttribute("aria-label", n.name);
+    el.title = n.name;
+    var img = document.createElement("img");
+    img.alt = "";
+    img.src = n.src;
+    if (n.srcset) img.setAttribute("srcset", n.srcset);
+    img.setAttribute("sizes", "66px");
+    img.decoding = "async";
+    el.appendChild(img);
+    return el;
+  }
+
+  function build() {
+    var gallery = document.getElementById(GALLERY);
+    if (!gallery) return;
+    var column = gallery.parentElement;              // the right-hand Notion column
+    var row = column && column.closest(".notion-column-list");
+    if (!row) return;
+    var list = networks(gallery);
+    if (!list.length) return;
+    var sig = list.map(function (n) { return n.name; }).join("|");
+    var existing = column.querySelector(":scope > .enc-net");
+    if (existing && existing.getAttribute("data-sig") === sig && row.hasAttribute("data-enc-net")) return;
+    if (existing) existing.remove();
+
+    var box = document.createElement("div");
+    box.className = "enc-net";
+    box.setAttribute("data-sig", sig);
+    box.setAttribute("role", "list");
+    box.setAttribute("aria-label", "Networks we run");
+    for (var c = 0; c < COLS; c++) {
+      var items = list.slice(c * PER_COL, c * PER_COL + PER_COL);
+      if (!items.length) break;
+      var col = document.createElement("div");
+      col.className = "enc-net__col";
+      var track = document.createElement("div");
+      track.className = "enc-net__track";
+      track.setAttribute("data-dir", c % 2 ? "down" : "up");
+      track.style.animationDuration = (SPEEDS[c] || 11) + "s";
+      [false, true].forEach(function (copy) {
+        items.forEach(function (n, i) {
+          var d = disc(n, c * PER_COL + i, copy);
+          if (!copy) d.setAttribute("role", "listitem");
+          track.appendChild(d);
+        });
+      });
+      col.appendChild(track);
+      box.appendChild(col);
+    }
+    column.insertBefore(box, gallery);
+
+    var heading = document.getElementById(HEADING);
+    if (heading && !(heading.previousElementSibling && heading.previousElementSibling.classList.contains("enc-net__kicker"))) {
+      var k = document.createElement("p");
+      k.className = "enc-net__kicker";
+      heading.parentElement.insertBefore(k, heading);
+    }
+    var kicker = heading && heading.previousElementSibling;
+    if (kicker && kicker.classList.contains("enc-net__kicker")) {
+      kicker.textContent = list.length + " networks · mainnet and testnet";
+    }
+    row.setAttribute("data-enc-net", "");
+  }
+
+  var t = 0;
+  new MutationObserver(function (muts) {
+    var ours = muts.every(function (m) { return m.target.closest && m.target.closest(".enc-net"); });
+    if (ours) return;
+    clearTimeout(t); t = setTimeout(build, 60);
+  }).observe(document.body, { childList: true, subtree: true });
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
+  else build();
+})();
