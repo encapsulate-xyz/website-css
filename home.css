@@ -2089,8 +2089,15 @@ body {
   background: #F2F2ED !important;
 }
 
+/* overflow: visible on the cell and the property — Super clips both, which cut
+   off the badge when it nudged up and right on hover. */
+#block-4529386b39be4a9aa44d2dbac56537bd td.text {
+  overflow: visible !important;
+}
+
 #block-4529386b39be4a9aa44d2dbac56537bd td.text .notion-property,
 #block-4529386b39be4a9aa44d2dbac56537bd td.text .highlighted-color {
+  overflow: visible !important;
   display: block !important;
   margin: 0 !important;
   padding: 0 !important;
