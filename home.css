@@ -1838,6 +1838,36 @@ body {
 }
 
 #block-45c7dda9faae4c6d94390f4eb380d3a4 { grid-area: lead !important; margin: 0 !important; }
+
+/* Kicker and lead, drawn to the handoff (37h) at the user's request: the
+   "Governance" text block as the mono label step, the sentence at 16px / 1.56
+   in #3A3D38 with a 50ch measure. The heading stays on the type system's h2. */
+#block-3dbe800a513880f59821eadfd281e31f {
+  margin: 0 0 14px !important;
+  padding: 0 !important;
+  font-family: var(--type-mono) !important;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #6B6F68 !important;
+  min-height: 0 !important;
+}
+
+#block-8596efbf83c94c59ac8278879b8be3bc {
+  margin-bottom: 14px !important;
+}
+
+#block-45c7dda9faae4c6d94390f4eb380d3a4 {
+  padding: 0 !important;
+  font-family: var(--type-body) !important;
+  font-size: 16px !important;
+  line-height: 1.56 !important;
+  color: #3A3D38 !important;
+  max-width: 50ch !important;
+  text-wrap: pretty !important;
+}
 #block-4efab8b5f9e246679a4d719fe3dcd31e { grid-area: cta !important; justify-self: end !important; margin: 0 !important; }
 #block-3b97079327e74e15848fb366e3adcbea { grid-area: band !important; margin: 0 !important; }
 #block-4529386b39be4a9aa44d2dbac56537bd { grid-area: table !important; margin: 0 !important; }
@@ -1892,8 +1922,9 @@ body {
    beside it. Hovering the track lights the well green. */
 #block-3b97079327e74e15848fb366e3adcbea .notion-property__title {
   position: relative !important;
-  display: grid !important;
-  place-items: center !important;
+  display: flex !important; /* not grid: the "0" and the digit are two items and grid stacked them */
+  align-items: center !important;
+  justify-content: center !important;
   width: 20px !important;
   height: 20px !important;
   min-height: 0 !important; /* Super floors properties at 24px */
@@ -1940,7 +1971,7 @@ body {
   color: #000000 !important;
 }
 
-#block-3b97079327e74e15848fb366e3adcbea .notion-property__text {
+#block-3b97079327e74e15848fb366e3adcbea .notion-property__text.property-747e7c6c {
   margin: 0 !important;
   padding: 0 !important;
   font-family: var(--type-display) !important;
@@ -1949,6 +1980,24 @@ body {
   line-height: 1.16 !important;
   letter-spacing: -0.018em !important;
   color: #000000 !important;
+}
+
+/* The pillar's description (the second text property): body, pinned to the
+   foot of the track so the four read level. */
+#block-3b97079327e74e15848fb366e3adcbea .notion-property__text.property-62485b44 {
+  margin: auto 0 0 !important;
+  padding: 0 !important;
+  font-family: var(--type-body) !important;
+  font-weight: 400 !important;
+  font-size: 13px !important;
+  line-height: 1.46 !important;
+  letter-spacing: 0 !important;
+  color: #3A3D38 !important;
+  white-space: normal !important;
+}
+
+#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card__content {
+  flex: 1 1 auto !important;
 }
 
 /* The table */
@@ -1961,6 +2010,7 @@ body {
   width: 100% !important;
   table-layout: fixed !important;
   border-collapse: collapse !important;
+  border: 0 !important; /* Notion's 1px frame drew lines down both sides and along the top */
 }
 
 #block-4529386b39be4a9aa44d2dbac56537bd th,
@@ -1996,7 +2046,7 @@ body {
 /* Super writes a width inline on every th; with every column fixed, a fixed
    table shares the spare width out between all of them. The chain column is
    the one that takes the rest. */
-#block-4529386b39be4a9aa44d2dbac56537bd .number { width: 84px !important; }
+#block-4529386b39be4a9aa44d2dbac56537bd .number { width: 116px !important; } /* 84px in the design, whose label is "Proposal"; "Proposal Id" needs more */
 #block-4529386b39be4a9aa44d2dbac56537bd th.select:nth-of-type(3) { width: auto !important; }
 #block-4529386b39be4a9aa44d2dbac56537bd th.select:nth-of-type(4),
 #block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(4) { width: 92px !important; }
@@ -2061,6 +2111,10 @@ body {
   font-size: 14.5px !important;
   color: #3A3D38 !important;
   white-space: nowrap !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd td.date > .notion-property {
+  justify-content: flex-end !important;
 }
 
 #block-4529386b39be4a9aa44d2dbac56537bd td.date .date {
