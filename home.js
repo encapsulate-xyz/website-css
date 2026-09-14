@@ -673,3 +673,80 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
   else build();
 })();
+
+
+/* ─────────────────────────────────────────────────────────────────────────────────────────────
+   Homepage governance table — design "Governance", 37h.
+
+   Each row's chain gets its glyph in a tinted well in front of the name, and the vote pill's
+   "YES" is written "Yes". Glyph and tint come from the homepage networks gallery, the same
+   source and the same tint order as the networks columns, so a chain is the same colour in both
+   sections. A chain with no card in that gallery keeps just its name. Styles: home.css §09
+   (governance) and home-dial.css ("GOVERNANCE CHAIN MARKS"). */
+(function () {
+  var TABLE = "block-4529386b39be4a9aa44d2dbac56537bd";
+  var GALLERY = "block-d07ab52b60ba4788bd8df0c9e74c5ad4";
+  var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
+
+  function chains() {
+    var map = {};
+    var gallery = document.getElementById(GALLERY);
+    if (!gallery) return map;
+    gallery.querySelectorAll(".notion-collection-card").forEach(function (card, i) {
+      var title = card.querySelector(".notion-property__title");
+      var img = card.querySelector("img.notion-collection-card__cover");
+      if (!title || !img) return;
+      var key = title.textContent.trim().toLowerCase();
+      if (!map[key]) map[key] = { src: img.getAttribute("src"), srcset: img.getAttribute("srcset"), tint: TINTS[i % TINTS.length] };
+    });
+    return map;
+  }
+
+  function column(table, label) {
+    var ths = table.querySelectorAll("thead th");
+    for (var i = 0; i < ths.length; i++) if (ths[i].textContent.trim().toLowerCase() === label) return i;
+    return -1;
+  }
+
+  function apply() {
+    var block = document.getElementById(TABLE);
+    var table = block && block.querySelector("table");
+    if (!table) return;
+    var chainCol = column(table, "chain"), voteCol = column(table, "vote option");
+    var map = null;
+    table.querySelectorAll("tbody tr").forEach(function (tr) {
+      var cells = tr.children;
+      var chainPill = chainCol >= 0 && cells[chainCol] && cells[chainCol].querySelector(".notion-pill");
+      if (chainPill && !chainPill.querySelector(".enc-chain")) {
+        map = map || chains();
+        var c = map[chainPill.textContent.trim().toLowerCase()];
+        if (c) {
+          var well = document.createElement("span");
+          well.className = "enc-chain";
+          well.style.background = c.tint;
+          var img = document.createElement("img");
+          img.alt = "";
+          img.src = c.src;
+          if (c.srcset) img.setAttribute("srcset", c.srcset);
+          img.setAttribute("sizes", "24px");
+          well.appendChild(img);
+          chainPill.insertBefore(well, chainPill.firstChild);
+        }
+      }
+      var votePill = voteCol >= 0 && cells[voteCol] && cells[voteCol].querySelector(".notion-pill");
+      if (votePill && !votePill.hasAttribute("data-enc-vote")) {
+        var t = votePill.textContent.trim();
+        votePill.setAttribute("data-enc-vote", t);
+        votePill.textContent = t.charAt(0).toUpperCase() + t.slice(1).toLowerCase();
+      }
+    });
+  }
+
+  var timer = 0;
+  new MutationObserver(function (muts) {
+    if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-chain, [data-enc-vote]"); })) return;
+    clearTimeout(timer); timer = setTimeout(apply, 60);
+  }).observe(document.body, { childList: true, subtree: true });
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply);
+  else apply();
+})();

@@ -600,3 +600,24 @@
   }
   .enc-net { gap: 10px; }
 }
+
+
+/*********************************************/
+/* GOVERNANCE CHAIN MARKS — ADDED BY home.js */
+/*********************************************/
+/* Design 37h: each chain's glyph at 78% of a 30px well in its fixed tint. */
+.enc-chain {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+}
+
+.enc-chain img {
+  display: block;
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
+}

@@ -52,97 +52,6 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 /*********************************************/
 
 /*********************************************/
-/* CONVERTS THE TABLE INTO CARD LAYOUT
-/*********************************************/
-
-@media (max-width: 1150px) {
-
-#block-4529386b39be4a9aa44d2dbac56537bd {
-  /* Adjustments to the overall table properties */
-  .notion-collection-table {
-    border-collapse: collapse;
-    table-layout: auto!important;
-  }
-
-  /* Styles for the table wrapper */
-  .notion-collection-table__wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    overflow-x: auto;
-    border: none!important;
-  }
-
-  /* Styles for cells wrapper */
-  .wrap-cells {
-    display: flex;
-    flex-wrap: wrap!important;
-    border: none!important;
-  }
-
-  /* Styles for table head and body */
-  .notion-collection-table__head,
-  .notion-collection-table__body {
-    width: 100%;
-  }
-
-  /* Styles for table body rows */
-  .notion-collection-table__body tr {
-    display: flex!important;
-    flex-direction: column!important;
-    margin: 4px!important;
-    margin-bottom: 10px!important;
-    border: 1px solid #ccc;
-    box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.3)!important;
-    padding: 20px!important;
-    border-radius: 10px;
-
-  }
-
-  .notion-collection-table__body tr:hover {
-    border: 1px solid black!important;
-  }
-
-  /* Styles for table body cells */
-  .notion-collection-table__cell {
-    height: auto!important;
-    margin: 0px!important;
-    border: none!important;
-    border-bottom: 1px solid #ccc!important;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    padding: 0px!important;
-  }
-
-  /* Styles for notion-pill span */
-  .notion-pill span {
-    margin-bottom: 10px;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-  }
-
-  /* Hiding the table header */
-  .notion-collection-table__head {
-    display: none!important;
-  }
-
-  /* Styles for notion-pill */
-  .notion-pill {
-    font-size: 13px!important;
-    border-radius: 18px!important;
-    padding: 8px 8px!important;
-    border: 1px solid black;
-    display: inline-block!important;
-    justify-content: normal!important;
-  }
-
-  /* Limits the display of elements in governance record collection to first 10 elements */
-.notion-collection-table__body tr:nth-child(n+5) {
-  display: none!important;
-}
-}
-}
-/*********************************************/
 /*********************************************/
 /* LIMITS PREVIEW
 /*********************************************/
@@ -166,14 +75,8 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 .notion-collection-table {
     table-layout: auto !important;
 }
-
-/* Adjusting the font-size, border-radius, padding, border, display, and justification of the notion-pill within the collection table body */
-.notion-collection-table__body .notion-pill {
-    font-size: 13px !important;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
+/* (The pill-per-cell rule that was here is replaced by section 09's governance
+   table, design 37h.) */
 /*********************************************/
 /* CODE FONT FOR NUMBERS */
 /*********************************************/
@@ -190,112 +93,6 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 /*********************************************/
 .notion-page {
     display: none !important;
-}
-/*********************************************/
-/*********************************************/
-/* FOR OUR VOTING MECHANISM DATABASE  */
-/*********************************************/
-
-#block-3b97079327e74e15848fb366e3adcbea {
-  /* Styling for notion-collection-gallery */
-  .notion-collection-gallery {
-  margin-top: 28px;
-    padding: 0px!important;
-    /* Styling for notion-collection-card */
-    .notion-collection-card {
-      margin-bottom: 18px;
-      padding: 0px!important;
-      display: flex!important;
-      flex-direction: row!important;
-      overflow: visible!important;
-    }
-
-    /* Styling for notion-collection-card__content */
-    .notion-collection-card__content {
-      display: flex!important;
-      flex-direction: row!important;
-            overflow: visible!important;
-    }
-
- .notion-property.notion-property__title {
-    border: 2px solid #444444;
-    border-radius: 50%;
-    font-size: 48px!important;
-    font-family: "Arial Black", sans-serif;
-    color: #444444;
-    -webkit-text-stroke: 2px #FFFEFC;
-    text-stroke: 2px #FFFEFC!important;
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 1);
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center!important;
-    justify-content: center!important;
-    background-color: var(--color-bg-default) !important;
-    transform: translateY(-40px);
-
-
-
-
-    @media (max-width: 1370px) {
-        font-size: calc(32px + 1vw) !important;
-    }
-}
-
-    /* Styling for notion-collection-card__content */
-    .notion-collection-card__content {
-      padding: 8px;
-    }
-
-
-    /* Adjusting the font-size of the title span */
-    .notion-property__title {
-      font-size: 22px;
-      padding: 4px 0px;
-    }
-
-    /* Styling for notion-collection-card__property-list */
-    .notion-collection-card__property-list {
-      display: flex;
-      align-items: center;
-    }
-
-    /* Adjusting the font-size, padding, and color of the text span */
-    .notion-property__text {
-      font-size: 15px;
-      padding: 1px 0px !important;
-      color: black !important;
-    }
-    .notion-property__text {
-      max-width: 100%;
-    }
-
-    /* THE PASTEL EXCEPTION (Card System 36f): a feature row of four, so
-       these are pastel cards — same ring construction, a translucent ink ring,
-       a lighter highlight, no lift, black type only. Not interactive. */
-    .notion-collection-card {
-      border-radius: var(--card-radius) !important;
-      padding: var(--callout-padding);
-      border: 1px solid rgba(0, 0, 0, 0.1) !important;
-      box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.5) !important;
-    }
-
-    .notion-collection-card:nth-child(4n + 1) {
-      background-color: #F8E8B3 !important; /* yellow */
-    }
-
-    .notion-collection-card:nth-child(4n + 2) {
-      background-color: #D2E3F6 !important; /* blue */
-    }
-
-    .notion-collection-card:nth-child(4n + 3) {
-      background-color: #DCEEC7 !important; /* green */
-    }
-
-    .notion-collection-card:nth-child(4n + 4) {
-      background-color: #F8DDC6 !important; /* orange */
-    }
-  }
 }
 /*********************************************/
 /*********************************************/
@@ -366,17 +163,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 /*********************************************/
 /* ALL BACKGROUND IMAGES */
 /*********************************************/
-/* PILLAR IMAGE */
-#block-f983f663c3e542d3a3f859f6eec33532 {
-  z-index: -1;
-  position: absolute;
-  width: 500px;
-  transform: translate(-150px, 90px)!important;
-
-  @media (max-width: 1024px) {
-     display: none!important;
-    }
-}
+/* PILLAR IMAGE — removed by the governance design (37h); hidden in section 09. */
 
 /* NETWORKS IMAGE */
 #block-dc0be2e247f04ffd91e3bf4f5b2fb58a {
@@ -2014,26 +1801,293 @@ body {
 /* These four cards are all .no-click: no hover (Card System 36a). */
 
 
-/* --- GOVERNANCE STEPS — 2x2 ---------------------------------------------- */
+/* --- GOVERNANCE — 37h "ONE OBJECT · PAPER" -------------------------------
 
-/* "On Chain Governance": four numbered pillars, which Super laid out on three
-   fixed 264px tracks — so the row broke 3 + 1 and the fourth pillar sat alone
-   under the first, reading as an afterthought rather than the fourth of four.
+   From design file "Governance", 37h. The pillars stop being four pastel cards
+   beside the table and become the table's own header band: four equal tracks
+   with hairline dividers, numbered like column headers, directly above the
+   votes they governed. The table loses its pill-per-cell look: hairline rows,
+   the chain as its glyph in a tinted well (added by home.js), the vote as a
+   word with one green dot, dates at full contrast.
 
-   Two tracks divide four cards evenly, and the set is a list of equal steps,
-   so an even split is what the content wants. Measured after: two rows of two,
-   every card 415x96.
+   THE NOTION STRUCTURE IS KEPT. Heading above; then a two-column list — left
+   the sentence, the pillars gallery and the temple image; right the table and
+   the View Voting History button. Both columns dissolve (display: contents)
+   and their blocks are placed on one grid:
+       sentence  | button
+       pillars (band, full width)
+       table (full width)
+   The heading and the sentence keep the site's own type — only the new band
+   and table are drawn to the design.
 
-   Fixed px tracks were the actual fault — they cannot reflow — so the columns
-   are fractions here, and there is a single-column fallback for phones. */
-#block-3b97079327e74e15848fb366e3adcbea .notion-collection-gallery {
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  gap: 24px !important;
+   Removed with this: the old pastel cards with outlined Arial Black numerals,
+   the temple line art, the table-to-cards mobile layout and the pill rules. */
+
+#block-e99ac68f4a5848d091bc204578c1ec55 {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-areas: "lead cta" "band band" "table table" !important;
+  column-gap: 40px !important;
+  row-gap: 30px !important;
+  align-items: end !important;
 }
 
-@media (max-width: 640px) {
+#block-811676ccbfa2496ebde5edf2b3520d6e,
+#block-d1894ed7cc594198a2355f8229e5d1a6 {
+  display: contents !important;
+}
+
+#block-45c7dda9faae4c6d94390f4eb380d3a4 { grid-area: lead !important; margin: 0 !important; }
+#block-4efab8b5f9e246679a4d719fe3dcd31e { grid-area: cta !important; justify-self: end !important; margin: 0 !important; }
+#block-3b97079327e74e15848fb366e3adcbea { grid-area: band !important; margin: 0 !important; }
+#block-4529386b39be4a9aa44d2dbac56537bd { grid-area: table !important; margin: 0 !important; }
+
+#block-f983f663c3e542d3a3f859f6eec33532,
+#block-e99ac68f4a5848d091bc204578c1ec55 .notion-text:empty {
+  display: none !important;
+}
+
+/* The band */
+#block-3b97079327e74e15848fb366e3adcbea .notion-collection-gallery {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-top: 1px solid #000000 !important;
+  border-bottom: 1px solid #E2E2DB !important;
+}
+
+#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card {
+  display: flex !important;
+  flex-direction: column !important;
+  margin: 0 !important;
+  padding: 20px !important;
+  border: 0 !important;
+  border-left: 1px solid #E2E2DB !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  transition: background-color 0.16s ease !important;
+}
+
+#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:first-child {
+  padding-left: 0 !important;
+  border-left: 0 !important;
+}
+
+#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:hover {
+  background: #F2F2ED !important;
+}
+
+#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card__content {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 9px !important;
+  padding: 0 !important;
+}
+
+/* The number: "1" in Notion, drawn as 01 in a 20px well, with a PILLAR label
+   beside it. Hovering the track lights the well green. */
+#block-3b97079327e74e15848fb366e3adcbea .notion-property__title {
+  position: relative !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 20px !important;
+  height: 20px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: #E2E2DB !important;
+  transform: none !important;
+  font-family: var(--type-mono) !important;
+  font-size: 9.5px !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  color: #3A3D38 !important;
+  -webkit-text-stroke: 0 !important;
+  text-shadow: none !important;
+  transition: background-color 0.16s ease, color 0.16s ease !important;
+}
+
+#block-3b97079327e74e15848fb366e3adcbea .notion-property__title::before {
+  content: "0";
+}
+
+#block-3b97079327e74e15848fb366e3adcbea .notion-property__title::after {
+  content: "Pillar";
+  position: absolute;
+  left: calc(100% + 9px);
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6B6F68;
+}
+
+#block-3b97079327e74e15848fb366e3adcbea .notion-property__title > * {
+  display: contents !important;
+}
+
+#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:hover .notion-property__title {
+  background: #99CC66 !important;
+  color: #000000 !important;
+}
+
+#block-3b97079327e74e15848fb366e3adcbea .notion-property__text {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: var(--type-display) !important;
+  font-weight: 600 !important;
+  font-size: 16.5px !important;
+  line-height: 1.16 !important;
+  letter-spacing: -0.018em !important;
+  color: #000000 !important;
+}
+
+/* The table */
+#block-4529386b39be4a9aa44d2dbac56537bd .notion-collection-table__wrapper {
+  overflow: visible !important;
+  border: 0 !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd table {
+  width: 100% !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd th,
+#block-4529386b39be4a9aa44d2dbac56537bd td {
+  height: auto !important;
+  padding: 14px 20px 14px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid #E2E2DB !important;
+  background: transparent !important;
+  vertical-align: middle !important;
+  text-align: left !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd th {
+  padding: 0 20px 12px 0 !important;
+  border-bottom-color: #000000 !important;
+  font-family: var(--type-mono) !important;
+  font-size: 10.5px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #6B6F68 !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd th *,
+#block-4529386b39be4a9aa44d2dbac56537bd td > div {
+  padding: 0 !important;
+  font: inherit !important;
+  color: inherit !important;
+  letter-spacing: inherit !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd .number { width: 84px !important; }
+#block-4529386b39be4a9aa44d2dbac56537bd th.select:nth-of-type(4),
+#block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(4) { width: 92px !important; }
+#block-4529386b39be4a9aa44d2dbac56537bd .date { width: 168px !important; }
+
+#block-4529386b39be4a9aa44d2dbac56537bd th.date,
+#block-4529386b39be4a9aa44d2dbac56537bd td.date {
+  padding-right: 0 !important;
+  text-align: right !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd td.number {
+  font-family: var(--type-mono) !important;
+  font-size: 14.5px !important;
+  font-variant-numeric: tabular-nums !important;
+  color: #000000 !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd td.select .notion-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  text-transform: none !important;
+  white-space: nowrap !important;
+  color: #000000 !important;
+}
+
+/* Chain: Outfit 500. home.js puts the glyph well in front of the name. */
+#block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(3) .notion-pill {
+  gap: 11px !important;
+  font-family: var(--type-display) !important;
+  font-weight: 500 !important;
+  font-size: 15.5px !important;
+  letter-spacing: -0.014em !important;
+}
+
+/* Vote: the word with one green dot. home.js writes "YES" as "Yes". */
+#block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(4) .notion-pill {
+  gap: 8px !important;
+  font-family: var(--type-body) !important;
+  font-weight: 400 !important;
+  font-size: 15px !important;
+  letter-spacing: 0 !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(4) .notion-pill::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #99CC66;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd td.date {
+  font-family: var(--type-body) !important;
+  font-size: 14.5px !important;
+  color: #3A3D38 !important;
+  white-space: nowrap !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd td.date .date {
+  position: static !important;
+  width: auto !important;
+  margin: 0 !important;
+  font-size: inherit !important;
+}
+
+/* Narrow: everything stacks, the band goes two by two, the table scrolls. */
+@media (max-width: 900px) {
+  #block-e99ac68f4a5848d091bc204578c1ec55 {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas: "lead" "cta" "band" "table" !important;
+    row-gap: 22px !important;
+  }
+  #block-4efab8b5f9e246679a4d719fe3dcd31e { justify-self: start !important; }
   #block-3b97079327e74e15848fb366e3adcbea .notion-collection-gallery {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:nth-child(3) {
+    padding-left: 0 !important;
+    border-left: 0 !important;
+  }
+  #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:nth-child(n+3) {
+    border-top: 1px solid #E2E2DB !important;
+  }
+  #block-4529386b39be4a9aa44d2dbac56537bd .notion-collection-table__wrapper {
+    overflow-x: auto !important;
+  }
+  #block-4529386b39be4a9aa44d2dbac56537bd table {
+    min-width: 560px !important;
   }
 }
 
