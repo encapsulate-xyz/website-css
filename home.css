@@ -1394,6 +1394,11 @@ body {
   pointer-events: none !important;
   margin: 0 !important;
   padding: 0 max(clamp(28px, 6vw, 88px), calc(50vw - 430px)) !important;
+  /* Full-viewport boxes with the text placed by padding, so the Type System's
+     heading measure (h2: max-width 22ch, main.css §06) must not apply: 22ch of
+     11px mono inside 530px padding left no content width and stacked the
+     label one letter per line. */
+  max-width: none !important;
 }
 
 /* "Testimonials" — directly above the quote, as in the artifact, not on the
