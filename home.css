@@ -2528,7 +2528,6 @@ body {
   min-height: 0 !important;
   display: block !important;
   position: relative !important;
-  min-height: 452px !important;
   margin-right: -64px !important;
   border: 1px solid rgba(250, 250, 248, 0.22) !important;
   border-right: 0 !important;
@@ -2621,6 +2620,8 @@ body {
     grid-column: 1 !important;
     grid-row: 5 !important;
     min-height: 0 !important;
+    width: 100% !important;
+    justify-self: stretch !important;
     margin: 16px 0 0 !important;
     border-right: 1px solid rgba(250, 250, 248, 0.22) !important;
     border-radius: 12px !important;
