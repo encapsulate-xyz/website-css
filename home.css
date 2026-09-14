@@ -2739,22 +2739,6 @@ body {
 
 
 /*********************************************/
-/* 15a. NETWORKS SECTION — LEFTOVER */
-/*********************************************/
-
-/* The section was briefly wrapped in a Notion callout (drawn as a paper-2 band,
-   then as a plain band with and without hairlines) and is back on the page
-   without one, which read better. Only this remains: */
-/* TEMPORARY — the old, now empty networks column list left behind below the
-   band when the section moved into the callout: six dividers, the atom
-   watermark and an empty line (210px of blank space). Delete the block in
-   Notion, then delete this rule. */
-.notion-root #block-c2b0cf429b3a4162bd2c1ec9922f16ed {
-  display: none !important;
-}
-
-
-/*********************************************/
 /* 15. NETWORKS GALLERY (HOMEPAGE) */
 /*********************************************/
 
