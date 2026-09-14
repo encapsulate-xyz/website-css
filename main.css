@@ -10,7 +10,7 @@
      06. HEADINGS — THE TYPE SYSTEM
      07. BUTTONS — THE BUTTON SYSTEM
      08. DATABASES AND PROPERTIES
-     09. COLLECTION CARDS
+     09. CARDS — THE CARD SYSTEM
      10. PILLS
      11. COLUMN DIVIDERS
      12. CODE BLOCKS
@@ -740,90 +740,203 @@ h4.notion-heading {
 
 
 /*********************************************/
-/* 09. COLLECTION CARDS */
+/* 09. CARDS — THE CARD SYSTEM */
 /*********************************************/
 
-/* SCOPING NOTE — read before touching anything here.
-   `.notion-collection-card` is shared by every gallery on the site. The
-   homepage alone has seven, and their covers are nothing alike:
+/* From design file "Card System" (36a–36h, built on 32c). One construction
+   for every card, the way §07 is for every button: a paper fill, a neutral 1px
+   ring, a 1.5px white highlight along the top, a 12px corner and one pixel of
+   lift that deepens on hover.
 
-     block-bd1e4d48…  4 cards   320x200   "Why Stake With Encapsulate"
-     block-f853251f…  5 cards   250x250   Testimonials (square avatars)
-     block-d07ab52b…  35 cards  189x128   Networks
-     block-3b970793…  4 cards   no cover  Governance steps
-     block-6a8e93a3…  3 cards   334x200   Team (object-fit: contain)
-     block-67d891d0…  40 cards  1140x200  Blog banners
-     block-5b2c372a…  4 cards   114x128   Contact (object-fit: contain)
+     state     fill     ring      shadow
+     rest      #FAFAF8  #D9D9D2   highlight + 0 1px 2px /6%
+     hover     #FAFAF8  #B9B9B1   highlight + lift + 0 2px 6px /5%
+     press     #F2F2ED  #D9D9D2   highlight + inset 0 1px 2px /7% (no lift)
+     selected  #FAFAF8  #000      doubled by an inner 1px ink ring
+     disabled  #FAFAF8  #EDEDE7   none
 
-   So a global `width: 100%` + `object-fit: cover` on the cover is destructive:
-   it stretches the square testimonial avatars over their quote text and pulls
-   the team portraits off-centre, because those covers rely on `contain` and on
-   Super's own sizing. Anything that assumes a particular cover shape belongs
-   in a per-collection block, not up here. */
+   HOW NOTION MAPS ONTO IT.
+     Interactive  = a card that opens a page. Super marks the others `.no-click`;
+                    those take no hover or press at all (36a's plan card).
+     Density      = the gallery's Card size setting in Notion, which Super
+                    emits as .small / .medium / .large on the gallery:
+                      small  → compact 16px padding, gap 10  (grids of eight+)
+                      medium → default 22px, gap 13          (sections)
+                      large  → roomy   28px, gap 16          (rows of two or three)
+     Bleed        = every card is drawn at 6px padding so a cover meets the
+                    ring; the cover's radius is 12 − 6 = 6px, and the text
+                    block takes the rest of the density's padding. A card with
+                    no cover ends up with exactly the density padding.
+   Nothing moves or scales on hover (36h): the old translateY lift and hard
+   offset shadow are gone.
 
-/* --- Global: applies to every gallery ------------------------------------ */
+   SCOPING. `.notion-collection-card` is shared by every gallery on the site.
+   The homepage galleries that are drawn as something other than a card —
+   networks (circles), testimonials (deck), Who we are (names), Why stake —
+   are scoped to a block id in home.css and out-rank everything here.
 
-/* Cards are transparent by default, which lets the page background image show
-   through — so an explicit background is required, not cosmetic. */
-.notion-collection-card {
-  padding: 8px;
-  border-radius: var(--radius-card) !important;
-  background-color: var(--color-bg-default) !important;
-  transition: var(--transition) !important;
+   Not built from the file, because Notion has no way to mark them: selected
+   state, the pastel variant (feature rows of three or four only) and the well
+   (a nested surface). Their tokens are below for sections that need them.
+   Rules that CSS can't enforce: one ring per object — never put a card inside
+   a card; no pastel grids. */
+
+:root {
+  --card-radius: 12px;
+  --card-bleed: 6px;
+  --card-media-radius: calc(var(--card-radius) - var(--card-bleed));
+  --card-pad: 22px;
+  --card-gap: 13px;
+  --card-title-size: 19px;
+
+  --card-fill: #FAFAF8;
+  --card-fill-press: #F2F2ED;
+  --card-ring: #D9D9D2;
+  --card-ring-hover: #B9B9B1;
+  --card-ring-selected: #000000;
+  --card-ring-disabled: #EDEDE7;
+  --card-highlight: inset 0 1.5px 0 rgba(255, 255, 255, 1);
+  --card-lift: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --card-lift-hover: 0 1px 2px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.05);
+  --card-press: inset 0 1px 2px rgba(0, 0, 0, 0.07);
+  --card-focus: rgba(0, 0, 0, 0.32);
+
+  --card-title: #000000;
+  --card-body: #3A3D38;
+  --card-meta: #6B6F68;
+
+  --card-well: #F2F2ED;           /* nested surface on paper; no ring, no highlight */
+  --card-pastels: #DCEEC7, #F8E8B3, #D2E3F6, #F8DDC6, #F7DCE7;
+
+  /* ON INK (36c) — redefine these on a dark section. No outer lift in any
+     state: a black blur over a dark field only darkens the edge.
+       --card-fill: rgba(250,250,248,.06);  --card-fill-press: rgba(250,250,248,.1);
+       --card-ring: rgba(250,250,248,.26);  --card-ring-hover: rgba(250,250,248,.44);
+       --card-ring-selected: #FAFAF8;       --card-ring-disabled: rgba(250,250,248,.12);
+       --card-highlight: inset 0 1.5px 0 rgba(255,255,255,.18);
+       --card-lift: 0 0 #0000;  --card-lift-hover: 0 0 #0000;
+       --card-press: inset 0 1px 2px rgba(0,0,0,.3);
+       --card-focus: rgba(250,250,248,.5);  --card-well: rgba(0,0,0,.22);
+       --card-title: #FAFAF8;  --card-body: #C9C9C4;  --card-meta: #B4B4B4; */
 }
 
-.notion-collection-card:hover {
-  transform: translateY(var(--hover-lift));
-  border: var(--hard-border) !important;
-  box-shadow: var(--hard-shadow-lg) !important;
-  background-color: var(--color-bg-default) !important;
+/* Density, from Notion's Card size. */
+.notion-collection-gallery.small {
+  --card-pad: 16px;
+  --card-gap: 10px;
+  --card-title-size: 16px;
+}
+
+.notion-collection-gallery.large {
+  --card-pad: 28px;
+  --card-gap: 16px;
+  --card-title-size: 21px;
+}
+
+/* 18px between cards: at 12px the lifts start to touch (36g). */
+.notion-collection-gallery {
+  gap: 18px !important;
+}
+
+/* An explicit fill is required, not cosmetic: cards are transparent by
+   default and the page background would show through. */
+.notion-collection-card {
+  position: relative;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: var(--card-bleed) !important;
+  border: 1px solid var(--card-ring) !important;
+  border-radius: var(--card-radius) !important;
+  background-color: var(--card-fill) !important;
+  box-shadow: var(--card-highlight), var(--card-lift) !important;
+  transform: none !important;
+  transition: background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease !important;
+}
+
+.notion-collection-card:not(.no-click):hover {
+  border-color: var(--card-ring-hover) !important;
+  box-shadow: var(--card-highlight), var(--card-lift-hover) !important;
+  cursor: pointer !important;
+}
+
+/* Pushed in, not dimmed: the lift goes and an inset takes its place. */
+.notion-collection-card:not(.no-click):active {
+  border-color: var(--card-ring) !important;
+  background-color: var(--card-fill-press) !important;
+  box-shadow: var(--card-highlight), var(--card-press) !important;
+}
+
+/* The whole card is one link (Super's anchor covers it), so the ring shows on
+   the card when that link has keyboard focus. */
+.notion-collection-card:has(> .notion-collection-card__anchor:focus-visible) {
+  outline: 3px solid var(--card-focus) !important;
+  outline-offset: 2px !important;
+}
+
+.notion-collection-card__anchor:focus-visible {
+  outline: 0 !important;
+}
+
+/* Not interactive: no hover, no press. */
+.notion-collection-card.no-click,
+.notion-collection-card.no-click:hover {
   cursor: default !important;
 }
 
-/* THE DOUBLE BORDER, everywhere.
-   This rule used to put a 1px border on the cover. Combined with Super's own
-   1px border on the card, that drew two nested frames — a box inside a box.
-   Measured on /team before the fix: cover border 1px, and because the cover
-   also carries `margin: 20px` from that page's own CSS, the image sat at
-   L:29 / R:-11 — pushed off centre and overflowing the card's right edge.
-
-   `border: 0` removes the inner frame. `margin-inline: auto` overrides only
-   the horizontal half of that 20px margin, so the image centres (L:9 / R:9)
-   while keeping its 20px of vertical breathing room. `max-width: 100%` stops
-   any cover from spilling past its card again.
-
-   Verified against every gallery: geometry is unchanged everywhere the cover
-   was already full-bleed (Why Stake, Networks, Team quotes, Blog) — only the
-   invisible 3px transparent border goes to 0 — and the contact-form icon does
-   not move. */
+/* The cover meets the ring at 6px, its corner derived from the card's. Cover
+   shapes differ by gallery (square avatars, contain-fit logos), so size and
+   fit are left to Super and the page CSS; this only removes the old inner
+   frame and centres the image. */
 .notion-collection-card__cover {
   border: 0 !important;
   margin-inline: auto !important;
   max-width: 100% !important;
-  border-radius: var(--radius-card) !important;
-  transition: var(--transition) !important;
+  border-radius: var(--card-media-radius) !important;
 }
 
-
-/* `.no-click` is Super's own class for a card whose link is disabled — it
-   should not pretend to be interactive.
-   CHANGED: was `.notion-collection-card.gallery.no-click`; Super applies
-   `.no-click` to the card regardless of view, so `.gallery` only narrowed it
-   for no reason. */
-.notion-collection-card.no-click:hover {
-  transform: none !important;
-  border: var(--hard-border) !important;
-  box-shadow: none !important;
-  cursor: default !important;
+/* The text block takes the rest of the density padding, so a card with no
+   cover is padded exactly --card-pad. Equal height in a row: the block
+   absorbs leftover height, and its last property is pinned to the bottom. */
+.notion-collection-card__content {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+  gap: calc(var(--card-gap) - 6px);
+  padding: calc(var(--card-pad) - var(--card-bleed)) !important;
 }
 
-/* TEMP: make cards genuinely unclickable.
-   CHANGED: Super now wraps the card in `a.notion-collection-card__anchor`
-   rather than a bare descendant <a>, so the old `.gallery a` selector would
-   no longer match. */
-/*.notion-collection-card__anchor {*/
-/*  pointer-events: none !important;*/
-/*}*/
+.notion-collection-card__cover ~ .notion-collection-card__content,
+.notion-collection-card > span:has(.notion-collection-card__cover) ~ .notion-collection-card__content {
+  padding-top: var(--card-gap) !important;
+}
+
+.notion-collection-card__content > :last-child:not(:first-child) {
+  margin-top: auto !important;
+}
+
+.notion-collection-card .notion-property__title {
+  font-family: var(--type-display) !important;
+  font-weight: 600 !important;
+  font-size: var(--card-title-size) !important;
+  line-height: 1.12 !important;
+  letter-spacing: -0.024em !important;
+  color: var(--card-title) !important;
+}
+
+.notion-collection-card .notion-property__text {
+  font-family: var(--type-body) !important;
+  font-size: 14.5px !important;
+  line-height: 1.55 !important;
+  color: var(--card-body) !important;
+}
+
+.notion-collection-card .notion-property__date {
+  font-family: var(--type-mono) !important;
+  font-size: 10.5px !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--card-meta) !important;
+}
 
 
 /*********************************************/
@@ -917,19 +1030,27 @@ h4.notion-heading {
 /* 13. LINK PREVIEWS (BOOKMARKS / EXTERNAL OBJECTS) */
 /*********************************************/
 
+/* Card System construction (§09) — a link preview is an interactive card. */
 .notion-external-object,
 .notion-bookmark {
-  border-radius: 8px !important;
-  border: 1px solid var(--color-border-default);
-  background-color: transparent !important;
-  transition: var(--transition) !important;
+  border: 1px solid var(--card-ring) !important;
+  border-radius: var(--card-radius) !important;
+  background-color: var(--card-fill) !important;
+  box-shadow: var(--card-highlight), var(--card-lift) !important;
+  transform: none !important;
+  transition: background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease !important;
 }
 
 .notion-external-object:hover,
 .notion-bookmark:hover {
-  transform: translateY(var(--hover-lift));
-  border: var(--hard-border);
-  box-shadow: var(--hard-shadow-lg) !important;
+  border-color: var(--card-ring-hover) !important;
+  box-shadow: var(--card-highlight), var(--card-lift-hover) !important;
+}
+
+.notion-external-object:active,
+.notion-bookmark:active {
+  background-color: var(--card-fill-press) !important;
+  box-shadow: var(--card-highlight), var(--card-press) !important;
 }
 
 .notion-external-object__attributes {
