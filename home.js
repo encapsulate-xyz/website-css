@@ -355,7 +355,8 @@
 
   var NEAR = 0.33;       // of a screen: how close a resting page must be to a stop to settle on it
   var EPS = 2;           // px: "on" a stop
-  var QUIET = 180;       // ms without wheel events that ends a gesture
+  var QUIET = 180;       // ms without wheel events before a resting page is settled
+  var gestureUntil = 0;
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   var docTop = function (el) { return el.getBoundingClientRect().top + window.scrollY; };
@@ -402,7 +403,7 @@
     if (anim) clearTimeout(anim.timer);
     anim = { target: target };
     // ends when the scroll arrives (checked on scrollend / scroll) or after a safety timeout
-    anim.timer = setTimeout(finish, smooth ? 1200 : 50);
+    anim.timer = setTimeout(finish, smooth ? 900 : 50);
     window.scrollTo({ top: target, behavior: smooth ? "smooth" : "instant" });
   }
   function finish() {
@@ -447,20 +448,37 @@
     return null;
   }
 
-  /* ── wheel and trackpad: one gesture, one panel ── */
-  var gestureUntil = 0, gestureLocked = false;
+  /* ── wheel and trackpad: one gesture, one panel ──
+
+     A trackpad keeps firing wheel events for seconds after the fingers lift (momentum), with
+     deltas that shrink. The first version treated every event within 180ms of the last as the
+     same gesture, so the lock stretched across the whole momentum tail and a new swipe made in
+     that time was swallowed — snapping "worked, then needed 4–5 seconds and several tries".
+
+     A new gesture is now recognised by either
+       - a pause: no wheel event for NEW_GAP ms, or
+       - a rise: once a swipe's deltas have started to fall, momentum only ever decays, so a
+         delta that jumps well above the smallest delta seen since can only be a fresh swipe.
+         (A swipe's own start ramps up before it falls, so rises before the fall don't count.)
+     A new gesture made while a snap is still moving pages on from where that snap is going. */
+  var NEW_GAP = 250;
+  var lastWheel = 0, lastAbs = 0, tailMin = Infinity, falling = false, gestureLocked = false;
   window.addEventListener("wheel", function (e) {
     if (e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return; // pinch-zoom, sideways
-    var now = performance.now();
-    var inGesture = now < gestureUntil;
+    var now = performance.now(), abs = Math.abs(e.deltaY);
+    var fresh = now - lastWheel > NEW_GAP || (falling && abs > lastAbs && abs > Math.max(tailMin * 3, 12));
+    if (abs < lastAbs) falling = true;
+    lastWheel = now; lastAbs = abs;
     gestureUntil = now + QUIET;
-    if (anim || (inGesture && gestureLocked)) { e.preventDefault(); return; }
-    gestureLocked = false;
-    var list = stops(), y = window.scrollY, dir = e.deltaY > 0 ? 1 : -1;
+    if (gestureLocked && !fresh) { if (falling) tailMin = Math.min(tailMin, abs); e.preventDefault(); return; }
+    gestureLocked = false; tailMin = Infinity; falling = false;
+
+    var list = stops(), dir = e.deltaY > 0 ? 1 : -1;
+    var y = anim ? anim.target : window.scrollY; // mid-snap: page on from where it is heading
     var d = deckAt(y, list);
-    if (!d) return;
+    if (!d) { if (anim) e.preventDefault(); return; }
     var target = onStop(d, y) ? nextStop(d, y, dir) : landStop(d, y, dir);
-    if (target === null) return; // at the end of the deck: scroll out normally
+    if (target === null) { if (anim) e.preventDefault(); return; } // end of the deck: scroll out normally
     e.preventDefault();
     gestureLocked = true;
     scrollToY(target);
@@ -493,6 +511,7 @@
   if (hasScrollEnd) window.addEventListener("scrollend", function () { arrived(); setTimeout(settle, 30); });
   window.addEventListener("scroll", function () {
     if (!hasScrollEnd) { clearTimeout(restTimer); restTimer = setTimeout(function () { arrived(); settle(); }, 140); }
+    arrived();
     paintRail();
   }, { passive: true });
   window.addEventListener("touchstart", function () { touching = true; if (anim) finish(); }, { passive: true });
