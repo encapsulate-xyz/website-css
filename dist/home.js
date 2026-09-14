@@ -765,7 +765,8 @@
    Homepage blog — design "Blog Highlights".
 
    The blog gallery's first three posts become a horizontal rail of large ink cards that snap to
-   the centre, with a dot pager and a "Read every post" link on the heading's row.
+   the centre, with a dot pager on the heading's row. (A script-made "Read every post" link was removed: buttons
+   and text come from Notion, never from this file — the section's own button is left as it is.)
 
      card    ink cover (#3A3D38) at 1.91:1, 12px corners; the post's Cover glyph bleeding off the
              bottom-right corner in a pastel tint picked per post; the category in that tint and the date
@@ -776,9 +777,8 @@
 
    BUILT FROM NOTION: title, link, date and tags are read from the gallery cards. The category is
    the post's first tag other than "Informative" (or "Informative" when that is all it has). The
-   glyph is the post's Cover image; its tint is a stable pseudo-random pick from the pastels. The link target of the
-   "Read every post" control is the section's View All button. The gallery and that button stay
-   in the page, hidden, as the no-JavaScript fallback. Styles: home-dial.css, "BLOG RAIL". The
+   glyph is the post's Cover image; its tint is a stable pseudo-random pick from the pastels. The gallery stays in the
+   page, hidden, as the no-JavaScript fallback. Styles: home-dial.css, "BLOG RAIL". The
    heading and the paragraph keep the site's own type. */
 (function () {
   var GALLERY = "block-67d891d07f914f4699b81d1765e1f04f";
@@ -870,18 +870,15 @@
     if (rail && rail.getAttribute("data-sig") === sig) { sizeControls(); return; }
     if (rail) rail.remove();
 
-    // the heading and paragraph above the gallery, and the View All row below it
+    // the heading above the gallery (the dot pager sits on its row)
     var heading = null, n = gallery.previousElementSibling;
     while (n && !heading) { if (n.matches && n.matches(".notion-heading")) heading = n; n = n.previousElementSibling; }
-    var more = gallery.nextElementSibling;
-    var moreLink = more && more.querySelector(".notion-callout .notion-link");
 
     rail = el("div", "enc-blog");
     rail.setAttribute("data-sig", sig);
     list.forEach(function (p, i) { rail.appendChild(card(p, i)); });
     gallery.parentElement.insertBefore(rail, gallery);
     gallery.setAttribute("data-enc-hidden", "");
-    if (more && moreLink) more.setAttribute("data-enc-hidden", "");
 
     var old = document.querySelector(".enc-blog__controls");
     if (old) old.remove();
@@ -895,11 +892,6 @@
       dots.appendChild(b);
     });
     controls.appendChild(dots);
-    if (moreLink) {
-      var read = el("a", "enc-blog__more", "Read every post");
-      read.setAttribute("href", moreLink.getAttribute("href"));
-      controls.appendChild(read);
-    }
     if (heading) heading.parentElement.insertBefore(controls, heading.nextSibling);
     else rail.parentElement.insertBefore(controls, rail);
     controls.__heading = heading;
