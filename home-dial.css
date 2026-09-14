@@ -538,10 +538,15 @@
   display: none !important;
 }
 
+/* Notion gives column children full width and a block margin; the columns
+   are sized by their discs and sit flush right, the full height of the band. */
 .enc-net {
-  display: flex;
+  display: flex !important;
+  flex: none !important;
   gap: 14px;
-  height: 100%;
+  width: auto !important;
+  height: 100% !important;
+  margin: 0 !important;
 }
 
 .enc-net__col {
