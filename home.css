@@ -2744,8 +2744,7 @@ body {
 
 /* The section sits in a Notion callout so it can be treated as one object.
    It stays on the page's own ground — a paper-2 band was tried and read as a
-   colour used nowhere else — and is set apart by full-width hairlines top and
-   bottom instead, in the Card System's ring colour (#D9D9D2). Same full-bleed
+   colour used nowhere else — with no border (see the note in the rule). Same full-bleed
    construction as the stats band (section 00): 100vw wide, pulled out by the
    difference, padded back in to the site gutter, so the rules run edge to
    edge. The callout's icon, fill, border, corner and padding go. The column
@@ -2757,8 +2756,9 @@ body {
   margin: 0 0 0 calc(50% - 50vw) !important;
   padding: 0 max(48px, calc(50vw - 864px)) !important;
   border: 0 !important;
-  border-top: 1px solid #D9D9D2 !important;
-  border-bottom: 1px solid #D9D9D2 !important;
+  /* Top and bottom hairlines were tried here (2026-09-15) and removed to see the
+     section without them. To bring them back, use the design's divider
+     colour: border-top / border-bottom: 1px solid #E2E2DB. */
   border-radius: 0 !important;
   box-shadow: none !important;
   background: transparent !important;
