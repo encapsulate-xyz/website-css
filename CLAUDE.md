@@ -111,11 +111,13 @@ pasted again.
 
 ## Open items
 
-- **Button sizing.** Buttons stretch to their column's full width — Notion block behaviour, not a
-  decision. A fit-content version was built and reverted on 2026-09-13; the working approach and the
-  trap are both recorded in the `TODO — BUTTON SIZING` comment in `main.css` section 07. Short
-  version: `width: fit-content` alone collapses every button to 66px, because the label sits inside
-  an absolutely-positioned anchor and so contributes no intrinsic width.
+- **Buttons follow the Button System (main.css §07, 2026-09-14).** Tier = the callout's colour in
+  Notion: Gray → secondary, Default (no colour) → tertiary (label + arrow badge), any other colour
+  → primary. The label sets the width; 44px default, 48px hero (home.css redefines `--btn-*` on
+  the hero column list); dark sections redefine the ink tokens (home.css does Who we are). Content
+  still to recolour in Notion to match the system's "one primary per view": the three "View All"
+  buttons and "View Voting History" → Default (tertiary); the eleven purple buttons on /services
+  are all primary.
 - **Both hero buttons point at `/networks`,** including "Book a Call". Content fix, in Notion.
 - **Stat card says 28 networks; the fork panel says 38.** One of them is wrong.
 - **Who We Are, "And others." card.** In Notion as the fourth, last card. Its cover is
