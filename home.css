@@ -2848,7 +2848,7 @@ body {
    it. Add it alongside Archivo if you want the exact design type:
    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet"> */
 #block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-property__title {
-  font-family: "Outfit", "Archivo", system-ui, sans-serif !important;
+  font-family: "Outfit", system-ui, sans-serif !important;
   font-weight: 500 !important;
   font-size: 17px !important;
   letter-spacing: -0.015em !important;

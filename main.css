@@ -429,10 +429,16 @@ nav.super-navbar .super-navbar__list::before {
    heading changed height — except "Services and Tools", which came back from
    153px to 78px, because the lighter, narrower face no longer overflows its
    640px column. Raise the weight toward 700 if the headings feel too soft. */
+/* FONT: plain sans-serif, on purpose. This rule asked for "Archivo" from 2026-09
+   onward, but the Head never loaded Archivo (only Archivo Black, a different
+   family), so every h1 rendered in the browser's fallback sans-serif — and that
+   is the look that was kept (decided 2026-09-14). It is now written as what it
+   is, so nothing names a font that never loads. Loading Archivo later would be
+   a visible change, not a fix. */
 h1.notion-heading {
   margin-top: 0 !important;
   padding-top: 0 !important;
-  font-family: "Archivo", sans-serif !important;
+  font-family: sans-serif !important;
   font-weight: 600 !important; /* overrides Super's --heading-weight: 800 */
   font-size: calc(48px + 1.4vw) !important;
   --h1-line-height: 1 !important;

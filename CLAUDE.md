@@ -81,10 +81,11 @@ Custom CSS boxes (site and page) must be **emptied**, or old and new rules both 
 - **Removed as unused:** Allerta Stencil, Comfortaa, Give You Glory, Gloria Hallelujah, Indie
   Flower, Archivo Black, the Google Inter link, and duplicate Outfit links. The gtag block was
   commented out (analytics is off).
-- **Open question — Archivo.** main.css §06 sets every `h1.notion-heading` in `"Archivo"`, but no
-  Head line loads Archivo (only Archivo Black was loaded, a different family), so headings render
-  in the fallback `sans-serif`. Either add `family=Archivo:wght@600` to the fonts link (headings
-  change to the intended face) or change §06 to the face the site should use.
+- **Archivo — resolved, not loaded.** main.css §06 used to ask for `"Archivo"` on every
+  `h1.notion-heading`, but Archivo was never loaded, so headings rendered in the fallback
+  `sans-serif`. That look was kept (2026-09-14): the rule now says `sans-serif`, and the unused
+  `"Archivo"` fallbacks were dropped from home.css and network.css. Do not add an Archivo link —
+  it would visibly change every heading.
 
 ### Releasing a change
 
