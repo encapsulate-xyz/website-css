@@ -1092,7 +1092,7 @@ body {
 
    THE MARKUP IT IS MAPPED ONTO. One Notion column-list, two columns, each:
      p.notion-text   (1st)  eyebrow, "For new chain teams" / "For delegators"
-     h1.notion-heading      "Add us to your genesis set" / "Stake where…"
+     h2.notion-heading      "Add us to your genesis set" / "Stake where…"
      p.notion-text   (2nd)  the standfirst
      ul.notion-bulleted-list
 
@@ -1181,10 +1181,10 @@ body {
   color: #6B6F68 !important;
 }
 
-/* Heading. Notion emits an h1 here, so this has to beat both
+/* Heading (Notion Heading 2; :is(h1, h2) so a re-level cannot orphan it). Has to beat
    `h1.notion-heading` (0,1,1) and `.notion-column .notion-column h1…` — the
    row id carries it. */
-#block-3dae800a51388006a57be06b8ebea78e h1.notion-heading {
+#block-3dae800a51388006a57be06b8ebea78e :is(h1, h2).notion-heading {
   margin: 0 0 20px !important;
   padding: 0 !important;
   font-family: "Outfit", sans-serif !important;
@@ -1197,7 +1197,7 @@ body {
   text-wrap: balance !important;
 }
 
-#block-3dae800a51388006a57be06b8ebea78e > .notion-column:last-child h1.notion-heading {
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column:last-child :is(h1, h2).notion-heading {
   max-width: 17ch !important; /* "Stake where we are already running." wants one more */
 }
 
@@ -1242,7 +1242,7 @@ body {
     border-left: 0 !important;
     border-top: 1px solid #E2E2DB !important;
   }
-  #block-3dae800a51388006a57be06b8ebea78e h1.notion-heading {
+  #block-3dae800a51388006a57be06b8ebea78e :is(h1, h2).notion-heading {
     font-size: 34px !important;
   }
 }
