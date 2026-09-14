@@ -1925,6 +1925,7 @@ body {
   display: flex !important; /* not grid: the "0" and the digit are two items and grid stacked them */
   align-items: center !important;
   justify-content: center !important;
+  gap: 0 !important; /* Super gives .notion-property a 4px gap, which split "0" from the digit */
   width: 20px !important;
   height: 20px !important;
   min-height: 0 !important; /* Super floors properties at 24px */
