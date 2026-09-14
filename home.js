@@ -384,31 +384,36 @@
     return out;
   }
 
+  /* Measurements are cached: reading layout on every scroll frame forces the browser to
+     recalculate it mid-scroll, which is visible as stutter on a page this size. The cache is
+     dropped on resize and whenever Super changes the page. */
+  var cache = null;
+  function stops() { return cache || (cache = decks()); }
+  function invalidate() { cache = null; }
+
+  /* The browser's own smooth scroll, not a scripted one. A per-frame window.scrollTo runs on the
+     main thread and stutters under full-screen sticky panels; behavior: "smooth" is animated by
+     the compositor. The first version animated by hand and was visibly choppy. */
   var anim = null;
-  function scrollToY(target, done) {
+  function scrollToY(target) {
     target = Math.max(0, Math.min(target, document.documentElement.scrollHeight - window.innerHeight));
-    var from = window.scrollY, dist = target - from;
-    if (anim) cancelAnimationFrame(anim.raf);
-    if (Math.abs(dist) < 1 || reduced.matches) {
-      window.scrollTo(0, target);
-      anim = null; lastRest = target; paintRail(); if (done) done();
-      return;
-    }
-    var html = document.documentElement, prev = html.style.scrollBehavior;
-    html.style.scrollBehavior = "auto"; // a smooth scroll-behavior would smooth every frame again
-    var dur = Math.max(420, Math.min(720, Math.abs(dist) * 0.6));
-    var t0 = performance.now();
-    anim = { target: target, raf: 0 };
-    var step = function (now) {
-      var p = Math.min(1, (now - t0) / dur);
-      var e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; // ease-in-out cubic
-      window.scrollTo(0, from + dist * e);
-      if (p < 1) { anim.raf = requestAnimationFrame(step); return; }
-      html.style.scrollBehavior = prev;
-      anim = null; lastRest = target; paintRail();
-      if (done) done();
-    };
-    anim.raf = requestAnimationFrame(step);
+    if (Math.abs(target - window.scrollY) < 1) { lastRest = target; paintRail(); return; }
+    var smooth = !reduced.matches;
+    if (anim) clearTimeout(anim.timer);
+    anim = { target: target };
+    // ends when the scroll arrives (checked on scrollend / scroll) or after a safety timeout
+    anim.timer = setTimeout(finish, smooth ? 1200 : 50);
+    window.scrollTo({ top: target, behavior: smooth ? "smooth" : "instant" });
+  }
+  function finish() {
+    if (!anim) return;
+    clearTimeout(anim.timer);
+    lastRest = window.scrollY;
+    anim = null;
+    paintRail();
+  }
+  function arrived() {
+    if (anim && Math.abs(window.scrollY - anim.target) <= 1) finish();
   }
 
   function deckAt(y, list) {
@@ -451,7 +456,7 @@
     gestureUntil = now + QUIET;
     if (anim || (inGesture && gestureLocked)) { e.preventDefault(); return; }
     gestureLocked = false;
-    var list = decks(), y = window.scrollY, dir = e.deltaY > 0 ? 1 : -1;
+    var list = stops(), y = window.scrollY, dir = e.deltaY > 0 ? 1 : -1;
     var d = deckAt(y, list);
     if (!d) return;
     var target = onStop(d, y) ? nextStop(d, y, dir) : landStop(d, y, dir);
@@ -465,7 +470,7 @@
   var lastRest = window.scrollY, touching = false, restTimer = 0;
   function settle() {
     if (anim || touching || performance.now() < gestureUntil) return;
-    var list = decks(), y = window.scrollY;
+    var list = stops(), y = window.scrollY;
     var d = deckAt(y, list);
     if (d) {
       if (onStop(d, y)) { lastRest = y; return; }
@@ -485,12 +490,12 @@
     else lastRest = y;
   }
   var hasScrollEnd = "onscrollend" in window;
-  if (hasScrollEnd) window.addEventListener("scrollend", function () { setTimeout(settle, 30); });
+  if (hasScrollEnd) window.addEventListener("scrollend", function () { arrived(); setTimeout(settle, 30); });
   window.addEventListener("scroll", function () {
-    if (!hasScrollEnd) { clearTimeout(restTimer); restTimer = setTimeout(settle, 140); }
+    if (!hasScrollEnd) { clearTimeout(restTimer); restTimer = setTimeout(function () { arrived(); settle(); }, 140); }
     paintRail();
   }, { passive: true });
-  window.addEventListener("touchstart", function () { touching = true; if (anim) { cancelAnimationFrame(anim.raf); anim = null; } }, { passive: true });
+  window.addEventListener("touchstart", function () { touching = true; if (anim) finish(); }, { passive: true });
   window.addEventListener("touchend", function () { touching = false; if (!hasScrollEnd) setTimeout(settle, 140); }, { passive: true });
 
   /* ── the testimonial rail ── */
@@ -502,7 +507,7 @@
       railQueued = false;
       var rail = document.getElementById(RAIL), section = document.getElementById(QUOTE_SECTION);
       if (!rail || !section) return;
-      var d = decks().filter(function (x) { return x.id === QUOTES; })[0];
+      var d = stops().filter(function (x) { return x.id === QUOTES; })[0];
       var rows = rail.querySelectorAll("tbody tr");
       if (!d || !rows.length) { section.removeAttribute("data-enc-deck"); return; }
       section.setAttribute("data-enc-deck", "");
@@ -514,7 +519,7 @@
         if (!r.hasAttribute("data-enc-go")) {
           r.setAttribute("data-enc-go", "");
           r.addEventListener("click", function () {
-            var dd = decks().filter(function (x) { return x.id === QUOTES; })[0];
+            var dd = stops().filter(function (x) { return x.id === QUOTES; })[0];
             if (dd && dd.stops[n] !== undefined) scrollToY(dd.stops[n]);
           });
         }
@@ -524,8 +529,9 @@
 
   /* Super re-renders after load and on in-app navigation; repaint the rail when it does. */
   var t = 0;
-  new MutationObserver(function () { clearTimeout(t); t = setTimeout(paintRail, 80); })
+  new MutationObserver(function () { invalidate(); clearTimeout(t); t = setTimeout(paintRail, 80); })
     .observe(document.body, { childList: true, subtree: true });
-  window.addEventListener("resize", paintRail);
+  window.addEventListener("resize", function () { invalidate(); paintRail(); });
+  window.addEventListener("load", invalidate);
   paintRail();
 })();
