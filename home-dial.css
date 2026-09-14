@@ -699,8 +699,11 @@
 }
 
 .enc-blog__controls {
-  display: flex;
+  display: flex !important;
+  flex: none !important;
   align-items: center;
+  width: auto !important; /* Notion gives column children full width */
+  margin: 0 !important;
 }
 
 .enc-blog__dots {
