@@ -1896,6 +1896,7 @@ body {
   place-items: center !important;
   width: 20px !important;
   height: 20px !important;
+  min-height: 0 !important; /* Super floors properties at 24px */
   margin: 0 !important;
   padding: 0 !important;
   border: 0 !important;
@@ -1992,7 +1993,11 @@ body {
   letter-spacing: inherit !important;
 }
 
+/* Super writes a width inline on every th; with every column fixed, a fixed
+   table shares the spare width out between all of them. The chain column is
+   the one that takes the rest. */
 #block-4529386b39be4a9aa44d2dbac56537bd .number { width: 84px !important; }
+#block-4529386b39be4a9aa44d2dbac56537bd th.select:nth-of-type(3) { width: auto !important; }
 #block-4529386b39be4a9aa44d2dbac56537bd th.select:nth-of-type(4),
 #block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(4) { width: 92px !important; }
 #block-4529386b39be4a9aa44d2dbac56537bd .date { width: 168px !important; }
