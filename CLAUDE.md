@@ -2,7 +2,12 @@
 
 Custom CSS for the Super.so site at https://encapsulate.xyz.
 
-- `main.css` — site-level CSS. Pasted into **Super → Settings → Code → Custom CSS**. Applies to every page.
+- `main.css` — site-level CSS. Pasted into **Super → Settings → Code → Custom CSS**. Applies to every page. Site-wide rules only — no `#block-…` ids.
+- `home.css` — page-level CSS for the homepage. Pasted into the homepage's own **Code** panel (CSS).
+- `home.js` + `home-dial.css` — homepage script for the institutional staking dial, and the styles
+  that only apply once it runs. `build.py` combines them (a `<style>` then a `<script>`) into
+  `dist/home-head.html`; paste that into the homepage's **Code** panel → **Head**. The dial styles
+  live there, not in home.css, because home.css is near Super's size limit.
 - `network.css` — page-level CSS for `/networks`. Pasted into that page's own **Code** panel.
 - `svg/` — source SVGs uploaded to the DigitalOcean CDN and referenced by URL from the CSS.
 
@@ -14,7 +19,7 @@ Custom CSS for the Super.so site at https://encapsulate.xyz.
 cp main.css backups/main.css.bak-$(date +%Y%m%d-%H%M%S)
 ```
 
-Same for `network.css`. One backup per editing session is enough — no need to re-copy between
+Same for `home.css` and `network.css`. One backup per editing session is enough — no need to re-copy between
 consecutive edits to the same file in the same turn.
 
 Backups live in `backups/`, which is gitignored. Keep them out of the project root — they were
@@ -38,14 +43,16 @@ These files are heavily commented on purpose — the comments are the record of 
 exists and what was measured — but Super does not need them. So:
 
 ```bash
-python3 build.py          # writes dist/main.css and dist/network.css
+python3 build.py          # writes dist/main.css, dist/home.css, dist/network.css, dist/home-head.html
 ```
 
-**Edit `main.css` / `network.css`. Paste `dist/main.css` / `dist/network.css`.**
+**Edit `main.css` / `home.css` / `network.css`. Paste the matching file from `dist/`.**
 
-The build only removes comments and blank-line runs; it is string- and `url()`-aware, so a `/*`
-inside a data URI or font name is never mistaken for a comment. Declaration counts are asserted
-equal before and after. Roughly: main.css 95KB → 39KB, network.css 38KB → 22KB.
+The build removes comments and collapses whitespace, both outside strings and `url()`, so a `/*`
+inside a data URI or a font name is never touched. Selectors and declarations are unchanged:
+with whitespace ignored, the output matches the comment-stripped source exactly. Largest accepted
+paste so far: 55.7KB; 106KB was rejected. Current builds: main.css 17.8KB, home.css 60.2KB,
+network.css 19.6KB — see "What lives where".
 
 ## Open items
 
@@ -56,6 +63,144 @@ equal before and after. Roughly: main.css 95KB → 39KB, network.css 38KB → 22
   an absolutely-positioned anchor and so contributes no intrinsic width.
 - **Both hero buttons point at `/networks`,** including "Book a Call". Content fix, in Notion.
 - **Stat card says 28 networks; the fork panel says 38.** One of them is wrong.
+- **Who We Are, "And others." card.** In Notion as the fourth, last card. Its cover is
+  `06-and-others-on-paper.png`; the section is dark, so the design's `06-and-others-on-ink.png` is the
+  right export. Any last card that is fourth or later is drawn without the tinted circle, so if a
+  fourth real person is added with no crew card, that rule needs revisiting.
+
+## What lives where — main.css vs home.css (moved 2026-09-14)
+
+**Rule:** `main.css` holds only what every page shares. Anything that targets a `#block-…` id
+belongs in that page's own CSS — for the homepage, `home.css`. Every block id that was in main.css
+existed only on the homepage (checked against the rendered HTML of `/`, `/networks`, `/team`,
+`/contact`, `/governance`, `/blog`, matching `id="block-…"` — Super inlines site CSS into every
+page, so a plain text search finds every id everywhere).
+
+**Built sizes after the move:** `dist/main.css` 11.0KB (was 65.4KB; 17.8KB once the form styles
+were added), `dist/home.css` 60.2KB (was 10.7KB). **home.css at 60KB is larger than anything pasted into Super before** (largest accepted:
+55.7KB, rejected: 106KB). If the homepage Code panel rejects it, shorten the long repeated
+selectors in the moved sections (the block ids dominate the byte count) or ask Super what the
+page-level limit is.
+
+### main.css — site-wide
+
+| § | Section |
+|---|---|
+| 01 | Fonts |
+| 02 | Design tokens |
+| 03 | General page layout |
+| 04 | Navigation bar |
+| 05 | Navbar menu (slide-out) |
+| 06 | Headings — generic h1–h3, nested-column h1, `strong`/`u` treatments |
+| 07 | Callouts as buttons — primary / secondary (gray) |
+| 08 | Databases and properties |
+| 09 | Collection cards — global card, cover, double border, `.no-click` |
+| 10 | Pills |
+| 11 | Column dividers |
+| 12 | Code blocks |
+| 13 | Link previews |
+| 13b | Notion forms — every form on the site (22a-light) |
+| 16 | Footer |
+| 17 | Reduced motion |
+
+### home.css — homepage
+
+Older page CSS, top of the file, unchanged: screen responsiveness, horizontal lines around
+"Earn Rewards…" (`0dea66c8…`), table-to-cards (`4529386b…`), network/governance table limits,
+governance table, code font for numbers, hides other pages, **voting mechanism / governance cards
+(`3b970793…`)**, hide proposal titles, contact us (`5b2c372a…`), pillar images, body background,
+full-page content, Wistia video (`1ee04e9f…`).
+
+Then, under "HOMEPAGE SECTIONS — MOVED FROM main.css", flat CSS in this order: stats band / figures
+/ deck (00–00c), hero line, audience fork (07b), testimonials deck, Why Stake cards + governance
+2×2, Who We Are (09b, with scroll snap), blog gallery (14), networks gallery (15).
+
+### How the move was done
+
+- **Replaced, not merged.** Where home.css already styled a block the moved section redesigned, the
+  old home.css rules were deleted: hero line, Team, testimonials, networks gallery, blog. The newer
+  (main.css) version won outright.
+- **Deleted as dead** — nothing on the site matches them: `eb15a093…` (old "Earn Rewards" heading,
+  in both files), `8cd1bdc3…`, `23ee800a…` (announcement banner),
+  `#block-test-home-new-why-stake-with-kingsuper` (not a real block id).
+- **Not an overlap after all:** governance. home.css styles the cards (badge numbers, colours,
+  layout); main.css only set the 2×2 column count and touched none of those properties. Both kept.
+- **Blog limit stated once.** The old blog rules hid cards twice (n+4 and nested n+3) and main.css
+  un-hid the third. With the old rules gone, §14 now hides `n+4` itself and the "reveal the third
+  post" rule is gone.
+- **Carried over deliberately** (the comparison below showed these old declarations were still
+  visible, so each is restated once in its new section, marked CARRIED OVER): hero line
+  `margin-bottom: 0`; 40px `padding-bottom` under each testimonial quote; plain 14px black network
+  pills; blog `.date` pinned bottom-right at 18px and 12px blog pills.
+
+**Verified** on the live homepage by swapping the old and new CSS into the page's own style
+elements and comparing ~100 computed properties (plus `::before`/`::after`) on all ~18,000
+elements, at 1920×936 and 390×844. After the carry-overs, no element changes size, position,
+colour, type or visibility at either width. The only remaining differences are inert:
+`flex-direction`/`padding` on testimonial and team cards that are `display: grid`/`contents`, and
+the Team quote's old `::after`, which was already `display: none`.
+
+## Notion forms — rendered natively, styled site-wide (main.css §13b, 2026-09-14)
+
+Super's docs describe forms only as an embed, but **Super renders a Notion form into the page with
+its own classes** (no iframe), so CSS styles all of it. Every form on the site is styled by
+`main.css` §13b ("22a-light" from design file *Institutional Form*), scoped to
+`.notion-form__wrapper`, not a block id. A form that should differ gets an id-scoped override in
+its page's CSS. First instance: the homepage's Institutional Staking form,
+`#block-3dbe800a513880af9fe0c4bc175e1975`.
+
+```
+div.notion-form__wrapper.as-embed                  ← the block (#block-…)
+  div.notion-header.form                           ← §03 hides .notion-header site-wide; §13b re-shows it
+    div.notion-header__cover.no-cover.no-icon.form-cover
+    div.notion-header__content.max-width.form-content.as-embed
+      div.notion-header__title-wrapper > h1.notion-header__title
+      div.notion-header__description.form-description
+  form.notion-form.has-header.as-embed             no action attribute — Super's JS submits
+    div.notion-form__field.<type>                  type: title | email | multi_select | text
+      h2.notion-form__field-title                  label
+        span.notion-form__field-title-required     "*" (gets .error too)
+      input.notion-form__input-field               title, email
+      textarea.notion-form__input-field.long-answer   long text
+      p.notion-form__field-error                   e.g. "Invalid email" — shown even when empty
+      div.notion-form__select-options              choice questions
+        div.notion-form__checkbox-wrapper[role=button]   Super sets width:100%
+          label.notion-form__checkbox-label
+            div.notion-form__checkbox-input-wrapper
+              input.notion-form__checkbox-input[type=radio]
+              div.notion-form__checkbox.radio      drawn indicator
+            div.notion-form__checkbox-text         option label
+    div.notion-button.notion-form__submit-button
+      button.notion-button__content.color-default > span  "Submit"
+```
+
+- **Dropdowns are ignored.** A choice question set to "Dropdown" in Notion still renders as a radio
+  list (15 radios for the network question). A real dropdown needs JS, so §13b draws the options
+  as chips, picked state via `:has(input:checked)`. The radio stays in place, invisible, over the
+  chip, so clicks and keyboard still work.
+- **"Invalid email"** is printed under an empty email field; §13b hides it while the field shows
+  its placeholder.
+- **The dial (homepage, `home.js` + `home-dial.css`, design 22a "The dial").** A hard left/right
+  split: ink half with the label, $ figure, $200k line and $50k–$25M slider; paper half with the
+  controls. On a form with a Number question labelled **Amount**, the script builds the dial and
+  writes the slider value into the hidden Amount question. Choice questions with more than 6
+  options (Network) become a listbox whose options show each chain's glyph in a pastel well — the
+  glyph is the cover of that chain's card in the homepage networks gallery, so there is no image
+  list to maintain; shorter ones (Duration) stay Super's radios, drawn as pill buttons. The button
+  reads "Send this". The form is marked `[data-enc-dial]` (attributes, not classes — React resets
+  className on re-render), and every dial style is scoped to that, so without JS the §13b look
+  remains. React inputs: never set `.checked`/`.value` directly — click labels, and use the
+  native value setter plus an `input` event. A MutationObserver re-applies it when Super
+  re-renders.
+- **The form's content in Notion** (Forms page): title "Institutional staking", description "Set
+  what you are planning to stake, tell us where, and we will come back with terms for that size.",
+  questions Network (single choice: the God/High/Medium-tier mainnets + Other), Duration (3–6
+  months, 6–12 months, 1–2 years, Over 2 years), Email, Amount (Number, filled by the dial). All
+  required.
+- **Not yet verified:** that a submission reaches the Notion database, and field types not used yet
+  (date, number, file, checkbox, URL, phone). Inspect when one is added.
+- Block `c79faa64…` on the homepage is the old Tally form (`.super-embed` iframe) — not stylable,
+  and due to be removed now the Notion form replaces it.
 
 ## SVGs are hosted, not inlined
 
