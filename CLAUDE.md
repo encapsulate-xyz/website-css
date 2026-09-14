@@ -283,6 +283,25 @@ div.notion-form__wrapper.as-embed                  ← the block (#block-…)
 - Block `c79faa64…` on the homepage is the old Tally form (`.super-embed` iframe) — not stylable,
   and due to be removed now the Notion form replaces it.
 
+## Homepage decks — JS snapping (home.js, since v7; confirmed working on a trackpad at v10)
+
+The stats band, testimonials and Who we are keep their CSS geometry (sticky one-viewport panels,
+home.css 00c / 09 / 09b); the second half of `home.js` only decides where scrolling stops. Inside a
+deck one wheel/trackpad gesture = one panel; keys, scrollbar and touch settle on the next stop when
+they come to rest; within a third of a screen of a stop outside a deck, the page settles onto it.
+It also drives the testimonial rail's active row (`[data-enc-deck]`, `tr[data-enc-active]`, styles
+in home-dial.css). Lessons, each learned the hard way:
+
+- **Use the browser's smooth scroll** (`scrollTo({behavior: "smooth"})`), not a per-frame scripted
+  animation — the scripted one was visibly choppy on this page (v7).
+- **Cache the stops.** Measuring layout on every scroll frame adds stutter; invalidate on resize
+  and on DOM mutation.
+- **Trackpad momentum lasts seconds.** Treating every wheel event within a short gap as one gesture
+  swallowed new swipes for 4–5 s (v9). A new gesture = a 250ms pause, or a rising delta after the
+  deltas have started to fall. The gesture logic is testable in Node with a stubbed window — the
+  automation tab is hidden, so neither rAF nor smooth scrolling runs there.
+- The CSS proximity snap on Who we are was removed: a CSS snap on html fights scripted scrolling.
+
 ## SVGs are hosted, not inlined
 
 Every SVG the CSS references lives at `validator-website/svg/` on the DigitalOcean CDN, with the
