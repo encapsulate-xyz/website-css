@@ -46,6 +46,19 @@ python3 build.py          # writes dist/: main.css, home.css, network.css, home-
 
 **Edit the source files, run the build, commit source and `dist/` together.** Never edit `dist/`.
 
+### Head files — what to paste into Super
+
+`head/` holds the exact, complete contents of each Super Head box, pinned to the current release.
+The user copies from these files, so **update them in the same commit as every new tag**:
+
+| File | Paste into (replace everything) |
+|---|---|
+| `head/site.html` | Super → Settings → Code → Head |
+| `head/home.html` | Homepage → Code → Head |
+| `head/networks.html` | /networks → Code → Head |
+
+Every other page's Head should contain no `website-css` line (main.css already comes from the site Head).
+
 ### The tags in Super
 
 Pin every URL to a release tag, never `@main` — jsDelivr caches branch URLs for up to 12 hours, so
