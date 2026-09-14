@@ -8,7 +8,7 @@
      04. NAVIGATION BAR
      05. NAVBAR MENU (SLIDE-OUT)
      06. HEADINGS
-     07. CALLOUTS AS BUTTONS
+     07. BUTTONS — THE BUTTON SYSTEM
      08. DATABASES AND PROPERTIES
      09. COLLECTION CARDS
      10. PILLS
@@ -512,168 +512,226 @@ h1.notion-heading:has(u)::after {
 
 
 /*********************************************/
-/* 07. CALLOUTS AS BUTTONS */
+/* 07. BUTTONS — THE BUTTON SYSTEM */
 /*********************************************/
 
-/* A callout containing a link becomes one fully clickable button: the callout
-   is the frame, and the link is stretched to fill it so the whole box is the
-   hit target. The icon is hidden globally via --callout-icon-display in
-   section 02. */
-.notion-callout {
-  position: relative !important;
-}
+/* From design file "Button System" (29a–29h, built on 25b). One construction
+   for every button on the site: a fill, a 1px ring in the fill's own hue a step
+   darker, a 1.5px inner highlight along the top, and a 1px lift shadow that is
+   dropped on ink grounds. Radius 10px. Hanken Grotesk 500, -0.006em.
 
-/* BRAND GREEN. These were pink (--color-bg-pink, #F4DFEB), which is one of
-   Notion's own palette colours rather than anything of yours. Buttons now use
-   the brand green from the kit.
-
-   Both layers have to be set: the callout is the frame and the stretched link
-   sits 2px inside it, so colouring only one leaves a pink hairline around the
-   green.
-
-   A CALLOUT IS A BUTTON ONLY IF ITS OWN TEXT IS THE LINK. The selector is
+   HOW A NOTION CALLOUT BECOMES A BUTTON. A callout whose own text is a link:
      .notion-callout:has(> .notion-callout__content > .notion-semantic-string > .notion-link)
-   — child combinators all the way down — not `:has(.notion-link)`. The looser
-   form matched ANY callout with a link anywhere inside it, so a callout used as
-   a section container turned into a giant button: measured, it caught 11
-   callouts of which two were containers — the "Who we are" section (it holds a
-   Book a call button) and the testimonials section (its glyph images are
-   wrapped in links). The child chain matches all nine real buttons and neither
-   container.
+   Child combinators all the way down, not :has(.notion-link) — the looser form
+   also caught callouts used as section containers (Who we are, testimonials),
+   which hold links further down and turned into giant buttons.
 
-   Scope note: this rule is limited to link callouts, so it only catches callouts
-   that ARE buttons. The stat callouts on the homepage — "Uptime 99.96 %",
-   "Total Customers", "Staked Assets Under Management" — carry Notion's
-   bg-blue-light / bg-green-light / bg-orange-light / bg-yellow-light and hold
-   content, not actions. They keep their own colours. */
-/* TODO — BUTTON SIZING, REVISIT. Buttons currently stretch to the full width
-   of their column, which is Notion's block behaviour, not a decision. A
-   fit-content version was built and reverted; the finding worth keeping is
-   that `width: fit-content` ALONE DOES NOT WORK here. The label lives inside
-   the anchor, and the anchor is absolutely positioned at `inset: 2px` (below)
-   so the whole box is clickable. Out of flow it contributes no intrinsic
-   width, so fit-content collapses every button to 66px — padding around
-   nothing, whatever the label says.
+   THE TIER COMES FROM THE CALLOUT'S BACKGROUND COLOUR IN NOTION:
+     Gray                      secondary   paper fill, grey ring
+     Default (no colour)       tertiary    no box: label + green arrow badge
+     Any other colour          primary     green fill, green ring
+   Rules from the design worth keeping to when choosing a colour: one primary
+   per view (two equal actions are both secondary), and the tertiary only where
+   there is genuinely a third thing to do — "View all" links are tertiary.
 
-   The version that worked: bring the anchor into flow (`position: static`) and
-   move the padding onto it, so the callout sizes to the anchor and the anchor
-   still covers the button. Add `min-width` for a floor and `fit-content` grows
-   past it. Measured then: 200x44, growing to 315px for a long label. */
-/* TEXT COLOUR IS SET, NOT INHERITED. Buttons used to pick up the page's
-   rgb(17,17,17), which only held while the button sat on a paper page. Inside
-   a dark section (Who We Are sets #FAFAF8 on its callout) the label inherited
-   white and read white-on-green. The link below repeats it because it
-   inherits from the callout. */
+   SIZE: the label sets the width. The link is in flow and carries the padding
+   and all the visuals; the callout is only a wrapper that shrinks to it. (The
+   old version stretched the link absolutely over a full-width callout, which
+   is why every button filled its column.) Under 520px buttons go full width,
+   the one case where the label does not set it.
+     md  44px tall, 18px sides, 15px    default — sections, forms, cards
+     lg  48px tall, 20px sides, 15.5px  hero CTAs — set per section in page CSS
+         by redefining --btn-h / --btn-px / --btn-fs / --btn-gap
+   44px is the touch floor, so there is no smaller height.
+
+   STATES: hover and press lower the green's lightness at constant hue (no
+   opacity, which would let the ground through). Press swaps the lift for an
+   inner shadow. Focus is a 3px ring via :focus-visible, so keyboard only.
+
+   INK GROUNDS: a dark section redefines the --btn-* ground tokens (see the
+   block at the end of this section for the names); page CSS does that per
+   section, e.g. home.css for Who we are. Primary drops its lift, secondary
+   becomes a translucent paper wash, the focus ring turns paper at 50%.
+
+   The callout icon is hidden globally via --callout-icon-display (section 02). */
+
+:root {
+  /* size (md) */
+  --btn-h: 44px;
+  --btn-px: 18px;
+  --btn-fs: 15px;
+  --btn-gap: 9px;
+  --btn-badge: 19px;
+  /* ground: paper */
+  --btn-lift: 0 1px 2px rgba(0, 0, 0, 0.10);
+  --btn-lift-soft: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --btn-focus: rgba(0, 0, 0, 0.32);
+  --btn-2-fill: #FAFAF8;
+  --btn-2-fill-hover: #FAFAF8;
+  --btn-2-fill-press: #F2F2ED;
+  --btn-2-ring: #D9D9D2;
+  --btn-2-ring-hover: #B9B9B1;
+  --btn-2-text: #000;
+  --btn-2-highlight: inset 0 1.5px 0 rgba(255, 255, 255, 1);
+  --btn-3-text: #000;
+}
+
+/* The wrapper: shrinks to the link, draws nothing. */
 .notion-callout:has(> .notion-callout__content > .notion-semantic-string > .notion-link) {
-  color: #111111 !important;
-  min-height: 45px !important;
-  border-radius: var(--radius-sm) !important;
-  border: var(--hard-border) !important;
-  box-shadow: var(--hard-shadow) !important;
-  background-color: var(--brand-green-tint) !important;
-  transition: var(--transition) !important;
-}
-
-/* Pressed-in look: the shadow collapses and the green deepens. */
-.notion-callout:has(> .notion-callout__content > .notion-semantic-string > .notion-link):hover {
+  position: relative !important;
+  display: flex !important;
+  align-self: flex-start !important; /* columns are flex columns that stretch */
+  width: fit-content !important;
+  max-width: 100% !important;
+  min-height: 0 !important;
+  margin: 6px 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: transparent !important;
   box-shadow: none !important;
-  background-color: var(--brand-green) !important;
+  overflow: visible !important;
 }
 
+.notion-callout:has(> .notion-callout__content > .notion-semantic-string > .notion-link) > .notion-callout__content {
+  display: block !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.notion-callout:has(> .notion-callout__content > .notion-semantic-string > .notion-link) > .notion-callout__content > .notion-semantic-string {
+  display: block !important;
+}
+
+/* The button itself: primary by default */
 .notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link {
-  color: #111111 !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  position: absolute !important;
-  inset: 2px !important; /* sits just inside the 1px border */
-  /* Flat colour only — no gradient. The lighter green is what lifts the black
-     off the fill; a bolder weight was tried for that and rejected.
-
-     Size comes from design variant 11a (artifact 424c4fde), whose buttons are
-     15px — one step down from Super's default 16px. WEIGHT IS DELIBERATELY NOT
-     TAKEN FROM 11a: it specifies 500, and heavier button text was tried here
-     before and rejected, so this stays at Super's 400. */
-  font-size: 15px !important;
-  background-color: var(--brand-green-tint) !important;
-  text-decoration: none;
-  transition: background-color 0.3s var(--ease) !important;
+  position: static !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: var(--btn-gap) !important;
+  box-sizing: border-box !important;
+  min-height: var(--btn-h) !important;
+  padding: 0 var(--btn-px) !important;
+  border: 1px solid #7CAE48 !important;
+  border-radius: 10px !important;
+  background: #99CC66 !important;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.78), var(--btn-lift) !important;
+  outline: none !important;
+  font-family: "Hanken Grotesk", system-ui, sans-serif !important;
+  font-size: var(--btn-fs) !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.006em !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+  color: #000 !important;
+  cursor: pointer !important;
+  transition: background-color 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease, color 0.14s ease !important;
 }
 
-.notion-callout:has(> .notion-callout__content > .notion-semantic-string > .notion-link):hover
-  .notion-callout__content
-  .notion-semantic-string
-  .notion-link {
-  background-color: var(--brand-green) !important;
+.notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link:hover {
+  background: #8CBF56 !important;
+  border-color: #6F9E41 !important;
 }
 
-
-/* --- SECONDARY BUTTON ---------------------------------------------------- */
-
-/* Everything above is the PRIMARY button: filled green, hard border, hard
-   shadow. This adds the secondary variant — same shape and frame, outline
-   instead of fill — so the two read as a pair rather than competing.
-
-   HOW A BUTTON IS MARKED SECONDARY IN NOTION: set the callout's background
-   colour to GRAY. Any other colour, including the default, stays primary.
-
-     Primary    any colour   filled --brand-green-tint -> --brand-green
-     Secondary  Gray         outline on the page ground, same fill on hover
-
-   WHY COLOUR AND NOT SOMETHING ELSE. This was first keyed to a single block
-   id, which was wrong the moment a second pair of buttons appeared: there are
-   now four button callouts on the homepage (two in the hero, two in the fork
-   panels) and the id covered exactly one of them. The obvious alternative,
-   `:has(.notion-link[href$="/networks"])`, cannot work either — every button
-   currently points at /networks, so it matches the primary too. (That shared
-   href is a content bug worth fixing: "Book a Call" should almost certainly
-   not go to the networks page.)
-
-   Background colour is the right hook because it is the one property an author
-   sets deliberately, per block, from the Notion UI, and it is visible in Notion
-   itself — the editor shows you which buttons are secondary without anyone
-   having to remember a rule. Adding a sixth button needs no CSS at all.
-
-   BOTH LAYERS AGAIN: the callout is the frame and the stretched link sits 2px
-   inside it. Colouring only the callout leaves a green rectangle floating in
-   the middle of an outline button, because the link keeps the fill it
-   inherits from the primary rule above. */
-
-/* THE TEXT COLOUR IS NOT OPTIONAL HERE. Notion's Gray callout arrives with
-   WHITE text: Super sets `color: rgb(255,255,255)` on the callout itself (its
-   parent computes to rgb(17,17,17), so it is not inherited), and the stretched
-   link inherits that. On a filled grey that is fine; on this outline button,
-   whose fill is transparent over a paper page, it is white on near-white —
-   invisible. So the secondary has to re-assert the colour, and it uses the
-   same rgb(17,17,17) the primary buttons already compute to, so the pair
-   matches. */
-.notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-semantic-string > .notion-link),
-.notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-semantic-string > .notion-link) .notion-callout__content
-  .notion-semantic-string .notion-link {
-  /* Filled with the page ground, not transparent. Transparent looked right on a
-     plain page but let whatever sits behind the button show through it — the
-     page's background artwork, or the arc watermark in the fork panels — so
-     the button read as a hole rather than a surface. --color-bg-default is
-     Super's own ground token, and collection cards already use it for exactly
-     this reason (see section 09). */
-  background-color: var(--color-bg-default) !important;
-  color: #111111 !important;
+.notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link:active {
+  background: #7CAE48 !important;
+  border-color: #5F8A37 !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.18) !important;
 }
 
-/* Same pressed-in gesture as the primary — the shadow collapses — but no
-   colour change: any green fill would make the secondary read as a second
-   primary at the moment the cursor is on it, which is the one state where the
-   hierarchy matters most. */
-.notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-semantic-string > .notion-link):hover,
-.notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-semantic-string > .notion-link):hover .notion-callout__content
-  .notion-semantic-string .notion-link {
-  background-color: var(--color-bg-default) !important;
+.notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link:focus-visible {
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.78), 0 0 0 3px var(--btn-focus) !important;
 }
 
-.notion-callout.bg-gray-light:has(> .notion-callout__content > .notion-semantic-string > .notion-link):hover {
+/* Secondary — Gray callout */
+.notion-callout.bg-gray-light > .notion-callout__content > .notion-semantic-string > .notion-link {
+  background: var(--btn-2-fill) !important;
+  border-color: var(--btn-2-ring) !important;
+  box-shadow: var(--btn-2-highlight), var(--btn-lift-soft) !important;
+  color: var(--btn-2-text) !important;
+}
+
+.notion-callout.bg-gray-light > .notion-callout__content > .notion-semantic-string > .notion-link:hover {
+  background: var(--btn-2-fill-hover) !important;
+  border-color: var(--btn-2-ring-hover) !important;
+}
+
+.notion-callout.bg-gray-light > .notion-callout__content > .notion-semantic-string > .notion-link:active {
+  background: var(--btn-2-fill-press) !important;
+  border-color: var(--btn-2-ring-hover) !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07) !important;
+}
+
+.notion-callout.bg-gray-light > .notion-callout__content > .notion-semantic-string > .notion-link:focus-visible {
+  box-shadow: var(--btn-2-highlight), 0 0 0 3px var(--btn-focus) !important;
+}
+
+/* Tertiary — Default-colour callout: no box, arrow badge */
+.notion-callout:not([class*="bg-"]) > .notion-callout__content > .notion-semantic-string > .notion-link,
+.notion-callout:not([class*="bg-"]) > .notion-callout__content > .notion-semantic-string > .notion-link:hover,
+.notion-callout:not([class*="bg-"]) > .notion-callout__content > .notion-semantic-string > .notion-link:active {
+  min-height: 44px !important;
+  padding: 0 6px !important;
+  background: transparent !important;
+  border-color: transparent !important;
   box-shadow: none !important;
+  color: var(--btn-3-text) !important;
 }
+
+.notion-callout:not([class*="bg-"]) > .notion-callout__content > .notion-semantic-string > .notion-link:focus-visible {
+  box-shadow: 0 0 0 3px var(--btn-focus) !important;
+}
+
+.notion-callout:not([class*="bg-"]) > .notion-callout__content > .notion-semantic-string > .notion-link::after {
+  content: "→";
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--btn-badge);
+  height: var(--btn-badge);
+  border-radius: 999px;
+  background: #99CC66;
+  color: #000;
+  font-size: calc(var(--btn-badge) * 0.52);
+  font-weight: 600;
+  transition: transform 0.16s ease;
+}
+
+.notion-callout:not([class*="bg-"]) > .notion-callout__content > .notion-semantic-string > .notion-link:hover::after {
+  transform: translateX(3px);
+}
+
+/* Stacked under 520px: full width */
+@media (max-width: 520px) {
+  .notion-callout:has(> .notion-callout__content > .notion-semantic-string > .notion-link) {
+    align-self: stretch !important;
+    width: 100% !important;
+  }
+
+  .notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link {
+    width: 100% !important;
+  }
+}
+
+/* INK GROUND TOKENS. A dark section sets these on itself (page CSS), and every
+   button inside switches to the on-ink variants. Kept here as a class-free
+   reference; copy the block into the section's selector.
+
+   --btn-lift: 0 0 transparent;
+   --btn-lift-soft: 0 0 transparent;
+   --btn-focus: rgba(250, 250, 248, 0.5);
+   --btn-2-fill: rgba(250, 250, 248, 0.06);
+   --btn-2-fill-hover: rgba(250, 250, 248, 0.12);
+   --btn-2-fill-press: rgba(250, 250, 248, 0.16);
+   --btn-2-ring: rgba(250, 250, 248, 0.3);
+   --btn-2-ring-hover: rgba(250, 250, 248, 0.3);
+   --btn-2-text: #FAFAF8;
+   --btn-2-highlight: inset 0 1.5px 0 rgba(255, 255, 255, 0.26);
+   --btn-3-text: #FAFAF8;
+*/
 
 
 /*********************************************/
@@ -894,8 +952,8 @@ h1.notion-heading:has(u)::after {
 /*********************************************/
 /* From design file "Institutional Form" (22a-light): a paper panel in two
    columns. Left, a very large Outfit figure over a short paragraph. Right, a
-   white card of fields with mono uppercase labels, 48px inputs and a green pill
-   to send.
+   white card of fields with mono uppercase labels, 48px inputs and the system's
+   primary button (section 07) to send.
 
    WHAT COULD NOT BE CARRIED OVER. The design's big figure is a live dollar
    amount driven by a slider, with a line that reacts to the $200k minimum.
@@ -1173,7 +1231,7 @@ h1.notion-heading:has(u)::after {
   outline-offset: 2px !important;
 }
 
-/* Send: the green pill */
+/* Send: the primary button */
 
 .notion-form__wrapper .notion-form__submit-button {
   display: block !important;
@@ -1183,22 +1241,44 @@ h1.notion-heading:has(u)::after {
   border: 0 !important;
 }
 
+/* The system's primary button (section 07), built on Super's own button: same
+   fill, ring, highlight, lift, radius and md size. */
 .notion-form__wrapper .notion-form__submit-button > button {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  min-height: 52px !important;
-  padding: 0 30px !important;
-  border: 0 !important;
-  border-radius: 999px !important;
+  gap: var(--btn-gap) !important;
+  box-sizing: border-box !important;
+  min-height: var(--btn-h) !important;
+  padding: 0 var(--btn-px) !important;
+  border: 1px solid #7CAE48 !important;
+  border-radius: 10px !important;
   background: #99CC66 !important;
-  box-shadow: none !important;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.78), var(--btn-lift) !important;
+  outline: none !important;
   cursor: pointer !important;
   font-family: "Hanken Grotesk", system-ui, sans-serif !important;
-  font-size: 15.5px !important;
+  font-size: var(--btn-fs) !important;
   font-weight: 500 !important;
+  letter-spacing: -0.006em !important;
+  white-space: nowrap !important;
   color: #000 !important;
-  transition: background-color 0.2s ease !important;
+  transition: background-color 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease !important;
+}
+
+.notion-form__wrapper .notion-form__submit-button > button:hover {
+  background: #8CBF56 !important;
+  border-color: #6F9E41 !important;
+}
+
+.notion-form__wrapper .notion-form__submit-button > button:active {
+  background: #7CAE48 !important;
+  border-color: #5F8A37 !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.18) !important;
+}
+
+.notion-form__wrapper .notion-form__submit-button > button:focus-visible {
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.78), 0 0 0 3px var(--btn-focus) !important;
 }
 
 .notion-form__wrapper .notion-form__submit-button > button * {

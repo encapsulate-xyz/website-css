@@ -105,6 +105,11 @@ body{background-repeat: no-repeat;background-position: top center;background-siz
 .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout h1,.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout h2{font-size: clamp(34px,11vw,56px) !important;}
 .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout__content > span.notion-semantic-string{font-size: 15px !important;}
 }
+#block-325ddb2d831643b89b6b291b1480b051{--btn-h: 48px;--btn-px: 20px;--btn-fs: 15.5px;--btn-gap: 10px;--btn-badge: 20px;justify-content: flex-start !important;gap: 12px !important;}
+#block-325ddb2d831643b89b6b291b1480b051 > .notion-column{flex: none !important;width: auto !important;margin: 0 !important;padding: 0 !important;}
+@media (max-width: 520px){#block-325ddb2d831643b89b6b291b1480b051{flex-direction: column !important;gap: 10px !important;}
+#block-325ddb2d831643b89b6b291b1480b051 > .notion-column{width: 100% !important;}
+}
 #block-803c66b0c67043d691a03f4f9e8bdc15{margin-bottom: 0 !important;}
 #block-803c66b0c67043d691a03f4f9e8bdc15{display: block !important;max-width: 16ch !important;padding: 0 !important;margin-left: 0 !important;}
 #block-803c66b0c67043d691a03f4f9e8bdc15,#block-803c66b0c67043d691a03f4f9e8bdc15 strong{font-family: "Outfit",sans-serif !important;font-weight: 600 !important;font-size: 104px !important;line-height: 0.94 !important;letter-spacing: -0.05em !important;color: #000000 !important;-webkit-text-stroke: 0 !important;text-shadow: none !important;}
@@ -249,7 +254,8 @@ body{background-repeat: no-repeat;background-position: top center;background-siz
 #block-3dbe800a513880829d7bd3f3fa175588::before{content: "" !important;position: absolute !important;left: 0 !important;top: calc(50% - 5.5px) !important;width: 1px !important;height: 11px !important;background: rgba(250,250,248,0.4) !important;}
 @supports (anchor-name: --a){#block-3dbe800a513880829d7bd3f3fa175588{position: absolute !important;grid-area: auto !important;position-anchor: --who-core;left: calc(anchor(right) + 16px) !important;top: anchor(top) !important;margin: 0 !important;}
 }
-#block-77f3d3c756c04b32827b07635290c222{grid-column: 5 !important;justify-self: end !important;margin: 0 !important;min-width: 200px !important;}
+#block-77f3d3c756c04b32827b07635290c222{grid-column: 5 !important;justify-self: end !important;margin: 0 !important;}
+#block-3dbe800a513880c5862ae676c8d06994{--btn-lift: 0 0 transparent;--btn-lift-soft: 0 0 transparent;--btn-focus: rgba(250,250,248,0.5);--btn-2-fill: rgba(250,250,248,0.06);--btn-2-fill-hover: rgba(250,250,248,0.12);--btn-2-fill-press: rgba(250,250,248,0.16);--btn-2-ring: rgba(250,250,248,0.3);--btn-2-ring-hover: rgba(250,250,248,0.3);--btn-2-text: #FAFAF8;--btn-2-highlight: inset 0 1.5px 0 rgba(255,255,255,0.26);--btn-3-text: #FAFAF8;}
 @media (min-width: 901px){html:has(#block-3dbe800a513880c5862ae676c8d06994){scroll-snap-type: y proximity;scroll-padding-top: 0 !important;}
 #block-3dbe800a513880c5862ae676c8d06994{scroll-snap-align: start;}
 }
@@ -267,7 +273,7 @@ body{background-repeat: no-repeat;background-position: top center;background-siz
 #block-6a8e93a3b7ed4648ba82d58ee6546962 .notion-collection-card:nth-child(n) .property-59696475{grid-column: 2 !important;grid-row: 2 !important;margin: 0 !important;}
 #block-6a8e93a3b7ed4648ba82d58ee6546962 .notion-collection-card:nth-child(n) .property-64664c63{grid-column: 1 / 3 !important;grid-row: 3 !important;margin: 12px 0 0 !important;max-width: none !important;font-size: 19px !important;}
 #block-3dbe800a513880d4a675d114ff684187{margin: 0 !important;}
-#block-77f3d3c756c04b32827b07635290c222{align-self: stretch !important;min-width: 0 !important;}
+#block-77f3d3c756c04b32827b07635290c222{align-self: flex-start !important;}
 }
 #block-67d891d07f914f4699b81d1765e1f04f .notion-collection-card__cover{width: 100% !important;height: auto !important;aspect-ratio: 16 / 9 !important;object-fit: cover !important;object-position: 50% 50% !important;max-width: none !important;}
 #block-67d891d07f914f4699b81d1765e1f04f .notion-collection-gallery{grid-template-columns: repeat(3,minmax(0,1fr)) !important;}
