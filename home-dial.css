@@ -465,8 +465,8 @@
    [data-enc-net]; everything here is scoped to that, so without the script
    the gallery (home.css §15) shows as before.
 
-   Section: 470px tall. Left, the copy — the Notion "Networks"
-   heading (h2 step; no kicker, removed on request), one sentence at 16px / 1.58 across the column, the buttons. Right,
+   Section: 470px tall. Left, the copy as Notion has it (heading, sentence,
+   button), vertically centred; the text itself is not restyled. Right,
    five columns of 126px discs, 14px apart, 16px between discs, the glyph at
    52% of the disc, each column faded out over its top and bottom 12%.
    The design also drops the atom-and-shield watermark image. */
@@ -497,20 +497,9 @@
   display: none !important;
 }
 
-[data-enc-net] #block-a78830dc0f674404810b08c2ec735847 {
-  margin: 0 0 20px !important;
-}
-
-[data-enc-net] #block-2270e94bfadc49cf8d0d8f0238ddf01b {
-  margin: 0 0 26px !important;
-  padding: 0 !important;
-  font-family: var(--type-body) !important;
-  font-size: 16px !important;
-  line-height: 1.58 !important;
-  color: #3A3D38 !important;
-  max-width: none !important; /* the design caps it at 34ch (three lines); the user asked for the full column */
-  text-wrap: pretty !important;
-}
+/* No rules on the heading or the sentence: they keep the site's own type
+   (main.css §06 and Super's text styles). Text is only restyled for an
+   entirely new section — the user's rule, 2026-09-14. */
 
 /* right: the columns fill the column's height; the gallery is kept, hidden */
 [data-enc-net] > .notion-column:last-child {
