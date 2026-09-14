@@ -901,36 +901,15 @@ body {
   }
 }
 
-/* HERO BUTTONS — the button system's lg size (48px), primary first, 12px gap.
-   In Notion the pair sits in a three-column list (Book a Call | View Networks
-   | empty); the columns are shrunk to their buttons so the gap is the
-   system's 12px rather than whatever the column widths leave. Under 520px
-   main.css section 07 stacks them full width. */
+/* HERO BUTTONS — the button system's lg size (48px). The grouping itself
+   (columns shrunk to their buttons, 12px gap, stacking under 520px) is now
+   main.css section 07's BUTTON GROUPS rule, which applies to every button pair. */
 #block-325ddb2d831643b89b6b291b1480b051 {
   --btn-h: 48px;
   --btn-px: 20px;
   --btn-fs: 15.5px;
   --btn-gap: 10px;
   --btn-badge: 20px;
-  justify-content: flex-start !important;
-  gap: 12px !important;
-}
-
-#block-325ddb2d831643b89b6b291b1480b051 > .notion-column {
-  flex: none !important;
-  width: auto !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-@media (max-width: 520px) {
-  #block-325ddb2d831643b89b6b291b1480b051 {
-    flex-direction: column !important;
-    gap: 10px !important;
-  }
-  #block-325ddb2d831643b89b6b291b1480b051 > .notion-column {
-    width: 100% !important;
-  }
 }
 
 /*********************************************/
