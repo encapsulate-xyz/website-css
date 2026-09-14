@@ -991,9 +991,12 @@ body {
    Measured live at 1920px after the change: Outfit 600, 104px, line-height
    97.76px, tracking -5.2px, no stroke, no shadow — wrapping to two lines in an
    854px column. */
+/* TYPE SYSTEM (main.css section 06): the page's one h1 — Outfit 600,
+   clamp(40px, 6.2vw, 92px), 0.96, -0.046em, 15ch. This replaced the flat
+   104px / 0.94 / -0.05em from design 11a on 2026-09-14. */
 #block-803c66b0c67043d691a03f4f9e8bdc15 {
   display: block !important;
-  max-width: 16ch !important;
+  max-width: 15ch !important;
   padding: 0 !important;
   margin-left: 0 !important;
 }
@@ -1002,24 +1005,14 @@ body {
 #block-803c66b0c67043d691a03f4f9e8bdc15 strong {
   font-family: "Outfit", sans-serif !important;
   font-weight: 600 !important;
-  font-size: 104px !important;
-  line-height: 0.94 !important;
-  letter-spacing: -0.05em !important;
+  font-size: clamp(40px, 6.2vw, 92px) !important;
+  line-height: 0.96 !important;
+  letter-spacing: -0.046em !important;
   color: #000000 !important;
 
   /* Inherited from the old outlined treatment; 11a is flat. */
   -webkit-text-stroke: 0 !important;
   text-shadow: none !important;
-}
-
-/* 104px is the desktop figure from the artifact. Left flat it overflows a
-   phone column, so below 900px it scales and only reaches 104px again where
-   there is room for it. */
-@media (max-width: 900px) {
-  #block-803c66b0c67043d691a03f4f9e8bdc15,
-  #block-803c66b0c67043d691a03f4f9e8bdc15 strong {
-    font-size: clamp(40px, 10vw, 104px) !important;
-  }
 }
 
 /* HAND-DRAWN CIRCLE AROUND ONE WORD ("online")

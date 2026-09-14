@@ -7,7 +7,7 @@
      03. GENERAL PAGE LAYOUT
      04. NAVIGATION BAR
      05. NAVBAR MENU (SLIDE-OUT)
-     06. HEADINGS
+     06. HEADINGS — THE TYPE SYSTEM
      07. BUTTONS — THE BUTTON SYSTEM
      08. DATABASES AND PROPERTIES
      09. COLLECTION CARDS
@@ -406,108 +406,108 @@ nav.super-navbar .super-navbar__list::before {
 
 
 /*********************************************/
-/* 06. HEADINGS */
+/* 06. HEADINGS — THE TYPE SYSTEM */
 /*********************************************/
 
-/* CHANGED: was "Anton", which never loaded — see section 01. Archivo Black is
-   the site's display face, shared with the "You Earn Rewards" h2 and matching
-   the Arial Black used by `h1 strong` below. */
-/* WHY EVERY HEADING LOOKED SO BOLD — two causes, stacked.
+/* From design file "Type System" (31a–31g). Outfit for display, Hanken Grotesk
+   for body, JetBrains Mono for labels; one fluid scale. Tracking tightens as
+   size grows, line height loosens as it shrinks, and every step carries a
+   measure in ch.
 
-   1. Super's theme sets `font-weight: 800` on headings (--heading-weight).
-      That was already true before any change here.
-   2. Archivo Black was briefly used for h1. It ships ONE weight, a black, so
-      `font-weight` has nothing to select and the 800 could not be dialled
-      back. Every section heading shouted at display strength.
+     step  face          size (fluid)             lh    tracking   measure
+     h1    Outfit 600    clamp(40px, 6.2vw, 92px) 0.96  -0.046em   15ch
+     h2    Outfit 600    clamp(30px, 4.2vw, 54px) 1.02  -0.038em   22ch
+     h3    Outfit 600    clamp(22px, 2.4vw, 30px) 1.14  -0.026em   30ch
+     h4    Outfit 500    clamp(18px, 1.6vw, 21px) 1.24  -0.018em   40ch
+     lead  Hanken 400    clamp(17px, 1.7vw, 21px) 1.5   -0.004em   46ch
+     body  Hanken 400    clamp(15.5px, 1.2vw, 16.5px) 1.6  0       72ch
+     small Hanken 400    14–14.5px                1.55  0          78ch
+     label Mono 500      11px uppercase           1.3   0.14em
 
-   Fixed by moving h1 to Archivo, the variable-weight member of the same
-   family, and setting the weight explicitly to 600. The typographic voice
-   stays (it still pairs with the Archivo Black h2 and the Arial Black hero),
-   but section headings read as headings again rather than billboards.
+   Only the headings are applied site-wide here (the tokens for the other steps
+   are defined below for sections to use). Body copy still comes from Super's
+   theme.
 
-   Verified live across all eleven homepage h1s: weight 800 -> 600, and no
-   heading changed height — except "Services and Tools", which came back from
-   153px to 78px, because the lighter, narrower face no longer overflows its
-   640px column. Raise the weight toward 700 if the headings feel too soft. */
-/* FONT: plain sans-serif, on purpose. This rule asked for "Archivo" from 2026-09
-   onward, but the Head never loaded Archivo (only Archivo Black, a different
-   family), so every h1 rendered in the browser's fallback sans-serif — and that
-   is the look that was kept (decided 2026-09-14). It is now written as what it
-   is, so nothing names a font that never loads. Loading Archivo later would be
-   a visible change, not a fix. */
-h1.notion-heading {
+   HOW NOTION HEADINGS MAP ONTO THE SCALE. The design allows one h1 per page.
+   On this site every page opens with a Heading 1 written bold (and usually
+   underlined) — Blog, Team, Services, Guides, Contact Us — which is the page
+   title; every later Heading 1 is a section heading. So:
+     Heading 1 containing bold   → h1   (the page title)
+     any other Heading 1         → h2   (section headings)
+     Heading 2                   → h3
+     Heading 3                   → h4
+   The bold and underline are only the marker: they no longer change the look
+   (they used to draw an outlined Arial Black with black rules above and below,
+   which the design replaces). Sections with their own heading treatment —
+   the homepage hero, stat figures, fork panels, /networks — keep it, because
+   their rules are scoped to a block id and out-rank these.
+
+   Content rule from the design that CSS cannot enforce: sentence case, not
+   Title Case On Every Word ("Latest blog posts", not "Latest Blog Posts"). */
+
+:root {
+  --type-display: "Outfit", system-ui, sans-serif;
+  --type-body: "Hanken Grotesk", system-ui, sans-serif;
+  --type-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+h1.notion-heading,
+h2.notion-heading,
+h3.notion-heading {
   margin-top: 0 !important;
   padding-top: 0 !important;
-  font-family: sans-serif !important;
-  font-weight: 600 !important; /* overrides Super's --heading-weight: 800 */
-  font-size: calc(48px + 1.4vw) !important;
-  --h1-line-height: 1 !important;
-
-  /* Kept as insurance: if a heading in a narrow column ever does wrap, this
-     splits it into two even lines instead of stranding one orphan word. */
-  text-wrap: balance;
+  font-family: var(--type-display) !important;
+  color: inherit;
+  text-wrap: balance !important;
 }
 
-@media (max-width: 1370px) {
-  h1.notion-heading {
-    font-size: calc(32px + 1vw) !important;
-  }
+/* h2 — section headings (every Heading 1 that is not the page title) */
+h1.notion-heading {
+  font-weight: 600 !important;
+  font-size: clamp(30px, 4.2vw, 54px) !important;
+  line-height: 1.02 !important;
+  --h1-line-height: 1.02 !important;
+  letter-spacing: -0.038em !important;
+  max-width: 22ch !important;
+  margin-bottom: 16px !important; /* h2 → body */
 }
 
-/* A heading nested two columns deep is a sub-heading; don't let it shout. */
-.notion-column .notion-column h1.notion-heading {
-  font-size: 48px !important;
+/* h1 — the page title: the Heading 1 that contains bold */
+h1.notion-heading:has(strong, b) {
+  font-size: clamp(40px, 6.2vw, 92px) !important;
+  line-height: 0.96 !important;
+  --h1-line-height: 0.96 !important;
+  letter-spacing: -0.046em !important;
+  max-width: 15ch !important;
+  margin-bottom: 20px !important; /* h1 → lead */
 }
 
-/* Bold runs inside an H1 become the outlined display treatment.
-   Arial Black ships a single weight, so font-weight: 200 is inert on most
-   systems — it only does anything for the sans-serif fallback. */
-h1.notion-heading strong {
-  font-family: "Arial Black", sans-serif;
-  font-size: calc(40px + 3.5vw);
-  font-weight: 200;
-
-  /* Fall back to black: an unresolved var() invalidates the whole declaration
-     and the fill would inherit instead. --color-bg-black is not one of
-     Super's tokens, so the fallback is what actually renders. */
-  color: var(--color-bg-black, #000);
-
-  /* paint-order puts the stroke behind the fill. Without it -webkit-text-stroke
-     is centred on the glyph edge and painted over the fill, so half the stroke
-     width eats into the letterform — which is why the letters looked thin and
-     gnawed and the counters closed up. */
-  paint-order: stroke fill;
-
-  /* In em, so the outline scales with the heading instead of looking heavy on
-     a phone and thin on a 1080p hero. 0.045em is ~4.8px at the 107px hero and
-     ~2.4px where the heading is half that size; the old flat 3px was ~0.028em
-     at the hero. Raise this number to thicken the outline further. */
-  -webkit-text-stroke: 0.045em white;
-
-  text-shadow: 3px 3px 0px rgb(0, 0, 0);
+/* h3 — Notion Heading 2 */
+h2.notion-heading {
+  font-weight: 600 !important;
+  font-size: clamp(22px, 2.4vw, 30px) !important;
+  line-height: 1.14 !important;
+  --h2-line-height: 1.14 !important;
+  letter-spacing: -0.026em !important;
+  max-width: 30ch !important;
 }
 
-/* The stroke and shadow are drawn outside the text box, so a heading sitting
-   flush left or hard against the top of its block gets its outline clipped.
-   The padding gives it somewhere to go; the negative margin keeps the heading
-   optically aligned with the rest of the column. */
-h1.notion-heading:has(strong) {
-  display: inline-block;
-  padding: 6px 8px;
-  margin-left: -8px;
+/* h4 — Notion Heading 3 */
+h3.notion-heading {
+  font-weight: 500 !important;
+  font-size: clamp(18px, 1.6vw, 21px) !important;
+  line-height: 1.24 !important;
+  --h3-line-height: 1.24 !important;
+  letter-spacing: -0.018em !important;
+  max-width: 40ch !important;
 }
 
-/* Underlining an H1 in Notion draws rules above and below it instead. */
-h1.notion-heading u {
-  text-decoration: none;
-}
-
-h1.notion-heading:has(u)::before,
-h1.notion-heading:has(u)::after {
-  content: "";
-  display: block;
-  height: 2px;
-  background: black;
+/* The bold and underline are markers, not styling. */
+:is(h1, h2, h3).notion-heading :is(strong, b, u) {
+  font: inherit !important;
+  letter-spacing: inherit !important;
+  color: inherit !important;
+  text-decoration: none !important;
 }
 
 
