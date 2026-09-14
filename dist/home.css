@@ -195,7 +195,18 @@ body{background-repeat: no-repeat;background-position: top center;background-siz
 #block-4529386b39be4a9aa44d2dbac56537bd th.select:nth-of-type(3){width: auto !important;}
 #block-4529386b39be4a9aa44d2dbac56537bd th.select:nth-of-type(4),#block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(4){width: 92px !important;}
 #block-4529386b39be4a9aa44d2dbac56537bd .date{width: 168px !important;}
-#block-4529386b39be4a9aa44d2dbac56537bd th.date,#block-4529386b39be4a9aa44d2dbac56537bd td.date{padding-right: 0 !important;text-align: right !important;}
+#block-4529386b39be4a9aa44d2dbac56537bd th.date,#block-4529386b39be4a9aa44d2dbac56537bd td.date{text-align: right !important;}
+#block-4529386b39be4a9aa44d2dbac56537bd th.text,#block-4529386b39be4a9aa44d2dbac56537bd td.text{width: 20px !important;padding-right: 0 !important;}
+#block-4529386b39be4a9aa44d2dbac56537bd th.text{font-size: 0 !important;}
+#block-4529386b39be4a9aa44d2dbac56537bd tbody tr{position: relative !important;}
+#block-4529386b39be4a9aa44d2dbac56537bd tbody td{transition: background-color 0.14s ease !important;}
+#block-4529386b39be4a9aa44d2dbac56537bd tbody tr:hover td{background: #F2F2ED !important;}
+#block-4529386b39be4a9aa44d2dbac56537bd td.text .notion-property,#block-4529386b39be4a9aa44d2dbac56537bd td.text .highlighted-color{display: block !important;margin: 0 !important;padding: 0 !important;background: transparent !important;}
+#block-4529386b39be4a9aa44d2dbac56537bd td.text a.notion-link{display: block !important;width: 20px !important;height: 20px !important;border-radius: 999px !important;background: #99CC66 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 13.5 13.5 6.5'/%3E%3Cpath d='M7.75 6.5h5.75v5.75'/%3E%3C/svg%3E") center / 60% no-repeat !important;font-size: 0 !important;color: transparent !important;text-decoration: none !important;border-bottom: 0 !important;opacity: 1 !important;transition: transform 0.16s ease !important;}
+#block-4529386b39be4a9aa44d2dbac56537bd td.text a.notion-link::after{content: "" !important;position: absolute !important;inset: 0 !important;}
+#block-4529386b39be4a9aa44d2dbac56537bd tbody tr:hover td.text a.notion-link{transform: translate(2px,-2px) !important;}
+#block-4529386b39be4a9aa44d2dbac56537bd td.text a.notion-link:focus-visible{outline: none !important;}
+#block-4529386b39be4a9aa44d2dbac56537bd td.text a.notion-link:focus-visible::after{outline: 3px solid rgba(0,0,0,0.32) !important;outline-offset: -3px !important;}
 #block-4529386b39be4a9aa44d2dbac56537bd td.number{font-family: var(--type-mono) !important;font-size: 14.5px !important;font-variant-numeric: tabular-nums !important;color: #000000 !important;}
 #block-4529386b39be4a9aa44d2dbac56537bd td.select .notion-pill{display: inline-flex !important;align-items: center !important;width: auto !important;margin: 0 !important;padding: 0 !important;border: 0 !important;border-radius: 0 !important;background: transparent !important;text-transform: none !important;white-space: nowrap !important;color: #000000 !important;}
 #block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(3) .notion-pill{gap: 11px !important;font-family: var(--type-display) !important;font-weight: 500 !important;font-size: 15.5px !important;letter-spacing: -0.014em !important;}
