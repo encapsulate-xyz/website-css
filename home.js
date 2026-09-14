@@ -455,23 +455,31 @@
      same gesture, so the lock stretched across the whole momentum tail and a new swipe made in
      that time was swallowed — snapping "worked, then needed 4–5 seconds and several tries".
 
-     A new gesture is now recognised by either
+     A new gesture is recognised by either
        - a pause: no wheel event for NEW_GAP ms, or
-       - a rise: once a swipe's deltas have started to fall, momentum only ever decays, so a
-         delta that jumps well above the smallest delta seen since can only be a fresh swipe.
-         (A swipe's own start ramps up before it falls, so rises before the fall don't count.)
+       - a rise after a real decay: at least MIN_LOCK ms after the page turned, once the deltas
+         have fallen below half their peak, a delta four times the smallest since then (and at
+         least 20) can only be a fresh swipe.
+     A swipe's own deltas wobble — they dip and climb while the fingers are still moving — so the
+     first version of this rule (any rise after any dip) sometimes fired mid-swipe and turned two
+     panels at once (v10). MIN_LOCK and the half-peak decay are what stop that.
      A new gesture made while a snap is still moving pages on from where that snap is going. */
-  var NEW_GAP = 250;
-  var lastWheel = 0, lastAbs = 0, tailMin = Infinity, falling = false, gestureLocked = false;
+  var NEW_GAP = 250, MIN_LOCK = 450;
+  var lastWheel = 0, lockedAt = 0, peak = 0, tailMin = Infinity, decayed = false, gestureLocked = false;
   window.addEventListener("wheel", function (e) {
     if (e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return; // pinch-zoom, sideways
     var now = performance.now(), abs = Math.abs(e.deltaY);
-    var fresh = now - lastWheel > NEW_GAP || (falling && abs > lastAbs && abs > Math.max(tailMin * 3, 12));
-    if (abs < lastAbs) falling = true;
-    lastWheel = now; lastAbs = abs;
+    var gap = now - lastWheel;
+    lastWheel = now;
     gestureUntil = now + QUIET;
-    if (gestureLocked && !fresh) { if (falling) tailMin = Math.min(tailMin, abs); e.preventDefault(); return; }
-    gestureLocked = false; tailMin = Infinity; falling = false;
+    if (gestureLocked && gap <= NEW_GAP) {
+      peak = Math.max(peak, abs);
+      if (abs < peak * 0.5) decayed = true;
+      var rise = decayed && now - lockedAt > MIN_LOCK && abs > Math.max(tailMin * 4, 20);
+      if (decayed) tailMin = Math.min(tailMin, abs);
+      if (!rise) { e.preventDefault(); return; }
+    }
+    gestureLocked = false;
 
     var list = stops(), dir = e.deltaY > 0 ? 1 : -1;
     var y = anim ? anim.target : window.scrollY; // mid-snap: page on from where it is heading
@@ -480,7 +488,7 @@
     var target = onStop(d, y) ? nextStop(d, y, dir) : landStop(d, y, dir);
     if (target === null) { if (anim) e.preventDefault(); return; } // end of the deck: scroll out normally
     e.preventDefault();
-    gestureLocked = true;
+    gestureLocked = true; lockedAt = now; peak = abs; tailMin = Infinity; decayed = false;
     scrollToY(target);
   }, { passive: false });
 
