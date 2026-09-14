@@ -793,7 +793,7 @@ h4.notion-heading {
   --card-title-size: 19px;
 
   --card-fill: #FFFFFF; /* design: #FAFAF8 on a #F2F2ED ground; this site's ground is #FFFEFC, so cards go to pure white to stay lighter than the page */
-  --card-fill-press: #F2F2ED;
+  --card-fill-press: #FAFAF8;  /* design: paper becomes the pressed step once the card is white */
   --card-ring: #D9D9D2;
   --card-ring-hover: #B9B9B1;
   --card-ring-selected: #000000;
@@ -857,6 +857,11 @@ h4.notion-heading {
 }
 
 .notion-collection-card:not(.no-click):hover {
+  /* The fill must be restated: Super's Minima theme sets
+     `.notion-collection-card:hover { background: var(--color-ui-hover-bg-light) !important }`,
+     a 3% grey wash that let the page show through. The design keeps the fill on hover —
+     only the ring steps and the lift deepens. */
+  background-color: var(--card-fill) !important;
   border-color: var(--card-ring-hover) !important;
   box-shadow: var(--card-highlight), var(--card-lift-hover) !important;
   cursor: pointer !important;
@@ -884,6 +889,12 @@ h4.notion-heading {
 .notion-collection-card.no-click,
 .notion-collection-card.no-click:hover {
   cursor: default !important;
+}
+
+/* Same Minima wash on cards that don't open anything — they take no hover at all.
+   (Pastel cards set their own fill against a block id, which out-ranks this.) */
+.notion-collection-card.no-click:hover {
+  background-color: var(--card-fill) !important;
 }
 
 /* The cover meets the ring at 6px, its corner derived from the card's. Cover
