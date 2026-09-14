@@ -703,15 +703,20 @@ h4.notion-heading {
    them was whatever half the row left over (a 110px gap in the networks
    section). A column list whose columns hold nothing but callouts, at least one
    of them a button, is a button group: columns shrink to their buttons,
-   primary first, 12px apart (29f). Empty columns are allowed, so a spare third
-   column in Notion does not break it. Under 520px the group stacks, below. */
-.notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout))) {
+   primary first, 12px apart (29f). Empty columns and empty text blocks are
+   allowed (the hero's pair has both), so stray blank lines in Notion do not
+   break it; empty text blocks inside a group are hidden. Under 520px the group stacks, below. */
+.notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout, .notion-text:empty))) {
   justify-content: flex-start !important;
   flex-wrap: wrap !important;
   gap: 12px !important;
 }
 
-.notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout))) > .notion-column {
+.notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout, .notion-text:empty))) > .notion-column > .notion-text:empty {
+  display: none !important;
+}
+
+.notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout, .notion-text:empty))) > .notion-column {
   flex: none !important;
   width: auto !important;
   margin: 0 !important;
@@ -728,12 +733,12 @@ h4.notion-heading {
     width: 100% !important;
   }
 
-  .notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout))) {
+  .notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout, .notion-text:empty))) {
     flex-direction: column !important;
     gap: 10px !important;
   }
 
-  .notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout))) > .notion-column {
+  .notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout, .notion-text:empty))) > .notion-column {
     width: 100% !important;
   }
 }
