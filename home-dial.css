@@ -755,6 +755,18 @@
   transform: translateX(3px);
 }
 
+/* Focus: the system's 3px ring, for keyboard focus only. The browser's own blue
+   outline showed on click. */
+.enc-blog__more:focus {
+  outline: none !important;
+}
+
+.enc-blog__more:focus-visible {
+  outline: 3px solid rgba(0, 0, 0, 0.32) !important;
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
 /* The rail: full width, cards snap to the centre, no scrollbar */
 .enc-blog {
   display: flex;
@@ -798,6 +810,23 @@
   bottom: -22%;
   width: 38%;
   aspect-ratio: 1;
+}
+
+/* The Cover glyph, as in the design's Gno.land card: 44% of the card wide,
+   bleeding off the right and bottom edges. The image is a mask, so the fill
+   (set by home.js) is exactly the tint. */
+.enc-blog__glyph {
+  position: absolute;
+  right: -4%;
+  bottom: -20%;
+  width: 44%;
+  aspect-ratio: 1;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
 }
 
 .enc-blog__body {

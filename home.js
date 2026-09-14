@@ -767,16 +767,16 @@
    The blog gallery's first three posts become a horizontal rail of large ink cards that snap to
    the centre, with a dot pager and a "Read every post" link on the heading's row.
 
-     card    ink cover (#3A3D38) at 1.91:1, 12px corners; a pastel shape bleeding off the
-             bottom-right corner (tint and shape per post); the category in its tint and the date
+     card    ink cover (#3A3D38) at 1.91:1, 12px corners; the post's Cover glyph bleeding off the
+             bottom-right corner in a pastel tint picked per post; the category in that tint and the date
              in mono along the top; the title in Outfit; the Encapsulate wordmark at the foot
      rail    scroll-snap x mandatory, cards clamp(300px, 72vw, 840px), 22px apart, full width
      dots    one per post in a paper-2 pill; the active one stretches to a 44px ink bar. Click a
              dot to bring its post to the centre; scrolling the rail moves the active dot
 
    BUILT FROM NOTION: title, link, date and tags are read from the gallery cards. The category is
-   the post's first tag other than "Informative" (or "Informative" when that is all it has), and
-   the tint is that tag's colour in Notion mapped to the pastel palette. The link target of the
+   the post's first tag other than "Informative" (or "Informative" when that is all it has). The
+   glyph is the post's Cover image; its tint is a stable pseudo-random pick from the pastels. The link target of the
    "Read every post" control is the section's View All button. The gallery and that button stay
    in the page, hidden, as the no-JavaScript fallback. Styles: home-dial.css, "BLOG RAIL". The
    heading and the paragraph keep the site's own type. */
@@ -785,7 +785,17 @@
   var COUNT = 3;
   var PASTEL = { green: "#DCEEC7", yellow: "#F8E8B3", red: "#F7DCE7", pink: "#F7DCE7",
     blue: "#D2E3F6", orange: "#F8DDC6", purple: "#E4DBF2", brown: "#F8DDC6", gray: "#E2E2DB" };
-  var SHAPES = ["50%", "999px 999px 0 0"];
+  var SHAPES = ["50%", "999px 999px 0 0"];     // only for a post with no Cover image
+  var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
+
+  // "Random" but stable: the same post always gets the same tint, so the colour does not change
+  // between visits; neighbours are nudged apart so two cards in a row never match.
+  function tintFor(title, prev) {
+    var h = 0;
+    for (var i = 0; i < title.length; i++) h = (h * 31 + title.charCodeAt(i)) >>> 0;
+    var t = TINTS[h % TINTS.length];
+    return t === prev ? TINTS[(h + 1) % TINTS.length] : t;
+  }
   var script = document.currentScript;
   var BASE = script && /\/dist\/home\.js/.test(script.src) ? script.src.replace(/\/dist\/home\.js.*$/, "/") : null;
   var WORDMARK = BASE ? BASE + "svg/wordmark-reversed.svg" : null;
@@ -794,6 +804,7 @@
     return Array.prototype.slice.call(gallery.querySelectorAll(".notion-collection-card"), 0, COUNT).map(function (card) {
       var title = card.querySelector(".notion-property__title");
       var link = card.querySelector("a[href]");
+      var cover = card.querySelector("img.notion-collection-card__cover");
       var date = card.querySelector(".notion-property__date");
       var pills = Array.prototype.map.call(card.querySelectorAll(".notion-property__select .notion-pill"), function (p) {
         var m = p.className.match(/pill-([a-z]+)/);
@@ -801,7 +812,10 @@
       });
       var tag = pills.filter(function (p) { return !/^informative$/i.test(p.name); })[0] || pills[0] || { name: "", tint: PASTEL.green };
       return { title: title ? title.textContent.trim() : "", href: link ? link.getAttribute("href") : null,
-        date: date ? date.textContent.trim() : "", tag: tag };
+        date: date ? date.textContent.trim() : "", tag: tag, glyph: cover ? cover.getAttribute("src") : null };
+    }).map(function (p, i, all) {
+      p.tint = tintFor(p.title, i ? all[i - 1].tint : null);
+      return p;
     });
   }
 
@@ -816,13 +830,21 @@
     var a = el(p.href ? "a" : "div", "enc-blog__card");
     if (p.href) a.setAttribute("href", p.href);
     a.setAttribute("data-card", String(i));
-    var shape = el("span", "enc-blog__shape");
-    shape.style.background = p.tag.tint;
-    shape.style.borderRadius = SHAPES[i % SHAPES.length];
+    // The post's Cover image (a transparent black glyph) used as a stencil and filled with the
+    // post's tint, so the mark takes any colour exactly. Without a cover, a tinted shape.
+    var shape = el("span", p.glyph ? "enc-blog__glyph" : "enc-blog__shape");
+    shape.style.background = p.tint;
+    if (p.glyph) {
+      var url = 'url("' + p.glyph.replace(/"/g, "%22") + '")';
+      shape.style.webkitMaskImage = url;
+      shape.style.maskImage = url;
+    } else {
+      shape.style.borderRadius = SHAPES[i % SHAPES.length];
+    }
     var body = el("div", "enc-blog__body");
     var top = el("div", "enc-blog__top");
     var cat = el("span", "enc-blog__cat", p.tag.name);
-    cat.style.color = p.tag.tint;
+    cat.style.color = p.tint; // one tint per post, as in the design: category and glyph match
     top.appendChild(cat);
     top.appendChild(el("span", "enc-blog__date", p.date));
     body.appendChild(top);
