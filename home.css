@@ -1868,7 +1868,7 @@ body {
   max-width: 50ch !important;
   text-wrap: pretty !important;
 }
-#block-4efab8b5f9e246679a4d719fe3dcd31e { grid-area: cta !important; justify-self: end !important; margin: 0 !important; }
+#block-4efab8b5f9e246679a4d719fe3dcd31e { grid-area: cta !important; justify-self: end !important; align-self: end !important; margin: 0 !important; } /* align-self: main.css §07 sets flex-start on every button callout */
 #block-3b97079327e74e15848fb366e3adcbea { grid-area: band !important; margin: 0 !important; }
 #block-4529386b39be4a9aa44d2dbac56537bd { grid-area: table !important; margin: 0 !important; }
 
