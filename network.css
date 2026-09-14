@@ -242,37 +242,6 @@ background-color: var(--color-bg-default)!important;
   }
 }
 /*********************************************/
-/*********************************************/
-/* FOR PAGE HEADING
-/*********************************************/
-#block-52c2528ddf394ab1acae527ece879455 strong {
-  color: var(--color-bg-pink)!important;
-  line-height: 1;
-  margin-top: 0 !important;
-  padding-top: 0 !important;
-  font-size: calc(1px + 9vw) !important;
-  font-weight: 200 !important;
-  font-family: Arial Black, sans-serif;
-  text-shadow: 4px 4px 0px rgba(0, 0, 0, 1) !important;
-  display: flex;
-      -webkit-text-stroke: 2px black;
-    text-stroke: 2px black !important;
-}
-
-#block-52c2528ddf394ab1acae527ece879455:after {
-  margin-top: 40px!important;
-    content: "";
-    display: block;
-    height: 2px!important;
-    margin: 4px 0;
-    width: calc(100% + 40px);
-    transform: translateX(-20px);
-}
-
-#block-52c2528ddf394ab1acae527ece879455:before {
-  background: none!important
-}
-/*********************************************/
 /********************************************/
 /* FOR PAGE SUB HEADING
 /********************************************/
