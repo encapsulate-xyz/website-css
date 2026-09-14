@@ -2315,6 +2315,10 @@ body {
      image may be at most the rest of the viewport. */
   --svc-screen-max: calc(100vh - 340px);
   --svc-screen-max: calc(100dvh - 340px);
+  /* The covers' proportions (1648 × 1124). The screen is as wide as the column
+     (plus the 64px bleed) or as wide as the height cap allows, whichever is
+     smaller, and the image fills it exactly. Upload all four at this ratio. */
+  --svc-ratio: 1.4662;
 
   display: block !important;
   width: 100vw !important;
@@ -2421,6 +2425,7 @@ body {
   /* The screen takes its height from the cover image (the whole artifact shows, at any width);
      the list sits centred beside it between two flexible spacer rows. */
   grid-template-rows: 1fr repeat(4, auto) 1fr !important;
+  align-items: center !important;
   column-gap: 44px !important;
   row-gap: 4px !important;
   margin: 0 !important;
@@ -2517,8 +2522,10 @@ body {
   grid-row: 1 / -1 !important;
   align-self: start !important;
   justify-self: end !important; /* when the height cap narrows it, it stays against the bleed */
-  width: fit-content !important;
-  max-width: calc(100% + 64px) !important;
+  width: min(calc(100% + 64px), calc(var(--svc-screen-max) * var(--svc-ratio))) !important;
+  max-width: none !important;
+  aspect-ratio: var(--svc-ratio) !important;
+  min-height: 0 !important;
   display: block !important;
   position: relative !important;
   min-height: 452px !important;
@@ -2536,10 +2543,10 @@ body {
 #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card__cover {
   position: static !important;
   display: block !important;
-  width: auto !important;
-  max-width: 100% !important;
-  height: auto !important; /* the image's own proportions set the screen's height… */
-  max-height: var(--svc-screen-max) !important; /* …up to what fits in one screen; then it narrows, whole */
+  width: 100% !important;
+  max-width: none !important;
+  height: 100% !important;
+  max-height: none !important;
   min-height: 0 !important;
   max-width: none !important;
   margin: 0 !important;
