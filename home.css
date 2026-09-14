@@ -2516,40 +2516,11 @@ body {
   --btn-3-text: #FAFAF8;
 }
 
-/* SNAP TO THE TOP OF THE SCREEN. When a scroll comes to rest within roughly a
-   third of a screen of this section, the page settles with the section's top
-   edge at the top of the viewport, so it opens as a full page.
-
-   Scroll snap has to be declared on the scroll container, which on a Super page
-   is the document itself (html is the scrolling element; body's overflow
-   propagates to the viewport). So the snap type goes on html — but only on a
-   page that contains this section, via :has(), so no other page is affected.
-   This section is the page's only snap point.
-
-   PROXIMITY, NOT MANDATORY. Mandatory would pull the reader to this section
-   from anywhere on the page. Proximity only acts near it. The trade-off: stop
-   scrolling a few hundred pixels past its top and the page settles back up
-   to it.
-
-   scroll-padding-top: 0 — Super sets 62px on html to clear a fixed navbar. The
-   navbar here scrolls with the page, so that padding only made the snap stop
-   62px short, showing a strip of the section above.
-
-   Measured on the live page at 1920x992: landing 200px above or below the
-   section snaps to exactly 0; 400px away is left alone.
-
-   Desktop only: at 900px and below the section is taller than the screen, and
-   snapping the start of a tall block fights the reader's own scrolling. */
-@media (min-width: 901px) {
-  html:has(#block-3dbe800a513880c5862ae676c8d06994) {
-    scroll-snap-type: y proximity;
-    scroll-padding-top: 0 !important;
-  }
-
-  #block-3dbe800a513880c5862ae676c8d06994 {
-    scroll-snap-align: start;
-  }
-}
+/* SNAP TO THE TOP OF THE SCREEN — now done by home.js ("Homepage decks"), which
+   settles the page onto this section's top when a scroll comes to rest within a
+   third of a screen of it, and pages the stats and testimonials exactly. The CSS
+   proximity snap that was here (scroll-snap-type on html) is removed: a CSS snap
+   on the document fights a scripted scroll. */
 
 /* 900px and below: no hover to rely on, so everyone is shown, stacked as
    portrait + name + role, with the quote underneath. The background rings are

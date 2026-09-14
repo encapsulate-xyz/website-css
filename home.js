@@ -309,3 +309,223 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();
+
+
+/* ─────────────────────────────────────────────────────────────────────────────────────────────
+   Homepage decks — exact snapping for the stats band, the testimonials and Who we are.
+
+   THE GEOMETRY STAYS CSS. home.css already lays the stats and the testimonials out as sticky,
+   one-viewport panels (sections 00c and 09) and Who we are as one full screen (09b). That works
+   without JavaScript — but ordinary scrolling can come to rest anywhere, including half-way
+   through a panel sliding over the one before it. This script only decides where scrolling
+   stops.
+
+   STOPS. Every panel contributes one stop: the scroll position at which it is pinned at the top
+   of the screen (its deck's top + index × panel height). Who we are contributes a single stop.
+
+   INSIDE A DECK (between its first and last stop) scrolling is paged:
+     - a wheel or trackpad gesture moves exactly one panel, animated, and the rest of that
+       gesture's momentum is swallowed so a flick cannot skip three quotes;
+     - anything else that moves the page (keys, the scrollbar, touch) is let through, and when it
+       comes to rest the page settles on the next stop in the direction it was moving.
+   At the deck's last stop, scrolling on down leaves the deck normally; at its first, scrolling
+   up does. Nothing outside a deck is intercepted.
+
+   NEAR A STOP, outside any deck (arriving from above, leaving from below, and Who we are):
+   coming to rest within a third of a screen of a stop settles onto it. Further away is left
+   alone, so the rest of the page scrolls the way it always did.
+
+   WHY NOT CSS SCROLL SNAP. Recorded in home.css 00c: on the document it either never engages
+   (proximity) or captures the whole page (mandatory), and a nested snap container aligns to its
+   own edge rather than the screen. The proximity snap Who we are used is removed in favour of
+   this, because a CSS snap on html also fights a scripted scroll.
+
+   THE TESTIMONIAL RAIL. With the scroll position known, the rail marks its active row itself
+   (data-enc-active) instead of every panel drawing a marker at its own row underneath — the
+   CSS-only marker slid off the rail mid-scroll. Rows can be clicked to go to that quote.
+
+   Each deck is used only while its CSS geometry is active (panels computed sticky; Who we are
+   above 900px). Reduced motion jumps instead of animating. */
+(function () {
+  var STATS = "block-3dae800a513880b493f9e17a6928281c";
+  var QUOTES = "block-f853251f87b0400d9d5b7e3fe71e57e5";
+  var QUOTE_SECTION = "block-3dae800a51388066b66ffeeb9bdb1550";
+  var RAIL = "block-3dbe800a513880659b03efb665f21e12";
+  var TEAM = "block-3dbe800a513880c5862ae676c8d06994";
+
+  var NEAR = 0.33;       // of a screen: how close a resting page must be to a stop to settle on it
+  var EPS = 2;           // px: "on" a stop
+  var QUIET = 180;       // ms without wheel events that ends a gesture
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  var docTop = function (el) { return el.getBoundingClientRect().top + window.scrollY; };
+
+  /* Decks, measured fresh each time: layout changes with the viewport and with Super re-renders. */
+  function decks() {
+    var out = [];
+    [[STATS, "#" + STATS + " .notion-callout"], [QUOTES, "#" + QUOTES + " .notion-collection-card"]]
+      .forEach(function (d) {
+        var box = document.getElementById(d[0]);
+        if (!box) return;
+        var panels = box.querySelectorAll(d[1]);
+        if (panels.length < 2 || getComputedStyle(panels[0]).position !== "sticky") return;
+        // Sticky elements report their stuck position, so the run is measured from the box's
+        // bottom, which never moves: the panels are the last thing in it, one height each.
+        var h = panels[0].offsetHeight;
+        var bottom = docTop(box) + box.offsetHeight - (parseFloat(getComputedStyle(box).paddingBottom) || 0);
+        var stops = [];
+        for (var i = 0; i < panels.length; i++) stops.push(Math.round(bottom - (panels.length - i) * h));
+        out.push({ id: d[0], stops: stops, h: h });
+      });
+    var team = document.getElementById(TEAM);
+    if (team && window.matchMedia("(min-width: 901px)").matches) {
+      out.push({ id: TEAM, stops: [Math.round(docTop(team))], h: window.innerHeight });
+    }
+    return out;
+  }
+
+  var anim = null;
+  function scrollToY(target, done) {
+    target = Math.max(0, Math.min(target, document.documentElement.scrollHeight - window.innerHeight));
+    var from = window.scrollY, dist = target - from;
+    if (anim) cancelAnimationFrame(anim.raf);
+    if (Math.abs(dist) < 1 || reduced.matches) {
+      window.scrollTo(0, target);
+      anim = null; lastRest = target; if (done) done();
+      return;
+    }
+    var html = document.documentElement, prev = html.style.scrollBehavior;
+    html.style.scrollBehavior = "auto"; // a smooth scroll-behavior would smooth every frame again
+    var dur = Math.max(420, Math.min(720, Math.abs(dist) * 0.6));
+    var t0 = performance.now();
+    anim = { target: target, raf: 0 };
+    var step = function (now) {
+      var p = Math.min(1, (now - t0) / dur);
+      var e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; // ease-in-out cubic
+      window.scrollTo(0, from + dist * e);
+      if (p < 1) { anim.raf = requestAnimationFrame(step); return; }
+      html.style.scrollBehavior = prev;
+      anim = null; lastRest = target;
+      if (done) done();
+    };
+    anim.raf = requestAnimationFrame(step);
+  }
+
+  function deckAt(y, list) {
+    for (var i = 0; i < list.length; i++) {
+      var s = list[i].stops;
+      if (s.length > 1 && y > s[0] - EPS && y < s[s.length - 1] + EPS) return list[i];
+    }
+    return null;
+  }
+
+  var onStop = function (d, y) {
+    for (var k = 0; k < d.stops.length; k++) if (Math.abs(d.stops[k] - y) <= EPS) return true;
+    return false;
+  };
+
+  /* From a position between stops (arriving in the deck, or a scroll that stopped mid-panel):
+     the stop in the direction of travel, counting one that is less than half a panel behind —
+     so arriving 50px past the first panel lands on the first panel, not the second. */
+  function landStop(d, y, dir) {
+    var s = d.stops, half = d.h / 2;
+    if (dir > 0) { for (var i = 0; i < s.length; i++) if (s[i] >= y - half) return s[i]; return s[s.length - 1]; }
+    for (var j = s.length - 1; j >= 0; j--) if (s[j] <= y + half) return s[j];
+    return s[0];
+  }
+
+  /* The stop to go to from y, moving in dir, inside deck d; null = leave the deck. */
+  function nextStop(d, y, dir) {
+    var s = d.stops;
+    if (dir > 0) { for (var i = 0; i < s.length; i++) if (s[i] > y + EPS) return s[i]; }
+    else { for (var j = s.length - 1; j >= 0; j--) if (s[j] < y - EPS) return s[j]; }
+    return null;
+  }
+
+  /* ── wheel and trackpad: one gesture, one panel ── */
+  var gestureUntil = 0, gestureLocked = false;
+  window.addEventListener("wheel", function (e) {
+    if (e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return; // pinch-zoom, sideways
+    var now = performance.now();
+    var inGesture = now < gestureUntil;
+    gestureUntil = now + QUIET;
+    if (anim || (inGesture && gestureLocked)) { e.preventDefault(); return; }
+    gestureLocked = false;
+    var list = decks(), y = window.scrollY, dir = e.deltaY > 0 ? 1 : -1;
+    var d = deckAt(y, list);
+    if (!d) return;
+    var target = onStop(d, y) ? nextStop(d, y, dir) : landStop(d, y, dir);
+    if (target === null) return; // at the end of the deck: scroll out normally
+    e.preventDefault();
+    gestureLocked = true;
+    scrollToY(target);
+  }, { passive: false });
+
+  /* ── everything else: settle when the page comes to rest ── */
+  var lastRest = window.scrollY, touching = false, restTimer = 0;
+  function settle() {
+    if (anim || touching || performance.now() < gestureUntil) return;
+    var list = decks(), y = window.scrollY;
+    var d = deckAt(y, list);
+    if (d) {
+      if (onStop(d, y)) { lastRest = y; return; }
+      var dir = y >= lastRest ? 1 : -1;
+      // moved off a stop of this deck (keys, a drag): carry on to the next; otherwise land
+      var t = onStop(d, lastRest) && Math.abs(y - lastRest) < d.h ? nextStop(d, lastRest, dir) : landStop(d, y, dir);
+      scrollToY(t === null ? landStop(d, y, dir) : t);
+      return;
+    }
+    var best = null, vh = window.innerHeight;
+    list.forEach(function (dk) {
+      dk.stops.forEach(function (s) {
+        if (Math.abs(s - y) <= vh * NEAR && (best === null || Math.abs(s - y) < Math.abs(best - y))) best = s;
+      });
+    });
+    if (best !== null && Math.abs(best - y) > EPS) scrollToY(best);
+    else lastRest = y;
+  }
+  var hasScrollEnd = "onscrollend" in window;
+  if (hasScrollEnd) window.addEventListener("scrollend", function () { setTimeout(settle, 30); });
+  window.addEventListener("scroll", function () {
+    if (!hasScrollEnd) { clearTimeout(restTimer); restTimer = setTimeout(settle, 140); }
+    paintRail();
+  }, { passive: true });
+  window.addEventListener("touchstart", function () { touching = true; if (anim) { cancelAnimationFrame(anim.raf); anim = null; } }, { passive: true });
+  window.addEventListener("touchend", function () { touching = false; if (!hasScrollEnd) setTimeout(settle, 140); }, { passive: true });
+
+  /* ── the testimonial rail ── */
+  var railQueued = false;
+  function paintRail() {
+    if (railQueued) return;
+    railQueued = true;
+    requestAnimationFrame(function () {
+      railQueued = false;
+      var rail = document.getElementById(RAIL), section = document.getElementById(QUOTE_SECTION);
+      if (!rail || !section) return;
+      var d = decks().filter(function (x) { return x.id === QUOTES; })[0];
+      var rows = rail.querySelectorAll("tbody tr");
+      if (!d || !rows.length) { section.removeAttribute("data-enc-deck"); return; }
+      section.setAttribute("data-enc-deck", "");
+      var i = Math.round((window.scrollY - d.stops[0]) / d.h);
+      i = Math.max(0, Math.min(rows.length - 1, i));
+      rows.forEach(function (r, n) {
+        if (n === i) { if (!r.hasAttribute("data-enc-active")) r.setAttribute("data-enc-active", ""); }
+        else if (r.hasAttribute("data-enc-active")) r.removeAttribute("data-enc-active");
+        if (!r.hasAttribute("data-enc-go")) {
+          r.setAttribute("data-enc-go", "");
+          r.addEventListener("click", function () {
+            var dd = decks().filter(function (x) { return x.id === QUOTES; })[0];
+            if (dd && dd.stops[n] !== undefined) scrollToY(dd.stops[n]);
+          });
+        }
+      });
+    });
+  }
+
+  /* Super re-renders after load and on in-app navigation; repaint the rail when it does. */
+  var t = 0;
+  new MutationObserver(function () { clearTimeout(t); t = setTimeout(paintRail, 80); })
+    .observe(document.body, { childList: true, subtree: true });
+  window.addEventListener("resize", paintRail);
+  paintRail();
+})();
