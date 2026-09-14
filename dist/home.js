@@ -391,7 +391,7 @@
     if (anim) cancelAnimationFrame(anim.raf);
     if (Math.abs(dist) < 1 || reduced.matches) {
       window.scrollTo(0, target);
-      anim = null; lastRest = target; if (done) done();
+      anim = null; lastRest = target; paintRail(); if (done) done();
       return;
     }
     var html = document.documentElement, prev = html.style.scrollBehavior;
@@ -405,7 +405,7 @@
       window.scrollTo(0, from + dist * e);
       if (p < 1) { anim.raf = requestAnimationFrame(step); return; }
       html.style.scrollBehavior = prev;
-      anim = null; lastRest = target;
+      anim = null; lastRest = target; paintRail();
       if (done) done();
     };
     anim.raf = requestAnimationFrame(step);
