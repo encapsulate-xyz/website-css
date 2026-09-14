@@ -466,7 +466,7 @@
    the gallery (home.css §15) shows as before.
 
    Section: 470px tall. Left, the copy — the Notion "Networks"
-   heading (h2 step; no kicker, removed on request), one sentence at 16px / 1.58 in 34ch, the buttons. Right,
+   heading (h2 step; no kicker, removed on request), one sentence at 16px / 1.58 across the column, the buttons. Right,
    five columns of 126px discs, 14px apart, 16px between discs, the glyph at
    52% of the disc, each column faded out over its top and bottom 12%.
    The design also drops the atom-and-shield watermark image. */
@@ -508,7 +508,7 @@
   font-size: 16px !important;
   line-height: 1.58 !important;
   color: #3A3D38 !important;
-  max-width: 34ch !important;
+  max-width: none !important; /* the design caps it at 34ch (three lines); the user asked for the full column */
   text-wrap: pretty !important;
 }
 
