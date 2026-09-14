@@ -270,27 +270,30 @@ The last block identifies the heading callout which says: Others Trust, We Valid
       max-width: 100%;
     }
 
-    /* Setting border-radius and padding for collection card */
+    /* THE PASTEL EXCEPTION (Card System 36f): a feature row of four, so
+       these are pastel cards — same ring construction, a translucent ink ring,
+       a lighter highlight, no lift, black type only. Not interactive. */
     .notion-collection-card {
-      border-radius: var(--callout-border-radius) !important;
+      border-radius: var(--card-radius) !important;
       padding: var(--callout-padding);
+      border: 1px solid rgba(0, 0, 0, 0.1) !important;
+      box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.5) !important;
     }
 
-    /* Setting background color for the nth-child of the collection card */
     .notion-collection-card:nth-child(4n + 1) {
-      background-color: var(--color-bg-yellow) !important;
+      background-color: #F8E8B3 !important; /* yellow */
     }
 
     .notion-collection-card:nth-child(4n + 2) {
-      background-color: var(--color-bg-blue) !important;
+      background-color: #D2E3F6 !important; /* blue */
     }
 
     .notion-collection-card:nth-child(4n + 3) {
-      background-color: var(--color-bg-green) !important;
+      background-color: #DCEEC7 !important; /* green */
     }
 
     .notion-collection-card:nth-child(4n + 4) {
-      background-color: var(--color-bg-orange) !important;
+      background-color: #F8DDC6 !important; /* orange */
     }
   }
 }
@@ -338,13 +341,8 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   /* Display the collection card as a flex container. */
   .notion-collection-card {
     display: flex;
-    border: 1px solid black !important;
-    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.4) !important;
-  }
-
-  /* no box shadow on hover */
-  .notion-collection-card:hover {
-    box-shadow: none !important;
+    /* ring, fill, shadow and hover come from the Card System (main.css §09);
+       the black ring and 8px hard shadow that were here are retired */
   }
 
   /* enable clicks for this */
@@ -1453,6 +1451,7 @@ body {
   margin: 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
+  box-shadow: none !important; /* a deck panel, not a card: no Card System ring */
   background: #3A3D38 !important; /* opaque: sticky panels stack, not replace */
   /* Caps the content at ~860px, centred, with the quote and attribution sharing
      one left edge. */
@@ -1957,7 +1956,7 @@ body {
   grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   grid-template-rows: none !important;
   grid-auto-rows: auto !important;
-  gap: 20px !important;
+  gap: 18px !important; /* Card System: lifts touch below 18px */
   padding-bottom: 0 !important;
 }
 
@@ -1973,12 +1972,12 @@ body {
   }
 }
 
+/* CARD SYSTEM (main.css §09): ring, fill, highlight and the 6px bleed come
+   from there. The cover used to run edge to edge with the card's overflow doing
+   the rounding; it now sits inside the 6px bleed with a derived 6px corner. */
 #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card {
   display: flex !important;
   flex-direction: column !important;
-  padding: 0 !important; /* cover goes edge to edge; the text below is padded */
-  border: 1px solid var(--color-border-default) !important;
-  overflow: hidden !important; /* clips the cover to the card's rounded corners */
 }
 
 /* The cover carries the aspect-ratio itself, so the artwork sits centred in a
@@ -2002,8 +2001,8 @@ body {
   min-height: 0 !important;
   max-width: none !important;
   margin: 0 !important;
-  border: 0 !important; /* the card's border is the only frame */
-  border-radius: 0 !important; /* the card's overflow does the rounding */
+  border: 0 !important; /* the card's ring is the only frame */
+  border-radius: var(--card-media-radius) !important;
   object-fit: cover;
 }
 
@@ -2014,7 +2013,6 @@ body {
   flex-direction: column;
   flex: 1 1 auto; /* absorbs leftover height so cards in a row match */
   gap: 6px;
-  padding: 14px 16px 16px !important;
 }
 
 #block-bd1e4d485a0d424394add746d8e3cd35 .notion-property__title {
@@ -2029,11 +2027,7 @@ body {
   color: rgba(17, 17, 17, 0.66); /* muted, so the title leads */
 }
 
-/* These four cards are all .no-click, so they stay put; the border still
-   darkens to signal the hover. */
-#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card:hover {
-  border-color: rgba(32, 32, 32, 0.55) !important;
-}
+/* These four cards are all .no-click: no hover (Card System 36a). */
 
 
 /* --- GOVERNANCE STEPS — 2x2 ---------------------------------------------- */
