@@ -563,6 +563,7 @@ h4.notion-heading {
   --btn-2-ring-hover: #B9B9B1;
   --btn-2-text: #000;
   --btn-2-highlight: inset 0 1.5px 0 rgba(255, 255, 255, 1);
+  --btn-2-press: inset 0 1px 2px rgba(0, 0, 0, 0.07); /* on ink the design keeps the highlight instead */
   --btn-3-text: #000;
 }
 
@@ -622,6 +623,9 @@ h4.notion-heading {
 }
 
 .notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link:hover {
+  /* Super's Minima theme sets `.notion-semantic-string .link:hover { opacity: .7 !important }`
+     and every button link carries .link — without this every tier fades on hover. */
+  opacity: 1 !important;
   background: #8CBF56 !important;
   border-color: #6F9E41 !important;
 }
@@ -652,7 +656,7 @@ h4.notion-heading {
 .notion-callout.bg-gray-light > .notion-callout__content > .notion-semantic-string > .notion-link:active {
   background: var(--btn-2-fill-press) !important;
   border-color: var(--btn-2-ring-hover) !important;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07) !important;
+  box-shadow: var(--btn-2-press) !important;
 }
 
 .notion-callout.bg-gray-light > .notion-callout__content > .notion-semantic-string > .notion-link:focus-visible {
@@ -676,17 +680,16 @@ h4.notion-heading {
 }
 
 .notion-callout:not([class*="bg-"]) > .notion-callout__content > .notion-semantic-string > .notion-link::after {
-  content: "→";
+  /* a stroked SVG arrow at 60% of the badge, as in the design — a text arrow
+     inherits the body font's metrics and sits off its optical centre */
+  content: "";
   display: grid;
   place-items: center;
   flex: none;
   width: var(--btn-badge);
   height: var(--btn-badge);
   border-radius: 999px;
-  background: #99CC66;
-  color: #000;
-  font-size: calc(var(--btn-badge) * 0.52);
-  font-weight: 600;
+  background: #99CC66 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.25 10h11.5'/%3E%3Cpath d='M11.25 5.5 15.75 10l-4.5 4.5'/%3E%3C/svg%3E") center / 60% no-repeat;
   transition: transform 0.16s ease;
 }
 
