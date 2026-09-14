@@ -867,18 +867,26 @@
     if (!list.length) return;
     var sig = list.map(function (p) { return p.title; }).join("|");
     var rail = gallery.previousElementSibling && gallery.previousElementSibling.classList.contains("enc-blog") ? gallery.previousElementSibling : null;
-    if (rail && rail.getAttribute("data-sig") === sig) { sizeControls(); return; }
+    if (rail && rail.getAttribute("data-sig") === sig && document.querySelector(".enc-blog__controls")) return;
     if (rail) rail.remove();
 
-    // the heading above the gallery (the dot pager sits on its row)
-    var heading = null, n = gallery.previousElementSibling;
-    while (n && !heading) { if (n.matches && n.matches(".notion-heading")) heading = n; n = n.previousElementSibling; }
+    // The section's intro is the Notion column row just above the gallery: heading and paragraph
+    // on the left, the Read every post button (a Notion callout) on the right. The dot pager goes
+    // into that right column, in front of the button.
+    var intro = null, n = gallery.previousElementSibling;
+    while (n) {
+      if (n.classList.contains("notion-column-list")) { if (n.querySelector(".notion-heading")) intro = n; break; }
+      if (!(n.classList.contains("enc-blog") || n.classList.contains("notion-text"))) break;
+      n = n.previousElementSibling;
+    }
+    var slot = intro ? intro.querySelector(":scope > .notion-column:last-child") : null;
 
     rail = el("div", "enc-blog");
     rail.setAttribute("data-sig", sig);
     list.forEach(function (p, i) { rail.appendChild(card(p, i)); });
     gallery.parentElement.insertBefore(rail, gallery);
     gallery.setAttribute("data-enc-hidden", "");
+    if (intro) intro.setAttribute("data-enc-blog-intro", "");
 
     var old = document.querySelector(".enc-blog__controls");
     if (old) old.remove();
@@ -892,22 +900,12 @@
       dots.appendChild(b);
     });
     controls.appendChild(dots);
-    if (heading) heading.parentElement.insertBefore(controls, heading.nextSibling);
+    if (slot) slot.insertBefore(controls, slot.firstChild);
     else rail.parentElement.insertBefore(controls, rail);
-    controls.__heading = heading;
 
     rail.__dots = dots;
     rail.addEventListener("scroll", function () { mark(rail, dots); }, { passive: true });
     mark(rail, dots);
-    sizeControls();
-  }
-
-  // the controls sit on the heading's row: pulled up by the heading's height
-  function sizeControls() {
-    var c = document.querySelector(".enc-blog__controls");
-    if (!c || !c.__heading) return;
-    c.style.setProperty("--enc-blog-head", c.__heading.offsetHeight + "px");
-    c.style.setProperty("--enc-blog-gap", (parseFloat(getComputedStyle(c.__heading).marginBottom) || 0) + "px");
   }
 
   function goTo(rail, i) {
@@ -936,7 +934,6 @@
     if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-blog, .enc-blog__controls"); })) return;
     clearTimeout(t); t = setTimeout(build, 60);
   }).observe(document.body, { childList: true, subtree: true });
-  window.addEventListener("resize", sizeControls);
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
   else build();
 })();

@@ -673,25 +673,34 @@
   display: none !important;
 }
 
-/* Controls on the heading's row, right-aligned: pulled up by the heading's
-   height (measured by home.js), bottom-aligned with it. The heading's own
-   22ch measure keeps it clear of them. */
-.enc-blog__controls {
-  align-self: stretch;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  gap: 18px;
-  flex-wrap: wrap;
-  height: var(--enc-blog-head, auto);
-  margin-top: calc((var(--enc-blog-head, 0px) + var(--enc-blog-gap, 0px)) * -1);
-  margin-bottom: var(--enc-blog-gap, 0px); /* the heading's own gap, kept below the row */
-  padding-bottom: 4px;
-  pointer-events: none;
+/* The intro row (Notion columns: heading + paragraph | Read every post). The
+   right column holds the dot pager (added by home.js) and the Notion button,
+   side by side, pushed right and aligned to the bottom of the intro — the
+   same alignment the Networks designs give their top-row buttons. */
+[data-enc-blog-intro] {
+  align-items: stretch !important;
 }
 
-.enc-blog__controls > * {
-  pointer-events: auto;
+[data-enc-blog-intro] > .notion-column:last-child {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  justify-content: flex-end !important;
+  align-items: flex-end !important;
+  gap: 18px !important;
+}
+
+[data-enc-blog-intro] > .notion-column:last-child > .notion-callout {
+  margin: 0 !important;
+}
+
+[data-enc-blog-intro] > .notion-column:last-child > .notion-text:empty {
+  display: none !important;
+}
+
+.enc-blog__controls {
+  display: flex;
+  align-items: center;
 }
 
 .enc-blog__dots {
@@ -840,11 +849,9 @@
   height: auto;
 }
 
-/* Narrow: the controls drop under the heading instead of beside it. */
+/* Narrow: the columns stack, so the dots and button line up on the left. */
 @media (max-width: 700px) {
-  .enc-blog__controls {
-    height: auto;
-    margin-top: 12px;
-    justify-content: flex-start;
+  [data-enc-blog-intro] > .notion-column:last-child {
+    justify-content: flex-start !important;
   }
 }
