@@ -830,16 +830,19 @@
   color: #B4B4B4;
 }
 
-.enc-blog__title {
-  margin: 0;
-  max-width: min(15ch, 64%);
-  font-family: var(--type-display), sans-serif;
-  font-weight: 600;
-  font-size: clamp(19px, 2.5vw, 36px);
-  line-height: 1.06;
-  letter-spacing: -0.035em;
-  color: #FAFAF8;
-  text-wrap: pretty;
+/* !important throughout: Super's Minima theme sets h3 size, weight, spacing
+   and margin with !important (it came out at 24px instead of 36px). */
+.enc-blog .enc-blog__title {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: min(15ch, 64%) !important;
+  font-family: var(--type-display), sans-serif !important;
+  font-weight: 600 !important;
+  font-size: clamp(19px, 2.5vw, 36px) !important;
+  line-height: 1.06 !important;
+  letter-spacing: -0.035em !important;
+  color: #FAFAF8 !important;
+  text-wrap: pretty !important;
 }
 
 .enc-blog__mark {

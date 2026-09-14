@@ -879,6 +879,7 @@
     else rail.parentElement.insertBefore(controls, rail);
     controls.__heading = heading;
 
+    rail.__dots = dots;
     rail.addEventListener("scroll", function () { mark(rail, dots); }, { passive: true });
     mark(rail, dots);
     sizeControls();
@@ -887,19 +888,25 @@
   // the controls sit on the heading's row: pulled up by the heading's height
   function sizeControls() {
     var c = document.querySelector(".enc-blog__controls");
-    if (c && c.__heading) c.style.setProperty("--enc-blog-head", c.__heading.offsetHeight + "px");
+    if (!c || !c.__heading) return;
+    var h = c.__heading.offsetHeight + (parseFloat(getComputedStyle(c.__heading).marginBottom) || 0);
+    c.style.setProperty("--enc-blog-head", h + "px");
   }
 
   function goTo(rail, i) {
     var c = rail.querySelector('[data-card="' + i + '"]');
     // scroll-snap mandatory cancels smooth scrolling, so the offset is set directly
     if (c) rail.scrollLeft = c.offsetLeft - (rail.clientWidth - c.clientWidth) / 2;
+    mark(rail, rail.__dots);
   }
 
+  // The active post is the one whose snap position is nearest the current scroll. Snap positions
+  // are clamped to the scrollable range, so the first card (which cannot be centred) owns 0.
   function mark(rail, dots) {
-    var centre = rail.scrollLeft + rail.clientWidth / 2, best = 0, bestD = Infinity;
+    var max = rail.scrollWidth - rail.clientWidth, best = 0, bestD = Infinity;
     Array.prototype.forEach.call(rail.children, function (c, i) {
-      var d = Math.abs(c.offsetLeft + c.clientWidth / 2 - centre);
+      var snap = Math.max(0, Math.min(max, c.offsetLeft - (rail.clientWidth - c.clientWidth) / 2));
+      var d = Math.abs(snap - rail.scrollLeft);
       if (d < bestD) { bestD = d; best = i; }
     });
     Array.prototype.forEach.call(dots.children, function (b, i) {
