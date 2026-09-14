@@ -118,6 +118,11 @@ pasted again.
   still to recolour in Notion to match the system's "one primary per view": the three "View All"
   buttons and "View Voting History" → Default (tertiary); the eleven purple buttons on /services
   are all primary.
+- **TODO (remind the user): delete the old page-title rules from Super's page Code panels.** Each of
+  /services, /team, /contact-us, /blog, /investments, /governance-record and /guides has a
+  `#block-<title id> strong { … font-family: Arial Black … }` rule in its own Code panel (not in
+  this repo). It is dead once the page titles are un-bolded in Notion, so deleting it is optional
+  tidy-up. Found 2026-09-14.
 - **Both hero buttons point at `/networks`,** including "Book a Call". Content fix, in Notion.
 - **Stat card says 28 networks; the fork panel says 38.** One of them is wrong.
 - **Who We Are, "And others." card.** In Notion as the fourth, last card. Its cover is
