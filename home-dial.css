@@ -529,9 +529,12 @@
   width: auto !important;
   min-width: 0 !important;
   display: flex !important;
+  flex-direction: row !important; /* a Notion column is a flex column, which stretched .enc-net to full width */
   justify-content: flex-end !important;
+  align-items: stretch !important;
   position: relative !important;
   height: var(--net-h) !important;
+  padding: 0 !important;
 }
 
 [data-enc-net] > .notion-column:last-child > :not(.enc-net) {
