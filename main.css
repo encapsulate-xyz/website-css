@@ -792,7 +792,7 @@ h4.notion-heading {
   --card-gap: 13px;
   --card-title-size: 19px;
 
-  --card-fill: #FFFFFF; /* design: #FAFAF8 on a #F2F2ED ground; this site's ground is #FFFEFC, so cards go to pure white to stay lighter than the page */
+  --card-fill: var(--color-bg-default); /* the page ground (#FFFEFC) — the user's call, 2026-09-14: cards are the same colour as the ground and are separated by the ring and lift alone. (Design: #FFFFFF on a #F2F2ED ground.) */
   --card-fill-press: #FAFAF8;  /* design: paper becomes the pressed step once the card is white */
   --card-ring: #D9D9D2;
   --card-ring-hover: #B9B9B1;
