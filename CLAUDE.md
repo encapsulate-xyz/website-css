@@ -49,7 +49,8 @@ python3 build.py          # writes dist/: main.css, home.css, network.css, home-
 ### Head files — what to paste into Super
 
 `head/` holds the exact, complete contents of each Super Head box, pinned to the current release.
-The user copies from these files, so **update them in the same commit as every new tag**:
+The user copies from these files. On a new tag, **bump only the head files whose dist files
+actually changed** since the tag they point at (`git diff vOLD vNEW -- dist/<file>`), in the same commit:
 
 | File | Paste into (replace everything) |
 |---|---|
