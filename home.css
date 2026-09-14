@@ -2413,7 +2413,8 @@ body {
   counter-reset: svc !important;
   display: grid !important;
   grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr) !important;
-  grid-template-rows: 1fr auto auto auto auto 1fr !important;
+  grid-template-rows: repeat(4, auto) !important; /* the list sets the height; the screen spans it (min 452px) */
+  align-content: center !important;
   column-gap: 44px !important;
   row-gap: 4px !important;
   margin: 0 !important;
@@ -2445,10 +2446,10 @@ body {
   transition: background-color 0.18s ease, border-color 0.18s ease !important;
 }
 
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(1) .notion-collection-card__content { grid-row: 2 !important; --svc-tint: #DCEEC7; }
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(2) .notion-collection-card__content { grid-row: 3 !important; --svc-tint: #F8E8B3; }
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(3) .notion-collection-card__content { grid-row: 4 !important; --svc-tint: #D2E3F6; }
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(4) .notion-collection-card__content { grid-row: 5 !important; --svc-tint: #F8DDC6; }
+#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(1) .notion-collection-card__content { grid-row: 1 !important; --svc-tint: #DCEEC7; }
+#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(2) .notion-collection-card__content { grid-row: 2 !important; --svc-tint: #F8E8B3; }
+#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(3) .notion-collection-card__content { grid-row: 3 !important; --svc-tint: #D2E3F6; }
+#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(4) .notion-collection-card__content { grid-row: 4 !important; --svc-tint: #F8DDC6; }
 
 /* the numbered well: 01–04 from a counter, not content */
 #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card__content::before {
@@ -2507,7 +2508,7 @@ body {
 /* the screen: every cover in the same cell, bleeding off the right */
 #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card > span {
   grid-column: 2 !important;
-  grid-row: 1 / -1 !important;
+  grid-row: 1 / 5 !important;
   display: block !important;
   position: relative !important;
   min-height: 452px !important;
