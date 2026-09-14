@@ -962,31 +962,10 @@ body {
    getElementById returns null), so every rule that referenced it has been
    deleted rather than left to rot as a dead selector.
 
-   FLAT, NOT OUTLINED. The old couplet was an outlined display treatment:
-   `h1.notion-heading strong` hands down `-webkit-text-stroke: 0.045em white`
-   and a 3px black shadow, and the page CSS adds its own 1px black stroke.
-   None of that is in 11a, so both are zeroed here. The `:has(strong)` rule
-   further down adds padding to stop a stroke being clipped — with no stroke
-   left there is nothing to clip, so padding and the compensating negative
-   margin are zeroed too, which is what puts the line flush with the column.
-
-   THE STRONG IS THE WHOLE LINE. Notion has the entire sentence bold, so the
-   size properties are set on BOTH the h1 and its `strong` — the strong would
-   otherwise keep taking `font-size: calc(40px + 3.5vw)` from
-   `h1.notion-heading strong`. `line-height` and `max-width` only do anything
-   on the h1: `strong` is inline, so a max-width on it is ignored.
-
    Outfit must be loaded from Super > Settings > Code > Head — @import is
    stripped and Outfit is NOT among the faces linked there today:
      <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
    Without that link this falls back to the generic sans-serif.
-
-   WHY ID + !important. The page-level rule `#block-803c… strong { font-size:
-   calc(14px + 2vw) !important }` is (1,0,1). This matches it and wins on
-   ORDER: verified live that the homepage page CSS is a <style> in a DIV in the
-   body and this file is the sheet immediately after it. The same rule placed
-   in <head> LOSES — a position failure, not a specificity one. That is exactly
-   how it failed the first time this was tried.
 
    Measured live at 1920px after the change: Outfit 600, 104px, line-height
    97.76px, tracking -5.2px, no stroke, no shadow — wrapping to two lines in an
@@ -1001,18 +980,13 @@ body {
   margin-left: 0 !important;
 }
 
-#block-803c66b0c67043d691a03f4f9e8bdc15,
-#block-803c66b0c67043d691a03f4f9e8bdc15 strong {
+#block-803c66b0c67043d691a03f4f9e8bdc15 {
   font-family: "Outfit", sans-serif !important;
   font-weight: 600 !important;
   font-size: clamp(40px, 6.2vw, 92px) !important;
   line-height: 0.96 !important;
   letter-spacing: -0.046em !important;
   color: #000000 !important;
-
-  /* Inherited from the old outlined treatment; 11a is flat. */
-  -webkit-text-stroke: 0 !important;
-  text-shadow: none !important;
 }
 
 /* HAND-DRAWN CIRCLE AROUND ONE WORD ("online")
@@ -1042,9 +1016,6 @@ body {
    press Cmd/Ctrl+I. Notion emits an <em> and this turns it into the circle —
    the text is NOT italicised (font-style is reset); the italic is only a hook,
    because Notion offers no way to add a class.
-
-   WHY NOT UNDERLINE. <u> is already spoken for: `h1.notion-heading:has(u)`
-   further down draws 2px black rules above and below the WHOLE heading.
 
    WHY ::after AND NOT A BACKGROUND ON THE <em>. The artifact positions the
    drawing in PERCENTAGES OF THE WORD (127% wide, 143% tall, offset up and

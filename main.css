@@ -434,14 +434,10 @@ nav.super-navbar .super-navbar__list::before {
      Heading 2 → h2   (section headings)
      Heading 3 → h3
      Heading 4 → h4
-   Bold and underline mean nothing to the size. (An earlier version used bold
-   as the page-title marker so section Heading 1s could stay as they were; it
-   was replaced by re-levelling the headings in Notion, which is easier to
-   reason about.) They used to draw an outlined Arial Black with black rules
-   above and below, which the design replaces. Sections with their own heading
-   treatment — the homepage hero, stat figures, fork panels, the 11px kickers,
-   /networks — keep it, because their rules are scoped to a block id and
-   out-rank these.
+   Bold and underline are not part of the system — leave them off headings in
+   Notion. Sections with their own heading treatment — the homepage hero, stat
+   figures, fork panels, the 11px kickers, /networks — keep it, because their
+   rules are scoped to a block id and out-rank these.
 
    Content rule from the design that CSS cannot enforce: sentence case, not
    Title Case On Every Word ("Latest blog posts", not "Latest Blog Posts"). */
@@ -504,15 +500,6 @@ h4.notion-heading {
   letter-spacing: -0.018em !important;
   max-width: 40ch !important;
 }
-
-/* Bold and underline don't change a heading's look. */
-:is(h1, h2, h3, h4).notion-heading :is(strong, b, u) {
-  font: inherit !important;
-  letter-spacing: inherit !important;
-  color: inherit !important;
-  text-decoration: none !important;
-}
-
 
 /*********************************************/
 /* 07. BUTTONS — THE BUTTON SYSTEM */
