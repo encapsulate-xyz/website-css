@@ -2310,6 +2310,11 @@ body {
   --btn-2-press: inset 0 1.5px 0 rgba(255, 255, 255, 0.26);
   --btn-3-text: #FAFAF8;
   --svc-gutter: max(48px, calc(50vw - 864px));
+  /* The section never exceeds one screen: the band's padding (54 + 48), the
+     header (~190) and the gap to the list (36) come to ~330px, so the screen
+     image may be at most the rest of the viewport. */
+  --svc-screen-max: calc(100vh - 340px);
+  --svc-screen-max: calc(100dvh - 340px);
 
   display: block !important;
   width: 100vw !important;
@@ -2511,6 +2516,9 @@ body {
   grid-column: 2 !important;
   grid-row: 1 / -1 !important;
   align-self: start !important;
+  justify-self: end !important; /* when the height cap narrows it, it stays against the bleed */
+  width: fit-content !important;
+  max-width: calc(100% + 64px) !important;
   display: block !important;
   position: relative !important;
   min-height: 452px !important;
@@ -2528,8 +2536,10 @@ body {
 #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card__cover {
   position: static !important;
   display: block !important;
-  width: 100% !important;
-  height: auto !important; /* the image's own proportions set the screen's height */
+  width: auto !important;
+  max-width: 100% !important;
+  height: auto !important; /* the image's own proportions set the screen's height… */
+  max-height: var(--svc-screen-max) !important; /* …up to what fits in one screen; then it narrows, whole */
   min-height: 0 !important;
   max-width: none !important;
   margin: 0 !important;
