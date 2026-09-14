@@ -123,6 +123,12 @@ pasted again.
   `#block-<title id> strong { … font-family: Arial Black … }` rule in its own Code panel (not in
   this repo). It is dead once the page titles are un-bolded in Notion, so deleting it is optional
   tidy-up. Found 2026-09-14.
+- **Cards follow the Card System (main.css §09, 2026-09-14).** Density = the gallery's Card size in
+  Notion (small → compact, medium → default, large → roomy); `.no-click` cards take no hover. Homepage
+  (home.css): Why stake are bleed cards, governance steps are the pastel variant, testimonials and
+  networks opt out. **Page Code panels outside this repo still override it:** /contact-us (black ring +
+  8px hard shadow), /guides (padding 0, image-only tiles), /investments (20px radius),
+  /governance-record (old 8px pastel cards). Move or delete those when tidying the panels.
 - **Both hero buttons point at `/networks`,** including "Book a Call". Content fix, in Notion.
 - **Stat card says 28 networks; the fork panel says 38.** One of them is wrong.
 - **Who We Are, "And others." card.** In Notion as the fourth, last card. Its cover is
@@ -156,7 +162,7 @@ page-level limit is.
 | 06 | Headings — the Type System: Notion Heading 1–4 → h1–h4, one to one. Bold/underline play no part; keep them off headings in Notion |
 | 07 | Callouts as buttons — primary / secondary (gray) |
 | 08 | Databases and properties |
-| 09 | Collection cards — global card, cover, double border, `.no-click` |
+| 09 | Cards — the Card System: ring + highlight, 12px, states, density from Notion card size, 6px bleed |
 | 10 | Pills |
 | 11 | Column dividers |
 | 12 | Code blocks |
