@@ -690,7 +690,11 @@
   gap: 18px !important;
 }
 
-[data-enc-blog-intro] > .notion-column:last-child > .notion-callout {
+/* align-self on the items as well: main.css §07 gives every button callout
+   align-self: flex-start, which beat the column's bottom alignment. */
+[data-enc-blog-intro] > .notion-column:last-child > .notion-callout,
+[data-enc-blog-intro] > .notion-column:last-child > .enc-blog__controls {
+  align-self: flex-end !important;
   margin: 0 !important;
 }
 
