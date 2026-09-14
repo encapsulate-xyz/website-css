@@ -938,3 +938,51 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
   else build();
 })();
+
+
+/* ─────────────────────────────────────────────────────────────────────────────────────────────
+   Homepage services — design "Services Section", 42m: SERVICES SELECTION.
+
+   Behaviour only; every word and image is in Notion. Pointing at, focusing or clicking a service
+   in the list marks its card [data-active], which home.css (§09a) uses to light the list item and
+   show that service's cover in the screen. The mark stays when the pointer leaves, so the screen
+   keeps the last service picked instead of snapping back to the first. List items are made
+   focusable so the keyboard can pick too. */
+(function () {
+  var GALLERY = "block-3dbe800a5138804d8ee8c6d84679cc63";
+
+  function select(card) {
+    var gallery = card.closest(".notion-collection-gallery");
+    if (!gallery) return;
+    gallery.querySelectorAll(".notion-collection-card[data-active]").forEach(function (c) {
+      if (c !== card) c.removeAttribute("data-active");
+    });
+    if (!card.hasAttribute("data-active")) card.setAttribute("data-active", "");
+  }
+
+  function wire() {
+    var block = document.getElementById(GALLERY);
+    if (!block) return;
+    var cards = block.querySelectorAll(".notion-collection-card");
+    if (!cards.length) return;
+    if (!block.querySelector(".notion-collection-card[data-active]")) cards[0].setAttribute("data-active", "");
+    cards.forEach(function (card) {
+      var item = card.querySelector(".notion-collection-card__content");
+      if (!item || item.hasAttribute("data-enc-svc")) return;
+      item.setAttribute("data-enc-svc", "");
+      item.setAttribute("tabindex", "0");
+      item.setAttribute("role", "button");
+      ["mouseenter", "focus", "click"].forEach(function (ev) {
+        item.addEventListener(ev, function () { select(card); });
+      });
+    });
+  }
+
+  var t = 0;
+  new MutationObserver(function (muts) {
+    if (muts.every(function (m) { return m.type === "attributes"; })) return;
+    clearTimeout(t); t = setTimeout(wire, 60);
+  }).observe(document.body, { childList: true, subtree: true });
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire);
+  else wire();
+})();
