@@ -148,7 +148,7 @@ page-level limit is.
 | 03 | General page layout |
 | 04 | Navigation bar |
 | 05 | Navbar menu (slide-out) |
-| 06 | Headings — generic h1–h3, nested-column h1, `strong`/`u` treatments |
+| 06 | Headings — the Type System: Notion Heading 1–4 → h1–h4, one to one. Bold/underline play no part; keep them off headings in Notion |
 | 07 | Callouts as buttons — primary / secondary (gray) |
 | 08 | Databases and properties |
 | 09 | Collection cards — global card, cover, double border, `.no-click` |
