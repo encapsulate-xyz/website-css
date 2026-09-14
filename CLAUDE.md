@@ -60,6 +60,32 @@ a fix on `main` would not reach the site. `vN` below is the current release.
 The fonts `<link>` stays in the site Head as before. Once the tags are in, the pasted CSS in the
 Custom CSS boxes (site and page) must be **emptied**, or old and new rules both apply.
 
+### Site Head — what each line is for (audited 2026-09-14)
+
+```html
+<link rel="stylesheet" href="https://sites.super.so/builder/themes/minima/minima.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@vN/dist/main.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Hanken+Grotesk:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Architects+Daughter&family=Manrope:wght@700&display=swap" rel="stylesheet">
+```
+
+- **minima.min.css is required.** Super does not load its theme itself on this site — this line is
+  the only place it comes from. Disabling it on the homepage changed 18,038 elements (base font
+  size 16→14px, text colour, letter-spacing, paddings, borders).
+- **Fonts actually rendered** (checked on /, /networks, /team, /blog, /governance): Inter (served
+  by Super from /fonts, not Google), Outfit, Hanken Grotesk, JetBrains Mono, Architects Daughter;
+  Manrope 700 in the slide-out menu (main.css §05, loads only when the menu opens). Arial Black,
+  Georgia, Verdana and Monaco are system fonts.
+- **Removed as unused:** Allerta Stencil, Comfortaa, Give You Glory, Gloria Hallelujah, Indie
+  Flower, Archivo Black, the Google Inter link, and duplicate Outfit links. The gtag block was
+  commented out (analytics is off).
+- **Open question — Archivo.** main.css §06 sets every `h1.notion-heading` in `"Archivo"`, but no
+  Head line loads Archivo (only Archivo Black was loaded, a different family), so headings render
+  in the fallback `sans-serif`. Either add `family=Archivo:wght@600` to the fonts link (headings
+  change to the intended face) or change §06 to the face the site should use.
+
 ### Releasing a change
 
 1. Back up, edit, `python3 build.py`, verify on the live page (inject the built file).
