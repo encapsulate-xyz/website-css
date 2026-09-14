@@ -756,3 +756,163 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply);
   else apply();
 })();
+
+
+/* ─────────────────────────────────────────────────────────────────────────────────────────────
+   Homepage blog — design "Blog Highlights".
+
+   The blog gallery's first three posts become a horizontal rail of large ink cards that snap to
+   the centre, with a dot pager and a "Read every post" link on the heading's row.
+
+     card    ink cover (#3A3D38) at 1.91:1, 12px corners; a pastel shape bleeding off the
+             bottom-right corner (tint and shape per post); the category in its tint and the date
+             in mono along the top; the title in Outfit; the Encapsulate wordmark at the foot
+     rail    scroll-snap x mandatory, cards clamp(300px, 72vw, 840px), 22px apart, full width
+     dots    one per post in a paper-2 pill; the active one stretches to a 44px ink bar. Click a
+             dot to bring its post to the centre; scrolling the rail moves the active dot
+
+   BUILT FROM NOTION: title, link, date and tags are read from the gallery cards. The category is
+   the post's first tag other than "Informative" (or "Informative" when that is all it has), and
+   the tint is that tag's colour in Notion mapped to the pastel palette. The link target of the
+   "Read every post" control is the section's View All button. The gallery and that button stay
+   in the page, hidden, as the no-JavaScript fallback. Styles: home-dial.css, "BLOG RAIL". The
+   heading and the paragraph keep the site's own type. */
+(function () {
+  var GALLERY = "block-67d891d07f914f4699b81d1765e1f04f";
+  var COUNT = 3;
+  var PASTEL = { green: "#DCEEC7", yellow: "#F8E8B3", red: "#F7DCE7", pink: "#F7DCE7",
+    blue: "#D2E3F6", orange: "#F8DDC6", purple: "#E4DBF2", brown: "#F8DDC6", gray: "#E2E2DB" };
+  var SHAPES = ["50%", "999px 999px 0 0"];
+  var script = document.currentScript;
+  var BASE = script && /\/dist\/home\.js/.test(script.src) ? script.src.replace(/\/dist\/home\.js.*$/, "/") : null;
+  var WORDMARK = BASE ? BASE + "svg/wordmark-reversed.svg" : null;
+
+  function posts(gallery) {
+    return Array.prototype.slice.call(gallery.querySelectorAll(".notion-collection-card"), 0, COUNT).map(function (card) {
+      var title = card.querySelector(".notion-property__title");
+      var link = card.querySelector("a[href]");
+      var date = card.querySelector(".notion-property__date");
+      var pills = Array.prototype.map.call(card.querySelectorAll(".notion-property__select .notion-pill"), function (p) {
+        var m = p.className.match(/pill-([a-z]+)/);
+        return { name: p.textContent.trim(), tint: PASTEL[m && m[1]] || PASTEL.green };
+      });
+      var tag = pills.filter(function (p) { return !/^informative$/i.test(p.name); })[0] || pills[0] || { name: "", tint: PASTEL.green };
+      return { title: title ? title.textContent.trim() : "", href: link ? link.getAttribute("href") : null,
+        date: date ? date.textContent.trim() : "", tag: tag };
+    });
+  }
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function card(p, i) {
+    var a = el(p.href ? "a" : "div", "enc-blog__card");
+    if (p.href) a.setAttribute("href", p.href);
+    a.setAttribute("data-card", String(i));
+    var shape = el("span", "enc-blog__shape");
+    shape.style.background = p.tag.tint;
+    shape.style.borderRadius = SHAPES[i % SHAPES.length];
+    var body = el("div", "enc-blog__body");
+    var top = el("div", "enc-blog__top");
+    var cat = el("span", "enc-blog__cat", p.tag.name);
+    cat.style.color = p.tag.tint;
+    top.appendChild(cat);
+    top.appendChild(el("span", "enc-blog__date", p.date));
+    body.appendChild(top);
+    body.appendChild(el("h3", "enc-blog__title", p.title));
+    if (WORDMARK) {
+      var mark = el("img", "enc-blog__mark");
+      mark.src = WORDMARK;
+      mark.alt = "Encapsulate";
+      body.appendChild(mark);
+    }
+    a.appendChild(shape);
+    a.appendChild(body);
+    return a;
+  }
+
+  function build() {
+    var gallery = document.getElementById(GALLERY);
+    if (!gallery) return;
+    var list = posts(gallery);
+    if (!list.length) return;
+    var sig = list.map(function (p) { return p.title; }).join("|");
+    var rail = gallery.previousElementSibling && gallery.previousElementSibling.classList.contains("enc-blog") ? gallery.previousElementSibling : null;
+    if (rail && rail.getAttribute("data-sig") === sig) { sizeControls(); return; }
+    if (rail) rail.remove();
+
+    // the heading and paragraph above the gallery, and the View All row below it
+    var heading = null, n = gallery.previousElementSibling;
+    while (n && !heading) { if (n.matches && n.matches(".notion-heading")) heading = n; n = n.previousElementSibling; }
+    var more = gallery.nextElementSibling;
+    var moreLink = more && more.querySelector(".notion-callout .notion-link");
+
+    rail = el("div", "enc-blog");
+    rail.setAttribute("data-sig", sig);
+    list.forEach(function (p, i) { rail.appendChild(card(p, i)); });
+    gallery.parentElement.insertBefore(rail, gallery);
+    gallery.setAttribute("data-enc-hidden", "");
+    if (more && moreLink) more.setAttribute("data-enc-hidden", "");
+
+    var old = document.querySelector(".enc-blog__controls");
+    if (old) old.remove();
+    var controls = el("div", "enc-blog__controls");
+    var dots = el("div", "enc-blog__dots");
+    list.forEach(function (p, i) {
+      var b = el("button", "enc-blog__dot");
+      b.type = "button";
+      b.setAttribute("aria-label", "Show post " + (i + 1));
+      b.addEventListener("click", function () { goTo(rail, i); });
+      dots.appendChild(b);
+    });
+    controls.appendChild(dots);
+    if (moreLink) {
+      var read = el("a", "enc-blog__more", "Read every post");
+      read.setAttribute("href", moreLink.getAttribute("href"));
+      controls.appendChild(read);
+    }
+    if (heading) heading.parentElement.insertBefore(controls, heading.nextSibling);
+    else rail.parentElement.insertBefore(controls, rail);
+    controls.__heading = heading;
+
+    rail.addEventListener("scroll", function () { mark(rail, dots); }, { passive: true });
+    mark(rail, dots);
+    sizeControls();
+  }
+
+  // the controls sit on the heading's row: pulled up by the heading's height
+  function sizeControls() {
+    var c = document.querySelector(".enc-blog__controls");
+    if (c && c.__heading) c.style.setProperty("--enc-blog-head", c.__heading.offsetHeight + "px");
+  }
+
+  function goTo(rail, i) {
+    var c = rail.querySelector('[data-card="' + i + '"]');
+    // scroll-snap mandatory cancels smooth scrolling, so the offset is set directly
+    if (c) rail.scrollLeft = c.offsetLeft - (rail.clientWidth - c.clientWidth) / 2;
+  }
+
+  function mark(rail, dots) {
+    var centre = rail.scrollLeft + rail.clientWidth / 2, best = 0, bestD = Infinity;
+    Array.prototype.forEach.call(rail.children, function (c, i) {
+      var d = Math.abs(c.offsetLeft + c.clientWidth / 2 - centre);
+      if (d < bestD) { bestD = d; best = i; }
+    });
+    Array.prototype.forEach.call(dots.children, function (b, i) {
+      if (i === best) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current");
+    });
+  }
+
+  var t = 0;
+  new MutationObserver(function (muts) {
+    if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-blog, .enc-blog__controls"); })) return;
+    clearTimeout(t); t = setTimeout(build, 60);
+  }).observe(document.body, { childList: true, subtree: true });
+  window.addEventListener("resize", sizeControls);
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
+  else build();
+})();
