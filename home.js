@@ -1,7 +1,7 @@
 /* Homepage script — the institutional staking dial (design "Institutional Form", 22a "The dial").
 
-   PASTE: dist/home-head.html into Super → homepage → Code → Head. build.py makes it from
-   home-dial.css (as a <style> block — the dial's styles) and this file (as a <script>). The base
+   SERVED from the repo (dist/home.js, via jsDelivr) and linked from Super → homepage → Code → Head,
+   together with its styles dist/home-dial.css — see "Serving from GitHub" in CLAUDE.md. The base
    form styles are main.css §13b.
 
    WHAT IT DOES, on a Notion form that has a Number question labelled "Amount":

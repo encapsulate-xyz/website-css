@@ -5,9 +5,9 @@ Custom CSS for the Super.so site at https://encapsulate.xyz.
 - `main.css` — site-level CSS. Pasted into **Super → Settings → Code → Custom CSS**. Applies to every page. Site-wide rules only — no `#block-…` ids.
 - `home.css` — page-level CSS for the homepage. Pasted into the homepage's own **Code** panel (CSS).
 - `home.js` + `home-dial.css` — homepage script for the institutional staking dial, and the styles
-  that only apply once it runs. `build.py` combines them (a `<style>` then a `<script>`) into
-  `dist/home-head.html`; paste that into the homepage's **Code** panel → **Head**. The dial styles
-  live there, not in home.css, because home.css is near Super's size limit.
+  that only apply once it runs.
+
+Everything is served from GitHub — see "Serving from GitHub" below.
 - `network.css` — page-level CSS for `/networks`. Pasted into that page's own **Code** panel.
 - `svg/` — source SVGs uploaded to the DigitalOcean CDN and referenced by URL from the CSS.
 
@@ -34,25 +34,53 @@ When reverting, say which backup is being restored and what will be lost.
 Delete old ones when a change is confirmed good — `backups/` grows fast (25 copies, 2.1MB, in one
 working session).
 
-## Paste `dist/`, not the source
+## Serving from GitHub (since 2026-09-14)
 
-Super's Custom CSS box has a size limit. Saving an oversized stylesheet fails with
-*"The code snippets you're trying to save are too large."*
-
-These files are heavily commented on purpose — the comments are the record of why each rule
-exists and what was measured — but Super does not need them. So:
+Repo: **github.com/encapsulate-xyz/website-css** (public — jsDelivr only serves public repos).
+Super loads the built files from jsDelivr instead of having them pasted, so Super's Custom CSS size
+limit no longer applies.
 
 ```bash
-python3 build.py          # writes dist/main.css, dist/home.css, dist/network.css, dist/home-head.html
+python3 build.py          # writes dist/: main.css, home.css, network.css, home-dial.css, home.js
 ```
 
-**Edit `main.css` / `home.css` / `network.css`. Paste the matching file from `dist/`.**
+**Edit the source files, run the build, commit source and `dist/` together.** Never edit `dist/`.
 
-The build removes comments and collapses whitespace, both outside strings and `url()`, so a `/*`
-inside a data URI or a font name is never touched. Selectors and declarations are unchanged:
-with whitespace ignored, the output matches the comment-stripped source exactly. Largest accepted
-paste so far: 55.7KB; 106KB was rejected. Current builds: main.css 17.8KB, home.css 60.2KB,
-network.css 19.6KB — see "What lives where".
+### The tags in Super
+
+Pin every URL to a release tag, never `@main` — jsDelivr caches branch URLs for up to 12 hours, so
+a fix on `main` would not reach the site. `vN` below is the current release.
+
+| Super → Code → Head of… | Tags |
+|---|---|
+| **Site settings** (every page) | `<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@vN/dist/main.css">` |
+| **Homepage** | `<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@vN/dist/home.css">`<br>`<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@vN/dist/home-dial.css">`<br>`<script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@vN/dist/home.js" defer></script>` |
+| **/networks** | `<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@vN/dist/network.css">` |
+
+The fonts `<link>` stays in the site Head as before. Once the tags are in, the pasted CSS in the
+Custom CSS boxes (site and page) must be **emptied**, or old and new rules both apply.
+
+### Releasing a change
+
+1. Back up, edit, `python3 build.py`, verify on the live page (inject the built file).
+2. Commit source + `dist/`, push.
+3. `git tag -a vN+1 -m "…" && git push origin vN+1`.
+4. In Super, change `@vN` to `@vN+1` in the tags that use a changed file. Only those tags need it.
+
+### Load order — verified, not assumed
+
+Custom Head code lands after Super's own stylesheets but before the page's inline styles. Moving
+main.css and home.css from pasted `<style>` blocks to `<link>`s in the Head was checked on the
+live homepage by comparing ~45 computed properties (plus `::before`/`::after`) on all ~18,000
+elements: inline as before, linked main-then-home, and linked home-then-main all computed
+**identically**. The rules are specific enough that their order no longer decides anything. If a
+future rule relies on order, re-run that comparison.
+
+### Size limit (historical)
+
+Super's Custom CSS box rejected a 106KB paste and accepted 55.7KB; that is why build.py strips
+comments and whitespace. With the files served from GitHub this only matters if something is ever
+pasted again.
 
 ## Open items
 

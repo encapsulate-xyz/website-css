@@ -13,11 +13,10 @@
    JavaScript keeps main.css §13b.
 
    WHERE THIS FILE GOES. Not in home.css: these rules do nothing without the
-   script, and home.css is already near Super's size limit. build.py squeezes
-   this file into a <style> block at the top of dist/home-head.html, which is
-   pasted into the homepage's Code → Head together with the script. A <style>
-   in the head loads before main.css, which is why every selector here out-ranks
-   §13b rather than relying on order.
+   script. It is served from the repo as dist/home-dial.css and linked from the
+   homepage's Code → Head next to home.js (see "Serving from GitHub" in
+   CLAUDE.md). Head stylesheets load before main.css's rules would if pasted,
+   which is why every selector here out-ranks §13b rather than relying on order.
 
    MARKERS ARE data- ATTRIBUTES, not classes: React resets className on every
    re-render of the form, which wiped the first version's class markers (see

@@ -58,12 +58,19 @@ for name in sys.argv[1:] or ['main.css', 'home.css', 'network.css']:
     print(f'{name:14} {len(src):>7,} -> {len(dst):>7,} bytes  '
           f'({100 - 100*len(dst)//len(src)}% smaller)')
 
-# home.js is pasted into Super's homepage Code -> Head, which takes HTML. The dial's styles
-# (home-dial.css) only matter when the script runs, so they travel with it as a <style> block
-# rather than adding to home.css, which is near Super's size limit.
-if os.path.exists('home.js') and not sys.argv[1:]:
-    js = open('home.js', encoding='utf-8').read()
-    css = squeeze(strip(open('home-dial.css', encoding='utf-8').read())) if os.path.exists('home-dial.css') else ''
-    out = ('<style>\n' + css + '</style>\n' if css else '') + '<script>\n' + js + '</script>\n'
-    open(os.path.join('dist', 'home-head.html'), 'w', encoding='utf-8').write(out)
-    print(f"home.js + home-dial.css -> dist/home-head.html  {len(out):>7,} bytes")
+# The homepage dial: home.js and its styles home-dial.css. Both are served from the repo via
+# jsDelivr and linked from the homepage's Code -> Head (see "Serving from GitHub" in CLAUDE.md),
+# so they are written to dist/ like the stylesheets.
+if not sys.argv[1:]:
+    if os.path.exists('home-dial.css'):
+        src = open('home-dial.css', encoding='utf-8').read()
+        dst = squeeze(strip(src))
+        open(os.path.join('dist', 'home-dial.css'), 'w', encoding='utf-8').write(dst)
+        print(f"{'home-dial.css':14} {len(src):>7,} -> {len(dst):>7,} bytes")
+    if os.path.exists('home.js'):
+        js = open('home.js', encoding='utf-8').read()
+        open(os.path.join('dist', 'home.js'), 'w', encoding='utf-8').write(js)
+        print(f"{'home.js':14} {len(js):>7,} -> dist/home.js (copied)")
+    stale = os.path.join('dist', 'home-head.html')
+    if os.path.exists(stale):
+        os.remove(stale)
