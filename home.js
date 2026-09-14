@@ -889,8 +889,8 @@
   function sizeControls() {
     var c = document.querySelector(".enc-blog__controls");
     if (!c || !c.__heading) return;
-    var h = c.__heading.offsetHeight + (parseFloat(getComputedStyle(c.__heading).marginBottom) || 0);
-    c.style.setProperty("--enc-blog-head", h + "px");
+    c.style.setProperty("--enc-blog-head", c.__heading.offsetHeight + "px");
+    c.style.setProperty("--enc-blog-gap", (parseFloat(getComputedStyle(c.__heading).marginBottom) || 0) + "px");
   }
 
   function goTo(rail, i) {

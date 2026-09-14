@@ -684,7 +684,8 @@
   gap: 18px;
   flex-wrap: wrap;
   height: var(--enc-blog-head, auto);
-  margin-top: calc(var(--enc-blog-head, 0px) * -1);
+  margin-top: calc((var(--enc-blog-head, 0px) + var(--enc-blog-gap, 0px)) * -1);
+  margin-bottom: var(--enc-blog-gap, 0px); /* the heading's own gap, kept below the row */
   padding-bottom: 4px;
   pointer-events: none;
 }
