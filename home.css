@@ -2049,6 +2049,12 @@ body {
   background: transparent !important;
 }
 
+/* six most recent, restated: display: grid above would otherwise override the
+   page's older, non-important n+7 limit and show the whole record */
+#block-4529386b39be4a9aa44d2dbac56537bd tbody tr:nth-child(n+7) {
+  display: none !important;
+}
+
 #block-4529386b39be4a9aa44d2dbac56537bd tbody tr {
   border-top: 1px solid #E2E2DB !important;
   transition: background-color 0.16s ease !important;
