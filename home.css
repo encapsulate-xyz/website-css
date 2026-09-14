@@ -2739,6 +2739,49 @@ body {
 
 
 /*********************************************/
+/* 15a. NETWORKS SECTION — ITS OWN GROUND */
+/*********************************************/
+
+/* The section sits in a Notion callout so it can be treated as one object.
+   Rather than a callout box it becomes a full-width band on paper 2
+   (#F2F2ED) — the section ground every design file places its sections on
+   ("section ground stays paper 2", Card System). Coming straight after the
+   ink testimonials it reads as its own chapter without adding a colour; the
+   page's off-white (#FFFEFC) resumes below. Same full-bleed construction as
+   the stats band (section 00): 100vw wide, pulled out by the difference, and
+   padded back in to the site gutter. The callout's icon, border, corner,
+   padding and Notion tint go. The column geometry is home-dial.css, 21b. */
+.notion-root #block-3dbe800a51388059870bfa97563baa3f {
+  display: block !important;
+  width: 100vw !important;
+  max-width: none !important;
+  margin: 0 0 0 calc(50% - 50vw) !important;
+  padding: 0 max(48px, calc(50vw - 864px)) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: #F2F2ED !important;
+  overflow: hidden !important; /* the discs' fade stays inside the band */
+}
+
+.notion-root #block-3dbe800a51388059870bfa97563baa3f > .notion-callout__icon {
+  display: none !important;
+}
+
+.notion-root #block-3dbe800a51388059870bfa97563baa3f > .notion-callout__content {
+  display: block !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.notion-root #block-3dbe800a51388059870bfa97563baa3f > .notion-callout__content > .notion-semantic-string:empty {
+  display: none !important;
+}
+
+
+/*********************************************/
 /* 15. NETWORKS GALLERY (HOMEPAGE) */
 /*********************************************/
 
