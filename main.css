@@ -1647,6 +1647,7 @@ h4.notion-heading {
 .enc-foot__text {
   margin: 0;
   font-size: 16.5px;
+  letter-spacing: normal;
   line-height: 1.55;
   color: #C9C9C4;
 }
@@ -1720,6 +1721,7 @@ h4.notion-heading {
 
 .enc-foot__link {
   font-size: 14.5px;
+  letter-spacing: normal;
   color: #C9C9C4 !important;
   text-decoration: none !important;
   transition: color 0.16s ease;
