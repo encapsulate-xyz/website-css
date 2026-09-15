@@ -980,14 +980,10 @@ body {
   align-self: flex-start !important;
 }
 
-#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-text:not(:first-of-type) + ol,
-#block-3dae800a51388006a57be06b8ebea78e > .notion-column > ol + .notion-callout {
-  margin-top: 0 !important;
-}
-
+/* both buttons on one level: pushed to the foot of equal-height columns (a stray
+   margin-top: 0 rule with higher specificity had cancelled this) */
 #block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-callout {
   margin-top: auto !important;
-  padding-top: 8px !important;
 }
 
 @media (max-width: 800px) {
