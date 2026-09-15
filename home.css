@@ -3142,6 +3142,29 @@ body {
   color: #3F6B27 !important;
 }
 
+/* The routes leave the site, so each handle carries the up-right badge the
+   governance rows use (the out-of-site arrow, distinct from the tertiary's
+   straight one): 20px green circle, nudging up and right on hover. */
+#block-3dce800a5138803a82f7d45863d6049c > .notion-callout__content > #block-3dce800a513880f58903ec250b9caeae ~ .notion-text a {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+#block-3dce800a5138803a82f7d45863d6049c > .notion-callout__content > #block-3dce800a513880f58903ec250b9caeae ~ .notion-text a::after {
+  content: "" !important;
+  flex: none !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 999px !important;
+  background: #99CC66 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 13.5 13.5 6.5'/%3E%3Cpath d='M7.75 6.5h5.75v5.75'/%3E%3C/svg%3E") center / 60% no-repeat !important;
+  transition: transform 0.16s ease !important;
+}
+
+#block-3dce800a5138803a82f7d45863d6049c > .notion-callout__content > #block-3dce800a513880f58903ec250b9caeae ~ .notion-text a:hover::after {
+  transform: translate(2px, -2px) !important;
+}
+
 /*********************************************/
 /* 09b. WHO WE ARE — THE TEAM, ONE NAME AT A TIME */
 /*********************************************/
