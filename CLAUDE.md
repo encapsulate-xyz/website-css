@@ -1,371 +1,258 @@
 # website-css
 
-Custom CSS for the Super.so site at https://encapsulate.xyz.
+Custom CSS and JS for the Super.so (Notion) site at https://encapsulate.xyz. Designs come as Claude
+Design handoffs (project `9da1c502-69a5-4e9f-9b05-9b435acb854b`, read with the DesignSync tool,
+`get_file`) and are implemented section by section, verified on the live site.
 
-- `main.css` — site-level CSS. Pasted into **Super → Settings → Code → Custom CSS**. Applies to every page. Site-wide rules only — no `#block-…` ids.
-- `home.css` — page-level CSS for the homepage. Pasted into the homepage's own **Code** panel (CSS).
-- `home.js` + `home-dial.css` — homepage script for the institutional staking dial, and the styles
-  that only apply once it runs.
+## How we work (agreed 2026-09-15)
 
-Everything is served from GitHub — see "Serving from GitHub" below.
-- `network.css` — page-level CSS for `/networks`. Pasted into that page's own **Code** panel.
-- `svg/` — source SVGs uploaded to the DigitalOcean CDN and referenced by URL from the CSS.
+The user shares a design handoff. I:
+
+1. read the handoff carefully (every value — misses were pointed out several times);
+2. **edit the Notion page myself** through the API (see "Editing Notion"), so the content is shaped
+   for the design;
+3. write the CSS/JS in the repo, build, verify on the live page, commit, tag a release;
+4. reply with **one table of what to paste** — `File | Paste into` — listing only the `head/*.html`
+   files that changed.
+
+User rules that stand on every task:
+
+- **Content stays in Notion.** Never create text, links or buttons with JS unless Notion + CSS
+  genuinely cannot produce it, and say so first. Allowed so far: Why Stake derived figures (years
+  since 2020, networks count), the footer CTA copy and its glyph list (footer.js), the contact
+  Copy button's "Copied" feedback. JS for behaviour and decoration is fine (snapping, glyph
+  columns, cover fields, dot pagers).
+- **No extra CSS on existing Notion text blocks** unless the section is new or redesigned.
+- **No `ch` max-width caps on body/lead text.** Headings may break; when the user shows the break
+  they want, set it with an em max-width and `text-wrap: wrap`.
+- **Say what was removed** when a Notion edit deletes blocks.
+- Commit, push and tag are allowed. Backups before editing any `.css` (below).
+
+## Files
+
+| File | What | Loaded from |
+|---|---|---|
+| `main.css` | site-wide styles, no `#block-…` ids | site Head |
+| `footer.js` | footer 44b, built inside Super's footer | site Head |
+| `covers.js` | inner-page cover graphics ("fields") | site Head |
+| `home.css`, `home-dial.css`, `home.js` | homepage sections, JS-enhanced styles, homepage scripts | homepage Head |
+| `network.css` | /networks | its page Head |
+| `governance.css`, `blog.css`, `brand.css`, `contact-us.css`, `guides.css`, `investments.css`, `security.css`, `services.css` | each page's CSS, moved out of Super's page Code panels on 2026-09-15 (old cover rules removed, the rest kept as it was) | each page's Head |
+| `svg/` | SVG sources (DigitalOcean CDN, or served from jsDelivr like `svg/wordmark-reversed.svg`, `svg/mark-a.svg`) | — |
+| `notion/page-covers.md` | cover copy for the nine inner pages | — |
+| `build.py` | strips comments into `dist/`, copies the JS | — |
+
+**Edit sources, run `python3 build.py`, commit source and `dist/` together. Never edit `dist/`.**
+When a new page CSS file is added, add it to build.py's default list and create `head/<page>.html`.
+If the user drops a file into `dist/`, move it to the root as the source.
 
 ## Back up before every change
 
-**Before editing any `.css` file, copy it into `backups/` first, then make the change.**
+Before editing any `.css` file, copy it into `backups/` (gitignored), one copy per session:
 
 ```bash
 cp main.css backups/main.css.bak-$(date +%Y%m%d-%H%M%S)
 ```
 
-Same for `home.css` and `network.css`. One backup per editing session is enough — no need to re-copy between
-consecutive edits to the same file in the same turn.
+Work has been lost before; `/tmp` is not good enough. When reverting, say which backup and what is
+lost. Prune old backups once a change is confirmed.
 
-Backups live in `backups/`, which is gitignored. Keep them out of the project root — they were
-piling up there and made it hard to see the four files that actually matter.
+## Serving and releasing
 
-Why this matters here: both files are large and hand-tuned, and work has already been lost several
-times this way. Backups in `/tmp` are not good enough — they are session-scoped and vanish. Keep
-them in the working tree where they survive.
+Repo **github.com/encapsulate-xyz/website-css** (public), served by jsDelivr:
+`https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@vN/dist/<file>`. Always pin a tag, never
+`@main` (branch URLs cache for 12h).
 
-When reverting, say which backup is being restored and what will be lost.
+1. Back up, edit, build.
+2. Verify live: swap the page's `link`/`script` URLs to the commit SHA (`@<sha>/dist/…`) in the
+   browser and measure. React may restore hrefs — swap again. **A brand-new tag can 404 on jsDelivr
+   for a short while**; a test that loads nothing may just be that (reload the link and check
+   `performance` entries).
+3. Commit (with the session's attribution trailer), push, `git tag -a vN -m … && git push origin vN`.
+4. Bump only the `head/*.html` files whose dist files changed; tell the user in a table.
 
-Delete old ones when a change is confirmed good — `backups/` grows fast (25 copies, 2.1MB, in one
-working session).
+Note: `git commit` also commits anything the user has staged — check `git status` first.
 
-## Serving from GitHub (since 2026-09-14)
-
-Repo: **github.com/encapsulate-xyz/website-css** (public — jsDelivr only serves public repos).
-Super loads the built files from jsDelivr instead of having them pasted, so Super's Custom CSS size
-limit no longer applies.
-
-```bash
-python3 build.py          # writes dist/: main.css, home.css, network.css, home-dial.css, home.js
-```
-
-**Edit the source files, run the build, commit source and `dist/` together.** Never edit `dist/`.
-
-### Head files — what to paste into Super
-
-`head/` holds the exact, complete contents of each Super Head box, pinned to the current release.
-The user copies from these files. On a new tag, **bump only the head files whose dist files
-actually changed** since the tag they point at (`git diff vOLD vNEW -- dist/<file>`), in the same commit:
+### Head files — what the user pastes
 
 | File | Paste into (replace everything) |
 |---|---|
-| `head/site.html` | Super → Settings → Code → Head |
+| `head/site.html` | Super → Settings → Code → Head (minima, main.css, footer.js, covers.js, fonts) |
+| `head/site-body.html` | Super → Settings → Code → Body (temporary "under reconstruction" banner) |
 | `head/home.html` | Homepage → Code → Head |
-| `head/networks.html` | /networks → Code → Head |
-| `head/governance.html` | /governance-record → Code → Head (its CSS box emptied; source `governance.css`) |
-| `head/blog.html` | /blog → Code → Head (its CSS box emptied; source `blog.css`) |
-| `head/brand.html` | /brand → Code → Head (its CSS box emptied; source `brand.css`) |
-| `head/contact-us.html` | /contact-us → Code → Head (its CSS box emptied; source `contact-us.css`) |
-| `head/guides.html` | /guides → Code → Head (its CSS box emptied; source `guides.css`) |
-| `head/investments.html` | /investments → Code → Head (its CSS box emptied; source `investments.css`) |
-| `head/security.html` | /security → Code → Head (its CSS box emptied; source `security.css`) |
-| `head/services.html` | /services → Code → Head (its CSS box emptied; source `services.css`) |
-| `head/site-body.html` | Super → Settings → Code → **Body** (the temporary "under reconstruction" banner; delete it there to remove the banner) |
+| `head/networks.html` | /networks → Code → Head (view-picker + network.css) |
+| `head/governance.html` | /governance-record → Code → Head |
+| `head/blog.html` | /blog → Code → Head |
+| `head/brand.html` | /brand → Code → Head (includes the Comfortaa font link) |
+| `head/contact-us.html` | /contact-us → Code → Head |
+| `head/guides.html` | /guides → Code → Head (view-picker + guides.css) |
+| `head/investments.html` | /investments → Code → Head |
+| `head/security.html` | /security → Code → Head |
+| `head/services.html` | /services → Code → Head |
 
-Every other page's Head should contain no `website-css` line (main.css already comes from the site Head).
+A page whose CSS moved to the repo has its Code → CSS box emptied. Pages not listed (team, etc.)
+have no repo file yet.
 
-### The tags in Super
+**Super bakes the site Head into each page when it republishes that page.** After a site Head
+paste, pages pick it up unevenly; check each page's served `website-css@vN` before diagnosing.
 
-Pin every URL to a release tag, never `@main` — jsDelivr caches branch URLs for up to 12 hours, so
-a fix on `main` would not reach the site. `vN` below is the current release.
+### Site Head notes (audited 2026-09-14)
 
-| Super → Code → Head of… | Tags |
-|---|---|
-| **Site settings** (every page) | `<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@vN/dist/main.css">` |
-| **Homepage** | `<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@vN/dist/home.css">`<br>`<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@vN/dist/home-dial.css">`<br>`<script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@vN/dist/home.js" defer></script>` |
-| **/networks** | `<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@vN/dist/network.css">` |
+- **minima.min.css is required** — Super does not load its theme itself on this site.
+- Fonts rendered: Inter (Super, /fonts), Outfit, Hanken Grotesk, JetBrains Mono, Architects
+  Daughter, Manrope 700 (menu). Arial Black, Georgia, Verdana, Monaco are system fonts.
+- Headings use `sans-serif` where "Archivo" was once asked for but never loaded — do not add an
+  Archivo link.
+- `@import` is stripped from Super's Custom CSS box; use `<link>` in a Head.
 
-The fonts `<link>` stays in the site Head as before. Once the tags are in, the pasted CSS in the
-Custom CSS boxes (site and page) must be **emptied**, or old and new rules both apply.
+## Editing Notion
 
-### Site Head — what each line is for (audited 2026-09-14)
+- Integration token in `~/.notion-covers-token` (chmod 600; integration "Encapsulate Website",
+  connected at the Home parent page and /contact-us). Read it from the file; never print it. The token
+  was once shown in chat — remind the user to refresh it.
+- REST API, `Notion-Version: 2022-06-28`: `GET blocks/{id}/children`, `PATCH blocks/{id}/children`
+  (optional `after` to insert after a block), `PATCH blocks/{id}`, `DELETE blocks/{id}`.
+  Pagination via `start_cursor`. A small helper (`api`, `children`, `tree`) is quick to write.
+- Live block id `block-<32 hex>` = Notion block id without dashes, so a live id maps straight to
+  the API. Pages: Home `b6b487f74b484c2e97c6ab7513295c14`, Networks `adea0804…`, Governance Record
+  `6915bef8…`, Blog `3c2dbe43…`, Guides `1f6e800a5138802a…`, Services and Tools `bf68edd2…`,
+  Investment `d6347738…`, Brand `53c5a135…`, Security `29c24b09…`, Contact Us `a8ec9a05…`.
+  Old copies of Contact Us / Brand / Security live under "Encapsulate Test Home" — not the live
+  pages.
+- **Make button callouts through the API** (`callout.rich_text` carrying the link). A callout made in
+  the Notion app can render its label as a child `p.notion-text`, which the Button System does not
+  match (seen on /networks: 79px/101px plain boxes).
+- Links: a page link renders as `/<page-id>` or its slug; a database link as its page path
+  (e.g. `/governance-record/governance-record`); a block link `https://www.notion.so/<page>#<block>`
+  should become `/#block-…` — confirm after republish.
+- Super republishes on its own schedule; edits are not live immediately.
 
-```html
-<link rel="stylesheet" href="https://sites.super.so/builder/themes/minima/minima.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@vN/dist/main.css">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Hanken+Grotesk:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Architects+Daughter&family=Manrope:wght@700&display=swap" rel="stylesheet">
-```
-
-- **minima.min.css is required.** Super does not load its theme itself on this site — this line is
-  the only place it comes from. Disabling it on the homepage changed 18,038 elements (base font
-  size 16→14px, text colour, letter-spacing, paddings, borders).
-- **Fonts actually rendered** (checked on /, /networks, /team, /blog, /governance): Inter (served
-  by Super from /fonts, not Google), Outfit, Hanken Grotesk, JetBrains Mono, Architects Daughter;
-  Manrope 700 in the slide-out menu (main.css §05, loads only when the menu opens). Arial Black,
-  Georgia, Verdana and Monaco are system fonts.
-- **Removed as unused:** Allerta Stencil, Comfortaa, Give You Glory, Gloria Hallelujah, Indie
-  Flower, Archivo Black, the Google Inter link, and duplicate Outfit links. The gtag block was
-  commented out (analytics is off).
-- **Archivo — resolved, not loaded.** main.css §06 used to ask for `"Archivo"` on every
-  `h1.notion-heading`, but Archivo was never loaded, so headings rendered in the fallback
-  `sans-serif`. That look was kept (2026-09-14): the rule now says `sans-serif`, and the unused
-  `"Archivo"` fallbacks were dropped from home.css and network.css. Do not add an Archivo link —
-  it would visibly change every heading.
-
-### Releasing a change
-
-1. Back up, edit, `python3 build.py`, verify on the live page (inject the built file).
-2. Commit source + `dist/`, push.
-3. `git tag -a vN+1 -m "…" && git push origin vN+1`.
-4. In Super, change `@vN` to `@vN+1` in the tags that use a changed file. Only those tags need it.
-
-### Load order — verified, not assumed
-
-Custom Head code lands after Super's own stylesheets but before the page's inline styles. Moving
-main.css and home.css from pasted `<style>` blocks to `<link>`s in the Head was checked on the
-live homepage by comparing ~45 computed properties (plus `::before`/`::after`) on all ~18,000
-elements: inline as before, linked main-then-home, and linked home-then-main all computed
-**identically**. The rules are specific enough that their order no longer decides anything. If a
-future rule relies on order, re-run that comparison.
-
-### Size limit (historical)
-
-Super's Custom CSS box rejected a 106KB paste and accepted 55.7KB; that is why build.py strips
-comments and whitespace. With the files served from GitHub this only matters if something is ever
-pasted again.
-
-## Open items
-
-- **Buttons follow the Button System (main.css §07, 2026-09-14).** Tier = the callout's colour in
-  Notion: Gray → secondary, Default (no colour) → tertiary (label + arrow badge), any other colour
-  → primary. The label sets the width; 44px default, 48px hero (home.css redefines `--btn-*` on
-  the hero column list); dark sections redefine the ink tokens (home.css does Who we are). Content
-  still to recolour in Notion to match the system's "one primary per view": the three "View All"
-  buttons and "View Voting History" → Default (tertiary); the eleven purple buttons on /services
-  are all primary.
-- **TODO (remind the user): delete the old page-title rules from Super's page Code panels.** Each of
-  /services, /team, /contact-us, /blog, /investments, /governance-record and /guides has a
-  `#block-<title id> strong { … font-family: Arial Black … }` rule in its own Code panel (not in
-  this repo). It is dead once the page titles are un-bolded in Notion, so deleting it is optional
-  tidy-up. Found 2026-09-14.
-- **Cards follow the Card System (main.css §09, 2026-09-14).** Density = the gallery's Card size in
-  Notion (small → compact, medium → default, large → roomy); `.no-click` cards take no hover. Homepage
-  (home.css): Why stake are bleed cards, governance steps are the pastel variant, testimonials and
-  networks opt out. **Page Code panels outside this repo still override it:** /contact-us (black ring +
-  8px hard shadow), /guides (padding 0, image-only tiles), /investments (20px radius),
-  /governance-record (old 8px pastel cards). Move or delete those when tidying the panels.
-- **Both hero buttons point at `/networks`,** including "Book a Call". Content fix, in Notion.
-- **Stat card says 28 networks; the fork panel says 38.** One of them is wrong.
-- **Who We Are, "And others." card.** In Notion as the fourth, last card. Its cover is
-  `06-and-others-on-paper.png`; the section is dark, so the design's `06-and-others-on-ink.png` is the
-  right export. Any last card that is fourth or later is drawn without the tinted circle, so if a
-  fourth real person is added with no crew card, that rule needs revisiting.
-
-## What lives where — main.css vs home.css (moved 2026-09-14)
-
-**Rule:** `main.css` holds only what every page shares. Anything that targets a `#block-…` id
-belongs in that page's own CSS — for the homepage, `home.css`. Every block id that was in main.css
-existed only on the homepage (checked against the rendered HTML of `/`, `/networks`, `/team`,
-`/contact`, `/governance`, `/blog`, matching `id="block-…"` — Super inlines site CSS into every
-page, so a plain text search finds every id everywhere).
-
-**Built sizes after the move:** `dist/main.css` 11.0KB (was 65.4KB; 17.8KB once the form styles
-were added), `dist/home.css` 60.2KB (was 10.7KB). **home.css at 60KB is larger than anything pasted into Super before** (largest accepted:
-55.7KB, rejected: 106KB). If the homepage Code panel rejects it, shorten the long repeated
-selectors in the moved sections (the block ids dominate the byte count) or ask Super what the
-page-level limit is.
-
-### main.css — site-wide
+## The systems in main.css
 
 | § | Section |
 |---|---|
-| 01 | Fonts |
-| 02 | Design tokens |
-| 03 | General page layout |
-| 04 | Navigation bar |
-| 05 | Navbar menu (slide-out) |
-| 06 | Headings — the Type System: Notion Heading 1–4 → h1–h4, one to one. Bold/underline play no part; keep them off headings in Notion |
-| 07 | Callouts as buttons — primary / secondary (gray) |
-| 08 | Databases and properties |
-| 09 | Cards — the Card System: ring + highlight, 12px, states, density from Notion card size, 6px bleed |
-| 10 | Pills |
-| 11 | Column dividers |
-| 12 | Code blocks |
-| 13 | Link previews |
-| 13b | Notion forms — every form on the site (22a-light) |
-| 14 | Page covers — the first callout on an inner page (crumb, eyebrow, H1, lede, buttons, foot, "Scroll ↓"); fields drawn by `covers.js` per path |
-| 16 | Footer |
-| 17 | Reduced motion |
+| 01–05 | fonts, tokens (`--color-bg-default` = #FFFEFC ground), layout, navbar, slide-out menu |
+| 06 | Type System: Notion Heading 1–4 → h1–h4, one to one (h1 clamp(40,6.2vw,92) … h4). No bold/underline on headings |
+| 07 | Button System |
+| 08 | databases and properties |
+| 09 | Card System |
+| 10–13 | pills, column dividers, code blocks, link previews (on card tokens) |
+| 13b | Notion forms (22a-light) |
+| 14 | Page covers |
+| 15b | temporary banner `.enc-banner` (markup in `head/site-body.html`) |
+| 16 | Footer 44b |
+| 17 | reduced motion |
 
-### home.css — homepage
+**Button System (§07).** A callout is a button when
+`.notion-callout > .notion-callout__content > span.notion-semantic-string > .notion-link` (span, not
+`p` — text blocks share the `notion-semantic-string` class). Tier = callout colour: Gray →
+secondary, Default → tertiary (label + up-right arrow badge, SVG), any other colour (green, purple…)
+→ primary. Sizes via `--btn-h/--btn-px/--btn-fs` (44px; 48px where a section redefines them). Ink
+sections redefine the ink tokens. Minima's `.link:hover{opacity:.7}` is cancelled.
+**Button groups:** a column list containing only callouts (empty texts allowed) shrinks to its
+buttons with a 12px gap; stacks under 520px. Design rule: one primary per view.
 
-Older page CSS, top of the file, unchanged: screen responsiveness, horizontal lines around
-"Earn Rewards…" (`0dea66c8…`), table-to-cards (`4529386b…`), network/governance table limits,
-governance table, code font for numbers, hides other pages, **voting mechanism / governance cards
-(`3b970793…`)**, hide proposal titles, contact us (`5b2c372a…`), pillar images, body background,
-full-page content, Wistia video (`1ee04e9f…`).
+**Card System (§09).** `.notion-collection-gallery .notion-collection-card`: fill = page ground,
+ring + highlight, 12px radius, hover keeps the fill (Minima's hover wash restated), press #FAFAF8.
+Density from the gallery's Notion card size (small/medium/large); 6px bleed; `.no-click` has no hover.
 
-Then, under "HOMEPAGE SECTIONS — MOVED FROM main.css", flat CSS in this order: stats band / figures
-/ deck (00–00c), hero line, audience fork (07b), testimonials deck, Why Stake cards + governance
-2×2, Who We Are (09b, with scroll snap), blog gallery (14), networks gallery (15).
+**Page covers (§14 + covers.js).** Every inner page's first block is a callout holding, in order:
+Text crumb ("Encapsulate · Networks"), Text eyebrow, Heading 1, Text lede, a button column list
+(Green "Book a call" → calendar, Gray secondary → content on the page), Text foot, Text "Scroll ↓".
+CSS selects `.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1)` and
+places texts by `p.notion-text:nth-of-type(n)` — an empty line inside the callout shifts them.
+One screen tall from where it starts (`--cover-top`, measured by covers.js because of the banner).
+covers.js picks the field by path (/networks 9a, /contact-us 8a, /investments 3c,
+/governance-record 2c, /brand 6a, /blog 5b, /security 7l, /guides 4h, /services 1m), copies the
+design's 924×540 %-based geometry into divs, and:
+- uses the cover's computed background as "paper" for knock-outs and 3px rings (the design's
+  #FAFAF8 showed as pale discs on the #FFFEFC ground);
+- measures the crumb and foot so each label pair sits together (`[data-enc-pairs]`) — the two rows
+  shared a grid column and the shorter pair opened a gap;
+- Networks glyphs are the homepage gallery's original `assets.super.so` PNGs (hardcoded list);
+  the Brand mark is `svg/mark-a.svg` via jsDelivr.
+Cover copy per page: `notion/page-covers.md`.
 
-### How the move was done
+**Footer 44b (§16 + footer.js).** Super's footer (type Stack) is rendered into the design: menu
+items named `Group: Label` become columns ("Legal" group → bottom right, no colon → "More"),
+Socials → "Social" column, Footnote → bottom left. CTA copy, calendar URL and the rotating disc
+glyphs are in footer.js by the user's choice; wordmark `svg/wordmark-reversed.svg`.
 
-- **Replaced, not merged.** Where home.css already styled a block the moved section redesigned, the
-  old home.css rules were deleted: hero line, Team, testimonials, networks gallery, blog. The newer
-  (main.css) version won outright.
-- **Deleted as dead** — nothing on the site matches them: `eb15a093…` (old "Earn Rewards" heading,
-  in both files), `8cd1bdc3…`, `23ee800a…` (announcement banner),
-  `#block-test-home-new-why-stake-with-kingsuper` (not a real block id).
-- **Not an overlap after all:** governance. home.css styles the cards (badge numbers, colours,
-  layout); main.css only set the 2×2 column count and touched none of those properties. Both kept.
-- **Blog limit stated once.** The old blog rules hid cards twice (n+4 and nested n+3) and main.css
-  un-hid the third. With the old rules gone, §14 now hides `n+4` itself and the "reveal the third
-  post" rule is gone.
-- **Carried over deliberately** (the comparison below showed these old declarations were still
-  visible, so each is restated once in its new section, marked CARRIED OVER): hero line
-  `margin-bottom: 0`; 40px `padding-bottom` under each testimonial quote; plain 14px black network
-  pills; blog `.date` pinned bottom-right at 18px and 12px blog pills.
+## Homepage (home.css, home-dial.css, home.js)
 
-**Verified** on the live homepage by swapping the old and new CSS into the page's own style
-elements and comparing ~100 computed properties (plus `::before`/`::after`) on all ~18,000
-elements, at 1920×936 and 390×844. After the carry-overs, no element changes size, position,
-colour, type or visibility at either width. The only remaining differences are inert:
-`flex-direction`/`padding` on testimonial and team cards that are `display: grid`/`contents`, and
-the Team quote's old `::after`, which was already `display: none`.
+home.css starts with older page CSS, then "HOMEPAGE SECTIONS": stats band/figures/deck (00–00c),
+hero, Audience split 51l (07b), testimonials deck (09), Why Stake 49a, governance 37h, Services 42m
+(09a), Who we are (09b), blog, networks 21b, Contact 48c (16).
 
-## Notion forms — rendered natively, styled site-wide (main.css §13b, 2026-09-14)
+home.js is a set of IIFEs: the dial (institutional form), homepage decks (snapping), networks
+glyph columns, governance chain marks, blog rail (Cover glyphs via CSS mask, dots), services
+selection (swaps covers to the original PNG), Why Stake graphics (derived figures), contact copy.
 
-Super's docs describe forms only as an embed, but **Super renders a Notion form into the page with
-its own classes** (no iframe), so CSS styles all of it. Every form on the site is styled by
-`main.css` §13b ("22a-light" from design file *Institutional Form*), scoped to
-`.notion-form__wrapper`, not a block id. A form that should differ gets an id-scoped override in
-its page's CSS. First instance: the homepage's Institutional Staking form,
-`#block-3dbe800a513880af9fe0c4bc175e1975`.
+**Snapping — lessons.** Use native `scrollTo({behavior:"smooth"})` (scripted animation was choppy);
+cache stops, invalidate on resize/mutation; trackpad momentum lasts seconds — a new gesture is a
+250ms gap, or after a 450ms MIN_LOCK and decay below half peak, a rise 4× the smallest delta (≥20);
+one-screen sections (Who we are, Services) are caught on the swipe within half a screen, and the
+settle retries. No CSS scroll-snap on html (fights the script). Gesture logic is testable in Node
+with a stubbed window.
 
-```
-div.notion-form__wrapper.as-embed                  ← the block (#block-…)
-  div.notion-header.form                           ← §03 hides .notion-header site-wide; §13b re-shows it
-    div.notion-header__cover.no-cover.no-icon.form-cover
-    div.notion-header__content.max-width.form-content.as-embed
-      div.notion-header__title-wrapper > h1.notion-header__title
-      div.notion-header__description.form-description
-  form.notion-form.has-header.as-embed             no action attribute — Super's JS submits
-    div.notion-form__field.<type>                  type: title | email | multi_select | text
-      h2.notion-form__field-title                  label
-        span.notion-form__field-title-required     "*" (gets .error too)
-      input.notion-form__input-field               title, email
-      textarea.notion-form__input-field.long-answer   long text
-      p.notion-form__field-error                   e.g. "Invalid email" — shown even when empty
-      div.notion-form__select-options              choice questions
-        div.notion-form__checkbox-wrapper[role=button]   Super sets width:100%
-          label.notion-form__checkbox-label
-            div.notion-form__checkbox-input-wrapper
-              input.notion-form__checkbox-input[type=radio]
-              div.notion-form__checkbox.radio      drawn indicator
-            div.notion-form__checkbox-text         option label
-    div.notion-button.notion-form__submit-button
-      button.notion-button__content.color-default > span  "Submit"
-```
+**Notion forms (§13b)** render natively (no iframe): `div.notion-form__wrapper > form.notion-form >
+div.notion-form__field.<type>`; dropdown questions still render as radios (drawn as chips);
+"Invalid email" shows on empty fields (hidden while placeholder shows). The dial: a Number question
+"Amount" is driven by the slider; choice questions with >6 options become a glyph listbox. React
+inputs: click labels, use the native value setter + `input` event; mark with attributes
+(`[data-enc-…]`), not classes — React resets className.
 
-- **Dropdowns are ignored.** A choice question set to "Dropdown" in Notion still renders as a radio
-  list (15 radios for the network question). A real dropdown needs JS, so §13b draws the options
-  as chips, picked state via `:has(input:checked)`. The radio stays in place, invisible, over the
-  chip, so clicks and keyboard still work.
-- **"Invalid email"** is printed under an empty email field; §13b hides it while the field shows
-  its placeholder.
-- **The dial (homepage, `home.js` + `home-dial.css`, design 22a "The dial").** A hard left/right
-  split: ink half with the label, $ figure, $200k line and $50k–$25M slider; paper half with the
-  controls. On a form with a Number question labelled **Amount**, the script builds the dial and
-  writes the slider value into the hidden Amount question. Choice questions with more than 6
-  options (Network) become a listbox whose options show each chain's glyph in a pastel well — the
-  glyph is the cover of that chain's card in the homepage networks gallery, so there is no image
-  list to maintain; shorter ones (Duration) stay Super's radios, drawn as pill buttons. The button
-  reads "Send this". The form is marked `[data-enc-dial]` (attributes, not classes — React resets
-  className on re-render), and every dial style is scoped to that, so without JS the §13b look
-  remains. React inputs: never set `.checked`/`.value` directly — click labels, and use the
-  native value setter plus an `input` event. A MutationObserver re-applies it when Super
-  re-renders.
-- **The form's content in Notion** (Forms page): title "Institutional staking", description "Set
-  what you are planning to stake, tell us where, and we will come back with terms for that size.",
-  questions Network (single choice: the God/High/Medium-tier mainnets + Other), Duration (3–6
-  months, 6–12 months, 1–2 years, Over 2 years), Email, Amount (Number, filled by the dial). All
-  required.
-- **Not yet verified:** that a submission reaches the Notion database, and field types not used yet
-  (date, number, file, checkbox, URL, phone). Inspect when one is added.
-- Block `c79faa64…` on the homepage is the old Tally form (`.super-embed` iframe) — not stylable,
-  and due to be removed now the Notion form replaces it.
+## Things that bite in Super / Notion markup
 
-## Homepage decks — JS snapping (home.js, since v7; confirmed working on a trackpad at v10)
+- **Minima `!important`s:** `.notion-semantic-string .link:hover{opacity:.7}`,
+  `.notion-collection-card:hover{background:…}`, `h3{font-size:var(--h3-size)!important}`.
+- **Old page Code-panel rules use `#id … !important`** — nothing in a stylesheet beats them; they
+  must be deleted (this is why the covers looked broken until the panels were cleaned).
+- **Clipping:** `.notion-property` has `overflow:hidden`, a 4px gap and min-height 24px; card
+  content is overflow hidden — descenders, figures and badges get cut; set `overflow: visible`.
+- **Covers on cards:** Super writes `object-fit/object-position` inline (only `!important` wins)
+  and floors height with `min-height`.
+- **Image optimizer:** covers come via `/_next/image?url=…&w=…&q=75` (WebP, only q75 allowed) and
+  look soft; the original is on `assets.super.so` — swap to it when sharpness matters.
+- **Column lists are flex rows** with inline widths; Super writes inline widths on `th`.
+- **Grid gotchas seen:** `display:grid` overrides un-hid a table's limited rows (restate the
+  limit); `1fr` rows inflate tall media (use ratio-based sizes).
+- **Global classes are global** (`.notion-callout`, `.notion-pill`, `.notion-property`,
+  `.notion-collection-card`, `.notion-column`) — page CSS files are full of such rules; scope new
+  work to a block id or a structural `:has()`.
+- **Block ids** are stable until a block is recreated (API-recreated buttons get new ids). Prefer
+  `:has(a[href$="/slug"])` over `:nth-child()` for database items.
+- **Specificity inside a file:** a `> *` reset can beat section margins; select through the
+  content wrapper. Load order between Head links and inline styles was measured as irrelevant for
+  the homepage (2026-09-14); page Heads now also carry repo CSS — if a rule seems to depend on
+  order, measure.
 
-The stats band, testimonials and Who we are keep their CSS geometry (sticky one-viewport panels,
-home.css 00c / 09 / 09b); the second half of `home.js` only decides where scrolling stops. Inside a
-deck one wheel/trackpad gesture = one panel; keys, scrollbar and touch settle on the next stop when
-they come to rest; within a third of a screen of a stop outside a deck, the page settles onto it.
-It also drives the testimonial rail's active row (`[data-enc-deck]`, `tr[data-enc-active]`, styles
-in home-dial.css). Lessons, each learned the hard way:
+## Verifying in the automation browser
 
-- **Use the browser's smooth scroll** (`scrollTo({behavior: "smooth"})`), not a per-frame scripted
-  animation — the scripted one was visibly choppy on this page (v7).
-- **Cache the stops.** Measuring layout on every scroll frame adds stutter; invalidate on resize
-  and on DOM mutation.
-- **Trackpad momentum lasts seconds.** Treating every wheel event within a short gap as one gesture
-  swallowed new swipes for 4–5 s (v9). A new gesture = a 250ms pause, or — at least 450ms after the
-  page turned and once deltas fell below half their peak — a delta 4× the smallest since (≥20).
-  "Any rise after any dip" (v10) fired on a swipe's own jitter and turned two panels at once. The gesture logic is testable in Node with a stubbed window — the
-  automation tab is hidden, so neither rAF nor smooth scrolling runs there.
-- **One-screen sections (Who we are, Services) are caught on the swipe**, not on rest: a swipe towards the top from within half a screen lands on it (v39). Settling on rest alone never fired on a trackpad — momentum runs to the end of the scroll, so the rest check always saw a live gesture. The settle now also retries.
-- The CSS proximity snap on Who we are was removed: a CSS snap on html fights scripted scrolling.
+- The automation tab is hidden: no rAF, no smooth scroll, no scroll events, transitions freeze
+  (finish with `document.getAnimations()`), screenshots often time out — measure with
+  `getBoundingClientRect`/computed styles instead, and use real hovers via the computer tool.
+- Long checks across pages: load each page in a hidden 1920×992 iframe, one batch at a time, and
+  store results on `window` — a single call over nine pages times out.
+- To preview a page without its Code panel CSS, set that `<style>`'s `media="not all"`.
+- The site is the source of truth: check what the browser actually has (served tag, matching
+  rules) before assuming a file is deployed.
 
-## SVGs are hosted, not inlined
+## Open items
 
-Every SVG the CSS references lives at `validator-website/svg/` on the DigitalOcean CDN, with the
-editable source in `svg/`. Change a drawing there, re-upload under the same name, and no CSS
-changes.
-
-They were briefly inlined as `data:` URIs — nicer in that there is no upload step and no flash of
-an undrawn background — but eight drawings came to 13KB encoded and that contributed to blowing
-the size limit above. If a new drawing is small (under ~500 bytes) inlining it is still fine;
-anything bigger goes on the CDN.
-
-## The deploy step is manual
-
-Nothing here is live until it is pasted into Super. There is no CLI deploy.
-
-This has caused repeated confusion: the file on disk is often **ahead** of what the site is serving,
-and the site is sometimes ahead of the file (when an older copy is pasted back from Super, silently
-discarding local edits). Before diagnosing "this CSS isn't working", check what the browser actually
-has — read the live rules rather than assuming the file is deployed.
-
-## Load order, and why it decides everything
-
-Super injects stylesheets in this order:
-
-1. Super's own runtime CSS
-2. **Page-level CSS** (`network.css` and the other pages' Code panels)
-3. **Site-level CSS** (`main.css`)
-
-So `main.css` loads *after* page CSS and wins ties at equal specificity. Two consequences that come
-up constantly:
-
-- A page rule with `!important` can still be overridden from `main.css`, because `main.css` is later.
-- A rule added at the **top** of a file loses to one lower down in the same file at equal
-  specificity. Add a class to the selector to win regardless of position.
-
-## Things that bite in Super/Notion markup
-
-- **`@import` is stripped.** Load fonts with a `<link>` in Super → Settings → Code → Head.
-- **Inline styles on covers.** Super writes `object-fit` and `object-position` inline on collection
-  card covers, from Notion's crop setting. Only `!important` beats them.
-- **`min-height` on covers.** Super floors covers with `min-height`, so a smaller `height` is
-  ignored no matter how important it is. Set `min-height` too.
-- **Block ids are positional-ish.** `#block-<32 hex>` is stable until the block is deleted and
-  recreated. Prefer `:has(a[href$="/slug"])` over `:nth-child()` when a rule should survive
-  reordering a Notion database.
-- **Global classes are genuinely global.** `.notion-callout`, `.notion-pill`, `.notion-property` and
-  `.notion-collection-card` are shared by every page. The homepage alone has seven galleries whose
-  covers differ in shape. Scope card styling to a block id unless it is genuinely site-wide.
-
-## Verify against the live site
-
-The browser is the source of truth for what Super emits. Check computed styles and which rules
-actually match before writing a fix — several bugs in this project were only visible that way
-(dead selectors after a Super rename, inline `object-position`, `min-height` floors).
+- /services, /investments, /brand, /blog, /guides were still served with site Head v55 at the last
+  check (needs Super republish); /networks needs `head/networks.html` (network.css v54).
+- Homepage "View Voting History" and "View All" are purple (primary) beside a primary "Book a call";
+  the design wants Default (tertiary). Offered, not done.
+- Each page CSS file still has old `#block-… strong {Arial Black …}` title rules and old sub-heading
+  rules; dead once titles are un-bolded — optional tidy-up (remind the user).
+- Page CSS overriding the Card System: contact-us.css (black ring + hard shadow), guides.css
+  (padding 0, image-only tiles), investments.css (radius), governance.css (old pastel cards).
+- Notion content still owed: 3 more networks (to 28), "Six years" → "Since 2020", Why Stake card
+  preview None, governance column renames (Network / Proposal / Our vote). Stat card says 28
+  networks, the fork panel 38.
+- Cover second buttons link to database pages (e.g. `/a148eb7f…`); switch to same-page anchors if
+  the user prefers.
+- Networks cover glyph URLs are hardcoded in covers.js; could read the /networks gallery instead.
+- Mobile layout of the covers (field below the text under 800px) is not verified.
+- Refresh the Notion integration token.
