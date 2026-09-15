@@ -36,7 +36,7 @@ User rules that stand on every task:
 | `footer.js` | footer 44b, built inside Super's footer | site Head |
 | `covers.js` | inner-page cover graphics ("fields") | site Head |
 | `home.css`, `home-dial.css`, `home.js` | homepage sections, JS-enhanced styles, homepage scripts | homepage Head |
-| `network.css` | /networks | its page Head |
+| `network.css`, `network.js` | /networks (network.js pages the Network Count panels, same gesture rules as home.js decks) | its page Head |
 | `governance.css`, `blog.css`, `brand.css`, `contact-us.css`, `guides.css`, `investments.css`, `security.css`, `services.css` | each page's CSS, moved out of Super's page Code panels on 2026-09-15 (old cover rules removed, the rest kept as it was) | each page's Head |
 | `svg/` | SVG sources (DigitalOcean CDN, or served from jsDelivr like `svg/wordmark-reversed.svg`, `svg/mark-a.svg`) | — |
 | `notion/page-covers.md` | cover copy for the nine inner pages | — |
@@ -80,7 +80,7 @@ Note: `git commit` also commits anything the user has staged — check `git stat
 | `head/site.html` | Super → Settings → Code → Head (minima, main.css, footer.js, covers.js, fonts) |
 | `head/site-body.html` | Super → Settings → Code → Body (temporary "under reconstruction" banner) |
 | `head/home.html` | Homepage → Code → Head |
-| `head/networks.html` | /networks → Code → Head (view-picker + network.css) |
+| `head/networks.html` | /networks → Code → Head (view-picker + network.css + network.js) |
 | `head/governance.html` | /governance-record → Code → Head |
 | `head/blog.html` | /blog → Code → Head |
 | `head/brand.html` | /brand → Code → Head (includes the Comfortaa font link) |
@@ -172,6 +172,12 @@ design's 924×540 %-based geometry into divs, and:
 - Networks glyphs are the homepage gallery's original `assets.super.so` PNGs (hardcoded list);
   the Brand mark is `svg/mark-a.svg` via jsDelivr.
 Cover copy per page: `notion/page-covers.md`.
+
+**Network Count (/networks, network.css + network.js).** Band callout `3dce800a…8154931a…` right
+after the cover: Text kicker, then a column list with one callout per panel (callout text "01 / 02",
+Heading 1 figure, Text label, Text note). Two sticky full-screen ink panels in a 2-screen band, each
+drawing the rail with its own pill active; fields are `svg/count-rings.svg` / `svg/count-dots.svg`
+(referenced as `../svg/…` from dist, so they come from the same tag). The figures are Notion text.
 
 **Footer 44b (§16 + footer.js).** Super's footer (type Stack) is rendered into the design: menu
 items named `Group: Label` become columns ("Legal" group → bottom right, no colon → "More"),
