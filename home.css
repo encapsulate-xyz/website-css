@@ -3080,7 +3080,7 @@ body {
 #block-3dce800a5138803a82f7d45863d6049c > .notion-callout__content > #block-3dce800a513880f58903ec250b9caeae {
   flex: 0 0 100% !important;
   margin-top: 26px !important;
-  padding-bottom: 26px !important;
+  padding-bottom: 20px !important; /* + the button callouts' own 6px margin = the handoff's 26px */
   border-bottom: 1px solid #E2E2DB !important;
 }
 
