@@ -818,167 +818,188 @@ body {
 }
 
 /*********************************************/
-/* 07b. AUDIENCE FORK — "FOR NEW CHAIN TEAMS" / "FOR DELEGATORS" */
+/* 07b. AUDIENCE SPLIT — 51l "HINGE · NODE" */
 /*********************************************/
 
-/* Built from the fork panels in artifact 424c4fde (variants 11a/11b). Every
-   value below — colours, sizes, tracking, padding, the arc watermarks and
-   their opacities — is the artifact's own.
+/* From design file "Audience Split", 51l. One shared claim, a single ink rule,
+   and the two audiences branching from it, each column opening with a pastel
+   disc sitting on the rule as the joint. Paper ground.
 
-   THE MARKUP IT IS MAPPED ONTO. One Notion column-list, two columns, each:
-     p.notion-text   (1st)  eyebrow, "For new chain teams" / "For delegators"
-     h2.notion-heading      "Add us to your genesis set" / "Stake where…"
-     p.notion-text   (2nd)  the standfirst
-     ul.notion-bulleted-list
+   NOTION STRUCTURE. The claim is a Heading 2 (block-23ff4256…) directly above the
+   fork, a two-column list (block-3dae800a…). Each column: kicker text, heading,
+   lead text, a 4-item numbered list, a button callout (green = primary on the
+   left, gray = secondary on the right). Replaced the earlier two-panel fork
+   (design 11a/11b), whose rules are gone.
 
-   Selectors key off POSITION WITHIN THE COLUMN, not per-block ids: both
-   paragraphs are the same class, so the eyebrow is `p:nth-of-type(1)` and the
-   standfirst `p:nth-of-type(2)`. Only the row id is hard-coded, so editing or
-   reordering the text in Notion does not break this — per CLAUDE.md, block ids
-   are positional-ish and worth avoiding where structure will do.
+   Redesigned section: its text takes the design's type. */
 
-   FONTS. This section wants three faces that are NOT yet linked in
-   Super > Settings > Code > Head. Until they are, each falls back and the
-   panel will look wrong in the type but correct in the layout:
-     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Hanken+Grotesk:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+#block-23ff4256e17b41f0ae5bf647820c67c7 {
+  margin: 0 !important;
+  padding: 0 0 26px !important;
+  font-family: var(--type-display) !important;
+  font-weight: 600 !important;
+  font-size: clamp(34px, 3.4vw, 46px) !important;
+  line-height: 1 !important;
+  letter-spacing: -0.04em !important;
+  color: #000000 !important;
+  max-width: 24ch !important;
+}
 
-   THE WATERMARKS are svg/fork-arcs-left.svg and -right.svg: eight nested arcs
-   rising from the bottom edge, origin at x=120 on the left panel and x=480 on
-   the right, so the two fields lean away from each other. Both are served
-   from the CDN — see the note on asset hosting at the top of section 00b. */
-
-/* --- The card ------------------------------------------------------------ */
-
+/* the rule, and the two columns hanging from it */
 #block-3dae800a51388006a57be06b8ebea78e {
   display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  gap: 0 !important; /* beats --column-spacing: 20px; the panels must meet */
-  align-items: stretch !important;
-  margin-block: 40px !important;
-  border: 1px solid #E2E2DB !important;
-  border-radius: 4px !important;
-  overflow: hidden !important; /* clips the arcs and the panel corners */
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-top: 1px solid #000000 !important;
 }
-
-/* --- Both panels --------------------------------------------------------- */
 
 #block-3dae800a51388006a57be06b8ebea78e > .notion-column {
-  /* Notion writes the column geometry INLINE, as
-       width: calc((100% - var(--column-spacing) * 1) * 0.5);
-     plus `margin-inline-start: var(--column-spacing)` on the second one. That
-     is correct for its own flex row, but inside the grid above the `100%`
-     resolves against the GRID CELL — so each panel came out at half the width
-     of the cell it sits in, leaving the ground painted across only the left
-     half of each half. That is the stripe effect.
-
-     A stylesheet `!important` outranks a non-important inline style, which is
-     what lets these two lines beat it without touching Notion. */
-  width: 100% !important;
-  max-width: none !important;
-  margin-inline: 0 !important;
-
-  padding: 52px 44px 48px !important;
-  background-repeat: no-repeat !important;
-  background-position: bottom center !important;
-  background-size: 100% 100% !important;
+  position: relative !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 26px 36px 0 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 15px !important;
+  counter-reset: fork !important;
 }
 
-/* Panel one: brand pale green, arcs leaning left. */
-#block-3dae800a51388006a57be06b8ebea78e > .notion-column:first-child {
-  background-color: #DCEEC7 !important;
-  background-image: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/svg/fork-arcs-left.svg") !important;
-}
-
-/* Panel two: paper, arcs leaning right, divided by a hairline rather than a
-   gap — the two grounds meeting is what makes it read as one card. */
-#block-3dae800a51388006a57be06b8ebea78e > .notion-column:last-child {
-  background-color: #FAFAF8 !important;
-  background-image: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/svg/fork-arcs-right.svg") !important;
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column + .notion-column {
+  padding: 26px 0 0 36px !important;
   border-left: 1px solid #E2E2DB !important;
 }
 
-/* --- Type ---------------------------------------------------------------- */
-
-/* Eyebrow. */
-#block-3dae800a51388006a57be06b8ebea78e .notion-column > p.notion-text:nth-of-type(1) {
-  margin: 0 0 20px !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
-  font-size: 11px !important;
-  font-weight: 400 !important;
-  letter-spacing: 0.14em !important;
-  text-transform: uppercase !important;
-  color: #3A3D38 !important;
+/* the joint: a 22px pastel disc on the rule, ringed in the page ground */
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column::before {
+  content: "" !important;
+  position: absolute !important;
+  top: -11px !important;
+  left: 0 !important;
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 999px !important;
+  background: #DCEEC7 !important;
+  box-shadow: 0 0 0 4px var(--color-bg-default, #FFFEFC) !important;
 }
 
-/* The right eyebrow is a step lighter in the artifact — the green panel can
-   carry more contrast than the paper one. */
-#block-3dae800a51388006a57be06b8ebea78e > .notion-column:last-child > p.notion-text:nth-of-type(1) {
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column + .notion-column::before {
+  left: 36px !important;
+  background: #D2E3F6 !important;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > * {
+  margin: 0 !important;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-heading__anchor,
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-text:empty {
+  display: none !important;
+}
+
+/* kicker */
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-text:first-of-type {
+  padding: 0 !important;
+  min-height: 0 !important;
+  font-family: var(--type-mono) !important;
+  font-size: 11px !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
   color: #6B6F68 !important;
 }
 
-/* Heading (Notion Heading 2; :is(h1, h2) so a re-level cannot orphan it). Has to beat
-   `h1.notion-heading` (0,1,1) and `.notion-column .notion-column h1…` — the
-   row id carries it. */
-#block-3dae800a51388006a57be06b8ebea78e :is(h1, h2).notion-heading {
-  margin: 0 0 20px !important;
-  padding: 0 !important;
-  font-family: "Outfit", sans-serif !important;
+/* heading */
+#block-3dae800a51388006a57be06b8ebea78e .notion-heading {
+  font-family: var(--type-display) !important;
   font-weight: 600 !important;
-  font-size: 44px !important;
+  font-size: clamp(26px, 2.4vw, 32px) !important;
   line-height: 1 !important;
-  letter-spacing: -0.038em !important;
+  letter-spacing: -0.04em !important;
   color: #000000 !important;
-  max-width: 16ch !important;
-  text-wrap: balance !important;
+  max-width: 17ch !important;
 }
 
-#block-3dae800a51388006a57be06b8ebea78e > .notion-column:last-child :is(h1, h2).notion-heading {
-  max-width: 17ch !important; /* "Stake where we are already running." wants one more */
-}
-
-/* Standfirst. */
-#block-3dae800a51388006a57be06b8ebea78e .notion-column > p.notion-text:nth-of-type(2) {
-  margin: 0 0 20px !important;
-  font-family: "Hanken Grotesk", sans-serif !important;
-  font-size: 17px !important;
-  line-height: 1.6 !important;
-  color: #3A3D38 !important;
-  max-width: 42ch !important;
-}
-
-/* Bullets. */
-#block-3dae800a51388006a57be06b8ebea78e .notion-bulleted-list {
-  margin: 0 !important;
-  padding-left: 1.15em !important;
-}
-
-#block-3dae800a51388006a57be06b8ebea78e .notion-bulleted-list li {
-  margin: 0 0 10px !important;
-  font-family: "Hanken Grotesk", sans-serif !important;
+/* lead */
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-text:not(:first-of-type) {
+  padding: 0 !important;
+  font-family: var(--type-body) !important;
   font-size: 15.5px !important;
+  line-height: 1.58 !important;
+  color: #3A3D38 !important;
+  max-width: 36ch !important;
+  text-wrap: pretty !important;
+}
+
+/* points: a rule-separated list numbered 01–04 (counters, not content) */
+#block-3dae800a51388006a57be06b8ebea78e .notion-numbered-list,
+#block-3dae800a51388006a57be06b8ebea78e .notion-bulleted-list {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e .notion-numbered-list > li,
+#block-3dae800a51388006a57be06b8ebea78e .notion-bulleted-list > li {
+  counter-increment: fork !important;
+  display: grid !important;
+  grid-template-columns: 26px minmax(0, 1fr) !important;
+  column-gap: 12px !important;
+  align-items: baseline !important;
+  margin: 0 !important;
+  padding: 12px 0 !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+  font-family: var(--type-body) !important;
+  font-size: 15px !important;
   line-height: 1.5 !important;
   color: #3A3D38 !important;
 }
 
-#block-3dae800a51388006a57be06b8ebea78e .notion-bulleted-list li:last-child {
-  margin-bottom: 0 !important;
+#block-3dae800a51388006a57be06b8ebea78e .notion-numbered-list > li::marker,
+#block-3dae800a51388006a57be06b8ebea78e .notion-bulleted-list > li::marker {
+  content: none !important;
 }
 
-/* Below the two-column breakpoint Notion stops laying columns side by side;
-   stack the panels and swap the vertical divider for a horizontal one. */
+#block-3dae800a51388006a57be06b8ebea78e .notion-numbered-list > li::before,
+#block-3dae800a51388006a57be06b8ebea78e .notion-bulleted-list > li::before {
+  content: counter(fork, decimal-leading-zero) !important;
+  font-family: var(--type-mono) !important;
+  font-size: 9.5px !important;
+  letter-spacing: 0.12em !important;
+  color: #575B55 !important;
+}
+
+/* the button, pinned to the column's foot */
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-callout {
+  margin-top: auto !important;
+  align-self: flex-start !important;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-text:not(:first-of-type) + ol,
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > ol + .notion-callout {
+  margin-top: 0 !important;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-callout {
+  margin-top: auto !important;
+  padding-top: 8px !important;
+}
+
 @media (max-width: 800px) {
   #block-3dae800a51388006a57be06b8ebea78e {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: minmax(0, 1fr) !important;
   }
   #block-3dae800a51388006a57be06b8ebea78e > .notion-column {
-    padding: 40px 28px 36px !important;
+    padding: 26px 0 32px !important;
   }
-  #block-3dae800a51388006a57be06b8ebea78e > .notion-column:last-child {
+  #block-3dae800a51388006a57be06b8ebea78e > .notion-column + .notion-column {
+    padding: 26px 0 0 !important;
     border-left: 0 !important;
-    border-top: 1px solid #E2E2DB !important;
+    border-top: 1px solid #000000 !important;
   }
-  #block-3dae800a51388006a57be06b8ebea78e :is(h1, h2).notion-heading {
-    font-size: 34px !important;
+  #block-3dae800a51388006a57be06b8ebea78e > .notion-column + .notion-column::before {
+    left: 0 !important;
   }
 }
 
