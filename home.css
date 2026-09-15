@@ -1856,6 +1856,7 @@ body {
     "body body body" !important;
   column-gap: 11px !important;
   row-gap: 0 !important;
+  align-content: start !important; /* equal-height cards must not spread their spare height across the rows */
   flex: 1 1 auto !important;
   margin: 0 !important;
   padding: 0 !important;
