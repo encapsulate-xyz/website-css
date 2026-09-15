@@ -352,6 +352,8 @@
   var QUOTE_SECTION = "block-3dae800a51388066b66ffeeb9bdb1550";
   var RAIL = "block-3dbe800a513880659b03efb665f21e12";
   var TEAM = "block-3dbe800a513880c5862ae676c8d06994";
+  // one-screen sections that settle to the top of the viewport (not paged): Who we are, Services
+  var SCREENS = [TEAM, "block-3dbe800a5138800d8a72c99cdde9bc3f"];
 
   var NEAR = 0.33;       // of a screen: how close a resting page must be to a stop to settle on it
   var EPS = 2;           // px: "on" a stop
@@ -378,9 +380,11 @@
         for (var i = 0; i < panels.length; i++) stops.push(Math.round(bottom - (panels.length - i) * h));
         out.push({ id: d[0], stops: stops, h: h });
       });
-    var team = document.getElementById(TEAM);
-    if (team && window.matchMedia("(min-width: 901px)").matches) {
-      out.push({ id: TEAM, stops: [Math.round(docTop(team))], h: window.innerHeight });
+    if (window.matchMedia("(min-width: 901px)").matches) {
+      SCREENS.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) out.push({ id: id, stops: [Math.round(docTop(el))], h: window.innerHeight });
+      });
     }
     return out;
   }

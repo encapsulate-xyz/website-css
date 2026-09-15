@@ -2320,7 +2320,15 @@ body {
      smaller, and the image fills it exactly. Upload all four at this ratio. */
   --svc-ratio: 1.4662;
 
-  display: block !important;
+  /* One full screen, content centred, like the stats, testimonials and Who we
+     are; home.js settles the page onto its top ("Homepage decks"). The screen
+     cap above already keeps the content inside this height. */
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
   width: 100vw !important;
   max-width: none !important;
   margin: 0 0 0 calc(50% - 50vw) !important;
@@ -2620,6 +2628,7 @@ body {
 /* Narrow: header stacks, list then a contained screen (no bleed). */
 @media (max-width: 900px) {
   #block-3dbe800a5138800d8a72c99cdde9bc3f {
+    min-height: 0 !important; /* no full screen, no snap, below 901px */
     padding: 44px var(--svc-gutter) 40px !important;
   }
   #block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content {
