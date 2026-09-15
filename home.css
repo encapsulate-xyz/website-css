@@ -2437,8 +2437,25 @@ body {
   display: contents !important;
 }
 
+/* THE ARCS behind the list (design revision): nine concentric half-circles
+   centred 60px in from the list column's bottom-left, radius 120px stepping by
+   76px, in paper at 20% fading by 1.7 points a ring, every third ring 1.5px.
+   Drawn as the gallery grid's own ::before in the list column (the SVG's
+   xMinYMax slice = anchored bottom-left, covering), under the items. */
+#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-gallery::before {
+  content: "" !important;
+  grid-column: 1 !important;
+  grid-row: 1 / -1 !important;
+  align-self: stretch !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 620 470' preserveAspectRatio='xMinYMax slice'%3E%3Cpath d='M-60 470 A 120 120 0 0 1 180 470' fill='none' stroke='%23FAFAF8' stroke-opacity='0.2' stroke-width='1.5'/%3E%3Cpath d='M-136 470 A 196 196 0 0 1 256 470' fill='none' stroke='%23FAFAF8' stroke-opacity='0.183' stroke-width='1'/%3E%3Cpath d='M-212 470 A 272 272 0 0 1 332 470' fill='none' stroke='%23FAFAF8' stroke-opacity='0.166' stroke-width='1'/%3E%3Cpath d='M-288 470 A 348 348 0 0 1 408 470' fill='none' stroke='%23FAFAF8' stroke-opacity='0.149' stroke-width='1.5'/%3E%3Cpath d='M-364 470 A 424 424 0 0 1 484 470' fill='none' stroke='%23FAFAF8' stroke-opacity='0.132' stroke-width='1'/%3E%3Cpath d='M-440 470 A 500 500 0 0 1 560 470' fill='none' stroke='%23FAFAF8' stroke-opacity='0.115' stroke-width='1'/%3E%3Cpath d='M-516 470 A 576 576 0 0 1 636 470' fill='none' stroke='%23FAFAF8' stroke-opacity='0.098' stroke-width='1.5'/%3E%3Cpath d='M-592 470 A 652 652 0 0 1 712 470' fill='none' stroke='%23FAFAF8' stroke-opacity='0.081' stroke-width='1'/%3E%3Cpath d='M-668 470 A 728 728 0 0 1 788 470' fill='none' stroke='%23FAFAF8' stroke-opacity='0.064' stroke-width='1'/%3E%3C/svg%3E") left bottom / cover no-repeat !important;
+}
+
 /* list item */
 #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card__content {
+  position: relative !important;
+  z-index: 1 !important; /* above the arcs */
   counter-increment: svc !important;
   grid-column: 1 !important;
   display: grid !important;
