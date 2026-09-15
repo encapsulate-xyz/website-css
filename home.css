@@ -2885,7 +2885,7 @@ body {
   padding: 44px 44px 40px !important;
   border: 1px solid var(--card-ring, #D9D9D2) !important;
   border-radius: var(--card-radius, 12px) !important;
-  background: #FAFAF8 !important; /* the handoff's paper, not the page ground */
+  background: var(--color-bg-default, #FFFEFC) !important; /* the page ground (user's call; the handoff's paper #FAFAF8 read as a tint) */
   box-shadow: var(--card-highlight, inset 0 1.5px 0 rgba(255, 255, 255, 1)), var(--card-lift, 0 1px 2px rgba(0, 0, 0, 0.06)) !important;
   overflow: hidden !important;
 }

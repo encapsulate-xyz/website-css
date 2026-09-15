@@ -511,7 +511,7 @@ h4.notion-heading {
    dropped on ink grounds. Radius 10px. Hanken Grotesk 500, -0.006em.
 
    HOW A NOTION CALLOUT BECOMES A BUTTON. A callout whose own text is a link:
-     .notion-callout:has(> .notion-callout__content > .notion-semantic-string > .notion-link)
+     .notion-callout:has(> .notion-callout__content > span.notion-semantic-string > .notion-link)
    Child combinators all the way down, not :has(.notion-link) — the looser form
    also caught callouts used as section containers (Who we are, testimonials),
    which hold links further down and turned into giant buttons.
@@ -568,7 +568,7 @@ h4.notion-heading {
 }
 
 /* The wrapper: shrinks to the link, draws nothing. */
-.notion-callout:has(> .notion-callout__content > .notion-semantic-string > .notion-link) {
+.notion-callout:has(> .notion-callout__content > span.notion-semantic-string > .notion-link) {
   position: relative !important;
   display: flex !important;
   align-self: flex-start !important; /* columns are flex columns that stretch */
@@ -584,19 +584,19 @@ h4.notion-heading {
   overflow: visible !important;
 }
 
-.notion-callout:has(> .notion-callout__content > .notion-semantic-string > .notion-link) > .notion-callout__content {
+.notion-callout:has(> .notion-callout__content > span.notion-semantic-string > .notion-link) > .notion-callout__content {
   display: block !important;
   width: auto !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 
-.notion-callout:has(> .notion-callout__content > .notion-semantic-string > .notion-link) > .notion-callout__content > .notion-semantic-string {
+.notion-callout:has(> .notion-callout__content > span.notion-semantic-string > .notion-link) > .notion-callout__content > .notion-semantic-string {
   display: block !important;
 }
 
 /* The button itself: primary by default */
-.notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link {
+.notion-callout > .notion-callout__content > span.notion-semantic-string > .notion-link {
   position: static !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -622,7 +622,7 @@ h4.notion-heading {
   transition: background-color 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease, color 0.14s ease !important;
 }
 
-.notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link:hover {
+.notion-callout > .notion-callout__content > span.notion-semantic-string > .notion-link:hover {
   /* Super's Minima theme sets `.notion-semantic-string .link:hover { opacity: .7 !important }`
      and every button link carries .link — without this every tier fades on hover. */
   opacity: 1 !important;
@@ -630,43 +630,43 @@ h4.notion-heading {
   border-color: #6F9E41 !important;
 }
 
-.notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link:active {
+.notion-callout > .notion-callout__content > span.notion-semantic-string > .notion-link:active {
   background: #7CAE48 !important;
   border-color: #5F8A37 !important;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.18) !important;
 }
 
-.notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link:focus-visible {
+.notion-callout > .notion-callout__content > span.notion-semantic-string > .notion-link:focus-visible {
   box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.78), 0 0 0 3px var(--btn-focus) !important;
 }
 
 /* Secondary — Gray callout */
-.notion-callout.bg-gray-light > .notion-callout__content > .notion-semantic-string > .notion-link {
+.notion-callout.bg-gray-light > .notion-callout__content > span.notion-semantic-string > .notion-link {
   background: var(--btn-2-fill) !important;
   border-color: var(--btn-2-ring) !important;
   box-shadow: var(--btn-2-highlight), var(--btn-lift-soft) !important;
   color: var(--btn-2-text) !important;
 }
 
-.notion-callout.bg-gray-light > .notion-callout__content > .notion-semantic-string > .notion-link:hover {
+.notion-callout.bg-gray-light > .notion-callout__content > span.notion-semantic-string > .notion-link:hover {
   background: var(--btn-2-fill-hover) !important;
   border-color: var(--btn-2-ring-hover) !important;
 }
 
-.notion-callout.bg-gray-light > .notion-callout__content > .notion-semantic-string > .notion-link:active {
+.notion-callout.bg-gray-light > .notion-callout__content > span.notion-semantic-string > .notion-link:active {
   background: var(--btn-2-fill-press) !important;
   border-color: var(--btn-2-ring-hover) !important;
   box-shadow: var(--btn-2-press) !important;
 }
 
-.notion-callout.bg-gray-light > .notion-callout__content > .notion-semantic-string > .notion-link:focus-visible {
+.notion-callout.bg-gray-light > .notion-callout__content > span.notion-semantic-string > .notion-link:focus-visible {
   box-shadow: var(--btn-2-highlight), 0 0 0 3px var(--btn-focus) !important;
 }
 
 /* Tertiary — Default-colour callout: no box, arrow badge */
-.notion-callout:not([class*="bg-"]) > .notion-callout__content > .notion-semantic-string > .notion-link,
-.notion-callout:not([class*="bg-"]) > .notion-callout__content > .notion-semantic-string > .notion-link:hover,
-.notion-callout:not([class*="bg-"]) > .notion-callout__content > .notion-semantic-string > .notion-link:active {
+.notion-callout:not([class*="bg-"]) > .notion-callout__content > span.notion-semantic-string > .notion-link,
+.notion-callout:not([class*="bg-"]) > .notion-callout__content > span.notion-semantic-string > .notion-link:hover,
+.notion-callout:not([class*="bg-"]) > .notion-callout__content > span.notion-semantic-string > .notion-link:active {
   min-height: 44px !important;
   padding: 0 6px !important;
   background: transparent !important;
@@ -675,11 +675,11 @@ h4.notion-heading {
   color: var(--btn-3-text) !important;
 }
 
-.notion-callout:not([class*="bg-"]) > .notion-callout__content > .notion-semantic-string > .notion-link:focus-visible {
+.notion-callout:not([class*="bg-"]) > .notion-callout__content > span.notion-semantic-string > .notion-link:focus-visible {
   box-shadow: 0 0 0 3px var(--btn-focus) !important;
 }
 
-.notion-callout:not([class*="bg-"]) > .notion-callout__content > .notion-semantic-string > .notion-link::after {
+.notion-callout:not([class*="bg-"]) > .notion-callout__content > span.notion-semantic-string > .notion-link::after {
   /* a stroked SVG arrow at 60% of the badge, as in the design — a text arrow
      inherits the body font's metrics and sits off its optical centre */
   content: "";
@@ -693,11 +693,17 @@ h4.notion-heading {
   transition: transform 0.16s ease;
 }
 
-.notion-callout:not([class*="bg-"]) > .notion-callout__content > .notion-semantic-string > .notion-link:hover::after {
+.notion-callout:not([class*="bg-"]) > .notion-callout__content > span.notion-semantic-string > .notion-link:hover::after {
   transform: translateX(3px);
 }
 
 /* Stacked under 520px: full width */
+/* WHICH CALLOUTS ARE BUTTONS. The link must sit in the callout's own inline
+   wrapper, span.notion-semantic-string. Notion gives a paragraph block the same
+   class (p.notion-semantic-string), so without the element name any linked text
+   directly inside a Default-colour callout became a tertiary button — the
+   contact section's route handles grew arrow badges (2026-09-15). */
+
 /* BUTTON GROUPS. Two buttons side by side are a column list in Notion, and
    Notion gives each column an equal share of the width — so the space between
    them was whatever half the row left over (a 110px gap in the networks
@@ -706,17 +712,17 @@ h4.notion-heading {
    primary first, 12px apart (29f). Empty columns and empty text blocks are
    allowed (the hero's pair has both), so stray blank lines in Notion do not
    break it; empty text blocks inside a group are hidden. Under 520px the group stacks, below. */
-.notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout, .notion-text:empty))) {
+.notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > span.notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout, .notion-text:empty))) {
   justify-content: flex-start !important;
   flex-wrap: wrap !important;
   gap: 12px !important;
 }
 
-.notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout, .notion-text:empty))) > .notion-column > .notion-text:empty {
+.notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > span.notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout, .notion-text:empty))) > .notion-column > .notion-text:empty {
   display: none !important;
 }
 
-.notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout, .notion-text:empty))) > .notion-column {
+.notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > span.notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout, .notion-text:empty))) > .notion-column {
   flex: none !important;
   width: auto !important;
   margin: 0 !important;
@@ -724,21 +730,21 @@ h4.notion-heading {
 }
 
 @media (max-width: 520px) {
-  .notion-callout:has(> .notion-callout__content > .notion-semantic-string > .notion-link) {
+  .notion-callout:has(> .notion-callout__content > span.notion-semantic-string > .notion-link) {
     align-self: stretch !important;
     width: 100% !important;
   }
 
-  .notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link {
+  .notion-callout > .notion-callout__content > span.notion-semantic-string > .notion-link {
     width: 100% !important;
   }
 
-  .notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout, .notion-text:empty))) {
+  .notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > span.notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout, .notion-text:empty))) {
     flex-direction: column !important;
     gap: 10px !important;
   }
 
-  .notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > .notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout, .notion-text:empty))) > .notion-column {
+  .notion-column-list:has(> .notion-column > .notion-callout > .notion-callout__content > span.notion-semantic-string > .notion-link):not(:has(> .notion-column > :not(.notion-callout, .notion-text:empty))) > .notion-column {
     width: 100% !important;
   }
 }
@@ -1544,7 +1550,7 @@ h4.notion-heading {
 @media (prefers-reduced-motion: reduce) {
   .notion-collection-card,
   .notion-collection-card__cover,
-  .notion-callout:has(> .notion-callout__content > .notion-semantic-string > .notion-link),
+  .notion-callout:has(> .notion-callout__content > span.notion-semantic-string > .notion-link),
   .notion-external-object,
   .notion-bookmark,
   .super-navbar__item {
