@@ -16,6 +16,8 @@
    Every composition is the design's own numbers: a 924×540 box, each mark placed and sized in %
    of it. A mark with a 3px paper ring keeps the ring in px, as in the design. */
 (function () {
+  // PAPER is the ground: knock-outs and the 3px rings are holes, so they take the cover's own
+  // background colour (read in apply), not the design file's #FAFAF8
   var PAPER = "#FAFAF8", INK = "#000", INK7 = "#3A3D38";
   var P = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
   var DEEP = ["#B4D98F", "#E8CB72", "#A3C3EC", "#EDB98A", "#E9A9C2"];
@@ -209,6 +211,8 @@
     var build = FIELDS[path];
     if (!build) return;
     if (cover.querySelector(":scope > .enc-cover")) return;
+    var ground = getComputedStyle(cover).backgroundColor;
+    if (ground && ground !== "rgba(0, 0, 0, 0)" && ground !== "transparent") PAPER = ground;
     var field = document.createElement("div");
     field.className = "enc-cover";
     field.setAttribute("aria-hidden", "true");
