@@ -1632,6 +1632,24 @@ body:has(.notion-root > .notion-callout:first-child > .notion-callout__content >
   height: 11px;
 }
 
+/* Each pair sits together: the top row and the bottom row share the grid's
+   first column, so its width is the longer of "crumb" and "foot" and the
+   shorter pair opened a gap. covers.js measures the first label of each pair
+   and marks the cover [data-enc-pairs]; the second label then starts right
+   after its own partner. Without the script the grid placement above stays. */
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading)[data-enc-pairs] > .notion-callout__content > p.notion-text:is(:nth-of-type(1), :nth-of-type(2), :nth-of-type(4), :nth-of-type(5)) {
+  grid-column: 1 / -1 !important;
+  justify-self: start !important;
+}
+
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading)[data-enc-pairs] > .notion-callout__content > p.notion-text:nth-of-type(2) {
+  margin-left: var(--cover-pair-top, 0px) !important;
+}
+
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading)[data-enc-pairs] > .notion-callout__content > p.notion-text:nth-of-type(5) {
+  margin-left: var(--cover-pair-foot, 0px) !important;
+}
+
 /* the ask: kept to the left of the field, min(47%, 640px) */
 .notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content > h1.notion-heading {
   grid-row: 3 !important;

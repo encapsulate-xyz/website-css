@@ -187,9 +187,18 @@
   };
 
   // the cover fills the rest of the first screen, below the navbar and any banner above it
+  function setVar(el, name, value) {
+    if (el.style.getPropertyValue(name) !== value) el.style.setProperty(name, value);
+  }
+
   function measure(cover) {
-    var top = Math.round(cover.getBoundingClientRect().top + window.scrollY) + "px";
-    if (cover.style.getPropertyValue("--cover-top") !== top) cover.style.setProperty("--cover-top", top);
+    setVar(cover, "--cover-top", Math.round(cover.getBoundingClientRect().top + window.scrollY) + "px");
+    // the label pairs: each second label starts where its own first label ends (main.css §14)
+    var texts = cover.querySelectorAll(":scope > .notion-callout__content > p.notion-text");
+    if (texts.length < 5) return;
+    if (!cover.hasAttribute("data-enc-pairs")) cover.setAttribute("data-enc-pairs", "");
+    setVar(cover, "--cover-pair-top", Math.ceil(texts[0].getBoundingClientRect().width) + "px");
+    setVar(cover, "--cover-pair-foot", Math.ceil(texts[3].getBoundingClientRect().width) + "px");
   }
 
   function apply() {
@@ -214,6 +223,7 @@
   new MutationObserver(function () { clearTimeout(t); t = setTimeout(apply, 60); })
     .observe(document.body, { childList: true, subtree: true });
   window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(apply, 100); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(apply);
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply);
   else apply();
 })();
