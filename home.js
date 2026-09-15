@@ -970,6 +970,22 @@
     var cards = block.querySelectorAll(".notion-collection-card");
     if (!cards.length) return;
     if (!block.querySelector(".notion-collection-card[data-active]")) cards[0].setAttribute("data-active", "");
+
+    // SHARP COVERS. Super serves covers through its image optimizer as WebP at quality 75 (the only
+    // quality it accepts), sized for a 780px card: 828px on 1x screens, 1920px on 2x. The screen
+    // shows them near 955px, so UI screenshots came out soft — upscaled on 1x, compression-smeared
+    // everywhere. The original upload (a 2x PNG on assets.super.so) is used instead.
+    block.querySelectorAll("img.notion-collection-card__cover").forEach(function (img) {
+      if (img.hasAttribute("data-enc-original")) return;
+      var m = (img.getAttribute("src") || "").match(/[?&]url=([^&]+)/);
+      if (!m) return;
+      var original = decodeURIComponent(m[1]);
+      if (!/^https:\/\/assets\.super\.so\//.test(original)) return;
+      img.setAttribute("data-enc-original", "");
+      img.removeAttribute("srcset");
+      img.removeAttribute("sizes");
+      img.src = original;
+    });
     cards.forEach(function (card) {
       var item = card.querySelector(".notion-collection-card__content");
       if (!item || item.hasAttribute("data-enc-svc")) return;
