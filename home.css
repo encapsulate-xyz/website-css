@@ -1868,6 +1868,9 @@ body {
   min-height: 0 !important;
   max-width: none !important;
   white-space: normal !important;
+  /* Super clips every property (overflow: hidden); the 74px figure at line-height 0.86 draws
+     past its line box, so its top and bottom were cut off */
+  overflow: visible !important;
 }
 
 #block-bd1e4d485a0d424394add746d8e3cd35 .property-70594a51 { /* Figure */
