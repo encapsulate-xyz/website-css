@@ -127,6 +127,9 @@ h4.notion-heading{font-weight: 500 !important;font-size: clamp(18px,1.6vw,21px) 
 @media (max-width: 900px){.notion-form__wrapper{grid-template-columns: minmax(0,1fr) !important;gap: 32px !important;padding: 36px 20px !important;}
 .notion-form__wrapper > form.notion-form{padding: 24px 20px !important;}
 }
+.enc-banner{position: relative;z-index: 50;display: flex;flex-wrap: wrap;align-items: center;justify-content: center;gap: 6px 12px;width: 100%;box-sizing: border-box;padding: 10px max(20px,calc(50vw - 864px));border-bottom: 1px solid rgba(0,0,0,0.1);background: #F8E8B3;font-family: var(--type-body),system-ui,sans-serif;font-size: 14px;line-height: 1.45;color: #000000;text-align: center;}
+.enc-banner strong,.enc-banner b{font-family: var(--type-mono),ui-monospace,monospace;font-size: 10.5px;font-weight: 500;letter-spacing: 0.12em;text-transform: uppercase;color: #000000;}
+.enc-banner a{color: #000000;text-decoration: underline;text-underline-offset: 3px;}
 .super-footer{width: 100vw;margin-inline: calc(50% - 50vw) !important;padding: 10px 10px 180px;border-radius: 0 !important;outline: 2px solid black;background-color: rgba(235,236,237,0.4) !important;background-image: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/foooter.gif");background-position: center bottom;background-repeat: no-repeat;background-size: cover;}
 @media (prefers-reduced-motion: reduce){.notion-collection-card,.notion-collection-card__cover,.notion-callout:has(> .notion-callout__content > .notion-semantic-string > .notion-link),.notion-external-object,.notion-bookmark,.super-navbar__item{transition: none !important;}
 .notion-collection-card:hover,.notion-external-object:hover,.notion-bookmark:hover{transform: none;}

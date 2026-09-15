@@ -57,6 +57,7 @@ actually changed** since the tag they point at (`git diff vOLD vNEW -- dist/<fil
 | `head/site.html` | Super → Settings → Code → Head |
 | `head/home.html` | Homepage → Code → Head |
 | `head/networks.html` | /networks → Code → Head |
+| `head/site-body.html` | Super → Settings → Code → **Body** (the temporary "under reconstruction" banner; delete it there to remove the banner) |
 
 Every other page's Head should contain no `website-css` line (main.css already comes from the site Head).
 
