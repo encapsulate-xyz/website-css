@@ -842,7 +842,7 @@ body {
   line-height: 1 !important;
   letter-spacing: -0.04em !important;
   color: #000000 !important;
-  max-width: 24ch !important;
+  max-width: none !important; /* no measure cap: text runs the full width (user's rule — no forced breaks) */
 }
 
 /* the rule, and the two columns hanging from it */
@@ -918,7 +918,7 @@ body {
   line-height: 1 !important;
   letter-spacing: -0.04em !important;
   color: #000000 !important;
-  max-width: 17ch !important;
+  max-width: none !important;
 }
 
 /* lead */
@@ -928,7 +928,7 @@ body {
   font-size: 15.5px !important;
   line-height: 1.58 !important;
   color: #3A3D38 !important;
-  max-width: 36ch !important;
+  max-width: none !important;
   text-wrap: pretty !important;
 }
 
