@@ -183,6 +183,7 @@ page-level limit is.
 | 12 | Code blocks |
 | 13 | Link previews |
 | 13b | Notion forms — every form on the site (22a-light) |
+| 14 | Page covers — the first callout on an inner page (crumb, eyebrow, H1, lede, buttons, foot, "Scroll ↓"); fields drawn by `covers.js` per path |
 | 16 | Footer |
 | 17 | Reduced motion |
 
