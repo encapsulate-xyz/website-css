@@ -7,7 +7,7 @@
      Footer → Menu items    each item named "Group: Label" becomes a link under that column title
                             ("Company: About" → About, in Company). A "Legal" group goes to the
                             bottom row, right. Items without a colon are grouped under "More".
-     Footer → Socials       the "Elsewhere" column, as text links (the icon's title is the label)
+     Footer → Socials       the "Social" column, as text links (the icon's title is the label)
      Footer → Footnote      the bottom row, left
 
    Written here, because Super has no field for them (the user's explicit choice, 2026-09-15):
@@ -82,7 +82,7 @@
       var label = (t ? t.textContent : a.getAttribute("aria-label") || "").replace(/\s*\(.*\)\s*$/, "").trim();
       if (label && a.getAttribute("href")) socials.push({ label: label, href: a.getAttribute("href") });
     });
-    if (socials.length) groups.push({ title: "Elsewhere", items: socials });
+    if (socials.length) groups.push({ title: "Social", items: socials });
     var note = footer.querySelector(".super-footer__footnote");
     return { groups: groups, legal: legal, footnote: note ? note.textContent.trim() : "" };
   }
