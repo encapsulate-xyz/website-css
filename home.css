@@ -2964,8 +2964,9 @@ body {
 /* the address box — now inside a card, so it is the Card System's WELL, not a
    second card: paper 2, no border, no highlight ("a card never contains
    another card"). The design's own ring and highlight on it would double the
-   frame. */
-#block-3dce800a51388036af93f757deaec9c1 {
+   frame. Selected through the content wrapper so its 26px top margin out-ranks
+   the section's margin reset (it did not, and the box sat 8px under the lead). */
+#block-3dce800a5138803a82f7d45863d6049c > .notion-callout__content > #block-3dce800a51388036af93f757deaec9c1 {
   display: flex !important;
   flex-wrap: wrap !important;
   align-items: center !important;
@@ -3074,8 +3075,9 @@ body {
 }
 
 /* the two CTAs (the button-group rule in main.css sets the 12px gap); the
-   hairline under them is the rule the routes row hangs from */
-#block-3dce800a513880f58903ec250b9caeae {
+   hairline under them is the rule the routes row hangs from. 26px above, as in
+   the handoff — through the content wrapper, for the same specificity reason. */
+#block-3dce800a5138803a82f7d45863d6049c > .notion-callout__content > #block-3dce800a513880f58903ec250b9caeae {
   flex: 0 0 100% !important;
   margin-top: 26px !important;
   padding-bottom: 26px !important;
