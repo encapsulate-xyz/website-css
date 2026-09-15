@@ -2885,7 +2885,7 @@ body {
   padding: 44px 44px 40px !important;
   border: 1px solid var(--card-ring, #D9D9D2) !important;
   border-radius: var(--card-radius, 12px) !important;
-  background: var(--card-fill, #FFFEFC) !important;
+  background: #FAFAF8 !important; /* the handoff's paper, not the page ground */
   box-shadow: var(--card-highlight, inset 0 1.5px 0 rgba(255, 255, 255, 1)), var(--card-lift, 0 1px 2px rgba(0, 0, 0, 0.06)) !important;
   overflow: hidden !important;
 }
@@ -2936,7 +2936,7 @@ body {
   font-family: var(--type-mono) !important;
   font-size: 11px !important;
   line-height: 1.3 !important;
-  letter-spacing: 0.14em !important;
+  letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
   color: #6B6F68 !important;
 }
@@ -2957,15 +2957,16 @@ body {
   font-family: var(--type-body) !important;
   font-size: 16px !important;
   line-height: 1.56 !important;
+  letter-spacing: 0 !important; /* Super's -0.1px text spacing is not in the handoff */
   color: #3A3D38 !important;
   max-width: none !important;
 }
 
-/* the address box — now inside a card, so it is the Card System's WELL, not a
-   second card: paper 2, no border, no highlight ("a card never contains
-   another card"). The design's own ring and highlight on it would double the
-   frame. Selected through the content wrapper so its 26px top margin out-ranks
-   the section's margin reset (it did not, and the box sat 8px under the lead). */
+/* the address box, exactly as the handoff draws it: paper 2, a 1px #D9D9D2
+   ring, 12px corners, the white top highlight, 20px 22px. (It was briefly a
+   borderless well when the section became a card; the handoff keeps its ring.)
+   Selected through the content wrapper so its 26px top margin out-ranks the
+   section's margin reset. */
 #block-3dce800a5138803a82f7d45863d6049c > .notion-callout__content > #block-3dce800a51388036af93f757deaec9c1 {
   display: flex !important;
   flex-wrap: wrap !important;
@@ -2973,10 +2974,10 @@ body {
   gap: 20px !important;
   margin-top: 26px !important;
   padding: 20px 22px !important;
-  border: 0 !important;
-  border-radius: calc(var(--card-radius, 12px) - 2px) !important;
-  background: var(--card-well, #F2F2ED) !important;
-  box-shadow: none !important;
+  border: 1px solid #D9D9D2 !important;
+  border-radius: 12px !important;
+  background: #F2F2ED !important;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
 }
 
 #block-3dce800a51388036af93f757deaec9c1 > .notion-column {
@@ -3016,7 +3017,7 @@ body {
   font-family: var(--type-display) !important;
   font-weight: 600 !important;
   font-size: clamp(24px, 3vw, 38px) !important;
-  line-height: 1.1 !important;
+  line-height: normal !important; /* the handoff sets none */
   letter-spacing: -0.03em !important;
   color: #000000 !important;
   white-space: nowrap !important;
@@ -3052,6 +3053,7 @@ body {
 #block-3dce800a51388036af93f757deaec9c1 > .notion-column:last-child .notion-callout[data-copied] {
   background: #99CC66 !important;
   border-color: #7CAE48 !important;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 1px 2px rgba(0, 0, 0, 0.10) !important;
 }
 
 #block-3dce800a51388036af93f757deaec9c1 > .notion-column:last-child .notion-callout__icon {
