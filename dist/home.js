@@ -1128,3 +1128,62 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply);
   else apply();
 })();
+
+
+/* ─────────────────────────────────────────────────────────────────────────────────────────────
+   Homepage contact — design "Contact Section", 48c: CONTACT COPY.
+
+   Behaviour only. The address lives in Notion as a mailto: link; the Copy callout next to it puts
+   that address on the clipboard, turns green and reads "Copied" for a second (the one word this
+   script shows — the design's confirmation), then returns to its Notion label. Keyboard: the
+   callout is focusable and Enter/Space copy too. */
+(function () {
+  var ROW = "block-3dce800a51388036af93f757deaec9c1";
+
+  function wire() {
+    var row = document.getElementById(ROW);
+    if (!row) return;
+    var link = row.querySelector('a[href^="mailto:"]');
+    var copy = row.querySelector(":scope > .notion-column:last-child .notion-callout");
+    if (!link || !copy || copy.hasAttribute("data-enc-copy")) return;
+    copy.setAttribute("data-enc-copy", "");
+    copy.setAttribute("role", "button");
+    copy.setAttribute("tabindex", "0");
+    copy.setAttribute("aria-label", "Copy our email address");
+    var label = copy.querySelector(".notion-callout__content .notion-semantic-string") || copy.querySelector(".notion-callout__content");
+    var timer = 0;
+
+    function done(ok) {
+      if (!ok) { window.location.href = link.getAttribute("href"); return; }
+      var original = label.textContent;
+      copy.setAttribute("data-copied", "");
+      label.textContent = "Copied";
+      clearTimeout(timer);
+      timer = setTimeout(function () { copy.removeAttribute("data-copied"); label.textContent = original; }, 1000);
+    }
+
+    function doCopy(e) {
+      if (e) e.preventDefault();
+      if (copy.hasAttribute("data-copied")) return;
+      var address = decodeURIComponent(link.getAttribute("href").replace(/^mailto:/i, "").split("?")[0]);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(address).then(function () { done(true); }, function () { done(false); });
+      } else {
+        done(false);
+      }
+    }
+
+    copy.addEventListener("click", doCopy);
+    copy.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") doCopy(e);
+    });
+  }
+
+  var t = 0;
+  new MutationObserver(function (muts) {
+    if (muts.every(function (m) { return m.target.closest && m.target.closest("[data-enc-copy]"); })) return;
+    clearTimeout(t); t = setTimeout(wire, 60);
+  }).observe(document.body, { childList: true, subtree: true });
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire);
+  else wire();
+})();
