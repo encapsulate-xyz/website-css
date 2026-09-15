@@ -75,6 +75,10 @@ if not sys.argv[1:]:
         js = open('footer.js', encoding='utf-8').read()
         open(os.path.join('dist', 'footer.js'), 'w', encoding='utf-8').write(js)
         print(f"{'footer.js':14} {len(js):>7,} -> dist/footer.js (copied)")
+    if os.path.exists('network.js'):
+        js = open('network.js', encoding='utf-8').read()
+        open(os.path.join('dist', 'network.js'), 'w', encoding='utf-8').write(js)
+        print(f"{'network.js':14} {len(js):>7,} -> dist/network.js (copied)")
     if os.path.exists('covers.js'):
         js = open('covers.js', encoding='utf-8').read()
         open(os.path.join('dist', 'covers.js'), 'w', encoding='utf-8').write(js)

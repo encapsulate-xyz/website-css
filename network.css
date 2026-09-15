@@ -825,185 +825,204 @@ STYLING DROPDOWN MENU
 
 
 /*********************************************/
-/* MAINNET / TESTNET STAT BAND  (variant 5e) */
+/* NETWORK COUNT — "Network Count" (Metrics Scroll, two panels) */
 /*********************************************/
 
-/* From the `Networks Pastel` project, variant 5e — "Ink ground": the palette
-   inverted. Ink field, pastel figures, paper labels. Highest contrast of the
-   eight, and the one meant to hold up as a full-bleed band between two white
-   sections.
+/* Replaces the old MAINNET / TESTNET band (5e). Two full-screen ink panels,
+   one figure each, paged one per gesture by network.js; the rail, the counter
+   and the kicker stay put while the panels change.
 
-   The two stats are Notion CALLOUTS, one per column, inside column-list
-   3d9e800a…. Per panel: span (icon, hidden site-wide), p label,
-   h1 number, p caption.
+   NOTION (band callout 3dce800a…8154931a…, right after the cover):
+     Text      "Encapsulate · where we run"         the kicker
+     Columns   one callout per panel:
+       callout text "01 / 02"                      the index
+         Heading 1  "28"                           the figure
+         Text       "Networks secured"             the label
+         Text       the note
 
-   The dark ground belongs to the BAND, not the panels — so the column-list
-   carries the background and padding, and each callout is stripped back to
-   transparent with no border, radius or padding of its own.
+   GEOMETRY. As on the homepage stat deck: every panel is sticky, one viewport
+   tall, inside a band two viewports tall, so panel 2 slides over panel 1. The
+   panels are opaque, so each draws the whole rail and counter with its own
+   entry active and the stacking shows the current one — no observer needed.
+   The kicker is sticky over both. Nothing between the band and the viewport
+   may clip (no overflow on the band), or sticky stops working. */
 
-   THE DIVIDER. 5e sets the band as `grid-template-columns: 1fr 1px 1fr` with a
-   third element between the stats. Notion emits exactly two columns and no
-   middle child, so the hairline is drawn as a pseudo-element on the second
-   column instead, pulled back half the 48px gap to sit centred in it. It is
-   200px tall and vertically centred, not full height — matching the variant.
-
-   FONTS: Outfit (numbers, caption) and JetBrains Mono (label); neither is in
-   the site Head, so Archivo and the system mono catch them. For exact type:
-     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"> */
-
-/* FULL-BLEED BAND.
-   `width: 100vw` plus `margin-inline: calc(50% - 50vw)` breaks the band out of
-   the page's content column and runs it edge to edge — the same technique the
-   footer uses in main.css. The 100vw overshoots by the scrollbar width, which
-   `overflow-x: hidden` on body (main.css) absorbs.
-
-   The horizontal padding then pulls the TEXT back into line with the rest of
-   the page: `calc(50vw - 864px)` is the gutter between the viewport edge and
-   the 1728px content column, so the labels and figures sit on the same left
-   edge as everything above and below, while the ink itself still reaches the
-   screen edges. `max()` keeps a sane 48px minimum on narrower viewports.
-
-   Border and radius are dropped — the artifact's 1px frame and 4px corners
-   were its demo chrome, and neither makes sense once the band is full-bleed.
-   The ink does the separating. */
-#block-3d9e800a513880228c52d46a421865c3 {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  gap: 48px !important;
-  align-items: center !important;
-  /* Ink ground + variant 5k, "Fan and rings": rays from a single origin off
-     the left edge, crossed by concentric rings from that same origin, every
-     fourth ray heavier. The SVG carries preserveAspectRatio="none" and is
-     sized 100% 100%, so it stretches to whatever width the band ends up —
-     which is what makes it work on a full-bleed element. */
-  background-color: #3A3D38 !important;
-  background-image: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/banners/5k-fan-and-rings.svg") !important;
-  background-size: 100% 100% !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-
+#block-3dce800a51388154931ac3c9478a65b5 {
+  --count-x: max(clamp(28px, 7vw, 110px), calc(50vw - 864px));
+  position: relative !important;
+  display: block !important;
   width: 100vw !important;
-  margin-inline: calc(50% - 50vw) !important;
-  padding: 40px max(48px, calc(50vw - 864px)) 36px !important;
+  max-width: none !important;
+  margin: 0 calc(50% - 50vw) !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #3A3D38 !important;
+  overflow: visible !important;
+}
+
+#block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__icon,
+#block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__content > span.notion-semantic-string {
+  display: none !important;
+}
+
+/* dissolve the wrappers: kicker and panels become the band's own children */
+#block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__content,
+#block-3dce800a51388154931ac3c9478a65b5 .notion-column-list,
+#block-3dce800a51388154931ac3c9478a65b5 .notion-column {
+  display: contents !important;
+}
+
+/* the kicker: top left, over both panels; takes no height */
+#block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__content > p.notion-text {
+  position: sticky !important;
+  top: 26px !important;
+  z-index: 3 !important;
+  height: 16px !important;
+  margin: 0 0 -16px !important;
+  padding: 0 0 0 40px !important;
+  min-height: 0 !important;
+  pointer-events: none !important;
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 11px !important;
+  line-height: 16px !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #B4B4B4 !important;
+}
+
+/* the panels */
+#block-3dce800a51388154931ac3c9478a65b5 .notion-callout {
+  --count-i: 0;
+  --count-fill: #DCEEC7;
+  --count-field: url("../svg/count-rings.svg");
+  position: sticky !important;
+  top: 0 !important;
+  box-sizing: border-box !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  margin: 0 !important;
+  padding: 0 var(--count-x) !important;
   border: 0 !important;
   border-radius: 0 !important;
   overflow: hidden !important;
+  display: flex !important;
+  align-items: stretch !important;
+  /* rail dots, the panel's field, the ink */
+  background-color: #3A3D38 !important;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%229%22 height=%2228%22 viewBox=%220 0 9 28%22%3E%3Cg fill=%22%23FAFAF8%22 fill-opacity=%220.4%22%3E%3Ccircle cx=%224.5%22 cy=%224.5%22 r=%224.5%22/%3E%3Ccircle cx=%224.5%22 cy=%2223.5%22 r=%224.5%22/%3E%3C/g%3E%3C/svg%3E"),
+    var(--count-field) !important;
+  background-repeat: no-repeat, no-repeat !important;
+  background-position: right 40px center, center !important;
+  background-size: 9px 28px, cover !important;
 }
 
-#block-3d9e800a513880228c52d46a421865c3 > .notion-column {
-  margin: 0 !important;
-  width: auto !important;
-  padding: 0 !important;
-  position: relative !important; /* anchors the divider below */
+#block-3dce800a51388154931ac3c9478a65b5 .notion-column + .notion-column .notion-callout {
+  --count-i: 1;
+  --count-fill: #D2E3F6;
+  --count-field: url("../svg/count-dots.svg");
 }
 
-/* The hairline between the two stats. */
-#block-3d9e800a5138800099c0db8197beb565::before {
+/* the rail's active pill, centred on the 9px dot column at right: 40px */
+#block-3dce800a51388154931ac3c9478a65b5 .notion-callout::after {
   content: "" !important;
   position: absolute !important;
-  left: -24px !important; /* half the 48px gap */
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: 1px !important;
-  height: 128px !important;
-  background: rgba(250, 250, 248, 0.22) !important;
+  right: 31.5px !important;
+  top: calc(50% - 14px + var(--count-i) * 19px) !important;
+  width: 26px !important;
+  height: 9px !important;
+  border-radius: 999px !important;
+  background: #FAFAF8 !important;
+  pointer-events: none !important;
 }
 
-/* Panels: no card of their own, the band is the surface. */
-#block-3d9e800a513880228c52d46a421865c3 .notion-callout {
+#block-3dce800a51388154931ac3c9478a65b5 .notion-callout > .notion-callout__icon {
+  display: none !important;
+}
+
+/* index, figure, label, note — centred in the screen, 22px apart */
+#block-3dce800a51388154931ac3c9478a65b5 .notion-callout > .notion-callout__content {
   display: flex !important;
   flex-direction: column !important;
-  gap: 0 !important;
-  background: transparent !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-}
-
-/* SLIMMER, VIA LAYOUT RATHER THAN SHRINKING.
-   The variant stacks label / number / caption in a column, which spends three
-   full rows of height. Setting the caption on the NUMBER's baseline collapses
-   one of those rows entirely — so the figure can grow while the band gets
-   shorter:
-
-     was  150px figure, 22px gaps, 60/56 padding  ->  ~326px tall
-     now  176px figure, 14px gaps, 40/36 padding  ->  ~260px tall
-
-   `align-items: baseline` on the second row is what makes it read as one
-   typographic unit instead of two stacked things. */
-#block-3d9e800a513880228c52d46a421865c3 .notion-callout__content {
-  display: grid !important;
-  grid-template-columns: auto 1fr !important;
-  grid-template-areas:
-    "label label"
-    "figure caption" !important;
-  align-items: baseline !important;
-  column-gap: 20px !important;
-  row-gap: 14px !important;
-  padding: 0 !important;
-}
-
-/* Label — mono, uppercase, wide tracking, muted against the ink. */
-#block-3d9e800a513880228c52d46a421865c3 .notion-callout__content > p:first-of-type {
-  grid-area: label !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
-  font-size: 11px !important;
-  font-weight: 400 !important;
-  letter-spacing: 0.14em !important;
-  text-transform: uppercase !important;
-  color: #A5A5A5 !important;
-  line-height: 1.2 !important;
-}
-
-/* The figures. `tabular-nums` is what holds the two numbers to one rhythm —
-   proportional digits would set them at different widths across the divider. */
-#block-3d9e800a513880228c52d46a421865c3 h1.notion-heading {
-  font-family: "Outfit", sans-serif !important;
-  grid-area: figure !important;
-  font-weight: 600 !important;
-  font-size: 176px !important;
-  line-height: 0.78 !important;
-  letter-spacing: -0.05em !important;
-  font-variant-numeric: tabular-nums !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  gap: 22px !important;
+  width: 100% !important;
+  max-width: none !important;
   margin: 0 !important;
   padding: 0 !important;
+}
+
+#block-3dce800a51388154931ac3c9478a65b5 .notion-callout > .notion-callout__content > * {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#block-3dce800a51388154931ac3c9478a65b5 .notion-callout > .notion-callout__content > .notion-heading__anchor {
+  display: none !important;
+}
+
+/* the index ("01 / 02") */
+#block-3dce800a51388154931ac3c9478a65b5 .notion-callout > .notion-callout__content > span.notion-semantic-string {
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 11px !important;
+  line-height: 16px !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #B4B4B4 !important;
+}
+
+#block-3dce800a51388154931ac3c9478a65b5 .notion-callout > .notion-callout__content > h1.notion-heading {
+  max-width: none !important;
+  font-family: var(--type-display) !important;
+  font-weight: 600 !important;
+  font-size: clamp(58px, 13vw, 168px) !important;
+  line-height: 0.88 !important;
+  --h1-line-height: 0.88 !important;
+  letter-spacing: -0.05em !important;
+  font-variant-numeric: tabular-nums !important;
   text-wrap: nowrap !important;
+  color: var(--count-fill) !important;
 }
 
-/* Pastel figures, one per side. */
-#block-3d9e800a51388034b5b5e191ce077377 h1.notion-heading {
-  color: #DCEEC7 !important; /* green */
-}
-
-#block-3d9e800a5138805bb980ea0d1ec63b22 h1.notion-heading {
-  color: #D2E3F6 !important; /* blue */
-}
-
-/* Caption — paper white. */
-#block-3d9e800a513880228c52d46a421865c3 .notion-callout__content > p:last-of-type {
-  grid-area: caption !important;
-  font-family: "Outfit", sans-serif !important;
+#block-3dce800a51388154931ac3c9478a65b5 .notion-callout > .notion-callout__content > p.notion-text:nth-of-type(1) {
+  font-family: var(--type-display) !important;
   font-weight: 500 !important;
-  font-size: 24px !important;
-  letter-spacing: -0.02em !important;
-  color: #FAFAF8 !important;
+  font-size: clamp(19px, 2.2vw, 30px) !important;
   line-height: 1.2 !important;
+  letter-spacing: -0.022em !important;
+  color: #FAFAF8 !important;
 }
 
-@media (max-width: 900px) {
-  #block-3d9e800a513880228c52d46a421865c3 {
-    grid-template-columns: 1fr !important;
-    gap: 40px !important;
-    padding: 44px 32px 40px !important; /* the max() gutter collapses here anyway */
+#block-3dce800a51388154931ac3c9478a65b5 .notion-callout > .notion-callout__content > p.notion-text:nth-of-type(2) {
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: clamp(14px, 1.3vw, 16.5px) !important;
+  line-height: 1.55 !important;
+  letter-spacing: normal !important;
+  color: #C9C9C4 !important;
+}
+
+/* Narrow screens: the panels stand as two ink blocks in sequence — no rail,
+   no sticking, no paging. */
+@media (max-width: 700px) {
+  #block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__content > p.notion-text {
+    position: static !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 40px var(--count-x) 0 !important;
   }
-  #block-3d9e800a5138800099c0db8197beb565::before {
-    left: 0 !important;
-    top: -20px !important;
-    transform: none !important;
-    width: 100% !important;
-    height: 1px !important;
+
+  #block-3dce800a51388154931ac3c9478a65b5 .notion-callout {
+    position: relative !important;
+    height: auto !important;
+    padding: 56px var(--count-x) !important;
+    background-image: var(--count-field) !important;
+    background-position: center !important;
+    background-size: cover !important;
   }
-  #block-3d9e800a513880228c52d46a421865c3 h1.notion-heading {
-    font-size: 104px !important;
+
+  #block-3dce800a51388154931ac3c9478a65b5 .notion-callout::after {
+    display: none !important;
   }
 }
