@@ -1472,6 +1472,253 @@ h4.notion-heading {
 }
 
 /*********************************************/
+/* 14. PAGE COVERS — "PAGE COVERS CHOSEN" */
+/*********************************************/
+
+/* One cover layout for every inner page (Networks 9a, Contact 8a, Investments
+   3c, Governance 2c, Brand 6a, Blog 5b, Security 7l, Guides 4h, Services 1m).
+   Replaces the old per-page Code-panel covers (a PNG/AVIF from the
+   DigitalOcean page-covers folder behind a yellow callout).
+
+   THE COVER IS THE PAGE'S FIRST BLOCK: a callout holding, in this order —
+     Text       crumb        "Encapsulate · Networks"
+     Text       eyebrow      "Mainnet & testnet"
+     Heading 1  title
+     Text       lede
+     Columns    buttons      Green callout (primary) + Gray callout (secondary)
+     Text       foot         "Genesis onward"
+     Text       "Scroll ↓"
+   The texts are placed by their order among the callout's text blocks, so a
+   stray empty line inside the callout shifts them. Callout colour and icon do
+   not matter; the ground is the page's.
+
+   The graphic behind it (the "field") is drawn by covers.js from the page's
+   path — decorative only, no words. Without the script the cover keeps its
+   layout on plain paper.
+
+   Field geometry, from the design: a 924×540 box the full width of the
+   cover, centred vertically and cropped by it; every mark is placed and sized
+   in % of that box, so the composition scales intact. */
+
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) {
+  --cover-x: max(clamp(24px, 5vw, 76px), calc(50vw - 864px));
+  --cover-gap: clamp(18px, 2.6vh, 32px);
+  position: relative !important;
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100vw !important;
+  max-width: none !important;
+  min-height: calc(100svh - 56px) !important; /* one screen under the navbar */
+  margin: 0 calc(50% - 50vw) !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: var(--color-bg-default) !important;
+  background-image: none !important;
+  overflow: hidden !important;
+  color: #000000 !important;
+  /* the buttons at the system's lg size, as in the design */
+  --btn-h: 48px;
+  --btn-px: 20px;
+  --btn-fs: 16px;
+}
+
+/* the cover starts right under the navbar */
+body:has(.notion-root > .notion-callout:first-child > .notion-callout__content > h1.notion-heading) .super-content {
+  padding-top: 0 !important;
+}
+
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__icon,
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content > span {
+  display: none !important;
+}
+
+/* three bands — top row, the ask, bottom row — spread over the screen */
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content {
+  position: relative !important;
+  z-index: 1 !important;
+  container-type: inline-size;
+  display: grid !important;
+  grid-template-columns: max-content minmax(0, 1fr) !important;
+  grid-template-rows:
+    auto
+    minmax(clamp(24px, 3.4vh, 44px), 1fr)
+    auto auto auto
+    minmax(clamp(24px, 3.4vh, 44px), 1fr)
+    auto !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: inherit !important;
+  margin: 0 !important;
+  padding: clamp(24px, 3.4vh, 40px) var(--cover-x) clamp(28px, 4vh, 48px) !important;
+}
+
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content > * {
+  grid-column: 1 / -1;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* top and bottom rows: mono labels, a short rule between each pair */
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content > p.notion-text:is(:nth-of-type(1), :nth-of-type(2), :nth-of-type(4), :nth-of-type(5)) {
+  position: relative !important;
+  overflow: visible !important;
+  min-height: 0 !important;
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  line-height: 16px !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  color: #3A3D38 !important;
+}
+
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content > p.notion-text:nth-of-type(1) {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  padding: 0 18px 18px 0 !important;
+}
+
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content > p.notion-text:nth-of-type(2) {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  padding: 0 0 18px 19px !important;
+}
+
+/* the hairline under the top row runs to min(46%, 420px), past the words */
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content > p.notion-text:nth-of-type(1)::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: min(46cqw, 420px);
+  height: 1px;
+  background: #E2E2DB;
+}
+
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content > p.notion-text:is(:nth-of-type(2), :nth-of-type(5))::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 1px;
+  height: 12px;
+  background: #A5A5A5;
+}
+
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content > p.notion-text:nth-of-type(4) {
+  grid-column: 1 !important;
+  grid-row: 7 !important;
+  padding-right: 16px !important;
+}
+
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content > p.notion-text:nth-of-type(5) {
+  grid-column: 2 !important;
+  grid-row: 7 !important;
+  padding-left: 17px !important;
+}
+
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content > p.notion-text:is(:nth-of-type(4), :nth-of-type(5)) {
+  font-size: 10.5px !important;
+  letter-spacing: 0.12em !important;
+}
+
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content > p.notion-text:nth-of-type(5)::before {
+  top: 2.5px;
+  height: 11px;
+}
+
+/* the ask: kept to the left of the field, min(47%, 640px) */
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content > h1.notion-heading {
+  grid-row: 3 !important;
+  max-width: min(47cqw, 640px) !important;
+  margin-bottom: var(--cover-gap) !important;
+  font-family: var(--type-display) !important;
+  font-weight: 600 !important;
+  font-size: clamp(40px, 6.6vw, 100px) !important;
+  line-height: 0.94 !important;
+  --h1-line-height: 0.94 !important;
+  letter-spacing: -0.048em !important;
+  color: #000000 !important;
+}
+
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content > p.notion-text:nth-of-type(3) {
+  grid-row: 4 !important;
+  max-width: min(47cqw, 640px) !important;
+  margin-bottom: var(--cover-gap) !important;
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: clamp(16px, 1.7vw, 21px) !important;
+  line-height: 1.52 !important;
+  letter-spacing: normal !important;
+  text-wrap: pretty;
+  color: #3A3D38 !important;
+}
+
+.notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content > .notion-column-list {
+  grid-row: 5 !important;
+  width: auto !important;
+  justify-self: start !important;
+}
+
+/* the field itself (covers.js) */
+.enc-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.enc-cover__box {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  aspect-ratio: 924 / 540;
+  transform: translateY(-50%);
+}
+
+.enc-cover__box > * {
+  position: absolute;
+  box-sizing: border-box;
+}
+
+.enc-cover__box img {
+  display: block;
+}
+
+.enc-cover__box svg {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Narrow screens: the ask takes the full width, and the field drops below
+   it — the right-hand part of the box, where every composition lives. */
+@media (max-width: 800px) {
+  .notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content {
+    padding-bottom: calc(70vw + 28px) !important;
+  }
+
+  .notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content > :is(h1.notion-heading, p.notion-text:nth-of-type(3)) {
+    max-width: none !important;
+  }
+
+  .enc-cover__box {
+    top: auto;
+    bottom: 0;
+    left: -60%;
+    right: 0;
+    transform: none;
+  }
+}
+
+
+/*********************************************/
 /* 15b. TEMPORARY SITE BANNER */
 /*********************************************/
 

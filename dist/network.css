@@ -10,13 +10,6 @@
 .notion-pill{font-size: 16px!important;padding:4px 8px!important;background-color: var(--color-bg-default);color: black;}
 .notion-property__title{font-size: 22px!important;}
 .notion-property__text{margin-top: 4px;font-size: 15px;}
-.direct-parent{position: relative;}
-.super-content{padding-top: 0px!important;}
-#block-93e89f7e8c0a4366bf2342c01b787d6f{background-color: var(--color-bg-default)!important;width: calc(100% + var(--padding-left) + var(--padding-right));left: calc(-1 * var(--padding-left));margin-top: 0px!important;height: auto;border-radius: 0px!important;border-bottom: 2px solid black!important;margin-right: 0px!important;padding-right: 0px!important;overflow: visible !important;background-color: transparent;margin-bottom: 12px!important;color: black;border-top: none!important;padding-top: 24vh!important;min-height: 90vh;overflow: auto!important;background-image: url('https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/page-covers/new/2b-closed-circles.png');background-repeat: no-repeat;background-position: right 40px;background-size: contain;background-attachment: fixed;@media (max-width: 546px){padding-top: 14vh!important;width: calc(100% + var(--padding-left-mobile) + var(--padding-right-mobile));left: calc(-1 * var(--padding-left-mobile));}
-.notion-column-list > .notion-column:first-child{}
-}
-#block-83e8ea69481b473dae21efe2d8398927{height: 280px!important;position: absolute;right: 0;top: 40px;margin: 0px!important;padding: 0px!important;width: 348px!important;height: auto!important;@media (max-width: 1050px){display: none;}
-display: none;}
 @media (min-width: 576px){.notion-dropdown__option-list{margin-left: auto !important;width: 40%;display: flex;justify-content: space-around;border-radius: 45px !important;}
 .notion-dropdown__option{margin: 5px!important;flex: 1;border-radius: 25px!important;padding: 10px;transition: background-color 0.3s ease;justify-content: center;}
 .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:nth-child(n){border-radius: 25px!important;border: 1px solid black!important;}
