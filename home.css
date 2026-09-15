@@ -2508,6 +2508,12 @@ body {
 
 #block-3dbe800a5138804d8ee8c6d84679cc63 .property-59644372 {
   grid-area: medium !important;
+  /* Super's text properties are pre-wrap / break-word at 95% width, which broke
+     BROWSER onto two lines in its auto-width track */
+  white-space: nowrap !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  max-width: none !important;
   font-family: var(--type-mono) !important;
   font-size: 9px !important;
   letter-spacing: 0.1em !important;
