@@ -3067,9 +3067,68 @@ body {
   outline-offset: 2px !important;
 }
 
-/* the two CTAs (the button-group rule in main.css sets the 12px gap) */
+/* the two CTAs (the button-group rule in main.css sets the 12px gap); the
+   hairline under them is the rule the routes row hangs from */
 #block-3dce800a513880f58903ec250b9caeae {
+  flex: 0 0 100% !important;
   margin-top: 26px !important;
+  padding-bottom: 26px !important;
+  border-bottom: 1px solid #E2E2DB !important;
+}
+
+/* The routes — the text blocks after the buttons (bold label + linked value),
+   set as one mono row: the content wraps, every other block takes a full line. */
+#block-3dce800a5138803a82f7d45863d6049c > .notion-callout__content {
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+}
+
+#block-3dce800a5138803a82f7d45863d6049c > .notion-callout__content > *:not(#block-3dce800a513880f58903ec250b9caeae ~ .notion-text) {
+  flex: 0 0 100% !important;
+}
+
+#block-3dce800a5138803a82f7d45863d6049c > .notion-callout__content > #block-3dce800a513880f58903ec250b9caeae ~ .notion-text {
+  flex: none !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  min-height: 44px !important;
+  margin: 18px 22px 0 0 !important;
+  padding: 0 22px 0 0 !important;
+  border-right: 1px solid #E2E2DB !important;
+  font-size: 0 !important; /* the space between label and value; the gap spaces them */
+}
+
+#block-3dce800a5138803a82f7d45863d6049c > .notion-callout__content > #block-3dce800a513880f58903ec250b9caeae ~ .notion-text:last-child {
+  border-right: 0 !important;
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+}
+
+#block-3dce800a5138803a82f7d45863d6049c > .notion-callout__content > #block-3dce800a513880f58903ec250b9caeae ~ .notion-text strong,
+#block-3dce800a5138803a82f7d45863d6049c > .notion-callout__content > #block-3dce800a513880f58903ec250b9caeae ~ .notion-text b {
+  font-family: var(--type-mono) !important;
+  font-size: 10px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #6B6F68 !important;
+}
+
+#block-3dce800a5138803a82f7d45863d6049c > .notion-callout__content > #block-3dce800a513880f58903ec250b9caeae ~ .notion-text a {
+  font-family: var(--type-mono) !important;
+  font-size: 12.5px !important;
+  letter-spacing: 0.02em !important;
+  color: #000000 !important;
+  text-decoration: none !important;
+  border-bottom: 0 !important;
+  opacity: 1 !important;
+  transition: color 0.16s ease !important;
+}
+
+#block-3dce800a5138803a82f7d45863d6049c > .notion-callout__content > #block-3dce800a513880f58903ec250b9caeae ~ .notion-text a:hover {
+  color: #3F6B27 !important;
 }
 
 /*********************************************/
