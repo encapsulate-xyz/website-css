@@ -1,0 +1,185 @@
+/* /blog — page-level CSS, linked from that page's Code → Head (head/blog.html).
+   Moved from the page's Code panel 2026-09-15. The old cover rules (page-covers/blog.avif behind the
+   first callout, .direct-parent, .super-content) were removed: the cover is main.css §14 + covers.js. */
+
+/*********************************************
+For the collection gallery
+*********************************************/
+/* Let cards auto-size (no fixed/aspect heights) */
+.notion-collection-card.gallery,
+.notion-collection-card.gallery .notion-collection-card__content {
+  height: auto !important;
+}
+.notion-collection-gallery {
+    grid-template-columns: repeat(3, 1fr) !important;
+}
+
+/* Grid should allow variable row heights */
+.notion-collection-gallery {
+  grid-auto-rows: auto !important;
+  align-items: start !important;
+}
+
+/* The actual cover element in your markup is the <img> */
+img.notion-collection-card__cover {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;              /* ignore height="200" */
+  max-height: none !important;
+  object-fit: contain !important;       /* NO CROP */
+  object-position: center center !important;  /* override inline "center 40%" */
+  background: transparent !important;
+  border-radius: 28px;                  /* keep your rounded look (optional) */
+}
+
+/* If sometimes a DIV is used as the cover (background-image variant) */
+.notion-collection-card__cover:not(img) {
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: auto !important;        /* kill forced ratios */
+}
+
+/* Helpful cleanups: kill any old constraints */
+.notion-collection-card__cover,
+.notion-collection-card.gallery .notion-collection-card__cover {
+  aspect-ratio: auto !important;
+  max-height: none !important;
+}
+
+/*********************************************
+Media query for max width 1024px
+*********************************************/
+
+/* Adjusting the grid layout, margin, and gap of the collection gallery, as well as the height of the collection card when the viewport width is 1000px or less. The first child of the collection card no longer spans two columns. */
+/* 1025–1400px → 2 columns */
+@media (max-width: 1400px) and (min-width: 1025px) {
+  .notion-collection-gallery {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ≤1024px → 1 column */
+@media (max-width: 1024px) {
+  .notion-collection-gallery {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/*********************************************
+Other styles
+*********************************************/
+
+/* Hiding the icon wrapper of the title property. */
+.notion-property__title__icon-wrapper {
+  display: none!important;
+}
+
+/* Adjusting the font-size, border-radius, padding and border of the notion pill. */
+.notion-pill {
+  margin-top: 8px!important;
+  padding-top: 2px!important;
+   padding-bottom: 2px!important;
+  font-size: 14px!important;
+}
+
+/*********************************************/
+/* FOR PAGE HEADING
+/*********************************************/
+
+#block-80a8aedbbe0d4f6d923eedd13a28b82c strong {
+  color: var(--color-bg-purple)!important;
+  line-height: 1;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  font-size: calc(1px + 9vw) !important;
+  font-weight: 200 !important;
+  font-family: Arial Black, sans-serif;
+  text-shadow: 4px 4px 0px rgba(0, 0, 0, 1) !important;
+  display: flex;
+  -webkit-text-stroke: 2px black;
+  text-stroke: 2px black !important;
+
+}
+
+#block-80a8aedbbe0d4f6d923eedd13a28b82c:after {
+  margin-top: 40px!important;
+    content: "";
+    display: block;
+    height: 2px!important;
+    margin: 4px 0;
+    width: calc(100% + 40px);
+    transform: translateX(-20px);
+}
+
+#block-80a8aedbbe0d4f6d923eedd13a28b82c:before {
+  background: none!important
+}
+/*********************************************/
+/********************************************/
+/* FOR PAGE SUB HEADING
+/********************************************/
+#block-6eb3c6e77ac24f3c95ad5b565e194a59 {
+  font-size: 22px!important;
+  font-family: Georgia;
+  @media (max-width: 800px) {
+    font-size: 18px!important;
+  }
+}
+/********************************************/
+/*********************************************
+For viewport
+*********************************************/
+/*
+This block defines styles to be applied when the viewport's width is 920 pixels or less, often used for responsiveness on smaller screens or devices.
+
+1. For the first element with class .notion-column-list, it sets the flex direction to its initial value.
+2. For the elements with class .notion-column, it sets their width to 100% and their start margin (both -webkit-margin-start and margin-inline-start for cross-browser compatibility) to 0, effectively making them occupy the full width of their container.
+3. For images within elements with class .notion-column, it ensures they are fully visible within their parent container. It sets their maximum width to 100%, their height to auto (maintaining aspect ratio), makes them block elements, and centers them horizontally.
+*/
+@media (max-width: 1024px) {
+  .notion-column-list:first-of-type {
+    flex-direction: initial !important;
+  }
+  .notion-column {
+    width: 100% !important;
+    -webkit-margin-start: 0 !important;
+    margin-inline-start: 0 !important;
+  }
+  .notion-column .notion-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    text-align: center !important;
+  }
+
+.notion-column .notion-divider {
+    display: none!important;
+}
+}
+@media (max-width: 1240px) {
+.notion-embed__container__wrapper {
+    height: 320px!important;
+}
+}
+/********************************************/
+/********************************************/
+/* DATE STYLING */
+/********************************************/
+.date {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 10px!important;
+  font-size: 18px!important;
+}
+/********************************************/
+/* ENABLE POINTER EVENTS FOR BLOG DATABASE */
+/********************************************/
+.notion-collection-card.gallery a {
+  pointer-events: auto!important;
+}
+/********************************************/
