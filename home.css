@@ -1854,7 +1854,7 @@ body {
     "graphic graphic graphic"
     "capl capl capr"
     "body body body" !important;
-  column-gap: 11px !important;
+  column-gap: 0 !important; /* a gap would break the caption's hairline in two */
   row-gap: 0 !important;
   align-content: start !important; /* equal-height cards must not spread their spare height across the rows */
   flex: 1 1 auto !important;
@@ -1886,7 +1886,7 @@ body {
 #block-bd1e4d485a0d424394add746d8e3cd35 .property-5b6a5a73 { /* Unit */
   grid-area: unit !important;
   align-self: end !important;
-  padding-bottom: 4px !important;
+  padding: 0 0 4px 11px !important;
   font-family: var(--type-mono) !important;
   font-size: 10.5px !important;
   letter-spacing: 0.12em !important;
@@ -1912,7 +1912,7 @@ body {
   font-size: 14.5px !important;
   line-height: 1.6 !important;
   color: #C9C9C4 !important;
-  max-width: 32ch !important;
+  max-width: none !important; /* full card width — no forced line breaks (user, 2026-09-15) */
 }
 
 #block-bd1e4d485a0d424394add746d8e3cd35 .property-443e5775,
@@ -1938,7 +1938,7 @@ body {
   font-size: 13.5px !important;
   line-height: 1.6 !important;
   color: #C9C9C4 !important;
-  max-width: 38ch !important;
+  max-width: none !important; /* full card width — no forced line breaks */
 }
 
 @media (max-width: 1024px) {
