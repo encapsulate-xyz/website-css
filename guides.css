@@ -1,0 +1,494 @@
+/* /guides — page-level CSS, linked from that page's Code → Head (head/guides.html, after Super's
+   view-picker.css). Moved from the page's Code panel 2026-09-15. The old cover rules
+   (page-covers/GuidesCover.png behind the first callout, .direct-parent, .super-content) were removed:
+   the cover is main.css §14 + covers.js. */
+
+:root {
+  --picker-border-radius: 8px !important;
+}
+
+
+/*********************************************
+For the collection gallery
+*********************************************/
+/* Let cards auto-size (no fixed/aspect heights) */
+.notion-collection-card.gallery,
+.notion-collection-card.gallery .notion-collection-card__content {
+  height: auto !important;
+}
+.notion-collection-gallery {
+    grid-template-columns: repeat(3, 1fr) !important;
+}
+
+/* Grid should allow variable row heights */
+.notion-collection-gallery {
+  grid-auto-rows: auto !important;
+  align-items: start !important;
+}
+
+/* The actual cover element in your markup is the <img> */
+img.notion-collection-card__cover {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;              /* ignore height="200" */
+  max-height: none !important;
+  object-fit: contain !important;       /* NO CROP */
+  object-position: center center !important;  /* override inline "center 40%" */
+  background: transparent !important;
+  border-radius: 28px;                  /* keep your rounded look (optional) */
+}
+
+/* If sometimes a DIV is used as the cover (background-image variant) */
+.notion-collection-card__cover:not(img) {
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: auto !important;        /* kill forced ratios */
+}
+
+/* Helpful cleanups: kill any old constraints */
+.notion-collection-card__cover,
+.notion-collection-card.gallery .notion-collection-card__cover {
+  aspect-ratio: auto !important;
+  max-height: none !important;
+}
+
+/*********************************************
+For viewport
+*********************************************/
+/*
+This block defines styles to be applied when the viewport's width is 920 pixels or less, often used for responsiveness on smaller screens or devices.
+
+1. For the first element with class .notion-column-list, it sets the flex direction to its initial value.
+2. For the elements with class .notion-column, it sets their width to 100% and their start margin (both -webkit-margin-start and margin-inline-start for cross-browser compatibility) to 0, effectively making them occupy the full width of their container.
+3. For images within elements with class .notion-column, it ensures they are fully visible within their parent container. It sets their maximum width to 100%, their height to auto (maintaining aspect ratio), makes them block elements, and centers them horizontally.
+*/
+/* 1025–1400px → 2 columns */
+@media (max-width: 1400px) and (min-width: 1025px) {
+  .notion-collection-gallery {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ≤1024px → 1 column */
+@media (max-width: 1024px) {
+  .notion-collection-gallery {
+    grid-template-columns: 1fr !important;
+  }
+}
+/********************************************/
+
+/*********************************************/
+/* MOVE THE IMAGE TO THE SIDE: COLLECTION CARD CONTENT STYLING */
+/*********************************************/
+
+/* Set the width and flex properties to center-align the content within the collection card. */
+.notion-collection-card__content {
+  display: none!important;
+}
+
+/* Set the width of the collection card cover. */
+
+.notion-collection-card__cover {
+  width: 100%;
+  margin: 0px!important;
+}
+
+
+/* Display the collection card as a flex container. */
+.notion-collection-card {
+  padding: 0px!important;
+  display: flex;
+  background-color: var(--color-bg-default);
+}
+/*********************************************
+For viewport
+*********************************************/
+/*
+This block defines styles to be applied when the viewport's width is 920 pixels or less, often used for responsiveness on smaller screens or devices.
+
+1. For the first element with class .notion-column-list, it sets the flex direction to its initial value.
+2. For the elements with class .notion-column, it sets their width to 100% and their start margin (both -webkit-margin-start and margin-inline-start for cross-browser compatibility) to 0, effectively making them occupy the full width of their container.
+3. For images within elements with class .notion-column, it ensures they are fully visible within their parent container. It sets their maximum width to 100%, their height to auto (maintaining aspect ratio), makes them block elements, and centers them horizontally.
+*/
+/*@media (max-width: 1024px) {*/
+/*  .notion-column-list:first-of-type {*/
+/*    flex-direction: initial !important;*/
+/*  }*/
+/*  .notion-column {*/
+/*    width: 100% !important;*/
+/*    -webkit-margin-start: 0 !important;*/
+/*    margin-inline-start: 0 !important;*/
+/*  }*/
+/*  .notion-column .notion-image {*/
+/*    max-width: 100%;*/
+/*    height: auto;*/
+/*    display: block;*/
+/*    margin: 0 auto;*/
+/*    text-align: center !important;*/
+/*  }*/
+
+/*  .notion-column .notion-divider {*/
+/*    display: none!important;*/
+/*  }*/
+/*}*/
+/********************************************/
+/*********************************************/
+/* NOTION PILL STYLING */
+/*********************************************/
+
+/* Adjust the font size, border radius, padding, background color, and border of the notion pill. */
+.notion-pill {
+  font-size: 16px!important;
+  padding:4px 8px!important;
+  background-color: var(--color-bg-default);
+  color: black;
+}
+
+/*********************************************/
+/* PROPERTY STYLING */
+/*********************************************/
+
+/* Adjust the font size of the title within the collection card. */
+.notion-property__title {
+  font-size: 22px!important;
+}
+
+/* Adjust the font size of the property text within the collection card. */
+.notion-property__text {
+  margin-top: 4px;
+  font-size: 15px;
+}
+
+
+
+/*********************************************/
+/* DATABASE VIEW PICKER */
+/*********************************************/
+@media (min-width: 576px) {
+/* Stretch the button group to the full page width */
+  .notion-dropdown__option-list {
+    width: 40%;
+    display: flex;
+    justify-content: space-around;
+    /*border: 1px solid black!important;*/
+    border-radius: 45px !important;
+     margin-left: auto !important;
+  }
+
+  /* Add rounded corners to buttons */
+  .notion-dropdown__option {
+    margin: 5px!important;
+    flex: 1;
+    border-radius: 25px!important;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+    justify-content: center;
+  }
+
+    .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:nth-child(n) {
+        border-radius: 25px!important;
+        border: 1px solid black!important;
+  }
+
+  .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:nth-child(2).active {
+    background: var(--color-bg-pink) !important;
+  }
+
+
+  .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:nth-child(1).active {
+    background: var(--color-bg-green) !important;
+  }
+
+
+  .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:nth-child(n):hover {
+    border: 1px solid black!important;
+  }
+
+
+
+
+  .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option.active {
+   border: 1px solid black!important;
+   pointer-events: none;
+  }
+
+  .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option p {
+    font-size: 18px!important;
+     font-family: Verdana, sans-serif;
+  }
+
+/* New view switcher code */
+  :root {
+    --picker-active-bg-color: #d9ecda!important;
+    --picker-active-text-color: rgb(70, 70, 70) !important;
+    --picker-border-color: rgb(255,255,255) !important;
+    --picker-text-color: rgb(70, 70, 70) !important;
+    --picker-border-radius: 25px !important;
+    --picker-hover-bg-color: transparent !important;
+    /*  --picker-hover-bg-color: rgb(244, 223, 235)!important;*/
+    /*--picker-hover-text-color: rgb(70, 70, 70) !important;*/
+    --picker-hover-border-color: transparent !important;
+
+  }
+}
+/*********************************************/
+/*********************************************/
+/* FOR PAGE HEADING
+/*********************************************/
+#block-1f6e800a5138817e814de8b6f2a33700 strong {
+  color: var(--color-bg-purple)!important;
+  line-height: 1;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  font-size: calc(1px + 9vw) !important;
+  font-weight: 200 !important;
+  font-family: Arial Black, sans-serif;
+  text-shadow: 4px 4px 0px rgba(0, 0, 0, 1) !important;
+  display: flex;
+  -webkit-text-stroke: 2px black;
+  text-stroke: 2px black !important;
+}
+
+#block-1f6e800a5138817e814de8b6f2a33700:after {
+  margin-top: 40px!important;
+    content: "";
+    display: block;
+    height: 2px!important;
+    margin: 4px 0;
+    width: calc(100% + 40px);
+    transform: translateX(-20px);
+}
+
+#block-1f6e800a5138817e814de8b6f2a33700:before {
+  background: none!important
+}
+/*********************************************/
+/********************************************/
+/* FOR PAGE SUB HEADING
+/********************************************/
+#block-1f6e800a51388131b3e7f8ed36e6a5eb, #block-1f6e800a51388157b5f1e0a37b643e6c {
+  font-size: 22px!important;
+  font-family: Georgia;
+  @media (max-width: 800px) {
+    font-size: 18px!important;
+  }
+}
+/********************************************/
+/*********************************************
+STYLING DROPDOWN MENU
+*********************************************/
+@media (max-width: 576px) {
+  /* Hiding menu header and first svg within dropdown button */
+  .notion-dropdown__menu-header {
+    display: none;
+  }
+  .notion-dropdown__button svg:first-of-type {
+    display: none;
+  }
+
+  /* Styling the dropdown button, including hover state */
+  .notion-dropdown__button {
+    padding: 10px 40px;
+    margin-bottom: 10px;
+    border: 1px solid var(--color-border-default);
+    border-radius: 50px;
+    background-color: #f8f9fa;
+    color: #495057;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .notion-dropdown__button:hover {
+    background-color: #e9ecef;
+  }
+
+  /* Styling the dropdown menu and its list */
+  .notion-dropdown__menu {
+    border-radius: 20px !important;
+  }
+  .notion-dropdown__option-list {
+    max-height: 750px;
+    overflow-y: auto;
+  }
+
+  /* Adds a divider to separate type select and chain select in dropdown */
+  .notion-dropdown__option:nth-child(6) {
+    border-bottom: 5px solid #ddd !important;
+  }
+
+  /* Styling each dropdown option, including hover and active states */
+  .notion-dropdown__option {
+    padding: 10px 15px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .notion-dropdown__option:last-child {
+    border-bottom: none;
+  }
+  .notion-dropdown__option:hover {
+    background-color: #f8f9fa;
+    border: 1px solid black !important;
+    border-radius: 20px !important;
+  }
+  .notion-dropdown__option:active {
+    background-color: #e9ecef;
+  }
+
+  /* Hiding svg within dropdown option */
+  .notion-dropdown__option svg {
+    display: none;
+  }
+}
+/*********************************************/
+/*********************************************/
+/* HIDES OTHER PAGES
+/*********************************************/
+.notion-page {
+    display: none !important;
+}
+/*********************************************/
+/*********************************************/
+/* DISPLAY MAINNET AND TETSNET COUNTS */
+/*********************************************/
+/* number of mainnet and tetsnet */
+#block-833ca930370a47b1b25ae3ab3452d188,
+#block-07e139d4db514840b6ce951a6bd8b092
+{
+  /*.notion-semantic-string strong {*/
+    line-height: 1;
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+    font-size: calc(108px + 9.5vw) !important;
+    font-weight: 200 !important;
+    font-family: Arial Black, sans-serif;
+    color: var(--color-bg-green);
+    -webkit-text-stroke: 2px black;
+    text-stroke: 2px black !important;
+    text-shadow: 4px 4px 0px rgba(0, 0, 0, 1) !important;
+  /*}*/
+}
+
+#block-07e139d4db514840b6ce951a6bd8b092 {
+  /*.notion-semantic-string strong {*/
+    color: var(--color-bg-pink);
+  /*}*/
+}
+
+
+/* column stylings */
+.notion-column {
+  position: relative;
+  direction: flex;
+  justify-content: center;
+}
+
+.notion-column:has( strong) {
+  position: relative;
+  direction: flex;
+  justify-content: center;
+
+  .notion-image {
+    display: none;
+    position: absolute;
+    top: -10px;
+    left: -80px;
+    width: 100%;
+    height: 100%;
+
+    @media (min-width: 348px) and (max-width: 1380px) {
+      display: none!important;
+    }
+  }
+}
+
+/* the texts like "Networks Secured…" and "….And Helping Test" and "More" */
+#block-947958362276433ca15bab673be88d93,
+#block-d919416a3ad241848b3e0a202f808279,
+#block-4b388a7c9f1e415f87b9ac319a5bb965  {
+    /*.notion-semantic-string span {*/
+    line-height: 1;
+    /*font-weight: bold;*/
+    font-family: 'Allerta Stencil', sans-serif;
+
+             /*font-weight: bold !important;*/
+    font-size: calc(28px + 2.5vw) !important;
+    vertical-align: middle !important;
+  /*}*/
+}
+
+
+#block-947958362276433ca15bab673be88d93:before,
+#block-d919416a3ad241848b3e0a202f808279:before,
+#block-4b388a7c9f1e415f87b9ac319a5bb965:before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin: 4px 0;
+    background: linear-gradient(to right, black, rgba(204, 204, 204, 0));
+}
+
+#block-947958362276433ca15bab673be88d93:after,
+#block-d919416a3ad241848b3e0a202f808279:after,
+#block-4b388a7c9f1e415f87b9ac319a5bb965:after
+{
+    content: "";
+    display: block;
+    height: 1px;
+    margin: 4px 0;
+    background: linear-gradient(to right, black, rgba(204, 204, 204, 0));
+}
+
+
+
+/* the image */
+#block-3c762e6c38b94858aa36ca17c50f69e2 {
+  position: relative;
+  z-index: -2!important;
+  position: absolute;
+  width: 700px;
+  transform: translate(700px, 920px);
+    @media (max-width: 1024px) {
+     display: none!important;
+    }
+}
+/*********************************************/
+/*********************************************/
+/* ENABLE HOVER AS YOU COMPLETE THE INTERNAL PAGES
+/*********************************************/
+#block-guides-mainnet-mina a,
+#block-guides-mainnet-sui a,
+#block-guides-mainnet-iota a,
+#block-guides-mainnet-avalanche a,
+#block-guides-mainnet-axelar a,
+#block-guides-mainnet-juno a,
+#block-guides-mainnet-namada a,
+#block-guides-mainnet-mellow a,
+#block-guides-mainnet-avail a,
+#block-guides-mainnet-zilliqa a,
+#block-guides-mainnet-omniflix a,
+#block-guides-mainnet-eigen-layer-lst a,
+#block-guides-mainnet-eigen-layer a,
+#block-guides-mainnet-starknet a,
+#block-guides-mainnet-agoric a,
+#block-guides-mainnet-terra a,
+#block-guides-mainnet-passage a,
+#block-guides-mainnet-quicksilver a,
+#block-guides-mainnet-ux a,
+#block-guides-mainnet-near a,
+#block-guides-mainnet-sommelier a,
+#block-guides-mainnet-monad a,
+#block-guides-mainnet-ika a,
+#block-guides-mainnet-althea a,
+#block-guides-mainnet-stargaze a,
+#block-guides-mainnet-lumera a,
+#block-guides-mainnet-gitopia a,
+#block-guides-testnet-espresso a
+#block-guides-testnet-zilliqa a
+{
+    pointer-events: auto!important;
+}
