@@ -1508,7 +1508,7 @@ h4.notion-heading {
   box-sizing: border-box !important;
   width: 100vw !important;
   max-width: none !important;
-  min-height: calc(100svh - 56px) !important; /* one screen under the navbar */
+  min-height: calc(100svh - var(--cover-top, 56px)) !important; /* one screen from where it starts (covers.js measures; the navbar's 56px without it) */
   margin: 0 calc(50% - 50vw) !important;
   padding: 0 !important;
   border: 0 !important;

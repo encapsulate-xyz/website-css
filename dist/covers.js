@@ -186,12 +186,19 @@
     }
   };
 
+  // the cover fills the rest of the first screen, below the navbar and any banner above it
+  function measure(cover) {
+    var top = Math.round(cover.getBoundingClientRect().top + window.scrollY) + "px";
+    if (cover.style.getPropertyValue("--cover-top") !== top) cover.style.setProperty("--cover-top", top);
+  }
+
   function apply() {
+    var cover = document.querySelector(".notion-root > .notion-callout:first-child");
+    if (!cover || !cover.querySelector(":scope > .notion-callout__content > h1.notion-heading")) return;
+    measure(cover);
     var path = location.pathname.replace(/\/+$/, "") || "/";
     var build = FIELDS[path];
     if (!build) return;
-    var cover = document.querySelector(".notion-root > .notion-callout:first-child");
-    if (!cover || !cover.querySelector(":scope > .notion-callout__content > h1.notion-heading")) return;
     if (cover.querySelector(":scope > .enc-cover")) return;
     var field = document.createElement("div");
     field.className = "enc-cover";
@@ -206,6 +213,7 @@
   var t = 0;
   new MutationObserver(function () { clearTimeout(t); t = setTimeout(apply, 60); })
     .observe(document.body, { childList: true, subtree: true });
+  window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(apply, 100); });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply);
   else apply();
 })();
