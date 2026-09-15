@@ -842,7 +842,11 @@ body {
   line-height: 1 !important;
   letter-spacing: -0.04em !important;
   color: #000000 !important;
-  max-width: none !important; /* no measure cap: text runs the full width (user's rule — no forced breaks) */
+  /* breaks as "Whichever side you are on, we were / there first." (the user's pick): wide
+     enough for the first line, in em so it holds at every size of the clamp; plain wrapping,
+     not main.css's balance, which would even the two lines out */
+  max-width: 16em !important;
+  text-wrap: wrap !important;
 }
 
 /* the rule, and the two columns hanging from it */
@@ -1809,7 +1813,7 @@ body {
   font-size: 16px !important;
   line-height: 1.6 !important;
   color: #C9C9C4 !important;
-  max-width: 46ch !important;
+  max-width: none !important; /* texts run the full width (user rule) */
   text-wrap: pretty !important;
 }
 
@@ -2051,7 +2055,7 @@ body {
   font-size: 16px !important;
   line-height: 1.56 !important;
   color: #3A3D38 !important;
-  max-width: 50ch !important;
+  max-width: none !important; /* texts run the full width (user rule) */
   text-wrap: pretty !important;
 }
 #block-4efab8b5f9e246679a4d719fe3dcd31e { grid-area: cta !important; justify-self: end !important; align-self: end !important; margin: 0 !important; } /* align-self: main.css §07 sets flex-start on every button callout */
@@ -2586,7 +2590,7 @@ body {
   font-size: 16.5px !important;
   line-height: 1.56 !important;
   color: #C9C9C4 !important;
-  max-width: 46ch !important;
+  max-width: none !important; /* texts run the full width (user rule) */
   text-wrap: pretty !important;
 }
 
