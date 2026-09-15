@@ -1681,125 +1681,283 @@ body {
 }
 
 /*********************************************/
-/* 09. WHY STAKE CARDS AND GOVERNANCE STEPS (was part of main.css section 09) */
+/* 09. WHY STAKE — 49a "THREE CLAIMS, THREE FIGURES" */
 /*********************************************/
-/* --- "Why Stake With Encapsulate" only ------------------------------------
-   THE DOUBLE BORDER: these cards drew two nested frames — Super's own 1px on
-   the card, plus the 1px this file puts on .notion-collection-card__cover
-   above. With 8px of card padding between them, a box inside a box.
 
-   (That is not fallout from the class rename — .notion-collection-card__cover
-   is still a current Super class. The cover border has been in this file all
-   along; the inner frame is just what it draws.)
+/* From design file "Why Stake", 49a. An ink band: kicker, heading and lead with
+   a secondary button on the right; below, three cards on ink, each led by its
+   figure, then the claim and its lead, a small data graphic with a caption
+   line, and the body.
 
-   Fixed here by dropping the card's padding and the cover's own frame, so the
-   image runs edge to edge and the card's single border is the only one, with
-   overflow: hidden rounding the corners. Scoped to this one collection so the
-   testimonial and team galleries keep their own cover treatment.
+   NOTION STRUCTURE. One callout (block-3dce800a…): text "Why stake with us",
+   Heading 2, the lead text, a Gray button callout (See the networks), and the
+   Why Stake gallery (block-bd1e4d48…), 3 entries with Name, Figure, Unit, Lead,
+   Body, Caption left, Caption right. Page links off.
 
-   The id is the Notion block. If the block is ever deleted and re-added the id
-   changes; the collection class on the wrapper
-   (.collection-59b828ace5fa4244abdadf99687f52b2) is the alternative hook. */
+   The graphics (dots per network, a year meter, bars per chain) are drawn by
+   home.js ("WHY STAKE GRAPHICS"), which also keeps two derived figures true: the
+   network count in the first card's caption and the years since 2020 in the
+   second card's figure and caption (the user's explicit choice). Styles for the
+   graphics: home-dial.css.
 
-/* LAYOUT — four equal cards in one row.
+   Entirely new section: its text takes the design's type. */
 
-   Replaces an earlier bento (one card spanning 2x2): with only four cards the
-   large tile dominated the section instead of leading it.
+#block-3dce800a513880349091dbe0cd0650a7 {
+  --btn-h: 48px;
+  --btn-px: 20px;
+  --btn-fs: 16px;
+  --btn-lift: 0 0 transparent;
+  --btn-lift-soft: 0 0 transparent;
+  --btn-focus: rgba(250, 250, 248, 0.5);
+  --btn-2-fill: rgba(250, 250, 248, 0.06);
+  --btn-2-fill-hover: rgba(250, 250, 248, 0.12);
+  --btn-2-fill-press: rgba(250, 250, 248, 0.16);
+  --btn-2-ring: rgba(250, 250, 248, 0.3);
+  --btn-2-ring-hover: rgba(250, 250, 248, 0.3);
+  --btn-2-text: #FAFAF8;
+  --btn-2-highlight: inset 0 1.5px 0 rgba(255, 255, 255, 0.26);
+  --btn-2-press: inset 0 1.5px 0 rgba(255, 255, 255, 0.26);
+  --why-gutter: max(48px, calc(50vw - 864px));
 
-   Equal cards also fix the original problem, which was Super's default gallery
-   flowing 3 + 1 and stranding the fourth card alone on a second row.
+  display: block !important;
+  width: 100vw !important;
+  max-width: none !important;
+  margin: 0 0 0 calc(50% - 50vw) !important;
+  padding: clamp(42px, 6vh, 72px) var(--why-gutter) clamp(46px, 6vh, 76px) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: #2A2C28 !important;
+  color: #FAFAF8 !important;
+}
 
-   The cover carries a fixed `aspect-ratio` rather than the grid carrying a
-   fixed row height. That keeps the image at the same 16:10 crop no matter how
-   wide the column gets, so one rule covers every breakpoint instead of a
-   hand-tuned row height per breakpoint. Measured at 4, 2 and 1 columns: the
-   ratio holds at 1.60 in all three.
+#block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__icon {
+  display: none !important;
+}
 
-   `flex: 0 0 auto` on the cover is what prevents runaway growth — its height
-   comes from the aspect-ratio, not from the image's intrinsic size. An earlier
-   attempt using `flex: 1` with auto rows produced 1200px-tall cards.
+#block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  column-gap: 40px !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
 
-   The content takes `flex: 1 1 auto` so it absorbs any leftover height, which
-   keeps every card in a row the same height with the text top-aligned. */
+#block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > * {
+  grid-column: 1 !important;
+  margin: 0 !important;
+}
+
+#block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > .notion-semantic-string:empty,
+#block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > .notion-text:empty,
+#block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > .notion-heading__anchor {
+  display: none !important;
+}
+
+#block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > .notion-text:first-of-type {
+  grid-row: 1 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin-bottom: 13px !important;
+  font-family: var(--type-mono) !important;
+  font-size: 11px !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #B4B4B4 !important;
+}
+
+#block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > .notion-heading {
+  grid-row: 2 !important;
+  margin-bottom: 13px !important;
+  font-family: var(--type-display) !important;
+  font-weight: 600 !important;
+  font-size: clamp(34px, 3.2vw, 44px) !important;
+  line-height: 1 !important;
+  letter-spacing: -0.042em !important;
+  color: #FAFAF8 !important;
+  max-width: 40ch !important;
+}
+
+#block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > .notion-text:not(:first-of-type) {
+  grid-row: 3 !important;
+  padding: 0 !important;
+  font-family: var(--type-body) !important;
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+  color: #C9C9C4 !important;
+  max-width: 46ch !important;
+  text-wrap: pretty !important;
+}
+
+/* the button: right of the header, level with its foot (main.css §07 sets
+   align-self: flex-start on button callouts, hence the explicit override) */
+#block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > .notion-callout {
+  grid-column: 2 !important;
+  grid-row: 1 / 4 !important;
+  align-self: end !important;
+  justify-self: end !important;
+}
+
+/* the cards */
+#block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > #block-bd1e4d485a0d424394add746d8e3cd35 {
+  grid-column: 1 / -1 !important;
+  grid-row: 4 !important;
+  margin: 30px 0 0 !important;
+  padding: 0 !important;
+}
+
+#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection__header-wrapper,
+#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card > span {
+  display: none !important; /* no title bar, no cover: the graphic replaces the collage */
+}
 
 #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-gallery {
   display: grid !important;
-  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  grid-template-rows: none !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   grid-auto-rows: auto !important;
-  gap: 18px !important; /* Card System: lifts touch below 18px */
-  padding-bottom: 0 !important;
+  gap: 18px !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-@media (max-width: 1100px) {
-  #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-gallery {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  }
-}
-
-@media (max-width: 640px) {
-  #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-gallery {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* CARD SYSTEM (main.css §09): ring, fill, highlight and the 6px bleed come
-   from there. The cover used to run edge to edge with the card's overflow doing
-   the rounding; it now sits inside the 6px bleed with a derived 6px corner. */
 #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card {
   display: flex !important;
   flex-direction: column !important;
+  margin: 0 !important;
+  padding: 26px 26px 28px !important;
+  border: 1px solid rgba(250, 250, 248, 0.26) !important;
+  border-radius: 12px !important;
+  background: rgba(250, 250, 248, 0.06) !important;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.18) !important; /* no outer lift on ink */
+  transition: border-color 0.16s ease !important;
 }
 
-/* The cover carries the aspect-ratio itself, so the artwork sits centred in a
-   16:10 box with `object-fit: cover` doing the crop.
+#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card:hover {
+  border-color: rgba(250, 250, 248, 0.44) !important;
+  background: rgba(250, 250, 248, 0.06) !important;
+}
 
-   REVERTED: this briefly promoted the wrapping `span` (which Super ships as
-   `display: contents`) into a crop frame, then scaled the image past 100% with
-   a per-card `transform-origin` so the artwork bled off the top and sides.
-   That treatment is gone — no frame, no zoom, no `--card-img-zoom` /
-   `--card-img-focus` tokens. The images are centred and whole again.
+/* Notion order: Name, Body, Caption left, Caption right, Figure, Unit, Lead —
+   placed on a grid in the design's order */
+#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card__content {
+  display: grid !important;
+  grid-template-columns: auto minmax(0, 1fr) !important;
+  grid-template-areas:
+    "fig unit"
+    "name name"
+    "lead lead"
+    "graphic graphic"
+    "capl capr"
+    "body body" !important;
+  column-gap: 11px !important;
+  row-gap: 0 !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
 
-   `flex: 0 0 auto` is what keeps the height honest: it comes from the
-   aspect-ratio, not from the image's intrinsic size. An earlier version using
-   `flex: 1` with auto grid rows produced 1200px-tall cards. */
-#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card__cover {
-  display: block;
-  flex: 0 0 auto !important; /* height from aspect-ratio, not the image */
-  aspect-ratio: 16 / 10 !important; /* same crop at every column count */
-  width: 100% !important;
-  height: auto !important;
+#block-bd1e4d485a0d424394add746d8e3cd35 .notion-property {
+  margin: 0 !important;
+  padding: 0 !important;
   min-height: 0 !important;
   max-width: none !important;
-  margin: 0 !important;
-  border: 0 !important; /* the card's ring is the only frame */
-  border-radius: var(--card-media-radius) !important;
-  object-fit: cover;
+  white-space: normal !important;
 }
 
-/* Room to breathe and a clear title/description hierarchy — Super's 9.6px box
-   left the text crowded into the bottom-left corner. */
-#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card__content {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto; /* absorbs leftover height so cards in a row match */
-  gap: 6px;
+#block-bd1e4d485a0d424394add746d8e3cd35 .property-70594a51 { /* Figure */
+  grid-area: fig !important;
+  align-self: end !important;
+  font-family: var(--type-display) !important;
+  font-weight: 600 !important;
+  font-size: 74px !important;
+  line-height: 0.86 !important;
+  letter-spacing: -0.05em !important;
+  font-variant-numeric: tabular-nums !important;
+  color: #FAFAF8 !important;
+  white-space: nowrap !important;
 }
 
-#block-bd1e4d485a0d424394add746d8e3cd35 .notion-property__title {
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.3;
+#block-bd1e4d485a0d424394add746d8e3cd35 .property-5b6a5a73 { /* Unit */
+  grid-area: unit !important;
+  align-self: end !important;
+  padding-bottom: 4px !important;
+  font-family: var(--type-mono) !important;
+  font-size: 10.5px !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #B4B4B4 !important;
 }
 
-#block-bd1e4d485a0d424394add746d8e3cd35 .notion-property__text {
-  font-size: 13px;
-  line-height: 1.55;
-  color: rgba(17, 17, 17, 0.66); /* muted, so the title leads */
+#block-bd1e4d485a0d424394add746d8e3cd35 .notion-property__title { /* Name */
+  grid-area: name !important;
+  margin-top: 16px !important;
+  font-family: var(--type-display) !important;
+  font-weight: 600 !important;
+  font-size: 21px !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.024em !important;
+  color: #FAFAF8 !important;
 }
 
-/* These four cards are all .no-click: no hover (Card System 36a). */
+#block-bd1e4d485a0d424394add746d8e3cd35 .property-5c5e5772 { /* Lead */
+  grid-area: lead !important;
+  margin-top: 7px !important;
+  font-family: var(--type-body) !important;
+  font-size: 14.5px !important;
+  line-height: 1.6 !important;
+  color: #C9C9C4 !important;
+  max-width: 32ch !important;
+}
 
+#block-bd1e4d485a0d424394add746d8e3cd35 .property-443e5775,
+#block-bd1e4d485a0d424394add746d8e3cd35 .property-6f505657 { /* Caption left / right, under the graphic */
+  margin-top: 11px !important;
+  padding-top: 10px !important;
+  border-top: 1px solid rgba(250, 250, 248, 0.18) !important;
+  font-family: var(--type-mono) !important;
+  font-size: 9.5px !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #B4B4B4 !important;
+  white-space: nowrap !important;
+}
+
+#block-bd1e4d485a0d424394add746d8e3cd35 .property-443e5775 { grid-area: capl !important; }
+#block-bd1e4d485a0d424394add746d8e3cd35 .property-6f505657 { grid-area: capr !important; justify-self: stretch !important; text-align: right !important; }
+
+#block-bd1e4d485a0d424394add746d8e3cd35 .property-446b6247 { /* Body */
+  grid-area: body !important;
+  margin-top: 16px !important;
+  font-family: var(--type-body) !important;
+  font-size: 13.5px !important;
+  line-height: 1.6 !important;
+  color: #C9C9C4 !important;
+  max-width: 38ch !important;
+}
+
+@media (max-width: 1024px) {
+  #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-gallery {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+@media (max-width: 700px) {
+  #block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  #block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > .notion-callout {
+    grid-column: 1 !important;
+    grid-row: 4 !important;
+    justify-self: start !important;
+    margin-top: 20px !important;
+  }
+  #block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > #block-bd1e4d485a0d424394add746d8e3cd35 {
+    grid-row: 5 !important;
+  }
+}
 
 /* --- GOVERNANCE — 37h "ONE OBJECT · PAPER" -------------------------------
 

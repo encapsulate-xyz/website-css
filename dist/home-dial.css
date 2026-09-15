@@ -116,3 +116,12 @@ to{transform: translateY(0);}
 .enc-blog__mark{display: block;width: clamp(78px,11vw,132px);height: auto;}
 @media (max-width: 700px){[data-enc-blog-intro] > .notion-column:last-child{justify-content: flex-start !important;}
 }
+.enc-why__graphic{grid-area: graphic;display: block;margin-top: 18px;}
+.enc-why__tally{display: grid;grid-template-columns: repeat(10,minmax(0,1fr));gap: 7px;width: 100%;}
+.enc-why__dot{aspect-ratio: 1;border-radius: 999px;}
+.enc-why__dot[data-open]{border: 1px solid rgba(250,250,248,0.18);opacity: 0.6;}
+.enc-why__meter{display: flex;gap: 4px;height: 30px;margin-top: 8px;}
+.enc-why__year{flex: 1;border-radius: 4px;}
+.enc-why__year[data-open]{border: 1.5px solid rgba(250,250,248,0.4);}
+.enc-why__bars{display: flex;align-items: flex-end;gap: 5px;width: 100%;height: 96px;}
+.enc-why__bar{flex: 1;border-radius: 3px 3px 0 0;opacity: 0.9;}

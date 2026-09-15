@@ -1029,3 +1029,102 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire);
   else wire();
 })();
+
+
+/* ─────────────────────────────────────────────────────────────────────────────────────────────
+   Homepage Why Stake — design "Why Stake", 49a: WHY STAKE GRAPHICS.
+
+   Each claim card gets a small data graphic, by position in the Notion gallery:
+     1  one dot per network — the count of cards in the homepage Networks gallery, filled in the
+        pastels, on a 10-wide grid with the rest of the row left as open rings
+     2  a year meter — one segment per year from 2020 to now, the current year left open
+     3  one bar per chain — twelve bars of varying height (commission differs by chain)
+
+   DERIVED FIGURES (the user's explicit choice, so they never go stale): the first card's
+   "Caption right" is written as "<networks> secured", and the second card's "Figure" as the
+   years since 2020 and its "Caption right" as "<this year> in progress". Everything else on the
+   cards is Notion text. Styles: home-dial.css, "WHY STAKE GRAPHICS"; layout: home.css §09. */
+(function () {
+  var GALLERY = "block-bd1e4d485a0d424394add746d8e3cd35";
+  var NETWORKS = "block-d07ab52b60ba4788bd8df0c9e74c5ad4";
+  var START = 2020;
+  var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
+  var BARS = [58, 74, 46, 88, 62, 70, 52, 80, 66, 44, 76, 60];
+  var FIGURE = ".property-70594a51", CAPTION_RIGHT = ".property-6f505657";
+
+  function span(cls) { var e = document.createElement("span"); e.className = cls; return e; }
+
+  function tally(n) {
+    var g = span("enc-why__tally");
+    var cells = Math.max(30, Math.ceil(n / 10) * 10);
+    for (var i = 0; i < cells; i++) {
+      var d = span("enc-why__dot");
+      if (i < n) d.style.background = TINTS[i % TINTS.length];
+      else d.setAttribute("data-open", "");
+      g.appendChild(d);
+    }
+    return g;
+  }
+
+  function meter(now) {
+    var g = span("enc-why__meter");
+    for (var y = START; y <= now; y++) {
+      var s = span("enc-why__year");
+      s.title = String(y);
+      if (y === now) s.setAttribute("data-open", "");
+      else s.style.background = TINTS[(y - START) % TINTS.length];
+      g.appendChild(s);
+    }
+    return g;
+  }
+
+  function bars() {
+    var g = span("enc-why__bars");
+    BARS.forEach(function (h, i) {
+      var b = span("enc-why__bar");
+      b.style.height = h + "%";
+      b.style.background = TINTS[i % TINTS.length];
+      g.appendChild(b);
+    });
+    return g;
+  }
+
+  function setText(el, text) { if (el && el.textContent !== text) el.textContent = text; }
+
+  function apply() {
+    var block = document.getElementById(GALLERY);
+    if (!block) return;
+    var cards = block.querySelectorAll(".notion-collection-card");
+    if (cards.length < 3) return;
+    var nets = document.querySelectorAll("#" + NETWORKS + " .notion-collection-card").length;
+    var now = new Date().getFullYear();
+    var sig = nets + "|" + now;
+
+    Array.prototype.forEach.call(cards, function (card, i) {
+      var content = card.querySelector(".notion-collection-card__content");
+      if (!content || i > 2) return;
+      var existing = content.querySelector(":scope > .enc-why__graphic");
+      if (!existing || existing.getAttribute("data-sig") !== sig) {
+        if (existing) existing.remove();
+        var wrap = span("enc-why__graphic");
+        wrap.setAttribute("data-sig", sig);
+        wrap.setAttribute("aria-hidden", "true");
+        wrap.appendChild(i === 0 ? tally(nets) : i === 1 ? meter(now) : bars());
+        content.appendChild(wrap);
+      }
+      if (i === 0 && nets) setText(card.querySelector(CAPTION_RIGHT), nets + " secured");
+      if (i === 1) {
+        setText(card.querySelector(FIGURE), String(now - START));
+        setText(card.querySelector(CAPTION_RIGHT), now + " in progress");
+      }
+    });
+  }
+
+  var t = 0;
+  new MutationObserver(function (muts) {
+    if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-why__graphic, " + FIGURE + ", " + CAPTION_RIGHT); })) return;
+    clearTimeout(t); t = setTimeout(apply, 60);
+  }).observe(document.body, { childList: true, subtree: true, characterData: true });
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply);
+  else apply();
+})();
