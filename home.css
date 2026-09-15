@@ -2649,6 +2649,9 @@ body {
     border-right: 1px solid rgba(250, 250, 248, 0.22) !important;
     border-radius: 12px !important;
   }
+  #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-gallery::before {
+    grid-row: 1 / 5 !important; /* behind the list only, not the stacked screen */
+  }
   #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(1) .notion-collection-card__content { grid-row: 1 !important; }
   #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(2) .notion-collection-card__content { grid-row: 2 !important; }
   #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(3) .notion-collection-card__content { grid-row: 3 !important; }
