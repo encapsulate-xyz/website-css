@@ -71,6 +71,10 @@ if not sys.argv[1:]:
         js = open('home.js', encoding='utf-8').read()
         open(os.path.join('dist', 'home.js'), 'w', encoding='utf-8').write(js)
         print(f"{'home.js':14} {len(js):>7,} -> dist/home.js (copied)")
+    if os.path.exists('footer.js'):
+        js = open('footer.js', encoding='utf-8').read()
+        open(os.path.join('dist', 'footer.js'), 'w', encoding='utf-8').write(js)
+        print(f"{'footer.js':14} {len(js):>7,} -> dist/footer.js (copied)")
     stale = os.path.join('dist', 'home-head.html')
     if os.path.exists(stale):
         os.remove(stale)
