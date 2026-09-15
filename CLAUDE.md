@@ -302,6 +302,7 @@ in home-dial.css). Lessons, each learned the hard way:
   page turned and once deltas fell below half their peak — a delta 4× the smallest since (≥20).
   "Any rise after any dip" (v10) fired on a swipe's own jitter and turned two panels at once. The gesture logic is testable in Node with a stubbed window — the
   automation tab is hidden, so neither rAF nor smooth scrolling runs there.
+- **One-screen sections (Who we are, Services) are caught on the swipe**, not on rest: a swipe towards the top from within half a screen lands on it (v39). Settling on rest alone never fired on a trackpad — momentum runs to the end of the scroll, so the rest check always saw a live gesture. The settle now also retries.
 - The CSS proximity snap on Who we are was removed: a CSS snap on html fights scripted scrolling.
 
 ## SVGs are hosted, not inlined
