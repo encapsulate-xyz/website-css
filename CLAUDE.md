@@ -62,6 +62,9 @@ actually changed** since the tag they point at (`git diff vOLD vNEW -- dist/<fil
 | `head/brand.html` | /brand → Code → Head (its CSS box emptied; source `brand.css`) |
 | `head/contact-us.html` | /contact-us → Code → Head (its CSS box emptied; source `contact-us.css`) |
 | `head/guides.html` | /guides → Code → Head (its CSS box emptied; source `guides.css`) |
+| `head/investments.html` | /investments → Code → Head (its CSS box emptied; source `investments.css`) |
+| `head/security.html` | /security → Code → Head (its CSS box emptied; source `security.css`) |
+| `head/services.html` | /services → Code → Head (its CSS box emptied; source `services.css`) |
 | `head/site-body.html` | Super → Settings → Code → **Body** (the temporary "under reconstruction" banner; delete it there to remove the banner) |
 
 Every other page's Head should contain no `website-css` line (main.css already comes from the site Head).

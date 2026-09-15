@@ -1,0 +1,78 @@
+/* /services — page-level CSS, linked from that page's Code → Head (head/services.html).
+   Moved from the page's Code panel 2026-09-15. The old cover rules (page-covers/services.avif behind the first
+   callout, .direct-parent, .super-content) and the hidden 3D image were removed: the cover is main.css §14 + covers.js. */
+
+/*********************************************
+For viewport
+*********************************************/
+/*
+This block defines styles to be applied when the viewport's width is 920 pixels or less, often used for responsiveness on smaller screens or devices.
+
+1. For the first element with class .notion-column-list, it sets the flex direction to its initial value.
+2. For the elements with class .notion-column, it sets their width to 100% and their start margin (both -webkit-margin-start and margin-inline-start for cross-browser compatibility) to 0, effectively making them occupy the full width of their container.
+3. For images within elements with class .notion-column, it ensures they are fully visible within their parent container. It sets their maximum width to 100%, their height to auto (maintaining aspect ratio), makes them block elements, and centers them horizontally.
+*/
+@media (max-width: 1024px) {
+  .notion-column-list:first-of-type {
+    flex-direction: initial !important;
+  }
+  .notion-column {
+    width: 100% !important;
+    -webkit-margin-start: 0 !important;
+    margin-inline-start: 0 !important;
+  }
+  .notion-column .notion-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    text-align: center !important;
+  }
+
+.notion-column .notion-divider {
+    display: none!important;
+}
+}
+/********************************************/
+/*********************************************/
+/* FOR PAGE HEADING
+/*********************************************/
+#block-f3a8a11abafd47ae863305ffd515385e strong {
+  color: var(--color-bg-blue)!important;
+  line-height: 1;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  font-size: calc(1px + 9vw) !important;
+  font-weight: 200 !important;
+  font-family: Arial Black, sans-serif;
+  text-shadow: 4px 4px 0px rgba(0, 0, 0, 1) !important;
+  display: flex;
+  -webkit-text-stroke: 2px black;
+  text-stroke: 2px black !important;
+}
+
+#block-f3a8a11abafd47ae863305ffd515385e:after {
+  margin-top: 40px!important;
+    content: "";
+    display: block;
+    height: 2px!important;
+    margin: 4px 0;
+    width: calc(100% + 40px);
+    transform: translateX(-20px);
+}
+
+#block-f3a8a11abafd47ae863305ffd515385e:before {
+  background: none!important
+}
+/*********************************************/
+/********************************************/
+/* FOR PAGE SUB HEADING
+/********************************************/
+#block-a260f1a9d4fe4291b0912b77bb106d7d {
+  font-size: 22px!important;
+  font-family: Georgia;
+  @media (max-width: 800px) {
+    font-size: 18px!important;
+  }
+}
+/********************************************/
