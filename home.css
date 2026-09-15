@@ -2873,17 +2873,20 @@ body {
   --btn-h: 48px;
   --btn-px: 20px;
   --btn-fs: 16px;
-  --contact-gutter: max(48px, calc(50vw - 864px));
+  /* A card, per the Card System (main.css §09), at the user's request: the
+     section sits inside the page width as one non-interactive card — the ring,
+     the 1.5px highlight, 12px corners, the 1px lift, the card fill. The dot
+     field is clipped to its corners. */
   position: relative !important;
   display: block !important;
-  width: 100vw !important;
+  width: 100% !important;
   max-width: none !important;
-  margin: 0 0 0 calc(50% - 50vw) !important;
-  padding: 44px var(--contact-gutter) 40px !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  background: transparent !important;
+  margin: 0 !important;
+  padding: 44px 44px 40px !important;
+  border: 1px solid var(--card-ring, #D9D9D2) !important;
+  border-radius: var(--card-radius, 12px) !important;
+  background: var(--card-fill, #FFFEFC) !important;
+  box-shadow: var(--card-highlight, inset 0 1.5px 0 rgba(255, 255, 255, 1)), var(--card-lift, 0 1px 2px rgba(0, 0, 0, 0.06)) !important;
   overflow: hidden !important;
 }
 
@@ -2958,7 +2961,10 @@ body {
   max-width: none !important;
 }
 
-/* the address box */
+/* the address box — now inside a card, so it is the Card System's WELL, not a
+   second card: paper 2, no border, no highlight ("a card never contains
+   another card"). The design's own ring and highlight on it would double the
+   frame. */
 #block-3dce800a51388036af93f757deaec9c1 {
   display: flex !important;
   flex-wrap: wrap !important;
@@ -2966,10 +2972,10 @@ body {
   gap: 20px !important;
   margin-top: 26px !important;
   padding: 20px 22px !important;
-  border: 1px solid #D9D9D2 !important;
-  border-radius: 12px !important;
-  background: #F2F2ED !important;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
+  border: 0 !important;
+  border-radius: calc(var(--card-radius, 12px) - 2px) !important;
+  background: var(--card-well, #F2F2ED) !important;
+  box-shadow: none !important;
 }
 
 #block-3dce800a51388036af93f757deaec9c1 > .notion-column {
