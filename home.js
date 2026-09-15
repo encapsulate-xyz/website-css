@@ -488,7 +488,26 @@
     var list = stops(), dir = e.deltaY > 0 ? 1 : -1;
     var y = anim ? anim.target : window.scrollY; // mid-snap: page on from where it is heading
     var d = deckAt(y, list);
-    if (!d) { if (anim) e.preventDefault(); return; }
+    if (!d) {
+      // CATCH A ONE-SCREEN SECTION (Who we are, Services). A swipe towards a section's top that
+      // starts within half a screen of it lands on it, as a deck's first panel would. Waiting for
+      // the scroll to rest did not work on a trackpad: momentum wheel events run right up to the
+      // end of the scroll, so the rest check always saw a gesture in progress and never settled.
+      var half = window.innerHeight / 2, catchAt = null;
+      list.forEach(function (dk) {
+        if (dk.stops.length !== 1) return;
+        var s0 = dk.stops[0], gap = (s0 - y) * dir;
+        if (gap > EPS && gap < half && (catchAt === null || gap < Math.abs(catchAt - y))) catchAt = s0;
+      });
+      if (catchAt !== null) {
+        e.preventDefault();
+        gestureLocked = true; lockedAt = now; peak = abs; tailMin = Infinity; decayed = false;
+        scrollToY(catchAt);
+        return;
+      }
+      if (anim) e.preventDefault();
+      return;
+    }
     var target = onStop(d, y) ? nextStop(d, y, dir) : landStop(d, y, dir);
     if (target === null) { if (anim) e.preventDefault(); return; } // end of the deck: scroll out normally
     e.preventDefault();
@@ -498,8 +517,12 @@
 
   /* ── everything else: settle when the page comes to rest ── */
   var lastRest = window.scrollY, touching = false, restTimer = 0;
+  var retry = 0;
   function settle() {
-    if (anim || touching || performance.now() < gestureUntil) return;
+    if (anim || touching) return;
+    // a trackpad's momentum ends with the scroll: if a gesture still looks live, look again once
+    // it has been quiet, instead of giving up (which is why the one-screen sections never settled)
+    if (performance.now() < gestureUntil) { clearTimeout(retry); retry = setTimeout(settle, QUIET + 20); return; }
     var list = stops(), y = window.scrollY;
     var d = deckAt(y, list);
     if (d) {
