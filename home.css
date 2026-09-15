@@ -3119,6 +3119,7 @@ body {
 #block-3dce800a5138803a82f7d45863d6049c > .notion-callout__content > #block-3dce800a513880f58903ec250b9caeae ~ .notion-text a {
   font-family: var(--type-mono) !important;
   font-size: 12.5px !important;
+  font-weight: 400 !important;
   letter-spacing: 0.02em !important;
   color: #000000 !important;
   text-decoration: none !important;
