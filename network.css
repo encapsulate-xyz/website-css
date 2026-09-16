@@ -1020,11 +1020,21 @@ STYLING DROPDOWN MENU
    menu, and a field for finding a chain. The last two are built by network.js because Notion has
    no block that is an input or a menu. Both work on the cards Super rendered. */
 
+/* The controls are not inside Super's picker markup (network.js explains why); they are laid over
+   the right-hand end of the header row so bar, tabs, sort and field still read as one control. */
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-controls {
+  position: absolute !important;
+  top: 0 !important;
+  right: 10px !important;
+  z-index: 5 !important;
+  height: 50px !important;
   display: flex !important;
   align-items: stretch !important;
-  margin-left: auto !important;
-  flex: 0 0 auto !important;
+}
+
+/* room for them, so a long tab list never runs under the field */
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection__header-wrapper {
+  padding-right: 400px !important;
 }
 
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort,
@@ -1183,9 +1193,15 @@ STYLING DROPDOWN MENU
 
 @media (max-width: 860px) {
   .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-controls {
+    position: static !important;
     width: 100% !important;
-    margin-left: 0 !important;
     border-top: 1px solid #E2E2DB;
+  }
+
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection__header-wrapper {
+    flex-wrap: wrap !important;
+    padding-right: 10px !important;
+    height: auto !important;
   }
 
   .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option-list {

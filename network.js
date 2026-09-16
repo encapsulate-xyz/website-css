@@ -245,12 +245,14 @@
   function controls() {
     var db = document.getElementById(SET_DB);
     if (!db) return;
-    /* The controls go in the collection's HEADER, beside Super's picker — not inside its menu.
-       Inside it, the picker's own handlers ran first and swallowed the click: the field never took
-       focus and the sort button did nothing (measured twice on the live page). network.css draws
-       the bar on the header row so the two still read as one control. */
-    var bar = db.querySelector(".notion-collection__header-wrapper");
+    /* The controls are kept OUT of Super's markup altogether. Inside the picker's menu, and then
+       inside the collection header, its own handlers ran first and swallowed the click — the field
+       never took focus and the sort button did nothing (measured on the live page). They now hang
+       off the collection itself, and network.css lays them over the right of the header row, so the
+       bar still reads as one control while no Super handler sits between the click and the input. */
+    var bar = db.querySelector(".notion-collection") || db;
     if (!bar || bar.querySelector(".enc-set-controls")) return;
+    if (getComputedStyle(bar).position === "static") bar.style.position = "relative";
 
     var state = { q: "", sort: "set" };
     var wrap = el("div", "enc-set-controls");
