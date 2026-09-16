@@ -641,11 +641,14 @@ STYLING DROPDOWN MENU
   display: none;
 }
 
+/* 24px disc, the mark 116% of it and centred on the disc's own centre — the design positions it
+   left/top 50% with a translate, so the part that overflows is clipped evenly on all four sides.
+   Centring it as a grid item instead let the overflow fall to one side and the marks sat low. */
 .notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__well {
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
+  position: relative;
+  display: block;
+  width: 24px;
+  height: 24px;
   flex: none;
   border-radius: 999px;
   background: var(--pill-tint, transparent);
@@ -654,6 +657,10 @@ STYLING DROPDOWN MENU
 }
 
 .notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__well img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 116%;
   height: 116%;
   object-fit: contain;
@@ -733,8 +740,8 @@ STYLING DROPDOWN MENU
 }
 
 .notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__card-badge {
-  display: grid;
-  place-items: center;
+  position: relative;
+  display: block;
   width: 38px;
   height: 38px;
   border-radius: 999px;
@@ -744,8 +751,12 @@ STYLING DROPDOWN MENU
 }
 
 .notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__card-badge img {
-  width: 116%;
-  height: 116%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 35px;          /* the design's 30px mark at 116%, centred on the badge */
+  height: 35px;
   object-fit: contain;
   display: block;
 }
@@ -819,6 +830,9 @@ STYLING DROPDOWN MENU
   display: none !important;
 }
 
+/* the Guides Database is the band's own sibling, so it is hidden as one — an earlier `~ *` only
+   reached collections nested inside a later block, and the gallery stayed under the picker */
+.notion-root #block-3dde800a5138811e906fc383bd7a0789[data-enc-sig] ~ #block-1f6e800a5138818195f9ed0a1403479e,
 .notion-root #block-3dde800a5138811e906fc383bd7a0789[data-enc-sig] ~ * #block-1f6e800a5138818195f9ed0a1403479e {
   display: none !important;
 }
