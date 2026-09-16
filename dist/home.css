@@ -197,9 +197,10 @@
 #block-3b97079327e74e15848fb366e3adcbea{grid-area: band !important;margin: 0 !important;}
 #block-4529386b39be4a9aa44d2dbac56537bd{grid-area: table !important;margin: 0 !important;}
 #block-f983f663c3e542d3a3f859f6eec33532,#block-e99ac68f4a5848d091bc204578c1ec55 .notion-text:empty{display: none !important;}
-#block-3b97079327e74e15848fb366e3adcbea .notion-collection-gallery{display: grid !important;grid-template-columns: repeat(4,minmax(0,1fr)) !important;gap: 0 !important;margin: 0 !important;padding: 0 !important;border-top: 1px solid #000000 !important;border-bottom: 1px solid #E2E2DB !important;}
+#block-3b97079327e74e15848fb366e3adcbea .notion-collection-gallery{display: grid !important;grid-template-columns: repeat(4,minmax(0,1fr)) !important;gap: 0 !important;margin: 0 !important;padding: 0 !important;border-top: 1px solid #000000 !important;border-bottom: 1px solid #E2E2DB !important;margin: 0 -14px !important;}
 #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card{display: flex !important;flex-direction: column !important;margin: 0 0 -1px !important;padding: 20px 20px 18px !important;border: 0 !important;border-left: 1px solid #E2E2DB !important;border-bottom: 2px solid transparent !important;border-radius: 0 !important;background: transparent !important;box-shadow: none !important;overflow: visible !important;transition: background-color 0.16s ease,border-color 0.16s ease !important;}
-#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:first-child{padding-left: 0 !important;border-left: 0 !important;}
+#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:first-child{padding-left: 14px !important;border-left: 0 !important;}
+#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:last-child{padding-right: 34px !important;}
 #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:hover{background: #DCEEC7 !important;border-left-color: #B4D98F !important;border-bottom-color: #99CC66 !important;}
 #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:first-child:hover{border-left-color: transparent !important;}
 #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card__content{display: flex !important;flex-direction: column !important;gap: 9px !important;padding: 0 !important;}
@@ -213,12 +214,13 @@
 #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card__content{flex: 1 1 auto !important;}
 #block-4529386b39be4a9aa44d2dbac56537bd .notion-collection-table__wrapper{overflow: visible !important;border: 0 !important;}
 #block-4529386b39be4a9aa44d2dbac56537bd table,#block-4529386b39be4a9aa44d2dbac56537bd thead,#block-4529386b39be4a9aa44d2dbac56537bd tbody{display: block !important;width: 100% !important;border: 0 !important;}
-#block-4529386b39be4a9aa44d2dbac56537bd tbody{border-bottom: 1px solid #000000 !important;}
+#block-4529386b39be4a9aa44d2dbac56537bd tbody{margin: 0 -14px !important;border-bottom: 1px solid #000000 !important;}
 #block-4529386b39be4a9aa44d2dbac56537bd tr{position: relative !important;display: grid !important;grid-template-columns: minmax(0,1.5fr) 92px minmax(0,1fr) 140px 30px !important;column-gap: 20px !important;align-items: center !important;height: auto !important;border: 0 !important;background: transparent !important;}
 #block-4529386b39be4a9aa44d2dbac56537bd tbody tr:nth-child(n+7){display: none !important;}
-#block-4529386b39be4a9aa44d2dbac56537bd tbody tr{border-top: 1px solid #E2E2DB !important;transition: background-color 0.16s ease !important;}
+#block-4529386b39be4a9aa44d2dbac56537bd tbody tr{padding: 16px 14px !important;border-top: 1px solid #E2E2DB !important;border-radius: 10px !important;transition: background-color 0.16s ease !important;}
 #block-4529386b39be4a9aa44d2dbac56537bd tbody tr:hover{background: #DCEEC7 !important;}
-#block-4529386b39be4a9aa44d2dbac56537bd th,#block-4529386b39be4a9aa44d2dbac56537bd td{display: block !important;width: auto !important;min-width: 0 !important;max-width: none !important;height: auto !important;padding: 16px 0 !important;border: 0 !important;background: transparent !important;text-align: left !important;overflow: visible !important;}
+#block-4529386b39be4a9aa44d2dbac56537bd tbody tr:hover,#block-4529386b39be4a9aa44d2dbac56537bd tbody tr:hover + tr{border-top-color: transparent !important;}
+#block-4529386b39be4a9aa44d2dbac56537bd th,#block-4529386b39be4a9aa44d2dbac56537bd td{display: block !important;width: auto !important;min-width: 0 !important;max-width: none !important;height: auto !important;padding: 0 !important;border: 0 !important;background: transparent !important;text-align: left !important;overflow: visible !important;}
 #block-4529386b39be4a9aa44d2dbac56537bd th.title,#block-4529386b39be4a9aa44d2dbac56537bd td.title{display: none !important;}
 #block-4529386b39be4a9aa44d2dbac56537bd th.select:nth-of-type(3),#block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(3){order: 1 !important;}
 #block-4529386b39be4a9aa44d2dbac56537bd th.number,#block-4529386b39be4a9aa44d2dbac56537bd td.number{order: 2 !important;}

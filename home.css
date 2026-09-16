@@ -2060,6 +2060,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   padding: 0 !important;
   border-top: 1px solid #000000 !important;
   border-bottom: 1px solid #E2E2DB !important;
+  margin: 0 -14px !important;   /* the band bleeds with the rows below it */
 }
 
 #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card {
@@ -2078,8 +2079,12 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 }
 
 #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:first-child {
-  padding-left: 0 !important;
+  padding-left: 14px !important;   /* back onto the measure, as the rows are */
   border-left: 0 !important;
+}
+
+#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:last-child {
+  padding-right: 34px !important;
 }
 
 /* Hover: the track becomes a pastel field — green ground, its divider a step
@@ -2208,7 +2213,11 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   border: 0 !important;
 }
 
+/* the rows bleed 14px past the section's measure so a hovered row's pastel field
+   extends beyond the text, the way the design draws it; the closing rule runs the
+   same width, and the row's own 14px padding puts the content back on the measure */
 #block-4529386b39be4a9aa44d2dbac56537bd tbody {
+  margin: 0 -14px !important;
   border-bottom: 1px solid #000000 !important;
 }
 
@@ -2230,12 +2239,21 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 }
 
 #block-4529386b39be4a9aa44d2dbac56537bd tbody tr {
+  padding: 16px 14px !important;
   border-top: 1px solid #E2E2DB !important;
+  border-radius: 10px !important;
   transition: background-color 0.16s ease !important;
 }
 
 #block-4529386b39be4a9aa44d2dbac56537bd tbody tr:hover {
   background: #DCEEC7 !important;
+}
+
+/* a rule across a rounded, filled row cuts its corner — so the hovered row drops its
+   own rule, and the row after it drops the one that would sit on the fill's foot */
+#block-4529386b39be4a9aa44d2dbac56537bd tbody tr:hover,
+#block-4529386b39be4a9aa44d2dbac56537bd tbody tr:hover + tr {
+  border-top-color: transparent !important;
 }
 
 #block-4529386b39be4a9aa44d2dbac56537bd th,
@@ -2245,7 +2263,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   min-width: 0 !important;
   max-width: none !important;
   height: auto !important;
-  padding: 16px 0 !important;
+  padding: 0 !important;   /* the row carries the padding now, so the fill is a strip */
   border: 0 !important;
   background: transparent !important;
   text-align: left !important;
