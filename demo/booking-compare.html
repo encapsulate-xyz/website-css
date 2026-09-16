@@ -139,6 +139,7 @@
   .drawer-backdrop[data-open] { opacity: 1; }
 
   .drawer {
+    --drawer-w: 560px;              /* column layout: times under the calendar */
     position: fixed;
     top: 0;
     right: 0;
@@ -146,7 +147,7 @@
     z-index: 41;
     display: flex;
     flex-direction: column;
-    width: min(560px, 100vw);
+    width: min(var(--drawer-w), 100vw);
     background: var(--paper);
     border-left: 1px solid var(--rule);
     box-shadow: -18px 0 50px rgba(0, 0, 0, 0.18);
@@ -154,6 +155,7 @@
     transition: transform .32s cubic-bezier(.4, 0, .2, 1);
   }
   .drawer[data-open] { transform: none; }
+  .drawer[data-layout="month_view"] { --drawer-w: 820px; }   /* month grid + times side by side */
 
   .drawer__head {
     display: flex;
@@ -229,10 +231,13 @@ cases. The difference is inside it.</p>
     <p>The same booker, this time as an inline embed inside a panel of ours that slides in from the
     right. The panel, its backdrop, heading, hairline and close button are plain CSS here, because
     the container is ours rather than Cal's.</p>
-    <button class="btn" id="open-drawer" type="button">Book a call</button>
+    <button class="btn" id="open-drawer" type="button">Book a call · column</button>
+    <button class="btn" id="open-drawer-month" type="button" style="margin-left:10px">Book a call · month</button>
     <ul>
       <li>Styled here: the whole panel, plus the booker's colours as in the popup</li>
       <li>Fixed: the same Cal internals — fonts, arrangement, wording</li>
+      <li>Column: 560px, times under the calendar. Month: 820px, times beside it — no scrolling
+      between picking a date and picking a time</li>
       <li>Full screen under 640px, where a side panel has no room</li>
     </ul>
   </div>
@@ -355,19 +360,25 @@ document.getElementById("open-cal").addEventListener("click", function () {
 // panel is narrower than the month grid wants.
 Cal("init", "drawer", { origin: "https://app.cal.com" });
 Cal.ns.drawer("ui", CAL_UI);
-var drawerBuilt = false;
+var drawerLayout = null;
 var drawer = document.getElementById("drawer");
 var drawerBackdrop = document.getElementById("drawer-backdrop");
+var drawerBody = document.getElementById("cal-drawer");
 
-function openDrawer() {
-  if (!drawerBuilt) {
+// The embed is built for the layout asked for; switching layout rebuilds it, since Cal reads the
+// layout when the booker loads.
+function openDrawer(layout) {
+  layout = layout || "column_view";
+  if (drawerLayout !== layout) {
+    drawerBody.innerHTML = "";
     Cal.ns.drawer("inline", {
       elementOrSelector: "#cal-drawer",
       calLink: CAL_LINK,
-      config: { layout: "column_view", theme: "light" }
+      config: { layout: layout, theme: "light" }
     });
-    drawerBuilt = true;
+    drawerLayout = layout;
   }
+  drawer.setAttribute("data-layout", layout);
   drawer.hidden = false;
   drawerBackdrop.hidden = false;
   void drawer.offsetWidth;   // one forced layout, so the transition has a start state to run from
@@ -381,7 +392,8 @@ function closeDrawer() {
   setTimeout(function () { drawer.hidden = true; drawerBackdrop.hidden = true; }, 320);
 }
 
-document.getElementById("open-drawer").addEventListener("click", openDrawer);
+document.getElementById("open-drawer").addEventListener("click", function () { openDrawer("column_view"); });
+document.getElementById("open-drawer-month").addEventListener("click", function () { openDrawer("month_view"); });
 document.getElementById("close-drawer").addEventListener("click", closeDrawer);
 drawerBackdrop.addEventListener("click", closeDrawer);
 document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !drawer.hidden) closeDrawer(); });
