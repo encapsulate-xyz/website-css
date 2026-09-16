@@ -182,9 +182,149 @@
     }
   }
 
-  new MutationObserver(function () { invalidate(); marks(); }).observe(document.body, { childList: true, subtree: true });
+  /* ── the control bar's sort and search ──
+     Design "Networks Set" puts three things in one bar: the stage tabs, a sort menu and a field
+     for finding a chain. Super gives the tabs (its view picker); Notion has no block that is a
+     text input or a menu, so these two are built here — the one case the rule allows. They work on
+     the cards Super rendered: search hides the ones that do not match, sort reorders them with the
+     grid's `order`, and "Default" restores the view's own sequence. Nothing is fetched. */
+  var SORTS = [["set", "Default"], ["name", "By name"], ["rate", "By reward rate"]];
+  var RATE_PROP = "property-597e3d69";
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function cardsOf(db) {
+    return Array.prototype.slice.call(db.querySelectorAll(".notion-collection-card"));
+  }
+
+  function applyControls(db, state) {
+    var cards = cardsOf(db);
+    var q = (state.q || "").trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function (card, i) {
+      if (card.__setIndex === undefined) card.__setIndex = i;
+      var name = (card.querySelector(".notion-property__title") || {}).textContent || "";
+      var hit = !q || name.toLowerCase().indexOf(q) >= 0;
+      card.hidden = !hit;
+      if (hit) shown++;
+    });
+    var order = cards.slice().filter(function (c) { return !c.hidden; });
+    if (state.sort === "name") {
+      order.sort(function (a, b) {
+        var an = (a.querySelector(".notion-property__title") || {}).textContent || "";
+        var bn = (b.querySelector(".notion-property__title") || {}).textContent || "";
+        return an.localeCompare(bn);
+      });
+    } else if (state.sort === "rate") {
+      var num = function (c) {
+        var r = c.querySelector("." + RATE_PROP);
+        var n = r ? parseFloat(r.textContent.replace("%", "")) : NaN;
+        return isNaN(n) ? null : n;
+      };
+      order.sort(function (a, b) {
+        var x = num(a), y = num(b);
+        if (x === null && y === null) return a.__setIndex - b.__setIndex;
+        if (x === null) return 1;
+        if (y === null) return -1;
+        return y - x;   // highest first, as the design sorts it
+      });
+    } else {
+      order.sort(function (a, b) { return a.__setIndex - b.__setIndex; });
+    }
+    order.forEach(function (c, i) { c.style.order = i; });
+    db.setAttribute("data-enc-shown", String(shown));
+    var empty = db.querySelector(".enc-set-empty");
+    if (empty) empty.hidden = shown !== 0;
+  }
+
+  function controls() {
+    var db = document.getElementById(SET_DB);
+    if (!db) return;
+    var bar = db.querySelector(".notion-dropdown__option-list");
+    if (!bar || bar.querySelector(".enc-set-controls")) return;
+
+    var state = { q: "", sort: "set" };
+    var wrap = el("div", "enc-set-controls");
+
+    // sort
+    var sort = el("div", "enc-set-sort");
+    var button = el("button", "enc-set-sort__button");
+    button.type = "button";
+    button.setAttribute("aria-haspopup", "listbox");
+    button.setAttribute("aria-expanded", "false");
+    var label = el("span", "enc-set-sort__label", SORTS[0][1]);
+    button.appendChild(label);
+    var menu = el("div", "enc-set-sort__menu");
+    menu.setAttribute("role", "listbox");
+    menu.setAttribute("aria-label", "Sort the networks");
+    menu.hidden = true;
+    SORTS.forEach(function (o) {
+      var item = el("button", "enc-set-sort__option", o[1]);
+      item.type = "button";
+      item.setAttribute("role", "option");
+      item.setAttribute("aria-selected", o[0] === state.sort ? "true" : "false");
+      item.addEventListener("click", function () {
+        state.sort = o[0];
+        label.textContent = o[1];
+        Array.prototype.forEach.call(menu.children, function (c) {
+          c.setAttribute("aria-selected", c === item ? "true" : "false");
+        });
+        menu.hidden = true;
+        button.setAttribute("aria-expanded", "false");
+        applyControls(db, state);
+      });
+      menu.appendChild(item);
+    });
+    button.addEventListener("click", function () {
+      menu.hidden = !menu.hidden;
+      button.setAttribute("aria-expanded", menu.hidden ? "false" : "true");
+    });
+    document.addEventListener("click", function (e) {
+      if (!menu.hidden && !sort.contains(e.target)) {
+        menu.hidden = true;
+        button.setAttribute("aria-expanded", "false");
+      }
+    });
+    sort.appendChild(button);
+    sort.appendChild(menu);
+
+    // search
+    var field = el("label", "enc-set-search");
+    var input = el("input", "enc-set-search__input");
+    input.type = "search";
+    input.placeholder = "Find a network";
+    input.setAttribute("aria-label", "Find a network");
+    input.addEventListener("input", function () {
+      state.q = input.value;
+      field.setAttribute("data-filled", input.value ? "" : null);
+      if (!input.value) field.removeAttribute("data-filled");
+      applyControls(db, state);
+    });
+    field.appendChild(input);
+
+    wrap.appendChild(sort);
+    wrap.appendChild(field);
+    bar.appendChild(wrap);
+
+    // the line shown when a search matches nothing
+    if (!db.querySelector(".enc-set-empty")) {
+      var empty = el("p", "enc-set-empty", "No network here matches that. We may not run it yet — tell us and we will look at it.");
+      empty.hidden = true;
+      var gal = db.querySelector(".notion-collection-gallery");
+      if (gal && gal.parentElement) gal.parentElement.insertBefore(empty, gal.nextSibling);
+    }
+    applyControls(db, state);
+  }
+
+  new MutationObserver(function () { invalidate(); marks(); controls(); }).observe(document.body, { childList: true, subtree: true });
   marks();
-  window.addEventListener("load", marks);
+  controls();
+  window.addEventListener("load", function () { marks(); controls(); });
   window.addEventListener("resize", invalidate);
   window.addEventListener("load", function () { invalidate(); paintKicker(); });
   paintKicker();
