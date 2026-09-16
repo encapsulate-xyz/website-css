@@ -95,11 +95,19 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   padding: 0 !important;
 }
 
-.notion-root .notion-dropdown {
+.notion-root .notion-collection__header-wrapper .notion-dropdown,
+.notion-root .notion-collection__header-wrapper .notion-dropdown__menu-wrapper,
+.notion-root .notion-collection__header-wrapper .notion-dropdown__menu {
   width: 100% !important;
+  margin: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
 }
 
-.notion-root .notion-dropdown__option-list {
+/* Super's view-picker snippet targets these at three classes deep, so these
+   rules carry four — one more — or the tabs keep its padding and fills. */
+.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option-list {
   display: flex !important;
   width: 100% !important;
   max-height: none !important;
@@ -107,6 +115,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   padding: 0 10px !important;
   justify-content: flex-start !important;
   align-items: stretch !important;
+  flex-wrap: nowrap !important;
   gap: 0 !important;
   min-height: 50px !important;
   border: 1px solid #D9D9D2 !important;
@@ -116,11 +125,13 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   overflow: visible !important;
 }
 
-.notion-root .notion-dropdown__option {
-  flex: none !important;
+.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option {
+  flex: 0 0 auto !important;
+  width: auto !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
+  height: 50px !important;
   min-height: 50px !important;
   margin: 0 !important;
   padding: 0 14px !important;
@@ -128,27 +139,33 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   border-radius: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
-  color: #6B6F68 !important;
   transition: color 0.16s ease, box-shadow 0.16s ease !important;
 }
 
-.notion-root .notion-dropdown__option p,
-.notion-root .notion-dropdown__option span {
+.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option p,
+.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option span {
   font-family: var(--type-body), system-ui, sans-serif !important;
   font-size: 15px !important;
   font-weight: 500 !important;
   letter-spacing: -0.006em !important;
-  color: inherit !important;
+  color: #6B6F68 !important;
+  transition: color 0.16s ease !important;
 }
 
-.notion-root .notion-dropdown__option:hover {
-  color: #000000 !important;
-  border: 0 !important;
+.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:hover {
   background: transparent !important;
+  border: 0 !important;
 }
 
-.notion-root .notion-dropdown__option.active {
+.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:hover p,
+.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option.active p,
+.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:hover span,
+.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option.active span {
   color: #000000 !important;
+}
+
+/* the active tab is marked by an ink underline, not a fill */
+.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option.active {
   background: transparent !important;
   box-shadow: inset 0 -2px 0 #000000 !important;
   pointer-events: none !important;
