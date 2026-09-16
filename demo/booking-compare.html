@@ -1,0 +1,228 @@
+<!doctype html>
+<!-- Booking popups compared — Google appointment schedule vs Cal.com, both opened from the site's
+     own button and dressed in the site's palette. Open it locally:
+       python3 -m http.server 8765   →   http://localhost:8765/demo/booking-compare.html
+     Nothing here ships to the site; it is a demo to decide which booking tool to use.
+     CAL_LINK is a public Cal.com demo link — swap it for ours once there is an account. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Booking popups — Google vs Cal.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Hanken+Grotesk:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://calendar.google.com/calendar/scheduling-button-script.css">
+<style>
+  :root {
+    --paper: #FFFEFC;
+    --ink: #3A3D38;
+    --green: #99CC66;
+    --green-ring: #7CAE48;
+    --green-hover: #8CBF56;
+    --rule: #D9D9D2;
+    --muted: #6B6F68;
+    --display: "Outfit", system-ui, sans-serif;
+    --body: "Hanken Grotesk", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: clamp(28px, 5vw, 76px);
+    background: var(--paper);
+    font-family: var(--body);
+    color: #000;
+  }
+
+  h1 {
+    margin: 0 0 10px;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(30px, 4.2vw, 54px);
+    letter-spacing: -0.038em;
+  }
+
+  .lede { margin: 0 0 40px; font-size: 17px; line-height: 1.55; color: #3A3D38; }
+  .kicker {
+    display: block;
+    margin-bottom: 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; }
+  .card {
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    padding: 26px;
+    background: var(--paper);
+  }
+  .card h2 {
+    margin: 0 0 8px;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: -0.026em;
+  }
+  .card p { margin: 0 0 20px; font-size: 15.5px; line-height: 1.55; color: #3A3D38; }
+  .card ul { margin: 20px 0 0; padding-left: 18px; font-size: 14.5px; line-height: 1.6; color: var(--muted); }
+
+  /* The Button System's primary, as on the site. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 48px;
+    padding: 0 20px;
+    border: 1px solid var(--green-ring);
+    border-radius: 10px;
+    background: var(--green);
+    box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.78), 0 1px 2px rgba(0, 0, 0, 0.10);
+    font-family: var(--body);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.006em;
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color .16s ease, border-color .16s ease;
+  }
+  .btn:hover { background: var(--green-hover); border-color: #6F9E41; }
+
+  /* ── Google's button and popup, restyled ──────────────────────────────────
+     The script inserts button.qxCTlb after its target and, on click, an
+     overlay div.hur54b holding iframe.mmGMM and a close button .Xfsokf — all
+     in this page, so CSS reaches them. The booking page inside the iframe is
+     Google's and cannot be touched. */
+  #gcal-host { display: none; }          /* their button; ours forwards the click */
+
+  .hur54b {
+    background-color: rgba(58, 61, 56, 0.72) !important;   /* site ink */
+    padding: clamp(20px, 6vh, 64px) clamp(16px, 8vw, 180px) !important;
+    backdrop-filter: blur(2px);
+  }
+  .mmGMM {
+    border-radius: 12px !important;
+    border: 1px solid var(--rule) !important;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28) !important;
+  }
+  .Xfsokf {
+    background-color: var(--paper) !important;
+    border: 1px solid var(--rule) !important;
+    border-radius: 999px !important;
+    top: clamp(8px, 2vh, 22px) !important;
+    right: clamp(12px, 4vw, 40px) !important;
+  }
+  .Xfsokf .L0Dvsd, .Xfsokf .uE25ec { color: #000 !important; }
+  .uE25ec { font-family: var(--body) !important; font-weight: 500 !important; }
+</style>
+</head>
+<body>
+
+<span class="kicker">Booking · what each one lets us style</span>
+<h1>Google vs Cal.com, in our clothes.</h1>
+<p class="lede">Both open in a popup over the page. Everything outside the white window is ours in both
+cases. The difference is inside it.</p>
+
+<div class="cols">
+  <div class="card">
+    <h2>Google appointment schedule</h2>
+    <p>Our button, our backdrop, our window frame and close button. The booking page itself keeps
+    Google's fonts, blue buttons and layout.</p>
+    <button class="btn" id="open-google" type="button">Book a call</button>
+    <div id="gcal-host"></div>
+    <ul>
+      <li>Styled here: button, backdrop, window, close button</li>
+      <li>Fixed: everything inside the window</li>
+      <li>No account change — this is the link we use today</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Cal.com</h2>
+    <p>Same shell, plus the booker inside takes our colours, corner radius and spacing through
+    Cal's own variables. Its type stays Inter; its layout stays Cal's.</p>
+    <button class="btn" id="open-cal" type="button">Book a call</button>
+    <ul>
+      <li>Styled here: button, and the booker's colours, radius, spacing, light/dark, layout</li>
+      <li>Fixed: Cal's fonts and the arrangement of the booker</li>
+      <li>Needs a Cal.com account and the booking link moved</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Google's script: draws a hidden button we click from ours -->
+<script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
+<script>
+  var GOOGLE_LINK = "https://calendar.google.com/calendar/appointments/schedules/AcZssZ3VmMrN15yUKaY4fwWIZ-QiIihIZwjamersVTGyqSzzKIg_UVd473mPpxE6suS0Q7YVoTXlSHLG?gv=true";
+  var CAL_LINK = "rick/get-rick-rolled";   // public demo link — swap for ours
+
+  // Google: build their button once, hidden, and forward our button's clicks to it.
+  var googleBtn = null;
+  function googleReady() {
+    if (googleBtn) return true;
+    if (!(window.calendar && window.calendar.schedulingButton)) return false;
+    var host = document.getElementById("gcal-host");
+    window.calendar.schedulingButton.load({
+      url: GOOGLE_LINK, color: "#99CC66", label: "Book a call", target: host
+    });
+    googleBtn = host.nextElementSibling;
+    googleBtn.style.display = "none";
+    return true;
+  }
+  document.getElementById("open-google").addEventListener("click", function () {
+    // if the script has not arrived, fall back to opening the link
+    if (googleReady()) googleBtn.click();
+    else window.open(GOOGLE_LINK, "_blank", "noopener");
+  });
+</script>
+
+<!-- Cal.com's embed: the site palette through cssVarsPerTheme -->
+<script>
+(function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); };
+})(window, "https://app.cal.com/embed/embed.js", "init");
+
+Cal("init", "enc", { origin: "https://app.cal.com" });
+Cal.ns.enc("ui", {
+  theme: "light",
+  layout: "month_view",
+  hideEventTypeDetails: false,
+  cssVarsPerTheme: {
+    light: {
+      "cal-brand": "#99CC66",
+      "cal-brand-emphasis": "#8CBF56",
+      "cal-brand-text": "#000000",
+      "cal-brand-subtle": "#DCEEC7",
+      "cal-bg": "#FFFEFC",
+      "cal-bg-subtle": "#F2F2ED",
+      "cal-bg-muted": "#F2F2ED",
+      "cal-bg-emphasis": "#EBECED",
+      "cal-bg-inverted": "#3A3D38",
+      "cal-text": "#000000",
+      "cal-text-emphasis": "#000000",
+      "cal-text-subtle": "#3A3D38",
+      "cal-text-muted": "#6B6F68",
+      "cal-text-inverted": "#FAFAF8",
+      "cal-border": "#D9D9D2",
+      "cal-border-default": "#D9D9D2",
+      "cal-border-subtle": "#E2E2DB",
+      "cal-border-emphasis": "#A5A5A5",
+      "cal-border-booker": "#D9D9D2",
+      "radius": "12px"
+    }
+  }
+});
+document.getElementById("open-cal").addEventListener("click", function () {
+  Cal.ns.enc("modal", { calLink: CAL_LINK, config: { layout: "month_view", theme: "light" } });
+});
+</script>
+
+</body>
+</html>
