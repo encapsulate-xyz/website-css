@@ -65,7 +65,13 @@
       .filter(function (b, i, all) { return b.id !== GUIDES && all.indexOf(b) === i; });
   }
   function sources(guideKeys) {
-    var known = { chains: document.getElementById(NETWORKS), wallets: document.getElementById(WALLETS) };
+    // a source id that is on the page but holds no items (Super can render the block as a plain
+    // page link) counts as not found
+    function byId(id) {
+      var b = document.getElementById(id);
+      return b && itemsOf(b).length ? b : null;
+    }
+    var known = { chains: byId(NETWORKS), wallets: byId(WALLETS) };
     if (known.chains && known.wallets) return known;
     var scored = collections().map(function (b) {
       var items = itemsOf(b);
