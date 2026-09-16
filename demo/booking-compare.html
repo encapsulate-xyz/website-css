@@ -296,61 +296,56 @@ var CAL_UI = {
   hideEventTypeDetails: false,
   cssVarsPerTheme: {
     light: {
-      /* One variable, three places (measured, not guessed: setting it grey turned Confirm grey).
-         --cal-brand is the Confirm button's fill AND its ring AND a slot's hover ring, because
-         Cal's bg-brand-default, border-brand-default and hover:border-brand-default all read it.
-         So it takes the site green: the primary button is right, and a hovered slot shows a green
-         ring instead of the Card System's grey — the one place Cal will not follow us. */
-      "cal-brand": "#99CC66",
-      "cal-brand-emphasis": "#8CBF56",
-      "cal-brand-text": "#000000",
+      /* ── the Button System (29a-29c) mapped onto what Cal exposes ───────────────
+         Selected date = primary (Cal draws it bg-brand-default / text-brand)
+         Time slot     = secondary (Cal's secondary button: bg-default + border-default)
+         Cal has no variable for a button ring, its inner highlight or its lift, so the
+         primary's #7CAE48 ring and both shadows cannot be carried across. */
+      "cal-brand": "#99CC66",             /* primary fill — the selected date */
+      "cal-brand-emphasis": "#8CBF56",    /* primary hover */
+      "cal-brand-text": "#000000",        /* label on green */
+      "cal-brand-accent": "#000000",      /* the dot under the selected date */
       "cal-brand-subtle": "#DCEEC7",
-      "cal-brand-accent": "#000000",
-      /* grounds */
-      "cal-bg": "#FFFEFC",
-      "cal-bg-subtle": "#FFFEFC",       /* a card keeps its fill on hover — so hover stays the ground */
-      "cal-bg-muted": "#FFFEFC",        /* Cal's secondary button hovers to bg-muted — a card keeps its fill */
-      "cal-bg-emphasis": "#EBECED",
+      "cal-brand-muted": "#DCEEC7",
+      "cal-bg-brand": "#99CC66",
+      "cal-bg-brand-emphasis": "#8CBF56",
+      "cal-bg-brand-muted": "#DCEEC7",
+
+      /* secondary: --btn-2-fill #FAFAF8, ring #D9D9D2, hover ring #B9B9B1, press #F2F2ED */
+      "cal-bg": "#FAFAF8",
+      "cal-bg-emphasis": "#FAFAF8",       /* unselected day cells */
+      "cal-bg-muted": "#FAFAF8",          /* a secondary keeps its fill on hover */
+      "cal-bg-subtle": "#F2F2ED",         /* the pressed step */
       "cal-bg-inverted": "#3A3D38",
-      "cal-bg-attention": "#F8E8B3",
-      "cal-bg-error": "#F7DCE7",
-      /* the availability dots beside each time, and the rest of Cal's success colour */
-      "cal-bg-semantic-success-emphasis": "#7CAE48",
-      "cal-bg-semantic-success-subtle": "#DCEEC7",
-      "cal-bg-success": "#DCEEC7",
-      "cal-text-semantic-success": "#3F6B27",
-      "cal-text-semantic-success-emphasis": "#3F6B27",
-      "cal-bg-semantic-info-subtle": "#D2E3F6",
-      "cal-bg-semantic-attention-subtle": "#F8E8B3",
-      "cal-bg-semantic-error-subtle": "#F7DCE7",
-      /* type */
+      "cal-border": "#D9D9D2",
+      "cal-border-default": "#D9D9D2",
+      "cal-border-subtle": "#E2E2DB",
+      "cal-border-muted": "#E2E2DB",
+      "cal-border-emphasis": "#B9B9B1",
+      "cal-border-booker": "#D9D9D2",
+      "cal-border-booker-width": "1px",
+
+      /* type, from the site's greys */
       "cal-text": "#000000",
       "cal-text-emphasis": "#000000",
       "cal-text-subtle": "#3A3D38",
       "cal-text-muted": "#6B6F68",
       "cal-text-inverted": "#FAFAF8",
-      "cal-text-info": "#3A3D38",
-      "cal-text-success": "#3F6B27",
-      "cal-bg-brand": "#99CC66",          /* Confirm fill, selected date — the site green */
-      "cal-bg-brand-emphasis": "#8CBF56", /* its hover, as in the Button System */
-      "cal-bg-brand-muted": "#DCEEC7",
-      "cal-brand-muted": "#DCEEC7",
-      "cal-text-attention": "#3A3D38",
-      "cal-text-error": "#8A3A55",
-      "cal-text-semantic-info": "#3A3D38",
-      "cal-text-semantic-attention": "#3A3D38",
-      "cal-text-semantic-error": "#8A3A55",
-      /* hairlines — the card ring and the 1px rules used across the site */
-      "cal-border": "#D9D9D2",
-      "cal-border-default": "#D9D9D2",
-      "cal-border-subtle": "#E2E2DB",
-      "cal-border-muted": "#E2E2DB",
-      "cal-border-emphasis": "#B9B9B1", /* --card-ring-hover */
-      "cal-border-error": "#8A3A55",
-      "cal-border-booker": "#D9D9D2",
-      "cal-border-booker-width": "1px",
-      /* shape and rhythm — the Card System's 12px */
-      "radius": "12px",
+      "cal-text-error": "#8A2F2F",
+      "cal-text-semantic-error": "#8A2F2F",
+      "cal-border-error": "#8A2F2F",
+      "cal-bg-error": "#F7DCE7",
+      "cal-bg-semantic-error-subtle": "#F7DCE7",
+      "cal-bg-attention": "#F8E8B3",
+      "cal-bg-semantic-attention-subtle": "#F8E8B3",
+      "cal-bg-semantic-info-subtle": "#D2E3F6",
+      "cal-bg-semantic-success-emphasis": "#7CAE48",
+      "cal-bg-semantic-success-subtle": "#DCEEC7",
+      "cal-bg-success": "#DCEEC7",
+      "cal-text-semantic-success": "#3F6B27",
+
+      /* the Button System's 10px corner; Cal derives its other radii from this */
+      "radius": "10px",
       "spacing": "4px"
     }
   }
