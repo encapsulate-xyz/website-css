@@ -245,7 +245,11 @@
   function controls() {
     var db = document.getElementById(SET_DB);
     if (!db) return;
-    var bar = db.querySelector(".notion-dropdown__option-list");
+    /* The controls go in the collection's HEADER, beside Super's picker — not inside its menu.
+       Inside it, the picker's own handlers ran first and swallowed the click: the field never took
+       focus and the sort button did nothing (measured twice on the live page). network.css draws
+       the bar on the header row so the two still read as one control. */
+    var bar = db.querySelector(".notion-collection__header-wrapper");
     if (!bar || bar.querySelector(".enc-set-controls")) return;
 
     var state = { q: "", sort: "set" };

@@ -90,15 +90,23 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
    they are not here. */
 
 .notion-root .notion-collection__header-wrapper {
+  display: flex !important;
+  align-items: stretch !important;
   width: 100% !important;
+  min-height: 50px !important;
   margin: 0 0 26px !important;
-  padding: 0 !important;
+  padding: 0 10px !important;
+  border: 1px solid #D9D9D2 !important;
+  border-radius: 10px !important;
+  background: var(--color-bg-default) !important;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
 }
 
 .notion-root .notion-collection__header-wrapper .notion-dropdown,
 .notion-root .notion-collection__header-wrapper .notion-dropdown__menu-wrapper,
 .notion-root .notion-collection__header-wrapper .notion-dropdown__menu {
-  width: 100% !important;
+  width: auto !important;
+  flex: 0 0 auto !important;
   margin: 0 !important;
   border: 0 !important;
   box-shadow: none !important;
@@ -107,21 +115,22 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 
 /* Super's view-picker snippet targets these at three classes deep, so these
    rules carry four — one more — or the tabs keep its padding and fills. */
+/* the picker is now just the tabs; the bar around it is the header row above */
 .notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option-list {
   display: flex !important;
-  width: 100% !important;
+  width: auto !important;
   max-height: none !important;
   margin: 0 !important;
-  padding: 0 10px !important;
+  padding: 0 !important;
   justify-content: flex-start !important;
   align-items: stretch !important;
   flex-wrap: nowrap !important;
   gap: 0 !important;
   min-height: 50px !important;
-  border: 1px solid #D9D9D2 !important;
-  border-radius: 10px !important;
-  background: var(--color-bg-default) !important;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
   overflow: visible !important;
 }
 
