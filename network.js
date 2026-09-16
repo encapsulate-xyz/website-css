@@ -279,6 +279,7 @@
       var item = el("button", "enc-set-sort__option", o[1]);
       item.type = "button";
       item.setAttribute("role", "option");
+      item.setAttribute("data-icon", o[0]);   // network.css draws the design's icon per option
       item.setAttribute("aria-selected", o[0] === state.sort ? "true" : "false");
       item.addEventListener("pointerdown", function (e) {
         e.preventDefault();
