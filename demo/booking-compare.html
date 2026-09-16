@@ -296,13 +296,13 @@ var CAL_UI = {
   hideEventTypeDetails: false,
   cssVarsPerTheme: {
     light: {
-      /* Cal keeps two brand families, and they land in different places:
-           --cal-bg-brand*  → the Confirm button's fill and the selected date  → the site green
-           --cal-brand      → borders: the Confirm button's ring AND a slot's hover ring
-         The Card System hovers to a grey ring, so --cal-brand takes that grey; the cost is that
-         the Confirm button's 1px ring is grey rather than the Button System's #7CAE48. */
-      "cal-brand": "#B9B9B1",
-      "cal-brand-emphasis": "#A5A5A5",
+      /* One variable, three places (measured, not guessed: setting it grey turned Confirm grey).
+         --cal-brand is the Confirm button's fill AND its ring AND a slot's hover ring, because
+         Cal's bg-brand-default, border-brand-default and hover:border-brand-default all read it.
+         So it takes the site green: the primary button is right, and a hovered slot shows a green
+         ring instead of the Card System's grey — the one place Cal will not follow us. */
+      "cal-brand": "#99CC66",
+      "cal-brand-emphasis": "#8CBF56",
       "cal-brand-text": "#000000",
       "cal-brand-subtle": "#DCEEC7",
       "cal-brand-accent": "#000000",
