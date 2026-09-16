@@ -335,7 +335,7 @@ var CAL_UI = {
       "cal-bg-inverted": "#3A3D38",
       "cal-border": "#D9D9D2",
       "cal-border-default": "#D9D9D2",
-      "cal-border-subtle": "#E2E2DB",
+      "cal-border-subtle": "#D9D9D2",   /* the profile cards and event rows draw their ring from this */
       "cal-border-muted": "#E2E2DB",
       "cal-border-emphasis": "#B9B9B1",
       "cal-border-booker": "#D9D9D2",
@@ -360,8 +360,15 @@ var CAL_UI = {
       "cal-bg-success": "#DCEEC7",
       "cal-text-semantic-success": "#3F6B27",
 
-      /* the Button System's 10px corner; Cal derives its other radii from this */
-      "radius": "10px",
+      /* Corners. Cal's buttons are hard-coded to 10px (the Button System's value); every other
+         surface derives from this scale, so it takes the Card System's 12px. */
+      "radius": "12px",
+      "cal-radius": "12px",
+      "cal-radius-sm": "8px",
+      "cal-radius-md": "12px",
+      "cal-radius-lg": "12px",
+      "cal-radius-xl": "12px",
+      "cal-radius-2xl": "12px",
       "spacing": "4px"
     }
   }
