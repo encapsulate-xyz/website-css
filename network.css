@@ -859,6 +859,11 @@ STYLING DROPDOWN MENU
   border-radius: 0 !important;
   background: #3A3D38 !important;
   overflow: visible !important;
+  /* ONE SCREEN OF SLACK. Sticky panels pin until the band's bottom reaches them, so a band exactly
+     as tall as its panels gives the LAST panel no dwell: it slides through and leaves the band's
+     ground showing with no figure on it. The extra screen is the last panel's dwell; network.js
+     subtracts this padding when it measures the stops, so the first panel still stops at the top. */
+  padding-bottom: 100dvh !important;
 }
 
 #block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__icon,
@@ -902,12 +907,13 @@ STYLING DROPDOWN MENU
   height: 100vh !important;
   height: 100dvh !important;
   margin: 0 !important;
-  padding: 0 var(--count-x) !important;
+  padding: 0 var(--count-x) 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
   overflow: hidden !important;
   display: flex !important;
   align-items: stretch !important;
+  padding-top: 72px !important;   /* the kicker's strip: 26 + 16 + air, so the figure clears it */
   /* rail dots, the panel's field, the ink */
   background-color: #3A3D38 !important;
   background-image:
@@ -1011,6 +1017,10 @@ STYLING DROPDOWN MENU
     height: auto !important;
     margin: 0 !important;
     padding: 40px var(--count-x) 0 !important;
+  }
+
+  #block-3dce800a51388154931ac3c9478a65b5 {
+    padding-bottom: 0 !important;
   }
 
   #block-3dce800a51388154931ac3c9478a65b5 .notion-callout {

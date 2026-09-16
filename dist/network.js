@@ -25,7 +25,11 @@
     var panels = box.querySelectorAll(".notion-callout");
     if (panels.length < 2 || getComputedStyle(panels[0]).position !== "sticky") return cache;
     // sticky panels report their stuck position; measure from the band's bottom, which never moves
-    var h = panels[0].offsetHeight, bottom = docTop(box) + box.offsetHeight, stops = [];
+    // the band carries a screen of padding-bottom (the last panel's dwell, network.css); the stops
+    // are measured from where the panels actually end, not from the padded box
+    var h = panels[0].offsetHeight;
+    var bottom = docTop(box) + box.offsetHeight - (parseFloat(getComputedStyle(box).paddingBottom) || 0);
+    var stops = [];
     for (var i = 0; i < panels.length; i++) stops.push(Math.round(bottom - (panels.length - i) * h));
     return (cache = { stops: stops, h: h });
   }
