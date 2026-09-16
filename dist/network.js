@@ -168,14 +168,18 @@
       span.appendChild(im);
       wrap.appendChild(span);
     });
-    var rest = cards.length - rows.length;
-    if (rest > 0) {
-      var more = document.createElement("span");
-      more.className = "enc-set-more";
-      more.textContent = "+" + rest + " more";
+    content.appendChild(wrap);
+    /* THE "+N MORE" IS NOTION'S. Super sends only the rendered view's rows, so a count taken from
+       the page would describe one tab (16 of the mainnet set) rather than the whole set (35).
+       The band carries the line as its own text block; this only moves it onto the row. */
+    var more = null;
+    Array.prototype.forEach.call(content.querySelectorAll(":scope > p.notion-text"), function (p) {
+      if (/^\s*\+\s*\d+\s*more\b/i.test(p.textContent)) more = p;
+    });
+    if (more) {
+      more.classList.add("enc-set-more");
       wrap.appendChild(more);
     }
-    content.appendChild(wrap);
   }
 
   new MutationObserver(function () { invalidate(); marks(); }).observe(document.body, { childList: true, subtree: true });

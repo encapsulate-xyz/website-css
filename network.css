@@ -918,6 +918,7 @@ STYLING DROPDOWN MENU
   color: #FAFAF8 !important;
 }
 
+/* the sentence; the "+N more" line is nth-of-type(3) and is moved onto the marks row by the script */
 .notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__content > p.notion-text:nth-of-type(2) {
   grid-row: 3 !important;
   max-width: none !important;
@@ -975,6 +976,9 @@ STYLING DROPDOWN MENU
 }
 
 .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-more {
+  grid-column: auto !important;   /* network.js lifts this Notion text onto the marks row */
+  grid-row: auto !important;
+  margin: 0 !important;
   padding-left: 6px;
   font-family: var(--type-mono), ui-monospace, monospace;
   font-size: 11px;
