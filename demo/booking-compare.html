@@ -231,6 +231,9 @@ cases. The difference is inside it.</p>
     <p>The same booker, this time as an inline embed inside a panel of ours that slides in from the
     right. The panel, its backdrop, heading, hairline and close button are plain CSS here, because
     the container is ours rather than Cal's.</p>
+    <label style="display:flex;align-items:center;gap:8px;margin-bottom:14px;font-size:14.5px;color:#3A3D38">
+      <input type="checkbox" id="grey-brand"> Card grey on hover (turns the primary grey too)
+    </label>
     <button class="btn" id="open-drawer" type="button">Book a call · column</button>
     <button class="btn" id="open-drawer-month" type="button" style="margin-left:10px">Book a call · month</button>
     <ul>
@@ -368,16 +371,31 @@ var drawerBody = document.getElementById("cal-drawer");
 
 // The embed is built for the layout asked for; switching layout rebuilds it, since Cal reads the
 // layout when the booker loads.
+// One variable, three jobs: Cal's bg-brand-default (primary fill), border-brand-default (primary
+// ring) and hover:border-brand-default (a slot's hover ring) all read --cal-brand. So the Card
+// System's grey hover ring and a green primary cannot both be had; this switch shows the cost.
+function uiWith(greyBrand) {
+  var ui = JSON.parse(JSON.stringify(CAL_UI));
+  if (greyBrand) {
+    ui.cssVarsPerTheme.light["cal-brand"] = "#B9B9B1";        /* --card-ring-hover */
+    ui.cssVarsPerTheme.light["cal-brand-emphasis"] = "#A5A5A5";
+  }
+  return ui;
+}
+
 function openDrawer(layout) {
   layout = layout || "column_view";
-  if (drawerLayout !== layout) {
+  var grey = document.getElementById("grey-brand").checked;
+  if (drawerLayout !== layout + (grey ? "-grey" : "")) {
+    Cal.ns.drawer("ui", uiWith(grey));
+    layout = layout;
     drawerBody.innerHTML = "";
     Cal.ns.drawer("inline", {
       elementOrSelector: "#cal-drawer",
       calLink: CAL_LINK,
       config: { layout: layout, theme: "light" }
     });
-    drawerLayout = layout;
+    drawerLayout = layout + (grey ? "-grey" : "");
   }
   drawer.setAttribute("data-layout", layout);
   drawer.hidden = false;
