@@ -33,10 +33,18 @@
     var m = /[?&]url=([^&]+)/.exec(src || "");
     return m ? decodeURIComponent(m[1]) : src;
   }
-  function cardsOf(id) {
-    var box = document.getElementById(id);
-    return box ? Array.prototype.slice.call(box.querySelectorAll(".notion-collection-card")) : [];
+  /* A *linked* view of a database is its own block, with its own id — the source database's id is
+     nowhere in the page — and it can be a table as well as a gallery. So the two source galleries
+     are found by what they contain, not by id: of every collection on the page other than the
+     guides one, the chains are whichever overlaps most with the guide rows' own names.
+     An item is a gallery card or a table row; both carry the title and the glyph. */
+  function itemsOf(box) {
+    if (!box) return [];
+    var cards = box.querySelectorAll(".notion-collection-card");
+    if (cards.length) return Array.prototype.slice.call(cards);
+    return Array.prototype.slice.call(box.querySelectorAll("tbody tr"));
   }
+  function cardsOf(id) { return itemsOf(document.getElementById(id)); }
   function titleOf(card) {
     var t = card.querySelector(".notion-property__title");
     return t ? t.textContent.trim() : "";
@@ -46,8 +54,28 @@
     return img ? original(img.currentSrc || img.src) : "";
   }
   function hrefOf(card) {
-    var a = card.matches("a") ? card : card.querySelector("a");
+    var a = card.matches && card.matches("a") ? card : card.querySelector('a[href^="/"]');
     return a ? a.getAttribute("href") : null;
+  }
+
+  /* every collection on the page, as its block element */
+  function collections() {
+    return Array.prototype.slice.call(document.querySelectorAll(".notion-collection"))
+      .map(function (c) { return c.closest("[id^=block-]") || c; })
+      .filter(function (b, i, all) { return b.id !== GUIDES && all.indexOf(b) === i; });
+  }
+  function sources(guideKeys) {
+    var known = { chains: document.getElementById(NETWORKS), wallets: document.getElementById(WALLETS) };
+    if (known.chains && known.wallets) return known;
+    var scored = collections().map(function (b) {
+      var items = itemsOf(b);
+      var hit = items.filter(function (c) { return guideKeys.indexOf(key(titleOf(c))) >= 0; }).length;
+      return { box: b, items: items.length, hit: hit };
+    }).filter(function (s) { return s.items; });
+    scored.sort(function (a, b) { return b.hit - a.hit || b.items - a.items; });
+    var chains = known.chains || (scored[0] && scored[0].box) || null;
+    var wallets = known.wallets || (scored.filter(function (s) { return s.box !== chains; })[0] || {}).box || null;
+    return { chains: chains, wallets: wallets };
   }
 
   /* A gallery card shows its relations as small chips and its numbers as text; both are read here,
@@ -59,18 +87,25 @@
   }
 
   function read() {
-    var chains = cardsOf(NETWORKS).map(function (c) {
+    var guideCards = cardsOf(GUIDES);
+    var guideKeys = guideCards.map(function (c) { return key(titleOf(c)); });
+    var src = sources(guideKeys);
+
+    if (src.chains) src.chains.setAttribute("data-enc-source", "chains");
+    if (src.wallets) src.wallets.setAttribute("data-enc-source", "wallets");
+
+    var chains = itemsOf(src.chains).map(function (c) {
       return { name: titleOf(c), key: key(titleOf(c)), glyph: glyphOf(c) };
     }).filter(function (c) { return c.name; });
 
     var wallets = {};
-    cardsOf(WALLETS).forEach(function (c) {
+    itemsOf(src.wallets).forEach(function (c) {
       var n = titleOf(c);
       if (n) wallets[key(n)] = { name: n, glyph: glyphOf(c) };
     });
 
     var guides = {};
-    cardsOf(GUIDES).forEach(function (c) {
+    guideCards.forEach(function (c) {
       var title = titleOf(c);
       if (!title) return;
       var props = propTexts(c);

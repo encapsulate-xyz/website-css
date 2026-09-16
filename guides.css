@@ -811,9 +811,11 @@ STYLING DROPDOWN MENU
 }
 
 /* THE SOURCES. The three galleries the picker reads stay in the page, hidden — the Guides
-   Database also remains the no-JavaScript fallback, so it is only hidden once the picker is up. */
+   Database also remains the no-JavaScript fallback, so it is only hidden once the picker is up.
+   A linked view has its own block id, so guides.js marks whichever blocks it read instead. */
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038,
-.notion-root #block-3dde800a51388097b664fafed678f048 {
+.notion-root #block-3dde800a51388097b664fafed678f048,
+.notion-root [data-enc-source] {
   display: none !important;
 }
 

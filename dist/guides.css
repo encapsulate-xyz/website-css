@@ -93,5 +93,5 @@ img.notion-collection-card__cover{display: block !important;width: 100% !importa
 .notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__card:hover .enc-guide__card-button{background: #8CBF56;border-color: #6F9E41;}
 .notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__card-meta{display: flex;align-items: center;gap: 10px;flex: none;font-family: var(--type-mono),ui-monospace,monospace;font-size: 9.5px;letter-spacing: 0.12em;text-transform: uppercase;color: #B4B4B4;}
 .notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__card-rule{width: 1px;height: 10px;background: #8A8E87;}
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038,.notion-root #block-3dde800a51388097b664fafed678f048{display: none !important;}
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038,.notion-root #block-3dde800a51388097b664fafed678f048,.notion-root [data-enc-source]{display: none !important;}
 .notion-root #block-3dde800a5138811e906fc383bd7a0789[data-enc-sig] ~ * #block-1f6e800a5138818195f9ed0a1403479e{display: none !important;}
