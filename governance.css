@@ -187,11 +187,14 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   text-wrap: pretty !important;
 }
 
-.notion-root #block-3dde800a513881d682c1cfc099994433 {
+/* the button sits beside the heading: it is written before it in Notion and floated right, so the
+   heading and the lead wrap to its left without either needing a fixed height */
+.notion-root #block-3dde800a513881d6815ed26488091143 {
   --btn-h: 48px;
   --btn-px: 20px;
   --btn-fs: 15.5px;
-  margin: 0 0 30px !important;
+  float: right !important;
+  margin: 0 0 20px 40px !important;
 }
 
 /* the four tracks, as on the homepage */

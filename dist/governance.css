@@ -17,7 +17,7 @@
 .notion-root .enc-rec__mark{width: 7px;height: 7px;border-radius: 999px;background: rgba(250,250,248,0.44);flex: none;}
 .notion-root .enc-rec__hundred[data-dim] .enc-rec__mark{background: rgba(250,250,248,0.26);}
 .notion-root #block-3dde800a51388122a9f4df1b44f7ccbe{margin: 0 0 30px !important;padding: 0 !important;font-family: var(--type-body),system-ui,sans-serif !important;font-size: 16px !important;line-height: 1.56 !important;color: #3A3D38 !important;text-wrap: pretty !important;}
-.notion-root #block-3dde800a513881d682c1cfc099994433{--btn-h: 48px;--btn-px: 20px;--btn-fs: 15.5px;margin: 0 0 30px !important;}
+.notion-root #block-3dde800a513881d6815ed26488091143{--btn-h: 48px;--btn-px: 20px;--btn-fs: 15.5px;float: right !important;margin: 0 0 20px 40px !important;}
 .notion-root #block-0ca954d1141e48b5a1d310dc290d3bd4{display: block !important;margin: 0 0 44px !important;}
 .notion-root #block-0ca954d1141e48b5a1d310dc290d3bd4 .notion-column{width: 100% !important;margin: 0 !important;padding: 0 !important;}
 .notion-root #block-0ca954d1141e48b5a1d310dc290d3bd4 .notion-column:last-child{display: none !important;}
