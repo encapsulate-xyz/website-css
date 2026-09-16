@@ -70,9 +70,16 @@
     return m ? decodeURIComponent(m[1]) : src;
   }
 
+  // The "Networks set" database (2026-09-16) is the source; anything else on the page is a
+  // fallback, so a second gallery cannot win by rendering first.
+  var SET_DB = "block-3dde800a51388133b7f1d1ccdda08038";
+
   function glyphFromPage() {
     var out = {};
-    document.querySelectorAll(".notion-collection-card").forEach(function (card) {
+    var set = document.getElementById(SET_DB);
+    var cards = (set ? Array.prototype.slice.call(set.querySelectorAll(".notion-collection-card")) : [])
+      .concat(Array.prototype.slice.call(document.querySelectorAll(".notion-collection-card")));
+    cards.forEach(function (card) {
       var cover = card.querySelector("img.notion-collection-card__cover, .notion-collection-card__cover img");
       var title = card.querySelector(".notion-property__title, .notion-collection-card__title");
       if (!cover || !title) return;

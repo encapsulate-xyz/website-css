@@ -26,17 +26,20 @@
     secondary: { label: "View networks", href: "/networks" }
   };
   var ASSETS = "https://assets.super.so/d7300a44-6aa9-4b9e-a149-0076eb69ca9d/images/";
+  // The ten chains the band cycles, from the "Networks set" database's own Cover uploads (the new
+  // gallery, 2026-09-16). The footer runs on every page, most of which have no networks gallery to
+  // read, so these are listed — replace a Cover in Notion and this list needs the new URL.
   var ROTATE = [
-    "b062f37e-70a0-42af-af3e-8ae6d97229b5/03-sui.png",
-    "f9b6c438-05de-48cf-9336-985c6eadc27a/05-near.png",
-    "38b7a01d-5a61-4753-be4e-ff55db92e9bb/02-monad.png",
-    "b43c6eaa-e6e0-4a28-a31a-9e534a48ea40/25-avalanche.png",
-    "74db3773-90e2-4f47-8c86-91286f395b6e/06-axelar.png",
-    "ee120fb1-d86a-4d9b-82bb-2eb7aeabdfbe/08-iota.png",
-    "e3e426e5-629d-4e25-9723-babe652f938a/24-mina.png",
-    "ce36fcc4-ea56-456f-8e6f-1ac07f059c86/13-starknet.png",
-    "9a0436bb-aec3-4324-bc22-dca8a9880328/09-terra.png",
-    "c0d369b5-d804-4d10-adff-113414ff4a95/04-zilliqa.png"
+    "ac378c4b-276b-488a-a9dd-c98d5595ed1a/sui.png",
+    "f2537cb6-7a6b-4cb4-b490-add73c3b1631/near.png",
+    "b3cd811c-7df4-4ae5-9e62-16df928605ab/monad.png",
+    "bbf0edd4-8eae-4f49-90ea-f2a39761cbb8/avalanche.png",
+    "7a6f8cb0-d4c7-486b-8eb5-8d4f1ae8c82d/axelar.png",
+    "7f3c918e-50ca-49a9-99db-c149c2b8a334/iota.png",
+    "a1d5375c-1dd5-4b5b-9969-54d8d3451460/mina.png",
+    "115f62b3-6961-4b9c-a3ac-ef0fe722759a/starknet.png",
+    "9230f802-d866-4a13-8a5a-b966917a578f/terra.png",
+    "ed3e7300-8e4b-4517-af4a-95cebfbcc14c/zilliqa.png"
   ];
   var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
   // [left, top, size] of the eight fixed positions, from the design

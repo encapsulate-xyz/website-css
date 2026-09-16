@@ -612,6 +612,9 @@
    source for the institutional staking listbox above. Styles: home-dial.css, "NETWORKS COLUMNS".
    Reduced motion: the columns stand still. */
 (function () {
+  // The new "Networks set" database (2026-09-16) is the source wherever it is on the page; the
+  // old homepage gallery is the fallback until a view of the new one is placed here.
+  var SET_DB = "block-3dde800a51388133b7f1d1ccdda08038";
   var GALLERY = "block-d07ab52b60ba4788bd8df0c9e74c5ad4";
   var PER_COL = 5, COLS = 5;
   var SPEEDS = [25, 21, 17, 14, 11];
@@ -656,7 +659,7 @@
   }
 
   function build() {
-    var gallery = document.getElementById(GALLERY);
+    var gallery = document.getElementById(SET_DB) || document.getElementById(GALLERY);
     if (!gallery) return;
     var column = gallery.parentElement;              // the right-hand Notion column
     var row = column && column.closest(".notion-column-list");
@@ -717,12 +720,15 @@
    (governance) and home-dial.css ("GOVERNANCE CHAIN MARKS"). */
 (function () {
   var TABLE = "block-4529386b39be4a9aa44d2dbac56537bd";
+  // The new "Networks set" database (2026-09-16) is the source wherever it is on the page; the
+  // old homepage gallery is the fallback until a view of the new one is placed here.
+  var SET_DB = "block-3dde800a51388133b7f1d1ccdda08038";
   var GALLERY = "block-d07ab52b60ba4788bd8df0c9e74c5ad4";
   var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
 
   function chains() {
     var map = {};
-    var gallery = document.getElementById(GALLERY);
+    var gallery = document.getElementById(SET_DB) || document.getElementById(GALLERY);
     if (!gallery) return map;
     gallery.querySelectorAll(".notion-collection-card").forEach(function (card, i) {
       var title = card.querySelector(".notion-property__title");
@@ -1047,6 +1053,7 @@
 (function () {
   var GALLERY = "block-bd1e4d485a0d424394add746d8e3cd35";
   var NETWORKS = "block-d07ab52b60ba4788bd8df0c9e74c5ad4";
+  var SET_DB = "block-3dde800a51388133b7f1d1ccdda08038";
   var START = 2020;
   var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
   var BARS = [58, 74, 46, 88, 62, 70, 52, 80, 66, 44, 76, 60];
@@ -1096,7 +1103,9 @@
     if (!block) return;
     var cards = block.querySelectorAll(".notion-collection-card");
     if (cards.length < 3) return;
-    var nets = document.querySelectorAll("#" + NETWORKS + " .notion-collection-card").length;
+    // count from the new "Networks set" where it is on the page, the old gallery otherwise
+    var netBox = document.getElementById(SET_DB) || document.getElementById(NETWORKS);
+    var nets = netBox ? netBox.querySelectorAll(".notion-collection-card").length : 0;
     var now = new Date().getFullYear();
     var sig = nets + "|" + now;
 
