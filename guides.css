@@ -506,11 +506,46 @@ STYLING DROPDOWN MENU
   width: 100vw !important;
   max-width: none !important;
   margin: 0 calc(50% - 50vw) 40px !important;
-  padding: 44px max(44px, calc(50vw - 864px)) 46px !important;
+  /* design "Guides Picker": the picker is its own screen, not a band inside the page */
+  position: relative !important;
+  min-height: 100svh !important;
+  padding: clamp(112px, 20vh, 200px) clamp(28px, 7vw, 110px) 96px !important;
   border: 0 !important;
   border-radius: 0 !important;
   background: #F2F2ED !important;
   overflow: hidden !important;
+}
+
+/* THE TOP BAR — the crumb and the counter, over the picker's own ground. Both are Notion texts
+   (the last two in the callout); the counter's two numbers are rewritten by guides.js from what
+   the page actually holds, the way the Why Stake figures are. */
+.notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 26px clamp(28px, 7vw, 110px);
+  pointer-events: none;
+}
+
+.notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__bar > p.notion-text {
+  margin: 0 !important;
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 11px !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #3A3D38 !important;
+}
+
+.notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__bar > p.notion-text + p.notion-text {
+  color: #575B55 !important;
+  text-align: right !important;
 }
 
 .notion-root #block-3dde800a5138811e906fc383bd7a0789 > .notion-callout__icon,
@@ -521,6 +556,7 @@ STYLING DROPDOWN MENU
 .notion-root #block-3dde800a5138811e906fc383bd7a0789 > .notion-callout__content {
   display: flex !important;
   flex-direction: column !important;
+  justify-content: flex-start !important;
   gap: 12px !important;
   width: 100% !important;
   max-width: none !important;
