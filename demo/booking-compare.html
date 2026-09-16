@@ -156,6 +156,7 @@
   }
   .drawer[data-open] { transform: none; }
   .drawer[data-layout="month_view"] { --drawer-w: 820px; }   /* month grid + times side by side */
+  .drawer[data-wide] { --drawer-w: 960px; }                  /* column view, several days abreast */
 
   .drawer__head {
     display: flex;
@@ -236,6 +237,7 @@ cases. The difference is inside it.</p>
     </label>
     <button class="btn" id="open-drawer" type="button">Book a call · column</button>
     <button class="btn" id="open-drawer-month" type="button" style="margin-left:10px">Book a call · month</button>
+    <button class="btn" id="open-drawer-days" type="button" style="margin-top:10px">Book a call · several days</button>
     <ul>
       <li>Styled here: the whole panel, plus the booker's colours as in the popup</li>
       <li>Fixed: the same Cal internals — fonts, arrangement, wording</li>
@@ -383,10 +385,11 @@ function uiWith(greyBrand) {
   return ui;
 }
 
-function openDrawer(layout) {
+function openDrawer(layout, wide) {
   layout = layout || "column_view";
   var grey = document.getElementById("grey-brand").checked;
-  if (drawerLayout !== layout + (grey ? "-grey" : "")) {
+  var key = layout + (grey ? "-grey" : "") + (wide ? "-wide" : "");
+  if (drawerLayout !== key) {
     Cal.ns.drawer("ui", uiWith(grey));
     layout = layout;
     drawerBody.innerHTML = "";
@@ -395,9 +398,12 @@ function openDrawer(layout) {
       calLink: CAL_LINK,
       config: { layout: layout, theme: "light" }
     });
-    drawerLayout = layout + (grey ? "-grey" : "");
+    drawerLayout = key;
   }
   drawer.setAttribute("data-layout", layout);
+  // Cal stacks DAYS in column view (6 extra on desktop, 3 on tablet), never times, so the only way
+  // to use more width is to show more days.
+  if (wide) drawer.setAttribute("data-wide", ""); else drawer.removeAttribute("data-wide");
   drawer.hidden = false;
   drawerBackdrop.hidden = false;
   void drawer.offsetWidth;   // one forced layout, so the transition has a start state to run from
@@ -413,6 +419,7 @@ function closeDrawer() {
 
 document.getElementById("open-drawer").addEventListener("click", function () { openDrawer("column_view"); });
 document.getElementById("open-drawer-month").addEventListener("click", function () { openDrawer("month_view"); });
+document.getElementById("open-drawer-days").addEventListener("click", function () { openDrawer("column_view", true); });
 document.getElementById("close-drawer").addEventListener("click", closeDrawer);
 drawerBackdrop.addEventListener("click", closeDrawer);
 document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !drawer.hidden) closeDrawer(); });
