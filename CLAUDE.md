@@ -443,9 +443,16 @@ flash of empty values and a key in the page.
   rules; dead once titles are un-bolded — optional tidy-up (remind the user).
 - Page CSS overriding the Card System: contact-us.css (black ring + hard shadow), guides.css
   (padding 0, image-only tiles), investments.css (radius), governance.css (old pastel cards).
+- **TODO — rename the Notion properties the governance design asks for (2026-09-17).** The homepage
+  table prints the database's own property names, so the header still reads *Proposal Id / Chain /
+  Vote Option* where design *Governance* 37h says **Network / Proposal / Our vote**. Renaming the
+  properties on the governance database is the whole fix (no CSS) — it also changes them on
+  /governance-record, which is why it has not been done unasked. In the same pass: the four pillar
+  titles want sentence case ("Understand the proposal"), but that gallery is a **linked view whose
+  source database the integration cannot reach** ("does not contain any data sources accessible by
+  this API bot"), so either connect "Encapsulate Website" to it or rename the four rows by hand.
 - Notion content still owed: 3 more networks (to 28), "Six years" → "Since 2020", Why Stake card
-  preview None, governance column renames (Network / Proposal / Our vote). Stat card says 28
-  networks, the fork panel 38.
+  preview None. Stat card says 28 networks, the fork panel 38.
 - Cover second buttons link to database pages (e.g. `/a148eb7f…`); switch to same-page anchors if
   the user prefers.
 - Networks cover glyph URLs are hardcoded in covers.js; could read the /networks gallery instead.
