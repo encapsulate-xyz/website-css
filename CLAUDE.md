@@ -242,6 +242,49 @@ two dead homepage background rules went with it on 2026-09-16. Keep large conten
 free for personal and commercial use with no bandwidth cap (20MB per file, 50MB per package), but it
 is a package CDN and sustained media traffic invites a fair-use review.
 
+## Search and sort on a Notion gallery — the working recipe (2026-09-16)
+
+Super has no search snippet and Notion has no input or menu block, so a gallery's search field and
+sort menu are ours to build. This is the shape that worked on /networks (network.js `controls()` /
+`applyControls()`, network.css "THE CONTROL BAR"). Reuse it for any other database; only the block
+id and the property class change.
+
+**1. Put the controls OUTSIDE Super's markup.** Two earlier attempts failed:
+- inside `.notion-dropdown__option-list` (the picker's menu) — the picker's own handlers run first
+  and swallow the click, so the field never focused and the menu never opened;
+- inside `.notion-collection__header-wrapper` — still Super's element, same result.
+What works: append them to the `.notion-collection`, give it `position: relative`, and lay the
+controls over the right-hand end of the header row (`position: absolute; top: 0; right: 10px;
+height: 50px`), with `padding-right` on the header so the tabs cannot run under them.
+
+**2. Never stopPropagation in the CAPTURE phase on the wrapper.** It looks like a way to keep
+Super's handlers out; it actually stops the event before it reaches your own button and input.
+This cost an hour. If Super must be kept out, do it on the element itself in the bubble phase.
+
+**3. Focus and open on `pointerdown`, not on the default action.** Super listens on the document to
+close its dropdown and cancels pointer events; a cancelled pointerdown focuses nothing. So:
+`field.addEventListener("pointerdown", () => setTimeout(() => input.focus(), 0))`, and open the menu
+on `pointerdown` with `preventDefault()`. Menu options too.
+
+**4. `hidden` loses to any class-level `display`.** Super renders a card as `display: flex` and the
+menu got `display: flex` from our own CSS, so both stayed visible. Always pair it:
+`.card[hidden], .menu[hidden] { display: none !important; }`.
+
+**5. Filter and sort the rendered cards, nothing else.**
+- search: read `.notion-property__title`, set `card.hidden`;
+- sort: set `card.style.order` on the visible ones, and park the hidden ones at a high order so they
+  leave no gaps; remember each card's original index on first run for "Default";
+- rate-style sorts: parse the property's text (`parseFloat` after stripping `%`), nulls last;
+- re-apply on the MutationObserver that already watches for Super's re-renders.
+
+**6. What cannot be done this way.** Counts per tab (Super only ships the active view's rows — the
+same reason the marks row's "+23 more" is a Notion text block), and searching rows Super did not
+render (a view limited to N cards).
+
+**7. Testing.** The automation browser delivers no real mouse clicks and freezes transitions, so
+click-to-focus cannot be verified there — drive it with `input.focus()` plus a native value setter
+and an `input` event, and ask the user to confirm the click itself.
+
 ## Things that bite in Super / Notion markup
 
 - **Minima `!important`s:** `.notion-semantic-string .link:hover{opacity:.7}`,
