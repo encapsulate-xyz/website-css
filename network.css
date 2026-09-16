@@ -1080,6 +1080,12 @@ STYLING DROPDOWN MENU
   color: #000000;
 }
 
+/* `hidden` has to win over the display below, or the menu stands open on load */
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__menu[hidden],
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-empty[hidden] {
+  display: none !important;
+}
+
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__menu {
   position: absolute;
   top: calc(100% + 6px);
