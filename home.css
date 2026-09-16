@@ -2217,6 +2217,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
    extends beyond the text, the way the design draws it; the closing rule runs the
    same width, and the row's own 14px padding puts the content back on the measure */
 #block-4529386b39be4a9aa44d2dbac56537bd tbody {
+  width: auto !important;   /* the 100% above would keep the box its old width and just shift it */
   margin: 0 -14px !important;
   border-bottom: 1px solid #000000 !important;
 }
