@@ -79,6 +79,10 @@ if not sys.argv[1:]:
         js = open('guides.js', encoding='utf-8').read()
         open(os.path.join('dist', 'guides.js'), 'w', encoding='utf-8').write(js)
         print(f"{'guides.js':14} {len(js):>7,} -> dist/guides.js (copied)")
+    if os.path.exists('blog.js'):
+        js = open('blog.js', encoding='utf-8').read()
+        open(os.path.join('dist', 'blog.js'), 'w', encoding='utf-8').write(js)
+        print(f"{'blog.js':14} {len(js):>7,} -> dist/blog.js (copied)")
     if os.path.exists('network.js'):
         js = open('network.js', encoding='utf-8').read()
         open(os.path.join('dist', 'network.js'), 'w', encoding='utf-8').write(js)

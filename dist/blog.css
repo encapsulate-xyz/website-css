@@ -1,12 +1,31 @@
-.notion-collection-card.gallery,.notion-collection-card.gallery .notion-collection-card__content{height: auto !important;}
-.notion-collection-gallery{grid-template-columns: repeat(3,1fr) !important;}
-.notion-collection-gallery{grid-auto-rows: auto !important;align-items: start !important;}
-img.notion-collection-card__cover{display: block !important;width: 100% !important;height: auto !important;max-height: none !important;object-fit: contain !important;object-position: center center !important;background: transparent !important;border-radius: 28px;}
-.notion-collection-card__cover:not(img){background-size: contain !important;background-repeat: no-repeat !important;background-position: center center !important;height: auto !important;min-height: 0 !important;aspect-ratio: auto !important;}
-.notion-collection-card__cover,.notion-collection-card.gallery .notion-collection-card__cover{aspect-ratio: auto !important;max-height: none !important;}
-@media (max-width: 1400px) and (min-width: 1025px){.notion-collection-gallery{grid-template-columns: repeat(2,1fr) !important;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc[data-enc-index] .notion-collection-gallery{display: grid !important;grid-template-columns: repeat(6,minmax(0,1fr)) !important;grid-auto-rows: auto !important;align-items: stretch !important;gap: 18px !important;margin: 0 !important;padding: 0 !important;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post]{container-type: inline-size;display: block !important;min-width: 0 !important;margin: 0 !important;padding: 0 !important;border: 0 !important;border-radius: 0 !important;background: transparent !important;box-shadow: none !important;overflow: visible !important;transition: opacity 0.16s ease !important;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post]:hover{opacity: 0.93;background: transparent !important;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post] img.notion-collection-card__cover,.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post] .notion-collection-card__content{display: none !important;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post] > .notion-collection-card__anchor{position: absolute !important;inset: 0 !important;z-index: 2 !important;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__cover{position: relative;display: flex;width: 100%;aspect-ratio: 1.91 / 1;border-radius: 12px;overflow: hidden;background: #3A3D38;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-tall]{display: flex !important;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-tall] .enc-post__cover{aspect-ratio: auto;height: 100%;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__glyph{position: absolute;right: -4%;bottom: -20%;width: 44%;aspect-ratio: 1;display: block;-webkit-mask-size: contain;mask-size: contain;-webkit-mask-repeat: no-repeat;mask-repeat: no-repeat;-webkit-mask-position: center;mask-position: center;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__body{position: relative;z-index: 1;flex: 1 1 auto;min-width: 0;display: flex;flex-direction: column;justify-content: space-between;gap: 16px;padding: 5.5cqw;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__top{display: flex;align-items: center;justify-content: space-between;gap: 18px;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__cat,.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__date{font-family: var(--type-mono),ui-monospace,monospace;font-size: max(9px,1.364cqw);line-height: 1.3;letter-spacing: 0.14em;text-transform: uppercase;white-space: nowrap;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__date{color: #B4B4B4;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__title{font-family: var(--type-display),system-ui,sans-serif;font-weight: 600;font-size: max(13px,4.4cqw);line-height: 1.06;letter-spacing: -0.035em;color: #FAFAF8;max-width: min(15ch,64%);text-wrap: pretty;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-tall] .enc-post__title{font-size: max(13px,3.3cqw);}
+@container (min-width: 546px){.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__title{-webkit-line-clamp: 3;}
 }
-@media (max-width: 1024px){.notion-collection-gallery{grid-template-columns: 1fr !important;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__foot{display: block;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__wordmark{display: none;width: clamp(120px,22cqw,132px);height: auto;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__mark{display: block;width: 26px;height: 26px;background: #FAFAF8;-webkit-mask-size: contain;mask-size: contain;-webkit-mask-repeat: no-repeat;mask-repeat: no-repeat;-webkit-mask-position: left center;mask-position: left center;}
+@container (min-width: 340px){.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__wordmark{display: block;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__mark{display: none;}
+}
+@media (max-width: 1024px){.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc[data-enc-index] .notion-collection-gallery{grid-template-columns: repeat(3,minmax(0,1fr)) !important;}
+}
+@media (max-width: 700px){.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc[data-enc-index] .notion-collection-gallery{grid-template-columns: minmax(0,1fr) !important;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post]{grid-column: span 1 !important;grid-row: span 1 !important;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-tall] .enc-post__cover{aspect-ratio: 1.91 / 1;height: auto;}
 }
 .notion-property__title__icon-wrapper{display: none!important;}
 .notion-pill{margin-top: 8px!important;padding-top: 2px!important;padding-bottom: 2px!important;font-size: 14px!important;}
@@ -22,5 +41,4 @@ img.notion-collection-card__cover{display: block !important;width: 100% !importa
 }
 @media (max-width: 1240px){.notion-embed__container__wrapper{height: 320px!important;}
 }
-.date{position: absolute;bottom: 0;right: 0;margin: 10px!important;font-size: 18px!important;}
 .notion-collection-card.gallery a{pointer-events: auto!important;}

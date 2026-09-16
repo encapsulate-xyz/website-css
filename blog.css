@@ -2,69 +2,205 @@
    Moved from the page's Code panel 2026-09-15. The old cover rules (page-covers/blog.avif behind the
    first callout, .direct-parent, .super-content) were removed: the cover is main.css §14 + covers.js. */
 
-/*********************************************
-For the collection gallery
-*********************************************/
-/* Let cards auto-size (no fixed/aspect heights) */
-.notion-collection-card.gallery,
-.notion-collection-card.gallery .notion-collection-card__content {
-  height: auto !important;
-}
-.notion-collection-gallery {
-    grid-template-columns: repeat(3, 1fr) !important;
-}
+/* ── THE INDEX — design "Blog Index Layouts", J "An alternating rhythm" ─────────────────────────
 
-/* Grid should allow variable row heights */
-.notion-collection-gallery {
+   Six tracks, so a row of two and a row of three share one grid: the first post spans four of them
+   and two rows, the next two take the sixth and seventh cells, then a pair at half width, then rows
+   of three. blog.js sets each card's span (it is the only thing that knows how many posts there
+   are) and builds the cover inside Super's own card, so the link and the ordering stay Notion's.
+
+   Every measurement in the design is a share of the card's own width, so the card is a container
+   and the type is set in cqw: title 4.4%, label 1.364%, padding 5.5%. That holds the design's
+   proportions at any column count and at any screen width, which the design's own fixed 1152px
+   figures cannot. */
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc[data-enc-index] .notion-collection-gallery {
+  display: grid !important;
+  grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
   grid-auto-rows: auto !important;
-  align-items: start !important;
+  align-items: stretch !important;
+  gap: 18px !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-/* The actual cover element in your markup is the <img> */
-img.notion-collection-card__cover {
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post] {
+  container-type: inline-size;
   display: block !important;
-  width: 100% !important;
-  height: auto !important;              /* ignore height="200" */
-  max-height: none !important;
-  object-fit: contain !important;       /* NO CROP */
-  object-position: center center !important;  /* override inline "center 40%" */
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
   background: transparent !important;
-  border-radius: 28px;                  /* keep your rounded look (optional) */
+  box-shadow: none !important;
+  overflow: visible !important;
+  transition: opacity 0.16s ease !important;
 }
 
-/* If sometimes a DIV is used as the cover (background-image variant) */
-.notion-collection-card__cover:not(img) {
-  background-size: contain !important;
-  background-repeat: no-repeat !important;
-  background-position: center center !important;
-  height: auto !important;
-  min-height: 0 !important;
-  aspect-ratio: auto !important;        /* kill forced ratios */
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post]:hover {
+  opacity: 0.93;
+  background: transparent !important;   /* Minima washes a card on hover */
 }
 
-/* Helpful cleanups: kill any old constraints */
-.notion-collection-card__cover,
-.notion-collection-card.gallery .notion-collection-card__cover {
-  aspect-ratio: auto !important;
-  max-height: none !important;
+/* Super's own card — the cover image and the property list — stays in the markup as the
+   no-JavaScript fallback, and is hidden once ours is built. */
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post] img.notion-collection-card__cover,
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post] .notion-collection-card__content {
+  display: none !important;
 }
 
-/*********************************************
-Media query for max width 1024px
-*********************************************/
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post] > .notion-collection-card__anchor {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+}
 
-/* Adjusting the grid layout, margin, and gap of the collection gallery, as well as the height of the collection card when the viewport width is 1000px or less. The first child of the collection card no longer spans two columns. */
-/* 1025–1400px → 2 columns */
-@media (max-width: 1400px) and (min-width: 1025px) {
-  .notion-collection-gallery {
-    grid-template-columns: repeat(2, 1fr) !important;
+/* THE COVER */
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__cover {
+  position: relative;
+  display: flex;
+  width: 100%;
+  aspect-ratio: 1.91 / 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #3A3D38;
+}
+
+/* the merged card is stretched by the two rows it spans, so it takes its height from the grid */
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-tall] {
+  display: flex !important;
+}
+
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-tall] .enc-post__cover {
+  aspect-ratio: auto;
+  height: 100%;
+}
+
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__glyph {
+  position: absolute;
+  right: -4%;
+  bottom: -20%;
+  width: 44%;
+  aspect-ratio: 1;
+  display: block;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__body {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 5.5cqw;
+}
+
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__cat,
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__date {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: max(9px, 1.364cqw);
+  line-height: 1.3;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__date {
+  color: #B4B4B4;
+}
+
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__title {
+  font-family: var(--type-display), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: max(13px, 4.4cqw);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  color: #FAFAF8;
+  max-width: min(15ch, 64%);
+  text-wrap: pretty;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* the merged card is twice as wide as a card in a row of three, but the design does not scale its
+   title with its width — it steps it by 1.55, which on this card is 3.3% of the card's own width */
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-tall] .enc-post__title {
+  font-size: max(13px, 3.3cqw);
+}
+
+/* three lines once the title is big enough to carry them (the design's 24px step) */
+@container (min-width: 546px) {
+  .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__title {
+    -webkit-line-clamp: 3;
   }
 }
 
-/* ≤1024px → 1 column */
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__foot {
+  display: block;
+}
+
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__wordmark {
+  display: none;
+  width: clamp(120px, 22cqw, 132px);
+  height: auto;
+}
+
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__mark {
+  display: block;
+  width: 26px;
+  height: 26px;
+  background: #FAFAF8;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: left center;
+  mask-position: left center;
+}
+
+/* the design's rule: a card wide enough for the wordmark's 120px minimum carries the wordmark,
+   a narrower one carries the mark */
+@container (min-width: 340px) {
+  .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__wordmark { display: block; }
+  .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__mark { display: none; }
+}
+
+/* Under 1024px the six tracks become three, and under 700px one: blog.js's spans are written in
+   sixths, so halving the tracks keeps every band legible without re-running the script. */
 @media (max-width: 1024px) {
-  .notion-collection-gallery {
-    grid-template-columns: 1fr !important;
+  .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc[data-enc-index] .notion-collection-gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc[data-enc-index] .notion-collection-gallery {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post] {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+  }
+  .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-tall] .enc-post__cover {
+    aspect-ratio: 1.91 / 1;
+    height: auto;
   }
 }
 
@@ -166,16 +302,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 }
 /********************************************/
-/********************************************/
-/* DATE STYLING */
-/********************************************/
-.date {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  margin: 10px!important;
-  font-size: 18px!important;
-}
+
 /********************************************/
 /* ENABLE POINTER EVENTS FOR BLOG DATABASE */
 /********************************************/
