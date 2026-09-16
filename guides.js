@@ -253,10 +253,15 @@
       a.appendChild(top);
       var foot = el("span", "enc-guide__card-foot");
       foot.appendChild(el("span", "enc-guide__card-button", buttonText));
+      // the two figures read as figures: the number in the display face, its unit in mono beside it
       var meta = el("span", "enc-guide__card-meta");
-      meta.appendChild(el("span", null, (guide.steps || "—") + " steps"));
-      meta.appendChild(el("span", "enc-guide__card-rule"));
-      meta.appendChild(el("span", null, "about " + (guide.minutes || "—") + " min"));
+      [[guide.steps == null ? "—" : String(guide.steps), "steps"],
+       [guide.minutes == null ? "—" : "~" + guide.minutes, "min"]].forEach(function (f) {
+        var fig = el("span", "enc-guide__figure");
+        fig.appendChild(el("span", "enc-guide__figure-value", f[0]));
+        fig.appendChild(el("span", "enc-guide__figure-unit", f[1]));
+        meta.appendChild(fig);
+      });
       foot.appendChild(meta);
       a.appendChild(foot);
       return a;
