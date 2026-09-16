@@ -291,8 +291,15 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
   pastel well pushed 26px past the bottom-right corner, glyph at 52%. Mainnet cards carry the rate
   (`.property-597e3d69`) as a 22px figure; testnet cards carry the role (`.property-585f6e6c`) and
   drop the disc to 62%. The hover arrow badge only appears on cards that are links.
+- **The control bar**: Super's view picker supplies the stage tabs (styled in network.css; the old
+  pill-and-Verdana picker rules were deleted). The **sort menu and the search field are built by
+  network.js** — Notion has no block that is an input or a menu, so this is the allowed exception.
+  Both work on the cards Super rendered: search hides non-matching cards, sort sets the grid's
+  `order`, Default restores the view's sequence. The design's per-tab counts are not there: Super
+  only sends the active view's rows, so the other tab's count cannot be known client-side.
 - **5m, the chain-teams band** (callout `3dde800a…9995f7…`): ink, full-bleed, with the marks row
-  built by `network.js` from the set's own gallery — first twelve cards plus a "+N more".
+  built by `network.js` from the set's own gallery — first twelve cards. The "+23 more" is a Notion
+  text block in the band that the script moves onto the row, for the same reason.
 - **Every script now prefers this database:** `covers.js` reads it by id, `home.js` uses it when a
   view of it is on the homepage (old gallery is the fallback), `network.js` builds 5m from it.
 - **The rates are the design's invented figures** — its own note says so. See the TODO below.
