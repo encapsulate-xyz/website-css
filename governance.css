@@ -492,9 +492,10 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   text-wrap: pretty !important;
 }
 
+/* the rationale has no header label, and an empty one on the grid's second row would open a
+   gap under the header */
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 thead th:nth-of-type(5) {
-  order: 6 !important;
-  font-size: 0 !important;
+  display: none !important;
 }
 
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 th {
@@ -523,6 +524,8 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 /* the proposal: the chain's disc, its title, the chain beneath */
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 td.title {
   display: grid !important;
+  width: 100% !important;        /* the cell sized to its content and left the track half empty */
+  justify-self: stretch !important;
   grid-template-columns: 30px minmax(0, 1fr) !important;
   align-items: start !important;
   column-gap: 13px !important;
