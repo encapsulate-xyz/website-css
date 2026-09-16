@@ -248,6 +248,17 @@ cases. The difference is inside it.</p>
   </div>
 </div>
 
+<section style="margin-top:36px">
+  <div class="card">
+    <h2>The whole profile, inline</h2>
+    <p>Not one event but the profile page — <code>cal.com/aditya-encapsulate</code> — embedded in a
+    div of ours. Same palette, and the visitor picks the call they want. The panel around it is our
+    CSS; everything inside is Cal.</p>
+    <button class="btn" id="open-profile" type="button">Open the profile in the drawer</button>
+    <div id="cal-profile" style="margin-top:22px; min-height:560px; border:1px solid var(--rule); border-radius:12px; overflow:hidden"></div>
+  </div>
+</section>
+
 <!-- The drawer: our panel, Cal's inline embed inside it -->
 <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
 <aside class="drawer" id="drawer" hidden aria-label="Book a call">
@@ -416,6 +427,34 @@ function closeDrawer() {
   drawerBackdrop.removeAttribute("data-open");
   setTimeout(function () { drawer.hidden = true; drawerBackdrop.hidden = true; }, 320);
 }
+
+// The profile page (every event type) as a plain inline embed, and the same link in the drawer.
+var PROFILE_LINK = "aditya-encapsulate";
+Cal("init", "profile", { origin: "https://app.cal.com" });
+Cal.ns.profile("ui", CAL_UI);
+Cal.ns.profile("inline", {
+  elementOrSelector: "#cal-profile",
+  calLink: PROFILE_LINK,
+  config: { layout: "month_view", theme: "light" }
+});
+document.getElementById("open-profile").addEventListener("click", function () {
+  var grey = document.getElementById("grey-brand").checked;
+  drawerBody.innerHTML = "";
+  Cal.ns.drawer("ui", uiWith(grey));
+  Cal.ns.drawer("inline", {
+    elementOrSelector: "#cal-drawer",
+    calLink: PROFILE_LINK,
+    config: { layout: "column_view", theme: "light" }
+  });
+  drawerLayout = "profile" + (grey ? "-grey" : "");
+  drawer.setAttribute("data-layout", "column_view");
+  drawer.removeAttribute("data-wide");
+  drawer.hidden = false;
+  drawerBackdrop.hidden = false;
+  void drawer.offsetWidth;
+  drawer.setAttribute("data-open", "");
+  drawerBackdrop.setAttribute("data-open", "");
+});
 
 document.getElementById("open-drawer").addEventListener("click", function () { openDrawer("column_view"); });
 document.getElementById("open-drawer-month").addEventListener("click", function () { openDrawer("month_view"); });
