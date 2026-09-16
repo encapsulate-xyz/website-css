@@ -36,6 +36,7 @@ User rules that stand on every task:
 | `footer.js` | footer 44b, built inside Super's footer | site Head |
 | `covers.js` | inner-page cover graphics ("fields") | site Head |
 | `home.css`, `home-dial.css`, `home.js` | homepage sections, JS-enhanced styles, homepage scripts | homepage Head |
+| `brand.css`, `brand.js` | /brand — four spreads with a sticky rail, the marks slab, the colour strip (design *Brand Page*) | page Head + site Head |
 | `blog.css`, `blog.js` | /blog — the index (design J); blog.js builds each card's cover and its band span, and is loaded from the site head | page Head + site Head |
 | `network.css`, `network.js` | /networks (network.js pages the Network Count panels, same gesture rules as home.js decks) | its page Head |
 | `governance.css` + `governance.js` (the record page: count band, pillars, controls, rows), `blog.css`, `brand.css`, `contact-us.css`, `guides.css`, `investments.css`, `security.css`, `services.css` | each page's CSS, moved out of Super's page Code panels on 2026-09-15 (old cover rules removed, the rest kept as it was) | each page's Head |
@@ -84,7 +85,7 @@ Note: `git commit` also commits anything the user has staged — check `git stat
 | `head/networks.html` | /networks → Code → Head (view-picker + network.css; network.js is in the site head) |
 | `head/governance.html` | /governance-record → Code → Head |
 | `head/blog.html` | /blog → Code → Head (blog.css; blog.js is in the site head) |
-| `head/brand.html` | /brand → Code → Head (includes the Comfortaa font link) |
+| `head/brand.html` | /brand → Code → Head (brand.css; brand.js is in the site head) |
 | `head/contact-us.html` | /contact-us → Code → Head |
 | `head/guides.html` | /guides → Code → Head (view-picker + guides.css) |
 | `head/investments.html` | /investments → Code → Head |
