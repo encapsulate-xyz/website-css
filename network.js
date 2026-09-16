@@ -256,12 +256,10 @@
 
     var state = { q: "", sort: "set" };
     var wrap = el("div", "enc-set-controls");
-    /* The controls sit inside Super's view-picker menu, which swallows pointer events on its own
-       markup (a menu closes and refuses focus on mousedown). Without this the field never focuses
-       and a click on the sort button does nothing — measured on the live page. */
-    ["pointerdown", "mousedown", "mouseup", "click", "keydown", "touchstart"].forEach(function (type) {
-      wrap.addEventListener(type, function (e) { e.stopPropagation(); }, true);
-    });
+    /* NO capture-phase stopPropagation here. An earlier version added one while the controls still
+       lived inside Super's picker; once they moved out it did nothing useful and one real harm —
+       stopping an event during CAPTURE on the wrapper keeps it from ever reaching the button and
+       the field inside it, so the sort menu never opened. */
 
     // sort
     var sort = el("div", "enc-set-sort");
