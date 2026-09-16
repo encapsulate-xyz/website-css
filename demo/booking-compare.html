@@ -360,10 +360,9 @@ function openDrawer() {
   }
   drawer.hidden = false;
   drawerBackdrop.hidden = false;
-  requestAnimationFrame(function () {
-    drawer.setAttribute("data-open", "");
-    drawerBackdrop.setAttribute("data-open", "");
-  });
+  void drawer.offsetWidth;   // one forced layout, so the transition has a start state to run from
+  drawer.setAttribute("data-open", "");
+  drawerBackdrop.setAttribute("data-open", "");
 }
 
 function closeDrawer() {
