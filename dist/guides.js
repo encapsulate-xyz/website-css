@@ -162,6 +162,17 @@
       bar.appendChild(ps[8]);
       bar.appendChild(ps[9]);
     }
+    /* anything left after the panel that holds no words and no pictures is a leftover block (Super
+       can still serve one Notion has already lost) — it only shows as a gap above the footer */
+    var after = band.nextElementSibling;
+    while (after) {
+      if (!after.hasAttribute("data-enc-source") && after.id !== GUIDES &&
+          !after.textContent.trim() && !after.querySelector("img, svg, iframe, video")) {
+        after.hidden = true;
+      }
+      after = after.nextElementSibling;
+    }
+
     var count = bar && bar.lastElementChild;
     if (count) {
       if (!count.hasAttribute("data-enc-count")) count.setAttribute("data-enc-count", count.textContent);

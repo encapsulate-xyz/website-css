@@ -505,7 +505,7 @@ STYLING DROPDOWN MENU
   box-sizing: border-box !important;
   width: 100vw !important;
   max-width: none !important;
-  margin: 0 calc(50% - 50vw) 40px !important;
+  margin: 0 calc(50% - 50vw) !important;
   /* design "Guides Picker": the picker is its own screen, not a band inside the page */
   position: relative !important;
   min-height: 100svh !important;
@@ -886,5 +886,22 @@ STYLING DROPDOWN MENU
    reached collections nested inside a later block, and the gallery stayed under the picker */
 .notion-root #block-3dde800a5138811e906fc383bd7a0789[data-enc-sig] ~ #block-1f6e800a5138818195f9ed0a1403479e,
 .notion-root #block-3dde800a5138811e906fc383bd7a0789[data-enc-sig] ~ * #block-1f6e800a5138818195f9ed0a1403479e {
+  display: none !important;
+}
+
+/* THE PANEL MEETS THE FOOTER. The picker is the page's last block, so the page's own trailing
+   space (Super's 98px on .super-content, 49px on .notion-root, and the band's old 40px margin)
+   showed as a white strip between the panel's ground and the footer. Empty blocks left over
+   after it are hidden by guides.js, which can tell an empty one from a real one. */
+.super-content.page__guides {
+  padding-bottom: 0 !important;
+}
+
+.super-content.page__guides .notion-root {
+  padding-bottom: 0 !important;
+}
+
+/* `hidden` loses to any class-level display, and Super renders these as flex */
+.notion-root > [hidden] {
   display: none !important;
 }
