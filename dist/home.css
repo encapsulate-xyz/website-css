@@ -193,6 +193,7 @@
 #block-3dbe800a513880f59821eadfd281e31f{margin: 0 0 14px !important;padding: 0 !important;font-family: var(--type-mono) !important;font-size: 11px !important;font-weight: 400 !important;line-height: 1.3 !important;letter-spacing: 0.14em !important;text-transform: uppercase !important;color: #6B6F68 !important;min-height: 0 !important;}
 #block-8596efbf83c94c59ac8278879b8be3bc{margin-bottom: 14px !important;}
 #block-45c7dda9faae4c6d94390f4eb380d3a4{padding: 0 !important;font-family: var(--type-body) !important;font-size: 16px !important;line-height: 1.56 !important;color: #3A3D38 !important;max-width: none !important;text-wrap: pretty !important;}
+#block-4efab8b5f9e246679a4d719fe3dcd31e{--btn-h: 48px;--btn-px: 20px;--btn-fs: 15.5px;}
 #block-4efab8b5f9e246679a4d719fe3dcd31e{grid-area: cta !important;justify-self: end !important;align-self: end !important;margin: 0 !important;}
 #block-3b97079327e74e15848fb366e3adcbea{grid-area: band !important;margin: 0 !important;}
 #block-4529386b39be4a9aa44d2dbac56537bd{grid-area: table !important;margin: 0 !important;}
