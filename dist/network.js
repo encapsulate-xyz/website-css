@@ -118,7 +118,69 @@
   window.addEventListener("touchstart", function () { touching = true; if (anim) finish(); }, { passive: true });
   window.addEventListener("touchend", function () { touching = false; if (!hasScrollEnd) setTimeout(settle, 140); }, { passive: true });
 
-  new MutationObserver(invalidate).observe(document.body, { childList: true, subtree: true });
+  /* ── 5m, the marks row ──
+     The band under the set restates the set itself: one disc per chain, read from the gallery that
+     is already on the page (its cards are sorted by Order, so the first twelve are the god and
+     high tiers, as the design's row is). Nothing is listed here — add a network in Notion and the
+     row follows. The glyph is the card's cover, taken at its original size rather than through
+     Super's optimizer. */
+  var BAND = "block-3dde800a5138819995f7de108ee8e815";
+  var SET_DB = "block-3dde800a51388133b7f1d1ccdda08038";
+  var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
+  var SHOWN = 12;
+
+  function original(src) {
+    var m = /[?&]url=([^&]+)/.exec(src || "");
+    return m ? decodeURIComponent(m[1]) : src;
+  }
+
+  function marks() {
+    var band = document.getElementById(BAND), db = document.getElementById(SET_DB);
+    if (!band || !db) return;
+    var content = band.querySelector(":scope > .notion-callout__content");
+    if (!content) return;
+    var cards = db.querySelectorAll(".notion-collection-card");
+    if (!cards.length) return;
+    var rows = [];
+    for (var i = 0; i < cards.length && rows.length < SHOWN; i++) {
+      var img = cards[i].querySelector("img");
+      var name = cards[i].querySelector(".notion-property__title");
+      if (img && name) rows.push({ src: original(img.currentSrc || img.src), name: name.textContent.trim() });
+    }
+    if (!rows.length) return;
+    var sig = rows.map(function (r) { return r.name; }).join("|") + "/" + cards.length;
+    var old = content.querySelector(":scope > .enc-set-marks");
+    if (old && old.getAttribute("data-sig") === sig) return;
+    if (old) old.remove();
+
+    var wrap = document.createElement("div");
+    wrap.className = "enc-set-marks";
+    wrap.setAttribute("data-sig", sig);
+    rows.forEach(function (r, i) {
+      var span = document.createElement("span");
+      span.className = "enc-set-mark";
+      span.title = r.name;
+      span.style.setProperty("--mark-tint", TINTS[i % TINTS.length]);
+      var im = document.createElement("img");
+      im.src = r.src;
+      im.alt = "";
+      im.loading = "lazy";
+      span.appendChild(im);
+      wrap.appendChild(span);
+    });
+    var rest = cards.length - rows.length;
+    if (rest > 0) {
+      var more = document.createElement("span");
+      more.className = "enc-set-more";
+      more.textContent = "+" + rest + " more";
+      wrap.appendChild(more);
+    }
+    content.appendChild(wrap);
+  }
+
+  new MutationObserver(function () { invalidate(); marks(); }).observe(document.body, { childList: true, subtree: true });
+  marks();
+  window.addEventListener("load", marks);
   window.addEventListener("resize", invalidate);
   window.addEventListener("load", function () { invalidate(); paintKicker(); });
   paintKicker();
