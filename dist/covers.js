@@ -26,7 +26,13 @@
   var script = document.currentScript;
   var BASE = script && /\/dist\/covers\.js/.test(script.src) ? script.src.replace(/\/dist\/covers\.js.*$/, "/") : null;
 
-  // the chain glyphs, as uploaded with the homepage networks gallery
+  /* THE CHAIN GLYPHS COME FROM NOTION. Each row of the Networks database has a Files property
+     "Cover" holding one PNG, and Super renders it as the card's cover in the gallery further down
+     /networks. glyphFromPage() reads those cards: the card's title gives the chain, its cover img
+     gives the file. Super serves covers through its optimizer (/_next/image?url=…&w=…&q=75), which
+     is where the blur came from, so the original URL is taken back out of the `url` parameter.
+     Change a Cover in Notion and this follows; the list below is only the fallback for a chain the
+     gallery does not show (a testnet-only view, a card not yet rendered). */
   var GLYPH = {
     "03-sui": "b062f37e-70a0-42af-af3e-8ae6d97229b5",
     "05-near": "f9b6c438-05de-48cf-9336-985c6eadc27a",
@@ -53,6 +59,28 @@
     "21-passage": "9e1e8719-01e2-4766-ac11-f205a0aea2d2",
     "22-sommelier": "7d36b978-ca89-4a16-b4f6-7f7ef07f9f7f"
   };
+
+  // "03-sui" → "sui", "Gravity Bridge" → "gravitybridge": one key for a file name and a card title
+  function key(text) {
+    return String(text).toLowerCase().replace(/\.[a-z0-9]+$/, "").replace(/^\d+[-_]/, "").replace(/[^a-z0-9]/g, "");
+  }
+
+  function original(src) {
+    var m = /[?&]url=([^&]+)/.exec(src || "");
+    return m ? decodeURIComponent(m[1]) : src;
+  }
+
+  function glyphFromPage() {
+    var out = {};
+    document.querySelectorAll(".notion-collection-card").forEach(function (card) {
+      var cover = card.querySelector("img.notion-collection-card__cover, .notion-collection-card__cover img");
+      var title = card.querySelector(".notion-property__title, .notion-collection-card__title");
+      if (!cover || !title) return;
+      var k = key(title.textContent.trim());
+      if (k && !out[k]) out[k] = original(cover.currentSrc || cover.src);
+    });
+    return out;
+  }
 
   function el(tag, style) {
     var e = document.createElement(tag);
@@ -111,12 +139,13 @@
         ["18-ixo", 0.658, 0.952, "low"], ["23-lumera", 0.972, 0.222, "low"],
         ["21-passage", 0.317, 0.952, "low"], ["22-sommelier", 0.836, 0.790, "low"]
       ];
+      var fromPage = glyphFromPage();
       return MARKS.map(function (m, i) {
         var w = d(m[1] * 100, m[2] * 100, D[m[3]] / 924 * 100, P[i % 5], { z: Z[m[3]] });
         w.style.display = "grid";
         w.style.placeItems = "center";
-        w.appendChild(img(ASSETS + GLYPH[m[0]] + "/" + m[0] + ".png",
-          { position: "static", width: "52%", height: "52%", objectFit: "contain" }));
+        var src = fromPage[key(m[0])] || (GLYPH[m[0]] && ASSETS + GLYPH[m[0]] + "/" + m[0] + ".png");
+        if (src) w.appendChild(img(src, { position: "static", width: "52%", height: "52%", objectFit: "contain" }));
         return w;
       });
     },
