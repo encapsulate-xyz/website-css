@@ -147,8 +147,9 @@ cases. The difference is inside it.</p>
 
   <div class="card">
     <h2>Cal.com</h2>
-    <p>Same shell, plus the booker inside takes our colours, corner radius and spacing through
-    Cal's own variables. Its type stays Inter; its layout stays Cal's.</p>
+    <p>Same shell, plus the booker and the confirmation screen take our colours, hairlines, corner
+    radius and spacing through Cal's own variables. Its type stays Inter; its layout stays Cal's,
+    and a free account shows a "Cal.com" mark under the booker.</p>
     <button class="btn" id="open-cal" type="button">Book a call</button>
     <ul>
       <li>Styled here: button, and the booker's colours, radius, spacing, light/dark, layout</li>
@@ -196,26 +197,48 @@ Cal.ns.enc("ui", {
   hideEventTypeDetails: false,
   cssVarsPerTheme: {
     light: {
+      /* brand — the site green, black type on it (pastels/green take ink) */
       "cal-brand": "#99CC66",
       "cal-brand-emphasis": "#8CBF56",
       "cal-brand-text": "#000000",
       "cal-brand-subtle": "#DCEEC7",
+      "cal-brand-accent": "#000000",
+      /* grounds */
       "cal-bg": "#FFFEFC",
       "cal-bg-subtle": "#F2F2ED",
       "cal-bg-muted": "#F2F2ED",
       "cal-bg-emphasis": "#EBECED",
       "cal-bg-inverted": "#3A3D38",
+      "cal-bg-attention": "#F8E8B3",
+      "cal-bg-error": "#F7DCE7",
+      "cal-bg-semantic-info-subtle": "#D2E3F6",
+      "cal-bg-semantic-attention-subtle": "#F8E8B3",
+      "cal-bg-semantic-error-subtle": "#F7DCE7",
+      /* type */
       "cal-text": "#000000",
       "cal-text-emphasis": "#000000",
       "cal-text-subtle": "#3A3D38",
       "cal-text-muted": "#6B6F68",
       "cal-text-inverted": "#FAFAF8",
+      "cal-text-info": "#3A3D38",
+      "cal-text-success": "#3F6B27",
+      "cal-text-attention": "#3A3D38",
+      "cal-text-error": "#8A3A55",
+      "cal-text-semantic-info": "#3A3D38",
+      "cal-text-semantic-attention": "#3A3D38",
+      "cal-text-semantic-error": "#8A3A55",
+      /* hairlines — the card ring and the 1px rules used across the site */
       "cal-border": "#D9D9D2",
       "cal-border-default": "#D9D9D2",
       "cal-border-subtle": "#E2E2DB",
+      "cal-border-muted": "#E2E2DB",
       "cal-border-emphasis": "#A5A5A5",
+      "cal-border-error": "#8A3A55",
       "cal-border-booker": "#D9D9D2",
-      "radius": "12px"
+      "cal-border-booker-width": "1px",
+      /* shape and rhythm — the Card System's 12px */
+      "radius": "12px",
+      "spacing": "4px"
     }
   }
 });
