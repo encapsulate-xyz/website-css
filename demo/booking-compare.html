@@ -191,7 +191,10 @@ cases. The difference is inside it.</p>
 })(window, "https://app.cal.com/embed/embed.js", "init");
 
 Cal("init", "enc", { origin: "https://app.cal.com" });
-Cal.ns.enc("ui", {
+
+// The palette, passed on the namespace we open the modal with and on the default one — a
+// namespace mismatch is the usual reason an embed keeps Cal's own colours.
+var CAL_UI = {
   theme: "light",
   layout: "month_view",
   hideEventTypeDetails: false,
@@ -241,7 +244,10 @@ Cal.ns.enc("ui", {
       "spacing": "4px"
     }
   }
-});
+};
+Cal.ns.enc("ui", CAL_UI);
+Cal("ui", CAL_UI);
+
 document.getElementById("open-cal").addEventListener("click", function () {
   Cal.ns.enc("modal", { calLink: CAL_LINK, config: { layout: "month_view", theme: "light" } });
 });
