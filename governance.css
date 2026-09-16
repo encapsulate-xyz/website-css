@@ -69,10 +69,14 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 .notion-root #block-3dde800a513881b1b88dd0b73f874bfe > .notion-callout__content {
   display: grid !important;
   grid-template-columns: minmax(0, 1fr) minmax(0, 34ch) !important;
-  grid-template-areas: "figure aside" "label label" "field field" !important;
+  grid-template-areas:
+    "kicker aside"
+    "figure asidebody"
+    "label  label"
+    "field  field" !important;
   align-items: end !important;
   column-gap: clamp(24px, 4vw, 56px) !important;
-  row-gap: 12px !important;
+  row-gap: 10px !important;
   width: 100% !important;
   max-width: none !important;
   margin: 0 !important;
@@ -81,15 +85,16 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 
 .notion-root #block-3dde800a513881b1b88dd0b73f874bfe > .notion-callout__content > * {
   margin: 0 !important;
+  min-width: 0 !important;
 }
 
-/* the kicker rides above the figure, in the same grid cell */
+/* the kicker, over the figure */
 .notion-root #block-3dde800a513881b1b88dd0b73f874bfe p.notion-text:nth-of-type(1) {
-  grid-area: figure !important;
+  grid-area: kicker !important;
   align-self: end !important;
-  margin-bottom: calc(-1 * clamp(66px, 11vw, 176px)) !important;
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 11px !important;
+  line-height: 1.3 !important;
   letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
   color: #B4B4B4 !important;
@@ -107,6 +112,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   font-variant-numeric: tabular-nums !important;
 }
 
+/* the two lines beside it, sitting on the figure's baseline */
 .notion-root #block-3dde800a513881b1b88dd0b73f874bfe p.notion-text:nth-of-type(3) {
   grid-area: aside !important;
   align-self: end !important;
@@ -119,9 +125,9 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 .notion-root #block-3dde800a513881b1b88dd0b73f874bfe p.notion-text:nth-of-type(4) {
-  grid-area: aside !important;
-  align-self: end !important;
-  margin-bottom: -76px !important;
+  grid-area: asidebody !important;
+  align-self: start !important;
+  padding-top: 8px !important;
   font-family: var(--type-body), system-ui, sans-serif !important;
   font-size: 15.5px !important;
   line-height: 1.56 !important;
@@ -130,9 +136,10 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 
 .notion-root #block-3dde800a513881b1b88dd0b73f874bfe p.notion-text:nth-of-type(5) {
   grid-area: label !important;
-  margin-top: 44px !important;
+  margin-top: clamp(26px, 4vh, 44px) !important;
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 9.5px !important;
+  line-height: 1.3 !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
   color: #B4B4B4 !important;
