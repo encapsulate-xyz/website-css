@@ -408,6 +408,62 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
 - The old gallery's CSS (pill, pastel tiles, side image; 456 lines) was removed on 2026-09-16: every
   rule used global collection classes and reached the new cards.
 
+## The governance record — how it is filled (2026-09-17)
+
+The record is a Notion database, `Governance Record` `c458e5dd…`, read by the homepage's 37h table
+and by /governance-record. Two jobs keep it current, both in `scripts/` and both re-runnable:
+
+| Script | What it does |
+|---|---|
+| `scripts/notion.py` | the shared client. Token from `NOTION_TOKEN`, else `~/.notion-covers-token`. Never print it |
+| `scripts/gov_rationales.py` | writes **Rationale** on every row |
+| `scripts/gov_upgrades.py` | adds the upgrades on the god and high tier chains that asked something of the validator |
+
+**Rationales.** A rationale that already says something specific is kept and tightened — the
+lead-ins ("Encapsulate votes YES because…", "We're in favour of…") dropped, cut to two sentences —
+unless dropping the lead-in would leave the proposal's own title standing as the reason, in which
+case the original wording stays. Boilerplate ("We support this proposal.", "Malicious Proposal.")
+and empty ones are written from the vote and the proposal's type: upgrades, parameter changes,
+spends, contract work, IBC repairs, signalling, and the scam airdrops that are vetoed. The wording
+is picked by a hash of the row id, so a row always gets the same line and a re-run is a no-op.
+The lines are **principle-based**: accurate about the vote and the kind of proposal, never claiming
+a specific action we cannot evidence. 2026-09-17: 1,106 rows — 465 tightened, 641 written.
+
+**Upgrades.** What counts is the user's rule: a proposal or release that required a **vote** or a
+**software upgrade by the validator**. Weekly maintenance releases, rc/alpha builds and
+testnet-only tags are left out. Every source is a public GitHub releases API and needs no key:
+
+| Chain | Repo | What marks a row |
+|---|---|---|
+| Avalanche | `ava-labs/avalanchego` | notes say "must upgrade"; the named upgrade (Helicon, Granite, Fortuna) is in them |
+| Near | `near/nearcore` | "protocol version N", and the date voting opens — NEAR counts a validator's vote only if it already runs the code |
+| Sui | `MystenLabs/sui` | `mainnet-*` with "Protocol Version: N"; two thirds of the stake vote the version in |
+| IOTA | `iotaledger/iota` | `[Mainnet]` releases, same shape |
+| Zilliqa | `Zilliqa/zq2` | notes contain a hard fork |
+| Mina | `MinaProtocol/mina` | mainnet hard-fork and stop-slot releases |
+| Starknet | `NethermindEth/juno` | breaking releases of the client we attest with |
+| EigenCloud | `Layr-Labs/eigenlayer-contracts` | the named protocol releases |
+| Monad | `category-labs/monad-bft` | consensus client releases |
+
+**The date is the release's own date**, or the day voting opens where the notes give it — never
+today's. On a chain with no on-chain vote the row is YES because running the release is how support
+is expressed, and the rationale says so. Rows are matched by (Chain, Proposal Title), so re-running
+adds only what is missing. `--dry` prints without writing. A row may still predate our deployment
+on that chain — the script cannot know, so check new rows before publishing.
+
+## TODO — run both governance jobs from a GitHub Action (agreed 2026-09-17, not built)
+
+Both scripts above are written to be run unattended; nothing about them needs a browser. The shape:
+
+- a scheduled workflow in this repo (weekly is enough for upgrades; rationales only need running
+  after rows are added), `python3 scripts/gov_upgrades.py` then `python3 scripts/gov_rationales.py`;
+- `NOTION_TOKEN` as a repo secret — the integration already has access to the database. `GITHUB_TOKEN`
+  is read if present, only to raise the GitHub API rate limit;
+- run `--dry` on a pull request and the real write on the schedule, so a human sees what a new
+  release would add before it lands on a public page;
+- the same Action is the natural home for the APY job below — one scheduled job that writes Notion,
+  rather than two.
+
 ## TODO — the rates in the Networks set are placeholders (2026-09-16)
 
 Every "Reward rate" in the `Networks set` database came from the design file, whose own note says
