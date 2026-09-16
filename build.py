@@ -49,7 +49,7 @@ def squeeze(css: str) -> str:
     return ''.join(out).replace('}', '}\n').strip() + '\n'
 
 os.makedirs('dist', exist_ok=True)
-for name in sys.argv[1:] or ['main.css', 'home.css', 'network.css', 'governance.css', 'blog.css', 'brand.css', 'contact-us.css', 'guides.css', 'investments.css', 'security.css', 'services.css']:
+for name in sys.argv[1:] or ['main.css', 'home.css', 'network.css', 'governance.css', 'blog.css', 'brand.css', 'contact-us.css', 'guides.css', 'investments.css', 'security.css', 'services.css', 'guides.css']:
     if not os.path.exists(name):
         continue
     src = open(name, encoding='utf-8').read()
@@ -75,6 +75,10 @@ if not sys.argv[1:]:
         js = open('footer.js', encoding='utf-8').read()
         open(os.path.join('dist', 'footer.js'), 'w', encoding='utf-8').write(js)
         print(f"{'footer.js':14} {len(js):>7,} -> dist/footer.js (copied)")
+    if os.path.exists('guides.js'):
+        js = open('guides.js', encoding='utf-8').read()
+        open(os.path.join('dist', 'guides.js'), 'w', encoding='utf-8').write(js)
+        print(f"{'guides.js':14} {len(js):>7,} -> dist/guides.js (copied)")
     if os.path.exists('network.js'):
         js = open('network.js', encoding='utf-8').read()
         open(os.path.join('dist', 'network.js'), 'w', encoding='utf-8').write(js)
