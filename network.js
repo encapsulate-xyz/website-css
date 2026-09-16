@@ -280,27 +280,27 @@
       item.type = "button";
       item.setAttribute("role", "option");
       item.setAttribute("aria-selected", o[0] === state.sort ? "true" : "false");
-      item.addEventListener("click", function () {
+      item.addEventListener("pointerdown", function (e) {
+        e.preventDefault();
         state.sort = o[0];
         label.textContent = o[1];
         Array.prototype.forEach.call(menu.children, function (c) {
           c.setAttribute("aria-selected", c === item ? "true" : "false");
         });
-        menu.hidden = true;
-        button.setAttribute("aria-expanded", "false");
+        toggleMenu(false);
         applyControls(db, state);
       });
       menu.appendChild(item);
     });
-    button.addEventListener("click", function () {
-      menu.hidden = !menu.hidden;
+    // the same for the menu: open it on pointerdown, so a cancelled click cannot swallow it
+    function toggleMenu(open) {
+      menu.hidden = open === undefined ? !menu.hidden : !open;
       button.setAttribute("aria-expanded", menu.hidden ? "false" : "true");
-    });
+    }
+    button.addEventListener("pointerdown", function (e) { e.preventDefault(); toggleMenu(); });
+    button.addEventListener("click", function (e) { e.preventDefault(); });
     document.addEventListener("click", function (e) {
-      if (!menu.hidden && !sort.contains(e.target)) {
-        menu.hidden = true;
-        button.setAttribute("aria-expanded", "false");
-      }
+      if (!menu.hidden && !sort.contains(e.target)) toggleMenu(false);
     });
     sort.appendChild(button);
     sort.appendChild(menu);
@@ -318,6 +318,15 @@
       applyControls(db, state);
     });
     field.appendChild(input);
+    /* Focus explicitly. A click normally focuses the field by itself, but Super listens for pointer
+       events on the document to close its dropdown and cancels them, and a cancelled pointerdown
+       never focuses anything — which is why typing did nothing. Focusing here does not depend on
+       the default action surviving. */
+    ["pointerdown", "mousedown", "click", "touchstart"].forEach(function (type) {
+      field.addEventListener(type, function () {
+        if (document.activeElement !== input) setTimeout(function () { input.focus(); }, 0);
+      });
+    });
 
     wrap.appendChild(sort);
     wrap.appendChild(field);
