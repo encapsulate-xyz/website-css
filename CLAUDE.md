@@ -242,6 +242,37 @@ two dead homepage background rules went with it on 2026-09-16. Keep large conten
 free for personal and commercial use with no bandwidth cap (20MB per file, 50MB per package), but it
 is a package CDN and sustained media traffic invites a fair-use review.
 
+## The guides picker (/guides, guides.css + guides.js, 2026-09-16)
+
+Design *Guides Set* 6d "One question at a time": the band asks "I want to stake &lt;chain&gt; with
+&lt;wallet&gt;." and finishes the sentence as the reader picks. It reads three galleries Super already
+renders on the page — the Guides Database, the **Networks set** and the **Wallet Set** — and writes
+no copy of its own.
+
+**A linked view is not the database.** Add a linked view of a database to a page and Super renders it
+under the *view's* own block id; the source database's id is nowhere in the page, and the source
+block can still exist as a plain page link with no rows in it. A view can also be a **table** rather
+than a gallery. So `guides.js` finds its two sources by content: of every `.notion-collection` other
+than the guides one, the chains are whichever overlaps most with the guide rows' own names, the other
+is the wallets; items are gallery cards **or** `tbody tr`, both carrying the title and the glyph. It
+marks what it used with `data-enc-source`, which is how the CSS hides them (ids alone did not).
+
+**The Guides gallery view must show Networks set, Wallet Set, Step and Time** — the picker reads the
+wallet, the step count and the minutes off the rendered card. They are hidden on the card by CSS.
+Notion's API cannot switch view properties on; that is a manual step.
+
+**Centre marks the design's way.** Every glyph is `left/top: 50%` + `translate(-50%, -50%)` at 116%
+of its disc, so the overflow is clipped evenly. Centred as a grid item instead, the overflow fell to
+one side and every mark sat 2.6px low (the user spotted it). Chain disc 24px, answer-card wallet
+badge 38px around a 30px mark, answer field 520×272 (1.91:1, the blog covers' ratio).
+
+**Step and Time came from the guides themselves** (2026-09-16): each guide's final slide, taken in
+**gallery order** — not filename order — and the step badge read off the rendered image. Largest is
+18 steps → 9 minutes, every other Time proportional. Guides for chains that are not in the Networks
+set are `Network = Rough` (Stargaze, UX, Quicksilver, OmniFlix, Namada, Juno), which drops them from
+the Mainnet view; MELLOW stays Mainnet and so is not reachable from the picker until Mellow is a row
+in the Networks set.
+
 ## Search and sort on a Notion gallery — the working recipe (2026-09-16)
 
 Super has no search snippet and Notion has no input or menu block, so a gallery's search field and
