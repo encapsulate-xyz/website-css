@@ -257,6 +257,8 @@ cases. The difference is inside it.</p>
 <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
 <script>
   var GOOGLE_LINK = "https://calendar.google.com/calendar/appointments/schedules/AcZssZ3VmMrN15yUKaY4fwWIZ-QiIihIZwjamersVTGyqSzzKIg_UVd473mPpxE6suS0Q7YVoTXlSHLG?gv=true";
+  // No overlayCalendar: its indicator dot is a hard-coded emerald in Cal's code, and no variable
+  // reaches it — without the toggle there is no dot.
   var CAL_LINK = "aditya-encapsulate/15min";   // Encapsulate, 15 minute call
 
   // Google: build their button once, hidden, and forward our button's clicks to it.
@@ -302,7 +304,7 @@ var CAL_UI = {
       "cal-brand-accent": "#000000",
       /* grounds */
       "cal-bg": "#FFFEFC",
-      "cal-bg-subtle": "#F2F2ED",
+      "cal-bg-subtle": "#FAFAF8",       /* the Card System's pressed paper — slot hover/press */
       "cal-bg-muted": "#F2F2ED",
       "cal-bg-emphasis": "#EBECED",
       "cal-bg-inverted": "#3A3D38",
@@ -339,7 +341,7 @@ var CAL_UI = {
       "cal-border-default": "#D9D9D2",
       "cal-border-subtle": "#E2E2DB",
       "cal-border-muted": "#E2E2DB",
-      "cal-border-emphasis": "#A5A5A5",
+      "cal-border-emphasis": "#B9B9B1", /* --card-ring-hover */
       "cal-border-error": "#8A3A55",
       "cal-border-booker": "#D9D9D2",
       "cal-border-booker-width": "1px",
