@@ -261,6 +261,15 @@ marks what it used with `data-enc-source`, which is how the CSS hides them (ids 
 wallet, the step count and the minutes off the rendered card. They are hidden on the card by CSS.
 Notion's API cannot switch view properties on; that is a manual step.
 
+**The picker is its own screen** (design *Guides Picker*, 2026-09-16): the band is one viewport tall
+on the #F2F2ED ground, padded `clamp(112px,20vh,200px) clamp(28px,7vw,110px) 96px`, with a bar across
+its top carrying the crumb and a counter — both Notion texts (the last two paragraphs in the callout);
+only the counter's two numbers are rewritten by the script, from the chains that have a guide and the
+guides it matched. A second IIFE in `guides.js` snaps to it with the Network Count gesture rules but a
+single stop: a gesture heading at the panel from within half a screen lands on it, a rest within a
+third of a screen settles onto it, nothing under 701px or with reduced motion. The catch rule is
+testable in Node (`scratchpad/snaptest.js`) — the automation tab fires no scroll events.
+
 **Centre marks the design's way.** Every glyph is `left/top: 50%` + `translate(-50%, -50%)` at 116%
 of its disc, so the overflow is clipped evenly. Centred as a grid item instead, the overflow fell to
 one side and every mark sat 2.6px low (the user spotted it). Chain disc 24px, answer-card wallet
