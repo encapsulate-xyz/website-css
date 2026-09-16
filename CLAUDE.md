@@ -225,15 +225,15 @@ can never drift from the CSS that positions it.
 
 | Asset | Where it lives | Who reads it |
 |---|---|---|
-| Network glyphs | the **Cover** files property on each row of the Networks database (not a page cover) | Super draws the gallery cards; `home.js` (glyph columns, staking listbox) and `covers.js` (/networks cover) read those cards off the page and take the original `assets.super.so` URL back out of Super's `/_next/image` link |
+| Network glyphs | the **Cover** files property on each row of the **Networks set** database `3dde800a…33b7f1…` (47 deployment rows, glyphs uploaded through the API 2026-09-16; the old "Networks" database is still on the page until it is deleted) | Super draws the gallery cards; `home.js` (glyph columns, staking listbox) and `covers.js` (/networks cover) read those cards off the page and take the original `assets.super.so` URL back out of Super's `/_next/image` link |
 | Services, team, testimonial and blog covers | the same kind of Notion property | Super, plus `home.js` for the services swap |
 | Every word on the site | Notion blocks | — |
 
 The Notion API can now upload files (`POST /v1/file_uploads` → send the bytes → attach by
 `file_upload` id), so a glyph can be replaced end to end from here; external URLs still work too.
 
-**The exception:** `footer.js` holds 10 hardcoded `assets.super.so` glyph URLs, because the footer
-runs on pages with no networks gallery to read. Replace one of those Covers in Notion and the footer
+**The exception:** `footer.js` holds 10 hardcoded `assets.super.so` glyph URLs (re-pointed at the
+Networks set uploads on 2026-09-16), because the footer runs on pages with no networks gallery to read. Replace one of those Covers in Notion and the footer
 keeps showing the old file until the list is updated.
 
 **DigitalOcean is no longer used by the CSS** (was
@@ -279,6 +279,25 @@ is a package CDN and sustained media traffic invites a fair-use review.
 - To preview a page without its Code panel CSS, set that `<style>`'s `media="not all"`.
 - The site is the source of truth: check what the browser actually has (served tag, matching
   rules) before assuming a file is deployed.
+
+## The Networks set (2026-09-16)
+
+`Networks set` (`3dde800a…33b7f1…`) replaces the old `Networks` database: **one row per deployment**,
+28 mainnet + 19 testnet, from design *Networks Set*. Properties: Name, Stage, Reward rate, Role,
+Status, Tier, Order, Cover (glyph, uploaded via the file-upload API), Link. Two gallery views,
+Mainnet and Testnet, sorted by Order — so the first twelve cards are the god and high tiers.
+
+- **5g, the cards** (network.css "NETWORKS SET"): 128px card, the Cover's span turned into a 96px
+  pastel well pushed 26px past the bottom-right corner, glyph at 52%. Mainnet cards carry the rate
+  (`.property-597e3d69`) as a 22px figure; testnet cards carry the role (`.property-585f6e6c`) and
+  drop the disc to 62%. The hover arrow badge only appears on cards that are links.
+- **5m, the chain-teams band** (callout `3dde800a…9995f7…`): ink, full-bleed, with the marks row
+  built by `network.js` from the set's own gallery — first twelve cards plus a "+N more".
+- **Every script now prefers this database:** `covers.js` reads it by id, `home.js` uses it when a
+  view of it is on the homepage (old gallery is the fallback), `network.js` builds 5m from it.
+- **The rates are the design's invented figures** — its own note says so. Replace before shipping.
+- The old gallery's CSS (pill, pastel tiles, side image; 456 lines) was removed on 2026-09-16: every
+  rule used global collection classes and reached the new cards.
 
 ## TODO — a GitHub Action to fill the APY property (agreed 2026-09-16, not built)
 
