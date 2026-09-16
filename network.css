@@ -157,7 +157,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   font-size: 15px !important;
   font-weight: 500 !important;
   letter-spacing: -0.006em !important;
-  color: #6B6F68 !important;
+  color: #575B55 !important;   /* the design's ON_GROUND, not the #6B6F68 body grey */
   transition: color 0.16s ease !important;
 }
 
@@ -1048,7 +1048,7 @@ STYLING DROPDOWN MENU
   font-family: var(--type-body), system-ui, sans-serif;
   font-size: 14.5px;
   letter-spacing: -0.006em;
-  color: #6B6F68;
+  color: #575B55;   /* ON_GROUND, as the design's sort control */
   white-space: nowrap;
   transition: color 0.16s ease;
 }
