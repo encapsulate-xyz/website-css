@@ -76,75 +76,95 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 
 
 /*********************************************/
-/* DATABASE VIEW PICKER */
+/* DATABASE VIEW PICKER — the design's control bar */
 /*********************************************/
-@media (min-width: 576px) {
-/* Stretch the button group to the full page width */
-  .notion-dropdown__option-list {
-      margin-left: auto !important;
-    width: 40%;
-    display: flex;
-    justify-content: space-around;
-    /*border: 1px solid black!important;*/
-    border-radius: 45px !important;
-  }
 
-  /* Add rounded corners to buttons */
-  .notion-dropdown__option {
-    margin: 5px!important;
-    flex: 1;
-    border-radius: 25px!important;
-    padding: 10px;
-    transition: background-color 0.3s ease;
-    justify-content: center;
-  }
+/* REPLACED 2026-09-16. The old rules made the picker a right-aligned 40%-wide
+   strip of 25px pill buttons in Verdana, tinted green and pink when active —
+   and they applied to every picker on the page, including the new set's.
 
-    .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:nth-child(n) {
-        border-radius: 25px!important;
-        border: 1px solid black!important;
-  }
+   "Networks Set" puts the stage tabs in one bar across the top of the grid:
+   a 50px row on the card ring, the tabs left-aligned, the active one marked by
+   a 2px ink underline rather than a fill. The design also carries a count on
+   each tab and a search field; both need markup Notion cannot provide, so
+   they are not here. */
 
-  .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:nth-child(2).active {
-    background: var(--color-bg-pink) !important;
-  }
-
-
-  .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:nth-child(1).active {
-    background: var(--color-bg-green) !important;
-  }
-
-
-  .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:nth-child(n):hover {
-    border: 1px solid black!important;
-  }
-
-
-
-
-  .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option.active {
-   border: 1px solid black!important;
-   pointer-events: none;
-  }
-
-  .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option p {
-    font-size: 18px!important;
-     font-family: Verdana, sans-serif;
-  }
-
-/* New view switcher code */
-  :root {
-    --picker-active-bg-color: #d9ecda!important;
-    --picker-active-text-color: rgb(70, 70, 70) !important;
-    --picker-border-color: rgb(255,255,255) !important;
-    --picker-text-color: rgb(70, 70, 70) !important;
-    --picker-border-radius: 25px !important;
-    --picker-hover-bg-color: transparent !important;
-    /*  --picker-hover-bg-color: rgb(244, 223, 235)!important;*/
-    /*--picker-hover-text-color: rgb(70, 70, 70) !important;*/
-    --picker-hover-border-color: transparent !important;
-
-  }
+.notion-root .notion-collection__header-wrapper {
+  width: 100% !important;
+  margin: 0 0 26px !important;
+  padding: 0 !important;
 }
+
+.notion-root .notion-dropdown {
+  width: 100% !important;
+}
+
+.notion-root .notion-dropdown__option-list {
+  display: flex !important;
+  width: 100% !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 10px !important;
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+  min-height: 50px !important;
+  border: 1px solid #D9D9D2 !important;
+  border-radius: 10px !important;
+  background: var(--color-bg-default) !important;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
+  overflow: visible !important;
+}
+
+.notion-root .notion-dropdown__option {
+  flex: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 50px !important;
+  margin: 0 !important;
+  padding: 0 14px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #6B6F68 !important;
+  transition: color 0.16s ease, box-shadow 0.16s ease !important;
+}
+
+.notion-root .notion-dropdown__option p,
+.notion-root .notion-dropdown__option span {
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.006em !important;
+  color: inherit !important;
+}
+
+.notion-root .notion-dropdown__option:hover {
+  color: #000000 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.notion-root .notion-dropdown__option.active {
+  color: #000000 !important;
+  background: transparent !important;
+  box-shadow: inset 0 -2px 0 #000000 !important;
+  pointer-events: none !important;
+}
+
+/* Super's own picker snippet reads these */
+.notion-root {
+  --picker-active-bg-color: transparent !important;
+  --picker-active-text-color: #000000 !important;
+  --picker-text-color: #6B6F68 !important;
+  --picker-border-color: transparent !important;
+  --picker-border-radius: 0 !important;
+  --picker-hover-bg-color: transparent !important;
+  --picker-hover-border-color: transparent !important;
+}
+
 /*********************************************/
 /********************************************/
 /* FOR PAGE SUB HEADING
