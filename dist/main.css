@@ -18,14 +18,14 @@ nav.super-navbar .super-navbar__button{display: flex;}
 .super-navbar__menu .super-navigation-menu__item:hover::before{background-image: var(--nav-icon);}
 .super-navbar__menu .super-navigation-menu__item-title{margin: 0;}
 .super-navbar__menu .super-navigation-menu__item-content::after{content: var(--nav-desc,none);display: block;margin-top: 2px;font-family: "Manrope",sans-serif;font-size: 0.9em;font-weight: normal;color: #666;}
-.super-navbar__menu .super-navigation-menu__item[href="/networks"]{--nav-icon: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/navbar/networks.png");--nav-desc: "Choose a network and start earning rewards";}
-.super-navbar__menu .super-navigation-menu__item[href="/services"]{--nav-icon: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/navbar/services1.png");--nav-desc: "View our community services";}
-.super-navbar__menu .super-navigation-menu__item[href="/snapshots"]{--nav-icon: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/navbar/snapshots.png");--nav-desc: "Sync in hours with our snapshots";}
-.super-navbar__menu .super-navigation-menu__item[href="/governance-record"]{--nav-icon: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/navbar/governance.png");--nav-desc: "View our voting principles and history";}
-.super-navbar__menu .super-navigation-menu__item[href="/rewards-calculator"]{--nav-icon: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/navbar/calculator.png");--nav-desc: "Calculate staking rewards";}
-.super-navbar__menu .super-navigation-menu__item[href="/blog"]{--nav-icon: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/navbar/blog.png");--nav-desc: "Read things we are interested in";}
-.super-navbar__menu .super-navigation-menu__item[href="/team"]{--nav-icon: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/navbar/team.png");--nav-desc: "Curious to know us ?";}
-.super-navbar__menu .super-navigation-menu__item[href="/contact-us"]{--nav-icon: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/navbar/contact.png");--nav-desc: "Feel free to reach out to us";}
+.super-navbar__menu .super-navigation-menu__item[href="/networks"]{--nav-icon: url("../img/nav-networks.png");--nav-desc: "Choose a network and start earning rewards";}
+.super-navbar__menu .super-navigation-menu__item[href="/services"]{--nav-icon: url("../img/nav-services1.png");--nav-desc: "View our community services";}
+.super-navbar__menu .super-navigation-menu__item[href="/snapshots"]{--nav-icon: url("../img/nav-snapshots.png");--nav-desc: "Sync in hours with our snapshots";}
+.super-navbar__menu .super-navigation-menu__item[href="/governance-record"]{--nav-icon: url("../img/nav-governance.png");--nav-desc: "View our voting principles and history";}
+.super-navbar__menu .super-navigation-menu__item[href="/rewards-calculator"]{--nav-icon: url("../img/nav-calculator.png");--nav-desc: "Calculate staking rewards";}
+.super-navbar__menu .super-navigation-menu__item[href="/blog"]{--nav-icon: url("../img/nav-blog.png");--nav-desc: "Read things we are interested in";}
+.super-navbar__menu .super-navigation-menu__item[href="/team"]{--nav-icon: url("../img/nav-team.png");--nav-desc: "Curious to know us ?";}
+.super-navbar__menu .super-navigation-menu__item[href="/contact-us"]{--nav-icon: url("../img/nav-contact.png");--nav-desc: "Feel free to reach out to us";}
 :root{--type-display: "Outfit",system-ui,sans-serif;--type-body: "Hanken Grotesk",system-ui,sans-serif;--type-mono: "JetBrains Mono",ui-monospace,monospace;}
 h1.notion-heading,h2.notion-heading,h3.notion-heading,h4.notion-heading{margin-top: 0 !important;padding-top: 0 !important;font-family: var(--type-display) !important;color: inherit;text-wrap: balance !important;}
 h1.notion-heading{font-weight: 600 !important;font-size: clamp(40px,6.2vw,92px) !important;line-height: 0.96 !important;--h1-line-height: 0.96 !important;letter-spacing: -0.046em !important;max-width: 15ch !important;margin-bottom: 20px !important;}

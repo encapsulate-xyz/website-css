@@ -462,7 +462,7 @@ body {
   color: #D2E3F6 !important;
 }
 .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-blue-light::before {
-  --stat-field: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/svg/stat-field-blue.svg") !important;
+  --stat-field: url("../svg/stat-field-blue.svg") !important;
 }
 
 .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-pink-light h1,
@@ -470,7 +470,7 @@ body {
   color: #F7DCE7 !important;
 }
 .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-pink-light::before {
-  --stat-field: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/svg/stat-field-pink.svg") !important;
+  --stat-field: url("../svg/stat-field-pink.svg") !important;
 }
 
 .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-green-light h1,
@@ -478,7 +478,7 @@ body {
   color: #DCEEC7 !important;
 }
 .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-green-light::before {
-  --stat-field: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/svg/stat-field-green.svg") !important;
+  --stat-field: url("../svg/stat-field-green.svg") !important;
 }
 
 .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-orange-light h1,
@@ -486,7 +486,7 @@ body {
   color: #F8DDC6 !important;
 }
 .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-orange-light::before {
-  --stat-field: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/svg/stat-field-orange.svg") !important;
+  --stat-field: url("../svg/stat-field-orange.svg") !important;
 }
 
 /* Dots, as gradients rather than 240 inlined circles. The radial-gradient is
@@ -498,7 +498,7 @@ body {
   color: #F8E8B3 !important;
 }
 .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout.bg-yellow-light::before {
-  --stat-field: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/svg/stat-field-yellow.svg") !important;
+  --stat-field: url("../svg/stat-field-yellow.svg") !important;
 }
 
 /* The band is already a full-bleed grid of these; below the two-column point
@@ -811,7 +811,7 @@ body {
   height: 143% !important;
   z-index: -1 !important;
   pointer-events: none !important;
-  background-image: url("https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/svg/circle-online.svg") !important;
+  background-image: url("../svg/circle-online.svg") !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   background-size: 100% 100% !important;

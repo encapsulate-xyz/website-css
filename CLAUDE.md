@@ -38,7 +38,7 @@ User rules that stand on every task:
 | `home.css`, `home-dial.css`, `home.js` | homepage sections, JS-enhanced styles, homepage scripts | homepage Head |
 | `network.css`, `network.js` | /networks (network.js pages the Network Count panels, same gesture rules as home.js decks) | its page Head |
 | `governance.css`, `blog.css`, `brand.css`, `contact-us.css`, `guides.css`, `investments.css`, `security.css`, `services.css` | each page's CSS, moved out of Super's page Code panels on 2026-09-15 (old cover rules removed, the rest kept as it was) | each page's Head |
-| `svg/` | SVG sources (DigitalOcean CDN, or served from jsDelivr like `svg/wordmark-reversed.svg`, `svg/mark-a.svg`) | — |
+| `svg/`, `img/` | every drawing and icon the CSS references, served from jsDelivr beside the CSS | referenced as `../svg/…` / `../img/…` from `dist/` |
 | `notion/page-covers.md` | cover copy for the nine inner pages | — |
 | `build.py` | strips comments into `dist/`, copies the JS | — |
 
@@ -207,6 +207,40 @@ div.notion-form__field.<type>`; dropdown questions still render as radios (drawn
 "Amount" is driven by the slider; choice questions with >6 options become a glyph listbox. React
 inputs: click labels, use the native value setter + `input` event; mark with attributes
 (`[data-enc-…]`), not classes — React resets className.
+
+## Where each asset comes from — repo vs Notion (settled 2026-09-16)
+
+**Repo + jsDelivr — anything that is part of the design.** Referenced from the built CSS as
+`../svg/name.svg` or `../img/name.png`, which resolves next to `dist/` on the same tag, so a drawing
+can never drift from the CSS that positions it.
+
+| Asset | Files |
+|---|---|
+| Section fields and drawings | `svg/stat-field-*.svg`, `svg/circle-online.svg`, `svg/fork-arcs-*.svg`, `svg/5k-fan-and-rings.svg`, `svg/5o-twin-fans.svg`, `svg/9c-inverted-horizons.svg`, `svg/rail-dots.svg`, `svg/team-crew.svg` |
+| Cover fields (/networks count) | `svg/count-rings.svg`, `svg/count-dots.svg` |
+| Brand | `svg/wordmark-reversed.svg` (footer), `svg/mark-a.svg` (/brand cover) |
+| Slide-out menu icons | `img/nav-*.png` — 8 icons, resized to 144px from the 500px originals (they render at 48px) |
+
+**Notion — anything that is content.** None of it is in the repo; Super stores and serves it.
+
+| Asset | Where it lives | Who reads it |
+|---|---|---|
+| Network glyphs | the **Cover** files property on each row of the Networks database (not a page cover) | Super draws the gallery cards; `home.js` (glyph columns, staking listbox) and `covers.js` (/networks cover) read those cards off the page and take the original `assets.super.so` URL back out of Super's `/_next/image` link |
+| Services, team, testimonial and blog covers | the same kind of Notion property | Super, plus `home.js` for the services swap |
+| Every word on the site | Notion blocks | — |
+
+The Notion API can now upload files (`POST /v1/file_uploads` → send the bytes → attach by
+`file_upload` id), so a glyph can be replaced end to end from here; external URLs still work too.
+
+**The exception:** `footer.js` holds 10 hardcoded `assets.super.so` glyph URLs, because the footer
+runs on pages with no networks gallery to read. Replace one of those Covers in Notion and the footer
+keeps showing the old file until the list is updated.
+
+**DigitalOcean is no longer used by the CSS** (was
+`multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/…`). The only references left are two
+commented-out homepage background rules in `home.css`. Keep large content images off jsDelivr: it is
+free for personal and commercial use with no bandwidth cap (20MB per file, 50MB per package), but it
+is a package CDN and sustained media traffic invites a fair-use review.
 
 ## Things that bite in Super / Notion markup
 
