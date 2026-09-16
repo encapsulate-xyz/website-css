@@ -22,7 +22,7 @@
     kicker: "Launching a chain",
     heading: "Add us to your genesis set.",
     text: "On call for upgrades and incidents, from your first testnet onward.",
-    primary: { label: "Book a call", href: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ3VmMrN15yUKaY4fwWIZ-QiIihIZwjamersVTGyqSzzKIg_UVd473mPpxE6suS0Q7YVoTXlSHLG?gv=true", external: true },
+    primary: { label: "Book a call", href: "https://cal.com/aditya-encapsulate/30min", external: true },
     secondary: { label: "View networks", href: "/networks" }
   };
   var ASSETS = "https://assets.super.so/d7300a44-6aa9-4b9e-a149-0076eb69ca9d/images/";
