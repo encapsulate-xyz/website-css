@@ -6,3 +6,4 @@ backups/
 *.iml
 __pycache__/
 .DS_Store
+scripts/__pycache__/
