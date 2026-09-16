@@ -859,11 +859,6 @@ STYLING DROPDOWN MENU
   border-radius: 0 !important;
   background: #3A3D38 !important;
   overflow: visible !important;
-  /* ONE SCREEN OF SLACK. Sticky panels pin until the band's bottom reaches them, so a band exactly
-     as tall as its panels gives the LAST panel no dwell: it slides through and leaves the band's
-     ground showing with no figure on it. The extra screen is the last panel's dwell; network.js
-     subtracts this padding when it measures the stops, so the first panel still stops at the top. */
-  padding-bottom: 100dvh !important;
 }
 
 #block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__icon,
@@ -894,6 +889,14 @@ STYLING DROPDOWN MENU
   letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
   color: #B4B4B4 !important;
+}
+
+/* THE KICKER LEAVES WITH THE PANELS. Its sticky range is the whole band, so once the last panel
+   has been scrolled past, the label would stay pinned over the band's bare ground — dots and no
+   figure. network.js marks the band [data-enc-leaving] past the last stop, and the label fades. */
+#block-3dce800a51388154931ac3c9478a65b5[data-enc-leaving] > .notion-callout__content > p.notion-text {
+  opacity: 0 !important;
+  transition: opacity 0.18s ease !important;
 }
 
 /* the panels */
@@ -1017,10 +1020,6 @@ STYLING DROPDOWN MENU
     height: auto !important;
     margin: 0 !important;
     padding: 40px var(--count-x) 0 !important;
-  }
-
-  #block-3dce800a51388154931ac3c9478a65b5 {
-    padding-bottom: 0 !important;
   }
 
   #block-3dce800a51388154931ac3c9478a65b5 .notion-callout {

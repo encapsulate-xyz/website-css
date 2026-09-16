@@ -25,8 +25,6 @@
     var panels = box.querySelectorAll(".notion-callout");
     if (panels.length < 2 || getComputedStyle(panels[0]).position !== "sticky") return cache;
     // sticky panels report their stuck position; measure from the band's bottom, which never moves
-    // the band carries a screen of padding-bottom (the last panel's dwell, network.css); the stops
-    // are measured from where the panels actually end, not from the padded box
     var h = panels[0].offsetHeight;
     var bottom = docTop(box) + box.offsetHeight - (parseFloat(getComputedStyle(box).paddingBottom) || 0);
     var stops = [];
@@ -97,16 +95,29 @@
     var t = onStop(d, lastRest) && Math.abs(y - lastRest) < d.h ? nextStop(d, lastRest, dir) : landStop(d, y, dir);
     scrollToY(t === null ? landStop(d, y, dir) : t);
   }
+  /* The kicker is sticky over the whole band, so past the last panel it would sit alone over the
+     band's ground. Mark the band while that is true and network.css fades the label out. */
+  function paintKicker() {
+    var d = deck(), box = document.getElementById(BAND);
+    if (!box || !d) return;
+    var leaving = window.scrollY > d.stops[d.stops.length - 1] + 8;
+    if (leaving === box.hasAttribute("data-enc-leaving")) return;
+    if (leaving) box.setAttribute("data-enc-leaving", "");
+    else box.removeAttribute("data-enc-leaving");
+  }
+
   var hasScrollEnd = "onscrollend" in window;
   if (hasScrollEnd) window.addEventListener("scrollend", function () { arrived(); setTimeout(settle, 30); });
   window.addEventListener("scroll", function () {
     if (!hasScrollEnd) { clearTimeout(restTimer); restTimer = setTimeout(function () { arrived(); settle(); }, 140); }
     arrived();
+    paintKicker();
   }, { passive: true });
   window.addEventListener("touchstart", function () { touching = true; if (anim) finish(); }, { passive: true });
   window.addEventListener("touchend", function () { touching = false; if (!hasScrollEnd) setTimeout(settle, 140); }, { passive: true });
 
   new MutationObserver(invalidate).observe(document.body, { childList: true, subtree: true });
   window.addEventListener("resize", invalidate);
-  window.addEventListener("load", invalidate);
+  window.addEventListener("load", function () { invalidate(); paintKicker(); });
+  paintKicker();
 })();
