@@ -278,6 +278,25 @@ is a package CDN and sustained media traffic invites a fair-use review.
 - The site is the source of truth: check what the browser actually has (served tag, matching
   rules) before assuming a file is deployed.
 
+## TODO — a GitHub Action to fill the APY property (agreed 2026-09-16, not built)
+
+APY values in the Networks database are **updated by hand for now**. When it is worth automating,
+the shape is a scheduled Action in this repo — not client-side fetching, which would mean CORS, a
+flash of empty values and a key in the page.
+
+- **Cosmos chains are free and verified working:** `https://chains.cosmos.directory/<chain>` returns
+  `params.calculated_apr` (Agoric read 7.05% on 2026-09-16) and answers with
+  `access-control-allow-origin: https://encapsulate.xyz`. Covers Agoric, Althea, Gravity Bridge,
+  Passage, Sommelier, Terra, Lumera, Gitopia, Chain4Energy and others — about a third of the set.
+- **Everything else is one API per chain** (Sui, NEAR, Monad, Avalanche, Starknet, Mina, IOTA,
+  Zilliqa, Axelar, Supra, Vara…), with different maths and no shared format. Aggregators that cover
+  them all are paid and key-based, so the key would have to be a repo secret — another reason the
+  job runs in CI rather than the browser.
+- **The job writes to Notion** through the integration (the API can set a property), so the site
+  keeps rendering an ordinary property and any value can still be overridden by hand. Add a
+  `Last updated` property so the page can say when, and have the job skip rows marked manual.
+- Publish network APR, not the delegator's figure, unless commission is subtracted — and date it.
+
 ## Open items
 
 - /services, /investments, /brand, /blog, /guides were still served with site Head v55 at the last
@@ -296,3 +315,9 @@ is a package CDN and sustained media traffic invites a fair-use review.
 - Networks cover glyph URLs are hardcoded in covers.js; could read the /networks gallery instead.
 - Mobile layout of the covers (field below the text under 800px) is not verified.
 - Refresh the Notion integration token.
+- Search and sort controls for a gallery are possible but unbuilt: Super ships no search snippet
+  (its "dynamic database filters" are roadmap), so an input plus reordering of the rendered cards
+  would be ours. Sorting alone can be done with extra Notion views and the view picker.
+- The booking drawer is designed in `demo/booking-compare.html` but **not** on the site — the user is
+  sending a drawer design first. Every "Book a call" opens https://cal.com/aditya-encapsulate/30min
+  in a new tab meanwhile.
