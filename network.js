@@ -19,11 +19,12 @@
   var cache = null;
   function deck() {
     if (cache !== null) return cache;
-    cache = false;
+    // A negative answer is NOT cached: the first call can land before network.css has applied (the
+    // panels are not sticky yet), and caching that would leave the deck dead until the next resize.
     var box = document.getElementById(BAND);
-    if (!box) return cache;
+    if (!box) return false;
     var panels = box.querySelectorAll(".notion-callout");
-    if (panels.length < 2 || getComputedStyle(panels[0]).position !== "sticky") return cache;
+    if (panels.length < 2 || getComputedStyle(panels[0]).position !== "sticky") return false;
     // sticky panels report their stuck position; measure from the band's bottom, which never moves
     var h = panels[0].offsetHeight;
     var bottom = docTop(box) + box.offsetHeight - (parseFloat(getComputedStyle(box).paddingBottom) || 0);
