@@ -79,8 +79,8 @@ Note: `git commit` also commits anything the user has staged — check `git stat
 |---|---|
 | `head/site.html` | Super → Settings → Code → Head (minima, main.css, footer.js, covers.js, fonts) |
 | `head/site-body.html` | Super → Settings → Code → Body (temporary "under reconstruction" banner) |
-| `head/home.html` | Homepage → Code → Head |
-| `head/networks.html` | /networks → Code → Head (view-picker + network.css + network.js) |
+| `head/home.html` | Homepage → Code → Head (CSS only — home.js is in the site head) |
+| `head/networks.html` | /networks → Code → Head (view-picker + network.css; network.js is in the site head) |
 | `head/governance.html` | /governance-record → Code → Head |
 | `head/blog.html` | /blog → Code → Head |
 | `head/brand.html` | /brand → Code → Head (includes the Comfortaa font link) |
@@ -284,6 +284,22 @@ render (a view limited to N cards).
 **7. Testing.** The automation browser delivers no real mouse clicks and freezes transitions, so
 click-to-focus cannot be verified there — drive it with `input.focus()` plus a native value setter
 and an `input` event, and ask the user to confirm the click itself.
+
+## Page scripts belong in the SITE head (measured 2026-09-16)
+
+Super is a single-page app. On a client-side navigation it **does inject the destination page's
+stylesheets** but **does not execute that page's `<script>`** — so arriving at the homepage from
+another page left every JS-built section unbuilt (the blog rail showed as the raw Notion gallery,
+the glyph columns and Why Stake figures were missing, snapping was dead), while the CSS looked
+right, which is what made it confusing.
+
+`home.js` and `network.js` are therefore loaded from `head/site.html`, not from their page's head.
+Every IIFE in both files already runs off a MutationObserver, so when Super swaps the page in they
+build by themselves — verified live: loading home.js on /networks and then clicking Home gave the
+rail (3 cards), the network columns and the figures. Page CSS stays in the page head.
+
+A new page script must follow the same rule: site head, and driven by an observer rather than by
+load order.
 
 ## Things that bite in Super / Notion markup
 
