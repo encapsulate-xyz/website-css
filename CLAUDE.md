@@ -295,9 +295,18 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
   built by `network.js` from the set's own gallery — first twelve cards plus a "+N more".
 - **Every script now prefers this database:** `covers.js` reads it by id, `home.js` uses it when a
   view of it is on the homepage (old gallery is the fallback), `network.js` builds 5m from it.
-- **The rates are the design's invented figures** — its own note says so. Replace before shipping.
+- **The rates are the design's invented figures** — its own note says so. See the TODO below.
+- **Both views must be sorted by Order ascending** — without a sort Notion returns rows in reverse
+  creation order, which puts the smallest chains first and gives 5m the wrong twelve marks.
 - The old gallery's CSS (pill, pastel tiles, side image; 456 lines) was removed on 2026-09-16: every
   rule used global collection classes and reached the new cards.
+
+## TODO — the rates in the Networks set are placeholders (2026-09-16)
+
+Every "Reward rate" in the `Networks set` database came from the design file, whose own note says
+the figures are invented to populate the column and exercise the sort. They must be replaced with
+published rates before the page is public — the plan is to fetch them and write them into Notion
+(same job as the Action below), not to type them.
 
 ## TODO — a GitHub Action to fill the APY property (agreed 2026-09-16, not built)
 
