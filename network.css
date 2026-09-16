@@ -661,6 +661,12 @@ STYLING DROPDOWN MENU
   padding: 0 !important;
 }
 
+/* A card Super renders is display:flex, which beats the `hidden` attribute — so a card the search
+   filters out stayed on screen and only moved. `hidden` has to win. */
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card[hidden] {
+  display: none !important;
+}
+
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card {
   position: relative !important;
   height: 128px !important;

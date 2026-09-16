@@ -237,6 +237,8 @@
       order.sort(function (a, b) { return a.__setIndex - b.__setIndex; });
     }
     order.forEach(function (c, i) { c.style.order = i; });
+    // a filtered-out card keeps no stale position in the grid
+    cards.forEach(function (c) { if (c.hidden) c.style.order = 9999; });
     db.setAttribute("data-enc-shown", String(shown));
     var empty = db.querySelector(".enc-set-empty");
     if (empty) empty.hidden = shown !== 0;
