@@ -327,10 +327,12 @@ var CAL_UI = {
       "cal-bg-brand-emphasis": "#8CBF56",
       "cal-bg-brand-muted": "#DCEEC7",
 
-      /* secondary: --btn-2-fill #FAFAF8, ring #D9D9D2, hover ring #B9B9B1, press #F2F2ED */
-      "cal-bg": "#FAFAF8",
-      "cal-bg-emphasis": "#FAFAF8",       /* unselected day cells */
-      "cal-bg-muted": "#FAFAF8",          /* a secondary keeps its fill on hover */
+      /* The booker's ground is the site's ground, so the embed and the panel around it are one
+         surface. Cal's secondary button (a time slot) fills with bg-default too, which is what the
+         Card System does — a card is the ground plus a ring. */
+      "cal-bg": "#FFFEFC",
+      "cal-bg-emphasis": "#FAFAF8",       /* unselected day cells — the Button System's paper */
+      "cal-bg-muted": "#FFFEFC",          /* a secondary keeps its fill on hover */
       "cal-bg-subtle": "#F2F2ED",         /* the pressed step */
       "cal-bg-inverted": "#3A3D38",
       "cal-border": "#D9D9D2",
