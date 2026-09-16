@@ -237,8 +237,8 @@ runs on pages with no networks gallery to read. Replace one of those Covers in N
 keeps showing the old file until the list is updated.
 
 **DigitalOcean is no longer used by the CSS** (was
-`multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/…`). The only references left are two
-commented-out homepage background rules in `home.css`. Keep large content images off jsDelivr: it is
+`multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/…`) — not one reference is left; the
+two dead homepage background rules went with it on 2026-09-16. Keep large content images off jsDelivr: it is
 free for personal and commercial use with no bandwidth cap (20MB per file, 50MB per package), but it
 is a package CDN and sustained media traffic invites a fair-use review.
 

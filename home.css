@@ -189,22 +189,10 @@ The last block identifies the heading callout which says: Others Trust, We Valid
     }
 }
 /*********************************************/
-/*********************************************/
-/* BACKGROUND IMAGE OF CURVED LINES
-/*********************************************/
-/*body {*/
-/*    background-image: url('https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/homepage/background.png');*/
-/*    background-repeat: no-repeat;*/
-/*    background-position: top center;*/
-/*}*/
-
-body {
-    /*background-image: url('https://multimedias.nyc3.cdn.digitaloceanspaces.com/validator-website/homepage/encapsulate-background.png');*/
-    background-repeat: no-repeat;
-    background-position: top center;
-    background-size: 100% auto;
-}
-/*********************************************/
+/* REMOVED 2026-09-16: the two homepage background images (curved lines, and a
+   2.1MB `encapsulate-background.png`). Both rules had been commented out for
+   a long time, and the `body` rule left behind only set background-repeat,
+   -position and -size with no image to apply them to. */
 /* TO USE MOST OF THE PAGE */
 /*********************************************/
 .super-content {
