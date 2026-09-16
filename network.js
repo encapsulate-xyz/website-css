@@ -12,6 +12,7 @@
    Under 701px the panels are not sticky and nothing is paged. */
 (function () {
   var BAND = "block-3dce800a51388154931ac3c9478a65b5";
+  window.encNetwork = { version: 2 };   // a marker, so a live page can be asked whether this ran
   var EPS = 2, QUIET = 180, NEW_GAP = 250, MIN_LOCK = 450;
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
   var docTop = function (el) { return el.getBoundingClientRect().top + window.scrollY; };
