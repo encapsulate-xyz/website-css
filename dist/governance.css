@@ -46,7 +46,7 @@
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 table,.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 thead,.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 tbody{display: block !important;width: auto !important;border: 0 !important;}
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 tbody{margin: 0 -14px !important;border-bottom: 1px solid #000000 !important;}
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 thead{margin: 0 !important;}
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 tr{position: relative !important;display: grid !important;grid-template-columns: minmax(0,2.1fr) 64px minmax(0,0.85fr) 140px 30px !important;column-gap: 20px !important;align-items: center !important;height: auto !important;border: 0 !important;background: transparent !important;}
+.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 tr{position: relative !important;display: grid !important;grid-template-columns: minmax(0,2.1fr) 64px minmax(0,0.85fr) 140px 30px !important;grid-template-rows: auto auto !important;column-gap: 20px !important;align-items: center !important;height: auto !important;border: 0 !important;background: transparent !important;}
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 tbody tr{padding: 16px 14px !important;border-top: 1px solid #E2E2DB !important;border-radius: 10px !important;transition: background-color 0.16s ease !important;}
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 tbody tr:hover{background: #DCEEC7 !important;}
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 tbody tr:hover,.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 tbody tr:hover + tr{border-top-color: transparent !important;}
@@ -55,8 +55,10 @@
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 :is(th,td).number{order: 2 !important;}
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 :is(th,td).select{order: 3 !important;}
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 :is(th,td).date{order: 4 !important;justify-self: end !important;}
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 :is(th,td).text:last-of-type{order: 5 !important;justify-self: end !important;}
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 tbody td.text:nth-of-type(5){order: 6 !important;grid-column: 1 / 2 !important;margin-top: 4px !important;max-width: 462px !important;font-family: var(--type-body),system-ui,sans-serif !important;font-size: 13px !important;line-height: 1.5 !important;color: #3A3D38 !important;text-wrap: pretty !important;}
+.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 tbody td:nth-of-type(4){order: 5 !important;justify-self: end !important;}
+.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 thead th:nth-of-type(4){order: 5 !important;}
+.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 tbody td:nth-of-type(5){order: 6 !important;grid-column: 1 !important;grid-row: 2 !important;margin-top: 4px !important;padding-left: 43px !important;max-width: 505px !important;font-family: var(--type-body),system-ui,sans-serif !important;font-size: 13px !important;line-height: 1.5 !important;color: #3A3D38 !important;text-wrap: pretty !important;}
+.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 thead th:nth-of-type(5){order: 6 !important;font-size: 0 !important;}
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 th{padding: 0 0 12px !important;font-family: var(--type-mono),ui-monospace,monospace !important;font-size: 10px !important;font-weight: 400 !important;letter-spacing: 0.12em !important;text-transform: uppercase !important;color: #6B6F68 !important;}
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 th *{font: inherit !important;color: inherit !important;letter-spacing: inherit !important;padding: 0 !important;}
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 th.date,.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 th.text{font-size: 0 !important;}
