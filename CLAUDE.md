@@ -269,7 +269,9 @@ is a package CDN and sustained media traffic invites a fair-use review.
 
 ## Verifying in the automation browser
 
-- The automation tab is hidden: no rAF, no smooth scroll, no scroll events, transitions freeze
+- The automation tab is hidden: no rAF, no smooth scroll, **no scroll events at all** (a scripted
+  `scrollTo` fires none, so scroll handlers cannot be exercised there — test their logic in Node or
+  by calling the effect directly), transitions freeze
   (finish with `document.getAnimations()`), screenshots often time out — measure with
   `getBoundingClientRect`/computed styles instead, and use real hovers via the computer tool.
 - Long checks across pages: load each page in a hidden 1920×992 iframe, one batch at a time, and
