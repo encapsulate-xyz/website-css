@@ -145,7 +145,17 @@
         disc.appendChild(img);
       }
       cell.insertBefore(disc, cell.firstChild);
-      cell.appendChild(el("span", "enc-rec__chain", name));
+      // the design's meta line under the title: CHAIN · reference, in one span so it reads as one
+      // line rather than as two columns (the reference cell itself is hidden by the CSS)
+      var meta = el("span", "enc-rec__meta");
+      meta.appendChild(el("span", "enc-rec__chain", name));
+      var ref = tr.querySelector('[data-enc-cell="id"]');
+      var refText = ref ? ref.textContent.trim() : "";
+      if (refText) {
+        meta.appendChild(el("span", "enc-rec__sep", "\u00B7"));
+        meta.appendChild(el("span", "enc-rec__ref", refText));
+      }
+      cell.appendChild(meta);
       tr.setAttribute("data-enc-row", "");
     });
     // the header cell has no property class of its own, so it is found by position: the same
@@ -211,9 +221,13 @@
     var trigger = el("button", "enc-rec__trigger");
     trigger.type = "button";
     trigger.setAttribute("aria-haspopup", "listbox");
-    var kicker = el("span", "enc-rec__kicker", label);
+    // the design's trigger is the picked option's own glyph and its name — the mono label was in
+    // an earlier pass of the handoff and is gone
     var value = el("span", "enc-rec__value", options[0][0] || "All");
-    trigger.appendChild(kicker);
+    var lead = el("span", "enc-rec__lead");
+    if (glyphFor) lead.appendChild(glyphFor(options[0][2]));
+    trigger.setAttribute("aria-label", label);
+    trigger.appendChild(lead);
     trigger.appendChild(value);
     trigger.appendChild(el("span", "enc-rec__chevron"));
     box.appendChild(trigger);
@@ -238,7 +252,9 @@
       item.addEventListener("pointerdown", function (e) {
         e.preventDefault();
         state[key] = o[2];
+        shown = PAGE;
         value.textContent = o[0];
+        if (glyphFor) { lead.textContent = ""; lead.appendChild(glyphFor(o[2])); }
         Array.prototype.forEach.call(panel.children, function (x) { x.removeAttribute("data-on"); });
         item.setAttribute("data-on", "");
         panel.hidden = true;
@@ -291,7 +307,22 @@
     input.setAttribute("aria-label", "Find a proposal by number or title");
     field.appendChild(input);
     field.addEventListener("pointerdown", function () { setTimeout(function () { input.focus(); }, 0); });
-    input.addEventListener("input", function () { state.q = input.value; apply(); });
+    input.addEventListener("input", function () {
+      state.q = input.value;
+      shown = PAGE;
+      field.toggleAttribute("data-enc-typed", !!input.value);
+      apply();
+    });
+    var clear = el("button", "enc-rec__clear");
+    clear.type = "button";
+    clear.setAttribute("aria-label", "Clear the search");
+    clear.addEventListener("pointerdown", function (e) {
+      e.preventDefault();
+      input.value = ""; state.q = "";
+      field.removeAttribute("data-enc-typed");
+      apply();
+    });
+    field.appendChild(clear);
     bar.appendChild(field);
 
     var header = box.querySelector(".notion-collection__header-wrapper");
@@ -350,6 +381,31 @@
     return out;
   }
 
+  /* ── the pager ── the design shows 25 and grows by 25, with the count line beside it ── */
+  var PAGE = 25;
+  var shown = PAGE;
+
+  function total() {
+    var band = document.getElementById(BAND);
+    var ps = band ? band.querySelectorAll(":scope > .notion-callout__content > p.notion-text") : [];
+    var n = ps.length > 1 ? parseInt((ps[1].textContent || "").replace(/[^\d]/g, ""), 10) : 0;
+    return n || rowsOf().length;
+  }
+
+  function pager() {
+    var box = document.getElementById(TABLE);
+    if (!box || box.querySelector(".enc-rec__foot")) return;
+    var foot = el("div", "enc-rec__foot");
+    var more = el("button", "enc-rec__more");
+    more.type = "button";
+    more.addEventListener("pointerdown", function (e) {
+      e.preventDefault(); shown += PAGE; apply();
+    });
+    foot.appendChild(more);
+    foot.appendChild(el("span", "enc-rec__shown"));
+    box.appendChild(foot);
+  }
+
   /* filtering and sorting run on the rows Super rendered — the record's own view decides which
      those are (CLAUDE.md: Super only ships the active view's rows) */
   function apply() {
@@ -374,6 +430,21 @@
         }).forEach(function (tr) { if (tr.parentNode === body) body.appendChild(tr); });
       }
     }
+    // then the pager: only the first `shown` of what matched stays on the page
+    var matched = rows.filter(function (tr) { return !tr.hidden; });
+    matched.forEach(function (tr, i) { if (i >= shown) tr.hidden = true; });
+    var onShow = Math.min(shown, matched.length);
+    var foot = box.querySelector(".enc-rec__foot");
+    if (foot) {
+      var left = matched.length - onShow;
+      var more = foot.querySelector(".enc-rec__more");
+      more.hidden = left <= 0;
+      more.textContent = "Show " + Math.min(PAGE, left) + " more";
+      var filtered = state.chain || state.vote || needle;
+      foot.querySelector(".enc-rec__shown").textContent =
+        onShow + " of " + (filtered ? matched.length + " matching" : fmt(total())) + " shown";
+    }
+
     // a group with nothing left in it goes with its rows
     Array.prototype.forEach.call(box.querySelectorAll(".notion-collection-group__section"), function (s2) {
       var any = Array.prototype.some.call(s2.querySelectorAll("tbody tr"), function (tr) { return !tr.hidden; });
@@ -390,7 +461,9 @@
     });
   }
 
-  function build() { count(); rows(); head(); controls(); hideSources(); }
+  function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+
+  function build() { count(); rows(); head(); controls(); pager(); apply(); hideSources(); }
 
   var t = 0;
   new MutationObserver(function (muts) {
