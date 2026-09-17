@@ -746,10 +746,39 @@
     return -1;
   }
 
+  /* Every cell says what it is, so the row's order never depends on Notion's type classes: since
+     2026-09-17 Proposal Id holds "ACP-176" and is rich text, which makes the id, the proof and the
+     rationale all td.text. The header carries the property's name. home.css orders on these. */
+  var KIND = {
+    "proposal title": "proposal", "proposal": "proposal", "name": "proposal",
+    "proposal id": "id", "id": "id",
+    "chain": "chain", "network": "chain",
+    "vote option": "vote", "our vote": "vote", "vote": "vote",
+    "voted on": "date", "date": "date",
+    "voting proof": "proof", "proof": "proof",
+    "rationale": "rationale"
+  };
+  function mark(table) {
+    var ths = table.querySelectorAll("thead th");
+    var kinds = Array.prototype.map.call(ths, function (th) {
+      return KIND[th.textContent.trim().toLowerCase()] || "";
+    });
+    if (!kinds.some(Boolean)) return;
+    Array.prototype.forEach.call(ths, function (th, i) {
+      if (kinds[i] && th.getAttribute("data-enc-cell") !== kinds[i]) th.setAttribute("data-enc-cell", kinds[i]);
+    });
+    table.querySelectorAll("tbody tr").forEach(function (tr) {
+      Array.prototype.forEach.call(tr.children, function (td, i) {
+        if (kinds[i] && td.getAttribute("data-enc-cell") !== kinds[i]) td.setAttribute("data-enc-cell", kinds[i]);
+      });
+    });
+  }
+
   function apply() {
     var block = document.getElementById(TABLE);
     var table = block && block.querySelector("table");
     if (!table) return;
+    mark(table);
     var chainCol = column(table, "chain"), voteCol = column(table, "vote option");
     var map = null;
     var rowIndex = -1;

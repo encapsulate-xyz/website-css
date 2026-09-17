@@ -735,8 +735,9 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #6B6F68;
 }
 
-/* the id */
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 td.number {
+/* the id — "ACP-176", "NEP-611": rich text since 2026-09-17, so it is picked by kind, not
+   by Notion's number class */
+.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 tbody td[data-enc-cell="id"] {
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 12.5px !important;
   letter-spacing: 0.04em !important;

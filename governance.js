@@ -81,6 +81,29 @@
     chainProp = best;
     return best;
   }
+  /* Which column is which, read off the header. Notion's type classes cannot answer it any more:
+     Proposal Id became rich text on 2026-09-17 (it holds "ACP-176" now), so the id, the rationale
+     and the proof are all td.text. The header carries the property's name, which is ours to know. */
+  var COLUMN_KIND = {
+    "proposal title": "proposal", "proposal": "proposal", "name": "proposal",
+    "proposal id": "id", "id": "id",
+    "chain": "chain", "network": "chain",
+    "vote option": "vote", "our vote": "vote", "vote": "vote",
+    "voted on": "date", "date": "date",
+    "voting proof": "proof", "proof": "proof",
+    "rationale": "rationale", "why": "rationale"
+  };
+  var colKinds = null;
+  function columns(box) {
+    if (colKinds) return colKinds;
+    var ths = box.querySelectorAll("thead th");
+    if (!ths.length) return [];
+    colKinds = Array.prototype.map.call(ths, function (th) {
+      return COLUMN_KIND[th.textContent.trim().toLowerCase()] || "";
+    });
+    return colKinds;
+  }
+
   function chainCell(tr) {
     if (!chainProp) return null;
     var p = tr.querySelector("td.select ." + chainProp);
@@ -101,10 +124,11 @@
       // every cell says what it is, so the row's layout never depends on the column order:
       // the proof is the text cell that carries a link, the rationale is the other one
       chain.setAttribute("data-enc-cell", "chain");
-      Array.prototype.forEach.call(tr.children, function (td) {
+      var kinds = columns(box);
+      Array.prototype.forEach.call(tr.children, function (td, i) {
         if (td.hasAttribute("data-enc-cell")) return;
-        if (td.classList.contains("title")) td.setAttribute("data-enc-cell", "proposal");
-        else if (td.classList.contains("number")) td.setAttribute("data-enc-cell", "id");
+        if (kinds[i]) td.setAttribute("data-enc-cell", kinds[i]);
+        else if (td.classList.contains("title")) td.setAttribute("data-enc-cell", "proposal");
         else if (td.classList.contains("date")) td.setAttribute("data-enc-cell", "date");
         else if (td.classList.contains("select")) td.setAttribute("data-enc-cell", "vote");
         else if (td.querySelector("a[href]")) td.setAttribute("data-enc-cell", "proof");

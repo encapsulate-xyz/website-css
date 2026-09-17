@@ -2283,12 +2283,16 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   display: none !important;
 }
 
-/* order: Chain, number, Vote Option, Voted On, Voting Proof */
-#block-4529386b39be4a9aa44d2dbac56537bd th.select:nth-of-type(3), #block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(3) { order: 1 !important; }
-#block-4529386b39be4a9aa44d2dbac56537bd th.number, #block-4529386b39be4a9aa44d2dbac56537bd td.number { order: 2 !important; }
-#block-4529386b39be4a9aa44d2dbac56537bd th.select:nth-of-type(4), #block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(4) { order: 3 !important; }
-#block-4529386b39be4a9aa44d2dbac56537bd th.date, #block-4529386b39be4a9aa44d2dbac56537bd td.date { order: 4 !important; justify-self: end !important; }
-#block-4529386b39be4a9aa44d2dbac56537bd th.text, #block-4529386b39be4a9aa44d2dbac56537bd td.text { order: 5 !important; justify-self: end !important; }
+/* order: Chain, Proposal Id, Vote Option, Voted On, Voting Proof — by what the cell IS, not by
+   Notion's type class: Proposal Id holds "ACP-176" (rich text since 2026-09-17), so the id and the
+   proof are both td.text and nth-of-type cannot tell them apart. home.js writes data-enc-cell from
+   the header labels. */
+#block-4529386b39be4a9aa44d2dbac56537bd :is(th, td)[data-enc-cell="chain"] { order: 1 !important; }
+#block-4529386b39be4a9aa44d2dbac56537bd :is(th, td)[data-enc-cell="id"] { order: 2 !important; }
+#block-4529386b39be4a9aa44d2dbac56537bd :is(th, td)[data-enc-cell="vote"] { order: 3 !important; }
+#block-4529386b39be4a9aa44d2dbac56537bd :is(th, td)[data-enc-cell="date"] { order: 4 !important; justify-self: end !important; }
+#block-4529386b39be4a9aa44d2dbac56537bd :is(th, td)[data-enc-cell="proof"] { order: 5 !important; justify-self: end !important; }
+#block-4529386b39be4a9aa44d2dbac56537bd :is(th, td)[data-enc-cell="rationale"] { display: none !important; }
 
 #block-4529386b39be4a9aa44d2dbac56537bd th {
   padding: 0 0 12px !important;
@@ -2334,7 +2338,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   color: #000000 !important;
 }
 
-#block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(3) .notion-pill {
+#block-4529386b39be4a9aa44d2dbac56537bd td[data-enc-cell="chain"] .notion-pill {
   gap: 13px !important;
   max-width: 100% !important;
   overflow: hidden !important;
@@ -2345,8 +2349,8 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   letter-spacing: -0.018em !important;
 }
 
-/* Proposal: mono 12.5 */
-#block-4529386b39be4a9aa44d2dbac56537bd td.number {
+/* Proposal: mono 12.5 — the reference, "ACP-176" */
+#block-4529386b39be4a9aa44d2dbac56537bd tbody td[data-enc-cell="id"] {
   font-family: var(--type-mono) !important;
   font-size: 12.5px !important;
   letter-spacing: 0.04em !important;
@@ -2355,7 +2359,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 }
 
 /* Our vote: green dot + the word (home.js writes YES as Yes) */
-#block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(4) .notion-pill {
+#block-4529386b39be4a9aa44d2dbac56537bd td[data-enc-cell="vote"] .notion-pill {
   gap: 9px !important;
   font-family: var(--type-body) !important;
   font-weight: 500 !important;
@@ -2363,7 +2367,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   letter-spacing: 0 !important;
 }
 
-#block-4529386b39be4a9aa44d2dbac56537bd td.select:nth-of-type(4) .notion-pill::before {
+#block-4529386b39be4a9aa44d2dbac56537bd td[data-enc-cell="vote"] .notion-pill::before {
   content: "";
   flex: none;
   width: 8px;
