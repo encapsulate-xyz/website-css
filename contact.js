@@ -2,13 +2,13 @@
    never executes a page's own script on a client-side navigation.
 
    The page is the cover and then one section in three bands: the ink band that leads with the
-   booking (cal.com's own booker mounted here, a spec beside the headline, the institutional route
+   booking (cal.com's own booker in the frame, a spec beside the headline, the institutional route
    folded into a toggle at its foot), the ink "Elsewhere" strip of the four social links, and the
    paper band where writing happens — the Notion form in one well, the address in the other.
 
-   The calendar is cal.com's inline embed, built here rather than pasted into Notion, so it takes
-   the site's palette through cssVarsPerTheme — the same CAL_UI the booking demo uses. The link it
-   books is Notion's: the "Open it in a new tab" anchor under the calendar.
+   The calendar is the booking link in an iframe, built here rather than pasted into Notion. Its
+   colours come from the link's own query parameters (layout, theme, brandColor), which is all a
+   cal.com link takes — cssVarsPerTheme is for cal.com's embed API, which this deliberately is not.
 
    Everything it prints is Notion's: this file only groups the blocks into bands, splits the
    "label · value" lines the design draws as two columns, and gives the Copy button its feedback
@@ -44,93 +44,24 @@
     return true;
   }
 
-  /* ── cal.com, mounted rather than pasted ──
-     Cal's own loader, then one namespace given the site's palette. Only the variables Cal exposes
-     can cross: it has none for a button's ring, its inner highlight or its lift, and --cal-brand is
-     reused for the primary fill, the primary ring and a slot's hover ring. */
-  var CAL_UI = {
-    theme: "light",
-    layout: "week_view",
-    hideEventTypeDetails: false,
-    cssVarsPerTheme: {
-      light: {
-        "cal-brand": "#99CC66",
-        "cal-brand-emphasis": "#8CBF56",
-        "cal-brand-text": "#000000",
-        "cal-brand-accent": "#000000",
-        "cal-brand-subtle": "#DCEEC7",
-        "cal-bg": "#FFFEFC",
-        "cal-bg-emphasis": "#FAFAF8",
-        "cal-bg-muted": "#FFFEFC",
-        "cal-bg-subtle": "#F2F2ED",
-        "cal-bg-inverted": "#3A3D38",
-        "cal-border": "#D9D9D2",
-        "cal-border-default": "#D9D9D2",
-        "cal-border-subtle": "#D9D9D2",
-        "cal-border-muted": "#E2E2DB",
-        "cal-border-emphasis": "#B9B9B1",
-        "cal-border-booker": "#D9D9D2",
-        "cal-border-booker-width": "1px",
-        "cal-text": "#000000",
-        "cal-text-emphasis": "#000000",
-        "cal-text-subtle": "#3A3D38",
-        "cal-text-muted": "#6B6F68",
-        "cal-text-inverted": "#FAFAF8",
-        "cal-radius": "12px",
-        "cal-radius-sm": "8px",
-        "cal-radius-md": "12px",
-        "cal-radius-lg": "12px",
-        "cal-radius-xl": "12px",
-        "cal-radius-2xl": "12px",
-        "spacing": "4px"
-      }
-    }
-  };
-
-  function loader() {
-    if (window.Cal) return;
-    (function (C, A, L) {
-      var p = function (a, ar) { a.q.push(ar); };
-      var d = C.document;
-      C.Cal = C.Cal || function () {
-        var cal = C.Cal, ar = arguments;
-        if (!cal.loaded) {
-          cal.ns = {}; cal.q = cal.q || [];
-          d.head.appendChild(d.createElement("script")).src = A;
-          cal.loaded = true;
-        }
-        if (ar[0] === L) {
-          var api = function () { p(api, arguments); };
-          var ns = ar[1];
-          api.q = api.q || [];
-          if (typeof ns === "string") { cal.ns[ns] = cal.ns[ns] || api; p(cal.ns[ns], ar); p(cal, ["initNamespace", ns]); }
-          else p(cal, ar);
-          return;
-        }
-        p(cal, ar);
-      };
-    })(window, "https://app.cal.com/embed/embed.js", "init");
-  }
-
-  /* the slug is read off the page's own link, so the event we book stays Notion's */
+  /* ── the calendar ──
+     The design frames cal.com's own booking page, so this is the page's link in an iframe rather
+     than cal.com's embed API: the URL carries the layout, the theme and the brand colour (the
+     query parameters are the only styling a cal.com link takes), and the frame is the design's
+     680px with the booker scrolling inside it. The link itself is Notion's — the "Open it in a new
+     tab" anchor under the calendar — so the event we book is never hardcoded here. */
   function calendar(call, link) {
     if (!link || call.querySelector(".enc-ct__cal")) return;
     var href = link.getAttribute("href") || "";
-    var m = /cal\.com\/([^?#]+)/.exec(href);
-    if (!m) return;
-    var slug = m[1].replace(/\/$/, "");
-    var layout = /layout=([a-z_]+)/.exec(href);
+    if (href.indexOf("cal.com") < 0) return;
     var box = el("div", "enc-ct__cal");
-    box.id = "enc-cal";
+    var frame = el("iframe");
+    frame.src = href;
+    frame.title = link.textContent.trim() || "Book a call";
+    frame.loading = "lazy";
+    frame.setAttribute("frameborder", "0");
+    box.appendChild(frame);
     link.parentNode.parentNode.insertBefore(box, link.parentNode);
-    loader();
-    window.Cal("init", "enc", { origin: "https://app.cal.com" });
-    window.Cal.ns.enc("ui", CAL_UI);
-    window.Cal.ns.enc("inline", {
-      elementOrSelector: "#enc-cal",
-      calLink: slug,
-      config: { layout: (layout && layout[1]) || "week_view", theme: "light" }
-    });
   }
 
   function copyBehaviour(well) {
