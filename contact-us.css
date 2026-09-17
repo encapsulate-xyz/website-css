@@ -143,13 +143,15 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   overflow: hidden;
   background: #FAFAF8;
   border: 1px solid rgba(250, 250, 248, 0.3);
-  min-height: 680px;
+  /* the design's frame is 680px; cal.com's inline embed sizes itself to the booker (1541px in week
+     view), so the frame holds the height and the booker scrolls inside it */
+  height: 680px;
+  overflow: auto;
 }
 
 .notion-root[data-enc-contact] .enc-ct__cal iframe {
   display: block;
   width: 100% !important;
-  min-height: 680px;
   border: none !important;
 }
 
