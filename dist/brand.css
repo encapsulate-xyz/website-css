@@ -4,7 +4,7 @@
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 > .notion-callout__content{display: flex !important;flex-direction: column !important;align-items: center !important;justify-content: space-between !important;text-align: center !important;gap: 30px !important;width: 100% !important;max-width: none !important;margin: 0 !important;padding: 0 !important;flex: 1 1 auto !important;}
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair{display: flex;align-items: center;justify-content: center;gap: 14px;flex-wrap: wrap;width: max-content;max-width: 100%;margin: 0 auto;}
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair[data-pair="foot"]{gap: 12px;}
-.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair > p.notion-text{margin: 0 !important;font-family: var(--type-mono),ui-monospace,monospace !important;font-size: 11px !important;line-height: 1.3 !important;letter-spacing: 0.12em !important;text-transform: uppercase !important;color: #B4B4B4 !important;}
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair > p.notion-text{margin: 0 !important;padding: 0 !important;min-height: 0 !important;font-family: var(--type-mono),ui-monospace,monospace !important;font-size: 11px !important;line-height: 1.3 !important;letter-spacing: 0.12em !important;text-transform: uppercase !important;color: #B4B4B4 !important;}
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair[data-pair="foot"] > p.notion-text{font-size: 10.5px !important;}
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair > p.notion-text:first-child{margin-right: -0.12em !important;}
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair > p.notion-text + p.notion-text{position: relative;}

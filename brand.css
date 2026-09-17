@@ -68,7 +68,11 @@
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair[data-pair="foot"] { gap: 12px; }
 
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair > p.notion-text {
+  /* Super gives a paragraph a 32px box for an 11px line, so a rule centred on the box sits below
+     the text — the box is reduced to its own line, and then centre means centre */
   margin: 0 !important;
+  padding: 0 !important;
+  min-height: 0 !important;
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 11px !important;
   line-height: 1.3 !important;
