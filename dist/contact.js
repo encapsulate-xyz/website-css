@@ -63,11 +63,25 @@
     });
   }
 
+  /* Super emits a heading's anchor as a sibling span, so counting raw children put the anchor
+     where the lede should be. The anchor travels with its heading and is never counted. */
+  function anchor(n) {
+    var prev = n.previousElementSibling;
+    return prev && prev.classList.contains("notion-heading__anchor") ? prev : null;
+  }
+  function move(into, n) {
+    var a = anchor(n);
+    if (a) into.appendChild(a);
+    into.appendChild(n);
+  }
+
   function build() {
     if (!PATH.test(location.pathname)) return;
     var root = document.querySelector(".notion-root");
     if (!root || root.querySelector(".enc-ct__call")) return;
-    var kids = Array.prototype.slice.call(root.children);
+    var kids = Array.prototype.slice.call(root.children).filter(function (n) {
+      return !n.classList.contains("notion-heading__anchor");
+    });
     if (kids.length < 12) return;
 
     var iWhere = find(kids, "elsewhere");
@@ -85,13 +99,13 @@
     top.appendChild(head);
     top.appendChild(spec);
     kids.slice(1, iWhere).forEach(function (n, i) {
-      if (i < 2) { head.appendChild(n); return; }              // the heading and its lede
+      if (i < 2) { move(head, n); return; }                     // the heading and its lede
       if (spec.children.length < 3 && !n.querySelector("a") && textOf(n).indexOf("·") > 0) {
         spec.appendChild(n);
         splitRow(n);
         return;
       }
-      call.appendChild(n);                                      // calendar, fallback line, toggle
+      move(call, n);                                            // calendar, fallback line, toggle
       if (n.querySelector && n.querySelector(".notion-callout")) n.classList.add("enc-ct__inst");
     });
     var fold = call.querySelector(".notion-toggle");
@@ -102,9 +116,9 @@
     root.insertBefore(where, kids[iWhere]);
     var list = el("div", "enc-ct__socials");
     kids.slice(iWhere, iWrite).forEach(function (n, i) {
-      if (i === 0) { n.classList.add("enc-ct__kicker"); where.appendChild(n); where.appendChild(list); return; }
+      if (i === 0) { n.classList.add("enc-ct__kicker"); move(where, n); where.appendChild(list); return; }
       var a = n.querySelector && n.querySelector("a[href]");
-      if (!a) { where.appendChild(n); return; }
+      if (!a) { move(where, n); return; }
       var name = textOf(a);
       var handle = textOf(n).slice(name.length).trim();
       n.textContent = "";
@@ -133,10 +147,10 @@
       else if (t === "the address") { into = wAddr; n.classList.add("enc-ct__kicker"); }
       if (!into) {                                              // kicker, heading, lede
         if (i === 0) n.classList.add("enc-ct__kicker");
-        wHead.appendChild(n);
+        move(wHead, n);
         return;
       }
-      into.appendChild(n);
+      move(into, n);
     });
     copyBehaviour(wAddr);
 
