@@ -192,7 +192,12 @@
        sdkActionManager.fire("bookingSuccessful", …) and "bookingSuccessfulV2", with reschedule
        twins) — they are not in the loader, which is why the postMessage listener below matches on
        the word as well: if Cal renames the action, the fallback still hears it. */
-    var booked = function () { box.setAttribute("data-enc-booked", ""); };
+    var booked = function (e) {
+      box.setAttribute("data-enc-booked", "");
+      var root = document.querySelector(".notion-root");
+      if (root) root.setAttribute("data-enc-booked", "");
+      confirm(e && (e.detail ? (e.detail.data || e.detail) : e.data || e));
+    };
     ["bookingSuccessful", "bookingSuccessfulV2",
      "rescheduleBookingSuccessful", "rescheduleBookingSuccessfulV2"].forEach(function (action) {
       try { window.Cal.ns.enc("on", { action: action, callback: booked }); } catch (e) {}
@@ -201,7 +206,7 @@
       if (!/(^|\.)cal\.com$/.test((e.origin || "").replace(/^https?:\/\//, ""))) return;
       var d = e.data;
       if (d && typeof d === "object" && /booking/i.test(d.type || d.action || "") &&
-          /success|confirm/i.test(d.type || d.action || "")) booked();
+          /success|confirm/i.test(d.type || d.action || "")) booked(d);
     });
   }
 
@@ -238,6 +243,96 @@
     var a = anchor(n);
     if (a) into.appendChild(a);
     into.appendChild(n);
+  }
+
+  /* ── the confirmation — design "Booking Confirmed" ──
+     Its words are Notion's: one callout on the page holding the heading, the four facts, what to
+     bring, the two urgent routes and the calendar labels. The booking's own values (the when, the
+     who, the reschedule link, the calendar exports) are filled from the payload cal.com sends. */
+  var booking = null;
+
+  function two(n) { return (n < 10 ? "0" : "") + n; }
+
+  function when(iso, tz) {
+    var d = new Date(iso);
+    if (isNaN(d)) return ["", ""];
+    var opts = { weekday: "long", day: "numeric", month: "long", year: "numeric" };
+    var time = { hour: "2-digit", minute: "2-digit", hour12: false };
+    if (tz) { opts.timeZone = tz; time.timeZone = tz; }
+    var end = new Date(d.getTime() + (booking && booking.duration ? booking.duration : 30) * 60000);
+    var zone = tz || Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var long = new Intl.DateTimeFormat("en-GB", { timeZone: zone, timeZoneName: "long" })
+      .formatToParts(d).filter(function (p) { return p.type === "timeZoneName"; })[0];
+    return [
+      new Intl.DateTimeFormat("en-GB", opts).format(d),
+      new Intl.DateTimeFormat("en-GB", time).format(d) + " – " +
+        new Intl.DateTimeFormat("en-GB", time).format(end) +
+        (long ? " " + long.value : "")
+    ];
+  }
+
+  /* the four exports, built from the booking rather than listed anywhere */
+  function calendarLinks(title, startISO, minutes, details) {
+    var start = new Date(startISO);
+    var end = new Date(start.getTime() + minutes * 60000);
+    var stamp = function (d) {
+      return d.getUTCFullYear() + two(d.getUTCMonth() + 1) + two(d.getUTCDate()) + "T" +
+        two(d.getUTCHours()) + two(d.getUTCMinutes()) + "00Z";
+    };
+    var q = encodeURIComponent;
+    var ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "BEGIN:VEVENT",
+      "DTSTART:" + stamp(start), "DTEND:" + stamp(end),
+      "SUMMARY:" + title, "DESCRIPTION:" + (details || ""),
+      "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+    return {
+      google: "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + q(title) +
+        "&dates=" + stamp(start) + "/" + stamp(end) + "&details=" + q(details || ""),
+      outlook: "https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose" +
+        "&rru=addevent&subject=" + q(title) + "&startdt=" + start.toISOString() +
+        "&enddt=" + end.toISOString() + "&body=" + q(details || ""),
+      "office 365": "https://outlook.office.com/calendar/0/deeplink/compose?path=/calendar/action/compose" +
+        "&rru=addevent&subject=" + q(title) + "&startdt=" + start.toISOString() +
+        "&enddt=" + end.toISOString() + "&body=" + q(details || ""),
+      ical: "data:text/calendar;charset=utf-8," + encodeURIComponent(ics)
+    };
+  }
+
+  function confirm(data) {
+    var band = document.querySelector(".enc-ct__done");
+    if (!band || band.hasAttribute("data-enc-filled")) return;
+    var b = (data && (data.booking || data)) || {};
+    var startISO = (data && data.date) || b.startTime || b.start || "";
+    var minutes = (data && data.duration) || b.length || 30;
+    var org = (data && data.organizer) || (b.user || {});
+    var uid = b.uid || b.bookingUid || "";
+    booking = { duration: minutes };
+    var rows = band.querySelectorAll(".enc-ct__fact");
+    var w = when(startISO, org.timeZone);
+    if (rows[0] && w[0]) fill(rows[0], w[0], w[1]);
+    if (rows[1] && org.name) fill(rows[1], org.name, org.email || "");
+    if (rows[3]) fill(rows[3], minutes + " minutes", "Nothing to prepare");
+
+    var again = band.querySelector('a[href*="cal.com/reschedule"]');
+    if (again && uid) again.href = "https://cal.com/reschedule/" + uid;
+    else if (again) again.closest(".notion-callout").hidden = true;
+
+    var links = calendarLinks("30 min meeting with Encapsulate", startISO, minutes,
+      "Meeting link is in the calendar invitation.");
+    Array.prototype.forEach.call(band.querySelectorAll(".enc-ct__ics"), function (a) {
+      var url = links[(a.textContent || "").trim().toLowerCase()];
+      if (!url) return;
+      a.href = url;
+      if (url.indexOf("data:") === 0) a.setAttribute("download", "encapsulate.ics");
+      else { a.target = "_blank"; a.rel = "noopener noreferrer"; }
+    });
+    band.setAttribute("data-enc-filled", "");
+  }
+
+  function fill(row, head, sub) {
+    var v = row.querySelector(".enc-ct__fv");
+    var s = row.querySelector(".enc-ct__fs");
+    if (v) v.textContent = head;
+    if (s) s.textContent = sub;
   }
 
   function build() {
@@ -319,6 +414,92 @@
       move(into, n);
     });
     copyBehaviour(wAddr);
+
+    // ── 4 · the confirmation, waiting under the page until cal.com says a booking landed ──
+    var done = null;
+    Array.prototype.forEach.call(root.querySelectorAll(":scope > .notion-callout"), function (c) {
+      if (textOf(c).slice(0, 6).toLowerCase() === "booked") done = c;
+    });
+    if (done) {
+      done.classList.add("enc-ct__done");
+      var content = done.querySelector(".notion-callout__content") || done;
+      var kids2 = Array.prototype.slice.call(content.children).filter(function (n) {
+        return !n.classList.contains("notion-heading__anchor");
+      });
+      var left = el("div", "enc-ct__done-l");
+      var right = el("div", "enc-ct__done-r");
+      content.appendChild(left);
+      content.appendChild(right);
+      var facts = el("div", "enc-ct__facts");
+      var prep = el("div", "enc-ct__prep");
+      var urgent = el("div", "enc-ct__urgent");
+      var ics = el("div", "enc-ct__cals");
+      var stage = "head";
+      kids2.forEach(function (n) {
+        var t2 = textOf(n).toLowerCase();
+        if (t2.indexOf("booked") === 0 && n.tagName === "SPAN") return;
+        if (t2.indexOf("before we speak") === 0) { stage = "prep"; n.classList.add("enc-ct__kicker"); right.appendChild(n); right.appendChild(prep); return; }
+        if (t2.indexOf("something urgent") === 0) { stage = "urgent"; n.classList.add("enc-ct__kicker"); right.appendChild(n); right.appendChild(urgent); return; }
+        if (t2.indexOf("add it to your calendar") === 0) { stage = "ics"; n.classList.add("enc-ct__kicker"); right.appendChild(n); right.appendChild(ics); return; }
+        if (stage === "head") {
+          if (n.querySelector && n.querySelector(".notion-link") && n.classList.contains("notion-callout")) {
+            left.appendChild(n);                       // the two buttons
+            return;
+          }
+          if (textOf(n).indexOf("·") > 0) {            // a fact: label, value, note
+            var parts = textOf(n).split("·");
+            n.textContent = "";
+            n.className += " enc-ct__fact";
+            n.appendChild(el("span", "enc-ct__fk", parts[0].trim()));
+            var col = el("span", "enc-ct__fcol");
+            col.appendChild(el("span", "enc-ct__fv", (parts[1] || "").trim()));
+            col.appendChild(el("span", "enc-ct__fs", (parts[2] || "").trim()));
+            n.appendChild(col);
+            facts.appendChild(n);
+            if (facts.parentNode !== left) left.appendChild(facts);
+            return;
+          }
+          move(left, n);
+          return;
+        }
+        if (stage === "prep" && textOf(n).indexOf("·") > 0) {
+          var p = textOf(n).split("·");
+          n.textContent = "";
+          n.className += " enc-ct__prep-row";
+          n.appendChild(el("span", "enc-ct__pn"));
+          var pc = el("span", "enc-ct__pc");
+          pc.appendChild(el("span", "enc-ct__pt", p[0].trim()));
+          pc.appendChild(el("span", "enc-ct__pb", p.slice(1).join("·").trim()));
+          n.appendChild(pc);
+          prep.appendChild(n);
+          return;
+        }
+        if (stage === "urgent" && n.querySelector && n.querySelector("a[href]")) {
+          var a2 = n.querySelector("a[href]");
+          var name2 = textOf(a2);
+          var handle2 = textOf(n).slice(name2.length).trim();
+          n.textContent = "";
+          n.appendChild(a2);
+          n.appendChild(el("span", "enc-ct__handle", handle2));
+          n.classList.add("enc-ct__social");
+          urgent.appendChild(n);
+          return;
+        }
+        if (stage === "ics" && textOf(n).indexOf("·") > 0) {
+          var names = textOf(n).split("·");
+          n.textContent = "";
+          n.className += " enc-ct__ics-row";
+          names.forEach(function (label) {
+            var a3 = el("a", "enc-ct__ics", label.trim());
+            a3.href = "#";
+            n.appendChild(a3);
+          });
+          ics.appendChild(n);
+          return;
+        }
+        move(right, n);
+      });
+    }
 
     root.setAttribute("data-enc-contact", "");
   }
