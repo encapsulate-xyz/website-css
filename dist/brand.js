@@ -153,6 +153,15 @@
   function inOrder(list) {
     return list.slice().sort(function (a, b) { return a.order - b.order; });
   }
+  /* The Order property is only readable when the view shows it, and Notion hands rows back newest
+     first — so where a sequence matters and Order is hidden, the handoff's own sequence decides:
+     ink before green, and the pastels as the design lists them. A value the handoff does not name
+     keeps its Notion position, at the end. */
+  var SEQUENCE = ["#000000", "#99CC66", "#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
+  function seqOf(hex) {
+    var at = SEQUENCE.indexOf((hex || "").toUpperCase());
+    return at < 0 ? 90 : at + 1;
+  }
 
   function marks() {
     var db = byId(KIT);
@@ -262,7 +271,7 @@
         name: titleOf(c),
         hex: (c.textContent.match(/#[0-9a-fA-F]{6}/) || [""])[0],
         set: fieldOf(c, /^(Brand|Pastel)$/i),
-        order: orderOf(c)
+        order: Math.min(orderOf(c), seqOf((c.textContent.match(/#[0-9a-fA-F]{6}/) || [""])[0]))
       };
     }).filter(function (r) { return r.hex; });
 
