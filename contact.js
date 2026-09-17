@@ -449,6 +449,9 @@
     var done = iDone < kids.length ? kids[iDone] : null;
     if (done) {
       done.classList.add("enc-ct__done");
+      // it replaces the booking band, so it stands where that band stands rather than at the foot
+      // of the page, which is where Notion keeps it
+      root.insertBefore(done, call);
       var content = done.querySelector(".notion-callout__content") || done;
       var kids2 = Array.prototype.slice.call(content.children).filter(function (n) {
         return !n.classList.contains("notion-heading__anchor");
