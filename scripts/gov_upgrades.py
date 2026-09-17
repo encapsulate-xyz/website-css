@@ -120,21 +120,21 @@ def candidates(chain, since="2025-01-01"):
 
 
 def existing_titles():
-    return {(val(r, "Chain"), val(r, "Proposal Title")) for r in rows(GOVERNANCE_DB)}
+    return {(val(r, "Network"), val(r, "Proposal")) for r in rows(GOVERNANCE_DB)}
 
 
 def add(chain, title, pid, date, proof, why):
     props = {
-        "Proposal Title": {"title": [{"type": "text", "text": {"content": title}}]},
-        "Chain": {"select": {"name": chain}},
-        "Vote Option": {"select": {"name": "YES"}},
-        "Voted On": {"date": {"start": date}},
-        "Voting Proof": {"rich_text": [{"type": "text",
+        "Proposal": {"title": [{"type": "text", "text": {"content": title}}]},
+        "Network": {"select": {"name": chain}},
+        "Our vote": {"select": {"name": "YES"}},
+        "Voted on": {"date": {"start": date}},
+        "Proof": {"rich_text": [{"type": "text",
                                         "text": {"content": "View Release", "link": {"url": proof}}}]},
         "Rationale": {"rich_text": [{"type": "text", "text": {"content": why}}]},
     }
     if pid is not None:
-        props["Proposal Id"] = {"number": pid}
+        props["Reference"] = {"number": pid}
     return api("POST", "pages", {"parent": {"database_id": GOVERNANCE_DB}, "properties": props})
 
 

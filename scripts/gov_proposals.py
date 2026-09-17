@@ -142,7 +142,7 @@ KEEP_TITLES = set(t for (_c, t) in RETITLE)
 
 def id_is_text():
     db = api("GET", "databases/" + GOVERNANCE_DB)
-    return (db.get("properties", {}).get("Proposal Id", {}).get("type")) == "rich_text"
+    return (db.get("properties", {}).get("Reference", {}).get("type")) == "rich_text"
 
 
 def make_id_text(dry):
@@ -151,21 +151,21 @@ def make_id_text(dry):
     print("Proposal Id: number -> rich text")
     if not dry:
         r = api("PATCH", "databases/" + GOVERNANCE_DB,
-                {"properties": {"Proposal Id": {"rich_text": {}}}})
+                {"properties": {"Reference": {"rich_text": {}}}})
         if r.get("error"):
             raise SystemExit("could not change Proposal Id: %s" % str(r)[:200])
 
 
 def props(chain, ref, title, date, proof, why):
     p = {
-        "Proposal Title": {"title": [{"type": "text", "text": {"content": title}}]},
-        "Chain": {"select": {"name": chain}},
-        "Vote Option": {"select": {"name": "YES"}},
-        "Voted On": {"date": {"start": date}},
-        "Voting Proof": {"rich_text": [{"type": "text",
+        "Proposal": {"title": [{"type": "text", "text": {"content": title}}]},
+        "Network": {"select": {"name": chain}},
+        "Our vote": {"select": {"name": "YES"}},
+        "Voted on": {"date": {"start": date}},
+        "Proof": {"rich_text": [{"type": "text",
                                         "text": {"content": "View Proposal", "link": {"url": proof}}}]},
         "Rationale": {"rich_text": [{"type": "text", "text": {"content": why}}]},
-        "Proposal Id": {"rich_text": ([{"type": "text", "text": {"content": ref}}] if ref else [])},
+        "Reference": {"rich_text": ([{"type": "text", "text": {"content": ref}}] if ref else [])},
     }
     return p
 
@@ -173,8 +173,8 @@ def props(chain, ref, title, date, proof, why):
 def main(dry=False):
     make_id_text(dry)
     current = rows()
-    upgrades = [r for r in current if val(r, "Voting Proof") in ("View Release", "View Proposal")]
-    have = {(val(r, "Chain"), val(r, "Proposal Title")): r for r in current}
+    upgrades = [r for r in current if val(r, "Proof") in ("View Release", "View Proposal")]
+    have = {(val(r, "Network"), val(r, "Proposal")): r for r in current}
 
     # 1. the proposal rows
     added = 0
@@ -182,7 +182,7 @@ def main(dry=False):
         row = have.get((chain, title))
         body = props(chain, ref, title, date, proof, why)
         if row:
-            if val(row, "Proposal Id") == ref:
+            if val(row, "Reference") == ref:
                 continue
             print("update  %-11s %-9s %s" % (chain, ref, title))
             if not dry:
@@ -199,21 +199,21 @@ def main(dry=False):
 
     # 2. retitle the version-vote rows
     for row in upgrades:
-        chain, title = val(row, "Chain"), val(row, "Proposal Title")
+        chain, title = val(row, "Network"), val(row, "Proposal")
         new = RETITLE.get((chain, title))
         if not new:
             continue
         print("retitle %-11s %s  ->  %s" % (chain, title, new))
         if not dry:
             api("PATCH", "pages/" + row["id"], {"properties": {
-                "Proposal Title": {"title": [{"type": "text", "text": {"content": new}}]},
-                "Proposal Id": {"rich_text": []}}})
+                "Proposal": {"title": [{"type": "text", "text": {"content": new}}]},
+                "Reference": {"rich_text": []}}})
             time.sleep(0.34)
 
     # 3. archive the release rows the proposals replace
     keep = {(c, t) for c, _r, t, _d, _p, _w in PROPOSALS} | {(c, RETITLE[(c, t)]) for (c, t) in RETITLE}
     for row in upgrades:
-        chain, title = val(row, "Chain"), val(row, "Proposal Title")
+        chain, title = val(row, "Network"), val(row, "Proposal")
         if chain not in REPLACED or (chain, title) in keep or (chain, title) in RETITLE:
             continue
         print("archive %-11s %s" % (chain, title))

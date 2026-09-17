@@ -129,9 +129,9 @@ def tighten(text):
 
 def rationale_for(row):
     old = (val(row, "Rationale") or "").strip()
-    vote = val(row, "Vote Option") or "YES"
+    vote = val(row, "Our vote") or "YES"
     keep = len(old) > 60 and not BOILER.match(old)
-    return (tighten(old) if keep else pick((vote, category(val(row, "Proposal Title"), vote)), row["id"])), keep
+    return (tighten(old) if keep else pick((vote, category(val(row, "Proposal"), vote)), row["id"])), keep
 
 
 def main(dry=False):

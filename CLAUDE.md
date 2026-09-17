@@ -542,11 +542,11 @@ flash of empty values and a key in the page.
   rules; dead once titles are un-bolded — optional tidy-up (remind the user).
 - Page CSS overriding the Card System: contact-us.css (black ring + hard shadow), guides.css
   (padding 0, image-only tiles), investments.css (radius), governance.css (old pastel cards).
-- **TODO — rename the Notion properties the governance design asks for (2026-09-17).** The homepage
-  table prints the database's own property names, so the header still reads *Proposal Id / Chain /
-  Vote Option* where design *Governance* 37h says **Network / Proposal / Our vote**. Renaming the
-  properties on the governance database is the whole fix (no CSS) — it also changes them on
-  /governance-record, which is why it has not been done unasked. In the same pass: the four pillar
+- **Governance properties renamed (2026-09-17, done):** Chain → **Network**, Proposal Title →
+  **Proposal**, Proposal Id → **Reference**, Vote Option → **Our vote**, Voted On → **Voted on**,
+  Voting Proof → **Proof** (Rationale kept). The header labels are what `governance.js` and
+  `home.js` read to tag cells, so both maps accept the old and the new names. `scripts/gov_*.py`
+  use the new names. Still outstanding in the same pass: the four pillar
   titles want sentence case ("Understand the proposal"), but that gallery is a **linked view whose
   source database the integration cannot reach** ("does not contain any data sources accessible by
   this API bot"), so either connect "Encapsulate Website" to it or rename the four rows by hand.
