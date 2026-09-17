@@ -317,6 +317,25 @@
     if (rows[1] && org.name) fill(rows[1], org.name, org.email || "");
     if (rows[3]) fill(rows[3], minutes + " minutes", "Nothing to prepare");
 
+    /* the meeting link, when the booking carries one: cal.com keeps it at
+       booking.metadata.videoCallUrl (that is where its own screen reads it from), and a custom
+       location can be the URL itself. The row keeps Notion's words and gains the link. */
+    var meet = (b.metadata && b.metadata.videoCallUrl) ||
+      (typeof b.location === "string" && /^https?:/.test(b.location) ? b.location : "");
+    if (rows[2] && meet) {
+      var v2 = rows[2].querySelector(".enc-ct__fv");
+      var s2 = rows[2].querySelector(".enc-ct__fs");
+      if (v2) {
+        var a = el("a", "enc-ct__meet", v2.textContent);
+        a.href = meet;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        v2.textContent = "";
+        v2.appendChild(a);
+      }
+      if (s2) s2.textContent = "Join from here, or from the invitation";
+    }
+
     var again = band.querySelector('a[href*="cal.com/reschedule"]');
     if (again && uid) again.href = "https://cal.com/reschedule/" + uid;
     else if (again) again.closest(".notion-callout").hidden = true;

@@ -660,6 +660,18 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #C9C9C4;
 }
 
+/* the meeting link, when the booking carries one */
+.notion-root[data-enc-contact] a.enc-ct__meet {
+  color: #FAFAF8 !important;
+  border-bottom: 1px solid rgba(250, 250, 248, 0.4) !important;
+  opacity: 1 !important;
+  transition: border-color 0.16s ease;
+}
+
+.notion-root[data-enc-contact] a.enc-ct__meet:hover {
+  border-bottom-color: #FAFAF8 !important;
+}
+
 /* the two buttons sit together under the facts */
 .notion-root[data-enc-contact] .enc-ct__done-l .notion-callout {
   display: inline-flex !important;
