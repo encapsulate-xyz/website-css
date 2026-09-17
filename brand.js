@@ -78,32 +78,40 @@
   function bands() {
     var root = document.querySelector(".notion-root");
     if (!root) return;
-    var heads = Array.prototype.slice.call(root.querySelectorAll(":scope > .notion-heading"));
+    var heads = Array.prototype.slice.call(root.querySelectorAll(".notion-heading"))
+      .filter(function (h) { return h.parentElement === root || h.closest(".enc-band__rail"); });
     heads.forEach(function (title, i) {
-      if (title.closest(".enc-band")) return;
-      var band = el("section", "enc-band");
-      band.setAttribute("data-band", String(i + 1));
-      var rail = el("div", "enc-band__rail");
-      var body = el("div", "enc-band__body");
-      band.appendChild(rail);
-      band.appendChild(body);
-      root.insertBefore(band, title);
-
-      // the title goes first — it is a heading, so the loop below would stop on it — then the two
-      // paragraphs Notion writes after it (the lede and the number) join it in the rail, and
-      // everything up to the next heading is the band's body
-      rail.appendChild(title);
-      var node = band.nextSibling, taken = 0;
+      var band = title.closest(".enc-band"), rail, body;
+      if (band) {
+        rail = band.querySelector(".enc-band__rail");
+        body = band.querySelector(".enc-band__body");
+      } else {
+        band = el("section", "enc-band");
+        band.setAttribute("data-band", String(i + 1));
+        rail = el("div", "enc-band__rail");
+        body = el("div", "enc-band__body");
+        band.appendChild(rail);
+        band.appendChild(body);
+        root.insertBefore(band, title);
+        rail.appendChild(title);      // the title first: the loop below stops on any heading
+      }
+      // everything after the band up to the next heading belongs to it — the first two paragraphs
+      // (the lede and the number) in the rail, the rest in the body. Running again fills a band
+      // that was built empty rather than skipping it.
+      var node = band.nextSibling;
       while (node) {
         var next = node.nextSibling;
-        if (node.classList && node.classList.contains("notion-heading")) break;
-        // Super writes an empty anchor before every heading; it marks the next band, not this one
-        if (node.classList && node.classList.contains("notion-heading__anchor")) break;
-        if (taken < 2) { rail.appendChild(node); taken++; }
+        if (node.classList && (node.classList.contains("notion-heading") ||
+            node.classList.contains("notion-heading__anchor") ||
+            node.classList.contains("enc-band"))) break;
+        if (rail.children.length < 3) rail.appendChild(node);
         else body.appendChild(node);
         node = next;
       }
     });
+    // Super's empty heading anchors are left behind once the headings have moved
+    Array.prototype.forEach.call(root.querySelectorAll(":scope > .notion-heading__anchor"),
+      function (a) { a.remove(); });
   }
 
   /* ── 01 · the marks ── */
