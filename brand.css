@@ -1,55 +1,139 @@
 /* /brand — page-level CSS, linked from that page's Code → Head (head/brand.html).
-   Moved from the page's Code panel 2026-09-15. The old cover rules (page-covers/BrandKit.png behind the
-   first callout, .direct-parent, .super-content) and the hidden 3D image were removed: the cover is
-   main.css §14 + covers.js. */
+   Rebuilt from scratch on 2026-09-17 against design "Brand Page", verbatim.
 
-/*********************************************
-For viewport
-*********************************************/
-/*
-This block defines styles to be applied when the viewport's width is 920 pixels or less, often used for responsiveness on smaller screens or devices.
+   The page is a cover and four bands. Every band is a two-column spread: a narrow rail holding the
+   number, the title and the lede, sticky while the band's content scrolls past it. Notion has no
+   block that is a spread, and its blocks arrive flat, so brand.js wraps each band's own nodes into
+   one and builds the three things CSS cannot make from Notion blocks — the marks rows, the type
+   specimens and the colour swatches. Every word on the page is Notion's.
 
-1. For the first element with class .notion-column-list, it sets the flex direction to its initial value.
-2. For the elements with class .notion-column, it sets their width to 100% and their start margin (both -webkit-margin-start and margin-inline-start for cross-browser compatibility) to 0, effectively making them occupy the full width of their container.
-3. For images within elements with class .notion-column, it ensures they are fully visible within their parent container. It sets their maximum width to 100%, their height to auto (maintaining aspect ratio), makes them block elements, and centers them horizontally.
-*/
-@media (max-width: 1024px) {
-  .notion-column-list:first-of-type {
-    flex-direction: initial !important;
-  }
-  .notion-column {
-    width: 100% !important;
-    -webkit-margin-start: 0 !important;
-    margin-inline-start: 0 !important;
-  }
-  .notion-column .notion-image {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    text-align: center !important;
-  }
+   Tokens from the handoff: INK #000, INK7 #3A3D38, PAPER #FAFAF8, PAPER2 #F2F2ED, DARK #2A2C28,
+   GREY #6B6F68, HAIR #E2E2DB, GREEN #99CC66, and PAD = clamp(28px, 7vw, 110px). */
 
-.notion-column .notion-divider {
-    display: none!important;
+/* ── THE COVER ─────────────────────────────────────────────────────────────────────────────────
+   Ink, one screen, centred: the eyebrow above, the wordmark with the kit line and two CTAs in the
+   middle, the foot below. No headline — the wordmark is the headline. */
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 {
+  position: relative !important;
+  overflow: hidden !important;
+  width: 100vw !important;
+  max-width: none !important;
+  margin: 0 calc(50% - 50vw) !important;
+  padding: clamp(40px, 6vh, 72px) clamp(28px, 7vw, 110px) !important;
+  background: #2A2C28 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
 }
+
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-cover,
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 > .notion-callout__icon,
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 > .notion-callout__content > span.notion-semantic-string,
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 > .notion-callout__content > .notion-heading__anchor {
+  display: none !important;
 }
-/********************************************/
 
-
-/*********************************************/
-
-
-/*********************************************/
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 > .notion-callout__content {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  text-align: center !important;
+  gap: 30px !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: calc(100svh - var(--cover-top, 56px)) !important;
 }
-/********************************************/
-/* ── THE BRAND PAGE — design "Brand Page" ──────────────────────────────────────────────────────
 
-   Four bands, each a two-column spread: a narrow rail holding the number, the title and the lede,
-   sticky while the band's content scrolls past it. brand.js wraps Notion's flat blocks into the
-   spread and builds the marks slab; everything below positions what it made. */
+/* the eyebrow and the foot: two labels with a rule between them */
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 auto;
+}
 
-.notion-root .enc-brand {
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair[data-pair="foot"] { gap: 12px; }
+
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair > p.notion-text {
+  margin: 0 !important;
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 11px !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #B4B4B4 !important;
+}
+
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair[data-pair="foot"] > p.notion-text { font-size: 10.5px !important; }
+
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair > p.notion-text + p.notion-text { position: relative; }
+
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair > p.notion-text + p.notion-text::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 12px;
+  background: rgba(250, 250, 248, 0.4);
+}
+
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair[data-pair="foot"] > p.notion-text + p.notion-text::before {
+  left: -12px;
+  height: 11px;
+}
+
+/* the middle: the wordmark, the kit line, the two CTAs */
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-mid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  max-width: min(88%, 760px);
+}
+
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-mid__mark {
+  width: min(100%, 600px);
+  aspect-ratio: 5376.7 / 906.31;
+  display: block;
+  background: url("../svg/wordmark-reversed.svg") center / contain no-repeat;
+}
+
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-mid > p.notion-text {
+  margin: 0 !important;
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: clamp(16px, 1.7vw, 21px) !important;
+  line-height: 1.52 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  color: #C9C9C4 !important;
+  max-width: 38ch !important;
+  text-wrap: pretty !important;
+}
+
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-mid > .notion-column-list {
+  justify-content: center !important;
+  gap: 12px !important;
+  width: auto !important;
+}
+
+/* the secondary CTA in its on-ink form, as the handoff draws it */
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .notion-callout.color-gray_background .notion-link {
+  background: rgba(250, 250, 248, 0.06) !important;
+  border-color: rgba(250, 250, 248, 0.3) !important;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.26) !important;
+  color: #FAFAF8 !important;
+}
+
+/* ── THE SPREADS ───────────────────────────────────────────────────────────────────────────── */
+.notion-root .enc-band {
   display: grid;
   grid-template-columns: minmax(0, 0.34fr) minmax(0, 1fr);
   gap: clamp(32px, 6vw, 88px);
@@ -59,17 +143,17 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   margin: 0 calc(50% - 50vw);
   padding: 88px clamp(28px, 7vw, 110px);
   border-top: 1px solid #E2E2DB;
+  background: #FAFAF8;
 }
 
-.notion-root .enc-brand[data-band="1"] { background: #F2F2ED; }
+.notion-root .enc-band[data-band="1"] { background: #F2F2ED; }
 
-/* the type band is the page's one ink section */
-.notion-root .enc-brand[data-band="3"] {
+.notion-root .enc-band[data-band="3"] {
   background: #2A2C28;
   border-top-color: transparent;
 }
 
-.notion-root .enc-brand__rail {
+.notion-root .enc-band__rail {
   position: sticky;
   top: 40px;
   display: flex;
@@ -78,18 +162,18 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 /* the number is written after the heading in Notion, so the rail orders it first */
-.notion-root .enc-brand__rail > p.notion-text:last-child {
+.notion-root .enc-band__rail > p.notion-text:last-child {
   order: -1;
   margin: 0 !important;
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 11px !important;
   line-height: 1.3 !important;
   letter-spacing: 0.14em !important;
-  text-transform: uppercase !important;
+  text-transform: none !important;
   color: #6B6F68 !important;
 }
 
-.notion-root .enc-brand__rail > .notion-heading {
+.notion-root .enc-band__rail > .notion-heading {
   margin: 0 !important;
   padding: 0 !important;
   font-family: var(--type-display), system-ui, sans-serif !important;
@@ -101,7 +185,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   max-width: 11ch !important;
 }
 
-.notion-root .enc-brand__rail > p.notion-text {
+.notion-root .enc-band__rail > p.notion-text {
   margin: 0 !important;
   font-family: var(--type-body), system-ui, sans-serif !important;
   font-size: 15.5px !important;
@@ -111,28 +195,25 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   text-wrap: pretty !important;
 }
 
-.notion-root .enc-brand[data-band="3"] .enc-brand__rail > .notion-heading { color: #FAFAF8 !important; }
-.notion-root .enc-brand[data-band="3"] .enc-brand__rail > p.notion-text { color: #C9C9C4 !important; }
-.notion-root .enc-brand[data-band="3"] .enc-brand__rail > p.notion-text:last-child { color: #B4B4B4 !important; }
+.notion-root .enc-band[data-band="3"] .enc-band__rail > .notion-heading { color: #FAFAF8 !important; }
+.notion-root .enc-band[data-band="3"] .enc-band__rail > p.notion-text { color: #C9C9C4 !important; }
+.notion-root .enc-band[data-band="3"] .enc-band__rail > p.notion-text:last-child { color: #B4B4B4 !important; }
 
-.notion-root .enc-brand__body {
+.notion-root .enc-band__body {
   display: flex;
   flex-direction: column;
   gap: 34px;
   min-width: 0;
 }
 
-.notion-root .enc-brand__body > * {
-  margin: 0 !important;
-}
+.notion-root .enc-band__body > * { margin: 0 !important; }
 
-/* the galleries the slab is built from stay in the page, hidden, as the no-JavaScript fallback */
-.notion-root [data-enc-source] {
-  display: none !important;
-}
+/* what the script reads and then hides: the galleries, and the words it borrows for its labels */
+.notion-root [data-enc-source] { display: none !important; }
 
-/* ── 01 · THE MARKS — one row per ground, the mark then the wordmark ── */
-.notion-root .enc-brand__slab {
+/* ── 01 · THE MARKS ────────────────────────────────────────────────────────────────────────────
+   One row per ground, one column per kind: the mark at 30% of the row and the wordmark at 70%. */
+.notion-root .enc-marks {
   display: flex;
   flex-direction: column;
   gap: 1px;
@@ -142,14 +223,14 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   overflow: hidden;
 }
 
-.notion-root .enc-brand__row {
+.notion-root .enc-marks__row {
   display: flex;
   gap: 1px;
   height: 132px;
   background: #E2E2DB;
 }
 
-.notion-root .enc-brand__cell {
+.notion-root .enc-marks__cell {
   position: relative;
   min-width: 0;
   display: grid;
@@ -158,20 +239,17 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   transition: box-shadow 0.16s ease;
 }
 
-/* the mark takes 30% of the row and the wordmark 70%, because the wordmark needs the width */
-.notion-root .enc-brand__cell[data-kind="mark"] { flex: 3 1 0; }
-.notion-root .enc-brand__cell[data-kind="word"] { flex: 7 1 0; }
+.notion-root .enc-marks__cell[data-kind="mark"] { flex: 3 1 0; }
+.notion-root .enc-marks__cell[data-kind="word"] { flex: 7 1 0; }
 
-.notion-root .enc-brand__cell:hover {
-  box-shadow: inset 0 0 0 1px #9B9B94;
-}
+.notion-root .enc-marks__cell:hover { box-shadow: inset 0 0 0 1px #9B9B94; }
 
-.notion-root .enc-brand__cell[style*="42, 44, 40"]:hover,
-.notion-root .enc-brand__cell[style*="153, 204, 102"]:hover {
+.notion-root .enc-marks__cell[data-ground="ink"]:hover,
+.notion-root .enc-marks__cell[data-ground="green"]:hover {
   box-shadow: inset 0 0 0 1px rgba(250, 250, 248, 0.4);
 }
 
-.notion-root .enc-brand__glyph {
+.notion-root .enc-marks__art {
   display: block;
   -webkit-mask-size: contain;
   mask-size: contain;
@@ -181,20 +259,11 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   mask-position: center;
 }
 
-.notion-root .enc-brand__cell[data-kind="mark"] .enc-brand__glyph {
-  width: 58px;
-  height: 58px;
-}
+.notion-root .enc-marks__cell[data-kind="mark"] .enc-marks__art { width: 58px; height: 58px; }
+.notion-root .enc-marks__cell[data-kind="word"] .enc-marks__art { width: 200px; max-width: 76%; height: 34px; }
 
-.notion-root .enc-brand__cell[data-kind="word"] .enc-brand__glyph {
-  width: 200px;
-  max-width: 76%;
-  height: 36px;
-}
-
-/* the file names itself in the corner, and says what a click does on hover */
-.notion-root .enc-brand__file,
-.notion-root .enc-brand__hint {
+.notion-root .enc-marks__file,
+.notion-root .enc-marks__hint {
   position: absolute;
   left: 12px;
   font-family: var(--type-mono), ui-monospace, monospace;
@@ -203,22 +272,27 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   text-transform: uppercase;
 }
 
-.notion-root .enc-brand__file { top: 11px; }
+.notion-root .enc-marks__file { top: 11px; }
 
-.notion-root .enc-brand__hint {
+.notion-root .enc-marks__hint {
   bottom: 10px;
   opacity: 0;
   transform: translateY(3px);
   transition: opacity 0.16s ease, transform 0.16s ease;
 }
 
-.notion-root .enc-brand__cell:hover .enc-brand__hint {
-  opacity: 1;
-  transform: none;
+.notion-root .enc-marks__cell:hover .enc-marks__hint { opacity: 1; transform: none; }
+
+/* the band's CTA row: the button, then the note beside it */
+.notion-root .enc-cta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
-/* the band's own note, beside its button */
-.notion-root [data-enc-note] {
+.notion-root .enc-cta > p.notion-text {
+  margin: 0 !important;
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 10px !important;
   letter-spacing: 0.12em !important;
@@ -226,145 +300,83 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #6B6F68 !important;
 }
 
-/* the intro's paragraph is replaced by the band's lede; its Download button is the band's CTA */
-.notion-root [data-enc-intro] {
-  display: block !important;
-  margin: 0 0 34px !important;
+/* ── 02 · COLOUR ───────────────────────────────────────────────────────────────────────────────
+   Two strips, edge to edge: the brand pair, then the pastel set at half the height. */
+.notion-root .enc-swatches {
+  display: flex;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
-.notion-root [data-enc-intro] .notion-text:not(:has(.notion-link)) {
-  display: none !important;
+.notion-root .enc-swatch {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 128px;
+  padding: 0 0 16px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 3px;
+  transition: box-shadow 0.16s ease;
 }
 
-/* ── 02 · COLOUR ── */
-.notion-root .enc-brand[data-band="2"] .notion-collection-gallery {
-  display: flex !important;
-  flex-wrap: nowrap !important;
-  gap: 0 !important;
+.notion-root .enc-swatches[data-set="brand"] .enc-swatch { height: 208px; }
+.notion-root .enc-swatch[data-flex="62"] { flex: 1 1 62%; }
+.notion-root .enc-swatch[data-flex="38"] { flex: 1 1 38%; }
+
+.notion-root .enc-swatch:hover { box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.34); }
+.notion-root .enc-swatch[data-on="dark"]:hover { box-shadow: inset 0 0 0 2px rgba(250, 250, 248, 0.6); }
+
+.notion-root .enc-swatch__name {
+  font-family: var(--type-display), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.018em;
+}
+
+.notion-root .enc-swatch__hex {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  opacity: 0.74;
+}
+
+/* the pastel set's label and the line beside it */
+.notion-root .enc-pastel-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.notion-root .enc-pastel-head > p.notion-text:first-child {
   margin: 0 !important;
-  padding: 0 !important;
-  border-radius: 4px !important;
-  overflow: hidden !important;
-}
-
-.notion-root .enc-brand[data-band="2"] .notion-collection-card {
-  flex: 1 1 0 !important;
-  min-width: 0 !important;
-  height: 208px !important;
-  margin: 0 !important;
-  padding: 0 0 16px 16px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: flex-end !important;
-  gap: 3px !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  cursor: pointer !important;
-  transition: box-shadow 0.16s ease !important;
-}
-
-.notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-hex] {
-  background: var(--enc-hex) !important;
-}
-
-/* the two brand colours take the tall row — ink at 62% of it, green at 38% — and the pastel set
-   sits under them at half the height, as a set rather than as decisions */
-.notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-kind="brand"] {
-  height: 208px !important;
-}
-
-.notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-kind="pastel"] {
-  height: 128px !important;
-}
-
-.notion-root .enc-brand[data-band="2"] .notion-collection-gallery {
-  flex-wrap: wrap !important;
-}
-
-.notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-hex="#000000"] { flex: 1 1 62% !important; }
-.notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-hex="#99CC66"] { flex: 1 1 38% !important; }
-.notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-kind="pastel"] { flex: 1 1 19% !important; }
-
-/* the name in the display face above the value, as the design sets them */
-.notion-root .enc-brand[data-band="2"] .notion-collection-card .notion-property__title {
-  display: block !important;
-  min-height: 0 !important;
-  margin: 0 !important;
-  font-family: var(--type-display), system-ui, sans-serif !important;
-  font-weight: 600 !important;
-  font-size: 16px !important;
-  letter-spacing: -0.018em !important;
-  color: #000000 !important;
-}
-
-.notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-on="dark"] .notion-property__title {
-  color: #FAFAF8 !important;
-}
-
-/* the pastel set's own label and note, above the row */
-.notion-root .enc-brand[data-band="2"] .enc-brand__body > p.notion-text:nth-of-type(1) {
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 10px !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
   color: #6B6F68 !important;
-  margin-bottom: -22px !important;
 }
 
-.notion-root .enc-brand[data-band="2"] .enc-brand__body > p.notion-text:nth-of-type(2) {
+.notion-root .enc-pastel-head > p.notion-text:last-child {
+  margin: 0 !important;
   font-family: var(--type-body), system-ui, sans-serif !important;
   font-size: 14.5px !important;
   color: #6B6F68 !important;
 }
 
-.notion-root .enc-brand[data-band="2"] .notion-collection-card:hover {
-  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.34) !important;
+.notion-root .enc-pastel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-.notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-on="dark"]:hover {
-  box-shadow: inset 0 0 0 2px rgba(250, 250, 248, 0.6) !important;
-}
-
-/* the card's cover image was the swatch; the row's own hex paints it now */
-.notion-root .enc-brand[data-band="2"] .notion-collection-card img {
-  display: none !important;
-}
-
-.notion-root .enc-brand[data-band="2"] .notion-collection-card .notion-property {
-  font-family: var(--type-mono), ui-monospace, monospace !important;
-  font-size: 11px !important;
-  letter-spacing: 0.08em !important;
-  color: #000000 !important;
-  opacity: 0.74 !important;
-}
-
-.notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-on="dark"] .notion-property {
-  color: #FAFAF8 !important;
-}
-
-/* the hex is a select property, so Super renders it as a pill and the Pill System (main.css §10)
-   gives it a ring and a radius — on a swatch it is just the value, in mono, on the colour */
-.notion-root .enc-brand[data-band="2"] .notion-collection-card .notion-pill {
-  display: inline !important;
-  width: auto !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  font: inherit !important;
-  letter-spacing: inherit !important;
-  color: inherit !important;
-  text-transform: none !important;
-}
-
-.notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-copied] .notion-property::after {
-  content: " · Copied";
-}
-
-/* ── 03 · TYPE ── */
-/* one row per face: the specimen at scale on a hairline, its name and weights at the right */
+/* ── 03 · TYPE ─────────────────────────────────────────────────────────────────────────────────
+   Each face is its specimen at scale, with the name and the weights at the right of the row. */
 .notion-root .enc-face {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 200px;
@@ -374,9 +386,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   border-top: 1px solid rgba(250, 250, 248, 0.18);
 }
 
-.notion-root .enc-face[data-face="1"] {
-  border-top-color: rgba(250, 250, 248, 0.3);
-}
+.notion-root .enc-face[data-face="1"] { border-top-color: rgba(250, 250, 248, 0.3); }
 
 .notion-root .enc-face > p.notion-text {
   margin: 0 !important;
@@ -428,11 +438,18 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #C9C9C4 !important;
 }
 
-/* the fourth face, which is not part of the system: a kicker, its name, its one job, and why */
-.notion-root .enc-brand[data-band="3"] .enc-brand__body > p.notion-text:nth-of-type(1) {
-  margin-top: 4px !important;
-  padding-top: 22px !important;
-  border-top: 1px solid rgba(250, 250, 248, 0.3) !important;
+/* the fourth face, which is not part of the system */
+.notion-root .enc-fourth {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid rgba(250, 250, 248, 0.3);
+  padding-top: 22px;
+  margin-top: 4px;
+}
+
+.notion-root .enc-fourth > p.notion-text:nth-of-type(1) {
+  margin: 0 !important;
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 10px !important;
   letter-spacing: 0.12em !important;
@@ -440,7 +457,15 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #B4B4B4 !important;
 }
 
-.notion-root .enc-brand[data-band="3"] .enc-brand__body > p.notion-text:nth-of-type(2) {
+.notion-root .enc-fourth__row {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.notion-root .enc-fourth__row > p.notion-text:first-child {
+  margin: 0 !important;
   font-family: var(--type-display), system-ui, sans-serif !important;
   font-weight: 600 !important;
   font-size: 21px !important;
@@ -448,7 +473,8 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #FAFAF8 !important;
 }
 
-.notion-root .enc-brand[data-band="3"] .enc-brand__body > p.notion-text:nth-of-type(3) {
+.notion-root .enc-fourth__row > p.notion-text:last-child {
+  margin: 0 !important;
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 9.5px !important;
   letter-spacing: 0.12em !important;
@@ -456,44 +482,69 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #C9C9C4 !important;
 }
 
-.notion-root .enc-brand[data-band="3"] .enc-brand__body > p.notion-text:nth-of-type(4) {
+.notion-root .enc-fourth > p.notion-text:last-child {
+  margin: 0 !important;
   font-family: var(--type-body), system-ui, sans-serif !important;
   font-size: 14.5px !important;
   line-height: 1.56 !important;
   color: #C9C9C4 !important;
   max-width: 66ch !important;
+  text-wrap: pretty !important;
 }
 
-/* ── 04 · USING IT ── */
-.notion-root .enc-brand[data-band="4"] .enc-brand__body {
+/* ── 04 · USING IT ─────────────────────────────────────────────────────────────────────────────
+   The clear-space diagram beside the four rules. */
+.notion-root .enc-rules {
   display: grid;
   grid-template-columns: 248px minmax(0, 1fr);
   gap: 28px;
   align-items: start;
 }
 
-/* the clear-space diagram, drawn from the mark the rail already names */
-.notion-root .enc-brand[data-band="4"] .enc-brand__body::before {
-  content: "";
-  grid-row: 1 / span 8;
+.notion-root .enc-rules__art {
+  position: relative;
+  display: grid;
+  place-items: center;
   width: 248px;
   height: 248px;
   border-radius: 4px;
-  background: #F2F2ED
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='23' y='23' width='54' height='54' fill='none' stroke='%239B9B94' stroke-width='0.6' stroke-dasharray='3 3'/%3E%3C/svg%3E")
-    center / contain no-repeat;
+  background: #F2F2ED;
   border: 1px solid #E2E2DB;
 }
 
-.notion-root .enc-brand[data-band="4"] .enc-brand__body > p.notion-text {
-  grid-column: 2;
-  align-self: baseline;
-  padding: 13px 0 !important;
-  border-top: 1px solid #E2E2DB !important;
+.notion-root .enc-rules__art::before {
+  content: "";
+  position: absolute;
+  inset: 23%;
+  border: 1px dashed #9B9B94;
 }
 
-/* the four labels — every odd line — and the four texts beside them */
-.notion-root .enc-brand[data-band="4"] .enc-brand__body > p.notion-text:nth-of-type(odd) {
+.notion-root .enc-rules__art::after {
+  content: "";
+  position: relative;
+  width: 86px;
+  height: 86px;
+  background: url("../svg/mark-b.svg") center / contain no-repeat;
+}
+
+.notion-root .enc-rules__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.notion-root .enc-rule {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  gap: 22px;
+  align-items: baseline;
+  padding: 13px 0;
+  border-top: 1px solid #E2E2DB;
+}
+
+.notion-root .enc-rule:first-child { border-top-color: #000000; }
+
+.notion-root .enc-rule > p.notion-text:first-child {
+  margin: 0 !important;
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 10px !important;
   letter-spacing: 0.12em !important;
@@ -501,157 +552,26 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #6B6F68 !important;
 }
 
-.notion-root .enc-brand[data-band="4"] .enc-brand__body > p.notion-text:nth-of-type(even) {
+.notion-root .enc-rule > p.notion-text:last-child {
+  margin: 0 !important;
   font-family: var(--type-body), system-ui, sans-serif !important;
   font-size: 14.5px !important;
   line-height: 1.56 !important;
   color: #3A3D38 !important;
-}
-
-.notion-root .enc-brand[data-band="4"] .enc-brand__body > p.notion-text:first-of-type {
-  border-top-color: #000000 !important;
-}
-
-@media (max-width: 900px) {
-  .notion-root .enc-brand {
-    grid-template-columns: minmax(0, 1fr);
-    padding: 56px clamp(20px, 6vw, 40px);
-  }
-  .notion-root .enc-brand__rail { position: static; }
-  .notion-root .enc-brand__row { flex-wrap: wrap; }
-  .notion-root .enc-brand__panel { flex: 1 1 46%; }
-  .notion-root .enc-brand[data-band="2"] .notion-collection-gallery { flex-wrap: wrap !important; }
-  .notion-root .enc-brand[data-band="2"] .notion-collection-card { flex: 1 1 40% !important; }
-  .notion-root .enc-brand[data-band="4"] .enc-brand__body { grid-template-columns: minmax(0, 1fr); }
-  .notion-root .enc-brand[data-band="4"] .enc-brand__body::before { grid-row: auto; }
-  .notion-root .enc-brand[data-band="4"] .enc-brand__body > p.notion-text { grid-column: 1; }
-}
-
-/* ── THE COVER — the design's ink cover ────────────────────────────────────────────────────────
-   Not a headline on paper: the wordmark itself on the ink ground, centred, with the eyebrow above
-   and the foot below. The words are the callout's own; the headline stays in the markup for the
-   page's heading level and is read, not seen — the wordmark says it. */
-.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 {
-  position: relative !important;
-  overflow: hidden !important;
-  width: 100vw !important;
-  max-width: none !important;
-  margin-left: calc(50% - 50vw) !important;
-  margin-right: calc(50% - 50vw) !important;
-  padding: clamp(40px, 6vh, 72px) clamp(28px, 7vw, 110px) !important;
-  background: #2A2C28 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-}
-
-.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 .enc-cover {
-  display: none !important;
-}
-
-.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > span.notion-semantic-string,
-.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > .notion-heading__anchor {
-  display: none !important;
-}
-
-.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  text-align: center !important;
-  gap: 30px !important;
-  width: 100% !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  min-height: calc(100svh - var(--cover-top, 56px)) !important;
-}
-
-/* the wordmark, in the headline's place */
-.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > h1.notion-heading {
-  position: relative !important;
-  width: min(100%, 600px) !important;
-  max-width: min(100%, 600px) !important;
-  height: auto !important;
-  margin: 0 auto !important;
-  aspect-ratio: 5376.7 / 906.31 !important;   /* the wordmark's own ratio — a % padding would
-                                                 resolve against the column, not the mark */
-  overflow: hidden !important;
-  text-indent: -9999px !important;            /* read by a screen reader, said by the mark */
-  background: url("../svg/wordmark-reversed.svg") center / contain no-repeat !important;
-}
-
-/* the lede */
-.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > p.notion-text:nth-of-type(1) {
-  margin: 0 auto !important;
-  font-family: var(--type-body), system-ui, sans-serif !important;
-  font-size: clamp(16px, 1.7vw, 21px) !important;
-  line-height: 1.52 !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
-  color: #C9C9C4 !important;
-  max-width: 38ch !important;
+  max-width: 46ch !important;
   text-wrap: pretty !important;
 }
 
-/* the two CTAs, centred, and the secondary in its on-ink form */
-.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > .notion-column-list {
-  justify-content: center !important;
-  max-width: min(88%, 760px) !important;
-}
-
-.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 .notion-callout.color-gray_background .notion-link {
-  background: rgba(250, 250, 248, 0.06) !important;
-  border-color: rgba(250, 250, 248, 0.3) !important;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.26) !important;
-  color: #FAFAF8 !important;
-}
-
-/* the mid block holds the wordmark, the lede and the buttons together, between the two labels */
-.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 .enc-cover__pair {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  width: max-content;
-  max-width: 100%;
-  margin: 0 auto;
-}
-
-.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 .enc-cover__pair > p.notion-text {
-  margin: 0 !important;
-  font-family: var(--type-mono), ui-monospace, monospace !important;
-  font-size: 11px !important;
-  line-height: 1.3 !important;
-  letter-spacing: 0.14em !important;
-  text-transform: uppercase !important;
-  color: #B4B4B4 !important;
-}
-
-.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 .enc-cover__pair[data-pair="foot"] {
-  gap: 12px;
-}
-
-.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 .enc-cover__pair[data-pair="foot"] > p.notion-text {
-  font-size: 10.5px !important;
-}
-
-.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 .enc-cover__pair > p.notion-text + p.notion-text {
-  position: relative;
-}
-
-.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 .enc-cover__pair > p.notion-text + p.notion-text::before {
-  content: "";
-  position: absolute;
-  left: -14px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1px;
-  height: 12px;
-  background: rgba(250, 250, 248, 0.4);
-}
-
-.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 .enc-cover__pair[data-pair="foot"] > p.notion-text + p.notion-text::before {
-  left: -12px;
-  height: 11px;
+/* ── UNDER 900px ───────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .notion-root .enc-band {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 56px clamp(20px, 6vw, 40px);
+  }
+  .notion-root .enc-band__rail { position: static; }
+  .notion-root .enc-marks__row { height: 108px; }
+  .notion-root .enc-swatches { flex-wrap: wrap; }
+  .notion-root .enc-swatch { flex: 1 1 40% !important; }
+  .notion-root .enc-rules { grid-template-columns: minmax(0, 1fr); }
+  .notion-root .enc-face { grid-template-columns: minmax(0, 1fr); }
 }
