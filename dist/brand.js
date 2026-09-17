@@ -345,7 +345,13 @@
     box.appendChild(list);
   }
 
-  function build() { cover(); coverTop(); bands(); marks(); colour(); faces(); rules(); }
+  /* This file is loaded from the site head, so it must say where it applies: bands() wraps any
+     top-level heading into a spread, and without this it was rebuilding /contact-us and every
+     other page's headings too. */
+  function build() {
+    if (!/^\/brand\/?$/.test(location.pathname)) return;
+    cover(); coverTop(); bands(); marks(); colour(); faces(); rules();
+  }
 
   var t = 0;
   new MutationObserver(function (muts) {
