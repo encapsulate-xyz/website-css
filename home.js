@@ -779,7 +779,18 @@
     var table = block && block.querySelector("table");
     if (!table) return;
     mark(table);
-    var chainCol = column(table, "chain"), voteCol = column(table, "vote option");
+    // the columns are found by what the cell IS, not by the property's name: the database's
+    // properties were renamed to the design's words on 2026-09-17 (Chain -> Network, Vote Option ->
+    // Our vote), and looking them up by the old names silently dropped the chain marks
+    var ths = table.querySelectorAll("thead th");
+    var chainCol = -1, voteCol = -1;
+    Array.prototype.forEach.call(ths, function (th, i) {
+      var kind = th.getAttribute("data-enc-cell");
+      if (kind === "chain") chainCol = i;
+      else if (kind === "vote") voteCol = i;
+    });
+    if (chainCol < 0) chainCol = column(table, "chain");
+    if (voteCol < 0) voteCol = column(table, "vote option");
     var map = null;
     var rowIndex = -1;
     table.querySelectorAll("tbody tr").forEach(function (tr) {
