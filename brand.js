@@ -185,15 +185,10 @@
         cell.setAttribute("data-ground", g.key);
         cell.style.background = g.bg;
 
-        // the file is drawn by masking itself, so the cell shows the drawing in the colour that
-        // ground demands even while the browser is still fetching it
-        var art = el("span", "enc-marks__art");
-        if (file && file.href) {
-          var url = 'url("' + file.href.replace(/"/g, "%22") + '")';
-          art.style.webkitMaskImage = url;
-          art.style.maskImage = url;
-        }
-        art.style.background = g.ink;
+        // the file is drawn as it is: each one is already coloured for the ground it belongs to
+        var art = el("img", "enc-marks__art");
+        if (file && file.href) art.src = file.href;
+        art.alt = "";
         cell.appendChild(art);
 
         var label = el("span", "enc-marks__file", (file && file.name) || "");

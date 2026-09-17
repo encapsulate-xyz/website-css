@@ -253,12 +253,7 @@
 
 .notion-root .enc-marks__art {
   display: block;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
+  object-fit: contain;
 }
 
 .notion-root .enc-marks__cell[data-kind="mark"] .enc-marks__art { width: 58px; height: 58px; }

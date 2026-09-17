@@ -33,7 +33,7 @@
 .notion-root .enc-marks__cell[data-kind="word"]{flex: 7 1 0;}
 .notion-root .enc-marks__cell:hover{box-shadow: inset 0 0 0 1px #9B9B94;}
 .notion-root .enc-marks__cell[data-ground="ink"]:hover,.notion-root .enc-marks__cell[data-ground="green"]:hover{box-shadow: inset 0 0 0 1px rgba(250,250,248,0.4);}
-.notion-root .enc-marks__art{display: block;-webkit-mask-size: contain;mask-size: contain;-webkit-mask-repeat: no-repeat;mask-repeat: no-repeat;-webkit-mask-position: center;mask-position: center;}
+.notion-root .enc-marks__art{display: block;object-fit: contain;}
 .notion-root .enc-marks__cell[data-kind="mark"] .enc-marks__art{width: 58px;height: 58px;}
 .notion-root .enc-marks__cell[data-kind="word"] .enc-marks__art{width: 200px;max-width: 76%;height: 34px;}
 .notion-root .enc-marks__file,.notion-root .enc-marks__hint{position: absolute;left: 12px;font-family: var(--type-mono),ui-monospace,monospace;font-size: 9px;letter-spacing: 0.12em;text-transform: uppercase;}
