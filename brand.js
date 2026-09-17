@@ -46,13 +46,14 @@
      and "Green" the recoloured ones. `row` is the card the panel downloads; the mark is still
      painted by a mask so the panel renders even before a file exists. */
   var PANELS = [
-    { bg: "#FAFAF8", ink: "#000000", mark: "mark", ground: "On light", row: "B" },
+    { bg: "#FAFAF8", ink: "#000000", mark: "mark", ground: "On light", row: "LIGHT" },
     { bg: "#2A2C28", ink: "#FAFAF8", mark: "mark", ground: "On ink", row: "INK" },
     { bg: "#99CC66", ink: "#000000", mark: "mark", ground: "On green", row: "GREEN" }
   ];
   var WORDS = [
-    { bg: "#FAFAF8", ink: "#000000", mark: "word", ground: "On light", row: "" },
-    { bg: "#2A2C28", ink: "#FAFAF8", mark: "word", ground: "On ink", row: "INK" }
+    { bg: "#FAFAF8", ink: "#000000", mark: "word", ground: "On light", row: "LIGHT" },
+    { bg: "#2A2C28", ink: "#FAFAF8", mark: "word", ground: "On ink", row: "INK" },
+    { bg: "#99CC66", ink: "#000000", mark: "word", ground: "On green", row: "GREEN" }
   ];
 
   function el(tag, cls, text) {
@@ -96,7 +97,7 @@
     var cards = Array.prototype.slice.call(
       gallery ? gallery.querySelectorAll(".notion-collection-card") : []);
     var svgs = cards.filter(function (c) { return /\bSVG\b/i.test(c.textContent); });
-    var named = svgs.filter(function (c) { return /\b(INK|GREEN)\b/i.test(c.textContent); });
+    var named = svgs.filter(function (c) { return /\b(INK|GREEN|LIGHT)\b/i.test(c.textContent); });
     var pick = ground
       ? svgs.filter(function (c) { return c.textContent.toUpperCase().indexOf(ground) >= 0; })[0]
       : svgs.filter(function (c) { return named.indexOf(c) < 0; })[0];
