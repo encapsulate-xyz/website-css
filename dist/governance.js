@@ -130,3 +130,92 @@
   else build();
   window.addEventListener("load", build);
 })();
+
+/* ── the count band is one screen, and scrolling settles on it ──
+   Design "Governance Record": the count band fills the viewport, so arriving at it half-shown
+   reads as a mistake. Same rules as the Network Count panels (network.js) and the homepage decks,
+   tuned on a trackpad — except that there is one stop rather than a deck of them, so this is the "one-screen
+   section" case: a gesture heading towards the panel from within half a screen lands on it, and
+   the page settles onto it when it comes to rest within a third of a screen. Nothing is paged once
+   the panel is on screen; the reader scrolls out of it normally.
+   Under 701px, and with reduced motion, nothing snaps. */
+(function () {
+  var BAND = "block-3dde800a513881b1b88dd0b73f874bfe";   // the count band
+  var EPS = 2, QUIET = 180, NEW_GAP = 250, MIN_LOCK = 450;
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var docTop = function (el) { return el.getBoundingClientRect().top + window.scrollY; };
+
+  var cache = null;
+  function panel() {
+    if (cache !== null) return cache;
+    // never cache a negative: the first call can land before governance.css has applied
+    var box = document.getElementById(BAND);
+    if (!box || window.innerWidth < 701) return false;
+    var h = window.innerHeight;
+    if (box.offsetHeight < h - 4) return false;
+    return (cache = { stop: Math.round(docTop(box)), h: h });
+  }
+  function invalidate() { cache = null; }
+
+  var anim = null, gestureUntil = 0;
+  function scrollToY(target) {
+    target = Math.max(0, Math.min(target, document.documentElement.scrollHeight - window.innerHeight));
+    if (Math.abs(target - window.scrollY) < 1) return;
+    var smooth = !reduced.matches;
+    if (anim) clearTimeout(anim.timer);
+    anim = { target: target, timer: setTimeout(finish, smooth ? 900 : 50) };
+    window.scrollTo({ top: target, behavior: smooth ? "smooth" : "instant" });
+  }
+  function finish() { if (!anim) return; clearTimeout(anim.timer); anim = null; }
+  function arrived() { if (anim && Math.abs(window.scrollY - anim.target) <= 1) finish(); }
+
+  // the panel is worth catching only while the reader is heading at it from outside
+  function catches(d, y, dir, reach) {
+    if (!d || Math.abs(y - d.stop) <= EPS) return false;
+    return dir > 0 ? (y < d.stop && d.stop - y <= reach) : (y > d.stop && y - d.stop <= reach);
+  }
+
+  var lastWheel = 0, lockedAt = 0, peak = 0, tailMin = Infinity, decayed = false, locked = false;
+  window.addEventListener("wheel", function (e) {
+    if (e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
+    var now = performance.now(), abs = Math.abs(e.deltaY), gap = now - lastWheel;
+    lastWheel = now;
+    gestureUntil = now + QUIET;
+    if (locked && gap <= NEW_GAP) {
+      peak = Math.max(peak, abs);
+      if (abs < peak * 0.5) decayed = true;
+      var rise = decayed && now - lockedAt > MIN_LOCK && abs > Math.max(tailMin * 4, 20);
+      if (decayed) tailMin = Math.min(tailMin, abs);
+      if (!rise) { e.preventDefault(); return; }
+    }
+    locked = false;
+    var d = panel(), dir = e.deltaY > 0 ? 1 : -1;
+    var y = anim ? anim.target : window.scrollY;
+    if (!catches(d, y, dir, d ? d.h / 2 : 0)) { if (anim) e.preventDefault(); return; }
+    e.preventDefault();
+    locked = true; lockedAt = now; peak = abs; tailMin = Infinity; decayed = false;
+    scrollToY(d.stop);
+  }, { passive: false });
+
+  var touching = false, restTimer = 0, retry = 0, lastRest = window.scrollY;
+  function settle() {
+    if (anim || touching) return;
+    if (performance.now() < gestureUntil) { clearTimeout(retry); retry = setTimeout(settle, QUIET + 20); return; }
+    var d = panel(), y = window.scrollY;
+    if (!d) return;
+    var dir = y >= lastRest ? 1 : -1;
+    lastRest = y;
+    if (catches(d, y, dir, d.h / 3)) scrollToY(d.stop);
+  }
+
+  var hasScrollEnd = "onscrollend" in window;
+  if (hasScrollEnd) window.addEventListener("scrollend", function () { arrived(); setTimeout(settle, 30); });
+  window.addEventListener("scroll", function () {
+    if (!hasScrollEnd) { clearTimeout(restTimer); restTimer = setTimeout(function () { arrived(); settle(); }, 140); }
+    arrived();
+  }, { passive: true });
+  window.addEventListener("touchstart", function () { touching = true; if (anim) finish(); }, { passive: true });
+  window.addEventListener("touchend", function () { touching = false; if (!hasScrollEnd) setTimeout(settle, 140); }, { passive: true });
+  window.addEventListener("resize", invalidate);
+  new MutationObserver(invalidate).observe(document.body, { childList: true, subtree: true });
+})();

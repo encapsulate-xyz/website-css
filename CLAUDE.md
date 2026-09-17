@@ -191,6 +191,12 @@ design's 924×540 %-based geometry into divs, and:
   the Brand mark is `svg/mark-a.svg` via jsDelivr.
 Cover copy per page: `notion/page-covers.md`.
 
+**One-screen bands snap the same way** (guides picker, the governance record's count band): one
+stop rather than a deck — a gesture heading at the panel from within half a screen lands on it, a
+rest within a third of a screen settles onto it, nothing snaps under 701px or with reduced motion.
+The catch rule is testable in Node (`scratchpad/snaptest.js`); the automation tab fires no scroll
+events.
+
 **Network Count (/networks, network.css + network.js).** Band callout `3dce800a…8154931a…` right
 after the cover: Text kicker, then a column list with one callout per panel (callout text "01 / 02",
 Heading 1 figure, Text label, Text note). Two sticky full-screen ink panels in a 2-screen band, each
