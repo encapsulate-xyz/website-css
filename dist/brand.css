@@ -30,6 +30,7 @@
 .notion-root [data-enc-intro] .notion-text:not(:has(.notion-link)){display: none !important;}
 .notion-root .enc-brand[data-band="2"] .notion-collection-gallery{display: flex !important;flex-wrap: nowrap !important;gap: 0 !important;margin: 0 !important;padding: 0 !important;border-radius: 4px !important;overflow: hidden !important;}
 .notion-root .enc-brand[data-band="2"] .notion-collection-card{flex: 1 1 0 !important;min-width: 0 !important;height: 208px !important;margin: 0 !important;padding: 0 0 16px 16px !important;display: flex !important;flex-direction: column !important;justify-content: flex-end !important;gap: 3px !important;border: 0 !important;border-radius: 0 !important;box-shadow: none !important;cursor: pointer !important;transition: box-shadow 0.16s ease !important;}
+.notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-hex]{background: var(--enc-hex) !important;}
 .notion-root .enc-brand[data-band="2"] .notion-collection-card:hover{box-shadow: inset 0 0 0 2px rgba(0,0,0,0.34) !important;}
 .notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-on="dark"]:hover{box-shadow: inset 0 0 0 2px rgba(250,250,248,0.6) !important;}
 .notion-root .enc-brand[data-band="2"] .notion-collection-card img{display: none !important;}

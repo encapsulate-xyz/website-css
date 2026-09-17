@@ -157,7 +157,10 @@
       var hex = (card.textContent.match(/#[0-9a-fA-F]{6}/) || [])[0];
       if (!hex || card.getAttribute("data-enc-hex") === hex) return;
       card.setAttribute("data-enc-hex", hex);
-      card.style.background = hex;
+      // the Card System fills a gallery card with the page ground and marks it !important, which
+      // an inline background cannot beat — so the colour is handed over as a custom property and
+      // brand.css spends it in a rule of its own
+      card.style.setProperty("--enc-hex", hex);
       // white type on a dark value, ink on a light one — luminance, so a new colour needs no rule
       var n = parseInt(hex.slice(1), 16);
       var lum = (0.2126 * (n >> 16) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255;

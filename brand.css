@@ -237,6 +237,10 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   transition: box-shadow 0.16s ease !important;
 }
 
+.notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-hex] {
+  background: var(--enc-hex) !important;
+}
+
 .notion-root .enc-brand[data-band="2"] .notion-collection-card:hover {
   box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.34) !important;
 }
