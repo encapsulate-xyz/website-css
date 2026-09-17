@@ -250,6 +250,19 @@ cases. The difference is inside it.</p>
 
 <section style="margin-top:36px">
   <div class="card">
+    <h2>The 30-minute booker, inline</h2>
+    <p>The same event as the popup and the drawer — <code>cal.com/aditya-encapsulate/30min</code> —
+    mounted in a div of ours with no height of its own. The palette is the same
+    <code>cssVarsPerTheme</code> object the popup uses, so this is what those variables look like
+    inline. Cal resizes the iframe to the booker's height, which is why there is no scrollbar
+    inside it: the page scrolls, the embed does not. Put the same link in a Notion embed block and
+    you get the opposite — Super gives that a fixed height and the booker scrolls inside it.</p>
+    <div id="cal-inline" style="margin-top:22px; border:1px solid var(--rule); border-radius:12px; overflow:hidden"></div>
+  </div>
+</section>
+
+<section style="margin-top:36px">
+  <div class="card">
     <h2>The whole profile, inline</h2>
     <p>Not one event but the profile page — <code>cal.com/aditya-encapsulate</code> — embedded in a
     div of ours. Same palette, and the visitor picks the call they want. The panel around it is our
@@ -436,6 +449,16 @@ function closeDrawer() {
   drawerBackdrop.removeAttribute("data-open");
   setTimeout(function () { drawer.hidden = true; drawerBackdrop.hidden = true; }, 320);
 }
+
+// The 30-minute event, inline: the same CAL_UI the popup and the drawer are given, on a container
+// with no height of its own, so the embed grows to the booker instead of scrolling inside.
+Cal("init", "single", { origin: "https://app.cal.com" });
+Cal.ns.single("ui", CAL_UI);
+Cal.ns.single("inline", {
+  elementOrSelector: "#cal-inline",
+  calLink: CAL_LINK,
+  config: { layout: "month_view", theme: "light" }
+});
 
 // The profile page (every event type) as a plain inline embed, and the same link in the drawer.
 var PROFILE_LINK = "aditya-encapsulate";
