@@ -15,6 +15,19 @@ The user shares a design handoff. I:
 4. reply with **one table of what to paste** — `File | Paste into` — listing only the `head/*.html`
    files that changed.
 
+**The order of work on a handoff (set 2026-09-17):**
+
+1. **Read the handoff first, every time** — including when a section is being revisited. The file
+   changes between passes; copy carried over from an earlier version is the most common way a
+   section ends up wrong. Check it string by string before saying a section is done.
+2. **Put everything the handoff needs into Notion** — texts, headings, buttons, database rows,
+   uploaded files. Verbatim: the handoff's words, nothing added, nothing dropped, nothing reworded.
+3. **Say what cannot be done from here and needs the user.** The API cannot change a view: it
+   cannot switch a database between table and gallery, show or hide a property on a view, set a
+   view's sort or filter, or create a linked view. Ask for those explicitly rather than working
+   around them in code.
+4. **Then implement it verbatim** in CSS/JS, verify on the live page, and hand back the paste table.
+
 User rules that stand on every task:
 
 - **Content stays in Notion.** Never create text, links or buttons with JS unless Notion + CSS
