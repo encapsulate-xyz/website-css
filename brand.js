@@ -143,6 +143,16 @@
     var t = row.querySelector(".notion-property__title");
     return t ? t.textContent.trim() : "";
   }
+  // Notion hands rows back newest first, so the sequence is the database's own Order property
+  function orderOf(row) {
+    var n = Array.prototype.slice.call(row.querySelectorAll(".notion-property"))
+      .map(function (p) { return p.textContent.trim(); })
+      .filter(function (t) { return /^\d+$/.test(t); })[0];
+    return n ? parseInt(n, 10) : 99;
+  }
+  function inOrder(list) {
+    return list.slice().sort(function (a, b) { return a.order - b.order; });
+  }
 
   function marks() {
     var db = byId(KIT);
@@ -159,6 +169,7 @@
         name: titleOf(c),
         kind: fieldOf(c, /^(Mark|Wordmark)$/i),
         ground: fieldOf(c, /^(Light|Ink|Green)$/i),
+        order: orderOf(c),
         href: fileOf(c)
       };
     });
@@ -250,19 +261,20 @@
       return {
         name: titleOf(c),
         hex: (c.textContent.match(/#[0-9a-fA-F]{6}/) || [""])[0],
-        set: fieldOf(c, /^(Brand|Pastel)$/i)
+        set: fieldOf(c, /^(Brand|Pastel)$/i),
+        order: orderOf(c)
       };
     }).filter(function (r) { return r.hex; });
 
     var brand = el("div", "enc-swatches");
     brand.setAttribute("data-set", "brand");
     var FLEX = { "#000000": "62", "#99CC66": "38" };   // the handoff's own split
-    rows.filter(function (r) { return /^brand$/i.test(r.set); })
+    inOrder(rows).filter(function (r) { return /^brand$/i.test(r.set); })
       .forEach(function (r) { brand.appendChild(swatch(r.name, r.hex, FLEX[r.hex.toUpperCase()])); });
 
     var pastel = el("div", "enc-swatches");
     pastel.setAttribute("data-set", "pastel");
-    rows.filter(function (r) { return /^pastel$/i.test(r.set); })
+    inOrder(rows).filter(function (r) { return /^pastel$/i.test(r.set); })
       .forEach(function (r) { pastel.appendChild(swatch(r.name, r.hex)); });
 
     band.insertBefore(brand, band.firstChild);
