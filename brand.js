@@ -115,25 +115,33 @@
   }
 
   /* ── 01 · the marks ── */
+  // a database renders as a gallery of cards or as a table of rows, depending on the view; both
+  // are read the same way — one element per row, its properties inside it
   function rowsOf(db) {
     var box = byId(db);
-    return box ? Array.prototype.slice.call(box.querySelectorAll(".notion-collection-card")) : [];
+    if (!box) return [];
+    var cards = box.querySelectorAll(".notion-collection-card");
+    if (cards.length) return Array.prototype.slice.call(cards);
+    return Array.prototype.slice.call(box.querySelectorAll("tbody tr"));
   }
-  // a row's file: the card's own link when the row is a page, else its cover, unwrapped from
-  // Super's image optimiser
-  function fileOf(card) {
-    var a = card.matches("a") ? card : card.querySelector("a[href]");
+  // a row's file: the link it carries, else its cover image, unwrapped from Super's optimiser
+  function fileOf(row) {
+    var a = row.matches("a") ? row : row.querySelector('a[href*="assets.super.so"], a[href$=".svg"], a[href^="/"]');
     if (a) return a.getAttribute("href");
-    var img = card.querySelector("img");
+    var img = row.querySelector("img");
     var src = img ? (img.currentSrc || img.src || "") : "";
     var m = /[?&]url=([^&]+)/.exec(src);
     return m ? decodeURIComponent(m[1]) : src;
   }
-  function fieldOf(card, re) {
-    var hit = Array.prototype.slice.call(card.querySelectorAll(".notion-collection-card__property"))
+  function fieldOf(row, re) {
+    var hit = Array.prototype.slice.call(row.querySelectorAll(".notion-property"))
       .map(function (p) { return p.textContent.trim(); })
       .filter(function (t) { return re.test(t); })[0];
     return hit || "";
+  }
+  function titleOf(row) {
+    var t = row.querySelector(".notion-property__title");
+    return t ? t.textContent.trim() : "";
   }
 
   function marks() {
@@ -147,9 +155,8 @@
     var hint = hintBlock ? hintBlock.textContent.trim() : "";
 
     var files = cards.map(function (c) {
-      var title = c.querySelector(".notion-property__title");
       return {
-        name: title ? title.textContent.trim() : "",
+        name: titleOf(c),
         kind: fieldOf(c, /^(Mark|Wordmark)$/i),
         ground: fieldOf(c, /^(Light|Ink|Green)$/i),
         href: fileOf(c)
@@ -240,9 +247,8 @@
     var cards = rowsOf(COLOUR);
     if (!cards.length) return;
     var rows = cards.map(function (c) {
-      var title = c.querySelector(".notion-property__title");
       return {
-        name: title ? title.textContent.trim() : "",
+        name: titleOf(c),
         hex: (c.textContent.match(/#[0-9a-fA-F]{6}/) || [""])[0],
         set: fieldOf(c, /^(Brand|Pastel)$/i)
       };
