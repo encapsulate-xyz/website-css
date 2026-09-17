@@ -185,14 +185,22 @@
       config: { layout: layout, theme: "dark" }
     });
     /* The booker fills our frame while a slot is being picked, but Cal's success screen is its own
-       centred card — inside our frame that reads as a panel within a panel. Cal says when the
-       booking lands, so the frame drops its ground and its hairline at that moment and the card
-       stands on the band alone. (Both action names: the V2 event is the current one.) */
+       centred card — inside our frame that reads as a panel within a panel. So the frame drops its
+       ground and its hairline the moment the booking lands.
+
+       Two ways of hearing it, because the action's name is emitted by the booker page inside the
+       iframe and is not in the loader we can read: Cal's own subscription under both names it has
+       used, and — the one that cannot go stale — the postMessage itself, taken straight from
+       cal.com's origin and matched on the word rather than the exact name. */
+    var booked = function () { box.setAttribute("data-enc-booked", ""); };
     ["bookingSuccessful", "bookingSuccessfulV2"].forEach(function (action) {
-      window.Cal.ns.enc("on", {
-        action: action,
-        callback: function () { box.setAttribute("data-enc-booked", ""); }
-      });
+      try { window.Cal.ns.enc("on", { action: action, callback: booked }); } catch (e) {}
+    });
+    window.addEventListener("message", function (e) {
+      if (!/(^|\.)cal\.com$/.test((e.origin || "").replace(/^https?:\/\//, ""))) return;
+      var d = e.data;
+      if (d && typeof d === "object" && /booking/i.test(d.type || d.action || "") &&
+          /success|confirm/i.test(d.type || d.action || "")) booked();
     });
   }
 
