@@ -62,32 +62,33 @@
   }
 
   /* ── 2 · the rows ── */
+  /* Each row names its own chain: the view shows the Chain property, and the chain is whichever of
+     the row's select cells matches a chain we have a mark for. (It used to come from the group
+     heading, which only existed while the view was grouped by chain.) */
   function rows() {
     var box = document.getElementById(TABLE);
     if (!box) return;
-    var sections = box.querySelectorAll(".notion-collection-group__section");
-    Array.prototype.forEach.call(sections, function (section) {
-      var head = section.querySelector(".notion-collection-group__section-header, [class*='section-header'], summary, h3, h4");
-      var name = head ? head.textContent.trim() : "";
-      // the header carries a disclosure arrow and sometimes a count; the chain is the first line
-      name = name.split("\n")[0].replace(/^[‣▸▾\s]+/, "").replace(/\s*\d+\s*$/, "").trim();
-      if (!name) return;
-      var tint = tintFor(name.toLowerCase());
-      Array.prototype.forEach.call(section.querySelectorAll("tbody tr"), function (tr) {
-        var cell = tr.querySelector("td.title");
-        if (!cell || cell.querySelector(".enc-rec__mark-disc")) return;
-        var disc = el("span", "enc-rec__mark-disc");
-        disc.style.background = tint;
-        var url = glyphs()[key(name)];
-        if (url) {
-          var img = el("img");
-          img.src = url; img.alt = ""; img.loading = "lazy";
-          disc.appendChild(img);
-        }
-        cell.insertBefore(disc, cell.firstChild);
-        cell.appendChild(el("span", "enc-rec__chain", name));
-        tr.setAttribute("data-enc-row", "");
+    var marks = glyphs();
+    Array.prototype.forEach.call(box.querySelectorAll("tbody tr"), function (tr) {
+      var cell = tr.querySelector("td.title");
+      if (!cell || cell.querySelector(".enc-rec__mark-disc")) return;
+      var name = "";
+      Array.prototype.forEach.call(tr.querySelectorAll("td.select"), function (td) {
+        var t = td.textContent.trim();
+        if (!name && t && marks[key(t)]) { name = t; td.setAttribute("data-enc-chain", ""); }
       });
+      if (!name) return;
+      var disc = el("span", "enc-rec__mark-disc");
+      disc.style.background = tintFor(name.toLowerCase());
+      var url = marks[key(name)];
+      if (url) {
+        var img = el("img");
+        img.src = url; img.alt = ""; img.loading = "lazy";
+        disc.appendChild(img);
+      }
+      cell.insertBefore(disc, cell.firstChild);
+      cell.appendChild(el("span", "enc-rec__chain", name));
+      tr.setAttribute("data-enc-row", "");
     });
     box.setAttribute("data-enc-record", "");
   }
@@ -123,8 +124,11 @@
     return c ? c.textContent.trim() : "";
   }
   function voteOf(tr) {
-    var v = tr.querySelector("td.select");
-    return v ? v.textContent.trim() : "";
+    var cells = tr.querySelectorAll("td.select");
+    for (var i = 0; i < cells.length; i++) {
+      if (!cells[i].hasAttribute("data-enc-chain")) return cells[i].textContent.trim();
+    }
+    return "";
   }
   function dateOf(tr) {
     var d = tr.querySelector("td.date");
