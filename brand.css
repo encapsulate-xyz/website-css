@@ -268,6 +268,56 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   background: var(--enc-hex) !important;
 }
 
+/* the two brand colours take the tall row — ink at 62% of it, green at 38% — and the pastel set
+   sits under them at half the height, as a set rather than as decisions */
+.notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-kind="brand"] {
+  height: 208px !important;
+}
+
+.notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-kind="pastel"] {
+  height: 128px !important;
+}
+
+.notion-root .enc-brand[data-band="2"] .notion-collection-gallery {
+  flex-wrap: wrap !important;
+}
+
+.notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-hex="#000000"] { flex: 1 1 62% !important; }
+.notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-hex="#99CC66"] { flex: 1 1 38% !important; }
+.notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-kind="pastel"] { flex: 1 1 19% !important; }
+
+/* the name in the display face above the value, as the design sets them */
+.notion-root .enc-brand[data-band="2"] .notion-collection-card .notion-property__title {
+  display: block !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  font-family: var(--type-display), system-ui, sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  letter-spacing: -0.018em !important;
+  color: #000000 !important;
+}
+
+.notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-on="dark"] .notion-property__title {
+  color: #FAFAF8 !important;
+}
+
+/* the pastel set's own label and note, above the row */
+.notion-root .enc-brand[data-band="2"] .enc-brand__body > p.notion-text:nth-of-type(1) {
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 10px !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #6B6F68 !important;
+  margin-bottom: -22px !important;
+}
+
+.notion-root .enc-brand[data-band="2"] .enc-brand__body > p.notion-text:nth-of-type(2) {
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: 14.5px !important;
+  color: #6B6F68 !important;
+}
+
 .notion-root .enc-brand[data-band="2"] .notion-collection-card:hover {
   box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.34) !important;
 }

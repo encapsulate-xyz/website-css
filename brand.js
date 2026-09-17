@@ -31,6 +31,7 @@
       lede:   "block-3dde800a5138813bb478ef91ee89b8e3",
       until:  null }
   ];
+  var PASTELS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
   var LOGO = "block-ee3caff6b33e4ece99c5580eb45215b0";
   var WORDMARK = "block-962b3e95baaf47b694975486fbe5c014";
   var INTRO = "block-44d0237ba9f64c6c82661fa12cb2857f";
@@ -173,6 +174,8 @@
       var n = parseInt(hex.slice(1), 16);
       var lum = (0.2126 * (n >> 16) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255;
       card.setAttribute("data-enc-on", lum < 0.55 ? "dark" : "light");
+      // the pastel set is the design's second row: graphics only, and half the height
+      card.setAttribute("data-enc-kind", PASTELS.indexOf(hex.toUpperCase()) >= 0 ? "pastel" : "brand");
       card.addEventListener("click", function (e) {
         e.preventDefault();
         if (navigator.clipboard) navigator.clipboard.writeText(hex).catch(function () {});
