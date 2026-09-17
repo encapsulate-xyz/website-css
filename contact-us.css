@@ -678,6 +678,29 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   margin: 0 14px 0 0 !important;
 }
 
+/* the pending wording waits out of sight until cal.com says the booking needs our yes */
+.notion-root[data-enc-contact] .enc-ct__pending {
+  display: none !important;
+}
+
+/* the quiet cancel line under the buttons */
+.notion-root[data-enc-contact] .enc-ct__done-l > p.notion-text:last-of-type {
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: 14.5px !important;
+  color: #9FA39B !important;
+}
+
+.notion-root[data-enc-contact] .enc-ct__done-l > p.notion-text a.notion-link {
+  color: #C9C9C4 !important;
+  border-bottom: 1px solid rgba(250, 250, 248, 0.3) !important;
+  opacity: 1 !important;
+}
+
+.notion-root[data-enc-contact] .enc-ct__done-l > p.notion-text a.notion-link:hover {
+  color: #FAFAF8 !important;
+  border-bottom-color: #FAFAF8 !important;
+}
+
 /* what to bring */
 .notion-root[data-enc-contact] .enc-ct__prep {
   display: flex;

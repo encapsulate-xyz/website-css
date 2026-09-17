@@ -311,20 +311,31 @@
     var org = (data && data.organizer) || (b.user || {});
     var uid = b.uid || b.bookingUid || "";
     booking = { duration: minutes };
-    var rows = band.querySelectorAll(".enc-ct__fact");
+    /* the facts are found by their own label, so adding or reordering a row in Notion cannot
+       hand a value to the wrong line */
+    var rows = {};
+    Array.prototype.forEach.call(band.querySelectorAll(".enc-ct__fact"), function (r) {
+      var k = (r.querySelector(".enc-ct__fk") || {}).textContent || "";
+      rows[k.trim().toLowerCase()] = r;
+    });
     var w = when(startISO, org.timeZone);
-    if (rows[0] && w[0]) fill(rows[0], w[0], w[1]);
-    if (rows[1] && org.name) fill(rows[1], org.name, org.email || "");
-    if (rows[3]) fill(rows[3], minutes + " minutes", "Nothing to prepare");
+    if (rows.when) fill(rows.when, w[0], w[1]);
+    if (rows.with) fill(rows.with, org.name, org.email || "");
+    if (rows.length) fill(rows.length, minutes + " minutes", "Nothing to prepare");
+
+    // who it went to — the address the invitation was sent to, as they typed it
+    var guest = (b.attendees && b.attendees[0]) || (data && data.attendee) || null;
+    if (rows.invited) fill(rows.invited, guest && (guest.name || guest.email),
+      guest ? (guest.name ? guest.email || "" : "") : "");
 
     /* the meeting link, when the booking carries one: cal.com keeps it at
        booking.metadata.videoCallUrl (that is where its own screen reads it from), and a custom
        location can be the URL itself. The row keeps Notion's words and gains the link. */
     var meet = (b.metadata && b.metadata.videoCallUrl) ||
       (typeof b.location === "string" && /^https?:/.test(b.location) ? b.location : "");
-    if (rows[2] && meet) {
-      var v2 = rows[2].querySelector(".enc-ct__fv");
-      var s2 = rows[2].querySelector(".enc-ct__fs");
+    if (rows.where && meet) {
+      var v2 = rows.where.querySelector(".enc-ct__fv");
+      var s2 = rows.where.querySelector(".enc-ct__fs");
       if (v2) {
         var a = el("a", "enc-ct__meet", v2.textContent);
         a.href = meet;
@@ -339,6 +350,23 @@
     var again = band.querySelector('a[href*="cal.com/reschedule"]');
     if (again && uid) again.href = "https://cal.com/reschedule/" + uid;
     else if (again) again.closest(".notion-callout").hidden = true;
+
+    var stop = band.querySelector('a[href="https://cal.com/booking"], a[href^="https://cal.com/booking"]');
+    if (stop && uid) stop.href = "https://cal.com/booking/" + uid + "?cancel=true";
+    else if (stop) stop.parentNode.hidden = true;
+
+    /* cal.com says whether the booking is confirmed or waiting on us (an event type that requires
+       confirmation). The alternative wording is Notion's, carried on the two "Pending …" lines. */
+    if (data && data.confirmed === false) {
+      var head2 = band.querySelector("h2");
+      var lede2 = band.querySelector(".enc-ct__done-l > p.notion-text");
+      Array.prototype.forEach.call(band.querySelectorAll(".enc-ct__pending"), function (p) {
+        var parts = textOf(p).split("·");
+        var value = parts.slice(1).join("·").trim();
+        if (/heading/i.test(parts[0]) && head2 && value) head2.textContent = value;
+        if (/line/i.test(parts[0]) && lede2 && value) lede2.textContent = value;
+      });
+    }
 
     var links = calendarLinks("30 min meeting with Encapsulate", startISO, minutes,
       "Meeting link is in the calendar invitation.");
@@ -534,6 +562,7 @@
           urgent.appendChild(n);
           return;
         }
+        if (startsWord(n, "pending")) { n.classList.add("enc-ct__pending"); left.appendChild(n); return; }
         if (stage === "ics" && textOf(n).indexOf("·") > 0) {
           var names = textOf(n).split("·");
           n.textContent = "";
