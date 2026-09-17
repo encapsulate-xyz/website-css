@@ -175,6 +175,28 @@
     });
   }
 
+  /* ── the cover's two label pairs ──
+     The design sets the crumb beside its eyebrow, and the foot beside "Scroll ↓". As grid cells
+     they cannot hold together: the headline and the lede span the same columns, and a spanning
+     item hands its width back to the tracks it spans, so the pair drifts apart by whatever the
+     headline is wide. Wrapping each pair makes it one item, which no other row can stretch. */
+  function coverRows() {
+    var cover = byId("block-af37871bf3db42c980b7cdaefb8a0ad0");
+    if (!cover) return;
+    var content = cover.querySelector(":scope > .notion-callout__content");
+    if (!content || content.querySelector(".enc-cover__pair")) return;
+    var ps = content.querySelectorAll(":scope > p.notion-text");
+    if (ps.length < 5) return;
+    [[ps[0], ps[1], "top"], [ps[3], ps[4], "foot"]].forEach(function (pair) {
+      var row = el("div", "enc-cover__pair");
+      row.setAttribute("data-pair", pair[2]);
+      pair[0].before(row);
+      row.appendChild(pair[0]);
+      row.appendChild(pair[1]);
+    });
+    cover.setAttribute("data-enc-cover", "");
+  }
+
   /* ── the intro's own paragraph is replaced by the band's lede; its button is the band's CTA ── */
   function intro() {
     var box = byId(INTRO);
@@ -182,7 +204,7 @@
     box.setAttribute("data-enc-intro", "");
   }
 
-  function build() { spreads(); slab(); colours(); intro(); }
+  function build() { coverRows(); spreads(); slab(); colours(); intro(); }
 
   var t = 0;
   new MutationObserver(function (muts) {

@@ -418,16 +418,24 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   /* max-content, not auto: the rows that span all three columns (the headline, the lede and the
      buttons) would otherwise push the two label tracks wide and split the crumb from its eyebrow */
   grid-template-columns: max-content max-content minmax(0, 1fr) !important;
-  grid-template-areas:
-    "crumb eyebrow ."
-    "title title title"
-    "lede lede lede"
-    "btns btns btns"
-    "foot scroll ." !important;
+  grid-template-columns: minmax(0, 1fr) !important;
   grid-template-rows: auto 1fr auto auto auto !important;
   align-items: start !important;
-  column-gap: 14px !important;
   row-gap: 22px !important;
+}
+
+/* each label pair is one row: the two texts side by side with the design's hairline between */
+.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 .enc-cover__pair {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: max-content;
+  max-width: min(46%, 420px);
+}
+
+.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 .enc-cover__pair[data-pair="top"] {
+  padding-bottom: 14px;
+  border-bottom: 1px solid #E2E2DB;
 }
 
 /* Super emits two empty spans inside the callout — its own semantic-string and the heading's
@@ -440,17 +448,11 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 
 /* the crumb and the eyebrow share one line under a hairline, as the design draws them */
 .notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > p.notion-text:nth-of-type(1) {
-  grid-area: crumb !important;
-  padding-bottom: 14px !important;
-  border-bottom: 1px solid #E2E2DB !important;
   color: #3A3D38 !important;
 }
 
 .notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > p.notion-text:nth-of-type(2) {
-  grid-area: eyebrow !important;
-  padding-bottom: 14px !important;
   padding-left: 14px !important;
-  border-bottom: 1px solid #E2E2DB !important;
   border-left: 1px solid #A5A5A5 !important;
   color: #3A3D38 !important;
 }
@@ -465,7 +467,6 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 .notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > h1.notion-heading {
-  grid-area: title !important;
   align-self: end !important;
   margin: 0 !important;
   font-size: clamp(40px, 6.6vw, 100px) !important;
@@ -475,7 +476,6 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 .notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > p.notion-text:nth-of-type(3) {
-  grid-area: lede !important;
   font-family: var(--type-body), system-ui, sans-serif !important;
   font-size: clamp(16px, 1.7vw, 21px) !important;
   line-height: 1.52 !important;
@@ -487,16 +487,13 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 .notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > .notion-column-list {
-  grid-area: btns !important;
 }
 
 .notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > p.notion-text:nth-of-type(4) {
-  grid-area: foot !important;
   color: #3A3D38 !important;
 }
 
 .notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > p.notion-text:nth-of-type(5) {
-  grid-area: scroll !important;
   padding-left: 14px !important;
   border-left: 1px solid #A5A5A5 !important;
   color: #3A3D38 !important;
