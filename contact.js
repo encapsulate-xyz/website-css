@@ -188,12 +188,13 @@
        centred card — inside our frame that reads as a panel within a panel. So the frame drops its
        ground and its hairline the moment the booking lands.
 
-       Two ways of hearing it, because the action's name is emitted by the booker page inside the
-       iframe and is not in the loader we can read: Cal's own subscription under both names it has
-       used, and — the one that cannot go stale — the postMessage itself, taken straight from
-       cal.com's origin and matched on the word rather than the exact name. */
+       The names are the booker's own, read out of its bundle (it calls
+       sdkActionManager.fire("bookingSuccessful", …) and "bookingSuccessfulV2", with reschedule
+       twins) — they are not in the loader, which is why the postMessage listener below matches on
+       the word as well: if Cal renames the action, the fallback still hears it. */
     var booked = function () { box.setAttribute("data-enc-booked", ""); };
-    ["bookingSuccessful", "bookingSuccessfulV2"].forEach(function (action) {
+    ["bookingSuccessful", "bookingSuccessfulV2",
+     "rescheduleBookingSuccessful", "rescheduleBookingSuccessfulV2"].forEach(function (action) {
       try { window.Cal.ns.enc("on", { action: action, callback: booked }); } catch (e) {}
     });
     window.addEventListener("message", function (e) {
