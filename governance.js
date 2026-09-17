@@ -112,9 +112,15 @@
       cell.appendChild(el("span", "enc-rec__chain", name));
       tr.setAttribute("data-enc-row", "");
     });
-    // the header cell of the chain column goes with the cells: the row prints the chain itself
-    var head = box.querySelector("thead th.select ." + chainProp);
-    if (head) head.closest("th").setAttribute("data-enc-chain", "");
+    // the header cell has no property class of its own, so it is found by position: the same
+    // index as the chain cell in a row
+    var first = box.querySelector("tbody tr");
+    var cell = first && chainCell(first);
+    if (cell) {
+      var at = Array.prototype.indexOf.call(cell.parentNode.children, cell);
+      var ths = box.querySelectorAll("thead th");
+      if (ths[at]) ths[at].setAttribute("data-enc-chain", "");
+    }
     box.setAttribute("data-enc-record", "");
   }
 
