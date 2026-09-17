@@ -158,6 +158,28 @@
     if (note) note.setAttribute("data-enc-note", "");
   }
 
+  /* ── the type band: each face is a specimen, its name and its job ──
+     The handoff sets the specimen large on the left and the name with its weights at the right of
+     the same row. Notion gives three flat paragraphs per face, so they are grouped here. */
+  function faces() {
+    var band = document.querySelector('.enc-brand[data-band="3"] .enc-brand__body');
+    if (!band || band.querySelector(".enc-face")) return;
+    var ps = Array.prototype.slice.call(band.querySelectorAll(":scope > p.notion-text"));
+    var SPECIMEN = /^Aa Bb Cc$/;
+    for (var i = 0; i < ps.length; i++) {
+      if (!SPECIMEN.test(ps[i].textContent.trim())) continue;
+      var row = el("div", "enc-face");
+      row.setAttribute("data-face", String(band.querySelectorAll(".enc-face").length + 1));
+      ps[i].before(row);
+      var meta = el("span", "enc-face__meta");
+      row.appendChild(ps[i]);            // the specimen
+      if (ps[i + 1]) meta.appendChild(ps[i + 1]);   // the name
+      if (ps[i + 2]) meta.appendChild(ps[i + 2]);   // role and weights
+      row.appendChild(meta);
+      i += 2;
+    }
+  }
+
   /* ── colour: the swatches are Notion's rows, and their own hex paints them ── */
   function colours() {
     var gallery = byId("block-5dc66b67801044d6b079f77ec376ba54");
@@ -214,7 +236,7 @@
     box.setAttribute("data-enc-intro", "");
   }
 
-  function build() { coverRows(); spreads(); slab(); colours(); intro(); }
+  function build() { coverRows(); spreads(); slab(); faces(); colours(); intro(); }
 
   var t = 0;
   new MutationObserver(function (muts) {

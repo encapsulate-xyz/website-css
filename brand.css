@@ -364,38 +364,74 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 /* ── 03 · TYPE ── */
-/* each face is one Notion line: the name, its job and its weights, set in the face it names */
-.notion-root .enc-brand[data-band="3"] .enc-brand__body > p.notion-text {
-  padding: 22px 0 20px !important;
-  border-top: 1px solid rgba(250, 250, 248, 0.18) !important;
-  font-size: clamp(28px, 3.4vw, 52px) !important;
-  line-height: 1.04 !important;
-  letter-spacing: -0.03em !important;
+/* one row per face: the specimen at scale on a hairline, its name and weights at the right */
+.notion-root .enc-face {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 200px;
+  gap: 24px;
+  align-items: end;
+  padding: 22px 0 20px;
+  border-top: 1px solid rgba(250, 250, 248, 0.18);
+}
+
+.notion-root .enc-face[data-face="1"] {
+  border-top-color: rgba(250, 250, 248, 0.3);
+}
+
+.notion-root .enc-face > p.notion-text {
+  margin: 0 !important;
+  font-size: clamp(44px, 6vw, 82px) !important;
+  line-height: 0.92 !important;
   color: #FAFAF8 !important;
 }
 
-.notion-root .enc-brand[data-band="3"] .enc-brand__body > p.notion-text:first-of-type {
-  border-top-color: rgba(250, 250, 248, 0.3) !important;
+.notion-root .enc-face[data-face="1"] > p.notion-text {
   font-family: var(--type-display), system-ui, sans-serif !important;
   font-weight: 600 !important;
+  letter-spacing: -0.04em !important;
 }
 
-.notion-root .enc-brand[data-band="3"] .enc-brand__body > p.notion-text:nth-of-type(2) {
+.notion-root .enc-face[data-face="2"] > p.notion-text {
   font-family: var(--type-body), system-ui, sans-serif !important;
   font-weight: 400 !important;
   letter-spacing: -0.006em !important;
 }
 
-.notion-root .enc-brand[data-band="3"] .enc-brand__body > p.notion-text:nth-of-type(3) {
+.notion-root .enc-face[data-face="3"] > p.notion-text {
   font-family: var(--type-mono), ui-monospace, monospace !important;
-  font-size: clamp(20px, 2.2vw, 34px) !important;
+  font-weight: 400 !important;
   letter-spacing: 0.04em !important;
 }
 
-/* the fourth face: a kicker, its one job, and the paragraph that says why it is not type */
-.notion-root .enc-brand[data-band="3"] .enc-brand__body > p.notion-text:nth-of-type(4) {
+.notion-root .enc-face__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-bottom: 8px;
+}
+
+.notion-root .enc-face__meta > p.notion-text:first-child {
+  margin: 0 !important;
+  font-family: var(--type-display), system-ui, sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 17px !important;
+  letter-spacing: -0.02em !important;
+  color: #FAFAF8 !important;
+}
+
+.notion-root .enc-face__meta > p.notion-text:last-child {
+  margin: 0 !important;
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 9.5px !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #C9C9C4 !important;
+}
+
+/* the fourth face, which is not part of the system: a kicker, its name, its one job, and why */
+.notion-root .enc-brand[data-band="3"] .enc-brand__body > p.notion-text:nth-of-type(1) {
   margin-top: 4px !important;
-  padding: 22px 0 0 !important;
+  padding-top: 22px !important;
   border-top: 1px solid rgba(250, 250, 248, 0.3) !important;
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 10px !important;
@@ -404,9 +440,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #B4B4B4 !important;
 }
 
-.notion-root .enc-brand[data-band="3"] .enc-brand__body > p.notion-text:nth-of-type(5) {
-  padding: 0 !important;
-  border: 0 !important;
+.notion-root .enc-brand[data-band="3"] .enc-brand__body > p.notion-text:nth-of-type(2) {
   font-family: var(--type-display), system-ui, sans-serif !important;
   font-weight: 600 !important;
   font-size: 21px !important;
@@ -414,13 +448,18 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #FAFAF8 !important;
 }
 
-.notion-root .enc-brand[data-band="3"] .enc-brand__body > p.notion-text:nth-of-type(6) {
-  padding: 0 !important;
-  border: 0 !important;
+.notion-root .enc-brand[data-band="3"] .enc-brand__body > p.notion-text:nth-of-type(3) {
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 9.5px !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #C9C9C4 !important;
+}
+
+.notion-root .enc-brand[data-band="3"] .enc-brand__body > p.notion-text:nth-of-type(4) {
   font-family: var(--type-body), system-ui, sans-serif !important;
   font-size: 14.5px !important;
   line-height: 1.56 !important;
-  letter-spacing: 0 !important;
   color: #C9C9C4 !important;
   max-width: 66ch !important;
 }
