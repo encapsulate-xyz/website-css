@@ -212,13 +212,15 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   transform: translate(-50%, 0);
 }
 
-/* the marks dim under the cursor so the block being counted is the one that reads brightest */
+/* the hovered block takes the figure's own pastel, so the hundred being counted reads as part of
+   the 1,882 above it rather than as a brighter grey */
 .notion-root .enc-rec__hundred .enc-rec__mark {
   transition: background-color 0.18s ease;
 }
 
-.notion-root .enc-rec__hundred:hover .enc-rec__mark {
-  background: rgba(250, 250, 248, 0.72);
+.notion-root .enc-rec__hundred:hover .enc-rec__mark,
+.notion-root .enc-rec__hundred[data-dim]:hover .enc-rec__mark {
+  background: #DCEEC7;
 }
 
 @media (prefers-reduced-motion: reduce) {
