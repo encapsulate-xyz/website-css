@@ -257,7 +257,7 @@
     bar.appendChild(menu("vote", "Vote", voteOpts, dotFor));
     bar.appendChild(el("span", "enc-rec__spacer"));
     bar.appendChild(el("span", "enc-rec__rule"));
-    bar.appendChild(menu("sort", "Sort", sortOpts));
+    bar.appendChild(menu("sort", "Sort", sortOpts, sortIcon));
     bar.appendChild(el("span", "enc-rec__rule"));
 
     var field = el("label", "enc-rec__find");
@@ -292,6 +292,13 @@
       disc.appendChild(img);
     }
     return disc;
+  }
+  // the handoff draws one icon per sort: lines long-to-short for the newest first, short-to-long
+  // for the oldest, and an A-Z with an arrow for by chain
+  function sortIcon(value) {
+    var i = el("span", "enc-rec__sort-icon");
+    i.setAttribute("data-sort", value || "recent");
+    return i;
   }
   function dotFor(vote) {
     var dot = el("span", "enc-rec__dot");

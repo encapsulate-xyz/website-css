@@ -444,6 +444,38 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 
 .notion-root .enc-rec__option[data-on] .enc-rec__tick { background: #000000; }
 
+/* the sort icons, drawn as the handoff draws them */
+.notion-root .enc-rec__sort-icon {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  background: #6B6F68;
+  -webkit-mask-size: 14px 14px;
+  mask-size: 14px 14px;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.notion-root .enc-rec__option[data-on] .enc-rec__sort-icon,
+.notion-root .enc-rec__option:hover .enc-rec__sort-icon { background: #000000; }
+
+.notion-root .enc-rec__sort-icon[data-sort="recent"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'%3E%3Cpath d='M3 3.5h9'/%3E%3Cpath d='M3 8h6'/%3E%3Cpath d='M3 12.5h3'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'%3E%3Cpath d='M3 3.5h9'/%3E%3Cpath d='M3 8h6'/%3E%3Cpath d='M3 12.5h3'/%3E%3C/svg%3E");
+}
+
+.notion-root .enc-rec__sort-icon[data-sort="oldest"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'%3E%3Cpath d='M3 3.5h3'/%3E%3Cpath d='M3 8h6'/%3E%3Cpath d='M3 12.5h9'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'%3E%3Cpath d='M3 3.5h3'/%3E%3Cpath d='M3 8h6'/%3E%3Cpath d='M3 12.5h9'/%3E%3C/svg%3E");
+}
+
+.notion-root .enc-rec__sort-icon[data-sort="chain"] {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.5 4.5 2l2 4.5'/%3E%3Cpath d='M3.1 5.2h2.8'/%3E%3Cpath d='M9.5 3h3.5L9.5 7.5H13'/%3E%3Cpath d='M4.5 9.5v4.5'/%3E%3Cpath d='M2.9 12.4 4.5 14l1.6-1.6'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.5 4.5 2l2 4.5'/%3E%3Cpath d='M3.1 5.2h2.8'/%3E%3Cpath d='M9.5 3h3.5L9.5 7.5H13'/%3E%3Cpath d='M4.5 9.5v4.5'/%3E%3Cpath d='M2.9 12.4 4.5 14l1.6-1.6'/%3E%3C/svg%3E");
+}
+
 /* a chain's glyph in its tint, and the outcome's own dot */
 .notion-root .enc-rec__disc {
   width: 22px;
