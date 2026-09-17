@@ -262,6 +262,22 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #FAFAF8 !important;
 }
 
+/* the hex is a select property, so Super renders it as a pill and the Pill System (main.css §10)
+   gives it a ring and a radius — on a swatch it is just the value, in mono, on the colour */
+.notion-root .enc-brand[data-band="2"] .notion-collection-card .notion-pill {
+  display: inline !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  font: inherit !important;
+  letter-spacing: inherit !important;
+  color: inherit !important;
+  text-transform: none !important;
+}
+
 .notion-root .enc-brand[data-band="2"] .notion-collection-card[data-enc-copied] .notion-property::after {
   content: " · Copied";
 }
