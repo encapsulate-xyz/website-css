@@ -312,73 +312,179 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #3A3D38 !important;
 }
 
-/* ── 3 · THE CONTROLS ── */
-/* Super's view picker is the chain and outcome filter — the record has a view per chain and per
-   outcome — so it is styled as the design's bar rather than replaced. */
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 .notion-collection__header-wrapper {
-  min-height: 52px !important;
-  margin: 0 0 26px !important;
-  padding: 0 248px 0 0 !important;
-  border-radius: 10px !important;
-  background: #FAFAF8 !important;
-  border: 1px solid #D9D9D2 !important;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
+/* ── 3 · THE CONTROLS ──
+   The handoff's bar: the chain, the outcome, the sort and a search field, in one rounded strip.
+   governance.js builds them from the rows themselves, so Super's view picker is hidden. */
+.notion-root [data-enc-source] { display: none !important; }
+
+.notion-root .enc-rec__bar {
+  display: flex;
+  align-items: stretch;
+  min-height: 52px;
+  width: 100%;
+  margin: 0 0 26px;
+  border-radius: 10px;
+  background: #FAFAF8;
+  border: 1px solid #D9D9D2;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1);
 }
 
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 .notion-dropdown__button {
-  min-height: 50px !important;
-  padding: 0 16px !important;
-  border: 0 !important;
-  border-radius: 10px !important;
-  background: transparent !important;
-  font-family: var(--type-body), system-ui, sans-serif !important;
-  font-size: 14.5px !important;
-  letter-spacing: -0.006em !important;
-  color: #000000 !important;
+.notion-root .enc-rec__spacer { flex: 1; }
+
+.notion-root .enc-rec__rule {
+  width: 1px;
+  align-self: stretch;
+  background: #E2E2DB;
+  flex: none;
 }
 
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 .notion-dropdown__menu {
-  margin-top: 6px !important;
-  padding: 3px !important;
-  border-radius: 12px !important;
-  background: #FAFAF8 !important;
-  border: 1px solid #D9D9D2 !important;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 4px 14px rgba(0, 0, 0, 0.10) !important;
+.notion-root .enc-rec__menu { position: relative; display: flex; align-items: stretch; flex: none; }
+
+.notion-root .enc-rec__trigger {
+  appearance: none;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 16px;
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 14.5px;
+  letter-spacing: -0.006em;
+  white-space: nowrap;
+  color: #000000;
 }
 
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 .notion-dropdown__option {
-  min-height: 44px !important;
-  padding: 0 12px !important;
-  border: 0 !important;
-  border-radius: 10px !important;
-  background: transparent !important;
-  font-family: var(--type-body), system-ui, sans-serif !important;
-  font-size: 14.5px !important;
-  color: #3A3D38 !important;
+.notion-root .enc-rec__kicker {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6B6F68;
 }
 
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 .notion-dropdown__option:hover {
-  background: #F2F2ED !important;
-  color: #000000 !important;
+.notion-root .enc-rec__chevron {
+  width: 11px;
+  height: 11px;
+  flex: none;
+  background: #6B6F68;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 .notion-dropdown__option.active {
-  background: #F2F2ED !important;
-  color: #000000 !important;
-}
-
-/* the search field, laid over the right-hand end of the bar (the recipe from /networks: the
-   controls sit on the collection, never inside Super's own header) */
-.notion-root .enc-rec__find {
+.notion-root .enc-rec__panel {
   position: absolute;
-  top: 0;
-  right: 10px;
-  z-index: 5;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 30;
+  min-width: 232px;
+  max-height: 332px;
+  overflow-y: auto;
+  padding: 3px;
+  border-radius: 12px;
+  background: #FAFAF8;
+  border: 1px solid #D9D9D2;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 4px 14px rgba(0, 0, 0, 0.10);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.notion-root .enc-rec__menu[data-menu="sort"] .enc-rec__panel { left: auto; right: 0; }
+
+.notion-root .enc-rec__panel[hidden] { display: none !important; }
+
+.notion-root .enc-rec__option {
+  appearance: none;
+  cursor: pointer;
+  border: 0;
+  text-align: left;
   display: flex;
   align-items: center;
   gap: 10px;
-  height: 52px;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 10px;
+  background: transparent;
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 14.5px;
+  letter-spacing: -0.006em;
+  color: #3A3D38;
+  white-space: nowrap;
+  transition: background-color 0.14s ease, color 0.14s ease;
+}
+
+.notion-root .enc-rec__option:hover { background: #F2F2ED; color: #000000; }
+.notion-root .enc-rec__option[data-on] { background: #F2F2ED; color: #000000; }
+.notion-root .enc-rec__option:disabled { opacity: 0.45; cursor: default; }
+
+.notion-root .enc-rec__option-label { flex: 1; }
+
+.notion-root .enc-rec__count {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: #6B6F68;
+  font-variant-numeric: tabular-nums;
+}
+
+.notion-root .enc-rec__tick {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  background: transparent;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 7.5 5.5 10.5 11.5 4'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 7.5 5.5 10.5 11.5 4'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.notion-root .enc-rec__option[data-on] .enc-rec__tick { background: #000000; }
+
+/* a chain's glyph in its tint, and the outcome's own dot */
+.notion-root .enc-rec__disc {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.notion-root .enc-rec__disc[data-empty] { border: 1px dashed #B9B9B1; background: transparent; }
+.notion-root .enc-rec__disc img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+.notion-root .enc-rec__dot {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+}
+
+.notion-root .enc-rec__dot::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #99CC66;
+}
+
+.notion-root .enc-rec__dot[data-vote="no"]::before { background: #000000; }
+.notion-root .enc-rec__dot[data-vote="no-with-veto"]::before { background: #E9A9C2; }
+.notion-root .enc-rec__dot[data-vote="abstain"]::before { background: transparent; box-shadow: inset 0 0 0 1.5px #9B9B94; }
+.notion-root .enc-rec__dot[data-empty] { border: 1px dashed #B9B9B1; }
+.notion-root .enc-rec__dot[data-empty]::before { display: none; }
+
+/* the search field closes the bar */
+.notion-root .enc-rec__find {
+  flex: none;
   width: 232px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
   padding: 0 14px;
   cursor: text;
 }
@@ -403,6 +509,29 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   font-size: 15px;
   color: #000000;
   padding: 0;
+}
+
+/* the pillars band's head: the heading and its lede left, the button right */
+.notion-root .enc-rec__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin: 0 0 30px;
+}
+
+.notion-root .enc-rec__head-text {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.notion-root .enc-rec__head > .notion-callout {
+  float: none !important;
+  margin: 0 !important;
+  flex: none;
 }
 
 /* ── 4 · THE ROWS ── */

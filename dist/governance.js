@@ -18,6 +18,8 @@
   var BAND = "block-3dde800a513881b1b88dd0b73f874bfe";
   var TABLE = "block-c458e5dd671d4ecb8fc07a15915e4f42";
   var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
+  var HEAD = "block-a9ed1443a36c4f6da5ac9cbae489c031";   // "Every vote, four pillars behind it."
+  var ASK = "block-3dde800a513881d6815ed26488091143";    // "Ask about a proposal"
 
   function el(tag, cls, text) {
     var e = document.createElement(tag);
@@ -84,46 +86,217 @@
     box.setAttribute("data-enc-record", "");
   }
 
-  /* ── 3 · the search field ── */
-  function search() {
-    var box = document.getElementById(TABLE);
-    if (!box) return;
-    var header = box.querySelector(".notion-collection__header-wrapper");
-    if (!header || box.querySelector(".enc-rec__find")) return;
-    box.style.position = "relative";
+  /* ── the pillars band's head: the heading and its lede on the left, the button on the right ── */
+  function head() {
+    var title = document.getElementById(HEAD);
+    var button = document.getElementById(ASK);
+    if (!title || !button || title.closest(".enc-rec__head")) return;
+    var row = el("div", "enc-rec__head");
+    var left = el("div", "enc-rec__head-text");
+    title.before(row);
+    row.appendChild(left);
+    left.appendChild(title);
+    var lede = row.nextElementSibling;
+    if (lede && lede.classList.contains("notion-text")) left.appendChild(lede);
+    row.appendChild(button);
+  }
 
-    var field = el("div", "enc-rec__find");
+  /* ── 3 · the control bar ──
+     The handoff's bar is four controls: the chain, the outcome, the sort and a search field. All
+     four are built from the rows Super rendered — their own Chain and Vote Option — rather than
+     from Super's view picker, so the menus carry counts and the picker can go. Notion has no block
+     that is a menu or an input; this is the allowed exception (CLAUDE.md, "Search and sort"). */
+  var state = { chain: "", vote: "", sort: "", q: "" };
+
+  function rowsOf() {
+    var box = document.getElementById(TABLE);
+    return box ? Array.prototype.slice.call(box.querySelectorAll("tbody tr")) : [];
+  }
+  function chainOf(tr) {
+    var c = tr.querySelector(".enc-rec__chain");
+    return c ? c.textContent.trim() : "";
+  }
+  function voteOf(tr) {
+    var v = tr.querySelector("td.select");
+    return v ? v.textContent.trim() : "";
+  }
+  function dateOf(tr) {
+    var d = tr.querySelector("td.date");
+    var t = d ? Date.parse(d.textContent.trim()) : NaN;
+    return isNaN(t) ? 0 : t;
+  }
+
+  function menu(key, label, options, glyphFor) {
+    var box = el("div", "enc-rec__menu");
+    box.setAttribute("data-menu", key);
+    var trigger = el("button", "enc-rec__trigger");
+    trigger.type = "button";
+    trigger.setAttribute("aria-haspopup", "listbox");
+    var kicker = el("span", "enc-rec__kicker", label);
+    var value = el("span", "enc-rec__value", options[0][0] || "All");
+    trigger.appendChild(kicker);
+    trigger.appendChild(value);
+    trigger.appendChild(el("span", "enc-rec__chevron"));
+    box.appendChild(trigger);
+
+    var panel = el("div", "enc-rec__panel");
+    panel.setAttribute("role", "listbox");
+    panel.hidden = true;
+    options.forEach(function (o) {
+      var item = el("button", "enc-rec__option");
+      item.type = "button";
+      item.setAttribute("role", "option");
+      if (glyphFor) {
+        var g = glyphFor(o[2]);
+        if (g) item.appendChild(g);
+      }
+      item.appendChild(el("span", "enc-rec__option-label", o[0]));
+      if (o[1] != null) item.appendChild(el("span", "enc-rec__count", String(o[1])));
+      item.appendChild(el("span", "enc-rec__tick"));
+      if (o[1] === 0) { item.disabled = true; item.title = "No votes in the record yet"; }
+      // Super closes its own dropdown on a document pointerdown, which cancels the event — so the
+      // choice is taken on pointerdown here too
+      item.addEventListener("pointerdown", function (e) {
+        e.preventDefault();
+        state[key] = o[2];
+        value.textContent = o[0];
+        Array.prototype.forEach.call(panel.children, function (x) { x.removeAttribute("data-on"); });
+        item.setAttribute("data-on", "");
+        panel.hidden = true;
+        apply();
+      });
+      panel.appendChild(item);
+    });
+    trigger.addEventListener("pointerdown", function (e) {
+      e.preventDefault();
+      var open = panel.hidden;
+      document.querySelectorAll(".enc-rec__panel").forEach(function (p) { p.hidden = true; });
+      panel.hidden = !open;
+    });
+    box.appendChild(panel);
+    return box;
+  }
+
+  function controls() {
+    var box = document.getElementById(TABLE);
+    if (!box || box.querySelector(".enc-rec__bar")) return;
+    var rows = rowsOf();
+    if (!rows.length) return;
+
+    var chains = {}, votes = {};
+    rows.forEach(function (tr) {
+      var c = chainOf(tr); if (c) chains[c] = (chains[c] || 0) + 1;
+      var v = voteOf(tr); if (v) votes[v] = (votes[v] || 0) + 1;
+    });
+    var chainOpts = [["All chains", rows.length, ""]].concat(Object.keys(chains).sort().map(function (c) {
+      return [c, chains[c], c];
+    }));
+    var voteOpts = [["Any vote", rows.length, ""]].concat(Object.keys(votes).map(function (v) {
+      return [v, votes[v], v];
+    }));
+    var sortOpts = [["Recent votes", null, ""], ["Oldest first", null, "oldest"], ["By chain", null, "chain"]];
+
+    var bar = el("div", "enc-rec__bar");
+    bar.appendChild(menu("chain", "Chain", chainOpts, glyphFor));
+    bar.appendChild(el("span", "enc-rec__rule"));
+    bar.appendChild(menu("vote", "Vote", voteOpts, dotFor));
+    bar.appendChild(el("span", "enc-rec__spacer"));
+    bar.appendChild(el("span", "enc-rec__rule"));
+    bar.appendChild(menu("sort", "Sort", sortOpts));
+    bar.appendChild(el("span", "enc-rec__rule"));
+
+    var field = el("label", "enc-rec__find");
     var input = el("input");
     input.type = "text";
     input.placeholder = "Find a proposal";
     input.setAttribute("aria-label", "Find a proposal by number or title");
     field.appendChild(input);
-    // focus on pointerdown: Super cancels pointer events on the document to close its own dropdown,
-    // and a cancelled pointerdown focuses nothing
     field.addEventListener("pointerdown", function () { setTimeout(function () { input.focus(); }, 0); });
-    input.addEventListener("input", function () { apply(input.value); });
-    box.appendChild(field);
+    input.addEventListener("input", function () { state.q = input.value; apply(); });
+    bar.appendChild(field);
+
+    var header = box.querySelector(".notion-collection__header-wrapper");
+    if (header) header.setAttribute("data-enc-source", "");
+    box.insertBefore(bar, box.firstChild);
+    document.addEventListener("pointerdown", function (e) {
+      if (!e.target.closest(".enc-rec__menu")) {
+        document.querySelectorAll(".enc-rec__panel").forEach(function (p) { p.hidden = true; });
+      }
+    });
   }
 
-  function apply(q) {
+  // a chain's glyph, when a view of the Networks set is on the page; otherwise its tinted disc
+  function glyphFor(chain) {
+    var disc = el("span", "enc-rec__disc");
+    if (!chain) { disc.setAttribute("data-empty", ""); return disc; }
+    disc.style.background = tintFor(chain.toLowerCase());
+    var url = glyphs()[key(chain)];
+    if (url) {
+      var img = el("img");
+      img.src = url; img.alt = "";
+      disc.appendChild(img);
+    }
+    return disc;
+  }
+  function dotFor(vote) {
+    var dot = el("span", "enc-rec__dot");
+    if (!vote) dot.setAttribute("data-empty", "");
+    else dot.setAttribute("data-vote", vote.toLowerCase().replace(/\s+/g, "-"));
+    return dot;
+  }
+  function key(s) { return String(s).toLowerCase().replace(/[^a-z0-9]/g, ""); }
+  var glyphCache = null;
+  function glyphs() {
+    if (glyphCache) return glyphCache;
+    var out = {};
+    Array.prototype.forEach.call(document.querySelectorAll(".notion-collection-card"), function (card) {
+      var t = card.querySelector(".notion-property__title");
+      var img = card.querySelector("img");
+      if (!t || !img) return;
+      var src = img.currentSrc || img.src || "";
+      var m = /[?&]url=([^&]+)/.exec(src);
+      out[key(t.textContent)] = m ? decodeURIComponent(m[1]) : src;
+    });
+    glyphCache = out;
+    return out;
+  }
+
+  /* filtering and sorting run on the rows Super rendered — the record's own view decides which
+     those are (CLAUDE.md: Super only ships the active view's rows) */
+  function apply() {
     var box = document.getElementById(TABLE);
     if (!box) return;
-    var needle = (q || "").trim().toLowerCase();
-    Array.prototype.forEach.call(box.querySelectorAll("tbody tr"), function (tr) {
-      tr.hidden = !!needle && tr.textContent.toLowerCase().indexOf(needle) < 0;
+    var needle = (state.q || "").trim().toLowerCase();
+    var rows = rowsOf();
+    rows.forEach(function (tr) {
+      var hide = false;
+      if (state.chain && chainOf(tr) !== state.chain) hide = true;
+      if (state.vote && voteOf(tr) !== state.vote) hide = true;
+      if (needle && tr.textContent.toLowerCase().indexOf(needle) < 0) hide = true;
+      tr.hidden = hide;
     });
+    if (state.sort) {
+      var body = rows[0] && rows[0].parentNode;
+      if (body) {
+        rows.slice().sort(function (a, b) {
+          if (state.sort === "oldest") return dateOf(a) - dateOf(b);
+          if (state.sort === "chain") return chainOf(a).localeCompare(chainOf(b)) || dateOf(b) - dateOf(a);
+          return dateOf(b) - dateOf(a);
+        }).forEach(function (tr) { if (tr.parentNode === body) body.appendChild(tr); });
+      }
+    }
     // a group with nothing left in it goes with its rows
-    Array.prototype.forEach.call(box.querySelectorAll(".notion-collection-group__section"), function (s) {
-      var any = Array.prototype.some.call(s.querySelectorAll("tbody tr"), function (tr) { return !tr.hidden; });
-      s.hidden = !any;
+    Array.prototype.forEach.call(box.querySelectorAll(".notion-collection-group__section"), function (s2) {
+      var any = Array.prototype.some.call(s2.querySelectorAll("tbody tr"), function (tr) { return !tr.hidden; });
+      s2.hidden = !any;
     });
   }
 
-  function build() { count(); rows(); search(); }
+  function build() { count(); rows(); head(); controls(); }
 
   var t = 0;
   new MutationObserver(function (muts) {
-    if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-rec__field, .enc-rec__find"); })) return;
+    if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-rec__bar, .enc-rec__field"); })) return;
     clearTimeout(t); t = setTimeout(build, 120);
   }).observe(document.body, { childList: true, subtree: true });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
