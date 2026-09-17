@@ -78,6 +78,12 @@
         if (!cell || cell.querySelector(".enc-rec__mark-disc")) return;
         var disc = el("span", "enc-rec__mark-disc");
         disc.style.background = tint;
+        var url = glyphs()[key(name)];
+        if (url) {
+          var img = el("img");
+          img.src = url; img.alt = ""; img.loading = "lazy";
+          disc.appendChild(img);
+        }
         cell.insertBefore(disc, cell.firstChild);
         cell.appendChild(el("span", "enc-rec__chain", name));
         tr.setAttribute("data-enc-row", "");
@@ -245,6 +251,9 @@
     return dot;
   }
   function key(s) { return String(s).toLowerCase().replace(/[^a-z0-9]/g, ""); }
+  /* Glyphs come from whichever gallery of chains is on the page: the Networks set for the chains
+     we still run, and "Chain marks" for the ones we have shut down — the record spans both, and a
+     retired chain has no row in the Networks set. Both are read the same way and hidden by CSS. */
   var glyphCache = null;
   function glyphs() {
     if (glyphCache) return glyphCache;
@@ -292,7 +301,16 @@
     });
   }
 
-  function build() { count(); rows(); head(); controls(); }
+  // the galleries the glyphs are read from are sources, not content
+  function hideSources() {
+    Array.prototype.forEach.call(document.querySelectorAll(".notion-collection"), function (c) {
+      var box = c.closest("[id^=block-]");
+      if (!box || box.id === TABLE) return;
+      if (box.querySelector(".notion-collection-card")) box.setAttribute("data-enc-source", "");
+    });
+  }
+
+  function build() { count(); rows(); head(); controls(); hideSources(); }
 
   var t = 0;
   new MutationObserver(function (muts) {

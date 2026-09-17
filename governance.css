@@ -670,6 +670,16 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   height: 30px;
   border-radius: 999px;
   margin-top: 2px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.notion-root .enc-rec__mark-disc img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 td.title .notion-property__title {
