@@ -53,9 +53,13 @@
     for (var at = 0; at < total; at += 100) {
       var n = Math.min(100, total - at);
       var block = el("div", "enc-rec__hundred");
-      block.title = n === 100 ? "100 votes" : n + " votes";
       if ((at / 100) % 2) block.setAttribute("data-dim", "");
       for (var i = 0; i < n; i++) block.appendChild(el("span", "enc-rec__mark"));
+      // the count reads as the homepage networks label — a pill that fades and rises on hover —
+      // rather than the browser's own title tooltip (the user, 2026-09-17)
+      var tip = el("span", "enc-rec__tip", n === 100 ? "100 votes" : n + " votes");
+      tip.setAttribute("aria-hidden", "true");
+      block.appendChild(tip);
       field.appendChild(block);
     }
     ps[4].after(field);
