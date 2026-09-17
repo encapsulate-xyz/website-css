@@ -698,8 +698,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 /* the Chain column is read, not shown — the row prints the chain under its title instead */
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 :is(th, td)[data-enc-chain],
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 thead th.select:nth-of-type(3) {
+.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 :is(th, td)[data-enc-chain] {
   display: none !important;
 }
 

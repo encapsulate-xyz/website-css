@@ -62,21 +62,43 @@
   }
 
   /* ── 2 · the rows ── */
-  /* Each row names its own chain: the view shows the Chain property, and the chain is whichever of
-     the row's select cells matches a chain we have a mark for. (It used to come from the group
-     heading, which only existed while the view was grouped by chain.) */
+  /* Which select column is the chain? It is learnt, not assumed: Super gives every property a
+     stable class of its own (property-<hash>), so the column whose values match the chains we hold
+     marks for is the chain column — and from then on every row uses that class, including chains
+     with no mark. Guessing by "has a mark" put a chain with none into the outcome menu. */
+  var chainProp = null;
+  function learnChainProp(box) {
+    if (chainProp) return chainProp;
+    var marks = glyphs(), tally = {};
+    Array.prototype.forEach.call(box.querySelectorAll("tbody tr td.select .notion-property"), function (p) {
+      var cls = (p.className.match(/property-[0-9a-f]+/) || [])[0];
+      var t = p.textContent.trim();
+      if (!cls || !t) return;
+      if (marks[key(t)]) tally[cls] = (tally[cls] || 0) + 1;
+    });
+    var best = null;
+    Object.keys(tally).forEach(function (c) { if (!best || tally[c] > tally[best]) best = c; });
+    chainProp = best;
+    return best;
+  }
+  function chainCell(tr) {
+    if (!chainProp) return null;
+    var p = tr.querySelector("td.select ." + chainProp);
+    return p ? p.closest("td") : null;
+  }
+
   function rows() {
     var box = document.getElementById(TABLE);
     if (!box) return;
     var marks = glyphs();
+    if (!learnChainProp(box)) return;
     Array.prototype.forEach.call(box.querySelectorAll("tbody tr"), function (tr) {
       var cell = tr.querySelector("td.title");
       if (!cell || cell.querySelector(".enc-rec__mark-disc")) return;
-      var name = "";
-      Array.prototype.forEach.call(tr.querySelectorAll("td.select"), function (td) {
-        var t = td.textContent.trim();
-        if (!name && t && marks[key(t)]) { name = t; td.setAttribute("data-enc-chain", ""); }
-      });
+      var chain = chainCell(tr);
+      if (!chain) return;
+      chain.setAttribute("data-enc-chain", "");
+      var name = chain.textContent.trim();
       if (!name) return;
       var disc = el("span", "enc-rec__mark-disc");
       disc.style.background = tintFor(name.toLowerCase());
@@ -90,6 +112,9 @@
       cell.appendChild(el("span", "enc-rec__chain", name));
       tr.setAttribute("data-enc-row", "");
     });
+    // the header cell of the chain column goes with the cells: the row prints the chain itself
+    var head = box.querySelector("thead th.select ." + chainProp);
+    if (head) head.closest("th").setAttribute("data-enc-chain", "");
     box.setAttribute("data-enc-record", "");
   }
 
