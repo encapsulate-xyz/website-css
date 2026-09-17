@@ -443,6 +443,7 @@ and by /governance-record. Two jobs keep it current, both in `scripts/` and both
 | `scripts/notion.py` | the shared client. Token from `NOTION_TOKEN`, else `~/.notion-covers-token`. Never print it |
 | `scripts/gov_rationales.py` | writes **Rationale** on every row |
 | `scripts/gov_upgrades.py` | adds the upgrades on the god and high tier chains that asked something of the validator |
+| `scripts/gov_proposals.py` | turns those rows into improvement proposals (ACP/NEP/MIP/ELIP), and retitles the rest |
 
 **Rationales.** A rationale that already says something specific is kept and tightened — the
 lead-ins ("Encapsulate votes YES because…", "We're in favour of…") dropped, cut to two sentences —
@@ -475,6 +476,22 @@ today's. On a chain with no on-chain vote the row is YES because running the rel
 is expressed, and the rationale says so. Rows are matched by (Chain, Proposal Title), so re-running
 adds only what is missing. `--dry` prints without writing. A row may still predate our deployment
 on that chain — the script cannot know, so check new rows before publishing.
+
+**Proposals, not releases (2026-09-17).** The record is a record of *votes*, so a row has to read
+as the proposal it is. `scripts/gov_proposals.py` rewrote what `gov_upgrades.py` had written:
+
+| Chain | Where the reference comes from |
+|---|---|
+| Avalanche | the release note lists the ACPs the upgrade activates → one row per ACP, titled from the ACP's own README (`avalanche-foundation/ACPs`) |
+| Near | nearcore notes link the NEPs a protocol version stabilises (`near/NEPs`) |
+| Mina | the Mesa hard fork carries MIP-0006…0009 (`MinaProtocol/MIPs`) |
+| EigenCloud | each core release implements named ELIPs (`eigenfoundation/ELIPs`) |
+| Sui, IOTA, Zilliqa, Starknet, Monad | no proposal document — the vote is the protocol-version vote itself, or running the fork build. The reference stays empty and the row is titled as the protocol change, never as a release tag |
+
+`Proposal Id` is **rich text** now (it holds "ACP-176"), which makes the id, the proof and the
+rationale all `td.text`. Both tables therefore tag their cells from the **header labels**
+(`governance.js` `columns()`, `home.js` `mark()`) and order on `[data-enc-cell]` — Notion's type
+classes and `nth-of-type` cannot tell those three columns apart.
 
 ## TODO — run both governance jobs from a GitHub Action (agreed 2026-09-17, not built)
 
