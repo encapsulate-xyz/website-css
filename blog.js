@@ -21,7 +21,7 @@
   var BASE = script && /\/dist\/blog\.js/.test(script.src)
     ? script.src.replace(/\/dist\/blog\.js.*$/, "/") : null;
   var WORDMARK = BASE ? BASE + "svg/wordmark-reversed.svg" : null;
-  var MARK = BASE ? BASE + "svg/mark-a.svg" : null;
+  var MARK = BASE ? BASE + "svg/mark-reversed.svg" : null;
 
   function el(tag, cls, text) {
     var e = document.createElement(tag);
@@ -78,10 +78,10 @@
       foot.appendChild(w);
     }
     if (MARK) {
-      // the mark is drawn as a mask so it takes the paper colour on the ink ground
-      var m = el("span", "enc-post__mark");
-      m.style.webkitMaskImage = 'url("' + MARK + '")';
-      m.style.maskImage = 'url("' + MARK + '")';
+      // the reversed mark as it is drawn in the kit — green disc, paper clip. It is an <img>, not a
+      // mask: a mask keeps only alpha and flattened it to one colour (the user, 2026-09-17).
+      var m = el("img", "enc-post__mark");
+      m.src = MARK; m.alt = "Encapsulate"; m.loading = "lazy";
       foot.appendChild(m);
     }
     body.appendChild(foot);
@@ -101,10 +101,11 @@
       return out;
     }
     if (n - i >= 2) { out.push([3, 1], [3, 1]); i += 2; }   // the pair
-    else if (n - i === 1) { out.push([COLS, 1]); return out; }
+    else if (n - i === 1) { out.push([2, 1]); return out; }  // one left: a third, and the gap stays
     while (n - i >= 3) { out.push([2, 1], [2, 1], [2, 1]); i += 3; }
-    var rest = n - i;                                        // a remainder of one or two
-    if (rest) for (var r = 0; r < rest; r++) out.push([COLS / rest, 1]);
+    // whatever is left keeps a third's width and leaves the gap — a last card must never stretch
+    // across the index (the user, 2026-09-17)
+    for (var r = n - i; r > 0; r--) out.push([2, 1]);
     return out;
   }
 

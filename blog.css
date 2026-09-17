@@ -166,13 +166,6 @@
   display: block;
   width: 26px;
   height: 26px;
-  background: #FAFAF8;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: left center;
-  mask-position: left center;
 }
 
 /* the design's rule: a card wide enough for the wordmark's 120px minimum carries the wordmark,
