@@ -327,41 +327,43 @@
 })();
 
 /* ── the count band is one screen, and scrolling settles on it ──
-   Design "Governance Record": the count band fills the viewport, so arriving at it half-shown
-   reads as a mistake. Same rules as the Network Count panels (network.js) and the homepage decks,
-   tuned on a trackpad — except that there is one stop rather than a deck of them, so this is the "one-screen
-   section" case: a gesture heading towards the panel from within half a screen lands on it, and
-   the page settles onto it when it comes to rest within a third of a screen. Nothing is paged once
-   the panel is on screen; the reader scrolls out of it normally.
+   The same rules as the homepage's one-screen sections (home.js: Who we are, Services) and the
+   Network Count panels, ported rather than re-invented:
+
+     - a wheel or trackpad gesture towards the band that starts within half a screen of its top
+       lands on it, as a deck's first panel would. Waiting for the scroll to rest does not work on
+       a trackpad: momentum wheel events run to the end of the scroll, so the rest check always
+       sees a gesture in progress;
+     - a new gesture is a 250ms gap, or — at least 450ms after the page turned and once deltas have
+       fallen below half their peak — a delta 4x the smallest since (>= 20). Momentum tails last
+       seconds and a swipe's own deltas wobble;
+     - coming to rest within a third of a screen of the band's top settles onto it, in whichever
+       direction it is nearer, and the settle retries while a gesture still looks live;
+     - the browser's own smooth scroll; the stop measured fresh, because the page above the band
+       settles late (images, the banner, Super's own renders).
+
    Under 701px, and with reduced motion, nothing snaps. */
 (function () {
   var BAND = "block-3dde800a513881b1b88dd0b73f874bfe";   // the count band
-  var EPS = 2, QUIET = 180, NEW_GAP = 250, MIN_LOCK = 450;
+  var NEAR = 0.33;       // of a screen: how close a resting page must be to settle on the stop
+  var EPS = 2;           // px: "on" the stop
+  var QUIET = 180;       // ms without wheel events before a resting page is settled
+  var NEW_GAP = 250, MIN_LOCK = 450;
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
   var docTop = function (el) { return el.getBoundingClientRect().top + window.scrollY; };
 
-  var cache = null;
-  function panel() {
-    if (cache !== null) return cache;
-    // never cache a negative: the first call can land before governance.css has applied
+  // measured fresh each time, as the homepage decks are
+  function stop() {
     var box = document.getElementById(BAND);
-    if (!box || window.innerWidth < 701) return false;
-    var h = window.innerHeight;
-    if (box.offsetHeight < h - 4) return false;
-    return (cache = { stop: Math.round(docTop(box)), h: h });
+    if (!box || window.innerWidth < 701) return null;
+    if (box.offsetHeight < window.innerHeight - 4) return null;
+    return Math.round(docTop(box));
   }
-  function invalidate() { cache = null; }
 
-  var anim = null, gestureUntil = 0;
-  // the stop is re-measured at the moment of scrolling: the band's top moves as the page above it
-  // settles (images, the banner, Super's own late renders), and a cached stop lands short
-  function stopNow() {
-    var box = document.getElementById(BAND);
-    return box ? Math.round(docTop(box)) : null;
-  }
+  var anim = null, gestureUntil = 0, lastRest = window.scrollY;
   function scrollToY(target) {
     target = Math.max(0, Math.min(target, document.documentElement.scrollHeight - window.innerHeight));
-    if (Math.abs(target - window.scrollY) < 1) return;
+    if (Math.abs(target - window.scrollY) < 1) { lastRest = target; return; }
     var smooth = !reduced.matches;
     if (anim) clearTimeout(anim.timer);
     anim = { target: target, timer: setTimeout(finish, smooth ? 900 : 50) };
@@ -372,20 +374,16 @@
     clearTimeout(anim.timer);
     var target = anim.target;
     anim = null;
-    // a smooth scroll can land a pixel or two out, and the band is exactly one screen — so a
-    // residue shows as a strip of the next section under it
-    var exact = stopNow();
-    if (exact != null && Math.abs(target - exact) < 6 && Math.abs(window.scrollY - exact) > 1) {
+    lastRest = window.scrollY;
+    // the band is exactly one screen, so a landing a pixel or two out shows as a strip of the
+    // next section beneath it
+    var exact = stop();
+    if (exact !== null && Math.abs(target - exact) < 6 && Math.abs(window.scrollY - exact) > 1) {
       window.scrollTo({ top: exact, behavior: "instant" });
+      lastRest = exact;
     }
   }
   function arrived() { if (anim && Math.abs(window.scrollY - anim.target) <= 1) finish(); }
-
-  // the panel is worth catching only while the reader is heading at it from outside
-  function catches(d, y, dir, reach) {
-    if (!d || Math.abs(y - d.stop) <= EPS) return false;
-    return dir > 0 ? (y < d.stop && d.stop - y <= reach) : (y > d.stop && y - d.stop <= reach);
-  }
 
   var lastWheel = 0, lockedAt = 0, peak = 0, tailMin = Infinity, decayed = false, locked = false;
   window.addEventListener("wheel", function (e) {
@@ -401,23 +399,28 @@
       if (!rise) { e.preventDefault(); return; }
     }
     locked = false;
-    var d = panel(), dir = e.deltaY > 0 ? 1 : -1;
-    var y = anim ? anim.target : window.scrollY;
-    if (!catches(d, y, dir, d ? d.h / 2 : 0)) { if (anim) e.preventDefault(); return; }
+
+    var s = stop();
+    if (s === null) { if (anim) e.preventDefault(); return; }
+    var dir = e.deltaY > 0 ? 1 : -1;
+    var y = anim ? anim.target : window.scrollY;   // mid-snap: page on from where it is heading
+    var half = window.innerHeight / 2, towards = (s - y) * dir;
+    if (towards <= EPS || towards >= half) { if (anim) e.preventDefault(); return; }
     e.preventDefault();
     locked = true; lockedAt = now; peak = abs; tailMin = Infinity; decayed = false;
-    scrollToY(stopNow() != null ? stopNow() : d.stop);
+    scrollToY(s);
   }, { passive: false });
 
-  var touching = false, restTimer = 0, retry = 0, lastRest = window.scrollY;
+  var touching = false, restTimer = 0, retry = 0;
   function settle() {
     if (anim || touching) return;
+    // a trackpad's momentum ends with the scroll: if a gesture still looks live, look again once
+    // it has been quiet rather than giving up
     if (performance.now() < gestureUntil) { clearTimeout(retry); retry = setTimeout(settle, QUIET + 20); return; }
-    var d = panel(), y = window.scrollY;
-    if (!d) return;
-    var dir = y >= lastRest ? 1 : -1;
-    lastRest = y;
-    if (catches(d, y, dir, d.h / 3)) scrollToY(stopNow() != null ? stopNow() : d.stop);
+    var s = stop(), y = window.scrollY;
+    if (s === null) { lastRest = y; return; }
+    if (Math.abs(s - y) <= window.innerHeight * NEAR && Math.abs(s - y) > EPS) scrollToY(s);
+    else lastRest = y;
   }
 
   var hasScrollEnd = "onscrollend" in window;
@@ -428,6 +431,4 @@
   }, { passive: true });
   window.addEventListener("touchstart", function () { touching = true; if (anim) finish(); }, { passive: true });
   window.addEventListener("touchend", function () { touching = false; if (!hasScrollEnd) setTimeout(settle, 140); }, { passive: true });
-  window.addEventListener("resize", invalidate);
-  new MutationObserver(invalidate).observe(document.body, { childList: true, subtree: true });
 })();
