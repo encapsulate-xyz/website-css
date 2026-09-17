@@ -430,6 +430,14 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   row-gap: 22px !important;
 }
 
+/* Super emits two empty spans inside the callout — its own semantic-string and the heading's
+   anchor. With no grid-area they auto-place into the first free cells and push the label tracks
+   wide, which is what split the crumb from its eyebrow. */
+.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > span.notion-semantic-string,
+.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > .notion-heading__anchor {
+  display: none !important;
+}
+
 /* the crumb and the eyebrow share one line under a hairline, as the design draws them */
 .notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > p.notion-text:nth-of-type(1) {
   grid-area: crumb !important;
