@@ -6,6 +6,7 @@
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair[data-pair="foot"]{gap: 12px;}
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair > p.notion-text{margin: 0 !important;font-family: var(--type-mono),ui-monospace,monospace !important;font-size: 11px !important;line-height: 1.3 !important;letter-spacing: 0.12em !important;text-transform: uppercase !important;color: #B4B4B4 !important;}
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair[data-pair="foot"] > p.notion-text{font-size: 10.5px !important;}
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair > p.notion-text:first-child{margin-right: -0.12em !important;}
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair > p.notion-text + p.notion-text{position: relative;}
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair > p.notion-text + p.notion-text::before{content: "";position: absolute;left: -7px;top: 50%;transform: translateY(-50%);width: 1px;height: 12px;background: rgba(250,250,248,0.4);}
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair[data-pair="foot"] > p.notion-text + p.notion-text::before{left: -6px;height: 11px;}

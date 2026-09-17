@@ -79,6 +79,12 @@
 
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair[data-pair="foot"] > p.notion-text { font-size: 10.5px !important; }
 
+/* letter-spacing leaves a trailing space after the last glyph, so the gap reads wider on the left
+   of the rule than on the right; taking that space back centres it optically */
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair > p.notion-text:first-child {
+  margin-right: -0.12em !important;
+}
+
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair > p.notion-text + p.notion-text { position: relative; }
 
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair > p.notion-text + p.notion-text::before {
