@@ -22,6 +22,11 @@
     return e;
   }
   function textOf(n) { return (n.textContent || "").trim(); }
+  /* Super prints a callout's icon inside its text ("💡Booked…"), so a block is recognised by its
+     first word with anything non-alphabetic in front of it stripped */
+  function startsWord(n, word) {
+    return textOf(n).replace(/^[^A-Za-z]+/, "").slice(0, word.length).toLowerCase() === word;
+  }
 
   /* the blocks are found by what they say, not by position: a line added in Notion must not shift
      the whole section */
@@ -351,7 +356,7 @@
     // the confirmation callout sits after the write band and must not be swallowed by it
     var iDone = kids.length;
     for (var d = iWrite; d < kids.length; d++) {
-      if (textOf(kids[d]).slice(0, 6).toLowerCase() === "booked") { iDone = d; break; }
+      if (startsWord(kids[d], "booked")) { iDone = d; break; }
     }
 
     // ── 1 · the ink band that leads with the booking ──
@@ -439,7 +444,7 @@
       var stage = "head";
       kids2.forEach(function (n) {
         var t2 = textOf(n).toLowerCase();
-        if (t2.indexOf("booked") === 0 && n.tagName === "SPAN") return;
+        if (startsWord(n, "booked") && n.tagName === "SPAN") return;
         if (t2.indexOf("before we speak") === 0) { stage = "prep"; n.classList.add("enc-ct__kicker"); right.appendChild(n); right.appendChild(prep); return; }
         if (t2.indexOf("something urgent") === 0) { stage = "urgent"; n.classList.add("enc-ct__kicker"); right.appendChild(n); right.appendChild(urgent); return; }
         if (t2.indexOf("add it to your calendar") === 0) { stage = "ics"; n.classList.add("enc-ct__kicker"); right.appendChild(n); right.appendChild(ics); return; }
