@@ -546,10 +546,7 @@ flash of empty values and a key in the page.
   **Proposal**, Proposal Id → **Reference**, Vote Option → **Our vote**, Voted On → **Voted on**,
   Voting Proof → **Proof** (Rationale kept). The header labels are what `governance.js` and
   `home.js` read to tag cells, so both maps accept the old and the new names. `scripts/gov_*.py`
-  use the new names. Still outstanding in the same pass: the four pillar
-  titles want sentence case ("Understand the proposal"), but that gallery is a **linked view whose
-  source database the integration cannot reach** ("does not contain any data sources accessible by
-  this API bot"), so either connect "Encapsulate Website" to it or rename the four rows by hand.
+  use the new names.
 - Notion content still owed: 3 more networks (to 28), "Six years" → "Since 2020", Why Stake card
   preview None. Stat card says 28 networks, the fork panel 38.
 - Cover second buttons link to database pages (e.g. `/a148eb7f…`); switch to same-page anchors if
