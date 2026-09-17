@@ -137,6 +137,9 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
 - **Make button callouts through the API** (`callout.rich_text` carrying the link). A callout made in
   the Notion app can render its label as a child `p.notion-text`, which the Button System does not
   match (seen on /networks: 79px/101px plain boxes).
+- **A link inside the site is a Notion block link.** `https://www.notion.so/<page-id>#<block-id>`
+  (both without dashes), which Super rewrites to `/<slug>#block-…`. Never invent an anchor name —
+  `#rules` and the like point at nothing. Take the block's id from the API and link to that.
 - Links: a page link renders as `/<page-id>` or its slug; a database link as its page path
   (e.g. `/governance-record/governance-record`); a block link `https://www.notion.so/<page>#<block>`
   should become `/#block-…` — confirm after republish.
