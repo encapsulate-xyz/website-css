@@ -348,6 +348,11 @@
     var iWrite = find(kids, "or write to us");
     var iAddr = find(kids, "the address");
     if (iWhere < 1 || iWrite < iWhere || iAddr < iWrite) return;
+    // the confirmation callout sits after the write band and must not be swallowed by it
+    var iDone = kids.length;
+    for (var d = iWrite; d < kids.length; d++) {
+      if (textOf(kids[d]).slice(0, 6).toLowerCase() === "booked") { iDone = d; break; }
+    }
 
     // ── 1 · the ink band that leads with the booking ──
     var call = el("div", "enc-ct__call");
@@ -402,7 +407,7 @@
     wells.appendChild(wForm);
     wells.appendChild(wAddr);
     var into = null;
-    kids.slice(iWrite).forEach(function (n, i) {
+    kids.slice(iWrite, iDone).forEach(function (n, i) {
       var t = textOf(n).toLowerCase();
       if (t === "the form") { into = wForm; n.classList.add("enc-ct__kicker"); }
       else if (t === "the address") { into = wAddr; n.classList.add("enc-ct__kicker"); }
@@ -416,10 +421,7 @@
     copyBehaviour(wAddr);
 
     // ── 4 · the confirmation, waiting under the page until cal.com says a booking landed ──
-    var done = null;
-    Array.prototype.forEach.call(root.querySelectorAll(":scope > .notion-callout"), function (c) {
-      if (textOf(c).slice(0, 6).toLowerCase() === "booked") done = c;
-    });
+    var done = iDone < kids.length ? kids[iDone] : null;
     if (done) {
       done.classList.add("enc-ct__done");
       var content = done.querySelector(".notion-callout__content") || done;
