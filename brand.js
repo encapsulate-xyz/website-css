@@ -115,52 +115,38 @@
   }
 
   /* ── 01 · the marks ── */
-  // a database renders as a gallery of cards or as a table of rows, depending on the view; both
-  // are read the same way — one element per row, its properties inside it
+  /* Both databases are read as galleries: one card per row, its properties inside it, and its
+     Order property deciding the sequence. A view that is a table, or one that hides Order, is a
+     Notion setting — ask for it rather than reading around it here. */
   function rowsOf(db) {
     var box = byId(db);
-    if (!box) return [];
-    var cards = box.querySelectorAll(".notion-collection-card");
-    if (cards.length) return Array.prototype.slice.call(cards);
-    return Array.prototype.slice.call(box.querySelectorAll("tbody tr"));
+    return box ? Array.prototype.slice.call(box.querySelectorAll(".notion-collection-card")) : [];
   }
-  // a row's file: the link it carries, else its cover image, unwrapped from Super's optimiser
-  function fileOf(row) {
-    var a = row.matches("a") ? row : row.querySelector('a[href*="assets.super.so"], a[href$=".svg"], a[href^="/"]');
+  function fileOf(card) {
+    var a = card.matches("a") ? card : card.querySelector("a[href]");
     if (a) return a.getAttribute("href");
-    var img = row.querySelector("img");
+    var img = card.querySelector("img");
     var src = img ? (img.currentSrc || img.src || "") : "";
     var m = /[?&]url=([^&]+)/.exec(src);
     return m ? decodeURIComponent(m[1]) : src;
   }
-  function fieldOf(row, re) {
-    var hit = Array.prototype.slice.call(row.querySelectorAll(".notion-property"))
+  function fieldOf(card, re) {
+    var hit = Array.prototype.slice.call(card.querySelectorAll(".notion-collection-card__property"))
       .map(function (p) { return p.textContent.trim(); })
       .filter(function (t) { return re.test(t); })[0];
     return hit || "";
   }
-  function titleOf(row) {
-    var t = row.querySelector(".notion-property__title");
+  function titleOf(card) {
+    var t = card.querySelector(".notion-property__title");
     return t ? t.textContent.trim() : "";
   }
   // Notion hands rows back newest first, so the sequence is the database's own Order property
-  function orderOf(row) {
-    var n = Array.prototype.slice.call(row.querySelectorAll(".notion-property"))
-      .map(function (p) { return p.textContent.trim(); })
-      .filter(function (t) { return /^\d+$/.test(t); })[0];
+  function orderOf(card) {
+    var n = fieldOf(card, /^\d+$/);
     return n ? parseInt(n, 10) : 99;
   }
   function inOrder(list) {
     return list.slice().sort(function (a, b) { return a.order - b.order; });
-  }
-  /* The Order property is only readable when the view shows it, and Notion hands rows back newest
-     first — so where a sequence matters and Order is hidden, the handoff's own sequence decides:
-     ink before green, and the pastels as the design lists them. A value the handoff does not name
-     keeps its Notion position, at the end. */
-  var SEQUENCE = ["#000000", "#99CC66", "#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
-  function seqOf(hex) {
-    var at = SEQUENCE.indexOf((hex || "").toUpperCase());
-    return at < 0 ? 90 : at + 1;
   }
 
   function marks() {
@@ -271,7 +257,7 @@
         name: titleOf(c),
         hex: (c.textContent.match(/#[0-9a-fA-F]{6}/) || [""])[0],
         set: fieldOf(c, /^(Brand|Pastel)$/i),
-        order: Math.min(orderOf(c), seqOf((c.textContent.match(/#[0-9a-fA-F]{6}/) || [""])[0]))
+        order: orderOf(c)
       };
     }).filter(function (r) { return r.hex; });
 
