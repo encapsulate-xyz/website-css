@@ -603,18 +603,16 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   overflow: visible !important;
 }
 
-/* Order the cells into the design's tracks. `nth-of-type` counts td siblings, not classes, so the
-   two text cells are addressed by their position among the cells (4 = Voting Proof, 5 = Rationale)
-   — `.text:last-of-type` matched nothing and left the proof link sitting in the title's column. */
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 :is(th, td).title { order: 1 !important; }
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 :is(th, td).number { order: 2 !important; }
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 :is(th, td).select { order: 3 !important; }
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 :is(th, td).date { order: 4 !important; justify-self: end !important; }
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 tbody td:nth-of-type(4) { order: 5 !important; justify-self: end !important; }
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 thead th:nth-of-type(4) { order: 5 !important; }
+/* Order the cells into the design's tracks by what each cell is — governance.js marks them —
+   rather than by its position, which changes whenever a column is shown or hidden in Notion. */
+.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 :is(th, td)[data-enc-cell="proposal"] { order: 1 !important; }
+.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 :is(th, td)[data-enc-cell="id"] { order: 2 !important; }
+.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 :is(th, td)[data-enc-cell="vote"] { order: 3 !important; }
+.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 :is(th, td)[data-enc-cell="date"] { order: 4 !important; justify-self: end !important; }
+.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 :is(th, td)[data-enc-cell="proof"] { order: 5 !important; justify-self: end !important; }
 
 /* the rationale reads under the title rather than as a column of its own */
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 tbody td:nth-of-type(5) {
+.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 tbody td[data-enc-cell="rationale"] {
   order: 6 !important;
   grid-column: 1 !important;
   grid-row: 2 !important;
@@ -628,10 +626,15 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   text-wrap: pretty !important;
 }
 
-/* the rationale has no header label, and an empty one on the grid's second row would open a
-   gap under the header */
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 thead th:nth-of-type(5) {
+/* the rationale and the proof carry no header label, and an empty header on the grid's second row
+   would open a gap under it */
+.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 thead th[data-enc-cell="rationale"] {
   display: none !important;
+}
+
+.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 thead th[data-enc-cell="proof"],
+.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 thead th[data-enc-cell="date"] {
+  font-size: 0 !important;
 }
 
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 th {
@@ -651,11 +654,6 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   padding: 0 !important;
 }
 
-/* the date, the proof and the rationale carry no header label in the design */
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 th.date,
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 th.text {
-  font-size: 0 !important;
-}
 
 /* the proposal: the chain's disc, its title, the chain beneath */
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 td.title {

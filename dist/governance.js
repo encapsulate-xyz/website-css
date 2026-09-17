@@ -98,6 +98,18 @@
       var chain = chainCell(tr);
       if (!chain) return;
       chain.setAttribute("data-enc-chain", "");
+      // every cell says what it is, so the row's layout never depends on the column order:
+      // the proof is the text cell that carries a link, the rationale is the other one
+      chain.setAttribute("data-enc-cell", "chain");
+      Array.prototype.forEach.call(tr.children, function (td) {
+        if (td.hasAttribute("data-enc-cell")) return;
+        if (td.classList.contains("title")) td.setAttribute("data-enc-cell", "proposal");
+        else if (td.classList.contains("number")) td.setAttribute("data-enc-cell", "id");
+        else if (td.classList.contains("date")) td.setAttribute("data-enc-cell", "date");
+        else if (td.classList.contains("select")) td.setAttribute("data-enc-cell", "vote");
+        else if (td.querySelector("a[href]")) td.setAttribute("data-enc-cell", "proof");
+        else td.setAttribute("data-enc-cell", "rationale");
+      });
       var name = chain.textContent.trim();
       if (!name) return;
       var disc = el("span", "enc-rec__mark-disc");
@@ -115,11 +127,13 @@
     // the header cell has no property class of its own, so it is found by position: the same
     // index as the chain cell in a row
     var first = box.querySelector("tbody tr");
-    var cell = first && chainCell(first);
-    if (cell) {
-      var at = Array.prototype.indexOf.call(cell.parentNode.children, cell);
+    if (first) {
       var ths = box.querySelectorAll("thead th");
-      if (ths[at]) ths[at].setAttribute("data-enc-chain", "");
+      Array.prototype.forEach.call(first.children, function (td, at) {
+        var what = td.getAttribute("data-enc-cell");
+        if (what && ths[at]) ths[at].setAttribute("data-enc-cell", what);
+        if (what === "chain" && ths[at]) ths[at].setAttribute("data-enc-chain", "");
+      });
     }
     box.setAttribute("data-enc-record", "");
   }
