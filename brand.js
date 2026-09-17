@@ -42,15 +42,17 @@
   var MARK = BASE ? BASE + "svg/mark-a.svg" : null;
   var WORD = BASE ? BASE + "svg/wordmark-reversed.svg" : null;
 
-  // ground, the mark's colour on it, which file it is, and the label
+  /* Each ground has its own file in the gallery, named for it — "B" is the mark on light, "Ink"
+     and "Green" the recoloured ones. `row` is the card the panel downloads; the mark is still
+     painted by a mask so the panel renders even before a file exists. */
   var PANELS = [
-    { bg: "#FAFAF8", ink: "#000000", mark: "mark", ground: "On light" },
-    { bg: "#2A2C28", ink: "#FAFAF8", mark: "mark", ground: "On ink" },
-    { bg: "#99CC66", ink: "#000000", mark: "mark", ground: "On green" }
+    { bg: "#FAFAF8", ink: "#000000", mark: "mark", ground: "On light", row: "B" },
+    { bg: "#2A2C28", ink: "#FAFAF8", mark: "mark", ground: "On ink", row: "INK" },
+    { bg: "#99CC66", ink: "#000000", mark: "mark", ground: "On green", row: "GREEN" }
   ];
   var WORDS = [
-    { bg: "#FAFAF8", ink: "#000000", mark: "word", ground: "On light" },
-    { bg: "#2A2C28", ink: "#FAFAF8", mark: "word", ground: "On ink" }
+    { bg: "#FAFAF8", ink: "#000000", mark: "word", ground: "On light", row: "" },
+    { bg: "#2A2C28", ink: "#FAFAF8", mark: "word", ground: "On ink", row: "INK" }
   ];
 
   function el(tag, cls, text) {
@@ -88,15 +90,20 @@
   }
 
   /* ── the marks slab ── */
-  function fileOf(gallery, want) {
-    var cards = gallery ? gallery.querySelectorAll(".notion-collection-card") : [];
-    for (var i = 0; i < cards.length; i++) {
-      var label = cards[i].textContent.toUpperCase();
-      var a = cards[i].matches("a") ? cards[i] : cards[i].querySelector("a[href]");
-      if (label.indexOf(want) >= 0 && a) return a.getAttribute("href");
-    }
-    var any = gallery && gallery.querySelector("a[href]");
-    return any ? any.getAttribute("href") : null;
+  // the SVG card whose name matches this ground; an unnamed ground takes the first SVG that is
+  // not one of the named ones, which is the file for light
+  function fileOf(gallery, ground) {
+    var cards = Array.prototype.slice.call(
+      gallery ? gallery.querySelectorAll(".notion-collection-card") : []);
+    var svgs = cards.filter(function (c) { return /\bSVG\b/i.test(c.textContent); });
+    var named = svgs.filter(function (c) { return /\b(INK|GREEN)\b/i.test(c.textContent); });
+    var pick = ground
+      ? svgs.filter(function (c) { return c.textContent.toUpperCase().indexOf(ground) >= 0; })[0]
+      : svgs.filter(function (c) { return named.indexOf(c) < 0; })[0];
+    pick = pick || svgs[0] || cards[0];
+    if (!pick) return null;
+    var a = pick.matches("a") ? pick : pick.querySelector("a[href]");
+    return a ? a.getAttribute("href") : null;
   }
 
   function panel(p, href) {
@@ -121,12 +128,11 @@
     if (!logo || !word || !MARK) return;
     var body = logo.closest(".enc-brand__body");
     if (!body || body.querySelector(".enc-brand__slab")) return;
-    var svgLogo = fileOf(logo, "SVG"), svgWord = fileOf(word, "SVG");
     var box = el("div", "enc-brand__slab");
     var top = el("div", "enc-brand__row");
-    PANELS.forEach(function (p) { top.appendChild(panel(p, svgLogo)); });
+    PANELS.forEach(function (p) { top.appendChild(panel(p, fileOf(logo, p.row))); });
     var bottom = el("div", "enc-brand__row");
-    WORDS.forEach(function (p) { bottom.appendChild(panel(p, svgWord)); });
+    WORDS.forEach(function (p) { bottom.appendChild(panel(p, fileOf(word, p.row))); });
     box.appendChild(top);
     box.appendChild(bottom);
     body.insertBefore(box, body.firstChild);
