@@ -6,9 +6,8 @@
    folded into a toggle at its foot), the ink "Elsewhere" strip of the four social links, and the
    paper band where writing happens — the Notion form in one well, the address in the other.
 
-   The calendar is the booking link in an iframe, built here rather than pasted into Notion. Its
-   colours come from the link's own query parameters (layout, theme, brandColor), which is all a
-   cal.com link takes — cssVarsPerTheme is for cal.com's embed API, which this deliberately is not.
+   The calendar is cal.com's embed, mounted here rather than pasted into Notion, so the booker takes
+   the site's palette through cssVarsPerTheme — the same construction as demo/booking-compare.html.
 
    Everything it prints is Notion's: this file only groups the blocks into bands, splits the
    "label · value" lines the design draws as two columns, and gives the Copy button its feedback
@@ -45,23 +44,103 @@
   }
 
   /* ── the calendar ──
-     The design frames cal.com's own booking page, so this is the page's link in an iframe rather
-     than cal.com's embed API: the URL carries the layout, the theme and the brand colour (the
-     query parameters are the only styling a cal.com link takes), and the frame is the design's
-     680px with the booker scrolling inside it. The link itself is Notion's — the "Open it in a new
-     tab" anchor under the calendar — so the event we book is never hardcoded here. */
+     cal.com's own embed, mounted here the way demo/booking-compare.html does it: the loader, one
+     namespace, and the site's palette through cssVarsPerTheme. Only the variables Cal exposes can
+     cross — it has none for a button's ring, its inner highlight or its lift, and --cal-brand is
+     reused for the primary fill, the primary ring and a slot's hover ring.
+
+     What is booked stays Notion's: the slug and the layout are read off the page's own "Open it in
+     a new tab" link, so switching event or layout is a Notion edit, not a release. */
+  var CAL_UI = {
+    theme: "light",
+    layout: "column_view",
+    hideEventTypeDetails: false,
+    cssVarsPerTheme: {
+      light: {
+        "cal-brand": "#99CC66",
+        "cal-brand-emphasis": "#8CBF56",
+        "cal-brand-text": "#000000",
+        "cal-brand-accent": "#000000",
+        "cal-brand-subtle": "#DCEEC7",
+        "cal-brand-muted": "#DCEEC7",
+        "cal-bg-brand": "#99CC66",
+        "cal-bg-brand-emphasis": "#8CBF56",
+        "cal-bg-brand-muted": "#DCEEC7",
+        "cal-bg": "#FFFEFC",
+        "cal-bg-emphasis": "#FAFAF8",
+        "cal-bg-muted": "#FFFEFC",
+        "cal-bg-subtle": "#F2F2ED",
+        "cal-bg-inverted": "#3A3D38",
+        "cal-border": "#D9D9D2",
+        "cal-border-default": "#D9D9D2",
+        "cal-border-subtle": "#D9D9D2",
+        "cal-border-muted": "#E2E2DB",
+        "cal-border-emphasis": "#B9B9B1",
+        "cal-border-booker": "#D9D9D2",
+        "cal-border-booker-width": "1px",
+        "cal-text": "#000000",
+        "cal-text-emphasis": "#000000",
+        "cal-text-subtle": "#3A3D38",
+        "cal-text-muted": "#6B6F68",
+        "cal-text-inverted": "#FAFAF8",
+        "cal-text-error": "#8A2F2F",
+        "cal-bg-error": "#F7DCE7",
+        "cal-bg-success": "#DCEEC7",
+        "cal-text-semantic-success": "#3F6B27",
+        "radius": "12px",
+        "cal-radius": "12px",
+        "cal-radius-sm": "8px",
+        "cal-radius-md": "12px",
+        "cal-radius-lg": "12px",
+        "cal-radius-xl": "12px",
+        "cal-radius-2xl": "12px",
+        "spacing": "4px"
+      }
+    }
+  };
+
+  function loader() {
+    if (window.Cal) return;
+    (function (C, A, L) {
+      var p = function (a, ar) { a.q.push(ar); };
+      var d = C.document;
+      C.Cal = C.Cal || function () {
+        var cal = C.Cal, ar = arguments;
+        if (!cal.loaded) {
+          cal.ns = {}; cal.q = cal.q || [];
+          d.head.appendChild(d.createElement("script")).src = A;
+          cal.loaded = true;
+        }
+        if (ar[0] === L) {
+          var api = function () { p(api, arguments); };
+          var ns = ar[1];
+          api.q = api.q || [];
+          if (typeof ns === "string") { cal.ns[ns] = cal.ns[ns] || api; p(cal.ns[ns], ar); p(cal, ["initNamespace", ns]); }
+          else p(cal, ar);
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, "https://app.cal.com/embed/embed.js", "init");
+  }
+
   function calendar(call, link) {
     if (!link || call.querySelector(".enc-ct__cal")) return;
     var href = link.getAttribute("href") || "";
-    if (href.indexOf("cal.com") < 0) return;
+    var slug = (/cal\.com\/([^?#]+)/.exec(href) || [])[1];
+    if (!slug) return;
+    var layout = (/layout=([a-z_]+)/.exec(href) || [])[1] || CAL_UI.layout;
     var box = el("div", "enc-ct__cal");
-    var frame = el("iframe");
-    frame.src = href;
-    frame.title = link.textContent.trim() || "Book a call";
-    frame.loading = "lazy";
-    frame.setAttribute("frameborder", "0");
-    box.appendChild(frame);
+    box.id = "enc-cal";
     link.parentNode.parentNode.insertBefore(box, link.parentNode);
+    loader();
+    window.Cal("init", "enc", { origin: "https://app.cal.com" });
+    window.Cal.ns.enc("ui", CAL_UI);
+    window.Cal.ns.enc("inline", {
+      elementOrSelector: "#enc-cal",
+      calLink: slug.replace(/\/$/, ""),
+      config: { layout: layout, theme: "light" }
+    });
   }
 
   function copyBehaviour(well) {

@@ -137,20 +137,22 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   text-align: right;
 }
 
-/* the calendar — the booking link in an iframe, put there by contact.js */
+/* the calendar — cal.com's embed, mounted by contact.js into this frame */
 .notion-root[data-enc-contact] .enc-ct__cal {
   border-radius: 12px;
   overflow: hidden;
   background: #FAFAF8;
   border: 1px solid rgba(250, 250, 248, 0.3);
-  height: 680px;   /* the design's frame; the booking page scrolls inside it */
+  /* the design's frame is 680px; Cal's inline embed sizes itself to the booker, so the frame holds
+     the height and the booker scrolls inside it */
+  height: 680px;
+  overflow: auto;
 }
 
 .notion-root[data-enc-contact] .enc-ct__cal iframe {
   display: block;
-  width: 100%;
-  height: 680px;
-  border: none;
+  width: 100% !important;
+  border: none !important;
 }
 
 /* "Calendar not loading? Open it in a new tab" */
