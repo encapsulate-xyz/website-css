@@ -34,27 +34,14 @@
   var LOGO = "block-ee3caff6b33e4ece99c5580eb45215b0";
   var WORDMARK = "block-962b3e95baaf47b694975486fbe5c014";
   var INTRO = "block-44d0237ba9f64c6c82661fa12cb2857f";
-  var WORDMARK_HEAD = "block-6501ab5b3141446b95daaebad7728bb3";
+  var HINT = "block-3dee800a513881e8b429deb3a9289539";   // Notion's "Click to download"
+  var NOTE = "block-3dee800a5138812283d6c31093c45298";   // "Three grounds, two kinds"
 
   var script = document.currentScript;
   var BASE = script && /\/dist\/brand\.js/.test(script.src)
     ? script.src.replace(/\/dist\/brand\.js.*$/, "/") : null;
   var MARK = BASE ? BASE + "svg/mark-a.svg" : null;
   var WORD = BASE ? BASE + "svg/wordmark-reversed.svg" : null;
-
-  /* Each ground has its own file in the gallery, named for it — "B" is the mark on light, "Ink"
-     and "Green" the recoloured ones. `row` is the card the panel downloads; the mark is still
-     painted by a mask so the panel renders even before a file exists. */
-  var PANELS = [
-    { bg: "#FAFAF8", ink: "#000000", mark: "mark", ground: "On light", row: "LIGHT" },
-    { bg: "#2A2C28", ink: "#FAFAF8", mark: "mark", ground: "On ink", row: "INK" },
-    { bg: "#99CC66", ink: "#000000", mark: "mark", ground: "On green", row: "GREEN" }
-  ];
-  var WORDS = [
-    { bg: "#FAFAF8", ink: "#000000", mark: "word", ground: "On light", row: "LIGHT" },
-    { bg: "#2A2C28", ink: "#FAFAF8", mark: "word", ground: "On ink", row: "INK" },
-    { bg: "#99CC66", ink: "#000000", mark: "word", ground: "On green", row: "GREEN" }
-  ];
 
   function el(tag, cls, text) {
     var e = document.createElement(tag);
@@ -90,44 +77,61 @@
     });
   }
 
-  /* ── the marks slab ── */
-  // the SVG card whose name matches this ground; an unnamed ground takes the first SVG that is
-  // not one of the named ones, which is the file for light
+  /* ── the marks: one row per ground, the mark then the wordmark ──
+     The design's 01: three rows, one per ground, each holding the two files that ground gets —
+     the mark at 30% of the row and the wordmark at 70%, because the wordmark needs the width.
+     Each cell is the file's own download, named in its corner. */
+  var GROUNDS = [
+    { bg: "#FAFAF8", ink: "#000000", row: "LIGHT", label: "#6B6F68" },
+    { bg: "#2A2C28", ink: "#FAFAF8", row: "INK", label: "#B4B4B4" },
+    { bg: "#99CC66", ink: "#000000", row: "GREEN", label: "#3A3D38" }
+  ];
+
   function fileOf(gallery, ground) {
     var cards = Array.prototype.slice.call(
       gallery ? gallery.querySelectorAll(".notion-collection-card") : []);
-    var svgs = cards.filter(function (c) { return /\bSVG\b/i.test(c.textContent); });
-    var named = svgs.filter(function (c) { return /\b(INK|GREEN|LIGHT)\b/i.test(c.textContent); });
-    var pick = ground
-      ? svgs.filter(function (c) { return c.textContent.toUpperCase().indexOf(ground) >= 0; })[0]
-      : svgs.filter(function (c) { return named.indexOf(c) < 0; })[0];
-    pick = pick || svgs[0] || cards[0];
+    var pick = cards.filter(function (c) {
+      return c.textContent.toUpperCase().indexOf(ground) >= 0;
+    })[0] || cards[0];
     if (!pick) return null;
     var a = pick.matches("a") ? pick : pick.querySelector("a[href]");
-    if (a) return a.getAttribute("href");
-    // a gallery whose rows are not pages renders its cards as no-click: the file is the card's
-    // own cover, and the original sits behind Super's image optimiser
+    if (a) return { href: a.getAttribute("href"), name: nameOf(pick) };
+    // a gallery whose rows are not pages renders its cards as no-click: the file is the cover,
+    // and the original sits behind Super's image optimiser
     var img = pick.querySelector("img");
     if (!img) return null;
     var src = img.currentSrc || img.src || "";
     var m = /[?&]url=([^&]+)/.exec(src);
-    return m ? decodeURIComponent(m[1]) : src;
+    return { href: m ? decodeURIComponent(m[1]) : src, name: nameOf(pick) };
   }
 
-  function panel(p, href) {
-    var a = el(href ? "a" : "div", "enc-brand__panel");
-    if (href) { a.setAttribute("href", href); a.setAttribute("download", ""); }
-    a.style.background = p.bg;
-    a.setAttribute("data-mark", p.mark);
+  // the file's own name, taken from the URL it downloads
+  function nameOf(card) {
+    var img = card.querySelector("img");
+    var src = img ? (img.currentSrc || img.src || "") : "";
+    var m = /[?&]url=([^&]+)/.exec(src);
+    var u = m ? decodeURIComponent(m[1]) : src;
+    var last = decodeURIComponent(u.split("?")[0].split("/").pop() || "");
+    return /\.(svg|png)$/i.test(last) ? last : "";
+  }
+
+  function cell(ground, file, kind, hint) {
+    var a = el(file && file.href ? "a" : "div", "enc-brand__cell");
+    if (file && file.href) { a.setAttribute("href", file.href); a.setAttribute("download", ""); }
+    a.setAttribute("data-kind", kind);
+    a.style.background = ground.bg;
     var glyph = el("span", "enc-brand__glyph");
-    var url = 'url("' + (p.mark === "mark" ? MARK : WORD) + '")';
+    var url = 'url("' + (kind === "mark" ? MARK : WORD) + '")';
     glyph.style.webkitMaskImage = url;
     glyph.style.maskImage = url;
-    glyph.style.background = p.ink;
+    glyph.style.background = ground.ink;
     a.appendChild(glyph);
-    var label = el("span", "enc-brand__ground", p.ground);
-    label.style.color = p.bg === "#2A2C28" ? "#B4B4B4" : (p.bg === "#99CC66" ? "#3A3D38" : "#6B6F68");
-    a.appendChild(label);
+    var name = el("span", "enc-brand__file", (file && file.name) || "");
+    name.style.color = ground.label;
+    a.appendChild(name);
+    var call = el("span", "enc-brand__hint", hint);
+    call.style.color = ground.ink;
+    a.appendChild(call);
     return a;
   }
 
@@ -136,18 +140,21 @@
     if (!logo || !word || !MARK) return;
     var body = logo.closest(".enc-brand__body");
     if (!body || body.querySelector(".enc-brand__slab")) return;
+    var hint = (byId(HINT) && byId(HINT).textContent.trim()) || "";
     var box = el("div", "enc-brand__slab");
-    var top = el("div", "enc-brand__row");
-    PANELS.forEach(function (p) { top.appendChild(panel(p, fileOf(logo, p.row))); });
-    var bottom = el("div", "enc-brand__row");
-    WORDS.forEach(function (p) { bottom.appendChild(panel(p, fileOf(word, p.row))); });
-    box.appendChild(top);
-    box.appendChild(bottom);
+    GROUNDS.forEach(function (g) {
+      var row = el("div", "enc-brand__row");
+      row.appendChild(cell(g, fileOf(logo, g.row), "mark", hint));
+      row.appendChild(cell(g, fileOf(word, g.row), "word", hint));
+      box.appendChild(row);
+    });
     body.insertBefore(box, body.firstChild);
     logo.setAttribute("data-enc-source", "");
     word.setAttribute("data-enc-source", "");
-    var head = byId(WORDMARK_HEAD);
-    if (head) head.setAttribute("data-enc-source", "");
+    var hintBlock = byId(HINT);
+    if (hintBlock) hintBlock.setAttribute("data-enc-source", "");
+    var note = byId(NOTE);
+    if (note) note.setAttribute("data-enc-note", "");
   }
 
   /* ── colour: the swatches are Notion's rows, and their own hex paints them ── */
