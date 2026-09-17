@@ -122,11 +122,13 @@
     var box = byId(db);
     return box ? Array.prototype.slice.call(box.querySelectorAll(".notion-collection-card")) : [];
   }
+  // The card's cover is the file: the Brand kit gallery's card preview is set to the File
+  // property. Super serves covers through its image optimiser, so the original comes back out of
+  // the URL — that is the file the cell draws and downloads.
   function fileOf(card) {
-    var a = card.matches("a") ? card : card.querySelector("a[href]");
-    if (a) return a.getAttribute("href");
-    var img = card.querySelector("img");
-    var src = img ? (img.currentSrc || img.src || "") : "";
+    var img = card.querySelector("img.notion-collection-card__cover");
+    if (!img) return null;
+    var src = img.currentSrc || img.src || "";
     var m = /[?&]url=([^&]+)/.exec(src);
     return m ? decodeURIComponent(m[1]) : src;
   }
