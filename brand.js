@@ -122,15 +122,11 @@
     var box = byId(db);
     return box ? Array.prototype.slice.call(box.querySelectorAll(".notion-collection-card")) : [];
   }
-  // The card's cover is the file: the Brand kit gallery's card preview is set to the File
-  // property. Super serves covers through its image optimiser, so the original comes back out of
-  // the URL — that is the file the cell draws and downloads.
+  // The file is the File property, shown on the card: Super renders it as a link to the file
+  // itself. The gallery needs no cover for this — card preview can be off.
   function fileOf(card) {
-    var img = card.querySelector("img.notion-collection-card__cover");
-    if (!img) return null;
-    var src = img.currentSrc || img.src || "";
-    var m = /[?&]url=([^&]+)/.exec(src);
-    return m ? decodeURIComponent(m[1]) : src;
+    var a = card.querySelector(".notion-property__file a[href]");
+    return a ? a.getAttribute("href") : null;
   }
   function fieldOf(card, re) {
     var hit = Array.prototype.slice.call(card.querySelectorAll(".notion-collection-card__property"))
