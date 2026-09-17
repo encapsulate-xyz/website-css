@@ -456,8 +456,12 @@
     });
   }
 
-  // the galleries the glyphs are read from are sources, not content
+  // the galleries the glyphs are read from are sources, not content. Only on the record page:
+  // this file is loaded from the site head, and marking every collection on every page set
+  // data-enc-source on the homepage's own galleries too (harmless only because governance.css is
+  // not loaded there — one page CSS away from hiding real content).
   function hideSources() {
+    if (!document.getElementById(TABLE)) return;
     Array.prototype.forEach.call(document.querySelectorAll(".notion-collection"), function (c) {
       var box = c.closest("[id^=block-]");
       if (!box || box.id === TABLE) return;
