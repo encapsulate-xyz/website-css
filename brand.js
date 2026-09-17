@@ -103,7 +103,14 @@
     pick = pick || svgs[0] || cards[0];
     if (!pick) return null;
     var a = pick.matches("a") ? pick : pick.querySelector("a[href]");
-    return a ? a.getAttribute("href") : null;
+    if (a) return a.getAttribute("href");
+    // a gallery whose rows are not pages renders its cards as no-click: the file is the card's
+    // own cover, and the original sits behind Super's image optimiser
+    var img = pick.querySelector("img");
+    if (!img) return null;
+    var src = img.currentSrc || img.src || "";
+    var m = /[?&]url=([^&]+)/.exec(src);
+    return m ? decodeURIComponent(m[1]) : src;
   }
 
   function panel(p, href) {
