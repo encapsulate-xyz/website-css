@@ -334,10 +334,30 @@
   }
 
   function fill(row, head, sub) {
+    if (!head) { row.hidden = true; return; }      // a fact with nothing to say is not shown
     var v = row.querySelector(".enc-ct__fv");
     var s = row.querySelector(".enc-ct__fs");
     if (v) v.textContent = head;
-    if (s) s.textContent = sub;
+    if (s) s.textContent = sub || "";
+  }
+
+  /* The second way in, and the one that does not depend on a message at all: cal.com's
+     redirect-on-booking can send the attendee back here with the booking in the query string
+     (Advanced → Redirect on booking, with "forward parameters" on). If those are present the
+     confirmation is filled from them on load — no event, no frame, nothing to miss. */
+  function fromQuery() {
+    var q = new URLSearchParams(location.search);
+    var start = q.get("startTime") || q.get("start") || q.get("date");
+    var uid = q.get("uid") || q.get("bookingUid");
+    if (!start && !uid && q.get("booked") === null) return null;
+    return {
+      date: start,
+      duration: parseInt(q.get("duration") || q.get("eventDuration") || "30", 10),
+      organizer: { name: q.get("hostName") || q.get("organizer") || "",
+                   email: q.get("hostEmail") || "",
+                   timeZone: q.get("timeZone") || q.get("tz") || "" },
+      booking: { uid: uid || "" }
+    };
   }
 
   function build() {
@@ -506,6 +526,13 @@
         }
         move(right, n);
       });
+    }
+
+    // a booking already in the query (cal.com's redirect) shows the confirmation straight away
+    var q = fromQuery();
+    if (q && done) {
+      root.setAttribute("data-enc-booked", "");
+      confirm(q);
     }
 
     root.setAttribute("data-enc-contact", "");
