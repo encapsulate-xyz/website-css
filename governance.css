@@ -50,6 +50,10 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   max-width: none !important;
   margin: 0 calc(50% - 50vw) 44px !important;
   padding: clamp(56px, 8vh, 92px) clamp(28px, 7vw, 110px) !important;
+  /* exactly one screen, padding included — a band even a few pixels taller shows a strip of the
+     next section under it once the page snaps to its top */
+  box-sizing: border-box !important;
+  height: 100svh !important;
   min-height: 100svh !important;
   display: flex !important;
   flex-direction: column !important;

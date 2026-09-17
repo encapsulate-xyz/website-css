@@ -349,6 +349,12 @@
   function invalidate() { cache = null; }
 
   var anim = null, gestureUntil = 0;
+  // the stop is re-measured at the moment of scrolling: the band's top moves as the page above it
+  // settles (images, the banner, Super's own late renders), and a cached stop lands short
+  function stopNow() {
+    var box = document.getElementById(BAND);
+    return box ? Math.round(docTop(box)) : null;
+  }
   function scrollToY(target) {
     target = Math.max(0, Math.min(target, document.documentElement.scrollHeight - window.innerHeight));
     if (Math.abs(target - window.scrollY) < 1) return;
@@ -357,7 +363,18 @@
     anim = { target: target, timer: setTimeout(finish, smooth ? 900 : 50) };
     window.scrollTo({ top: target, behavior: smooth ? "smooth" : "instant" });
   }
-  function finish() { if (!anim) return; clearTimeout(anim.timer); anim = null; }
+  function finish() {
+    if (!anim) return;
+    clearTimeout(anim.timer);
+    var target = anim.target;
+    anim = null;
+    // a smooth scroll can land a pixel or two out, and the band is exactly one screen — so a
+    // residue shows as a strip of the next section under it
+    var exact = stopNow();
+    if (exact != null && Math.abs(target - exact) < 6 && Math.abs(window.scrollY - exact) > 1) {
+      window.scrollTo({ top: exact, behavior: "instant" });
+    }
+  }
   function arrived() { if (anim && Math.abs(window.scrollY - anim.target) <= 1) finish(); }
 
   // the panel is worth catching only while the reader is heading at it from outside
@@ -385,7 +402,7 @@
     if (!catches(d, y, dir, d ? d.h / 2 : 0)) { if (anim) e.preventDefault(); return; }
     e.preventDefault();
     locked = true; lockedAt = now; peak = abs; tailMin = Infinity; decayed = false;
-    scrollToY(d.stop);
+    scrollToY(stopNow() != null ? stopNow() : d.stop);
   }, { passive: false });
 
   var touching = false, restTimer = 0, retry = 0, lastRest = window.scrollY;
@@ -396,7 +413,7 @@
     if (!d) return;
     var dir = y >= lastRest ? 1 : -1;
     lastRest = y;
-    if (catches(d, y, dir, d.h / 3)) scrollToY(d.stop);
+    if (catches(d, y, dir, d.h / 3)) scrollToY(stopNow() != null ? stopNow() : d.stop);
   }
 
   var hasScrollEnd = "onscrollend" in window;
