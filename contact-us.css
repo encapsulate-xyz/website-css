@@ -357,6 +357,52 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1);
 }
 
+/* the header's dots, from the design's own generator (svg/contact-dots.svg) */
+.notion-root[data-enc-contact] .enc-ct__whead {
+  position: relative;
+  padding-right: 184px;
+}
+
+.notion-root[data-enc-contact] .enc-ct__whead::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 168px;
+  height: 84px;
+  background: url("../svg/contact-dots.svg") right bottom / cover no-repeat;
+  pointer-events: none;
+}
+
+/* the form, embedded: Super renders a Notion form view as a plain collection, so the page carries
+   the form's own public URL in an embed and the well frames it */
+.notion-root[data-enc-contact] .enc-ct__well .notion-embed,
+.notion-root[data-enc-contact] .enc-ct__well [class*="embed"] {
+  margin: 0 !important;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #FAFAF8;
+  border: 1px solid #D9D9D2;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.notion-root[data-enc-contact] .enc-ct__well iframe {
+  display: block;
+  width: 100% !important;
+  height: 420px !important;
+  border: none !important;
+}
+
+/* the line beside the button — the last text in the form's well */
+.notion-root[data-enc-contact] .enc-ct__well > p.notion-text:last-child:not(.enc-ct__kicker) {
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 9.5px !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #575B55 !important;
+  max-width: none !important;
+}
+
 /* the Notion form inside the first well — §13b draws the fields; this is the well's fit */
 .notion-root[data-enc-contact] .enc-ct__well .notion-collection,
 .notion-root[data-enc-contact] .enc-ct__well .notion-form__wrapper {
