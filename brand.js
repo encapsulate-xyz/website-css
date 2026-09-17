@@ -89,18 +89,20 @@
       band.appendChild(body);
       root.insertBefore(band, title);
 
-      // the rail takes the title and the two paragraphs written after it — the lede and the
-      // number — and everything up to the next heading is the band's body
+      // the title goes first — it is a heading, so the loop below would stop on it — then the two
+      // paragraphs Notion writes after it (the lede and the number) join it in the rail, and
+      // everything up to the next heading is the band's body
+      rail.appendChild(title);
       var node = band.nextSibling, taken = 0;
       while (node) {
         var next = node.nextSibling;
         if (node.classList && node.classList.contains("notion-heading")) break;
-        if (node.classList && node.classList.contains("notion-heading__anchor")) { node.remove(); node = next; continue; }
-        if (taken < 3) { rail.appendChild(node); taken++; }
+        // Super writes an empty anchor before every heading; it marks the next band, not this one
+        if (node.classList && node.classList.contains("notion-heading__anchor")) break;
+        if (taken < 2) { rail.appendChild(node); taken++; }
         else body.appendChild(node);
         node = next;
       }
-      rail.insertBefore(title, rail.firstChild);
     });
   }
 
