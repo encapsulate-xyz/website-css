@@ -184,6 +184,16 @@
       calLink: slug.replace(/\/$/, ""),
       config: { layout: layout, theme: "dark" }
     });
+    /* The booker fills our frame while a slot is being picked, but Cal's success screen is its own
+       centred card — inside our frame that reads as a panel within a panel. Cal says when the
+       booking lands, so the frame drops its ground and its hairline at that moment and the card
+       stands on the band alone. (Both action names: the V2 event is the current one.) */
+    ["bookingSuccessful", "bookingSuccessfulV2"].forEach(function (action) {
+      window.Cal.ns.enc("on", {
+        action: action,
+        callback: function () { box.setAttribute("data-enc-booked", ""); }
+      });
+    });
   }
 
   function copyBehaviour(well) {

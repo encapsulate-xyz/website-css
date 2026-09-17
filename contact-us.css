@@ -148,6 +148,14 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   /* Cal measures the booker and sizes its own frame, so ours follows it: no fixed height, nothing
      to scroll inside. The design's 680px is the floor, not the ceiling. */
   min-height: 680px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* once the booking lands, Cal draws its own card: our frame steps back so there is one panel */
+.notion-root[data-enc-contact] .enc-ct__cal[data-enc-booked] {
+  background: transparent;
+  border-color: transparent;
+  min-height: 0;
 }
 
 .notion-root[data-enc-contact] .enc-ct__cal iframe {
