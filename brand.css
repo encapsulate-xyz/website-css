@@ -415,7 +415,9 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   position: relative !important;
   z-index: 1 !important;
   display: grid !important;
-  grid-template-columns: auto auto minmax(0, 1fr) !important;
+  /* max-content, not auto: the rows that span all three columns (the headline, the lede and the
+     buttons) would otherwise push the two label tracks wide and split the crumb from its eyebrow */
+  grid-template-columns: max-content max-content minmax(0, 1fr) !important;
   grid-template-areas:
     "crumb eyebrow ."
     "title title title"
