@@ -483,9 +483,10 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   position: relative !important;
   width: min(100%, 600px) !important;
   max-width: min(100%, 600px) !important;
-  height: 0 !important;
+  height: auto !important;
   margin: 0 auto !important;
-  padding-top: 17.5% !important;              /* the wordmark's own ratio */
+  aspect-ratio: 5376.7 / 906.31 !important;   /* the wordmark's own ratio — a % padding would
+                                                 resolve against the column, not the mark */
   overflow: hidden !important;
   text-indent: -9999px !important;            /* read by a screen reader, said by the mark */
   background: url("../svg/wordmark-reversed.svg") center / contain no-repeat !important;
