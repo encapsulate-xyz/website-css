@@ -13,7 +13,9 @@ The user shares a design handoff. I:
    for the design;
 3. write the CSS/JS in the repo, build, verify on the live page, commit, tag a release;
 4. reply with **one table of what to paste** — `File | Paste into` — listing only the `head/*.html`
-   files that changed.
+   files that changed. Keep the second column to the name of the target and nothing else: `site`
+   for the site head, otherwise the page (`brand`, `guides`, `/networks`). The full
+   Settings → Code → Head path is noise; the table below says where each file goes.
 
 **The order of work on a handoff (set 2026-09-17):**
 
