@@ -10,6 +10,11 @@
    Tokens from the handoff: INK #000, INK7 #3A3D38, PAPER #FAFAF8, PAPER2 #F2F2ED, DARK #2A2C28,
    GREY #6B6F68, HAIR #E2E2DB, GREEN #99CC66, and PAD = clamp(28px, 7vw, 110px). */
 
+/* the page's own top padding would show as a white strip above the ink cover */
+.super-content.page__brand {
+  padding-top: 0 !important;
+}
+
 /* ── THE COVER ─────────────────────────────────────────────────────────────────────────────────
    Ink, one screen, centred: the eyebrow above, the wordmark with the kit line and two CTAs in the
    middle, the foot below. No headline — the wordmark is the headline. */
@@ -20,7 +25,7 @@
   max-width: none !important;
   margin: 0 calc(50% - 50vw) !important;
   padding: clamp(40px, 6vh, 72px) clamp(28px, 7vw, 110px) !important;
-  min-height: calc(100svh - var(--cover-top, 56px)) !important;
+  min-height: calc(100svh - var(--enc-cover-top, 56px)) !important;
   display: flex !important;
   background: #2A2C28 !important;
   border: 0 !important;

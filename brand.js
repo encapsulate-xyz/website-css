@@ -74,6 +74,15 @@
     foot.appendChild(ps[4]);
   }
 
+  /* The cover is one screen from where it starts, and where it starts depends on the navbar and
+     on whether the temporary banner is up — so it is measured rather than assumed. */
+  function coverTop() {
+    var box = byId(COVER);
+    if (!box) return;
+    var top = Math.round(box.getBoundingClientRect().top + window.scrollY);
+    box.style.setProperty("--enc-cover-top", top + "px");
+  }
+
   /* ── the spreads: a rail of title, lede and number, then everything up to the next title ── */
   function bands() {
     var root = document.querySelector(".notion-root");
@@ -336,7 +345,7 @@
     box.appendChild(list);
   }
 
-  function build() { cover(); bands(); marks(); colour(); faces(); rules(); }
+  function build() { cover(); coverTop(); bands(); marks(); colour(); faces(); rules(); }
 
   var t = 0;
   new MutationObserver(function (muts) {
@@ -348,4 +357,5 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
   else build();
   window.addEventListener("load", build);
+  window.addEventListener("resize", coverTop);
 })();
