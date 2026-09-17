@@ -259,6 +259,20 @@ cases. The difference is inside it.</p>
     inside it: the page scrolls, the embed does not. Put the same link in a Notion embed block and
     you get the opposite — Super gives that a fixed height and the booker scrolls inside it.</p>
     <div id="cal-inline" style="margin-top:22px; border:1px solid var(--rule); border-radius:12px; overflow:hidden"></div>
+
+    <!-- Every message cal.com sends this page, in order. The contact page drops its frame when the
+         booking lands, and the action's name is emitted inside the iframe rather than by the
+         loader — so this is where we read the real name instead of guessing it. -->
+    <div style="margin-top:18px">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <strong style="font-size:14.5px">What cal.com sends this page</strong>
+        <button class="btn" id="cal-log-clear" type="button" style="min-height:34px;padding:0 12px;font-size:13.5px">Clear</button>
+        <label style="display:flex;align-items:center;gap:7px;font-size:13.5px;color:#3A3D38">
+          <input type="checkbox" id="cal-log-noise"> include __dimensionChanged
+        </label>
+      </div>
+      <pre id="cal-log" style="margin:10px 0 0;max-height:220px;overflow:auto;padding:12px 14px;border:1px solid var(--rule);border-radius:10px;background:#FAFAF8;font:12px/1.5 'JetBrains Mono',monospace;color:#3A3D38">waiting…</pre>
+    </div>
   </div>
 </section>
 
@@ -489,6 +503,28 @@ document.getElementById("open-profile").addEventListener("click", function () {
   drawer.setAttribute("data-open", "");
   drawerBackdrop.setAttribute("data-open", "");
 });
+
+// The log: every postMessage from cal.com, so the booking action's real name is observable here
+(function () {
+  var log = document.getElementById("cal-log");
+  var noise = document.getElementById("cal-log-noise");
+  var lines = [];
+  document.getElementById("cal-log-clear").addEventListener("click", function () {
+    lines = []; log.textContent = "waiting…";
+  });
+  window.addEventListener("message", function (e) {
+    if (!/cal\.com/.test(e.origin)) return;
+    var d = e.data;
+    var name = (d && (d.type || d.action)) || String(d).slice(0, 40);
+    if (name === "__dimensionChanged" && !noise.checked) return;
+    var at = new Date().toLocaleTimeString("en-GB");
+    var detail = "";
+    try { detail = JSON.stringify(d && d.data ? d.data : d).slice(0, 140); } catch (err) { detail = ""; }
+    lines.push(at + "  " + name + "  " + detail);
+    log.textContent = lines.slice(-40).join("\n");
+    log.scrollTop = log.scrollHeight;
+  });
+})();
 
 document.getElementById("open-drawer").addEventListener("click", function () { openDrawer("column_view"); });
 document.getElementById("open-drawer-month").addEventListener("click", function () { openDrawer("week_view"); });
