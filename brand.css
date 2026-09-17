@@ -455,6 +455,15 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #3A3D38 !important;
 }
 
+/* a grid item that spans every column hands its min-content width back to those columns, which is
+   what kept stretching the two label tracks — min-width: 0 stops the headline, the lede and the
+   buttons from sizing the crumb's row */
+.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > h1.notion-heading,
+.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > p.notion-text:nth-of-type(3),
+.notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > .notion-column-list {
+  min-width: 0 !important;
+}
+
 .notion-root #block-af37871bf3db42c980b7cdaefb8a0ad0 > .notion-callout__content > h1.notion-heading {
   grid-area: title !important;
   align-self: end !important;
