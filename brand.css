@@ -84,7 +84,8 @@
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair > p.notion-text + p.notion-text::before {
   content: "";
   position: absolute;
-  left: -14px;
+  /* centred in the gap, not flush against the label before it */
+  left: -7px;
   top: 50%;
   transform: translateY(-50%);
   width: 1px;
@@ -93,7 +94,7 @@
 }
 
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair[data-pair="foot"] > p.notion-text + p.notion-text::before {
-  left: -12px;
+  left: -6px;
   height: 11px;
 }
 
