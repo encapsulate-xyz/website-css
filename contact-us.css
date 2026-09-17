@@ -137,20 +137,19 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   text-align: right;
 }
 
-/* the calendar itself — cal.com in an embed block */
-.notion-root[data-enc-contact] .enc-ct__call .notion-embed,
-.notion-root[data-enc-contact] .enc-ct__call [class*="embed"] {
-  margin: 0 !important;
+/* the calendar — cal.com's inline embed, mounted by contact.js into this frame */
+.notion-root[data-enc-contact] .enc-ct__cal {
   border-radius: 12px;
   overflow: hidden;
   background: #FAFAF8;
   border: 1px solid rgba(250, 250, 248, 0.3);
+  min-height: 680px;
 }
 
-.notion-root[data-enc-contact] .enc-ct__call iframe {
+.notion-root[data-enc-contact] .enc-ct__cal iframe {
   display: block;
   width: 100% !important;
-  height: 680px !important;
+  min-height: 680px;
   border: none !important;
 }
 
@@ -374,23 +373,83 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   pointer-events: none;
 }
 
-/* the form, embedded: Super renders a Notion form view as a plain collection, so the page carries
-   the form's own public URL in an embed and the well frames it */
-.notion-root[data-enc-contact] .enc-ct__well .notion-embed,
-.notion-root[data-enc-contact] .enc-ct__well [class*="embed"] {
+/* the form — Super renders the form block natively (main.css §13b), so the design's own field
+   construction applies here: mono labels, paper fields with the ring and the highlight */
+.notion-root[data-enc-contact] .enc-ct__well .notion-form,
+.notion-root[data-enc-contact] .enc-ct__well .notion-form__wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
   margin: 0 !important;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #FAFAF8;
-  border: 1px solid #D9D9D2;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
 }
 
-.notion-root[data-enc-contact] .enc-ct__well iframe {
-  display: block;
+.notion-root[data-enc-contact] .enc-ct__well .notion-form__field {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 7px !important;
+  margin: 0 !important;
+}
+
+.notion-root[data-enc-contact] .enc-ct__well .notion-form__field-title {
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 9.5px !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #575B55 !important;
+}
+
+.notion-root[data-enc-contact] .enc-ct__well .notion-form__input-field,
+.notion-root[data-enc-contact] .enc-ct__well textarea {
   width: 100% !important;
-  height: 420px !important;
-  border: none !important;
+  min-height: 48px !important;
+  padding: 0 16px !important;
+  border-radius: 10px !important;
+  background: #FAFAF8 !important;
+  border: 1px solid #D9D9D2 !important;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+  color: #000000 !important;
+  outline: none !important;
+  transition: border-color 0.16s ease;
+}
+
+.notion-root[data-enc-contact] .enc-ct__well textarea {
+  min-height: 104px !important;
+  padding: 13px 16px !important;
+  resize: vertical !important;
+}
+
+.notion-root[data-enc-contact] .enc-ct__well .notion-form__input-field:hover,
+.notion-root[data-enc-contact] .enc-ct__well textarea:hover {
+  border-color: #9B9B94 !important;
+}
+
+/* Send: the Button System's primary, at the design's 48px */
+.notion-root[data-enc-contact] .enc-ct__well .notion-form button[type="submit"],
+.notion-root[data-enc-contact] .enc-ct__well .notion-form__submit {
+  min-height: 48px !important;
+  padding: 0 20px !important;
+  border-radius: 10px !important;
+  background: #99CC66 !important;
+  border: 1px solid #7CAE48 !important;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.78), 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.006em !important;
+  color: #000000 !important;
+  transition: background-color 0.16s ease, border-color 0.16s ease;
+}
+
+.notion-root[data-enc-contact] .enc-ct__well .notion-form button[type="submit"]:hover {
+  background: #8CBF56 !important;
+  border-color: #6F9E41 !important;
 }
 
 /* the line beside the button — the last text in the form's well */
