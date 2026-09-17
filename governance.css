@@ -803,6 +803,13 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 /* the row link — the Voting Proof cell, drawn as the up-right badge and stretched over the row */
+/* the badge's own boxes must not clip it: Notion's p.notion-property is overflow:hidden and
+   exactly 20px wide, so the hover nudge (translate 2px, -2px) was cut off the top-right corner */
+.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 td[data-enc-cell="proof"] .notion-property,
+.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 td[data-enc-cell="proof"] .highlighted-color {
+  overflow: visible !important;
+}
+
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42 td.text a.notion-link {
   display: block !important;
   width: 20px !important;
