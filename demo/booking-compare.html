@@ -156,6 +156,7 @@
   }
   .drawer[data-open] { transform: none; }
   .drawer[data-layout="month_view"] { --drawer-w: 820px; }   /* month grid + times side by side */
+  .drawer[data-layout="week_view"] { --drawer-w: 900px; }    /* a week of columns needs the width */
   .drawer[data-wide] { --drawer-w: 960px; }                  /* column view, several days abreast */
 
   .drawer__head {
@@ -235,9 +236,9 @@ cases. The difference is inside it.</p>
     <label style="display:flex;align-items:center;gap:8px;margin-bottom:14px;font-size:14.5px;color:#3A3D38">
       <input type="checkbox" id="grey-brand"> Card grey on hover (turns the primary grey too)
     </label>
-    <button class="btn" id="open-drawer" type="button">Book a call · column</button>
+    <button class="btn" id="open-drawer" type="button">Book a call · week</button>
     <button class="btn" id="open-drawer-month" type="button" style="margin-left:10px">Book a call · month</button>
-    <button class="btn" id="open-drawer-days" type="button" style="margin-top:10px">Book a call · several days</button>
+    <button class="btn" id="open-drawer-days" type="button" style="margin-top:10px">Book a call · week, wide</button>
     <ul>
       <li>Styled here: the whole panel, plus the booker's colours as in the popup</li>
       <li>Fixed: the same Cal internals — fonts, arrangement, wording</li>
@@ -321,7 +322,7 @@ Cal("init", "enc", { origin: "https://app.cal.com" });
 // namespace mismatch is the usual reason an embed keeps Cal's own colours.
 var CAL_UI = {
   theme: "light",
-  layout: "month_view",
+  layout: "week_view",
   hideEventTypeDetails: false,
   cssVarsPerTheme: {
     light: {
@@ -392,11 +393,11 @@ Cal.ns.enc("ui", CAL_UI);
 Cal("ui", CAL_UI);
 
 document.getElementById("open-cal").addEventListener("click", function () {
-  Cal.ns.enc("modal", { calLink: CAL_LINK, config: { layout: "month_view", theme: "light" } });
+  Cal.ns.enc("modal", { calLink: CAL_LINK, config: { layout: "week_view", theme: "light" } });
 });
 
-// The drawer: Cal's inline embed, built once, inside our own panel. Column layout, since a side
-// panel is narrower than the month grid wants.
+// The drawer: Cal's inline embed, built once, inside our own panel. Week view like everything
+// else here, so the panel widens to 900px to hold the week's columns.
 Cal("init", "drawer", { origin: "https://app.cal.com" });
 Cal.ns.drawer("ui", CAL_UI);
 var drawerLayout = null;
@@ -419,7 +420,7 @@ function uiWith(greyBrand) {
 }
 
 function openDrawer(layout, wide) {
-  layout = layout || "column_view";
+  layout = layout || "week_view";
   var grey = document.getElementById("grey-brand").checked;
   var key = layout + (grey ? "-grey" : "") + (wide ? "-wide" : "");
   if (drawerLayout !== key) {
@@ -457,7 +458,7 @@ Cal.ns.single("ui", CAL_UI);
 Cal.ns.single("inline", {
   elementOrSelector: "#cal-inline",
   calLink: CAL_LINK,
-  config: { layout: "month_view", theme: "light" }
+  config: { layout: "week_view", theme: "light" }
 });
 
 // The profile page (every event type) as a plain inline embed, and the same link in the drawer.
@@ -467,7 +468,7 @@ Cal.ns.profile("ui", CAL_UI);
 Cal.ns.profile("inline", {
   elementOrSelector: "#cal-profile",
   calLink: PROFILE_LINK,
-  config: { layout: "month_view", theme: "light" }
+  config: { layout: "week_view", theme: "light" }
 });
 document.getElementById("open-profile").addEventListener("click", function () {
   var grey = document.getElementById("grey-brand").checked;
@@ -476,10 +477,10 @@ document.getElementById("open-profile").addEventListener("click", function () {
   Cal.ns.drawer("inline", {
     elementOrSelector: "#cal-drawer",
     calLink: PROFILE_LINK,
-    config: { layout: "column_view", theme: "light" }
+    config: { layout: "week_view", theme: "light" }
   });
   drawerLayout = "profile" + (grey ? "-grey" : "");
-  drawer.setAttribute("data-layout", "column_view");
+  drawer.setAttribute("data-layout", "week_view");
   drawer.removeAttribute("data-wide");
   drawer.hidden = false;
   drawerBackdrop.hidden = false;
@@ -488,9 +489,9 @@ document.getElementById("open-profile").addEventListener("click", function () {
   drawerBackdrop.setAttribute("data-open", "");
 });
 
-document.getElementById("open-drawer").addEventListener("click", function () { openDrawer("column_view"); });
+document.getElementById("open-drawer").addEventListener("click", function () { openDrawer("week_view"); });
 document.getElementById("open-drawer-month").addEventListener("click", function () { openDrawer("month_view"); });
-document.getElementById("open-drawer-days").addEventListener("click", function () { openDrawer("column_view", true); });
+document.getElementById("open-drawer-days").addEventListener("click", function () { openDrawer("week_view", true); });
 document.getElementById("close-drawer").addEventListener("click", closeDrawer);
 drawerBackdrop.addEventListener("click", closeDrawer);
 document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !drawer.hidden) closeDrawer(); });
