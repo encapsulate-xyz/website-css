@@ -52,7 +52,7 @@
      What is booked stays Notion's: the slug and the layout are read off the page's own "Open it in
      a new tab" link, so switching event or layout is a Notion edit, not a release. */
   var CAL_UI = {
-    theme: "light",
+    theme: "dark",
     layout: "column_view",
     hideEventTypeDetails: false,
     cssVarsPerTheme: {
@@ -87,6 +87,49 @@
         "cal-bg-error": "#F7DCE7",
         "cal-bg-success": "#DCEEC7",
         "cal-text-semantic-success": "#3F6B27",
+        "radius": "12px",
+        "cal-radius": "12px",
+        "cal-radius-sm": "8px",
+        "cal-radius-md": "12px",
+        "cal-radius-lg": "12px",
+        "cal-radius-xl": "12px",
+        "cal-radius-2xl": "12px",
+        "spacing": "4px"
+      },
+      /* Cal's own dark is a neutral near-black (#0F0F0F ground, #4D4D4D borders, a white brand),
+         which reads as a second black against our warm ink. These are the band's own values, so
+         the booker dissolves into it instead of sitting in a frame. */
+      dark: {
+        "cal-brand": "#99CC66",
+        "cal-brand-emphasis": "#8CBF56",
+        "cal-brand-text": "#000000",
+        "cal-brand-accent": "#000000",
+        "cal-brand-subtle": "#3F6B27",
+        "cal-brand-muted": "#3F6B27",
+        "cal-bg-brand": "#99CC66",
+        "cal-bg-brand-emphasis": "#8CBF56",
+        "cal-bg-brand-muted": "#3F6B27",
+        "cal-bg": "#2A2C28",
+        "cal-bg-emphasis": "#33352F",
+        "cal-bg-muted": "#2F312C",
+        "cal-bg-subtle": "#3A3D38",
+        "cal-bg-inverted": "#FAFAF8",
+        "cal-border": "rgba(250, 250, 248, 0.18)",
+        "cal-border-default": "rgba(250, 250, 248, 0.18)",
+        "cal-border-subtle": "rgba(250, 250, 248, 0.18)",
+        "cal-border-muted": "rgba(250, 250, 248, 0.12)",
+        "cal-border-emphasis": "rgba(250, 250, 248, 0.3)",
+        "cal-border-booker": "rgba(250, 250, 248, 0.18)",
+        "cal-border-booker-width": "1px",
+        "cal-text": "#FAFAF8",
+        "cal-text-emphasis": "#FAFAF8",
+        "cal-text-subtle": "#C9C9C4",
+        "cal-text-muted": "#9FA39B",
+        "cal-text-inverted": "#000000",
+        "cal-text-error": "#E9A9C2",
+        "cal-bg-error": "#4A2A36",
+        "cal-bg-success": "#3F6B27",
+        "cal-text-semantic-success": "#DCEEC7",
         "radius": "12px",
         "cal-radius": "12px",
         "cal-radius-sm": "8px",
@@ -139,7 +182,7 @@
     window.Cal.ns.enc("inline", {
       elementOrSelector: "#enc-cal",
       calLink: slug.replace(/\/$/, ""),
-      config: { layout: layout, theme: "light" }
+      config: { layout: layout, theme: "dark" }
     });
   }
 

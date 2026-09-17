@@ -141,8 +141,10 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 .notion-root[data-enc-contact] .enc-ct__cal {
   border-radius: 12px;
   overflow: hidden;
-  background: #FAFAF8;
-  border: 1px solid rgba(250, 250, 248, 0.3);
+  /* the booker runs on the band's own values (CAL_UI's dark palette), so the frame is the band —
+     a hairline holds its edge rather than a paper card */
+  background: #2A2C28;
+  border: 1px solid rgba(250, 250, 248, 0.18);
   /* Cal measures the booker and sizes its own frame, so ours follows it: no fixed height, nothing
      to scroll inside. The design's 680px is the floor, not the ceiling. */
   min-height: 680px;
