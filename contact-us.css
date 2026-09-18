@@ -91,6 +91,31 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   max-width: 17ch;
 }
 
+/* An italic word in this heading is circled, the way the homepage hero circles "online". That
+   drawing is scoped to the hero's own block id in home.css, which never loads here — so the same
+   construction is repeated for this heading: the <em> is the hook (not a typographic italic), the
+   circle is its ::after so the artifact's percentages resolve against the word itself, and
+   `isolation: isolate` keeps z-index:-1 behind the letters rather than behind the band. */
+.notion-root[data-enc-contact] .enc-ct__head h2 em {
+  font-style: normal !important;
+  position: relative !important;
+  display: inline-block !important;
+  white-space: nowrap !important;
+  isolation: isolate !important;
+}
+
+.notion-root[data-enc-contact] .enc-ct__head h2 em::after {
+  content: "" !important;
+  position: absolute !important;
+  left: -14.3% !important;
+  top: -25.5% !important;
+  width: 127% !important;
+  height: 143% !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+  background: url("../svg/circle-online.svg") center / 100% 100% no-repeat !important;
+}
+
 .notion-root[data-enc-contact] .enc-ct__head > p.notion-text {
   margin: 0 !important;
   font-family: var(--type-body), system-ui, sans-serif !important;
