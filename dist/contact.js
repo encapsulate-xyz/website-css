@@ -296,28 +296,37 @@
     label.appendChild(el("span", "enc-ct__fa", parts.slice(1).join("·").trim()));
   }
 
+  /* The Copy button. The listener is on the document, not on the callout: React re-renders the
+     band and would take a listener bound to the node with it (the same reason the fold is marked
+     with an attribute). The label swap is the one bit of JS-written text here, by the user's
+     decision; the green "Copied" fill is CSS, on [data-enc-copied]. */
   function copyBehaviour(well) {
     var button = well.querySelector(".notion-callout");
-    var link = well.querySelector('a[href^="mailto:"]');
-    if (!button || !link || button.hasAttribute("data-enc-copy")) return;
-    button.setAttribute("data-enc-copy", "");
+    if (button) button.setAttribute("data-enc-copy", "");
+  }
+
+  document.addEventListener("click", function (e) {
+    var button = e.target.closest && e.target.closest("[data-enc-contact] .enc-ct__well .notion-callout");
+    if (!button) return;
+    var well = button.closest(".enc-ct__well");
+    var link = well && well.querySelector('a[href^="mailto:"]');
+    if (!link) return;
+    e.preventDefault();
+    if (button.hasAttribute("data-enc-copied")) return;
     var label = button.querySelector(".notion-link") || button;
     var said = label.textContent;
-    button.addEventListener("click", function (e) {
-      e.preventDefault();
-      var address = decodeURIComponent(link.getAttribute("href").replace(/^mailto:/i, "").split("?")[0]);
-      var done = function () {
-        label.textContent = "Copied";
-        button.setAttribute("data-enc-copied", "");
-        setTimeout(function () {
-          label.textContent = said;
-          button.removeAttribute("data-enc-copied");
-        }, 1200);
-      };
-      if (navigator.clipboard) navigator.clipboard.writeText(address).then(done, done);
-      else done();
-    });
-  }
+    var address = decodeURIComponent(link.getAttribute("href").replace(/^mailto:/i, "").split("?")[0]);
+    var done = function () {
+      label.textContent = "Copied";
+      button.setAttribute("data-enc-copied", "");
+      setTimeout(function () {
+        label.textContent = said;
+        button.removeAttribute("data-enc-copied");
+      }, 1200);
+    };
+    if (navigator.clipboard) navigator.clipboard.writeText(address).then(done, done);
+    else done();
+  });
 
   /* Super emits a heading's anchor as a sibling span, so counting raw children put the anchor
      where the lede should be. The anchor travels with its heading and is never counted. */

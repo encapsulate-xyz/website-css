@@ -114,6 +114,7 @@
 .notion-root[data-enc-contact] .enc-ct__well > p.notion-text:not(.enc-ct__kicker){margin: 0 !important;font-family: var(--type-body),system-ui,sans-serif !important;font-size: 14.5px !important;line-height: 1.56 !important;color: #6B6F68 !important;max-width: 34ch;}
 .notion-root[data-enc-contact] .enc-ct__well .notion-callout{margin: auto 0 0 !important;align-self: flex-start;background: transparent !important;border: 0 !important;box-shadow: none !important;padding: 0 !important;}
 .notion-root[data-enc-contact] .enc-ct__well .notion-callout{--btn-h: 44px;--btn-px: 18px;--btn-fs: 15.5px;}
+.notion-root[data-enc-contact] .enc-ct__well .notion-callout[data-enc-copied] .notion-link{background: #99CC66 !important;border-color: #7CAE48 !important;box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.78),0 1px 2px rgba(0,0,0,0.1) !important;}
 .notion-root[data-enc-contact] .enc-ct__well .notion-callout .notion-link{font-family: var(--type-body),system-ui,sans-serif !important;text-decoration: none !important;}
 .notion-root[data-enc-contact] [data-enc-copied] .notion-link{background: #99CC66 !important;border-color: #7CAE48 !important;}
 @media (max-width: 900px){.notion-root[data-enc-contact] .enc-ct__wells,.notion-root[data-enc-contact] .enc-ct__socials{grid-template-columns: minmax(0,1fr);}

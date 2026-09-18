@@ -900,6 +900,13 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   --btn-fs: 15.5px;
 }
 
+/* copied: the design turns the button green for its 1.2 seconds */
+.notion-root[data-enc-contact] .enc-ct__well .notion-callout[data-enc-copied] .notion-link {
+  background: #99CC66 !important;
+  border-color: #7CAE48 !important;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.78), 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
 .notion-root[data-enc-contact] .enc-ct__well .notion-callout .notion-link {
   font-family: var(--type-body), system-ui, sans-serif !important;
   text-decoration: none !important;
