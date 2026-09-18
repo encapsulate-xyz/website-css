@@ -339,8 +339,33 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   content: "0";
 }
 
+/* The number's well takes the pastel cycle, one tint per pillar (handoff "Governance Record",
+   pillarBand: `backgroundColor: P[i % 5]`) — it was a single grey well before. On hover the track
+   washes green, so the well inverts to paper rather than keeping a tint that would disappear
+   into the wash. */
+
+.notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-card:nth-child(1) .notion-property__title {
+  background: #DCEEC7 !important;
+  color: #000000 !important;
+}
+
+.notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-card:nth-child(2) .notion-property__title {
+  background: #F8E8B3 !important;
+  color: #000000 !important;
+}
+
+.notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-card:nth-child(3) .notion-property__title {
+  background: #D2E3F6 !important;
+  color: #000000 !important;
+}
+
+.notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-card:nth-child(4) .notion-property__title {
+  background: #F8DDC6 !important;
+  color: #000000 !important;
+}
+
 .notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-card:hover .notion-property__title {
-  background: #99CC66 !important;
+  background: #FAFAF8 !important;
   color: #000000 !important;
 }
 
