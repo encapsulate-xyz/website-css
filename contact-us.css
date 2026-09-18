@@ -896,6 +896,10 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   max-width: 34ch;
 }
 
+/* §07's wrapper rule carries a :has() and out-ranks a plainer selector, which is why the button
+   was sitting under its paragraph instead of at the well's foot — both wells put their button on
+   the same line in the design. */
+.notion-root[data-enc-contact] .enc-ct__well > .notion-callout.bg-gray-light.border,
 .notion-root[data-enc-contact] .enc-ct__well .notion-callout {
   margin: auto 0 0 !important;
   align-self: flex-start;
