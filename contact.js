@@ -202,6 +202,7 @@
       var root = document.querySelector(".notion-root");
       if (root) root.setAttribute("data-enc-booked", "");
       confirm(e && (e.detail ? (e.detail.data || e.detail) : e.data || e));
+      toTop();
     };
     ["bookingSuccessful", "bookingSuccessfulV2",
      "rescheduleBookingSuccessful", "rescheduleBookingSuccessfulV2"].forEach(function (action) {
@@ -392,7 +393,47 @@
     };
   }
 
+  /* Where cal.com puts the meeting link depends on the location and on how far along the
+     integration is when the embed fires: its own success screen reads booking.metadata.videoCallUrl,
+     a Cal Video booking carries videoCallUrl on the booking, a custom location is the URL itself,
+     and a Google Meet link arrives on a reference once the calendar event exists. All of them are
+     tried; when none is there the row keeps Notion's "Link is in the invitation". */
+  function meetUrl(b, data) {
+    var refs = b.references || b.bookingReferences || [];
+    var fromRef = "";
+    for (var i = 0; i < refs.length; i++) {
+      var u = refs[i] && (refs[i].meetingUrl || refs[i].meetingId);
+      if (typeof u === "string" && /^https?:/.test(u)) { fromRef = u; break; }
+    }
+    var here = [b.metadata && b.metadata.videoCallUrl, b.videoCallUrl,
+      data && data.videoCallUrl, data && data.metadata && data.metadata.videoCallUrl,
+      typeof b.location === "string" && /^https?:/.test(b.location) ? b.location : "",
+      fromRef];
+    for (var j = 0; j < here.length; j++) if (here[j]) return here[j];
+    return "";
+  }
+
+  /* The payload is kept for the session: it is what a booking looks like from the embed, which is
+     the only way to see which of the fields above cal.com actually sends for a given location. */
+  function remember(data) {
+    window.encBooking = data;
+    try { sessionStorage.setItem("enc-booking", JSON.stringify(data)); } catch (e) {}
+  }
+
+  /* The band the reader was looking at is gone, so the page is left mid-scroll where the calendar
+     used to be. The confirmation starts at the top of the screen instead. */
+  function toTop() {
+    var done = document.querySelector(".enc-ct__done");
+    if (!done) return;
+    var quiet = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setTimeout(function () {
+      var y = done.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({ top: y, behavior: quiet ? "auto" : "smooth" });
+    }, 60);
+  }
+
   function confirm(data) {
+    remember(data);
     var band = document.querySelector(".enc-ct__done");
     if (!band || band.hasAttribute("data-enc-filled")) return;
     var b = (data && (data.booking || data)) || {};
@@ -421,8 +462,7 @@
     /* the meeting link, when the booking carries one: cal.com keeps it at
        booking.metadata.videoCallUrl (that is where its own screen reads it from), and a custom
        location can be the URL itself. The row keeps Notion's words and gains the link. */
-    var meet = (b.metadata && b.metadata.videoCallUrl) ||
-      (typeof b.location === "string" && /^https?:/.test(b.location) ? b.location : "");
+    var meet = meetUrl(b, data);
     if (rows.where && meet) {
       var v2 = rows.where.querySelector(".enc-ct__fv");
       var s2 = rows.where.querySelector(".enc-ct__fs");
@@ -687,6 +727,7 @@
     if (q && done) {
       root.setAttribute("data-enc-booked", "");
       confirm(q);
+      toTop();
     }
 
     root.setAttribute("data-enc-contact", "");
