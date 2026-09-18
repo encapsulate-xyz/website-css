@@ -385,6 +385,15 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 .notion-root[data-enc-contact] [data-enc-fold] .notion-form__wrapper:not([data-enc-dial]) [class*="notion-form__submit"] {
+  display: inline-block !important;
+  width: auto !important;
+  padding: 0 !important;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.notion-root[data-enc-contact] [data-enc-fold] .notion-form__wrapper:not([data-enc-dial]) [class*="notion-form__submit"] > button {
   min-height: 48px !important;
   padding: 0 20px !important;
   border-radius: 10px !important;
@@ -399,7 +408,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   transition: background-color 0.16s ease, border-color 0.16s ease;
 }
 
-.notion-root[data-enc-contact] [data-enc-fold] .notion-form__wrapper:not([data-enc-dial]) [class*="notion-form__submit"]:hover {
+.notion-root[data-enc-contact] [data-enc-fold] .notion-form__wrapper:not([data-enc-dial]) [class*="notion-form__submit"] > button:hover {
   background: #8CBF56 !important;
   border-color: #6F9E41 !important;
 }
@@ -767,9 +776,19 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   border-color: #9B9B94 !important;
 }
 
-/* Send: the Button System's primary, at the design's 48px. Super renders it as a div, not a
-   button, so the class is what selects it */
+/* Send: the Button System's primary, at the design's 48px. Super wraps the button in a div that
+   carries the same class — paint the div as well and you get a button inside a button, so the
+   wrapper only holds the shape and every painted value goes on the button itself. */
 .notion-root[data-enc-contact] .enc-ct__well [class*="notion-form__submit"] {
+  display: inline-block !important;
+  width: auto !important;
+  padding: 0 !important;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.notion-root[data-enc-contact] .enc-ct__well [class*="notion-form__submit"] > button {
   min-height: 48px !important;
   padding: 0 20px !important;
   border-radius: 10px !important;
@@ -784,7 +803,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   transition: background-color 0.16s ease, border-color 0.16s ease;
 }
 
-.notion-root[data-enc-contact] .enc-ct__well [class*="notion-form__submit"]:hover {
+.notion-root[data-enc-contact] .enc-ct__well [class*="notion-form__submit"] > button:hover {
   background: #8CBF56 !important;
   border-color: #6F9E41 !important;
 }
