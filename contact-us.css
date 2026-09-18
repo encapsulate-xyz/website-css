@@ -900,11 +900,16 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   --btn-fs: 15.5px;
 }
 
-/* copied: the design turns the button green for its 1.2 seconds */
-.notion-root[data-enc-contact] .enc-ct__well .notion-callout[data-enc-copied] .notion-link {
-  background: #99CC66 !important;
-  border-color: #7CAE48 !important;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.78), 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+/* copied: the design turns the button green for its 1.2 seconds. The Button System paints the
+   link from its tokens, so the state is a change of tokens — painting the link directly loses to
+   §07's own rule. */
+.notion-root[data-enc-contact] .enc-ct__well .notion-callout[data-enc-copied] {
+  --btn-2-fill: #99CC66;
+  --btn-2-fill-hover: #99CC66;
+  --btn-2-fill-press: #8CBF56;
+  --btn-2-ring: #7CAE48;
+  --btn-2-ring-hover: #7CAE48;
+  --btn-2-highlight: inset 0 1.5px 0 rgba(255, 255, 255, 0.78);
 }
 
 .notion-root[data-enc-contact] .enc-ct__well .notion-callout .notion-link {
