@@ -2183,9 +2183,10 @@ html[data-enc-locked] {
   line-height: 0.98 !important;
   letter-spacing: -0.044em !important;
   color: #FAFAF8 !important;
-  /* the design's own measure — a ch cap breaks the same way at any size, so this is the handoff's
-     line break whatever the headline grows to */
-  max-width: 14ch !important;
+  /* The design's measure is 14ch, which breaks "emergency" and "upgrade?" onto lines of their own.
+     The user asked for those two together, so the measure is 17ch: "Did your validator / answer
+     the last / emergency upgrade?" (a ch cap breaks the same way at any size). */
+  max-width: 17ch !important;
 }
 
 /* the circled word — the ring is the word's own child, so its percentages resolve against the
