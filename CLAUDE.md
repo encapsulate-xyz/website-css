@@ -234,6 +234,32 @@ div.notion-form__field.<type>`; dropdown questions still render as radios (drawn
 inputs: click labels, use the native value setter + `input` event; mark with attributes
 (`[data-enc-…]`), not classes — React resets className.
 
+## The contact band's fold holds the dial (2026-09-18)
+
+The toggle at the foot of /contact-us ("Staking a treasury or a fund?") is a Notion **form block**,
+and that form is the institutional one — so `home.js` claims it as the Institutional Dial exactly as
+it does on the homepage. Consequences, all of them learned the hard way:
+
+- **`home-dial.css` is linked from `head/contact-us.html`** as well as the homepage's. Without it
+  the dial renders as a bare Notion form with a 90px title.
+- `contact.js` recognises the dial the same way `home.js` does — by a Number question labelled
+  **Amount** — and leaves it alone; its own plain-form shaping (descriptions into placeholders,
+  Send on a row) stands down, and every fold-form rule in contact-us.css is scoped
+  `:not([data-enc-dial])`.
+- The band redraws the dial **fully on ink**: the paper half takes #2A2C28 with a
+  `rgba(250,250,248,.18)` hairline for the split, fields and duration pills go to the .06 fill with
+  the .3 ring (a picked pill is paper with ink text), the listbox panel is ink. The pastel glyph
+  wells and the green Send are the only colour left.
+- **Glyphs on a page with no gallery:** `covers.js` publishes `window.encGlyphs()` — its own
+  fallback list keyed by chain ("gravitybridge") plus anything the page renders — and `home.js`
+  merges it when a name has no card. `mark()` matches on the flattened key too.
+- **React resets className on the toggle when it opens**, which took the band's fold styling with
+  it. The fold is marked `[data-enc-fold]` (an attribute, per the rule above) and re-marked, with
+  its split label and its form, on every tick of contact.js's observer.
+- Removed from Notion on 2026-09-18: the fold's "Open the institutional dial" button (the dial is
+  in the fold now) and, by the user's own edit, the paragraph "Size, custody and jurisdiction are
+  the first things we will ask."
+
 ## Where each asset comes from — repo vs Notion (settled 2026-09-16)
 
 **Repo + jsDelivr — anything that is part of the design.** Referenced from the built CSS as
