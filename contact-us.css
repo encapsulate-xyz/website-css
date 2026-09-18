@@ -532,8 +532,9 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #B4D98F;
 }
 
-/* Send keeps the green; on ink it loses the outer lift */
-.notion-root[data-enc-contact] [data-enc-fold] [data-enc-dial] .notion-form__submit-button {
+/* Send keeps the green; on ink it loses the outer lift. The highlight belongs to the button — on
+   its container, which is a full-width block, the 1.5px inset drew a white rule across the band. */
+.notion-root[data-enc-contact] [data-enc-fold] [data-enc-dial] .notion-form__submit-button > button {
   box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.78) !important;
 }
 
