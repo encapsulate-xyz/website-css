@@ -256,6 +256,14 @@ it does on the homepage. Consequences, all of them learned the hard way:
 - **React resets className on the toggle when it opens**, which took the band's fold styling with
   it. The fold is marked `[data-enc-fold]` (an attribute, per the rule above) and re-marked, with
   its split label and its form, on every tick of contact.js's observer.
+- **The meeting link is `booking.videoCallUrl`** (top level), not `booking.metadata.videoCallUrl`
+  where cal.com's own success screen reads it — measured from a real booking through the embed on
+  2026-09-18: the payload is `{uid, title, startTime, endTime, eventTypeId, status,
+  paymentRequired, isRecurring, videoCallUrl}` and carries no metadata, attendees or organizer.
+  `contact.js` tries every place the link can be and keeps the payload at `window.encBooking` and
+  in `sessionStorage["enc-booking"]`, which is how that shape was read.
+- On a booking the confirmation scrolls to the top of the viewport; the band the reader was looking
+  at has gone, so the page would otherwise sit mid-scroll where the calendar was.
 - Removed from Notion on 2026-09-18: the fold's "Open the institutional dial" button (the dial is
   in the fold now) and, by the user's own edit, the paragraph "Size, custody and jurisdiction are
   the first things we will ask."
