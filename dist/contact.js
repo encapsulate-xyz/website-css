@@ -344,7 +344,14 @@
         v2.textContent = "";
         v2.appendChild(a);
       }
-      if (s2) s2.textContent = "Join from here, or from the invitation";
+      if (s2) {                                   // show the link itself, not a pointer to the email
+        s2.textContent = "";
+        var j = el("a", "enc-ct__meet", meet.replace(/^https?:\/\//, "").replace(/\/$/, ""));
+        j.href = meet;
+        j.target = "_blank";
+        j.rel = "noopener noreferrer";
+        s2.appendChild(j);
+      }
     }
 
     var again = band.querySelector('a[href*="cal.com/reschedule"]');
