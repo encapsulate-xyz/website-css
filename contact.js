@@ -464,16 +464,8 @@
        location can be the URL itself. The row keeps Notion's words and gains the link. */
     var meet = meetUrl(b, data);
     if (rows.where && meet) {
-      var v2 = rows.where.querySelector(".enc-ct__fv");
+      // the place keeps Notion's words as plain text — the line under it is the link
       var s2 = rows.where.querySelector(".enc-ct__fs");
-      if (v2) {
-        var a = el("a", "enc-ct__meet", v2.textContent);
-        a.href = meet;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        v2.textContent = "";
-        v2.appendChild(a);
-      }
       if (s2) {                                   // show the link itself, not a pointer to the email
         s2.textContent = "";
         var j = el("a", "enc-ct__meet", meet.replace(/^https?:\/\//, "").replace(/\/$/, ""));

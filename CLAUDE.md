@@ -403,6 +403,14 @@ load order.
 
 ## Things that bite in Super / Notion markup
 
+- **A link gets ONE rule under it.** Notion draws its own `text-decoration: underline`, so any rule
+  that gives a link a `border-bottom` must also set `text-decoration: none !important` in the same
+  block, or the link shows two lines. This has been reported three times (the contact band's
+  "Open it in a new tab", "Cancel this booking", the meeting link) — check it whenever a link is
+  styled, on every page.
+- **Do not make two links out of one fact.** A value and the line under it are not both links: the
+  label stays plain text and the line under it carries the link.
+
 - **Minima `!important`s:** `.notion-semantic-string .link:hover{opacity:.7}`,
   `.notion-collection-card:hover{background:…}`, `h3{font-size:var(--h3-size)!important}`.
 - **Old page Code-panel rules use `#id … !important`** — nothing in a stylesheet beats them; they
