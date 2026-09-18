@@ -628,7 +628,9 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #B4B4B4;
 }
 
-/* the arrow disc at the row's end */
+/* The arrow disc at the row's end. These routes leave the site, so the badge is the up-right
+   out-of-site arrow the governance rows and the homepage's own handles use — not the straight one,
+   which the site keeps for going somewhere on it. It nudges up and right, the same as those. */
 .notion-root[data-enc-contact] .enc-ct__social::after {
   content: "";
   margin-left: auto;
@@ -636,12 +638,12 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   height: 20px;
   flex: none;
   border-radius: 999px;
-  background: #99CC66 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.25 10h11.5'/%3E%3Cpath d='M11.25 5.5 15.75 10l-4.5 4.5'/%3E%3C/svg%3E") center / 62% no-repeat;
+  background: #99CC66 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 13.5 13.5 6.5'/%3E%3Cpath d='M7.75 6.5h5.75v5.75'/%3E%3C/svg%3E") center / 60% no-repeat;
   transition: transform 0.16s ease;
 }
 
 .notion-root[data-enc-contact] .enc-ct__social:hover::after {
-  transform: translateX(3px);
+  transform: translate(2px, -2px);
 }
 
 /* ── 3 · THE WRITE BAND ── */
