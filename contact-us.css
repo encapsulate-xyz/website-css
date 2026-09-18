@@ -659,8 +659,10 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 /* ── 3 · THE WRITE BAND ── */
+/* The handoff gives this band its own paper ground (#FAFAF8) a shade off the page's #FFFEFC.
+   Dropped on 2026-09-18 at the user's ask: the band sits on the page ground and the wells carry
+   the change of tone by themselves. */
 .notion-root[data-enc-contact] .enc-ct__write {
-  background: #FAFAF8;
   padding: clamp(40px, 4.5vw, 64px) var(--ct-pad);
   display: flex;
   flex-direction: column;
