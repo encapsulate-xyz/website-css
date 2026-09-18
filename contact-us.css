@@ -672,10 +672,19 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   border-bottom-color: #FAFAF8 !important;
 }
 
-/* the two buttons sit together under the facts */
-.notion-root[data-enc-contact] .enc-ct__done-l .notion-callout {
+/* the two buttons share one row under the facts */
+.notion-root[data-enc-contact] .enc-ct__cta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.notion-root[data-enc-contact] .enc-ct__cta .notion-callout {
   display: inline-flex !important;
-  margin: 0 14px 0 0 !important;
+  margin: 0 !important;
+  flex: none;
 }
 
 /* the pending wording waits out of sight until cal.com says the booking needs our yes */

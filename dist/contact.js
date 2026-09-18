@@ -508,6 +508,7 @@
       content.appendChild(left);
       content.appendChild(right);
       var facts = el("div", "enc-ct__facts");
+      var cta = el("div", "enc-ct__cta");
       var prep = el("div", "enc-ct__prep");
       var urgent = el("div", "enc-ct__urgent");
       var ics = el("div", "enc-ct__cals");
@@ -520,7 +521,8 @@
         if (t2.indexOf("add it to your calendar") === 0) { stage = "ics"; n.classList.add("enc-ct__kicker"); right.appendChild(n); right.appendChild(ics); return; }
         if (stage === "head") {
           if (n.querySelector && n.querySelector(".notion-link") && n.classList.contains("notion-callout")) {
-            left.appendChild(n);                       // the two buttons
+            cta.appendChild(n);                        // the two buttons share one row
+            if (cta.parentNode !== left) left.appendChild(cta);
             return;
           }
           if (textOf(n).indexOf("·") > 0) {            // a fact: label, value, note
