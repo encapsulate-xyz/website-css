@@ -181,6 +181,8 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   letter-spacing: -0.006em !important;
   text-transform: none !important;
   color: #FAFAF8 !important;
+  /* the rule under it is the border, so Notion's own underline goes — two were showing */
+  text-decoration: none !important;
   border-bottom: 1px solid rgba(250, 250, 248, 0.4) !important;
   opacity: 1 !important;
   transition: border-color 0.16s ease;
