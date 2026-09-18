@@ -2183,10 +2183,9 @@ html[data-enc-locked] {
   line-height: 0.98 !important;
   letter-spacing: -0.044em !important;
   color: #FAFAF8 !important;
-  /* the design's 14ch was measured against its own font stack; in Outfit as served here the same
-     cap breaks "Did your validator" in two, so the measure is 17ch — the design's three lines:
-     "Did your validator / answer the last / emergency upgrade?" */
-  max-width: 17ch !important;
+  /* the design's own measure — a ch cap breaks the same way at any size, so this is the handoff's
+     line break whatever the headline grows to */
+  max-width: 14ch !important;
 }
 
 /* the circled word — the ring is the word's own child, so its percentages resolve against the
