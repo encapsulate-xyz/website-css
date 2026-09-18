@@ -244,12 +244,31 @@
   function foldForm() {
     var body = document.querySelector("[data-enc-contact] .enc-ct__fold .notion-toggle__content");
     if (!body || body.hasAttribute("data-enc-fold")) return;
-    if (!body.querySelector("form.notion-form")) return;
+    var wrap = body.querySelector(".notion-form__wrapper");
+    if (!wrap || !wrap.querySelector("form.notion-form")) return;
+    // The institutional form is the dial: home.js builds it and home-dial.css draws it, so it is
+    // left alone here — it is recognised the same way home.js recognises it, by the Amount
+    // question, because this can run before the script has marked it [data-enc-dial].
+    if (wrap.hasAttribute("data-enc-dial") || isDial(wrap)) {
+      body.setAttribute("data-enc-fold", "dial");
+      return;
+    }
     body.setAttribute("data-enc-fold", "");
     formShape(body);
     var row = body.querySelector(".enc-ct__send");
     var cta = body.querySelector(".notion-callout");
     if (row && cta) row.appendChild(cta);
+  }
+
+  function isDial(wrap) {
+    var fields = wrap.querySelectorAll(".notion-form__field");
+    for (var i = 0; i < fields.length; i++) {
+      var title = fields[i].querySelector(".notion-form__field-title");
+      if (title && /amount/i.test(textOf(title)) &&
+          fields[i].querySelector("input.notion-form__input-field") &&
+          !fields[i].classList.contains("multi_select")) return true;
+    }
+    return false;
   }
 
   /* the fold's one line is two in the design: the question, then the aside beside it */

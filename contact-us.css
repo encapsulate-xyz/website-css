@@ -273,8 +273,8 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   border: 0 !important;
 }
 
-.notion-root[data-enc-contact] .enc-ct__fold .notion-form,
-.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper {
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) .notion-form,
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) {
   display: grid !important;
   grid-template-columns: repeat(auto-fit, minmax(248px, 1fr));
   gap: 18px 22px !important;
@@ -287,12 +287,12 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   box-shadow: none !important;
 }
 
-.notion-root[data-enc-contact] .enc-ct__fold .notion-header,
-.notion-root[data-enc-contact] .enc-ct__fold .notion-collection__header-wrapper {
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) .notion-header,
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) .notion-collection__header-wrapper {
   display: none !important;
 }
 
-.notion-root[data-enc-contact] .enc-ct__fold .notion-form__field {
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) .notion-form__field {
   display: flex !important;
   flex-direction: column !important;
   gap: 7px !important;
@@ -300,13 +300,13 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 /* anything that is not one line takes the full width */
-.notion-root[data-enc-contact] .enc-ct__fold .notion-form__field:has(textarea),
-.notion-root[data-enc-contact] .enc-ct__fold .notion-form__field:has(.notion-form__select-options),
-.notion-root[data-enc-contact] .enc-ct__fold .notion-form__field:has(.notion-form__checkbox-wrapper) {
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) .notion-form__field:has(textarea),
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) .notion-form__field:has(.notion-form__select-options),
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) .notion-form__field:has(.notion-form__checkbox-wrapper) {
   grid-column: 1 / -1;
 }
 
-.notion-root[data-enc-contact] .enc-ct__fold .notion-form__field-title {
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) .notion-form__field-title {
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 9.5px !important;
   letter-spacing: 0.12em !important;
@@ -314,12 +314,12 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #B4B4B4 !important;
 }
 
-.notion-root[data-enc-contact] .enc-ct__fold .notion-form__field-title-required {
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) .notion-form__field-title-required {
   color: #99CC66 !important;
 }
 
-.notion-root[data-enc-contact] .enc-ct__fold .notion-form__input-field,
-.notion-root[data-enc-contact] .enc-ct__fold textarea {
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) .notion-form__input-field,
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) textarea {
   width: 100% !important;
   min-height: 48px !important;
   padding: 0 16px !important;
@@ -335,42 +335,42 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   transition: border-color 0.16s ease, background-color 0.16s ease;
 }
 
-.notion-root[data-enc-contact] .enc-ct__fold textarea {
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) textarea {
   min-height: 104px !important;
   padding: 13px 16px !important;
   resize: vertical !important;
 }
 
-.notion-root[data-enc-contact] .enc-ct__fold .notion-form__input-field:hover,
-.notion-root[data-enc-contact] .enc-ct__fold textarea:hover,
-.notion-root[data-enc-contact] .enc-ct__fold .notion-form__input-field:focus,
-.notion-root[data-enc-contact] .enc-ct__fold textarea:focus {
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) .notion-form__input-field:hover,
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) textarea:hover,
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) .notion-form__input-field:focus,
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) textarea:focus {
   background: rgba(250, 250, 248, 0.1) !important;
   border-color: rgba(250, 250, 248, 0.4) !important;
 }
 
-.notion-root[data-enc-contact] .enc-ct__fold .notion-form__input-field::placeholder,
-.notion-root[data-enc-contact] .enc-ct__fold textarea::placeholder {
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) .notion-form__input-field::placeholder,
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) textarea::placeholder {
   color: #9FA39B !important;
 }
 
-.notion-root[data-enc-contact] .enc-ct__fold .notion-form__field-description[hidden] {
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) .notion-form__field-description[hidden] {
   display: none !important;
 }
 
 /* choices and the consent box, in the same ink */
-.notion-root[data-enc-contact] .enc-ct__fold .notion-form__checkbox-label,
-.notion-root[data-enc-contact] .enc-ct__fold .notion-form__checkbox-text {
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) .notion-form__checkbox-label,
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) .notion-form__checkbox-text {
   font-family: var(--type-body), system-ui, sans-serif !important;
   font-size: 15px !important;
   color: #C9C9C4 !important;
 }
 
-.notion-root[data-enc-contact] .enc-ct__fold .notion-form__checkbox-input {
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) .notion-form__checkbox-input {
   accent-color: #99CC66;
 }
 
-.notion-root[data-enc-contact] .enc-ct__fold .notion-form__field-error {
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) .notion-form__field-error {
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 9.5px !important;
   letter-spacing: 0.12em !important;
@@ -384,7 +384,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   margin-top: 4px;
 }
 
-.notion-root[data-enc-contact] .enc-ct__fold [class*="notion-form__submit"] {
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) [class*="notion-form__submit"] {
   min-height: 48px !important;
   padding: 0 20px !important;
   border-radius: 10px !important;
@@ -399,7 +399,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   transition: background-color 0.16s ease, border-color 0.16s ease;
 }
 
-.notion-root[data-enc-contact] .enc-ct__fold [class*="notion-form__submit"]:hover {
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper:not([data-enc-dial]) [class*="notion-form__submit"]:hover {
   background: #8CBF56 !important;
   border-color: #6F9E41 !important;
 }
@@ -408,6 +408,21 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 .notion-root[data-enc-contact] .enc-ct__fold .enc-ct__send .notion-callout {
   margin: 0 !important;
   width: auto !important;
+}
+
+/* The institutional form IS the dial the handoff imports here: home.js builds it and
+   home-dial.css (linked from this page's Head as well as the homepage's) draws its ink/paper
+   split. All this band adds is the frame the calendar above it wears. */
+.notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper[data-enc-dial] {
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(250, 250, 248, 0.18) !important;
+}
+
+@media (max-width: 860px) {
+  .notion-root[data-enc-contact] .enc-ct__fold .notion-form__wrapper[data-enc-dial] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
 }
 
 /* the buttons on ink: the Button System paints the link, through these tokens (the same set the
