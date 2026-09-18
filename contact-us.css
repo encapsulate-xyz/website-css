@@ -191,10 +191,12 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 /* the institutional route, folded away at the band's foot */
+/* The handoff's rule above this row is the only line there because its calendar has no frame.
+   Ours does, and the frame's bottom edge already draws that line a few pixels above — so the fold
+   keeps the space and drops the second rule. */
 .notion-root[data-enc-contact] [data-enc-fold] {
   margin: 0 !important;
-  padding-top: 20px !important;
-  border-top: 1px solid rgba(250, 250, 248, 0.3);
+  padding-top: 28px !important;
 }
 
 /* the summary is the design's one row: the question, the aside, then the green disc */
@@ -587,7 +589,9 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 .notion-root[data-enc-contact] .enc-ct__socials {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 24px;
+  /* each row ends in its arrow disc, so the columns need more air between them than the design's
+     24px — at 24px the left row's arrow reads as the right row's bullet */
+  gap: 0 56px;
 }
 
 .notion-root[data-enc-contact] .enc-ct__social {
@@ -702,22 +706,8 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1);
 }
 
-/* the header's dots, from the design's own generator (svg/contact-dots.svg) */
-.notion-root[data-enc-contact] .enc-ct__whead {
-  position: relative;
-  padding-right: 184px;
-}
-
-.notion-root[data-enc-contact] .enc-ct__whead::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 168px;
-  height: 84px;
-  background: url("../svg/contact-dots.svg") right bottom / cover no-repeat;
-  pointer-events: none;
-}
+/* The design draws a 168x84 dot field at the header's right (bgDots), removed on 2026-09-18 at
+   the user's ask: sliced to that size it read as a faint smudge rather than a mark. */
 
 /* the form — Super renders the form block natively (main.css §13b), so the design's own field
    construction applies here: mono labels, paper fields with the ring and the highlight */
