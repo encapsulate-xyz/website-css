@@ -596,7 +596,11 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   gap: 0 56px;
 }
 
+/* The whole row is the link in the design — Notion gives us a paragraph with the name as the
+   only anchor, so the anchor is stretched over the row (the governance rows do the same). */
 .notion-root[data-enc-contact] .enc-ct__social {
+  position: relative;
+  cursor: pointer;
   display: flex !important;
   align-items: center;
   gap: 12px;
@@ -610,6 +614,12 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 
 .notion-root[data-enc-contact] .enc-ct__social:hover {
   background: rgba(250, 250, 248, 0.05);
+}
+
+.notion-root[data-enc-contact] .enc-ct__social a.notion-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
 }
 
 .notion-root[data-enc-contact] .enc-ct__social a.notion-link {
