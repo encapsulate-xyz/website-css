@@ -239,6 +239,19 @@
     form.setAttribute("data-enc-shaped", "");
   }
 
+  /* The fold reveals a Notion form (the institutional intake). Super can render it after the band
+     is built — and only once the toggle is opened — so it is shaped on its own, idempotently. */
+  function foldForm() {
+    var body = document.querySelector("[data-enc-contact] .enc-ct__fold .notion-toggle__content");
+    if (!body || body.hasAttribute("data-enc-fold")) return;
+    if (!body.querySelector("form.notion-form")) return;
+    body.setAttribute("data-enc-fold", "");
+    formShape(body);
+    var row = body.querySelector(".enc-ct__send");
+    var cta = body.querySelector(".notion-callout");
+    if (row && cta) row.appendChild(cta);
+  }
+
   /* the fold's one line is two in the design: the question, then the aside beside it */
   function foldShape(fold) {
     var label = fold.querySelector(".notion-toggle__summary .notion-semantic-string");
@@ -635,10 +648,14 @@
     }
 
     root.setAttribute("data-enc-contact", "");
+    foldForm();
   }
 
   var t = 0;
-  new MutationObserver(function () { clearTimeout(t); t = setTimeout(build, 120); })
+  new MutationObserver(function () {
+    clearTimeout(t);
+    t = setTimeout(function () { build(); foldForm(); }, 120);
+  })
     .observe(document.body, { childList: true, subtree: true });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
   else build();
