@@ -200,3 +200,59 @@ body:has(.notion-root > .notion-callout:first-child > .notion-callout__content >
 @media (prefers-reduced-motion: reduce){.notion-collection-card,.notion-collection-card__cover,.notion-callout:has(> .notion-callout__content > span.notion-semantic-string > .notion-link),.notion-external-object,.notion-bookmark,.super-navbar__item{transition: none !important;}
 .notion-collection-card:hover,.notion-external-object:hover,.notion-bookmark:hover{transform: none;}
 }
+html[data-enc-locked]{overflow: hidden !important;}
+.enc-bk{position: fixed;inset: 0;z-index: 60;display: none;justify-content: flex-end;flex-wrap: wrap;overflow-y: auto;font-family: "Hanken Grotesk",system-ui,sans-serif;}
+.enc-bk[data-enc-open]{display: flex;}
+.enc-bk__scrim{position: fixed;inset: 0;background: rgba(42,44,40,0.62);}
+.enc-bk__ink{position: relative;flex: 1 1 300px;min-width: 0;background: #2A2C28;padding: clamp(24px,4vw,56px);display: flex;flex-direction: column;justify-content: space-between;gap: 28px;}
+.enc-bk__brow{display: flex;align-items: center;gap: 12px;max-width: min(72%,340px);padding-bottom: 13px;border-bottom: 1px solid rgba(250,250,248,0.18);}
+.enc-bk__k{font-family: "JetBrains Mono",ui-monospace,monospace;font-size: 10.5px;line-height: 1.4;letter-spacing: 0.12em;text-transform: uppercase;color: #B4B4B4;white-space: nowrap;}
+.enc-bk__rule{width: 1px;height: 12px;flex: none;background: rgba(250,250,248,0.4);}
+.enc-bk__mid{display: flex;flex-direction: column;gap: 13px;}
+.enc-bk__h{margin: 0;font-family: "Outfit",sans-serif;font-weight: 600;font-size: clamp(32px,4.2vw,56px);line-height: 0.98;letter-spacing: -0.044em;color: #FAFAF8;max-width: 14ch;}
+.enc-bk__ring{position: relative;display: inline-block;white-space: nowrap;}
+.enc-bk__ring > svg{position: absolute;left: -12.4%;top: -25.5%;width: 124%;height: 143%;overflow: visible;pointer-events: none;}
+.enc-bk__lede{margin: 0;font-size: 15.5px;line-height: 1.56;color: #C9C9C4;max-width: 36ch;text-wrap: pretty;}
+.enc-bk__spec{width: 100%;max-width: 360px;display: flex;flex-direction: column;}
+.enc-bk__row{display: flex;align-items: baseline;justify-content: space-between;gap: 18px;padding: 11px 0;border-top: 1px solid rgba(250,250,248,0.18);}
+.enc-bk__row:first-child{border-top-color: rgba(250,250,248,0.3);}
+.enc-bk__row .enc-bk__k{font-size: 9.5px;color: #9FA39B;}
+.enc-bk__v{font-size: 14.5px;font-weight: 500;color: #FAFAF8;text-align: right;}
+.enc-bk__panel{position: relative;flex: 0 1 620px;align-self: stretch;height: auto;max-height: 100%;min-height: 0;display: flex;flex-direction: column;overflow: hidden;background: #FAFAF8;border-left: 1px solid rgba(250,250,248,0.18);}
+.enc-bk__head{flex: none;display: flex;align-items: flex-start;justify-content: space-between;gap: 18px;padding: 20px 14px 16px 18px;background: #FAFAF8;border-top: 3px solid #99CC66;}
+.enc-bk__title{font-family: "Outfit",sans-serif;font-weight: 600;font-size: clamp(20px,2.4vw,26px);line-height: 1.08;letter-spacing: -0.03em;color: #000000;max-width: 18ch;}
+.enc-bk__x{appearance: none;cursor: pointer;display: grid;place-items: center;width: 44px;height: 44px;flex: none;padding: 0;border: 0;border-radius: 10px;background: transparent;color: #6B6F68;transition: background-color 0.14s ease,color 0.14s ease;}
+.enc-bk__x:hover{background: #F2F2ED;color: #000000;}
+.enc-bk__x:focus-visible{outline: 3px solid rgba(0,0,0,0.32);outline-offset: 2px;}
+.enc-bk__cal{flex: 1;min-height: 0;width: 100%;overflow-y: auto;background: #FAFAF8;}
+.enc-bk__fallback{flex: none;display: flex;align-items: center;gap: 12px;flex-wrap: wrap;padding: 12px 18px 14px;border-top: 1px solid #E2E2DB;}
+.enc-bk__fallback .enc-bk__k{font-size: 9.5px;color: #6B6F68;}
+.enc-bk__away{font-size: 13.5px;font-weight: 500;color: #000000;text-decoration: none;border-bottom: 1px solid #9B9B94;transition: border-color 0.16s ease;}
+.enc-bk__away:hover{border-bottom-color: #000000;}
+.enc-bk__panel[data-enc-done]{gap: 16px;padding: 22px;overflow-y: auto;border-top: 3px solid #99CC66;}
+.enc-bk__done-top{display: flex;align-items: flex-start;justify-content: space-between;gap: 14px;}
+.enc-bk__tick{display: grid;place-items: center;width: 40px;height: 40px;flex: none;border-radius: 999px;background: #DCEEC7;color: #000000;}
+.enc-bk__done-h{font-size: 26px;max-width: 16ch;}
+.enc-bk__facts{display: flex;flex-direction: column;}
+.enc-bk__fact{display: grid;grid-template-columns: 86px minmax(0,1fr);gap: 14px;align-items: baseline;padding: 11px 0;border-top: 1px solid #E2E2DB;}
+.enc-bk__fact:first-child{border-top-color: #000000;}
+.enc-bk__fact .enc-bk__k{font-size: 9px;color: #6B6F68;}
+.enc-bk__fcol{display: flex;flex-direction: column;gap: 2px;min-width: 0;}
+.enc-bk__fv{font-family: "Outfit",sans-serif;font-weight: 600;font-size: 15.5px;letter-spacing: -0.018em;color: #000000;}
+.enc-bk__fs{font-size: 12.5px;color: #6B6F68;}
+.enc-bk__flink{width: fit-content;font-size: 12.5px;color: #575B55;text-decoration: underline;text-underline-offset: 3px;}
+.enc-bk__btns{display: flex;gap: 10px;flex-wrap: wrap;}
+.enc-bk__btn{appearance: none;cursor: pointer;display: inline-flex;align-items: center;justify-content: center;min-height: 48px;padding: 0 20px;border-radius: 10px;font-family: "Hanken Grotesk",system-ui,sans-serif;font-size: 16px;font-weight: 500;letter-spacing: -0.006em;white-space: nowrap;text-decoration: none;transition: background-color 0.16s ease,border-color 0.16s ease;}
+.enc-bk__btn.is-primary{background: #99CC66;border: 1px solid #7CAE48;color: #000000;box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.78);}
+.enc-bk__btn.is-primary:hover{background: #8CBF56;border-color: #6F9E41;}
+.enc-bk__btn.is-secondary{background: #FAFAF8;border: 1px solid #D9D9D2;color: #000000;box-shadow: inset 0 1.5px 0 rgba(255,255,255,1),0 1px 2px rgba(0,0,0,0.06);}
+.enc-bk__btn.is-secondary:hover{border-color: #B9B9B1;}
+.enc-bk__cancel{margin: 0;font-size: 13.5px;color: #6B6F68;}
+.enc-bk__cals{display: flex;flex-direction: column;gap: 9px;margin-top: auto;padding-top: 14px;}
+.enc-bk__cals .enc-bk__k{font-size: 9px;color: #6B6F68;}
+.enc-bk__cals-row{gap: 7px;padding-top: 11px;border-top: 1px solid #000000;}
+@media (max-width: 760px){.enc-bk__panel{flex: 1 1 100%;border-left: 0;border-top: 1px solid rgba(250,250,248,0.18);}
+.enc-bk__ink{flex: 1 1 100%;}
+}
+@media (prefers-reduced-motion: reduce){.enc-bk__x,.enc-bk__btn,.enc-bk__away{transition: none !important;}
+}

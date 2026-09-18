@@ -48,6 +48,7 @@ User rules that stand on every task:
 | File | What | Loaded from |
 |---|---|---|
 | `main.css` | site-wide styles, no `#block-…` ids | site Head |
+| `booking.js` | the booking drawer — every "Book a call" on the site, except /contact-us | site Head |
 | `footer.js` | footer 44b, built inside Super's footer | site Head |
 | `covers.js` | inner-page cover graphics ("fields") | site Head |
 | `home.css`, `home-dial.css`, `home.js` | homepage sections, JS-enhanced styles, homepage scripts | homepage Head |
@@ -233,6 +234,31 @@ div.notion-form__field.<type>`; dropdown questions still render as radios (drawn
 "Amount" is driven by the slider; choice questions with >6 options become a glyph listbox. React
 inputs: click labels, use the native value setter + `input` event; mark with attributes
 (`[data-enc-…]`), not classes — React resets className.
+
+## The booking drawer (2026-09-18, design *Drawer Variations*)
+
+Every "Book a call" on the site used to open cal.com in a new tab. `booking.js` (site head) now
+catches the click and opens the drawer the design settles on: the **split takeover** with the
+**green-edge chrome** — the band's own ink on the left carrying the eyebrow, the headline with its
+circled word and the three spec rows, cal.com's calendar on the paper half, a 3px green rule and an
+inline title instead of a header bar. Escape, the backdrop and the 44px close all shut it; the body
+scrolls only inside the drawer (`html[data-enc-locked]`). Styles: **main.css § 18** — the drawer
+opens on every page, and main.css is the only stylesheet that is on every page.
+
+- **It binds by href**, on the document: any `a[href*="cal.com/aditya-encapsulate/30min"]`, whenever
+  Super renders it. So nothing in Notion changed and nothing needs to — the covers' green buttons,
+  the homepage hero, the footer CTA are all already links to that URL. A ⌘/ctrl/shift/alt click is
+  left alone, so "open in a new tab" still works.
+- **/contact-us is excluded** by path: that page has the calendar in its own band and its own
+  confirmation built from Notion's words.
+- **When the booking lands**, the paper half becomes the confirmation — tick, the facts, the two
+  buttons, the cancel line and the four calendar exports — built from cal.com's payload.
+- **The drawer's words are in `CONTENT` at the top of booking.js, not in Notion.** They have to be:
+  Super ships only the current page's blocks, so there is no block to read on eleven of the twelve
+  pages. This is the same exception already made for the footer's CTA copy and the Copy button's
+  "Copied" feedback, and the user agreed to it on 2026-09-18.
+- `window.encBook` publishes `when()`, `calendarLinks()` and `meetUrl()` so contact.js and the
+  drawer cannot drift on the payload; the design file asks for exactly that extraction.
 
 ## The contact band's fold holds the dial (2026-09-18)
 

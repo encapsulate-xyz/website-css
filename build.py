@@ -83,6 +83,10 @@ if not sys.argv[1:]:
         js = open('brand.js', encoding='utf-8').read()
         open(os.path.join('dist', 'brand.js'), 'w', encoding='utf-8').write(js)
         print(f"{'brand.js':14} {len(js):>7,} -> dist/brand.js (copied)")
+    if os.path.exists('booking.js'):
+        js = open('booking.js', encoding='utf-8').read()
+        open(os.path.join('dist', 'booking.js'), 'w', encoding='utf-8').write(js)
+        print(f"{'booking.js':14} {len(js):>7,} -> dist/booking.js (copied)")
     if os.path.exists('contact.js'):
         js = open('contact.js', encoding='utf-8').read()
         open(os.path.join('dist', 'contact.js'), 'w', encoding='utf-8').write(js)
