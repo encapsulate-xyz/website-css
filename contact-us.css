@@ -688,6 +688,18 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   max-width: 50ch;
 }
 
+/* the kicker is one of those paragraphs, and the lede rule above out-ranked it — it is the
+   design's 10.5px mono, not body text */
+.notion-root[data-enc-contact] .enc-ct__whead > p.notion-text.enc-ct__kicker {
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 10.5px !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #575B55 !important;
+  max-width: none !important;
+}
+
 .notion-root[data-enc-contact] .enc-ct__wells {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
