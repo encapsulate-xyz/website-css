@@ -209,7 +209,7 @@ html[data-enc-locked]{overflow: hidden !important;}
 .enc-bk__k{font-family: "JetBrains Mono",ui-monospace,monospace;font-size: 10.5px;line-height: 1.4;letter-spacing: 0.12em;text-transform: uppercase;color: #B4B4B4;white-space: nowrap;}
 .enc-bk__rule{width: 1px;height: 12px;flex: none;background: rgba(250,250,248,0.4);}
 .enc-bk__mid{display: flex;flex-direction: column;gap: 13px;}
-.enc-bk .enc-bk__h{margin: 0 !important;font-family: "Outfit",sans-serif !important;font-weight: 600 !important;font-size: clamp(32px,7.4cqw,92px) !important;line-height: 0.98 !important;letter-spacing: -0.044em !important;color: #FAFAF8 !important;max-width: 17ch !important;}
+.enc-bk .enc-bk__h{margin: 0 !important;font-family: "Outfit",sans-serif !important;font-weight: 600 !important;font-size: clamp(32px,7.4cqw,92px) !important;line-height: 0.98 !important;letter-spacing: -0.044em !important;color: #FAFAF8 !important;max-width: 14ch !important;}
 .enc-bk__ring{position: relative;display: inline-block;white-space: nowrap;}
 .enc-bk__ring > svg{position: absolute;left: -12.4%;top: -25.5%;width: 124%;height: 143%;overflow: visible;pointer-events: none;}
 .enc-bk .enc-bk__lede{margin: 0 !important;font-size: 15.5px;line-height: 1.56;color: #C9C9C4;max-width: 36ch;text-wrap: pretty;}

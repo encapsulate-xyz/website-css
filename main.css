@@ -2183,10 +2183,10 @@ html[data-enc-locked] {
   line-height: 0.98 !important;
   letter-spacing: -0.044em !important;
   color: #FAFAF8 !important;
-  /* The design's measure is 14ch, which breaks "emergency" and "upgrade?" onto lines of their own.
-     The user asked for those two together, so the measure is 17ch: "Did your validator / answer
-     the last / emergency upgrade?" (a ch cap breaks the same way at any size). */
-  max-width: 17ch !important;
+  /* The design's own measure, and on the live page (real Outfit, not a fallback) it reads
+     "Did your validator / answer the last / emergency upgrade?" — the three lines the user asked
+     for. Measured on the served font: 14-16ch all give that break, 17ch and up do not. */
+  max-width: 14ch !important;
 }
 
 /* the circled word — the ring is the word's own child, so its percentages resolve against the
