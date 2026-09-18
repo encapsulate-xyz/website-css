@@ -241,19 +241,33 @@
 
   /* The fold reveals a Notion form (the institutional intake). Super can render it after the band
      is built — and only once the toggle is opened — so it is shaped on its own, idempotently. */
+  /* React re-renders the toggle when it opens and resets its className, which took the band's
+     fold styling with it — so the fold is marked with an attribute, and re-marked (with its
+     label split and its form shaped again) on every tick of the observer. */
+  function foldKeep() {
+    var root = document.querySelector("[data-enc-contact]");
+    if (!root) return;
+    var fold = root.querySelector(".enc-ct__call .notion-toggle");
+    if (!fold) return;
+    var host = fold.closest("[id^=block-]") || fold;
+    if (!host.hasAttribute("data-enc-fold")) host.setAttribute("data-enc-fold", "");
+    foldShape(fold);
+    foldForm();
+  }
+
   function foldForm() {
-    var body = document.querySelector("[data-enc-contact] .enc-ct__fold .notion-toggle__content");
-    if (!body || body.hasAttribute("data-enc-fold")) return;
+    var body = document.querySelector("[data-enc-contact] [data-enc-fold] .notion-toggle__content");
+    if (!body || body.hasAttribute("data-enc-fold-form")) return;
     var wrap = body.querySelector(".notion-form__wrapper");
     if (!wrap || !wrap.querySelector("form.notion-form")) return;
     // The institutional form is the dial: home.js builds it and home-dial.css draws it, so it is
     // left alone here — it is recognised the same way home.js recognises it, by the Amount
     // question, because this can run before the script has marked it [data-enc-dial].
     if (wrap.hasAttribute("data-enc-dial") || isDial(wrap)) {
-      body.setAttribute("data-enc-fold", "dial");
+      body.setAttribute("data-enc-fold-form", "dial");
       return;
     }
-    body.setAttribute("data-enc-fold", "");
+    body.setAttribute("data-enc-fold-form", "");
     formShape(body);
     var row = body.querySelector(".enc-ct__send");
     var cta = body.querySelector(".notion-callout");
@@ -522,7 +536,7 @@
     calendar(call, call.querySelector('a[href*="cal.com"]'));
     var fold = call.querySelector(".notion-toggle");
     if (fold) {
-      (fold.closest("[id^=block-]") || fold).classList.add("enc-ct__fold");
+      (fold.closest("[id^=block-]") || fold).setAttribute("data-enc-fold", "");
       foldShape(fold);
     }
 
@@ -667,13 +681,13 @@
     }
 
     root.setAttribute("data-enc-contact", "");
-    foldForm();
+    foldKeep();
   }
 
   var t = 0;
   new MutationObserver(function () {
     clearTimeout(t);
-    t = setTimeout(function () { build(); foldForm(); }, 120);
+    t = setTimeout(function () { build(); foldKeep(); }, 120);
   })
     .observe(document.body, { childList: true, subtree: true });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
