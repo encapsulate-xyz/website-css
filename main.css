@@ -2168,15 +2168,17 @@ html[data-enc-locked] {
   gap: 13px;
 }
 
-.enc-bk__h {
-  margin: 0;
-  font-family: "Outfit", sans-serif;
-  font-weight: 600;
-  font-size: clamp(32px, 4.2vw, 56px);
-  line-height: 0.98;
-  letter-spacing: -0.044em;
-  color: #FAFAF8;
-  max-width: 14ch;
+/* Minima sets `h2 { font-size: var(--h2-size) !important }`, which took this to 35px and its
+   tracking to -0.5px — the drawer's headline states its own type, with the weight to win. */
+.enc-bk .enc-bk__h {
+  margin: 0 !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: clamp(32px, 4.2vw, 56px) !important;
+  line-height: 0.98 !important;
+  letter-spacing: -0.044em !important;
+  color: #FAFAF8 !important;
+  max-width: 14ch !important;
 }
 
 /* the circled word — the ring is the word's own child, so its percentages resolve against the
@@ -2197,8 +2199,8 @@ html[data-enc-locked] {
   pointer-events: none;
 }
 
-.enc-bk__lede {
-  margin: 0;
+.enc-bk .enc-bk__lede {
+  margin: 0 !important;
   font-size: 15.5px;
   line-height: 1.56;
   color: #C9C9C4;
@@ -2265,7 +2267,7 @@ html[data-enc-locked] {
   border-top: 3px solid #99CC66;
 }
 
-.enc-bk__title {
+.enc-bk .enc-bk__title {
   font-family: "Outfit", sans-serif;
   font-weight: 600;
   font-size: clamp(20px, 2.4vw, 26px);

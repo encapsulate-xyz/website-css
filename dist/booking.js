@@ -41,6 +41,7 @@
       labels: ["When", "With", "Invited", "Where", "Length"],
       where: ["Google Meet", "Link is in the invitation"],
       length: ["30 minutes", "Nothing to prepare"],
+      host: ["Aditya Verma", "aditya@encapsulate.xyz"],
       read: ["Read what we run", "https://encapsulate.xyz/services"],
       again: "Reschedule",
       cancel: ["Need to cancel instead?", "Cancel this booking"],
@@ -149,18 +150,29 @@
 
   function two(n) { return (n < 10 ? "0" : "") + n; }
 
-  function when(iso, tz) {
+  /* "Wed 30 September" and "20:00–20:30 IST", the way the handoff writes them. The abbreviation
+     is built from the long zone name's initials — Intl gives "GMT+5:30" for `short` in most
+     locales, and "India Standard Time" is what IST is short for. */
+  function zoneShort(d, tz) {
+    if (!tz) return "";
+    var long = new Intl.DateTimeFormat("en-GB", { timeZone: tz, timeZoneName: "long" })
+      .formatToParts(d).filter(function (p) { return p.type === "timeZoneName"; })
+      .map(function (p) { return p.value; })[0] || "";
+    var words = long.split(/\s+/).filter(Boolean);
+    if (words.length < 2) return long;
+    return words.map(function (w) { return w.charAt(0); }).join("").toUpperCase();
+  }
+
+  function when(iso, tz, minutes) {
     var d = new Date(iso);
     if (isNaN(d)) return ["", ""];
-    var opts = { weekday: "long", day: "numeric", month: "long", year: "numeric" };
+    var opts = { weekday: "short", day: "numeric", month: "long" };
     var t = { hour: "2-digit", minute: "2-digit", hour12: false };
     if (tz) { opts.timeZone = tz; t.timeZone = tz; }
-    var day = d.toLocaleDateString("en-GB", opts);
+    var day = d.toLocaleDateString("en-GB", opts).replace(/,/g, "");
     var from = d.toLocaleTimeString("en-GB", t);
-    var end = new Date(d.getTime() + 30 * 60000).toLocaleTimeString("en-GB", t);
-    var zone = tz ? new Intl.DateTimeFormat("en-GB", { timeZone: tz, timeZoneName: "long" })
-      .formatToParts(d).filter(function (p) { return p.type === "timeZoneName"; })
-      .map(function (p) { return p.value; })[0] : "";
+    var end = new Date(d.getTime() + (minutes || 30) * 60000).toLocaleTimeString("en-GB", t);
+    var zone = zoneShort(d, tz);
     return [day, from + "–" + end + (zone ? " " + zone : "")];
   }
 
@@ -343,7 +355,8 @@
       (data && data.attendees && data.attendees[0]) || (data && data.attendee) || null;
     var uid = b.uid || b.bookingUid || "";
     var meet = meetUrl(b, data);
-    var w = when(startISO, org.timeZone);
+    var w = when(startISO, org.timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone,
+      minutes);
     var pending = data && data.confirmed === false;
 
     panel.textContent = "";
@@ -361,7 +374,7 @@
 
     var facts = el("div", "enc-bk__facts");
     facts.appendChild(fact(d.labels[0], w[0], w[1]));
-    if (org.name || org.email) facts.appendChild(fact(d.labels[1], org.name, org.email));
+    facts.appendChild(fact(d.labels[1], org.name || d.host[0], org.email || d.host[1]));
     // the payload does not always carry the guest; an empty row would say nothing
     if (guest) facts.appendChild(fact(d.labels[2], guest.name || guest.email,
       guest.name ? guest.email : ""));
