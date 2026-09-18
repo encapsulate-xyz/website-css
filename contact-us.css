@@ -917,11 +917,6 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   text-decoration: none !important;
 }
 
-.notion-root[data-enc-contact] [data-enc-copied] .notion-link {
-  background: #99CC66 !important;
-  border-color: #7CAE48 !important;
-}
-
 /* Narrow: the wells stack, the socials run in one column */
 @media (max-width: 900px) {
   .notion-root[data-enc-contact] .enc-ct__wells,
