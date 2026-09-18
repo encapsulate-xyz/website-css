@@ -417,12 +417,34 @@
     }
   }
 
+  /* cal.com fires more than one event for the same booking and they do not carry the same fields:
+     the V2 payload measured on 2026-09-18 is only {uid, title, startTime, endTime, status,
+     videoCallUrl} while the older one carries the organizer and the attendees. Whichever arrives,
+     the fields are merged into one booking rather than replacing it, so a thin event cannot take
+     away what a fuller one gave — which is why "Invited" was missing. */
+  var payload = null;
+
+  function merge(into, from) {
+    var k;
+    for (k in from) {
+      if (from[k] == null || from[k] === "") continue;
+      if (Object.prototype.toString.call(from[k]) === "[object Object]") {
+        into[k] = merge(into[k] && typeof into[k] === "object" ? into[k] : {}, from[k]);
+      } else if (Array.isArray(from[k])) {
+        if (from[k].length) into[k] = from[k];
+      } else into[k] = from[k];
+    }
+    return into;
+  }
+
   function subscribe(C) {
     var booked = function (e) {
       var data = e && (e.detail ? (e.detail.data || e.detail) : (e.data || e));
-      window.encBooking = data;
-      try { sessionStorage.setItem("enc-booking", JSON.stringify(data)); } catch (err) {}
-      if (layer && layer.hasAttribute("data-enc-open")) confirmPanel(data);
+      if (!data || typeof data !== "object") return;
+      payload = merge(payload || {}, data);
+      window.encBooking = payload;
+      try { sessionStorage.setItem("enc-booking", JSON.stringify(payload)); } catch (err) {}
+      if (layer && layer.hasAttribute("data-enc-open")) confirmPanel(payload);
     };
     ["bookingSuccessful", "bookingSuccessfulV2",
      "rescheduleBookingSuccessful", "rescheduleBookingSuccessfulV2"].forEach(function (name) {

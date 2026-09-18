@@ -2126,6 +2126,7 @@ html[data-enc-locked] {
 
 .enc-bk__ink {
   position: relative;
+  container-type: inline-size;
   flex: 1 1 300px;
   min-width: 0;
   background: #2A2C28;
@@ -2174,11 +2175,18 @@ html[data-enc-locked] {
   margin: 0 !important;
   font-family: "Outfit", sans-serif !important;
   font-weight: 600 !important;
-  font-size: clamp(32px, 4.2vw, 56px) !important;
+  /* The design's 4.2vw was written for its own 1380px canvas, where the ink half is about 760px
+     wide — on a 1920 screen that half is 1300px and the same headline reads small against it. The
+     size is taken from the HALF (7.4cqw is the design's ratio to it), and capped at 92px, which is
+     the Type System's own h1 ceiling (main.css section 06). */
+  font-size: clamp(32px, 7.4cqw, 92px) !important;
   line-height: 0.98 !important;
   letter-spacing: -0.044em !important;
   color: #FAFAF8 !important;
-  max-width: 14ch !important;
+  /* the design's 14ch was measured against its own font stack; in Outfit as served here the same
+     cap breaks "Did your validator" in two, so the measure is 17ch — the design's three lines:
+     "Did your validator / answer the last / emergency upgrade?" */
+  max-width: 17ch !important;
 }
 
 /* the circled word — the ring is the word's own child, so its percentages resolve against the
