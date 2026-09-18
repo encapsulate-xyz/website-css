@@ -339,9 +339,10 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   transition: border-color 0.16s ease, background-color 0.16s ease;
 }
 
+.notion-root[data-enc-contact] [data-enc-fold] .notion-form__wrapper:not([data-enc-dial]) textarea.notion-form__input-field,
 .notion-root[data-enc-contact] [data-enc-fold] .notion-form__wrapper:not([data-enc-dial]) textarea {
   min-height: 104px !important;
-  padding: 13px 16px !important;
+  padding: 12px 16px 13px !important;
   resize: vertical !important;
 }
 
@@ -783,9 +784,14 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   transition: border-color 0.16s ease;
 }
 
+/* Super gives the textarea the same .notion-form__input-field class as the inputs, so the shared
+   rule above (a class) out-ranked a bare `textarea` (an element) and the message box was drawn as a
+   48px single-line field with no padding. The class goes in the selector, and the top padding puts
+   the first line where the input's text sits. */
+.notion-root[data-enc-contact] .enc-ct__well textarea.notion-form__input-field,
 .notion-root[data-enc-contact] .enc-ct__well textarea {
   min-height: 104px !important;
-  padding: 13px 16px !important;
+  padding: 12px 16px 13px !important;
   resize: vertical !important;
 }
 
