@@ -197,24 +197,64 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   border-top: 1px solid rgba(250, 250, 248, 0.3);
 }
 
-.notion-root[data-enc-contact] .enc-ct__fold .notion-toggle__trigger,
-.notion-root[data-enc-contact] .enc-ct__fold summary {
+/* the summary is the design's one row: the question, the aside, then the green disc */
+.notion-root[data-enc-contact] .enc-ct__fold .notion-toggle__summary {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
   min-height: 44px;
-  color: #C9C9C4 !important;
+  cursor: pointer;
 }
 
-.notion-root[data-enc-contact] .enc-ct__fold .notion-semantic-string {
-  font-family: var(--type-display), system-ui, sans-serif !important;
-  font-weight: 600 !important;
-  font-size: 21px !important;
-  letter-spacing: -0.024em !important;
-  color: #C9C9C4 !important;
+/* Notion's own triangle goes; the disc at the end takes its place */
+.notion-root[data-enc-contact] .enc-ct__fold .notion-toggle__trigger {
+  order: 3;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 999px;
+  background: #99CC66 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.25 10h11.5'/%3E%3Cpath d='M11.25 5.5 15.75 10l-4.5 4.5'/%3E%3C/svg%3E") center / 14px no-repeat;
+  transition: transform 0.18s ease;
+}
+
+.notion-root[data-enc-contact] .enc-ct__fold[open] .notion-toggle__trigger,
+.notion-root[data-enc-contact] .enc-ct__fold .notion-toggle.open .notion-toggle__trigger {
+  transform: rotate(90deg);
+}
+
+.notion-root[data-enc-contact] .enc-ct__fold .notion-toggle__trigger_icon,
+.notion-root[data-enc-contact] .enc-ct__fold .notion-toggle__trigger span {
+  display: none !important;
+}
+
+.notion-root[data-enc-contact] .enc-ct__fold .notion-toggle__summary > .notion-semantic-string {
+  display: flex !important;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  order: 1;
+}
+
+.notion-root[data-enc-contact] .enc-ct__fq {
+  font-family: var(--type-display), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: -0.024em;
+  color: #C9C9C4;
   transition: color 0.16s ease;
 }
 
-.notion-root[data-enc-contact] .enc-ct__fold:hover .notion-semantic-string,
-.notion-root[data-enc-contact] .enc-ct__fold[open] .notion-semantic-string {
-  color: #FAFAF8 !important;
+.notion-root[data-enc-contact] .enc-ct__fold:hover .enc-ct__fq,
+.notion-root[data-enc-contact] .enc-ct__fold .notion-toggle.open .enc-ct__fq {
+  color: #FAFAF8;
+}
+
+.notion-root[data-enc-contact] .enc-ct__fa {
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 15px;
+  color: #9FA39B;
 }
 
 .notion-root[data-enc-contact] .enc-ct__fold p.notion-text {
@@ -225,11 +265,16 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   max-width: 52ch;
 }
 
-/* the button inside the fold sits on ink */
+/* the button inside the fold is the on-ink secondary */
 .notion-root[data-enc-contact] .enc-ct__fold .notion-callout {
-  --btn-bg: rgba(250, 250, 248, 0.06);
-  --btn-ink: #FAFAF8;
-  --btn-ring: rgba(250, 250, 248, 0.3);
+  background: rgba(250, 250, 248, 0.06) !important;
+  border: 1px solid rgba(250, 250, 248, 0.3) !important;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.26) !important;
+}
+
+.notion-root[data-enc-contact] .enc-ct__fold .notion-callout .notion-link,
+.notion-root[data-enc-contact] .enc-ct__done .enc-ct__cta .notion-callout.bg-gray-light .notion-link {
+  color: #FAFAF8 !important;
 }
 
 /* ── 2 · ELSEWHERE ── */
@@ -441,9 +486,9 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   border-color: #9B9B94 !important;
 }
 
-/* Send: the Button System's primary, at the design's 48px */
-.notion-root[data-enc-contact] .enc-ct__well .notion-form button[type="submit"],
-.notion-root[data-enc-contact] .enc-ct__well .notion-form__submit {
+/* Send: the Button System's primary, at the design's 48px. Super renders it as a div, not a
+   button, so the class is what selects it */
+.notion-root[data-enc-contact] .enc-ct__well [class*="notion-form__submit"] {
   min-height: 48px !important;
   padding: 0 20px !important;
   border-radius: 10px !important;
@@ -458,7 +503,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   transition: background-color 0.16s ease, border-color 0.16s ease;
 }
 
-.notion-root[data-enc-contact] .enc-ct__well .notion-form button[type="submit"]:hover {
+.notion-root[data-enc-contact] .enc-ct__well [class*="notion-form__submit"]:hover {
   background: #8CBF56 !important;
   border-color: #6F9E41 !important;
 }
@@ -482,13 +527,37 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   border: 0 !important;
 }
 
-.notion-root[data-enc-contact] .enc-ct__well .notion-header__title-wrapper,
+.notion-root[data-enc-contact] .enc-ct__well .notion-header,
 .notion-root[data-enc-contact] .enc-ct__well .notion-collection__header-wrapper {
   display: none !important;
 }
 
+/* Send and its line share a row, the way the design sets them */
+.notion-root[data-enc-contact] .enc-ct__send {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+.notion-root[data-enc-contact] .enc-ct__send > p.notion-text {
+  margin: 0 !important;
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 9.5px !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #575B55 !important;
+  max-width: none !important;
+}
+
+/* the description is the field's placeholder now */
+.notion-root[data-enc-contact] .enc-ct__well .notion-form__field-description[hidden] {
+  display: none !important;
+}
+
 /* the address, and the line under it */
-.notion-root[data-enc-contact] .enc-ct__well a[href^="mailto:"] {
+.notion-root[data-enc-contact] .enc-ct__well > p.notion-text > a[href^="mailto:"] {
   font-family: var(--type-display), system-ui, sans-serif !important;
   font-weight: 600 !important;
   font-size: clamp(22px, 2.4vw, 32px) !important;
@@ -496,6 +565,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #000000 !important;
   white-space: nowrap;
   border-bottom: 0 !important;
+  text-decoration: none !important;
   opacity: 1 !important;
 }
 
@@ -511,6 +581,23 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 .notion-root[data-enc-contact] .enc-ct__well .notion-callout {
   margin: auto 0 0 !important;
   align-self: flex-start;
+  min-height: 44px !important;
+  padding: 0 18px !important;
+  border-radius: 10px !important;
+  background: #FAFAF8 !important;
+  border: 1px solid #D9D9D2 !important;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+}
+
+.notion-root[data-enc-contact] .enc-ct__well .notion-callout .notion-link {
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: 15.5px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.006em !important;
+  color: #000000 !important;
+  text-decoration: none !important;
+  border-bottom: 0 !important;
+  opacity: 1 !important;
 }
 
 .notion-root[data-enc-contact] [data-enc-copied] .notion-link {

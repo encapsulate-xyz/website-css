@@ -215,6 +215,41 @@
     });
   }
 
+  /* The design writes the description inside the field ("Where we should reply"), where Super
+     renders it as a line above and puts "Your answer" in the field instead. The line becomes the
+     placeholder, and Send takes its note onto the same row. */
+  function formShape(well) {
+    var form = well.querySelector("form.notion-form");
+    if (!form || form.hasAttribute("data-enc-shaped")) return;
+    Array.prototype.forEach.call(form.querySelectorAll(".notion-form__field"), function (f) {
+      var note = f.querySelector(".notion-form__field-description");
+      var input = f.querySelector("input.notion-form__input-field, textarea.notion-form__input-field");
+      if (!note || !input) return;
+      input.placeholder = textOf(note);
+      note.hidden = true;
+    });
+    var submit = form.querySelector('[class*="notion-form__submit"]');
+    var line = well.querySelector(":scope > p.notion-text:last-child");
+    if (submit) {
+      var row = el("div", "enc-ct__send");
+      submit.parentNode.insertBefore(row, submit);
+      row.appendChild(submit);
+      if (line && !line.classList.contains("enc-ct__kicker")) row.appendChild(line);
+    }
+    form.setAttribute("data-enc-shaped", "");
+  }
+
+  /* the fold's one line is two in the design: the question, then the aside beside it */
+  function foldShape(fold) {
+    var label = fold.querySelector(".notion-toggle__summary .notion-semantic-string");
+    if (!label || label.querySelector(".enc-ct__fq")) return;
+    var parts = textOf(label).split("·");
+    if (parts.length < 2) return;
+    label.textContent = "";
+    label.appendChild(el("span", "enc-ct__fq", parts[0].trim()));
+    label.appendChild(el("span", "enc-ct__fa", parts.slice(1).join("·").trim()));
+  }
+
   function copyBehaviour(well) {
     var button = well.querySelector(".notion-callout");
     var link = well.querySelector('a[href^="mailto:"]');
@@ -454,7 +489,10 @@
     });
     calendar(call, call.querySelector('a[href*="cal.com"]'));
     var fold = call.querySelector(".notion-toggle");
-    if (fold) (fold.closest("[id^=block-]") || fold).classList.add("enc-ct__fold");
+    if (fold) {
+      (fold.closest("[id^=block-]") || fold).classList.add("enc-ct__fold");
+      foldShape(fold);
+    }
 
     // ── 2 · Elsewhere ──
     var where = el("div", "enc-ct__where");
@@ -497,6 +535,7 @@
       }
       move(into, n);
     });
+    formShape(wForm);
     copyBehaviour(wAddr);
 
     // ── 4 · the confirmation, waiting under the page until cal.com says a booking landed ──
