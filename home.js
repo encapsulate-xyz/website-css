@@ -135,11 +135,22 @@
       var key = title.textContent.trim().toLowerCase();
       if (src && !map[key]) map[key] = src;
     });
+    // On a page with no gallery to read — the contact band's dial — covers.js publishes the same
+    // glyphs it uses for the page covers, keyed by chain.
+    if (window.encGlyphs) {
+      var shared = window.encGlyphs();
+      for (var k in shared) if (!map[k]) map[k] = shared[k];
+    }
     return map;
   }
 
+  // "Gravity Bridge" and "gravitybridge" are the same chain: covers.js keys on letters and digits
+  function flatKey(name) {
+    return String(name).toLowerCase().replace(/[^a-z0-9]/g, "");
+  }
+
   function mark(name, index, map) {
-    var src = map[name.toLowerCase()];
+    var src = map[name.toLowerCase()] || map[flatKey(name)];
     if (!src) return null;
     var well = document.createElement("span");
     well.className = "enc-mark";

@@ -89,6 +89,18 @@
     return out;
   }
 
+  /* The same glyphs are wanted on pages that carry no networks gallery at all — the institutional
+     dial in the contact band, for one. covers.js runs everywhere from the site head, so it
+     publishes what it knows: the chain key ("gravitybridge") against the original PNG. home.js
+     reads it when the page has no cards of its own. */
+  window.encGlyphs = function () {
+    var out = {}, k;
+    for (k in GLYPH) out[key(k)] = ASSETS + GLYPH[k] + "/" + k + ".png";
+    var page = glyphFromPage();
+    for (k in page) out[k] = page[k];
+    return out;
+  };
+
   function el(tag, style) {
     var e = document.createElement(tag);
     for (var k in style) e.style[k] = style[k];
