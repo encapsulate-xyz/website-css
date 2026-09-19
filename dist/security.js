@@ -196,21 +196,24 @@
 
   function stage() {
     var s = el("div", "enc-sec__stage");
-    ["a", "b"].forEach(function (k) {
-      var host = el("div", "enc-sec__host");
-      host.setAttribute("data-enc-host", k);
-      host.appendChild(el("span", "enc-sec__hk", k === "a" ? "Region 1" : "Region 2"));
-      host.appendChild(el("span", "enc-sec__ht", k === "a" ? "Validator A" : "Validator B"));
-      host.appendChild(el("span", "enc-sec__hs"));
-      s.appendChild(host);
-    });
-    var bus = el("div", "enc-sec__bus");
-    for (var i = 1; i <= 3; i++) {
-      var c = el("span", "enc-sec__cos", "Shard " + i);
-      bus.appendChild(c);
+    s.setAttribute("aria-hidden", "true");
+    function host(k) {
+      var h = el("div", "enc-sec__host");
+      h.setAttribute("data-enc-host", k);
+      h.appendChild(el("span", "enc-sec__hs"));
+      h.appendChild(el("span", "enc-sec__ht", k === "a" ? "Host A" : "Host B"));
+      return h;
     }
-    s.appendChild(bus);
-    s.appendChild(el("span", "enc-sec__note"));
+    function wire(k) {
+      var w = el("span", "enc-sec__wire");
+      w.setAttribute("data-enc-wire", k);
+      return w;
+    }
+    s.appendChild(host("a"));
+    s.appendChild(wire("a"));
+    s.appendChild(el("div", "enc-sec__signer", "SIGNER"));
+    s.appendChild(wire("b"));
+    s.appendChild(host("b"));
     return s;
   }
 
@@ -218,11 +221,15 @@
     var st = STATES[i] || STATES[0];
     var s = root.querySelector(".enc-sec__stage");
     if (!s) return;
-    s.querySelector('[data-enc-host="a"]').setAttribute("data-enc-state", st.a);
-    s.querySelector('[data-enc-host="b"]').setAttribute("data-enc-state", st.b);
-    s.querySelector('[data-enc-host="a"] .enc-sec__hs').textContent = st.a;
-    s.querySelector('[data-enc-host="b"] .enc-sec__hs').textContent = st.b;
-    s.querySelector(".enc-sec__note").textContent = st.note;
+    ["a", "b"].forEach(function (k) {
+      var host = s.querySelector('[data-enc-host="' + k + '"]');
+      host.setAttribute("data-enc-state", st[k]);
+      host.querySelector(".enc-sec__hs").textContent =
+        st[k] === "lost" ? "lost" : st[k] === "live" ? "signing" : "in sync";
+      var wire = s.querySelector('[data-enc-wire="' + k + '"]');
+      if (st[k] === "live") wire.setAttribute("data-enc-on", "");
+      else wire.removeAttribute("data-enc-on");
+    });
   }
 
   /* ── grouping ──────────────────────────────────────────────────────────────────────────────
@@ -516,35 +523,71 @@
       six.appendChild(paper);
     }
 
-    // 04 · the failover steps drive the stage
+    // 04 · the stage stays put while the four steps pile up beside it
     var four = root.querySelector('[data-enc-sec="04"]');
     if (four) {
       var togs = Array.prototype.slice.call(four.querySelectorAll(":scope > .notion-toggle"));
-      var steps = togs.slice(5);           // the first five are the machine rules
-      if (steps.length === 4) {
+      var msteps = togs.slice(-4);
+      if (msteps.length === 4) {
+        var mleft = el("div", "enc-sec__mleft");
+        var mhead = el("div", "enc-sec__mhead");
+        Array.prototype.slice.call(four.children).forEach(function (n) {
+          if (!n.classList.contains("notion-toggle")) mhead.appendChild(n);
+        });
         var seg = el("div", "enc-sec__seg");
         seg.setAttribute("role", "tablist");
-        var st = stage();
-        steps.forEach(function (n, i) {
+        msteps.forEach(function (n, i) {
           n.classList.add("enc-sec__step");
-          var b = el("button", "enc-sec__segbtn");
-          b.type = "button";
-          b.setAttribute("role", "tab");
-          b.appendChild(el("span", "enc-sec__segn", "0" + (i + 1)));
-          b.appendChild(el("span", "enc-sec__segt", label(n)));
-          b.addEventListener("click", function () { step(four, i); });
-          seg.appendChild(b);
+          n.setAttribute("data-enc-i", String(i));
+          n.style.setProperty("--enc-i", String(i));
+          n.style.zIndex = String(i + 1);
+          var row = el("div", "enc-sec__srow");
+          row.appendChild(el("span", "enc-sec__sd", "0" + (i + 1)));
+          row.appendChild(el("span", "enc-sec__sn", STATES[i].note));
+          n.insertBefore(row, n.firstChild);
+          var bt = el("button", "enc-sec__segbtn");
+          bt.type = "button";
+          bt.setAttribute("role", "tab");
+          bt.appendChild(el("span", "enc-sec__segn", "0" + (i + 1)));
+          bt.appendChild(el("span", "enc-sec__segt", label(n)));
+          bt.addEventListener("click", function () {
+            step(four, i);
+            var top = n.getBoundingClientRect().top + window.pageYOffset - (STACK_TOP + i * STACK_STEP) + 2;
+            window.scrollTo({ top: top, behavior: "smooth" });
+          });
+          seg.appendChild(bt);
         });
-        var left = el("div", "enc-sec__rail");
-        left.appendChild(seg);
-        left.appendChild(st);
-        var right = el("div", "enc-sec__spine");
-        steps.forEach(function (n) { right.appendChild(n); });
-        var pair = el("div", "enc-sec__pair");
-        pair.appendChild(left);
-        pair.appendChild(right);
-        four.appendChild(pair);
+        var field = el("div", "enc-sec__field");
+        field.appendChild(stage());
+        mleft.appendChild(mhead);
+        mleft.appendChild(seg);
+        mleft.appendChild(field);
+        var mright = el("div", "enc-sec__steps");
+        msteps.forEach(function (n) { mright.appendChild(n); });
+        mright.appendChild(el("div", "enc-sec__sroom"));
+        var mgrid = el("div", "enc-sec__pair");
+        mgrid.appendChild(mleft);
+        mgrid.appendChild(mright);
+        four.appendChild(mgrid);
         step(four, 0);
+
+        /* the step at the top of the pile is the one the stage shows. The tab is hidden while
+           this runs, and a hidden tab fires no scroll events, so the sync hangs off an
+           observer of the steps themselves rather than off scroll. */
+        var sync = function () {
+          var pick = 0;
+          msteps.forEach(function (n, i) {
+            if (n.getBoundingClientRect().top <= STACK_TOP + i * STACK_STEP + 4) pick = i;
+          });
+          if (four.getAttribute("data-enc-step") !== String(pick)) step(four, pick);
+        };
+        if (window.IntersectionObserver) {
+          var io = new IntersectionObserver(sync, {
+            threshold: [0, 0.05, 0.25, 0.5, 0.75, 1],
+            rootMargin: "-" + STACK_TOP + "px 0px 0px 0px"
+          });
+          msteps.forEach(function (n) { io.observe(n); });
+        }
       }
     }
 
@@ -598,7 +641,10 @@
     });
   }
 
+  var STACK_TOP = 56, STACK_STEP = 112;
+
   function step(band, i) {
+    band.setAttribute("data-enc-step", String(i));
     band.querySelectorAll(".enc-sec__segbtn").forEach(function (b, j) {
       if (j === i) b.setAttribute("data-enc-on", ""); else b.removeAttribute("data-enc-on");
       b.setAttribute("aria-selected", j === i ? "true" : "false");

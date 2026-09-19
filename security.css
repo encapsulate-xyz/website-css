@@ -1051,14 +1051,68 @@
   display: none;
 }
 
-/* ── 04 · failover: the segmented control and the stage ── */
+/* ── 04 · failover: the stage stays put, the steps pile up beside it ── */
+.notion-root[data-enc-security] [data-enc-sec="04"] {
+  gap: 48px;
+  background-color: #FAFAF8;
+  background-image: radial-gradient(#DAD9D0 1px, transparent 1px);
+  background-size: 18px 18px;
+  background-attachment: fixed;
+}
+
+.notion-root[data-enc-security] [data-enc-sec="04"] .enc-sec__pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: clamp(24px, 4vw, 64px);
+  align-items: start;
+  max-width: 1180px;
+}
+
+.notion-root[data-enc-security] .enc-sec__mleft {
+  position: sticky;
+  top: 56px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.notion-root[data-enc-security] .enc-sec__mhead {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  max-width: 680px;
+  margin-bottom: 12px;
+}
+
+/* the head sits on the dot field, so its words carry the paper with them */
+.notion-root[data-enc-security] .enc-sec__mhead h2 {
+  display: inline !important;
+  background: #FAFAF8;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0 0.12em 0 0;
+  font-size: clamp(30px, 3.4vw, 46px) !important;
+}
+
+.notion-root[data-enc-security] .enc-sec__mhead > p.notion-text:not(.enc-sec__kicker) {
+  display: inline !important;
+  background: #FAFAF8;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0 0.3em 0 0;
+  font-size: 16.5px !important;
+  max-width: 42ch !important;
+}
+
 .notion-root[data-enc-security] .enc-sec__seg {
   display: flex;
+  align-self: stretch;
   gap: 4px;
   padding: 4px;
   border-radius: 10px;
   background: #F2F2ED;
-  flex-wrap: wrap;
 }
 
 .notion-root[data-enc-security] .enc-sec__segbtn {
@@ -1081,6 +1135,7 @@
   letter-spacing: -0.006em;
   color: #3A3D38;
   white-space: nowrap;
+  overflow: hidden;
   transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
 }
 
@@ -1096,6 +1151,7 @@
 }
 
 .notion-root[data-enc-security] .enc-sec__segn {
+  flex: none;
   font-family: var(--type-mono), ui-monospace, monospace;
   font-size: 10px;
   letter-spacing: 0.08em;
@@ -1104,92 +1160,202 @@
 
 .notion-root[data-enc-security] .enc-sec__segbtn[data-enc-on] .enc-sec__segn { color: #000000; }
 
+.notion-root[data-enc-security] .enc-sec__segt {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.notion-root[data-enc-security] .enc-sec__field {
+  border: 1px solid #D9D9D2;
+  border-radius: 4px;
+  padding: clamp(24px, 3.5vw, 48px);
+  background: #FAFAF8;
+}
+
 .notion-root[data-enc-security] .enc-sec__stage {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 18px;
-  padding: 24px;
-  border: 1px solid #E2E2DB;
-  border-radius: 12px;
-  background: #F2F2ED;
+  display: flex;
+  align-items: stretch;
 }
 
 .notion-root[data-enc-security] .enc-sec__host {
+  flex: 1 1 0;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding: 16px;
-  border: 1px solid #D9D9D2;
-  border-radius: 10px;
+  padding: 16px 16px 18px;
+  border: 1px dashed #B9B9B1;
+  border-radius: 4px;
   background: #FAFAF8;
-  transition: opacity 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  transition: background-color 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
 }
 
-.notion-root[data-enc-security] .enc-sec__host[data-enc-state="live"]    { background: #DCEEC7; border-color: #7CAE48; }
-.notion-root[data-enc-security] .enc-sec__host[data-enc-state="lost"]    { opacity: 0.4; border-style: dashed; }
-.notion-root[data-enc-security] .enc-sec__host[data-enc-state="standby"] { background: #FAFAF8; }
-
-.notion-root[data-enc-security] .enc-sec__hk {
-  font-family: var(--type-mono), ui-monospace, monospace;
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #6B6F68;
+.notion-root[data-enc-security] .enc-sec__host[data-enc-state="live"] {
+  background: #DCEEC7;
+  border: 1px solid transparent;
 }
 
-.notion-root[data-enc-security] .enc-sec__ht {
-  font-family: var(--type-display), system-ui, sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-  letter-spacing: -0.02em;
-  color: #000000;
-}
+.notion-root[data-enc-security] .enc-sec__host[data-enc-state="lost"] { opacity: 0.5; }
 
 .notion-root[data-enc-security] .enc-sec__hs {
   font-family: var(--type-mono), ui-monospace, monospace;
   font-size: 9px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #3A3D38;
-}
-
-.notion-root[data-enc-security] .enc-sec__bus {
-  grid-column: 1 / -1;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.notion-root[data-enc-security] .enc-sec__cos {
-  flex: 1 1 0;
-  min-width: 96px;
-  padding: 10px 12px;
-  border-radius: 999px;
-  background: #F8E8B3;
-  font-family: var(--type-mono), ui-monospace, monospace;
-  font-size: 9.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #000000;
-  text-align: center;
-}
-
-.notion-root[data-enc-security] .enc-sec__note {
-  grid-column: 1 / -1;
-  font-family: var(--type-mono), ui-monospace, monospace;
-  font-size: 9.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: #575B55;
 }
 
-/* the step whose state is showing keeps its body open; the rest read as a list */
-.notion-root[data-enc-security] .enc-sec__step[data-enc-on] .notion-toggle__summary > .notion-semantic-string {
+.notion-root[data-enc-security] .enc-sec__ht {
+  font-family: var(--type-display), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: #000000;
+}
+
+.notion-root[data-enc-security] .enc-sec__host[data-enc-state="lost"] .enc-sec__ht {
+  color: #3A3D38;
+  text-decoration: line-through;
+}
+
+.notion-root[data-enc-security] .enc-sec__signer {
+  flex: none;
+  align-self: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: #F8E8B3;
+  display: grid;
+  place-items: center;
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: #000000;
+}
+
+/* the wire runs while that host is the one signing */
+.notion-root[data-enc-security] .enc-sec__wire {
+  flex: none;
+  align-self: center;
+  width: 40px;
+  height: 1px;
+  background-image: repeating-linear-gradient(90deg, #9B9B94 0 3px, transparent 3px 7px);
+  background-size: 7px 1px;
+}
+
+.notion-root[data-enc-security] .enc-sec__wire[data-enc-on] {
+  background-image: repeating-linear-gradient(90deg, #000000 0 6px, transparent 6px 14px);
+  background-size: 14px 1px;
+  animation: enc-sec-dash 0.9s linear infinite;
+}
+
+@keyframes enc-sec-dash {
+  from { background-position: 0 0; }
+  to   { background-position: 14px 0; }
+}
+
+/* the steps: each sticks a little lower than the last, so they pile up as the reader scrolls */
+.notion-root[data-enc-security] .enc-sec__steps {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.notion-root[data-enc-security] .enc-sec__step {
+  position: sticky;
+  top: calc(56px + var(--enc-i) * 112px);
+  box-sizing: border-box;
+  min-height: 56vh;
+  margin: 0 !important;
+  padding: 28px 0 28px 28px !important;
+  border-left: 2px solid #E2E2DB;
+  background-color: #FAFAF8;
+  background-image: radial-gradient(#DAD9D0 1px, transparent 1px);
+  background-size: 18px 18px;
+  background-attachment: fixed;
+  transition: border-color 0.16s ease;
+}
+
+.notion-root[data-enc-security] .enc-sec__step[data-enc-on] { border-left-color: #000000; }
+
+.notion-root[data-enc-security] .enc-sec__sroom { height: 24vh; }
+
+.notion-root[data-enc-security] .enc-sec__srow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.notion-root[data-enc-security] .enc-sec__sd {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: #D2E3F6;
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 10px;
+  color: #000000;
+}
+
+.notion-root[data-enc-security] .enc-sec__step[data-enc-i="1"] .enc-sec__sd { background: #F8DDC6; }
+.notion-root[data-enc-security] .enc-sec__step[data-enc-i="2"] .enc-sec__sd { background: #DCEEC7; }
+.notion-root[data-enc-security] .enc-sec__step[data-enc-i="3"] .enc-sec__sd { background: #F8E8B3; }
+
+.notion-root[data-enc-security] .enc-sec__sn {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6B6F68;
+}
+
+.notion-root[data-enc-security] .enc-sec__step[data-enc-on] .enc-sec__sn { color: #3A3D38; }
+
+/* the step's own words: the toggle read as a heading over its paragraph, always open */
+.notion-root[data-enc-security] .enc-sec__step .notion-toggle__trigger { display: none !important; }
+
+.notion-root[data-enc-security] .enc-sec__step .notion-toggle__summary {
+  margin: 0 0 14px !important;
+  padding: 0 !important;
+}
+
+.notion-root[data-enc-security] .enc-sec__step .notion-toggle__summary .notion-semantic-string {
+  font-family: var(--type-display), system-ui, sans-serif !important;
+  font-weight: 600 !important;
+  font-size: clamp(26px, 2.6vw, 36px) !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.036em !important;
+  color: #6B6F68 !important;
+  transition: color 0.16s ease;
+}
+
+.notion-root[data-enc-security] .enc-sec__step[data-enc-on] .notion-toggle__summary .notion-semantic-string {
   color: #000000 !important;
 }
 
-/* the paired columns in 04 and 05 */
-.notion-root[data-enc-security] .enc-sec__pair,
+.notion-root[data-enc-security] .enc-sec__step .notion-toggle__content {
+  display: block !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.notion-root[data-enc-security] .enc-sec__step .notion-toggle__content p.notion-text {
+  margin: 0 !important;
+  align-self: flex-start;
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: 16.5px !important;
+  line-height: 1.55 !important;
+  color: #3A3D38 !important;
+  max-width: 40ch !important;
+  text-wrap: pretty !important;
+}
+
+/* ── 05 · the two columns, the spine ── */
 .notion-root[data-enc-security] [data-enc-sec="05"] {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
@@ -1197,15 +1363,11 @@
   align-items: start;
 }
 
-.notion-root[data-enc-security] .enc-sec__spine {
+.notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__spine {
   display: flex;
   flex-direction: column;
   border-top: 1px solid rgba(250, 250, 248, 0.3);
   min-width: 0;
-}
-
-.notion-root[data-enc-security] [data-enc-sec="04"] .enc-sec__spine {
-  border-top-color: #000000;
 }
 
 /* ── 05 · the response table ── */
