@@ -25,7 +25,7 @@
      built with, so a newer script unwraps an older build and does it again rather than finding
      bands already there and leaving them — which is what happens on a page still serving the
      previous release from its baked site head. */
-  var VERSION = "3";
+  var VERSION = "4";
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -293,7 +293,7 @@
       ".enc-sec__tabs, .enc-sec__panel, .enc-sec__ledger, .enc-sec__seg, .enc-sec__stage," +
       ".enc-sec__table, .enc-sec__pair, .enc-sec__rail, .enc-sec__rows, .enc-sec__spine," +
       ".enc-sec__figs, .enc-sec__half, .enc-sec__bar, .enc-sec__canvas, .enc-sec__verbs," +
-      ".enc-sec__rules, .enc-sec__lhead, .enc-sec__kleft, .enc-sec__kright"), function (n) { n.remove(); });
+      ".enc-sec__rules, .enc-sec__lhead, .enc-sec__kleft, .enc-sec__kright, .enc-sec__costs"), function (n) { n.remove(); });
   }
 
   function build() {
@@ -520,6 +520,11 @@
         if (n.classList.contains("enc-sec__kicker--paper")) side = paper;
         side.appendChild(n);
       });
+      // the two costs are one child of the half, so the half spaces three things, not four
+      var costs = el("div", "enc-sec__costs");
+      Array.prototype.forEach.call(paper.querySelectorAll(":scope > .notion-toggle"),
+        function (n) { costs.appendChild(n); });
+      if (costs.children.length) paper.appendChild(costs);
       six.appendChild(ink);
       six.appendChild(paper);
     }

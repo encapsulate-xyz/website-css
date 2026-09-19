@@ -51,7 +51,7 @@
   color: #FAFAF8 !important;
 }
 
-.notion-root[data-enc-security] .enc-sec__band p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent) {
+.notion-root[data-enc-security] .enc-sec__band p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent):not(.enc-sec__zero):not(.enc-sec__cost) {
   margin: 0 !important;
   font-family: var(--type-body), system-ui, sans-serif !important;
   font-size: 18px !important;
@@ -61,10 +61,10 @@
   text-wrap: pretty !important;
 }
 
-.notion-root[data-enc-security] [data-enc-sec="01"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent),
-.notion-root[data-enc-security] [data-enc-sec="03"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent),
-.notion-root[data-enc-security] [data-enc-sec="05"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent),
-.notion-root[data-enc-security] [data-enc-sec="06"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent) {
+.notion-root[data-enc-security] [data-enc-sec="01"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent):not(.enc-sec__zero):not(.enc-sec__cost),
+.notion-root[data-enc-security] [data-enc-sec="03"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent):not(.enc-sec__zero):not(.enc-sec__cost),
+.notion-root[data-enc-security] [data-enc-sec="05"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent):not(.enc-sec__zero):not(.enc-sec__cost),
+.notion-root[data-enc-security] [data-enc-sec="06"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent):not(.enc-sec__zero):not(.enc-sec__cost) {
   color: #C9C9C4 !important;
 }
 
@@ -83,7 +83,7 @@
   max-width: 12ch !important;
 }
 
-.notion-root[data-enc-security] [data-enc-sec="01"] .enc-sec__rail > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent) {
+.notion-root[data-enc-security] [data-enc-sec="01"] .enc-sec__rail > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent):not(.enc-sec__zero):not(.enc-sec__cost) {
   max-width: 38ch !important;
 }
 
@@ -95,7 +95,7 @@
   max-width: 18ch !important;
 }
 
-.notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__rail > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent) {
+.notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__rail > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent):not(.enc-sec__zero):not(.enc-sec__cost) {
   font-size: clamp(16px, 1.5vw, 19px) !important;
 }
 
@@ -1134,7 +1134,7 @@
   font-size: clamp(30px, 3.4vw, 46px) !important;
 }
 
-.notion-root[data-enc-security] [data-enc-sec="04"] .enc-sec__mhead > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent) {
+.notion-root[data-enc-security] [data-enc-sec="04"] .enc-sec__mhead > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent):not(.enc-sec__zero):not(.enc-sec__cost) {
   display: inline !important;
   background: #FAFAF8;
   box-decoration-break: clone;
@@ -1575,7 +1575,7 @@
 }
 
 /* the two costs: a numbered disc, the name and the line, under a rule */
-.notion-root[data-enc-security] .enc-sec__half--paper > .notion-toggle {
+.notion-root[data-enc-security] .enc-sec__costs > .notion-toggle {
   position: relative;
   display: grid;
   grid-template-columns: 30px minmax(0, 1fr);
@@ -1590,14 +1590,13 @@
   counter-increment: enc-cost;
 }
 
-.notion-root[data-enc-security] .enc-sec__half--paper { counter-reset: enc-cost; }
+.notion-root[data-enc-security] .enc-sec__costs { counter-reset: enc-cost; }
 
-.notion-root[data-enc-security] .enc-sec__half--paper > .notion-toggle:first-of-type {
+.notion-root[data-enc-security] .enc-sec__costs > .notion-toggle:first-of-type {
   border-top-color: #000000 !important;
-  margin-top: auto !important;
 }
 
-.notion-root[data-enc-security] .enc-sec__half--paper > .notion-toggle::before {
+.notion-root[data-enc-security] .enc-sec__costs > .notion-toggle::before {
   content: "0" counter(enc-cost);
   grid-column: 1;
   grid-row: 1 / 3;
@@ -1612,15 +1611,15 @@
   color: #000000;
 }
 
-.notion-root[data-enc-security] .enc-sec__half--paper > .notion-toggle .notion-toggle__trigger { display: none !important; }
+.notion-root[data-enc-security] .enc-sec__costs > .notion-toggle .notion-toggle__trigger { display: none !important; }
 
-.notion-root[data-enc-security] .enc-sec__half--paper > .notion-toggle .notion-toggle__summary {
+.notion-root[data-enc-security] .enc-sec__costs > .notion-toggle .notion-toggle__summary {
   grid-column: 2;
   margin: 0 !important;
   padding: 4px 0 0 !important;
 }
 
-.notion-root[data-enc-security] .enc-sec__half--paper > .notion-toggle .notion-toggle__summary .notion-semantic-string {
+.notion-root[data-enc-security] .enc-sec__costs > .notion-toggle .notion-toggle__summary .notion-semantic-string {
   font-family: var(--type-display), system-ui, sans-serif !important;
   font-weight: 600 !important;
   font-size: 16px !important;
@@ -1629,7 +1628,7 @@
   color: #000000 !important;
 }
 
-.notion-root[data-enc-security] .enc-sec__half--paper > .notion-toggle .notion-toggle__content {
+.notion-root[data-enc-security] .enc-sec__costs > .notion-toggle .notion-toggle__content {
   grid-column: 2;
   display: block !important;
   height: auto !important;
@@ -1638,7 +1637,7 @@
   overflow: visible !important;
 }
 
-.notion-root[data-enc-security] .enc-sec__half--paper > .notion-toggle .notion-toggle__content p.notion-text {
+.notion-root[data-enc-security] .enc-sec__costs > .notion-toggle .notion-toggle__content p.notion-text {
   margin: 0 !important;
   font-family: var(--type-body), system-ui, sans-serif !important;
   font-size: 13.5px !important;
@@ -1651,7 +1650,20 @@
   color: #575B55 !important;
 }
 
+.notion-root[data-enc-security] .enc-sec__half--ink > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent):not(.enc-sec__zero):not(.enc-sec__cost) {
+  max-width: 32ch !important;
+  font-size: 16px !important;
+}
+
+.notion-root[data-enc-security] .enc-sec__costs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 420px;
+}
+
 .notion-root[data-enc-security] .enc-sec__zero {
+  margin-left: -0.05em !important;
   font-family: var(--type-display), system-ui, sans-serif !important;
   font-weight: 600 !important;
   font-size: clamp(120px, 18vw, 300px) !important;
