@@ -163,8 +163,22 @@
     return true;
   }
 
+  /* A row that has been split has no separators left in it, so a later build cannot recognise it.
+     Unwrapping puts the text back the way Notion wrote it — for rows this script marked, and for
+     rows an earlier version split before the mark existed. */
+  function unsplit(root) {
+    Array.prototype.forEach.call(root.querySelectorAll(".enc-sec__row, .enc-sec__fig"), function (n) {
+      var bits = Array.prototype.map.call(
+        n.querySelectorAll(".enc-sec__term, .enc-sec__verb, .enc-sec__line"), textOf);
+      if (bits.length) n.textContent = bits.join(" · ");
+      n.removeAttribute("data-enc-split");
+      n.classList.remove("enc-sec__row", "enc-sec__fig");
+    });
+  }
+
   /* put every Notion block back on the root, so a build can start from the page as Super sent it */
   function unwrap(root) {
+    unsplit(root);
     var bands = root.querySelectorAll(".enc-sec__band");
     if (!bands.length) return;
     Array.prototype.forEach.call(bands, function (b) {
