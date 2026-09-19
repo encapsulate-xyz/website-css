@@ -572,9 +572,10 @@
         four.appendChild(mgrid);
         step(four, 0);
 
-        /* the step at the top of the pile is the one the stage shows. The tab is hidden while
-           this runs, and a hidden tab fires no scroll events, so the sync hangs off an
-           observer of the steps themselves rather than off scroll. */
+        /* the step at the top of the pile is the one the stage shows. Scroll drives it, as the
+           design does; the observer is there as well because a rebuild can move the steps
+           without the reader scrolling. The sync reads the steps that are on the page now, so
+           it survives a rebuild. */
         var sync = function () {
           var pick = 0;
           msteps.forEach(function (n, i) {
@@ -582,6 +583,13 @@
           });
           if (four.getAttribute("data-enc-step") !== String(pick)) step(four, pick);
         };
+        if (syncing) {
+          window.removeEventListener("scroll", syncing);
+          window.removeEventListener("resize", syncing);
+        }
+        syncing = sync;
+        window.addEventListener("scroll", sync, { passive: true });
+        window.addEventListener("resize", sync);
         if (window.IntersectionObserver) {
           var io = new IntersectionObserver(sync, {
             threshold: [0, 0.05, 0.25, 0.5, 0.75, 1],
@@ -589,6 +597,7 @@
           });
           msteps.forEach(function (n) { io.observe(n); });
         }
+        sync();
       }
     }
 
@@ -643,6 +652,7 @@
   }
 
   var STACK_TOP = 56, STACK_STEP = 112;
+  var syncing = null;   // a rebuild replaces the handler rather than stacking another one
 
   function step(band, i) {
     band.setAttribute("data-enc-step", String(i));
