@@ -1138,7 +1138,7 @@
   font-size: clamp(30px, 3.4vw, 46px) !important;
 }
 
-.notion-root[data-enc-security] .enc-sec__mhead > p.notion-text:not(.enc-sec__kicker) {
+.notion-root[data-enc-security] [data-enc-sec="04"] .enc-sec__mhead > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent) {
   display: inline !important;
   background: #FAFAF8;
   box-decoration-break: clone;
