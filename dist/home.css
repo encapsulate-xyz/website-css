@@ -224,8 +224,8 @@
 #block-4529386b39be4a9aa44d2dbac56537bd tbody tr:hover,#block-4529386b39be4a9aa44d2dbac56537bd tbody tr:hover + tr{border-top-color: transparent !important;}
 #block-4529386b39be4a9aa44d2dbac56537bd th,#block-4529386b39be4a9aa44d2dbac56537bd td{display: block !important;width: auto !important;min-width: 0 !important;max-width: none !important;height: auto !important;padding: 0 !important;border: 0 !important;background: transparent !important;text-align: left !important;overflow: visible !important;}
 #block-4529386b39be4a9aa44d2dbac56537bd :is(th,td)[data-enc-cell="chain"],#block-4529386b39be4a9aa44d2dbac56537bd :is(th,td)[data-enc-cell="id"]{display: none !important;}
-#block-4529386b39be4a9aa44d2dbac56537bd :is(th,td)[data-enc-cell="proposal"]{display: flex !important;align-items: flex-start !important;gap: 13px !important;order: 1 !important;min-width: 0 !important;}
-#block-4529386b39be4a9aa44d2dbac56537bd td[data-enc-cell="proposal"] .enc-gov__col{display: flex;flex-direction: column;gap: 3px;min-width: 0;}
+#block-4529386b39be4a9aa44d2dbac56537bd :is(th,td)[data-enc-cell="proposal"]{display: flex !important;align-items: flex-start !important;gap: 13px !important;order: 1 !important;width: 100% !important;max-width: 100% !important;min-width: 0 !important;overflow: hidden !important;}
+#block-4529386b39be4a9aa44d2dbac56537bd td[data-enc-cell="proposal"] .enc-gov__col{display: flex;flex-direction: column;gap: 3px;min-width: 0;overflow: hidden;}
 #block-4529386b39be4a9aa44d2dbac56537bd td[data-enc-cell="proposal"] .notion-property__title{font-family: var(--type-display) !important;font-weight: 600 !important;font-size: 16.5px !important;line-height: 1.16 !important;letter-spacing: -0.018em !important;color: #000000 !important;overflow: hidden !important;text-overflow: ellipsis !important;white-space: nowrap !important;}
 #block-4529386b39be4a9aa44d2dbac56537bd .enc-gov__meta{display: flex;align-items: baseline;gap: 5px;}
 #block-4529386b39be4a9aa44d2dbac56537bd .enc-gov__chain{font-family: var(--type-mono),ui-monospace,monospace;font-size: 9.5px;letter-spacing: 0.12em;text-transform: uppercase;color: #6B6F68;}

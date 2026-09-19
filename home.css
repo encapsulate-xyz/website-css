@@ -2300,12 +2300,17 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   display: none !important;
 }
 
+/* the base td rule lifts max-width, so a long proposal pushed the cell past its own track and
+   under the vote column — the cell is pinned to the track and the title clips inside it */
 #block-4529386b39be4a9aa44d2dbac56537bd :is(th, td)[data-enc-cell="proposal"] {
   display: flex !important;
   align-items: flex-start !important;
   gap: 13px !important;
   order: 1 !important;
+  width: 100% !important;
+  max-width: 100% !important;
   min-width: 0 !important;
+  overflow: hidden !important;
 }
 
 #block-4529386b39be4a9aa44d2dbac56537bd td[data-enc-cell="proposal"] .enc-gov__col {
@@ -2313,6 +2318,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   flex-direction: column;
   gap: 3px;
   min-width: 0;
+  overflow: hidden;
 }
 
 #block-4529386b39be4a9aa44d2dbac56537bd td[data-enc-cell="proposal"] .notion-property__title {
