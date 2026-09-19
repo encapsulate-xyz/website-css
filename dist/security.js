@@ -386,8 +386,7 @@
           rows.appendChild(n);
           return;
         }
-        // the two lines after the rules are the ledger's own header; the lede comes before them
-        if (rows.children.length) extra.push(n);
+        extra.push(n);
       });
       Array.prototype.forEach.call(rows.querySelectorAll(".enc-sec__row"), function (r, i) {
         var v = r.querySelector(".enc-sec__verb");
@@ -408,12 +407,14 @@
         if (term) head.appendChild(term);
         r.insertBefore(head, r.firstChild);
       });
-      if (extra.length > 1) {
+      // the last two paragraphs of the band are the ledger's own header; the lede comes first
+      if (extra.length > 2) {
         var lhead = el("div", "enc-sec__lhead");
+        var pair = extra.slice(-2);
         // the count is the rules the page actually carries, so the line cannot drift from them
-        extra[0].textContent = textOf(extra[0]).replace(/\d+/, String(rows.children.length));
-        lhead.appendChild(extra[0]);
-        lhead.appendChild(extra[1]);
+        pair[0].textContent = textOf(pair[0]).replace(/\d+/, String(rows.children.length));
+        lhead.appendChild(pair[0]);
+        lhead.appendChild(pair[1]);
         ledger.appendChild(lhead);
       }
       ledger.appendChild(verbs);
