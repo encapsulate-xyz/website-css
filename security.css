@@ -164,11 +164,87 @@
   min-width: 0;
 }
 
-/* the toggles are the accordion the design draws */
+/* THE ACCORDION (01). The handoff's row: a mono number, the title at 20px growing to 24 when it
+   opens, and a 10px dot at the end that fills with the row's own pastel. Notion's toggle gives the
+   summary, the trigger and the content; the number is a counter, the dot is the trigger. */
 .notion-root[data-enc-security] .notion-toggle {
   margin: 0 !important;
   padding: 0 !important;
   border-bottom: 1px solid rgba(250, 250, 248, 0.18);
+}
+
+.notion-root[data-enc-security] .enc-sec__rows { counter-reset: enc-row; }
+
+.notion-root[data-enc-security] .enc-sec__rows > .notion-toggle { counter-increment: enc-row; }
+
+.notion-root[data-enc-security] .enc-sec__rows .notion-toggle__summary {
+  display: grid !important;
+  grid-template-columns: 44px minmax(0, 1fr) 20px !important;
+  gap: 16px !important;
+  align-items: start !important;
+  min-height: 0 !important;
+  margin: 0 -14px !important;
+  padding: 18px 14px !important;
+  border-radius: 10px !important;
+  transition: background-color 0.16s ease !important;
+}
+
+.notion-root[data-enc-security] .enc-sec__rows .notion-toggle:not(.open) .notion-toggle__summary:hover {
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.notion-root[data-enc-security] .enc-sec__rows .notion-toggle__summary::before {
+  content: "0" counter(enc-row);
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: #9FA39B;
+  padding-top: 5px;
+}
+
+.notion-root[data-enc-security] .enc-sec__rows .notion-toggle.open .notion-toggle__summary::before { color: #FAFAF8; }
+
+.notion-root[data-enc-security] .enc-sec__rows .notion-toggle__summary > .notion-semantic-string {
+  order: 1;
+  font-size: 20px !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.028em !important;
+  transition: font-size 0.16s ease !important;
+}
+
+.notion-root[data-enc-security] .enc-sec__rows .notion-toggle.open .notion-toggle__summary > .notion-semantic-string {
+  font-size: 24px !important;
+}
+
+/* the trigger becomes the dot: a ring while the row is closed, its own pastel when it opens */
+.notion-root[data-enc-security] .enc-sec__rows .notion-toggle__trigger {
+  order: 2;
+  width: 10px !important;
+  height: 10px !important;
+  margin: 8px 0 0 auto !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+  border: 1.5px solid rgba(250, 250, 248, 0.7) !important;
+  background: transparent !important;
+  transition: background-color 0.16s ease, border-color 0.16s ease !important;
+}
+
+.notion-root[data-enc-security] .enc-sec__rows .notion-toggle__trigger_icon,
+.notion-root[data-enc-security] .enc-sec__rows .notion-toggle__trigger span { display: none !important; }
+
+.notion-root[data-enc-security] .enc-sec__rows .notion-toggle:nth-child(5n+1).open .notion-toggle__trigger { background: #DCEEC7 !important; border-color: transparent !important; }
+.notion-root[data-enc-security] .enc-sec__rows .notion-toggle:nth-child(5n+2).open .notion-toggle__trigger { background: #F8E8B3 !important; border-color: transparent !important; }
+.notion-root[data-enc-security] .enc-sec__rows .notion-toggle:nth-child(5n+3).open .notion-toggle__trigger { background: #D2E3F6 !important; border-color: transparent !important; }
+.notion-root[data-enc-security] .enc-sec__rows .notion-toggle:nth-child(5n+4).open .notion-toggle__trigger { background: #F8DDC6 !important; border-color: transparent !important; }
+.notion-root[data-enc-security] .enc-sec__rows .notion-toggle:nth-child(5n).open   .notion-toggle__trigger { background: #F7DCE7 !important; border-color: transparent !important; }
+
+.notion-root[data-enc-security] .enc-sec__rows .notion-toggle__content { padding: 0 0 0 60px !important; }
+
+.notion-root[data-enc-security] .enc-sec__rows .notion-toggle__content p.notion-text {
+  margin: 0 0 18px !important;
+  font-size: 16px !important;
+  line-height: 1.58 !important;
+  max-width: 58ch !important;
 }
 
 .notion-root[data-enc-security] [data-enc-sec="02"] .notion-toggle,
