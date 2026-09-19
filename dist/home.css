@@ -5,7 +5,7 @@
 #block-0dea66c8640e43628360c627219fdb79:before{content: "";display: block;height: 1px;margin: 4px 0;background: linear-gradient(to right,black,rgba(204,204,204,0));}
 #block-0dea66c8640e43628360c627219fdb79:after{content: "";display: block;height: 1px;margin: 4px 0;background: linear-gradient(to right,black,rgba(204,204,204,0));}
 #block-0dea66c8640e43628360c627219fdb79{font-family: var(--type-body),system-ui,sans-serif !important;font-size: 21px !important;}
-.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749{width: 100vw !important;margin-inline: calc(50% - 50vw) !important;padding: 0 max(48px,calc(50vw - 864px)) !important;}
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749{position: relative !important;z-index: 1 !important;width: 100vw !important;margin-inline: calc(50% - 50vw) !important;padding: 0 max(48px,calc(50vw - 864px)) !important;}
 .notion-collection-gallery.small .notion-collection-card:nth-child(n+10){display: none;}
 .notion-collection-table__body tr:nth-child(n+7){display: none;}
 .notion-collection-table{table-layout: auto !important;}
