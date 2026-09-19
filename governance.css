@@ -298,15 +298,9 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   padding-right: 34px !important;
 }
 
-.notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-card:hover {
-  background: #DCEEC7 !important;
-  border-left-color: #B4D98F !important;
-  border-bottom-color: #99CC66 !important;
-}
-
-.notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-card:first-child:hover {
-  border-left-color: transparent !important;
-}
+/* No hover on a pillar: the handoff's pillarBand has none — the four are a statement, not four
+   controls, and nothing in them is clickable. The green wash and its foot rule went on
+   2026-09-19 with the pastel wells. */
 
 .notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-card__content {
   display: flex !important;
@@ -361,11 +355,6 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 
 .notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-card:nth-child(4) .notion-property__title {
   background: #F8DDC6 !important;
-  color: #000000 !important;
-}
-
-.notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-card:hover .notion-property__title {
-  background: #FAFAF8 !important;
   color: #000000 !important;
 }
 

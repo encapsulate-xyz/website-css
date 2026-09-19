@@ -2096,15 +2096,9 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 
 /* Hover: the track becomes a pastel field — green ground, its divider a step
    of the green, and a 2px green rule along its foot. */
-#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:hover {
-  background: #DCEEC7 !important;
-  border-left-color: #B4D98F !important;
-  border-bottom-color: #99CC66 !important;
-}
-
-#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:first-child:hover {
-  border-left-color: transparent !important;
-}
+/* No hover on a pillar: the handoff's pillarBand has none — the four are a statement, not four
+   controls, and nothing in them is clickable. The green wash and its foot rule went on
+   2026-09-19 with the pastel wells. */
 
 #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card__content {
   display: flex !important;
@@ -2184,11 +2178,6 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 
 #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:nth-child(4) .notion-property__title {
   background: #F8DDC6 !important;
-  color: #000000 !important;
-}
-
-#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:hover .notion-property__title {
-  background: #FAFAF8 !important;
   color: #000000 !important;
 }
 
