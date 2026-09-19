@@ -25,8 +25,8 @@
 .notion-root[data-enc-security] .enc-sec__rows .notion-toggle:not(.open) .notion-toggle__summary:hover{background: rgba(0,0,0,0.22);}
 .notion-root[data-enc-security] .enc-sec__rows .notion-toggle__summary::before{content: "0" counter(enc-row);font-family: var(--type-mono),ui-monospace,monospace;font-size: 12px;letter-spacing: 0.08em;color: #9FA39B;padding-top: 5px;}
 .notion-root[data-enc-security] .enc-sec__rows .notion-toggle.open .notion-toggle__summary::before{color: #FAFAF8;}
-.notion-root[data-enc-security] .enc-sec__rows .notion-toggle__summary > .notion-semantic-string{order: 1;font-size: 20px !important;line-height: 1.1 !important;letter-spacing: -0.028em !important;transition: font-size 0.16s ease !important;}
-.notion-root[data-enc-security] .enc-sec__rows .notion-toggle.open .notion-toggle__summary > .notion-semantic-string{font-size: 24px !important;}
+.notion-root[data-enc-security] .enc-sec__band .enc-sec__rows .notion-toggle__summary > .notion-semantic-string{order: 1;font-size: 20px !important;line-height: 1.1 !important;letter-spacing: -0.028em !important;transition: font-size 0.16s ease !important;}
+.notion-root[data-enc-security] .enc-sec__band .enc-sec__rows .notion-toggle.open .notion-toggle__summary > .notion-semantic-string{font-size: 24px !important;}
 .notion-root[data-enc-security] .enc-sec__rows .notion-toggle__trigger{order: 2;width: 10px !important;height: 10px !important;margin: 8px 0 0 auto !important;padding: 0 !important;border-radius: 999px !important;border: 1.5px solid rgba(250,250,248,0.7) !important;background: transparent !important;transition: background-color 0.16s ease,border-color 0.16s ease !important;}
 .notion-root[data-enc-security] .enc-sec__rows .notion-toggle__trigger_icon,.notion-root[data-enc-security] .enc-sec__rows .notion-toggle__trigger span{display: none !important;}
 .notion-root[data-enc-security] .enc-sec__rows .notion-toggle:nth-child(5n+1).open .notion-toggle__trigger{background: #DCEEC7 !important;border-color: transparent !important;}
@@ -43,7 +43,7 @@
 .notion-root[data-enc-security] .notion-toggle__trigger{order: 2;margin-left: auto !important;width: 20px;height: 20px;flex: none;color: #9FA39B;}
 .notion-root[data-enc-security] .notion-toggle__content p.notion-text{margin: 0 0 18px !important;font-family: var(--type-body),system-ui,sans-serif !important;font-size: 14.5px !important;line-height: 1.55 !important;color: #C9C9C4 !important;max-width: 62ch !important;}
 .notion-root[data-enc-security] [data-enc-sec="02"] .notion-toggle__content p.notion-text,.notion-root[data-enc-security] [data-enc-sec="04"] .notion-toggle__content p.notion-text{color: #3A3D38 !important;}
-.notion-root[data-enc-security] [data-enc-sec="01"] > .notion-callout{--btn-h: 48px;--btn-px: 20px;--btn-fs: 16px;margin: 0 !important;}
+.notion-root[data-enc-security] [data-enc-sec="01"] .notion-callout{--btn-h: 48px;--btn-px: 20px;--btn-fs: 16px;margin: 0 !important;}
 .notion-root[data-enc-security] .enc-sec__source{display: none !important;}
 .notion-root[data-enc-security] .enc-sec__tabs{display: flex;gap: 4px;padding: 4px;border-radius: 10px;background: #F2F2ED;align-self: flex-start;flex-wrap: wrap;}
 .notion-root[data-enc-security] .enc-sec__tab{appearance: none;cursor: pointer;height: 36px;padding: 0 14px;border: 1px solid transparent;border-radius: 8px;background: transparent;font-family: var(--type-body),system-ui,sans-serif;font-size: 14px;font-weight: 500;letter-spacing: -0.006em;color: #3A3D38;transition: background-color 0.16s ease,border-color 0.16s ease,color 0.16s ease;}

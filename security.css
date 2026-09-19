@@ -204,7 +204,7 @@
 
 .notion-root[data-enc-security] .enc-sec__rows .notion-toggle.open .notion-toggle__summary::before { color: #FAFAF8; }
 
-.notion-root[data-enc-security] .enc-sec__rows .notion-toggle__summary > .notion-semantic-string {
+.notion-root[data-enc-security] .enc-sec__band .enc-sec__rows .notion-toggle__summary > .notion-semantic-string {
   order: 1;
   font-size: 20px !important;
   line-height: 1.1 !important;
@@ -212,7 +212,7 @@
   transition: font-size 0.16s ease !important;
 }
 
-.notion-root[data-enc-security] .enc-sec__rows .notion-toggle.open .notion-toggle__summary > .notion-semantic-string {
+.notion-root[data-enc-security] .enc-sec__band .enc-sec__rows .notion-toggle.open .notion-toggle__summary > .notion-semantic-string {
   font-size: 24px !important;
 }
 
@@ -296,7 +296,7 @@
   color: #3A3D38 !important;
 }
 
-.notion-root[data-enc-security] [data-enc-sec="01"] > .notion-callout {
+.notion-root[data-enc-security] [data-enc-sec="01"] .notion-callout {
   --btn-h: 48px;
   --btn-px: 20px;
   --btn-fs: 16px;
