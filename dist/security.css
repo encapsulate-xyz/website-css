@@ -6,23 +6,12 @@
 .notion-root[data-enc-security] [data-enc-sec="01"] h2,.notion-root[data-enc-security] [data-enc-sec="05"] h2{color: #FAFAF8 !important;}
 .notion-root[data-enc-security] .enc-sec__band p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent){margin: 0 !important;font-family: var(--type-body),system-ui,sans-serif !important;font-size: 18px !important;line-height: 1.52 !important;color: #3A3D38 !important;max-width: 46ch !important;text-wrap: pretty !important;}
 .notion-root[data-enc-security] [data-enc-sec="01"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent),.notion-root[data-enc-security] [data-enc-sec="03"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent),.notion-root[data-enc-security] [data-enc-sec="05"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent),.notion-root[data-enc-security] [data-enc-sec="06"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent){color: #C9C9C4 !important;}
-{R}
-.enc-sec__band .notion-heading__anchor{{display: none !important;}
-}
-{R}
-[data-enc-sec="01"]{{padding-top: clamp(64px,7vw,96px);padding-bottom: clamp(64px,7vw,96px);}
-}
-{R}
-[data-enc-sec="01"] h2{{font-size: clamp(38px,4.6vw,64px) !important;letter-spacing: -0.046em !important;max-width: 12ch !important;}
-}
-{R}
-[data-enc-sec="01"] .enc-sec__rail > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent){{max-width: 38ch !important;}
-}
-{R}
-[data-enc-sec="05"] h2{{font-size: clamp(30px,3.4vw,44px) !important;line-height: 1.02 !important;letter-spacing: -0.036em !important;max-width: 18ch !important;}
-}
-{R}
-[data-enc-sec="05"] .enc-sec__rail > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent){font-size: clamp(16px,1.5vw,19px) !important;}
+.notion-root[data-enc-security] .enc-sec__band .notion-heading__anchor{display: none !important;}
+.notion-root[data-enc-security] [data-enc-sec="01"]{padding-top: clamp(64px,7vw,96px);padding-bottom: clamp(64px,7vw,96px);}
+.notion-root[data-enc-security] [data-enc-sec="01"] h2{font-size: clamp(38px,4.6vw,64px) !important;letter-spacing: -0.046em !important;max-width: 12ch !important;}
+.notion-root[data-enc-security] [data-enc-sec="01"] .enc-sec__rail > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent){max-width: 38ch !important;}
+.notion-root[data-enc-security] [data-enc-sec="05"] h2{font-size: clamp(30px,3.4vw,44px) !important;line-height: 1.02 !important;letter-spacing: -0.036em !important;max-width: 18ch !important;}
+.notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__rail > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent){font-size: clamp(16px,1.5vw,19px) !important;}
 .notion-root[data-enc-security] .enc-sec__band p.enc-sec__kicker{margin: 0 !important;font-family: var(--type-mono),ui-monospace,monospace !important;font-size: 10.5px !important;line-height: 1.4 !important;letter-spacing: 0.12em !important;text-transform: uppercase !important;color: #575B55 !important;max-width: none !important;}
 .notion-root[data-enc-security] [data-enc-sec="01"] p.enc-sec__kicker,.notion-root[data-enc-security] [data-enc-sec="03"] p.enc-sec__kicker,.notion-root[data-enc-security] [data-enc-sec="05"] p.enc-sec__kicker,.notion-root[data-enc-security] [data-enc-sec="06"] p.enc-sec__kicker{color: #B4B4B4 !important;}
 .notion-root[data-enc-security] [data-enc-sec="01"] > p.enc-sec__fig{display: flex !important;flex-direction: column !important;gap: 6px !important;margin: 0 !important;max-width: none !important;font-size: 13.5px !important;}

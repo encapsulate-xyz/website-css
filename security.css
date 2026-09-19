@@ -69,33 +69,33 @@
 }
 
 /* Notion's heading anchors are empty siblings; as flex items they would open a gap */
-{R}.enc-sec__band .notion-heading__anchor {{ display: none !important; }}
+.notion-root[data-enc-security] .enc-sec__band .notion-heading__anchor { display: none !important; }
 
 /* 01 · a wider band, a bigger statement, a narrower lede */
-{R}[data-enc-sec="01"] {{
+.notion-root[data-enc-security] [data-enc-sec="01"] {
   padding-top: clamp(64px, 7vw, 96px);
   padding-bottom: clamp(64px, 7vw, 96px);
-}}
+}
 
-{R}[data-enc-sec="01"] h2 {{
+.notion-root[data-enc-security] [data-enc-sec="01"] h2 {
   font-size: clamp(38px, 4.6vw, 64px) !important;
   letter-spacing: -0.046em !important;
   max-width: 12ch !important;
-}}
+}
 
-{R}[data-enc-sec="01"] .enc-sec__rail > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent) {{
+.notion-root[data-enc-security] [data-enc-sec="01"] .enc-sec__rail > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent) {
   max-width: 38ch !important;
-}}
+}
 
 /* 05 · the head reads a size down */
-{R}[data-enc-sec="05"] h2 {{
+.notion-root[data-enc-security] [data-enc-sec="05"] h2 {
   font-size: clamp(30px, 3.4vw, 44px) !important;
   line-height: 1.02 !important;
   letter-spacing: -0.036em !important;
   max-width: 18ch !important;
-}}
+}
 
-{R}[data-enc-sec="05"] .enc-sec__rail > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent) {
+.notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__rail > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent) {
   font-size: clamp(16px, 1.5vw, 19px) !important;
 }
 
