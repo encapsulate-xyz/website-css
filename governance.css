@@ -267,7 +267,9 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 .notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-gallery {
   position: relative !important;
   display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, max(320px, 45%)), 1fr)) !important;
+  /* two and two: the design's auto-fit expression resolves its percentage against the wrong box
+     in a Notion collection and gave four tracks, so the 2x2 is stated outright */
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   gap: 10px !important;
   max-width: 1180px !important;
   margin: 0 !important;
@@ -315,6 +317,10 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 @media (max-width: 860px) {
+  .notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-gallery {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
   .notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-gallery::after,
   .notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-gallery::before {
     display: none;
