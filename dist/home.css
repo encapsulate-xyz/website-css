@@ -72,7 +72,7 @@
 .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout__content > span.notion-semantic-string{font-size: 15px !important;}
 }
 #block-11a2eeaf43d94c23aeaa3d347ec2d749{position: relative !important;margin: 0 0 56px !important;padding: clamp(56px,7vw,92px) clamp(24px,4vw,56px) clamp(52px,6vw,84px) !important;background: #FAFAF8 url("../svg/hero-horizons.svg") center / 100% 100% no-repeat !important;overflow: hidden !important;}
-#block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column,#block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-column:first-child{width: 100% !important;max-width: none !important;flex: 1 1 100% !important;}
+#block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column{width: 100% !important;max-width: none !important;flex: 1 1 100% !important;}
 #block-f9a89e98cb3f419ebfcbd93b7b4253d4,#block-3e0e800a51388119b3e0fabbaddf0fa7{height: 1px !important;margin: 0 !important;border: 0 !important;border-top: 1px solid #E2E2DB !important;background: transparent !important;}
 #block-f9a89e98cb3f419ebfcbd93b7b4253d4{margin-bottom: 28px !important;}
 #block-3e0e800a51388119b3e0fabbaddf0fa7{margin-top: 34px !important;}

@@ -699,8 +699,9 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 }
 
 /* one column now, so it takes the band's width whatever inline width Notion wrote on it */
-#block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column,
-#block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-column:first-child {
+/* direct children only — the button pair is a column list of its own inside this one, and a
+   descendant selector would stretch its first column to the full width */
+#block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column {
   width: 100% !important;
   max-width: none !important;
   flex: 1 1 100% !important;
