@@ -123,9 +123,10 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   margin: 0 !important;
   padding: 0 !important;
   justify-content: flex-start !important;
-  align-items: stretch !important;
+  align-items: center !important;
+  align-self: center !important;
   flex-wrap: nowrap !important;
-  gap: 0 !important;
+  gap: 4px !important;                    /* the design's `seg` spacing between tabs */
   min-height: 50px !important;
   border: 0 !important;
   border-radius: 0 !important;
@@ -134,36 +135,42 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   overflow: visible !important;
 }
 
+/* The tab is a pill now, not an underline (handoff "Networks Set", controls → tab): 36px tall
+   inside the 50px bar, transparent until hovered or picked, and the picked one takes the paper
+   fill with the card ring and the 1.5px highlight — the same construction as a secondary button.
+   Hover shows the ring alone, so the fill is what says "this is the view you are looking at". */
 .notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option {
   flex: 0 0 auto !important;
+  box-sizing: border-box !important;
   width: auto !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  height: 50px !important;
-  min-height: 50px !important;
+  gap: 8px !important;
+  height: 36px !important;
+  min-height: 36px !important;
   margin: 0 !important;
   padding: 0 14px !important;
-  border: 0 !important;
-  border-radius: 0 !important;
+  border: 1px solid transparent !important;
+  border-radius: 8px !important;
   background: transparent !important;
   box-shadow: none !important;
-  transition: color 0.16s ease, box-shadow 0.16s ease !important;
+  transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease !important;
 }
 
 .notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option p,
 .notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option span {
   font-family: var(--type-body), system-ui, sans-serif !important;
-  font-size: 15px !important;
   font-weight: 500 !important;
   letter-spacing: -0.006em !important;
-  color: #575B55 !important;   /* the design's ON_GROUND, not the #6B6F68 body grey */
+  font-size: 14px !important;
+  color: #3A3D38 !important;   /* the design's INK7 for a tab that is not the current one */
   transition: color 0.16s ease !important;
 }
 
 .notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:hover {
   background: transparent !important;
-  border: 0 !important;
+  border-color: #D9D9D2 !important;
 }
 
 .notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:hover p,
@@ -173,20 +180,21 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #000000 !important;
 }
 
-/* the active tab is marked by an ink underline, not a fill */
+/* the picked tab: paper on the bar's paper, held by the ring and the highlight */
 .notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option.active {
-  background: transparent !important;
-  box-shadow: inset 0 -2px 0 #000000 !important;
+  background: #FAFAF8 !important;
+  border-color: #D9D9D2 !important;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 1px 2px rgba(0, 0, 0, 0.06) !important;
   pointer-events: none !important;
 }
 
 /* Super's own picker snippet reads these */
 .notion-root {
-  --picker-active-bg-color: transparent !important;
+  --picker-active-bg-color: #FAFAF8 !important;
   --picker-active-text-color: #000000 !important;
-  --picker-text-color: #6B6F68 !important;
+  --picker-text-color: #3A3D38 !important;
   --picker-border-color: transparent !important;
-  --picker-border-radius: 0 !important;
+  --picker-border-radius: 8px !important;
   --picker-hover-bg-color: transparent !important;
   --picker-hover-border-color: transparent !important;
 }
