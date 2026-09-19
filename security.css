@@ -51,7 +51,7 @@
   color: #FAFAF8 !important;
 }
 
-.notion-root[data-enc-security] .enc-sec__band > p.notion-text {
+.notion-root[data-enc-security] .enc-sec__band p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent) {
   margin: 0 !important;
   font-family: var(--type-body), system-ui, sans-serif !important;
   font-size: 18px !important;
@@ -61,11 +61,42 @@
   text-wrap: pretty !important;
 }
 
-.notion-root[data-enc-security] [data-enc-sec="01"] > p.notion-text,
-.notion-root[data-enc-security] [data-enc-sec="03"] > p.notion-text,
-.notion-root[data-enc-security] [data-enc-sec="05"] > p.notion-text,
-.notion-root[data-enc-security] [data-enc-sec="06"] > p.notion-text {
+.notion-root[data-enc-security] [data-enc-sec="01"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent),
+.notion-root[data-enc-security] [data-enc-sec="03"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent),
+.notion-root[data-enc-security] [data-enc-sec="05"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent),
+.notion-root[data-enc-security] [data-enc-sec="06"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent) {
   color: #C9C9C4 !important;
+}
+
+/* Notion's heading anchors are empty siblings; as flex items they would open a gap */
+{R}.enc-sec__band .notion-heading__anchor {{ display: none !important; }}
+
+/* 01 · a wider band, a bigger statement, a narrower lede */
+{R}[data-enc-sec="01"] {{
+  padding-top: clamp(64px, 7vw, 96px);
+  padding-bottom: clamp(64px, 7vw, 96px);
+}}
+
+{R}[data-enc-sec="01"] h2 {{
+  font-size: clamp(38px, 4.6vw, 64px) !important;
+  letter-spacing: -0.046em !important;
+  max-width: 12ch !important;
+}}
+
+{R}[data-enc-sec="01"] .enc-sec__rail > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent) {{
+  max-width: 38ch !important;
+}}
+
+/* 05 · the head reads a size down */
+{R}[data-enc-sec="05"] h2 {{
+  font-size: clamp(30px, 3.4vw, 44px) !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.036em !important;
+  max-width: 18ch !important;
+}}
+
+{R}[data-enc-sec="05"] .enc-sec__rail > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent) {
+  font-size: clamp(16px, 1.5vw, 19px) !important;
 }
 
 /* the kicker, stated after the band's paragraph rule so it wins on order as well as weight */
@@ -308,6 +339,17 @@
   display: none !important;
 }
 
+
+/* 02 · the head trio at 14, everything after it at the section's 36 */
+.notion-root[data-enc-security] [data-enc-sec="02"] { gap: 14px; }
+
+.notion-root[data-enc-security] .enc-sec__bar,
+.notion-root[data-enc-security] .enc-sec__canvas,
+.notion-root[data-enc-security] .enc-sec__ledger { margin-top: 22px; }
+
+/* 05 · the head trio at 16, the table 24 below it */
+.notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__rail { gap: 16px; }
+.notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__table { margin-top: 8px; }
 
 /* the bar: the segmented control, and the story it tells beside it */
 .notion-root[data-enc-security] .enc-sec__bar {
