@@ -1,7 +1,83 @@
-.notion-pill{font-size: 13px!important;border-radius: 18px!important;padding: 8px 8px!important;border: 1px solid black;display: flex;justify-content: center;width: 100%;}
-#block-0da8da634e5642b1a319a32a030321ee{border: 2px solid black!important;}
-#block-0159f44fc98d460cae9cbff9f4ae8267 strong{color: var(--color-bg-blue)!important;line-height: 1;margin-top: 0 !important;padding-top: 0 !important;font-size: calc(1px + 9vw) !important;font-weight: 200 !important;font-family: Arial Black,sans-serif;text-shadow: 4px 4px 0px rgba(0,0,0,1) !important;display: flex;-webkit-text-stroke: 2px black;text-stroke: 2px black !important;}
-#block-0159f44fc98d460cae9cbff9f4ae8267:after{margin-top: 40px!important;content: "";display: block;height: 2px!important;margin: 4px 0;width: calc(100% + 40px);transform: translateX(-20px);}
-#block-0159f44fc98d460cae9cbff9f4ae8267:before{background: none!important}
-#block-13d1cda5c63044a8b662da280ea943bf{font-size: 22px!important;font-family: Georgia;@media (max-width: 800px){font-size: 18px!important;}
+.notion-root[data-enc-security] .enc-sec__band{width: 100vw;margin-inline: calc(50% - 50vw);padding: clamp(56px,7vw,96px) max(28px,calc(50vw - 610px));display: flex;flex-direction: column;gap: 28px;}
+.notion-root[data-enc-security] [data-enc-sec="01"],.notion-root[data-enc-security] [data-enc-sec="03"],.notion-root[data-enc-security] [data-enc-sec="05"]{background: #2A2C28;color: #FAFAF8;}
+.notion-root[data-enc-security] [data-enc-sec="02"],.notion-root[data-enc-security] [data-enc-sec="04"]{background: #FAFAF8;}
+.notion-root[data-enc-security] [data-enc-sec="06"]{background: #2A2C28;}
+.notion-root[data-enc-security] .enc-sec__kicker{margin: 0 !important;font-family: var(--type-mono),ui-monospace,monospace !important;font-size: 10.5px !important;letter-spacing: 0.12em !important;text-transform: uppercase !important;color: #575B55 !important;}
+.notion-root[data-enc-security] [data-enc-sec="01"] .enc-sec__kicker,.notion-root[data-enc-security] [data-enc-sec="03"] .enc-sec__kicker,.notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__kicker,.notion-root[data-enc-security] [data-enc-sec="06"] .enc-sec__kicker{color: #B4B4B4 !important;}
+.notion-root[data-enc-security] .enc-sec__band h2{margin: 0 !important;max-width: 15ch !important;font-family: var(--type-display),system-ui,sans-serif !important;font-weight: 600 !important;font-size: clamp(34px,4.2vw,58px) !important;line-height: 0.98 !important;letter-spacing: -0.044em !important;color: #000000 !important;}
+.notion-root[data-enc-security] [data-enc-sec="01"] h2,.notion-root[data-enc-security] [data-enc-sec="05"] h2{color: #FAFAF8 !important;}
+.notion-root[data-enc-security] .enc-sec__band > p.notion-text{margin: 0 !important;font-family: var(--type-body),system-ui,sans-serif !important;font-size: 18px !important;line-height: 1.52 !important;color: #3A3D38 !important;max-width: 46ch !important;text-wrap: pretty !important;}
+.notion-root[data-enc-security] [data-enc-sec="01"] > p.notion-text,.notion-root[data-enc-security] [data-enc-sec="03"] > p.notion-text,.notion-root[data-enc-security] [data-enc-sec="05"] > p.notion-text,.notion-root[data-enc-security] [data-enc-sec="06"] > p.notion-text{color: #C9C9C4 !important;}
+.notion-root[data-enc-security] .enc-sec__fig{display: flex !important;flex-direction: column !important;gap: 6px !important;max-width: none !important;}
+.notion-root[data-enc-security] .enc-sec__fig .enc-sec__term{font-family: var(--type-display),system-ui,sans-serif;font-weight: 600;font-size: 34px;letter-spacing: -0.04em;color: #FAFAF8;font-variant-numeric: tabular-nums;}
+.notion-root[data-enc-security] .enc-sec__fig .enc-sec__line{font-size: 13.5px;line-height: 1.4;color: #B4B4B4;}
+.notion-root[data-enc-security] [data-enc-sec="01"]{display: grid;grid-template-columns: minmax(0,0.9fr) minmax(0,1.1fr);gap: clamp(28px,4vw,72px);align-items: start;}
+.notion-root[data-enc-security] [data-enc-sec="01"] > .enc-sec__kicker,.notion-root[data-enc-security] [data-enc-sec="01"] > h2,.notion-root[data-enc-security] [data-enc-sec="01"] > p.notion-text,.notion-root[data-enc-security] [data-enc-sec="01"] > .notion-callout{grid-column: 1;}
+.notion-root[data-enc-security] [data-enc-sec="01"] > .notion-toggle{grid-column: 2;}
+.notion-root[data-enc-security] .notion-toggle{margin: 0 !important;padding: 0 !important;border-bottom: 1px solid rgba(250,250,248,0.18);}
+.notion-root[data-enc-security] [data-enc-sec="02"] .notion-toggle,.notion-root[data-enc-security] [data-enc-sec="04"] .notion-toggle{border-bottom-color: #E2E2DB;}
+.notion-root[data-enc-security] .notion-toggle__summary{display: flex !important;align-items: center;gap: 12px;min-height: 56px;cursor: pointer;}
+.notion-root[data-enc-security] .notion-toggle__summary > .notion-semantic-string{font-family: var(--type-display),system-ui,sans-serif !important;font-weight: 600 !important;font-size: 17px !important;letter-spacing: -0.02em !important;color: #FAFAF8 !important;}
+.notion-root[data-enc-security] [data-enc-sec="02"] .notion-toggle__summary > .notion-semantic-string,.notion-root[data-enc-security] [data-enc-sec="04"] .notion-toggle__summary > .notion-semantic-string{color: #000000 !important;}
+.notion-root[data-enc-security] .notion-toggle__trigger{order: 2;margin-left: auto !important;width: 20px;height: 20px;flex: none;color: #9FA39B;}
+.notion-root[data-enc-security] .notion-toggle__content p.notion-text{margin: 0 0 18px !important;font-family: var(--type-body),system-ui,sans-serif !important;font-size: 14.5px !important;line-height: 1.55 !important;color: #C9C9C4 !important;max-width: 62ch !important;}
+.notion-root[data-enc-security] [data-enc-sec="02"] .notion-toggle__content p.notion-text,.notion-root[data-enc-security] [data-enc-sec="04"] .notion-toggle__content p.notion-text{color: #3A3D38 !important;}
+.notion-root[data-enc-security] [data-enc-sec="01"] > .notion-callout{--btn-h: 48px;--btn-px: 20px;--btn-fs: 16px;margin: 0 !important;}
+.notion-root[data-enc-security] .enc-sec__source{display: none !important;}
+.notion-root[data-enc-security] .enc-sec__tabs{display: flex;gap: 4px;padding: 4px;border-radius: 10px;background: #F2F2ED;align-self: flex-start;flex-wrap: wrap;}
+.notion-root[data-enc-security] .enc-sec__tab{appearance: none;cursor: pointer;height: 36px;padding: 0 14px;border: 1px solid transparent;border-radius: 8px;background: transparent;font-family: var(--type-body),system-ui,sans-serif;font-size: 14px;font-weight: 500;letter-spacing: -0.006em;color: #3A3D38;transition: background-color 0.16s ease,border-color 0.16s ease,color 0.16s ease;}
+.notion-root[data-enc-security] .enc-sec__tab:hover{border-color: #D9D9D2;}
+.notion-root[data-enc-security] .enc-sec__tab[data-enc-on]{background: #FAFAF8;border-color: #D9D9D2;box-shadow: inset 0 1.5px 0 rgba(255,255,255,1),0 1px 2px rgba(0,0,0,0.06);color: #000000;}
+.notion-root[data-enc-security] .enc-sec__panel{display: flex;flex-direction: column;gap: 20px;}
+.notion-root[data-enc-security] .enc-sec__story{margin: 0;max-width: 78ch;font-family: var(--type-body),system-ui,sans-serif;font-size: 15px;line-height: 1.55;color: #3A3D38;text-wrap: pretty;}
+.notion-root[data-enc-security] .enc-sec__arch{position: relative;display: grid;grid-template-columns: minmax(0,0.7fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) minmax(0,0.8fr);grid-template-areas: ".   net  net  net  net" ".   senA .    senB full" "eng valA .    valB ." ".   cos1 cos2 cos3 mon";gap: 44px 24px;padding: 26px 0 8px;}
+.notion-root[data-enc-security] .enc-sec__frame{grid-area: senA / senA / cos3 / mon;margin: -16px;border: 1px dashed #B9B9B1;border-radius: 4px;opacity: 0.45;transition: opacity 0.25s ease,border-color 0.25s ease;position: relative;}
+.notion-root[data-enc-security] .enc-sec__frame[data-enc-lit]{opacity: 1;border-color: #000000;}
+.notion-root[data-enc-security] .enc-sec__frame-label{position: absolute;bottom: -8px;left: 16px;padding: 0 6px;background: #FAFAF8;font-family: var(--type-mono),ui-monospace,monospace;font-size: 8.5px;letter-spacing: 0.1em;text-transform: uppercase;color: #000000;white-space: nowrap;}
+.notion-root[data-enc-security] .enc-sec__node{position: relative;z-index: 1;display: flex;flex-direction: column;gap: 3px;padding: 14px 16px;border: 1px solid #D9D9D2;border-radius: 10px;background: #FAFAF8;opacity: 0.38;transition: opacity 0.2s ease,border-color 0.2s ease;}
+.notion-root[data-enc-security] .enc-sec__node[data-enc-lit]{opacity: 1;border-color: #000000;}
+.notion-root[data-enc-security] .enc-sec__node[data-enc-tint="blue"]{background: #D2E3F6;}
+.notion-root[data-enc-security] .enc-sec__node[data-enc-tint="green"]{background: #DCEEC7;}
+.notion-root[data-enc-security] .enc-sec__node[data-enc-tint="yellow"]{background: #F8E8B3;}
+.notion-root[data-enc-security] .enc-sec__node[data-enc-tint="orange"]{background: #F8DDC6;}
+.notion-root[data-enc-security] .enc-sec__node[data-enc-tint="pink"]{background: #F7DCE7;}
+.notion-root[data-enc-security] .enc-sec__nk{font-family: var(--type-mono),ui-monospace,monospace;font-size: 8.5px;letter-spacing: 0.12em;text-transform: uppercase;color: #6B6F68;}
+.notion-root[data-enc-security] .enc-sec__nt{font-family: var(--type-display),system-ui,sans-serif;font-weight: 600;font-size: 15px;letter-spacing: -0.018em;color: #000000;}
+.notion-root[data-enc-security] .enc-sec__nl{font-family: var(--type-body),system-ui,sans-serif;font-size: 12px;line-height: 1.4;color: #3A3D38;}
+.notion-root[data-enc-security] .enc-sec__link{display: none;}
+.notion-root[data-enc-security] .enc-sec__ledger{display: grid;grid-template-columns: repeat(auto-fit,minmax(min(100%,320px),1fr));gap: 0 32px;border-top: 1px solid #000000;}
+.notion-root[data-enc-security] .enc-sec__row{display: grid !important;grid-template-columns: 96px minmax(0,1fr);gap: 4px 14px;align-items: baseline;margin: 0 !important;padding: 16px 0 !important;border-bottom: 1px solid #E2E2DB;max-width: none !important;}
+.notion-root[data-enc-security] .enc-sec__row .enc-sec__verb{grid-row: 1 / 3;font-family: var(--type-mono),ui-monospace,monospace;font-size: 9.5px;letter-spacing: 0.12em;text-transform: uppercase;color: #6B6F68;}
+.notion-root[data-enc-security] .enc-sec__row .enc-sec__term{font-family: var(--type-display),system-ui,sans-serif;font-weight: 600;font-size: 16px;letter-spacing: -0.02em;color: #000000;}
+.notion-root[data-enc-security] .enc-sec__row .enc-sec__line{font-family: var(--type-body),system-ui,sans-serif;font-size: 13.5px;line-height: 1.5;color: #3A3D38;}
+.notion-root[data-enc-security] [data-enc-sec="03"] > p.notion-text:not(.enc-sec__kicker):first-of-type{font-family: var(--type-display),system-ui,sans-serif !important;font-weight: 600 !important;font-size: clamp(26px,3.2vw,48px) !important;line-height: 1.16 !important;letter-spacing: -0.038em !important;color: #FAFAF8 !important;max-width: 28ch !important;}
+.notion-root[data-enc-security] .enc-sec__seg{display: flex;gap: 4px;padding: 4px;border-radius: 10px;background: #F2F2ED;flex-wrap: wrap;}
+.notion-root[data-enc-security] .enc-sec__segbtn{appearance: none;cursor: pointer;flex: 1 1 0;min-width: 0;height: 36px;padding: 0 10px;display: inline-flex;align-items: center;justify-content: center;gap: 8px;border: 1px solid transparent;border-radius: 8px;background: transparent;font-family: var(--type-body),system-ui,sans-serif;font-size: 13.5px;font-weight: 500;letter-spacing: -0.006em;color: #3A3D38;white-space: nowrap;transition: background-color 0.16s ease,border-color 0.16s ease,color 0.16s ease;}
+.notion-root[data-enc-security] .enc-sec__segbtn:hover{border-color: #D9D9D2;}
+.notion-root[data-enc-security] .enc-sec__segbtn[data-enc-on]{background: #FAFAF8;border-color: #D9D9D2;box-shadow: inset 0 1.5px 0 rgba(255,255,255,1),0 1px 2px rgba(0,0,0,0.06);color: #000000;}
+.notion-root[data-enc-security] .enc-sec__segn{font-family: var(--type-mono),ui-monospace,monospace;font-size: 10px;letter-spacing: 0.08em;color: #6B6F68;}
+.notion-root[data-enc-security] .enc-sec__segbtn[data-enc-on] .enc-sec__segn{color: #000000;}
+.notion-root[data-enc-security] .enc-sec__stage{display: grid;grid-template-columns: minmax(0,1fr) minmax(0,1fr);gap: 18px;padding: 24px;border: 1px solid #E2E2DB;border-radius: 12px;background: #F2F2ED;}
+.notion-root[data-enc-security] .enc-sec__host{display: flex;flex-direction: column;gap: 4px;padding: 16px;border: 1px solid #D9D9D2;border-radius: 10px;background: #FAFAF8;transition: opacity 0.2s ease,border-color 0.2s ease,background-color 0.2s ease;}
+.notion-root[data-enc-security] .enc-sec__host[data-enc-state="live"]{background: #DCEEC7;border-color: #7CAE48;}
+.notion-root[data-enc-security] .enc-sec__host[data-enc-state="lost"]{opacity: 0.4;border-style: dashed;}
+.notion-root[data-enc-security] .enc-sec__host[data-enc-state="standby"]{background: #FAFAF8;}
+.notion-root[data-enc-security] .enc-sec__hk{font-family: var(--type-mono),ui-monospace,monospace;font-size: 9px;letter-spacing: 0.12em;text-transform: uppercase;color: #6B6F68;}
+.notion-root[data-enc-security] .enc-sec__ht{font-family: var(--type-display),system-ui,sans-serif;font-weight: 600;font-size: 16px;letter-spacing: -0.02em;color: #000000;}
+.notion-root[data-enc-security] .enc-sec__hs{font-family: var(--type-mono),ui-monospace,monospace;font-size: 9px;letter-spacing: 0.12em;text-transform: uppercase;color: #3A3D38;}
+.notion-root[data-enc-security] .enc-sec__bus{grid-column: 1 / -1;display: flex;gap: 10px;flex-wrap: wrap;}
+.notion-root[data-enc-security] .enc-sec__cos{flex: 1 1 0;min-width: 96px;padding: 10px 12px;border-radius: 999px;background: #F8E8B3;font-family: var(--type-mono),ui-monospace,monospace;font-size: 9.5px;letter-spacing: 0.12em;text-transform: uppercase;color: #000000;text-align: center;}
+.notion-root[data-enc-security] .enc-sec__note{grid-column: 1 / -1;font-family: var(--type-mono),ui-monospace,monospace;font-size: 9.5px;letter-spacing: 0.12em;text-transform: uppercase;color: #575B55;}
+.notion-root[data-enc-security] .enc-sec__step[data-enc-on] .notion-toggle__summary > .notion-semantic-string{color: #000000 !important;}
+.notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__row{grid-template-columns: minmax(0,1fr) auto;border-bottom-color: rgba(250,250,248,0.18);}
+.notion-root[data-enc-security] [data-enc-sec="06"]{display: grid;grid-template-columns: minmax(0,1fr) minmax(0,1fr);gap: clamp(32px,5vw,80px);align-items: start;}
+.notion-root[data-enc-security] [data-enc-sec="06"] > *:nth-child(-n+3){grid-column: 1;}
+.notion-root[data-enc-security] [data-enc-sec="06"] > *:nth-child(n+4){grid-column: 2;}
+.notion-root[data-enc-security] [data-enc-sec="06"] > p.notion-text:nth-child(2){font-family: var(--type-display),system-ui,sans-serif !important;font-weight: 600 !important;font-size: clamp(120px,18vw,300px) !important;line-height: 0.84 !important;letter-spacing: -0.07em !important;color: #FAFAF8 !important;font-variant-numeric: tabular-nums !important;max-width: none !important;}
+.notion-root[data-enc-security] [data-enc-sec="06"] > p.notion-text:nth-child(5){font-family: var(--type-display),system-ui,sans-serif !important;font-weight: 600 !important;font-size: clamp(40px,6vw,104px) !important;line-height: 0.9 !important;letter-spacing: -0.055em !important;color: #FAFAF8 !important;max-width: 8ch !important;}
+@media (max-width: 900px){.notion-root[data-enc-security] [data-enc-sec="01"],.notion-root[data-enc-security] [data-enc-sec="06"]{grid-template-columns: minmax(0,1fr);}
+.notion-root[data-enc-security] [data-enc-sec="01"] > .notion-toggle,.notion-root[data-enc-security] [data-enc-sec="06"] > *{grid-column: 1;}
+.notion-root[data-enc-security] .enc-sec__arch{grid-template-columns: minmax(0,1fr);grid-template-areas: "net" "senA" "senB" "full" "eng" "valA" "valB" "cos1" "cos2" "cos3" "mon";gap: 12px;}
+.notion-root[data-enc-security] .enc-sec__frame{display: none;}
+.notion-root[data-enc-security] .enc-sec__stage{grid-template-columns: minmax(0,1fr);}
 }
