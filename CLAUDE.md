@@ -16,6 +16,16 @@ The user shares a design handoff. I:
    files that changed. Keep the second column to the name of the target and nothing else: `site`
    for the site head, otherwise the page (`brand`, `guides`, `/networks`). The full
    Settings → Code → Head path is noise; the table below says where each file goes.
+5. **and a second table of everything else the user has to do** — `Action | Where | Why` — for
+   anything I cannot do from here (set 2026-09-19). Never leave one of these as a sentence in the
+   middle of a reply: if the user has to act, it is a row in that table. The recurring ones:
+
+   | Action | Where | Why |
+   |---|---|---|
+   | Show a property on a view | Notion → the view → view options → Properties | the API cannot switch a view's properties on (Guides Step/Time, the pillars' Word) |
+   | Switch a database between table and gallery, or set a view's sort or filter | Notion → the view | same — the API cannot change a view at all |
+   | Republish a page | Super | the site head is baked per page; after a site-head paste, pages pick it up unevenly, and a stale page runs an old script for every page you navigate to from it |
+   | Rotate the integration token | Notion → integration settings | it was shown in chat once |
 
 **The order of work on a handoff (set 2026-09-17):**
 
@@ -260,6 +270,23 @@ opens on every page, and main.css is the only stylesheet that is on every page.
   "Copied" feedback, and the user agreed to it on 2026-09-18.
 - `window.encBook` publishes `when()`, `calendarLinks()` and `meetUrl()` so contact.js and the
   drawer cannot drift on the payload; the design file asks for exactly that extraction.
+
+## The governance page's last two sections (2026-09-19, design *Governance Record Wow*)
+
+**The pillars are a quadrant**: a 2×2 of pastel fields, each carrying one word at display scale
+(Read. / Weigh. / Listen. / Step back.), the number in mono at the top right, the question and its
+line at the foot, and an ink "then / Vote" disc at the crosshair. The word is a **Word** property on
+the `Governance Mechanism` database (added 2026-09-19); **it has to be switched on in the record
+page's gallery view by hand** — the API cannot change a view. Without it the field still reads
+(number, question, line), so it degrades rather than breaks. `governance.js` marks each card's text
+properties by view order (`data-enc-pillar="title|line|word"`) so no CSS depends on Super's property
+hashes. The handoff's `auto-fit` track expression resolves its percentage against the wrong box
+inside a Notion collection and gave four tracks in a row — the 2×2 is stated outright instead.
+
+**The record is one line per ballot**: proposal, the vote as a mono capsule that inverts to ink on
+hover, the date, the arrow. A hairline under each line darkens instead of the row filling green, and
+the **rationale is collapsed and opens beneath the line on hover or focus** rather than always being
+printed. The homepage's table got the same line treatment (2026-09-19) — its pillars band did not.
 
 ## The contact band's fold holds the dial (2026-09-18)
 
