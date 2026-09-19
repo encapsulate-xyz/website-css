@@ -25,7 +25,7 @@
      built with, so a newer script unwraps an older build and does it again rather than finding
      bands already there and leaving them — which is what happens on a page still serving the
      previous release from its baked site head. */
-  var VERSION = "2";
+  var VERSION = "3";
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -47,25 +47,38 @@
      A story lights a set of nodes; everything else dims. Connectors are CSS rules between grid
      cells, so nothing is measured and nothing redraws on resize. */
   var NODES = [
-    { id: "net",  area: "net",  kicker: "Outside",          title: "The internet", line: "Peers, RPC clients, everything inbound", tint: "" },
-    { id: "senA", area: "senA", kicker: "Region 1",         title: "Sentries",     line: "Replaceable, re-addressable", tint: "blue" },
-    { id: "senB", area: "senB", kicker: "Region 2",         title: "Sentries",     line: "Replaceable, re-addressable", tint: "blue" },
-    { id: "full", area: "full", kicker: "Public reads",     title: "Full nodes",   line: "RPC, indexing. Hold nothing.", tint: "orange" },
-    { id: "eng",  area: "eng",  kicker: "Outside",          title: "An engineer",  line: "Tagged laptop, hardware key", tint: "" },
-    { id: "valA", area: "valA", kicker: "Primary · signing", title: "Validator A", line: "Bare metal. Nothing else on it.", tint: "green" },
-    { id: "valB", area: "valB", kicker: "Standby · in sync", title: "Validator B", line: "Bare metal. Waiting for the cosigners.", tint: "paper" },
-    { id: "cos1", area: "cos1", kicker: "Shard 1",          title: "Cosigner",     line: "Own host. No inbound.", tint: "yellow" },
-    { id: "cos2", area: "cos2", kicker: "Shard 2",          title: "Cosigner",     line: "Own host. No inbound.", tint: "yellow" },
-    { id: "cos3", area: "cos3", kicker: "Shard 3",          title: "Cosigner",     line: "Own host. No inbound.", tint: "yellow" },
-    { id: "mon",  area: "mon",  kicker: "Every host",       title: "Monitoring",   line: "auditd, Wazuh, Loki, alerts to a person", tint: "pink" }
+    { id: "net",  area: "1 / 3 / 2 / 10", kicker: "Outside",           title: "The internet", line: "Peers, RPC clients, everything inbound", tint: "dash" },
+    { id: "senA", area: "3 / 3 / 4 / 4",  kicker: "Region 1",          title: "Sentries",     line: "Replaceable, re-addressable", tint: "blue" },
+    { id: "senB", area: "3 / 7 / 4 / 8",  kicker: "Region 2",          title: "Sentries",     line: "Replaceable, re-addressable", tint: "blue" },
+    { id: "full", area: "3 / 9 / 4 / 10", kicker: "Public reads",      title: "Full nodes",   line: "RPC, indexing. Hold nothing.", tint: "orange" },
+    { id: "eng",  area: "5 / 1 / 6 / 2",  kicker: "Outside",           title: "An engineer",  line: "Tagged laptop, hardware key", tint: "dash" },
+    { id: "valA", area: "5 / 3 / 6 / 4",  kicker: "Primary · signing", title: "Validator A",  line: "Bare metal. Nothing else on it.", tint: "green" },
+    { id: "valB", area: "5 / 7 / 6 / 8",  kicker: "Standby · in sync", title: "Validator B",  line: "Bare metal. Waiting for the cosigners.", tint: "paper" },
+    { id: "cos1", area: "7 / 3 / 8 / 4",  kicker: "Shard 1",           title: "Cosigner",     line: "Own host. No inbound.", tint: "yellow" },
+    { id: "cos2", area: "7 / 5 / 8 / 6",  kicker: "Shard 2",           title: "Cosigner",     line: "Own host. No inbound.", tint: "yellow" },
+    { id: "cos3", area: "7 / 7 / 8 / 8",  kicker: "Shard 3",           title: "Cosigner",     line: "Own host. No inbound.", tint: "yellow" },
+    { id: "mon",  area: "7 / 9 / 8 / 10", kicker: "Every host",        title: "Monitoring",   line: "auditd, Wazuh, Loki, alerts to a person", tint: "pink" }
   ];
 
-  // which nodes each story lights — the handoff's own sets
+  // the connectors live in the grid's own lanes — the 44px and 24px tracks between the node columns
+  var LINKS = [
+    { id: "l-net-A",    area: "2 / 3 / 3 / 4",  label: "p2p",   dir: "v" },
+    { id: "l-net-B",    area: "2 / 7 / 3 / 8",  label: "p2p",   dir: "v" },
+    { id: "l-net-full", area: "2 / 9 / 3 / 10", label: "rpc",   dir: "v" },
+    { id: "l-peers-A",  area: "4 / 3 / 5 / 4",  label: "peers", dir: "v" },
+    { id: "l-peers-B",  area: "4 / 7 / 5 / 8",  label: "peers", dir: "v" },
+    { id: "l-eng",      area: "5 / 2 / 6 / 3",  label: "ssh",   dir: "h" },
+    { id: "l-logs",     area: "7 / 8 / 8 / 9",  label: "logs",  dir: "h", dashed: true }
+  ];
+
+  // which nodes and which connectors each story lights — the handoff's own sets
   var STORIES = {
-    "a block":     ["net", "senA", "senB", "valA", "valB", "cos1", "cos2", "cos3"],
-    "a signature": ["cos1", "cos2", "cos3", "valA", "valB"],
-    "an engineer": ["eng", "frame", "senA", "senB", "valA", "valB", "cos1", "cos2", "cos3", "full", "mon"],
-    "an attacker": ["net", "senA", "senB", "full"]
+    "a block":     { n: ["net", "senA", "senB", "valA", "valB", "cos1", "cos2", "cos3"],
+                     l: ["l-net-A", "l-net-B", "l-peers-A", "l-peers-B", "bus", "bus-A"] },
+    "a signature": { n: ["cos1", "cos2", "cos3", "valA", "valB"], l: ["bus", "bus-A", "bus-B"] },
+    "an engineer": { n: ["eng", "frame", "senA", "senB", "valA", "valB", "cos1", "cos2", "cos3", "full", "mon"],
+                     l: ["l-eng", "l-logs"] },
+    "an attacker": { n: ["net", "senA", "senB", "full"], l: ["l-net-A", "l-net-B", "l-net-full"] }
   };
 
   function node(n) {
@@ -77,6 +90,41 @@
     box.appendChild(el("span", "enc-sec__nt", n.title));
     box.appendChild(el("span", "enc-sec__nl", n.line));
     return box;
+  }
+
+  function link(l) {
+    var w = el("div", "enc-sec__link");
+    w.setAttribute("data-enc-link", l.id);
+    w.setAttribute("data-enc-dir", l.dir);
+    if (l.dashed) w.setAttribute("data-enc-dashed", "");
+    w.style.gridArea = l.area;
+    w.appendChild(el("span", "enc-sec__lrule"));
+    if (l.label) w.appendChild(el("span", "enc-sec__llabel", l.label));
+    return w;
+  }
+
+  /* the cosigner bus: a rail under the validators, a stub up to each of them and one down to each
+     of the three cosigners. The rail's ends sit over the outer cosigners, a sixth of the free
+     width in from either side (three node columns and two 24px gaps). */
+  function bus() {
+    var b = el("div", "enc-sec__busrail");
+    b.style.gridArea = "6 / 3 / 7 / 8";
+    var rail = el("span", "enc-sec__brail");
+    rail.setAttribute("data-enc-link", "bus");
+    b.appendChild(rail);
+    [["bus-A", "up", "calc((100% - 48px) / 6)"], ["bus-B", "up", "calc(100% - (100% - 48px) / 6)"],
+     ["bus", "down", "calc((100% - 48px) / 6)"], ["bus", "down", "50%"],
+     ["bus", "down", "calc(100% - (100% - 48px) / 6)"]].forEach(function (s) {
+      var st = el("span", "enc-sec__bstub");
+      st.setAttribute("data-enc-link", s[0]);
+      st.setAttribute("data-enc-updown", s[1]);
+      st.style.left = s[2];
+      b.appendChild(st);
+    });
+    var lab = el("span", "enc-sec__blabel", "out · dials both · 2 of 3");
+    lab.setAttribute("data-enc-link", "bus");
+    b.appendChild(lab);
+    return b;
   }
 
   function diagram() {
@@ -91,13 +139,14 @@
     frame.appendChild(el("span", "enc-sec__frame-label",
       "Private tailnet · firewall on every host, inbound denied by default"));
     d.appendChild(frame);
+    LINKS.forEach(function (l) { d.appendChild(link(l)); });
+    d.appendChild(bus());
     NODES.forEach(function (n) { d.appendChild(node(n)); });
-    ["p2p-a", "p2p-b", "rpc", "peers-a", "peers-b", "ssh", "bus", "logs"].forEach(function (k) {
-      var l = el("span", "enc-sec__link");
-      l.setAttribute("data-enc-link", k);
-      d.appendChild(l);
-    });
-    return d;
+    var canvas = el("div", "enc-sec__canvas");
+    var inner = el("div", "enc-sec__canvin");
+    inner.appendChild(d);
+    canvas.appendChild(inner);
+    return canvas;
   }
 
   /* ── the stage in 04 ───────────────────────────────────────────────────────────────────────
@@ -195,7 +244,8 @@
     Array.prototype.forEach.call(root.querySelectorAll(
       ".enc-sec__tabs, .enc-sec__panel, .enc-sec__ledger, .enc-sec__seg, .enc-sec__stage," +
       ".enc-sec__table, .enc-sec__pair, .enc-sec__rail, .enc-sec__rows, .enc-sec__spine," +
-      ".enc-sec__figs, .enc-sec__half"), function (n) { n.remove(); });
+      ".enc-sec__figs, .enc-sec__half, .enc-sec__bar, .enc-sec__canvas, .enc-sec__verbs," +
+      ".enc-sec__rules"), function (n) { n.remove(); });
   }
 
   function build() {
@@ -249,21 +299,33 @@
       one.appendChild(rows);
     }
 
-    // 02 · the ledger rows, then the diagram and its tabs
+    // 02 · the segmented bar and its caption, the diagram, then the ledger
     var two = root.querySelector('[data-enc-sec="02"]');
     if (two) {
-      var rows = el("div", "enc-sec__ledger");
+      var rows = el("div", "enc-sec__rules");
+      var verbs = el("div", "enc-sec__verbs");
+      verbs.setAttribute("role", "tablist");
+      var ledger = el("div", "enc-sec__ledger");
+      var bar = el("div", "enc-sec__bar");
       var tabs = el("div", "enc-sec__tabs");
       tabs.setAttribute("role", "tablist");
-      var panel = el("div", "enc-sec__panel");
-      var story = el("p", "enc-sec__story");
+      var cap = el("div", "enc-sec__cap");
+      var capb = el("span", "enc-sec__capb");
+      cap.appendChild(el("span", "enc-sec__capd"));
+      capb.appendChild(el("span", "enc-sec__capn"));
+      capb.appendChild(el("p", "enc-sec__story"));
+      cap.appendChild(capb);
+      bar.appendChild(tabs);
+      bar.appendChild(cap);
       Array.prototype.slice.call(two.children).forEach(function (n) {
         if (n.classList.contains("notion-toggle")) {
           var name = label(n).toLowerCase();
-          var tab = el("button", "enc-sec__tab", label(n));
+          var tab = el("button", "enc-sec__tab");
           tab.type = "button";
           tab.setAttribute("role", "tab");
           tab.setAttribute("data-enc-story", name);
+          tab.appendChild(el("span", "enc-sec__tn", "0" + (tabs.children.length + 1)));
+          tab.appendChild(el("span", "enc-sec__tt", label(n)));
           tab.addEventListener("click", function () { pick(two, name); });
           tabs.appendChild(tab);
           n.classList.add("enc-sec__source");
@@ -274,12 +336,32 @@
           if (split(n, 3)) { n.classList.add("enc-sec__row"); rows.appendChild(n); }
         }
       });
-      panel.appendChild(diagram());
-      panel.appendChild(story);
-      two.appendChild(tabs);
-      two.appendChild(panel);
-      two.appendChild(rows);
+      Array.prototype.forEach.call(rows.querySelectorAll(".enc-sec__row"), function (r, i) {
+        var v = r.querySelector(".enc-sec__verb");
+        var btn = el("button", "enc-sec__verbbtn");
+        btn.type = "button";
+        btn.setAttribute("role", "tab");
+        btn.setAttribute("data-enc-i", String(i % 5));
+        btn.appendChild(el("span", "enc-sec__vd", ("0" + (i + 1)).slice(-2)));
+        btn.appendChild(el("span", "enc-sec__vv", v ? textOf(v) : ""));
+        btn.addEventListener("click", function () { openRule(rows, i); });
+        btn.addEventListener("mouseenter", function () { openRule(rows, i); });
+        btn.addEventListener("focus", function () { openRule(rows, i); });
+        verbs.appendChild(btn);
+        r.setAttribute("data-enc-i", String(i % 5));
+        var head = el("div", "enc-sec__head");
+        head.appendChild(el("span", "enc-sec__num", ("0" + (i + 1)).slice(-2)));
+        var term = r.querySelector(".enc-sec__term");
+        if (term) head.appendChild(term);
+        r.insertBefore(head, r.firstChild);
+      });
+      ledger.appendChild(verbs);
+      ledger.appendChild(rows);
+      two.appendChild(bar);
+      two.appendChild(diagram());
+      two.appendChild(ledger);
       pick(two, "a block");
+      openRule(rows, 0);
     }
 
     // 05 · the promises read as label and value
@@ -358,25 +440,50 @@
   }
 
   function pick(band, name) {
-    var lit = STORIES[name] || [];
-    band.querySelectorAll(".enc-sec__tab").forEach(function (t) {
+    var st = STORIES[name] || { n: [], l: [] };
+    var idx = 0;
+    var tabs = band.querySelectorAll(".enc-sec__tab");
+    Array.prototype.forEach.call(tabs, function (t, i) {
       var on = t.getAttribute("data-enc-story") === name;
+      if (on) idx = i;
       t.setAttribute("aria-selected", on ? "true" : "false");
       if (on) t.setAttribute("data-enc-on", ""); else t.removeAttribute("data-enc-on");
     });
-    band.querySelectorAll("[data-enc-node]").forEach(function (n) {
-      if (lit.indexOf(n.getAttribute("data-enc-node")) >= 0) n.setAttribute("data-enc-lit", "");
+    Array.prototype.forEach.call(band.querySelectorAll("[data-enc-node]"), function (n) {
+      if (st.n.indexOf(n.getAttribute("data-enc-node")) >= 0) n.setAttribute("data-enc-lit", "");
+      else n.removeAttribute("data-enc-lit");
+    });
+    Array.prototype.forEach.call(band.querySelectorAll("[data-enc-link]"), function (n) {
+      if (st.l.indexOf(n.getAttribute("data-enc-link")) >= 0) n.setAttribute("data-enc-lit", "");
       else n.removeAttribute("data-enc-lit");
     });
     var src = null;
-    band.querySelectorAll(".enc-sec__source").forEach(function (t) {
+    Array.prototype.forEach.call(band.querySelectorAll(".enc-sec__source"), function (t) {
       if (label(t).toLowerCase() === name) src = t;
     });
+    var cap = band.querySelector(".enc-sec__cap");
+    if (cap) {
+      cap.setAttribute("data-enc-i", String(idx));
+      cap.querySelector(".enc-sec__capd").textContent = "0" + (idx + 1);
+      cap.querySelector(".enc-sec__capn").textContent = src ? label(src) : "";
+    }
     var story = band.querySelector(".enc-sec__story");
     if (story && src) {
       var body = src.querySelector(".notion-toggle__content");
       story.textContent = body ? textOf(body) : "";
     }
+  }
+
+  /* the ledger: the nouns are the index, the rule opens beneath — one panel, every rule stacked
+     in the same cell so nothing below it moves when the reader picks another. */
+  function openRule(rows, i) {
+    Array.prototype.forEach.call(rows.querySelectorAll(".enc-sec__row"), function (r, j) {
+      if (j === i) r.setAttribute("data-enc-on", ""); else r.removeAttribute("data-enc-on");
+    });
+    Array.prototype.forEach.call(rows.parentNode.querySelectorAll(".enc-sec__verbbtn"), function (b, j) {
+      if (j === i) b.setAttribute("data-enc-on", ""); else b.removeAttribute("data-enc-on");
+      b.setAttribute("aria-selected", j === i ? "true" : "false");
+    });
   }
 
   function step(band, i) {

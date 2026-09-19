@@ -308,14 +308,24 @@
   display: none !important;
 }
 
-.notion-root[data-enc-security] .enc-sec__tabs {
+
+/* the bar: the segmented control, and the story it tells beside it */
+.notion-root[data-enc-security] .enc-sec__bar {
   display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 18px 32px;
+}
+
+.notion-root[data-enc-security] .enc-sec__tabs {
+  display: inline-flex;
   gap: 4px;
   padding: 4px;
   border-radius: 10px;
   background: #F2F2ED;
-  align-self: flex-start;
-  flex-wrap: wrap;
+  flex: none;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 .notion-root[data-enc-security] .enc-sec__tab {
@@ -323,6 +333,9 @@
   cursor: pointer;
   height: 36px;
   padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   border: 1px solid transparent;
   border-radius: 8px;
   background: transparent;
@@ -331,6 +344,7 @@
   font-weight: 500;
   letter-spacing: -0.006em;
   color: #3A3D38;
+  white-space: nowrap;
   transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
 }
 
@@ -345,44 +359,101 @@
   color: #000000;
 }
 
-.notion-root[data-enc-security] .enc-sec__panel {
+.notion-root[data-enc-security] .enc-sec__tn {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: #6B6F68;
+}
+
+.notion-root[data-enc-security] .enc-sec__tab[data-enc-on] .enc-sec__tn {
+  color: #000000;
+}
+
+.notion-root[data-enc-security] .enc-sec__cap {
+  flex: 1 1 360px;
+  min-width: 0;
+  max-width: 78ch;
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+
+.notion-root[data-enc-security] .enc-sec__capd {
+  width: 30px;
+  height: 30px;
+  margin-top: 3px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: #D2E3F6;
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 10px;
+  color: #000000;
+}
+
+.notion-root[data-enc-security] .enc-sec__cap[data-enc-i="1"] .enc-sec__capd { background: #F8E8B3; }
+.notion-root[data-enc-security] .enc-sec__cap[data-enc-i="2"] .enc-sec__capd { background: #F7DCE7; }
+.notion-root[data-enc-security] .enc-sec__cap[data-enc-i="3"] .enc-sec__capd { background: #F8DDC6; }
+
+.notion-root[data-enc-security] .enc-sec__capb {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 4px;
+  padding-top: 4px;
+  min-width: 0;
+}
+
+.notion-root[data-enc-security] .enc-sec__capn {
+  font-family: var(--type-display), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 19px;
+  letter-spacing: -0.026em;
+  color: #000000;
 }
 
 .notion-root[data-enc-security] .enc-sec__story {
   margin: 0;
-  max-width: 78ch;
   font-family: var(--type-body), system-ui, sans-serif;
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 1.55;
   color: #3A3D38;
   text-wrap: pretty;
 }
 
-/* the drawing: a grid of nodes with the tailnet framed around ours */
+/* the drawing: nodes in a grid, the connectors in the grid's own lanes, the tailnet framed */
+.notion-root[data-enc-security] .enc-sec__canvas {
+  border: 1px solid #E2E2DB;
+  border-radius: 4px;
+  padding: clamp(28px, 3vw, 48px) 0 48px;
+  overflow-x: auto;
+}
+
+.notion-root[data-enc-security] .enc-sec__canvin {
+  min-width: 740px;
+  padding: 0 40px 0 24px;
+  box-sizing: content-box;
+}
+
 .notion-root[data-enc-security] .enc-sec__arch {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.8fr);
-  grid-template-areas:
-    ".   net  net  net  net"
-    ".   senA .    senB full"
-    "eng valA .    valB ."
-    ".   cos1 cos2 cos3 mon";
-  gap: 44px 24px;
-  padding: 26px 0 8px;
+  grid-template-columns:
+    minmax(0, 0.7fr) 44px minmax(0, 1fr) 24px minmax(0, 1fr) 24px minmax(0, 1fr) 44px minmax(0, 0.8fr);
+  grid-template-rows: auto 60px auto 60px auto 76px auto;
+  gap: 0;
 }
 
 .notion-root[data-enc-security] .enc-sec__frame {
-  grid-area: senA / senA / cos3 / mon;
+  position: relative;
+  z-index: 0;
+  grid-area: 3 / 3 / 8 / 10;
   margin: -16px;
   border: 1px dashed #B9B9B1;
   border-radius: 4px;
-  opacity: 0.45;
+  opacity: 0.35;
   transition: opacity 0.25s ease, border-color 0.25s ease;
-  position: relative;
 }
 
 .notion-root[data-enc-security] .enc-sec__frame[data-enc-lit] {
@@ -406,21 +477,22 @@
 
 .notion-root[data-enc-security] .enc-sec__node {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 3px;
-  padding: 14px 16px;
-  border: 1px solid #D9D9D2;
-  border-radius: 10px;
+  padding: 11px 13px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
   background: #FAFAF8;
-  opacity: 0.38;
-  transition: opacity 0.2s ease, border-color 0.2s ease;
+  opacity: 0.28;
+  transition: opacity 0.25s ease, box-shadow 0.25s ease;
 }
 
 .notion-root[data-enc-security] .enc-sec__node[data-enc-lit] {
   opacity: 1;
-  border-color: #000000;
+  box-shadow: 0 0 0 1px #000000;
 }
 
 .notion-root[data-enc-security] .enc-sec__node[data-enc-tint="blue"]   { background: #D2E3F6; }
@@ -428,76 +500,289 @@
 .notion-root[data-enc-security] .enc-sec__node[data-enc-tint="yellow"] { background: #F8E8B3; }
 .notion-root[data-enc-security] .enc-sec__node[data-enc-tint="orange"] { background: #F8DDC6; }
 .notion-root[data-enc-security] .enc-sec__node[data-enc-tint="pink"]   { background: #F7DCE7; }
+.notion-root[data-enc-security] .enc-sec__node[data-enc-tint="paper"]  { background: #FAFAF8; }
+
+/* the two nodes outside the tailnet are drawn, not filled */
+.notion-root[data-enc-security] .enc-sec__node[data-enc-tint="dash"] {
+  background: #FAFAF8;
+  border: 1px dashed #B9B9B1;
+}
+
+.notion-root[data-enc-security] .enc-sec__node[data-enc-tint="dash"][data-enc-lit] {
+  box-shadow: none;
+  border-color: #000000;
+}
 
 .notion-root[data-enc-security] .enc-sec__nk {
   font-family: var(--type-mono), ui-monospace, monospace;
   font-size: 8.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #6B6F68;
+  color: #3A3D38;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+.notion-root[data-enc-security] .enc-sec__node[data-enc-tint="dash"] .enc-sec__nk { color: #575B55; }
 
 .notion-root[data-enc-security] .enc-sec__nt {
   font-family: var(--type-display), system-ui, sans-serif;
   font-weight: 600;
-  font-size: 15px;
-  letter-spacing: -0.018em;
+  font-size: clamp(13px, 1.25vw, 16px);
+  line-height: 1.1;
+  letter-spacing: -0.022em;
   color: #000000;
 }
 
 .notion-root[data-enc-security] .enc-sec__nl {
   font-family: var(--type-body), system-ui, sans-serif;
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: clamp(11px, 1vw, 12.5px);
+  line-height: 1.35;
   color: #3A3D38;
 }
 
-/* the connectors are drawn by the grid's own gaps, not measured */
 .notion-root[data-enc-security] .enc-sec__link {
-  display: none;
+  position: relative;
+  opacity: 0.35;
+  transition: opacity 0.25s ease;
 }
 
-/* the ledger under the diagram */
+.notion-root[data-enc-security] .enc-sec__link[data-enc-lit] { opacity: 1; }
+
+.notion-root[data-enc-security] .enc-sec__lrule {
+  position: absolute;
+  border-color: #9B9B94;
+}
+
+.notion-root[data-enc-security] .enc-sec__link[data-enc-dir="v"] .enc-sec__lrule {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-left: 1px solid #9B9B94;
+}
+
+.notion-root[data-enc-security] .enc-sec__link[data-enc-dir="h"] .enc-sec__lrule {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 0;
+  border-top: 1px solid #9B9B94;
+}
+
+.notion-root[data-enc-security] .enc-sec__link[data-enc-dashed] .enc-sec__lrule { border-style: dashed; }
+.notion-root[data-enc-security] .enc-sec__link[data-enc-lit] .enc-sec__lrule { border-color: #000000; }
+
+.notion-root[data-enc-security] .enc-sec__llabel,
+.notion-root[data-enc-security] .enc-sec__blabel {
+  position: absolute;
+  z-index: 1;
+  padding: 1px 5px;
+  background: #FAFAF8;
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6B6F68;
+  white-space: nowrap;
+}
+
+.notion-root[data-enc-security] .enc-sec__link[data-enc-dir="v"] .enc-sec__llabel {
+  left: calc(50% + 6px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.notion-root[data-enc-security] .enc-sec__link[data-enc-dir="h"] .enc-sec__llabel {
+  left: 50%;
+  top: calc(50% - 8px);
+  transform: translate(-50%, -100%);
+}
+
+.notion-root[data-enc-security] .enc-sec__link[data-enc-lit] .enc-sec__llabel { color: #000000; }
+
+/* the cosigner bus: a rail with a stub up to each validator and down to each shard */
+.notion-root[data-enc-security] .enc-sec__busrail {
+  position: relative;
+}
+
+.notion-root[data-enc-security] .enc-sec__brail {
+  position: absolute;
+  top: 50%;
+  left: calc((100% - 48px) / 6);
+  right: calc((100% - 48px) / 6);
+  height: 0;
+  border-top: 1px solid #9B9B94;
+  opacity: 0.35;
+  transition: opacity 0.25s ease, border-color 0.25s ease;
+}
+
+.notion-root[data-enc-security] .enc-sec__bstub {
+  position: absolute;
+  width: 0;
+  border-left: 1px solid #9B9B94;
+  opacity: 0.35;
+  transition: opacity 0.25s ease, border-color 0.25s ease;
+}
+
+.notion-root[data-enc-security] .enc-sec__bstub[data-enc-updown="up"]   { top: 0; bottom: 50%; }
+.notion-root[data-enc-security] .enc-sec__bstub[data-enc-updown="down"] { top: 50%; bottom: 0; }
+
+.notion-root[data-enc-security] .enc-sec__brail[data-enc-lit],
+.notion-root[data-enc-security] .enc-sec__bstub[data-enc-lit] {
+  opacity: 1;
+  border-color: #000000;
+}
+
+.notion-root[data-enc-security] .enc-sec__blabel {
+  left: 33%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.35;
+  transition: opacity 0.25s ease, color 0.25s ease;
+}
+
+.notion-root[data-enc-security] .enc-sec__blabel[data-enc-lit] {
+  opacity: 1;
+  color: #000000;
+}
+
+/* the ledger: the nouns are the index, the rule opens beneath */
 .notion-root[data-enc-security] .enc-sec__ledger {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1180px;
+}
+
+.notion-root[data-enc-security] .enc-sec__verbs {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-  gap: 0 32px;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 8px;
   border-top: 1px solid #000000;
+  padding-top: 8px;
+}
+
+.notion-root[data-enc-security] .enc-sec__verbbtn {
+  appearance: none;
+  cursor: pointer;
+  min-width: 0;
+  margin: 0;
+  padding: 14px 4px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  transition: border-color 0.16s ease;
+}
+
+.notion-root[data-enc-security] .enc-sec__verbbtn[data-enc-on] { border-bottom-color: #000000; }
+
+.notion-root[data-enc-security] .enc-sec__vd {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  border: 1px solid transparent;
+  background: #DCEEC7;
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  color: #000000;
+  transition: border-color 0.16s ease;
+}
+
+.notion-root[data-enc-security] .enc-sec__verbbtn[data-enc-i="1"] .enc-sec__vd { background: #F8E8B3; }
+.notion-root[data-enc-security] .enc-sec__verbbtn[data-enc-i="2"] .enc-sec__vd { background: #D2E3F6; }
+.notion-root[data-enc-security] .enc-sec__verbbtn[data-enc-i="3"] .enc-sec__vd { background: #F8DDC6; }
+.notion-root[data-enc-security] .enc-sec__verbbtn[data-enc-i="4"] .enc-sec__vd { background: #F7DCE7; }
+.notion-root[data-enc-security] .enc-sec__verbbtn[data-enc-on] .enc-sec__vd { border-color: #000000; }
+
+.notion-root[data-enc-security] .enc-sec__vv {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--type-display), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(13px, 1.7vw, 22px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #6B6F68;
+  transition: color 0.16s ease;
+}
+
+.notion-root[data-enc-security] .enc-sec__verbbtn[data-enc-on] .enc-sec__vv { color: #000000; }
+
+/* every rule sits in the same cell, so nothing below moves when another is picked */
+.notion-root[data-enc-security] .enc-sec__rules {
+  display: grid;
+  position: relative;
 }
 
 .notion-root[data-enc-security] .enc-sec__row {
+  grid-area: 1 / 1;
   display: grid !important;
-  grid-template-columns: 96px minmax(0, 1fr);
-  gap: 4px 14px;
-  align-items: baseline;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: clamp(20px, 3vw, 48px);
+  align-items: start;
   margin: 0 !important;
-  padding: 16px 0 !important;
-  border-bottom: 1px solid #E2E2DB;
+  padding: 26px 0 8px !important;
+  border-top: 3px solid #DCEEC7;
   max-width: none !important;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.16s ease;
 }
 
-.notion-root[data-enc-security] .enc-sec__row .enc-sec__verb {
-  grid-row: 1 / 3;
-  font-family: var(--type-mono), ui-monospace, monospace;
-  font-size: 9.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #6B6F68;
+.notion-root[data-enc-security] .enc-sec__row[data-enc-i="1"] { border-top-color: #F8E8B3; }
+.notion-root[data-enc-security] .enc-sec__row[data-enc-i="2"] { border-top-color: #D2E3F6; }
+.notion-root[data-enc-security] .enc-sec__row[data-enc-i="3"] { border-top-color: #F8DDC6; }
+.notion-root[data-enc-security] .enc-sec__row[data-enc-i="4"] { border-top-color: #F7DCE7; }
+
+.notion-root[data-enc-security] .enc-sec__row[data-enc-on] {
+  visibility: visible;
+  opacity: 1;
+}
+
+.notion-root[data-enc-security] .enc-sec__head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.notion-root[data-enc-security] .enc-sec__num {
+  font-family: var(--type-display), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(40px, 5vw, 72px);
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+  color: #000000;
+  font-variant-numeric: tabular-nums;
 }
 
 .notion-root[data-enc-security] .enc-sec__row .enc-sec__term {
   font-family: var(--type-display), system-ui, sans-serif;
   font-weight: 600;
-  font-size: 16px;
-  letter-spacing: -0.02em;
+  font-size: clamp(22px, 2.4vw, 30px);
+  line-height: 1.05;
+  letter-spacing: -0.032em;
   color: #000000;
 }
 
+.notion-root[data-enc-security] .enc-sec__row .enc-sec__verb { display: none; }
+
 .notion-root[data-enc-security] .enc-sec__row .enc-sec__line {
   font-family: var(--type-body), system-ui, sans-serif;
-  font-size: 13.5px;
-  line-height: 1.5;
+  font-size: 16.5px;
+  line-height: 1.55;
   color: #3A3D38;
+  text-wrap: pretty;
+  max-width: 56ch;
 }
 
 /* ── 03 · keys: the sentence at display scale ── */
@@ -764,12 +1049,14 @@
     grid-column: 1;
   }
 
-  .notion-root[data-enc-security] .enc-sec__arch {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "net" "senA" "senB" "full" "eng" "valA" "valB" "cos1" "cos2" "cos3" "mon";
-    gap: 12px;
+  /* the drawing keeps its shape and scrolls inside its frame, as the handoff has it */
+  .notion-root[data-enc-security] .enc-sec__canvin {
+    padding: 0 24px;
   }
 
-  .notion-root[data-enc-security] .enc-sec__frame { display: none; }
+  .notion-root[data-enc-security] .enc-sec__verbs {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  }
   .notion-root[data-enc-security] .enc-sec__stage { grid-template-columns: minmax(0, 1fr); }
 }
