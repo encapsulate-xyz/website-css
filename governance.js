@@ -471,7 +471,27 @@
 
   function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
 
-  function build() { count(); rows(); head(); controls(); pager(); apply(); hideSources(); }
+  /* The quadrant's fields (design "Governance Record Wow"): each card shows the number, then the
+     question, its line and the word, in the view's own order. They are marked here so the CSS does
+     not have to know Super's property hashes — and so a property added to the view later cannot
+     silently take another one's styling. */
+  var PILLARS = "block-10fb4619625b43cd82d572d6b806ead7";
+  var FIELDS = ["title", "line", "word"];
+
+  function pillars() {
+    var box = document.getElementById(PILLARS);
+    if (!box) return;
+    box.querySelectorAll(".notion-collection-card").forEach(function (card) {
+      var texts = card.querySelectorAll(".notion-property__text");
+      Array.prototype.forEach.call(texts, function (t, i) {
+        if (FIELDS[i] && t.getAttribute("data-enc-pillar") !== FIELDS[i]) {
+          t.setAttribute("data-enc-pillar", FIELDS[i]);
+        }
+      });
+    });
+  }
+
+  function build() { count(); rows(); head(); controls(); pager(); apply(); hideSources(); pillars(); }
 
   var t = 0;
   new MutationObserver(function (muts) {
