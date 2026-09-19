@@ -330,6 +330,9 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 
 /* each field */
 .notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-card {
+  box-sizing: border-box !important;   /* the design's 260 is the whole field, padding included —
+                                          on content-box the padding added 80px and opened a gap
+                                          between the word and the question */
   display: flex !important;
   flex-direction: column !important;
   min-height: 260px !important;
