@@ -36,6 +36,12 @@
 
   function textOf(n) { return (n.textContent || "").replace(/\s+/g, " ").trim(); }
 
+  // the toggle's own words, without the trigger glyph Notion puts beside them
+  function label(t) {
+    var s = t.querySelector(".notion-toggle__summary .notion-semantic-string");
+    return textOf(s || t.querySelector(".notion-toggle__summary") || t);
+  }
+
   /* ── the diagram in 02 ─────────────────────────────────────────────────────────────────────
      Eleven nodes in a grid, the tailnet drawn as a dashed frame around everything that is ours.
      A story lights a set of nodes; everything else dims. Connectors are CSS rules between grid
@@ -142,9 +148,12 @@
   }
 
   function split(n, parts) {
+    // the separators are gone once a row is split, so the mark is what a later build reads
+    if (n.hasAttribute("data-enc-split")) return true;
     var t = textOf(n);
     var bits = t.split("·").map(function (x) { return x.trim(); });
     if (bits.length < parts) return false;
+    n.setAttribute("data-enc-split", String(parts));
     n.textContent = "";
     var names = parts === 3 ? ["term", "verb", "line"] : ["term", "line"];
     if (parts === 3) bits = [bits[0], bits[1], bits.slice(2).join(" · ")];
@@ -212,7 +221,8 @@
       var rows = el("div", "enc-sec__rows");
       Array.prototype.slice.call(one.children).forEach(function (n) {
         if (n.classList.contains("notion-toggle")) { rows.appendChild(n); return; }
-        if (n.tagName === "P" && !n.classList.contains("enc-sec__kicker") && split(n, 2)) {
+        if (n.tagName === "P" && !n.classList.contains("enc-sec__kicker") &&
+            (n.hasAttribute("data-enc-split") || textOf(n).indexOf("·") > 0) && split(n, 2)) {
           n.classList.add("enc-sec__fig");
           figs.appendChild(n);
           return;
@@ -235,8 +245,8 @@
       var story = el("p", "enc-sec__story");
       Array.prototype.slice.call(two.children).forEach(function (n) {
         if (n.classList.contains("notion-toggle")) {
-          var name = textOf(n.querySelector(".notion-toggle__summary") || n).toLowerCase();
-          var tab = el("button", "enc-sec__tab", textOf(n.querySelector(".notion-toggle__summary") || n));
+          var name = label(n).toLowerCase();
+          var tab = el("button", "enc-sec__tab", label(n));
           tab.type = "button";
           tab.setAttribute("role", "tab");
           tab.setAttribute("data-enc-story", name);
@@ -245,7 +255,8 @@
           n.classList.add("enc-sec__source");
           return;
         }
-        if (n.tagName === "P" && !n.classList.contains("enc-sec__kicker") && textOf(n).indexOf("·") > 0) {
+        if (n.tagName === "P" && !n.classList.contains("enc-sec__kicker") &&
+            (n.hasAttribute("data-enc-split") || textOf(n).indexOf("·") > 0)) {
           if (split(n, 3)) { n.classList.add("enc-sec__row"); rows.appendChild(n); }
         }
       });
@@ -263,7 +274,7 @@
       var table = el("div", "enc-sec__table");
       Array.prototype.slice.call(five.children).forEach(function (n) {
         if (n.tagName !== "P" || n.classList.contains("enc-sec__kicker")) return;
-        if (textOf(n).indexOf("·") < 0) return;
+        if (!n.hasAttribute("data-enc-split") && textOf(n).indexOf("·") < 0) return;
         if (split(n, 2)) { n.classList.add("enc-sec__row"); table.appendChild(n); }
       });
       if (table.children.length) five.appendChild(table);
@@ -312,7 +323,7 @@
           b.type = "button";
           b.setAttribute("role", "tab");
           b.appendChild(el("span", "enc-sec__segn", "0" + (i + 1)));
-          b.appendChild(el("span", "enc-sec__segt", textOf(n.querySelector(".notion-toggle__summary") || n)));
+          b.appendChild(el("span", "enc-sec__segt", label(n)));
           b.addEventListener("click", function () { step(four, i); });
           seg.appendChild(b);
         });
@@ -345,7 +356,7 @@
     });
     var src = null;
     band.querySelectorAll(".enc-sec__source").forEach(function (t) {
-      if (textOf(t.querySelector(".notion-toggle__summary") || t).toLowerCase() === name) src = t;
+      if (label(t).toLowerCase() === name) src = t;
     });
     var story = band.querySelector(".enc-sec__story");
     if (story && src) {
