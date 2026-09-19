@@ -245,7 +245,7 @@
       ".enc-sec__tabs, .enc-sec__panel, .enc-sec__ledger, .enc-sec__seg, .enc-sec__stage," +
       ".enc-sec__table, .enc-sec__pair, .enc-sec__rail, .enc-sec__rows, .enc-sec__spine," +
       ".enc-sec__figs, .enc-sec__half, .enc-sec__bar, .enc-sec__canvas, .enc-sec__verbs," +
-      ".enc-sec__rules"), function (n) { n.remove(); });
+      ".enc-sec__rules, .enc-sec__lhead"), function (n) { n.remove(); });
   }
 
   function build() {
@@ -306,6 +306,7 @@
       var verbs = el("div", "enc-sec__verbs");
       verbs.setAttribute("role", "tablist");
       var ledger = el("div", "enc-sec__ledger");
+      var extra = [];
       var bar = el("div", "enc-sec__bar");
       var tabs = el("div", "enc-sec__tabs");
       tabs.setAttribute("role", "tablist");
@@ -331,10 +332,14 @@
           n.classList.add("enc-sec__source");
           return;
         }
-        if (n.tagName === "P" && !n.classList.contains("enc-sec__kicker") &&
-            (n.hasAttribute("data-enc-split") || textOf(n).indexOf("·") > 0)) {
-          if (split(n, 3)) { n.classList.add("enc-sec__row"); rows.appendChild(n); }
+        if (n.tagName !== "P" || n.classList.contains("enc-sec__kicker")) return;
+        if ((n.hasAttribute("data-enc-split") || textOf(n).indexOf("·") > 0) && split(n, 3)) {
+          n.classList.add("enc-sec__row");
+          rows.appendChild(n);
+          return;
         }
+        // the two lines after the rules are the ledger's own header; the lede comes before them
+        if (rows.children.length) extra.push(n);
       });
       Array.prototype.forEach.call(rows.querySelectorAll(".enc-sec__row"), function (r, i) {
         var v = r.querySelector(".enc-sec__verb");
@@ -355,6 +360,14 @@
         if (term) head.appendChild(term);
         r.insertBefore(head, r.firstChild);
       });
+      if (extra.length > 1) {
+        var lhead = el("div", "enc-sec__lhead");
+        // the count is the rules the page actually carries, so the line cannot drift from them
+        extra[0].textContent = textOf(extra[0]).replace(/\d+/, String(rows.children.length));
+        lhead.appendChild(extra[0]);
+        lhead.appendChild(extra[1]);
+        ledger.appendChild(lhead);
+      }
       ledger.appendChild(verbs);
       ledger.appendChild(rows);
       two.appendChild(bar);
