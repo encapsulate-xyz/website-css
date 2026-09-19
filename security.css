@@ -51,7 +51,7 @@
   color: #FAFAF8 !important;
 }
 
-.notion-root[data-enc-security] .enc-sec__band p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent):not(.enc-sec__zero):not(.enc-sec__cost) {
+.notion-root[data-enc-security] .enc-sec__band p.enc-sec__lede {
   margin: 0 !important;
   font-family: var(--type-body), system-ui, sans-serif !important;
   font-size: 18px !important;
@@ -61,10 +61,8 @@
   text-wrap: pretty !important;
 }
 
-.notion-root[data-enc-security] [data-enc-sec="01"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent):not(.enc-sec__zero):not(.enc-sec__cost),
-.notion-root[data-enc-security] [data-enc-sec="03"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent):not(.enc-sec__zero):not(.enc-sec__cost),
-.notion-root[data-enc-security] [data-enc-sec="05"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent):not(.enc-sec__zero):not(.enc-sec__cost),
-.notion-root[data-enc-security] [data-enc-sec="06"] p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent):not(.enc-sec__zero):not(.enc-sec__cost) {
+.notion-root[data-enc-security] [data-enc-sec="01"] p.enc-sec__lede,
+.notion-root[data-enc-security] [data-enc-sec="05"] p.enc-sec__lede {
   color: #C9C9C4 !important;
 }
 
@@ -83,7 +81,7 @@
   max-width: 12ch !important;
 }
 
-.notion-root[data-enc-security] [data-enc-sec="01"] .enc-sec__rail > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent):not(.enc-sec__zero):not(.enc-sec__cost) {
+.notion-root[data-enc-security] [data-enc-sec="01"] p.enc-sec__lede {
   max-width: 38ch !important;
 }
 
@@ -95,7 +93,7 @@
   max-width: 18ch !important;
 }
 
-.notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__rail > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent):not(.enc-sec__zero):not(.enc-sec__cost) {
+.notion-root[data-enc-security] [data-enc-sec="05"] p.enc-sec__lede {
   font-size: clamp(16px, 1.5vw, 19px) !important;
 }
 
@@ -114,7 +112,7 @@
 .notion-root[data-enc-security] [data-enc-sec="01"] p.enc-sec__kicker,
 .notion-root[data-enc-security] [data-enc-sec="03"] p.enc-sec__kicker,
 .notion-root[data-enc-security] [data-enc-sec="05"] p.enc-sec__kicker,
-.notion-root[data-enc-security] [data-enc-sec="06"] p.enc-sec__kicker {
+.notion-root[data-enc-security] [data-enc-sec="06"] p.enc-sec__kicker:not(.enc-sec__kicker--paper) {
   color: #B4B4B4 !important;
 }
 
@@ -1134,7 +1132,7 @@
   font-size: clamp(30px, 3.4vw, 46px) !important;
 }
 
-.notion-root[data-enc-security] [data-enc-sec="04"] .enc-sec__mhead > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent):not(.enc-sec__zero):not(.enc-sec__cost) {
+.notion-root[data-enc-security] [data-enc-sec="04"] p.enc-sec__lede {
   display: inline !important;
   background: #FAFAF8;
   box-decoration-break: clone;
@@ -1565,7 +1563,6 @@
 .notion-root[data-enc-security] .enc-sec__half--ink   { background: #2A2C28; }
 .notion-root[data-enc-security] .enc-sec__half--paper { background: #FAFAF8; }
 
-.notion-root[data-enc-security] .enc-sec__half--paper p.notion-text:not(.enc-sec__cost):not(.enc-sec__kicker) { color: #3A3D38 !important; }
 .notion-root[data-enc-security] .enc-sec__half--paper p.enc-sec__cost { color: #000000 !important; }
 
 .notion-root[data-enc-security] [data-enc-sec="06"] > .enc-sec__kicker--paper,
@@ -1650,9 +1647,14 @@
   color: #575B55 !important;
 }
 
-.notion-root[data-enc-security] .enc-sec__half--ink > p.notion-text:not(.enc-sec__kicker):not(.enc-sec__row):not(.enc-sec__fig):not(.enc-sec__khint):not(.enc-sec__kempty):not(.enc-sec__ksent):not(.enc-sec__zero):not(.enc-sec__cost) {
-  max-width: 32ch !important;
+.notion-root[data-enc-security] p.enc-sec__zeroline {
+  margin: 0 !important;
+  font-family: var(--type-body), system-ui, sans-serif !important;
   font-size: 16px !important;
+  line-height: 1.55 !important;
+  color: #C9C9C4 !important;
+  max-width: 32ch !important;
+  text-wrap: pretty !important;
 }
 
 .notion-root[data-enc-security] .enc-sec__costs {

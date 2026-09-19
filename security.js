@@ -25,7 +25,7 @@
      built with, so a newer script unwraps an older build and does it again rather than finding
      bands already there and leaving them — which is what happens on a page still serving the
      previous release from its baked site head. */
-  var VERSION = "4";
+  var VERSION = "5";
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -276,6 +276,13 @@
   /* put every Notion block back on the root, so a build can start from the page as Super sent it */
   function unwrap(root) {
     unsplit(root);
+    Array.prototype.forEach.call(root.querySelectorAll(
+      ".enc-sec__lede, .enc-sec__zeroline, .enc-sec__zero, .enc-sec__cost, .enc-sec__kicker"),
+      function (n) {
+        n.classList.remove("enc-sec__lede", "enc-sec__zeroline", "enc-sec__zero",
+          "enc-sec__cost", "enc-sec__kicker", "enc-sec__kicker--paper", "enc-sec__ksent",
+          "enc-sec__khint", "enc-sec__kempty", "enc-sec__step", "enc-sec__source");
+      });
     var bands = root.querySelectorAll(".enc-sec__band");
     if (!bands.length) return;
     Array.prototype.forEach.call(bands, function (b) {
@@ -322,6 +329,19 @@
       }
       if (si === 0) kids[from].classList.add("enc-sec__kicker");
       else band.firstElementChild.classList.add("enc-sec__kicker");
+
+      /* the band's own lede: the first paragraph after the kicker that is not one of the
+         figures or rows. Naming it is what keeps the band's type off everything else. */
+      if (SECTIONS[si] !== "03" && SECTIONS[si] !== "06") {
+        var lede = null;
+        Array.prototype.forEach.call(band.children, function (n) {
+          if (lede || n.tagName !== "P") return;
+          if (n.classList.contains("enc-sec__kicker")) return;
+          if (textOf(n).indexOf("·") > 0) return;    // a figure or a rule, not the lede
+          lede = n;
+        });
+        if (lede) lede.classList.add("enc-sec__lede");
+      }
     });
 
     /* 01 · the handoff's two columns: a rail that sticks — kicker, headline, lede, the three
@@ -510,6 +530,7 @@
       Array.prototype.forEach.call(six.querySelectorAll(":scope > p.notion-text"), function (n) {
         var t = textOf(n);
         if (t === "0") n.classList.add("enc-sec__zero");
+        else if (/^Slashing events/.test(t)) n.classList.add("enc-sec__zeroline");
         else if (t === "The seat.") n.classList.add("enc-sec__cost");
         else if (/^What slashing costs/.test(t)) n.classList.add("enc-sec__kicker", "enc-sec__kicker--paper");
       });
