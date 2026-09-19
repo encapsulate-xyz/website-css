@@ -347,10 +347,6 @@
 .notion-root[data-enc-security] .enc-sec__canvas,
 .notion-root[data-enc-security] .enc-sec__ledger { margin-top: 22px; }
 
-/* 05 · the head trio at 16, the table 24 below it */
-.notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__rail { gap: 16px; }
-.notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__table { margin-top: 8px; }
-
 /* the bar: the segmented control, and the story it tells beside it */
 .notion-root[data-enc-security] .enc-sec__bar {
   display: flex;
@@ -1416,11 +1412,12 @@
 .notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__rail {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
   min-width: 0;
 }
 
 .notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__table {
+  margin-top: 8px;
   display: flex;
   flex-direction: column;
   width: 100%;
