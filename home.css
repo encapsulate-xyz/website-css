@@ -2234,13 +2234,11 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   border: 0 !important;
 }
 
-/* the rows bleed 14px past the section's measure so a hovered row's pastel field
-   extends beyond the text, the way the design draws it; the closing rule runs the
-   same width, and the row's own 14px padding puts the content back on the measure */
+/* 2026-09-19, design "Governance Record Wow": the row is a line with a rule under it rather than
+   a pastel field, so the bleed goes — nothing extends past the measure any more. */
 #block-4529386b39be4a9aa44d2dbac56537bd tbody {
-  width: auto !important;   /* the 100% above would keep the box its old width and just shift it */
-  margin: 0 -14px !important;
-  border-bottom: 1px solid #000000 !important;
+  width: 100% !important;
+  margin: 0 !important;
 }
 
 #block-4529386b39be4a9aa44d2dbac56537bd tr {
@@ -2261,22 +2259,19 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 }
 
 #block-4529386b39be4a9aa44d2dbac56537bd tbody tr {
-  padding: 16px 14px !important;
-  border-top: 1px solid #E2E2DB !important;
-  border-radius: 10px !important;
-  transition: background-color 0.16s ease !important;
+  padding: 14px 0 !important;
+  border-bottom: 1px solid #E2E2DB !important;
+  border-radius: 0 !important;
+  transition: border-color 0.16s ease !important;
 }
 
-#block-4529386b39be4a9aa44d2dbac56537bd tbody tr:hover {
-  background: #DCEEC7 !important;
-}
-
-/* a rule across a rounded, filled row cuts its corner — so the hovered row drops its
-   own rule, and the row after it drops the one that would sit on the fill's foot */
+/* the hovered line darkens its own rule; the fill moved to the vote pill */
 #block-4529386b39be4a9aa44d2dbac56537bd tbody tr:hover,
-#block-4529386b39be4a9aa44d2dbac56537bd tbody tr:hover + tr {
-  border-top-color: transparent !important;
+#block-4529386b39be4a9aa44d2dbac56537bd tbody tr:focus-within {
+  border-bottom-color: #000000 !important;
 }
+
+
 
 #block-4529386b39be4a9aa44d2dbac56537bd th,
 #block-4529386b39be4a9aa44d2dbac56537bd td {
@@ -2441,18 +2436,29 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 
 /* Our vote: green dot + the word (home.js writes YES as Yes) */
 #block-4529386b39be4a9aa44d2dbac56537bd td[data-enc-cell="vote"] .notion-pill {
-  gap: 9px !important;
-  font-family: var(--type-body) !important;
-  font-weight: 500 !important;
-  font-size: 14.5px !important;
-  letter-spacing: 0 !important;
+  gap: 8px !important;
+  padding: 5px 10px !important;
+  border-radius: 999px !important;
+  background: #F2F2ED !important;
+  font-family: var(--type-mono) !important;
+  font-weight: 400 !important;
+  font-size: 10.5px !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  transition: background-color 0.16s ease, color 0.16s ease !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd tbody tr:hover td[data-enc-cell="vote"] .notion-pill,
+#block-4529386b39be4a9aa44d2dbac56537bd tbody tr:focus-within td[data-enc-cell="vote"] .notion-pill {
+  background: #000000 !important;
+  color: #FAFAF8 !important;
 }
 
 #block-4529386b39be4a9aa44d2dbac56537bd td[data-enc-cell="vote"] .notion-pill::before {
   content: "";
   flex: none;
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 999px;
   background: #99CC66;
 }
