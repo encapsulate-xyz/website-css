@@ -175,13 +175,26 @@
       else band.firstElementChild.classList.add("enc-sec__kicker");
     });
 
-    // 01 · the three figures read as figure and label
+    /* 01 · the handoff's two columns: a rail that sticks — kicker, headline, lede, the three
+       figures under a rule, the CTA — and the nine commitments beside it as one list. */
     var one = root.querySelector('[data-enc-sec="01"]');
     if (one) {
-      Array.prototype.forEach.call(one.querySelectorAll(":scope > p.notion-text"), function (p) {
-        if (p.classList.contains("enc-sec__kicker")) return;
-        if (split(p, 2)) p.classList.add("enc-sec__fig");
+      var rail = el("div", "enc-sec__rail");
+      var figs = el("div", "enc-sec__figs");
+      var rows = el("div", "enc-sec__rows");
+      Array.prototype.slice.call(one.children).forEach(function (n) {
+        if (n.classList.contains("notion-toggle")) { rows.appendChild(n); return; }
+        if (n.tagName === "P" && !n.classList.contains("enc-sec__kicker") && split(n, 2)) {
+          n.classList.add("enc-sec__fig");
+          figs.appendChild(n);
+          return;
+        }
+        rail.appendChild(n);
+        if (n.classList.contains("notion-callout")) rail.insertBefore(figs, n);
       });
+      if (!figs.parentNode) rail.appendChild(figs);
+      one.appendChild(rail);
+      one.appendChild(rows);
     }
 
     // 02 · the ledger rows, then the diagram and its tabs
@@ -226,6 +239,14 @@
         if (split(n, 2)) { n.classList.add("enc-sec__row"); table.appendChild(n); }
       });
       if (table.children.length) five.appendChild(table);
+      var rail5 = el("div", "enc-sec__rail");
+      var spine = el("div", "enc-sec__spine");
+      Array.prototype.slice.call(five.children).forEach(function (n) {
+        if (n.classList.contains("notion-toggle")) spine.appendChild(n);
+        else rail5.appendChild(n);
+      });
+      five.appendChild(rail5);
+      five.appendChild(spine);
     }
 
     // 06 · the figure and the claim, marked by their own words rather than by position
@@ -237,6 +258,15 @@
         else if (t === "The seat.") n.classList.add("enc-sec__cost");
         else if (/^What slashing costs/.test(t)) n.classList.add("enc-sec__kicker", "enc-sec__kicker--paper");
       });
+      var ink = el("div", "enc-sec__half enc-sec__half--ink");
+      var paper = el("div", "enc-sec__half enc-sec__half--paper");
+      var side = ink;
+      Array.prototype.slice.call(six.children).forEach(function (n) {
+        if (n.classList.contains("enc-sec__kicker--paper")) side = paper;
+        side.appendChild(n);
+      });
+      six.appendChild(ink);
+      six.appendChild(paper);
     }
 
     // 04 · the failover steps drive the stage
@@ -258,9 +288,15 @@
           b.addEventListener("click", function () { step(four, i); });
           seg.appendChild(b);
         });
-        four.appendChild(seg);
-        four.appendChild(st);
-        steps.forEach(function (n) { four.appendChild(n); });
+        var left = el("div", "enc-sec__rail");
+        left.appendChild(seg);
+        left.appendChild(st);
+        var right = el("div", "enc-sec__spine");
+        steps.forEach(function (n) { right.appendChild(n); });
+        var pair = el("div", "enc-sec__pair");
+        pair.appendChild(left);
+        pair.appendChild(right);
+        four.appendChild(pair);
         step(four, 0);
       }
     }
