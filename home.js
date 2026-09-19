@@ -827,6 +827,43 @@
           chainPill.insertBefore(well, chainPill.firstChild);
         }
       }
+      /* 2026-09-19: the row reads as the governance record's does — the PROPOSAL is the line,
+         with the chain and the reference merged into one mono line under it. The glyph moves
+         from the chain cell into the proposal cell so it leads the row; the chain and reference
+         cells are then hidden by home.css. */
+      var pCell = tr.querySelector('[data-enc-cell="proposal"]');
+      if (pCell && !pCell.hasAttribute("data-enc-swap")) {
+        var glyph = tr.querySelector(".enc-chain");
+        var chainName = chainPill ? chainPill.textContent.trim() : "";
+        var refCell = tr.querySelector('[data-enc-cell="id"]');
+        var refText = refCell ? refCell.textContent.trim() : "";
+        if (chainName) {
+          pCell.setAttribute("data-enc-swap", "");
+          var col = document.createElement("span");
+          col.className = "enc-gov__col";
+          while (pCell.firstChild) col.appendChild(pCell.firstChild);
+          if (glyph) pCell.appendChild(glyph);
+          pCell.appendChild(col);
+          var meta = document.createElement("span");
+          meta.className = "enc-gov__meta";
+          var cn = document.createElement("span");
+          cn.className = "enc-gov__chain";
+          cn.textContent = chainName;
+          meta.appendChild(cn);
+          if (refText) {
+            var sep = document.createElement("span");
+            sep.className = "enc-gov__sep";
+            sep.textContent = "\u00B7";
+            meta.appendChild(sep);
+            var rf = document.createElement("span");
+            rf.className = "enc-gov__ref";
+            rf.textContent = refText;
+            meta.appendChild(rf);
+          }
+          col.appendChild(meta);
+        }
+      }
+
       var votePill = voteCol >= 0 && cells[voteCol] && cells[voteCol].querySelector(".notion-pill");
       if (votePill && !votePill.hasAttribute("data-enc-vote")) {
         var t = votePill.textContent.trim();
@@ -838,7 +875,7 @@
 
   var timer = 0;
   new MutationObserver(function (muts) {
-    if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-chain, [data-enc-vote]"); })) return;
+    if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-chain, .enc-gov__col, [data-enc-vote]"); })) return;
     clearTimeout(timer); timer = setTimeout(apply, 60);
   }).observe(document.body, { childList: true, subtree: true });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply);

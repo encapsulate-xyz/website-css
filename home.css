@@ -2246,7 +2246,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 #block-4529386b39be4a9aa44d2dbac56537bd tr {
   position: relative !important; /* the row link's ::after is stretched over this */
   display: grid !important;
-  grid-template-columns: minmax(0, 1.5fr) 92px minmax(0, 1fr) 140px 30px !important; /* the date column is fixed so the header and every row share the same tracks */
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) 140px 30px !important; /* the date column is fixed so the header and every row share the same tracks */
   column-gap: 20px !important;
   align-items: center !important;
   height: auto !important;
@@ -2292,17 +2292,78 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   overflow: visible !important;
 }
 
-#block-4529386b39be4a9aa44d2dbac56537bd th.title,
-#block-4529386b39be4a9aa44d2dbac56537bd td.title {
+/* 2026-09-19: the record page's construction, brought here — the proposal is the line, the chain
+   and the reference are the mono line under it (home.js merges them). The chain and reference
+   cells are hidden; the title cell, which used to be, is the row's first column. */
+#block-4529386b39be4a9aa44d2dbac56537bd :is(th, td)[data-enc-cell="chain"],
+#block-4529386b39be4a9aa44d2dbac56537bd :is(th, td)[data-enc-cell="id"] {
   display: none !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd :is(th, td)[data-enc-cell="proposal"] {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 13px !important;
+  order: 1 !important;
+  min-width: 0 !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd td[data-enc-cell="proposal"] .enc-gov__col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd td[data-enc-cell="proposal"] .notion-property__title {
+  font-family: var(--type-display) !important;
+  font-weight: 600 !important;
+  font-size: 16.5px !important;
+  line-height: 1.16 !important;
+  letter-spacing: -0.018em !important;
+  color: #000000 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd .enc-gov__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd .enc-gov__chain {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6B6F68;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd .enc-gov__sep {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  color: #A5A5A5;
+}
+
+#block-4529386b39be4a9aa44d2dbac56537bd .enc-gov__ref {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: #6B6F68;
+}
+
+/* the glyph now leads the proposal cell, so it keeps its size there */
+#block-4529386b39be4a9aa44d2dbac56537bd td[data-enc-cell="proposal"] .enc-chain {
+  margin-top: 1px;
 }
 
 /* order: Chain, Proposal Id, Vote Option, Voted On, Voting Proof — by what the cell IS, not by
    Notion's type class: Proposal Id holds "ACP-176" (rich text since 2026-09-17), so the id and the
    proof are both td.text and nth-of-type cannot tell them apart. home.js writes data-enc-cell from
    the header labels. */
-#block-4529386b39be4a9aa44d2dbac56537bd :is(th, td)[data-enc-cell="chain"] { order: 1 !important; }
-#block-4529386b39be4a9aa44d2dbac56537bd :is(th, td)[data-enc-cell="id"] { order: 2 !important; }
 #block-4529386b39be4a9aa44d2dbac56537bd :is(th, td)[data-enc-cell="vote"] { order: 3 !important; }
 #block-4529386b39be4a9aa44d2dbac56537bd :is(th, td)[data-enc-cell="date"] { order: 4 !important; justify-self: end !important; }
 #block-4529386b39be4a9aa44d2dbac56537bd :is(th, td)[data-enc-cell="proof"] { order: 5 !important; justify-self: end !important; }
