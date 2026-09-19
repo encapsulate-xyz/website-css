@@ -476,7 +476,8 @@
      not have to know Super's property hashes — and so a property added to the view later cannot
      silently take another one's styling. */
   var PILLARS = "block-10fb4619625b43cd82d572d6b806ead7";
-  var FIELDS = ["title", "line", "word"];
+  // the view renders the Word property first, then the question, then its line
+  var FIELDS = ["word", "title", "line"];
 
   function pillars() {
     var box = document.getElementById(PILLARS);

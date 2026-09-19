@@ -287,6 +287,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   transform: translate(-50%, -50%);
   display: grid;
   place-items: center;
+  box-sizing: border-box;      /* a pseudo-element keeps content-box, so 96 + 14 padding = an oval */
   width: 96px;
   height: 96px;
   padding-top: 14px;
@@ -366,7 +367,10 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 /* the word: the Word property, last in the view, pulled to the top left at display scale */
-.notion-root #block-10fb4619625b43cd82d572d6b806ead7 [data-enc-pillar="word"] {
+/* the Word property, added 2026-09-19 — pinned by its own class, as the other two are,
+   so the view's property order cannot swap the three around */
+.notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-property__text.property-55517a72,
+.notion-root #block-10fb4619625b43cd82d572d6b806ead7 [data-enc-pillar="word"]:not(.notion-property__text) {
   grid-column: 1 !important;
   grid-row: 1 !important;
   margin: 0 !important;
@@ -408,7 +412,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 /* the question and its line, at the foot */
-.notion-root #block-10fb4619625b43cd82d572d6b806ead7 [data-enc-pillar="title"] {
+.notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-property__text.property-747e7c6c {
   grid-column: 1 / -1 !important;
   grid-row: 3 !important;
   margin: 0 !important;
@@ -420,7 +424,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #000000 !important;
 }
 
-.notion-root #block-10fb4619625b43cd82d572d6b806ead7 [data-enc-pillar="line"] {
+.notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-property__text.property-62485b44 {
   grid-column: 1 / -1 !important;
   grid-row: 4 !important;
   margin: 4px 0 0 !important;
