@@ -21,6 +21,11 @@
 
   var PATH = /^\/security\/?$/;
   var SECTIONS = ["01", "02", "03", "04", "05", "06"];
+  /* Bumped whenever the shape this script builds changes. The page carries the version it was
+     built with, so a newer script unwraps an older build and does it again rather than finding
+     bands already there and leaving them — which is what happens on a page still serving the
+     previous release from its baked site head. */
+  var VERSION = "2";
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -149,10 +154,33 @@
     return true;
   }
 
+  /* put every Notion block back on the root, so a build can start from the page as Super sent it */
+  function unwrap(root) {
+    var bands = root.querySelectorAll(".enc-sec__band");
+    if (!bands.length) return;
+    Array.prototype.forEach.call(bands, function (b) {
+      var flat = [];
+      (function walk(n) {
+        Array.prototype.forEach.call(n.children, function (c) {
+          if (c.id && c.id.indexOf("block-") === 0) flat.push(c);
+          else walk(c);
+        });
+      })(b);
+      flat.forEach(function (n) { root.insertBefore(n, b); });
+      b.remove();
+    });
+    Array.prototype.forEach.call(root.querySelectorAll(
+      ".enc-sec__tabs, .enc-sec__panel, .enc-sec__ledger, .enc-sec__seg, .enc-sec__stage," +
+      ".enc-sec__table, .enc-sec__pair, .enc-sec__rail, .enc-sec__rows, .enc-sec__spine," +
+      ".enc-sec__figs, .enc-sec__half"), function (n) { n.remove(); });
+  }
+
   function build() {
     if (!PATH.test(location.pathname)) return;
     var root = document.querySelector(".notion-root");
-    if (!root || root.querySelector(".enc-sec__band")) return;
+    if (!root) return;
+    if (root.getAttribute("data-enc-security") === VERSION) return;
+    unwrap(root);
     var kids = Array.prototype.slice.call(root.children).filter(function (n) {
       return !n.classList.contains("notion-heading__anchor");
     });
@@ -301,7 +329,7 @@
       }
     }
 
-    root.setAttribute("data-enc-security", "");
+    root.setAttribute("data-enc-security", VERSION);
   }
 
   function pick(band, name) {
