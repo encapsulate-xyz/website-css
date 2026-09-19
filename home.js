@@ -731,6 +731,7 @@
    (governance) and home-dial.css ("GOVERNANCE CHAIN MARKS"). */
 (function () {
   var TABLE = "block-4529386b39be4a9aa44d2dbac56537bd";
+  var ROWS = 6;                       // what home.css shows
   // The new "Networks set" database (2026-09-16) is the source wherever it is on the page; the
   // old homepage gallery is the fallback until a view of the new one is placed here.
   var SET_DB = "block-3dde800a51388133b7f1d1ccdda08038";
@@ -785,7 +786,10 @@
     });
   }
 
+  var missing = false;
+
   function apply() {
+    missing = false;
     var block = document.getElementById(TABLE);
     var table = block && block.querySelector("table");
     if (!table) return;
@@ -803,12 +807,13 @@
     if (chainCol < 0) chainCol = column(table, "chain");
     if (voteCol < 0) voteCol = column(table, "vote option");
     var map = null;
-    var rowIndex = -1;
-    table.querySelectorAll("tbody tr").forEach(function (tr) {
-      // only the rows on show (home.css keeps six): the table holds the whole voting record, and
-      // marking every row fetched a glyph image for hundreds of hidden votes
-      if (!tr.offsetParent) return;
-      rowIndex++;
+    table.querySelectorAll("tbody tr").forEach(function (tr, rowIndex) {
+      /* Only the rows on show — home.css keeps the six most recent, and marking the rest fetched a
+         glyph image for hundreds of hidden votes. Counted rather than measured: asking whether a
+         row is laid out (offsetParent) made this depend on the section being visible at the moment
+         the script ran, which on a client-side navigation it often is not — the row arrived with
+         its title and no glyph and stayed that way until a reload. */
+      if (rowIndex >= ROWS) return;
       var cells = tr.children;
       var chainPill = chainCol >= 0 && cells[chainCol] && cells[chainCol].querySelector(".notion-pill");
       if (chainPill && !chainPill.querySelector(".enc-chain")) {
@@ -864,6 +869,8 @@
         }
       }
 
+      if (!tr.querySelector(".enc-chain")) missing = true;
+
       var votePill = voteCol >= 0 && cells[voteCol] && cells[voteCol].querySelector(".notion-pill");
       if (votePill && !votePill.hasAttribute("data-enc-vote")) {
         var t = votePill.textContent.trim();
@@ -873,13 +880,20 @@
     });
   }
 
-  var timer = 0;
+  var timer = 0, tries = 0;
+  function run() {
+    apply();
+    // the glyphs come from the networks gallery on the page, which can render after the table —
+    // and after Super has stopped mutating, so there is nothing left to wake the observer
+    if (missing && tries++ < 12) setTimeout(run, 300);
+  }
   new MutationObserver(function (muts) {
     if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-chain, .enc-gov__col, [data-enc-vote]"); })) return;
-    clearTimeout(timer); timer = setTimeout(apply, 60);
+    clearTimeout(timer); tries = 0; timer = setTimeout(run, 60);
   }).observe(document.body, { childList: true, subtree: true });
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply);
-  else apply();
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", run);
+  else run();
+  window.addEventListener("load", run);
 })();
 
 
