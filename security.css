@@ -69,7 +69,7 @@
 }
 
 /* the kicker, stated after the band's paragraph rule so it wins on order as well as weight */
-.notion-root[data-enc-security] .enc-sec__band > p.enc-sec__kicker {
+.notion-root[data-enc-security] .enc-sec__band p.enc-sec__kicker {
   margin: 0 !important;
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 10.5px !important;
@@ -80,10 +80,10 @@
   max-width: none !important;
 }
 
-.notion-root[data-enc-security] [data-enc-sec="01"] > p.enc-sec__kicker,
-.notion-root[data-enc-security] [data-enc-sec="03"] > p.enc-sec__kicker,
-.notion-root[data-enc-security] [data-enc-sec="05"] > p.enc-sec__kicker,
-.notion-root[data-enc-security] [data-enc-sec="06"] > p.enc-sec__kicker {
+.notion-root[data-enc-security] [data-enc-sec="01"] p.enc-sec__kicker,
+.notion-root[data-enc-security] [data-enc-sec="03"] p.enc-sec__kicker,
+.notion-root[data-enc-security] [data-enc-sec="05"] p.enc-sec__kicker,
+.notion-root[data-enc-security] [data-enc-sec="06"] p.enc-sec__kicker {
   color: #B4B4B4 !important;
 }
 
@@ -803,15 +803,252 @@
   max-width: 56ch;
 }
 
-/* ── 03 · keys: the sentence at display scale ── */
-.notion-root[data-enc-security] [data-enc-sec="03"] > p.notion-text:not(.enc-sec__kicker):first-of-type {
+/* ── 03 · keys: the sentence on the left, the keyhole and the commitment on the right ── */
+.notion-root[data-enc-security] [data-enc-sec="03"] {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+
+.notion-root[data-enc-security] .enc-sec__kleft,
+.notion-root[data-enc-security] .enc-sec__kright {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.notion-root[data-enc-security] .enc-sec__kleft  { gap: 24px; }
+.notion-root[data-enc-security] .enc-sec__kright { gap: 28px; }
+
+.notion-root[data-enc-security] p.enc-sec__ksent {
+  margin: 0 !important;
   font-family: var(--type-display), system-ui, sans-serif !important;
   font-weight: 600 !important;
   font-size: clamp(26px, 3.2vw, 48px) !important;
   line-height: 1.16 !important;
   letter-spacing: -0.038em !important;
   color: #FAFAF8 !important;
-  max-width: 28ch !important;
+  max-width: none !important;
+  text-wrap: pretty !important;
+}
+
+/* the highlighted phrases: Notion's own background colours, restated as the design's pastels */
+.notion-root[data-enc-security] p.enc-sec__ksent [data-enc-key] {
+  padding: 0.04em 0.2em;
+  border-radius: 3px;
+  color: #000000 !important;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  box-shadow: none;
+  outline: none;
+  transition: box-shadow 0.16s ease;
+}
+
+.notion-root[data-enc-security] p.enc-sec__ksent [data-enc-key="0"] { background: #DCEEC7 !important; }
+.notion-root[data-enc-security] p.enc-sec__ksent [data-enc-key="1"] { background: #F8E8B3 !important; }
+.notion-root[data-enc-security] p.enc-sec__ksent [data-enc-key="2"] { background: #D2E3F6 !important; }
+.notion-root[data-enc-security] p.enc-sec__ksent [data-enc-key="3"] { background: #F8DDC6 !important; }
+.notion-root[data-enc-security] p.enc-sec__ksent [data-enc-key="4"] { background: #F7DCE7 !important; }
+
+.notion-root[data-enc-security] p.enc-sec__ksent [data-enc-hot] {
+  box-shadow: 0 0 0 2px #FAFAF8;
+}
+
+.notion-root[data-enc-security] p.enc-sec__khint {
+  margin: 0 !important;
+  min-height: 14px;
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 9.5px !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #9FA39B !important;
+  max-width: none !important;
+}
+
+.notion-root[data-enc-security] [data-enc-sec="03"][data-enc-key-on]:not([data-enc-key-on=""]) p.enc-sec__khint {
+  visibility: hidden;
+}
+
+/* the keyhole: a circle over a shaft, cut out of the ink in paper */
+.notion-root[data-enc-security] .enc-sec__hole {
+  position: relative;
+  width: min(100%, 380px);
+  aspect-ratio: 380 / 540;
+  align-self: flex-end;
+}
+
+.notion-root[data-enc-security] .enc-sec__hshaft {
+  position: absolute;
+  left: 31%;
+  top: 40%;
+  width: 38%;
+  bottom: 0;
+  border-radius: 0 0 4px 4px;
+  background: #FAFAF8;
+}
+
+.notion-root[data-enc-security] .enc-sec__hcircle {
+  position: absolute;
+  left: 10%;
+  top: 0;
+  width: 80%;
+  aspect-ratio: 1 / 1;
+  border-radius: 999px;
+  background: #FAFAF8;
+}
+
+.notion-root[data-enc-security] .enc-sec__hcore {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  width: 18%;
+  aspect-ratio: 1 / 1;
+  border-radius: 999px;
+  background: #2A2C28;
+  border: none;
+  display: grid;
+  place-items: center;
+  transition: width 0.2s ease, background-color 0.2s ease;
+}
+
+.notion-root[data-enc-security] .enc-sec__hnum {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: #000000;
+}
+
+.notion-root[data-enc-security] .enc-sec__hlabel {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: #FAFAF8;
+  transition: opacity 0.16s ease;
+}
+
+.notion-root[data-enc-security] .enc-sec__hword {
+  position: absolute;
+  left: 31%;
+  width: 38%;
+  top: 58%;
+  bottom: 0;
+  padding: 10% 8% 8%;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.notion-root[data-enc-security] .enc-sec__hw {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  line-height: 1.15;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #3A3D38;
+  text-align: center;
+  text-wrap: pretty;
+}
+
+/* a commitment picked: the core takes its colour and the shaft says its name */
+.notion-root[data-enc-security] [data-enc-sec="03"][data-enc-key-on]:not([data-enc-key-on=""]) .enc-sec__hcore {
+  width: 12%;
+  border: 1px solid #000000;
+}
+
+.notion-root[data-enc-security] [data-enc-sec="03"][data-enc-key-on]:not([data-enc-key-on=""]) .enc-sec__hlabel { opacity: 0; }
+
+.notion-root[data-enc-security] [data-enc-sec="03"][data-enc-key-on]:not([data-enc-key-on=""]) .enc-sec__hw {
+  font-family: var(--type-display), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(15px, 1.4vw, 19px);
+  letter-spacing: -0.024em;
+  text-transform: none;
+  color: #000000;
+}
+
+.notion-root[data-enc-security] [data-enc-sec="03"][data-enc-key-on="0"] .enc-sec__hcore { background: #DCEEC7; }
+.notion-root[data-enc-security] [data-enc-sec="03"][data-enc-key-on="1"] .enc-sec__hcore { background: #F8E8B3; }
+.notion-root[data-enc-security] [data-enc-sec="03"][data-enc-key-on="2"] .enc-sec__hcore { background: #D2E3F6; }
+.notion-root[data-enc-security] [data-enc-sec="03"][data-enc-key-on="3"] .enc-sec__hcore { background: #F8DDC6; }
+.notion-root[data-enc-security] [data-enc-sec="03"][data-enc-key-on="4"] .enc-sec__hcore { background: #F7DCE7; }
+
+/* the commitment itself, under a hairline */
+.notion-root[data-enc-security] .enc-sec__kfact {
+  min-height: 150px;
+  padding-top: 20px;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(250, 250, 248, 0.18);
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+
+.notion-root[data-enc-security] .enc-sec__kd {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 10px;
+  color: #000000;
+  background: transparent;
+}
+
+.notion-root[data-enc-security] [data-enc-sec="03"][data-enc-key-on="0"] .enc-sec__kd { background: #DCEEC7; }
+.notion-root[data-enc-security] [data-enc-sec="03"][data-enc-key-on="1"] .enc-sec__kd { background: #F8E8B3; }
+.notion-root[data-enc-security] [data-enc-sec="03"][data-enc-key-on="2"] .enc-sec__kd { background: #D2E3F6; }
+.notion-root[data-enc-security] [data-enc-sec="03"][data-enc-key-on="3"] .enc-sec__kd { background: #F8DDC6; }
+.notion-root[data-enc-security] [data-enc-sec="03"][data-enc-key-on="4"] .enc-sec__kd { background: #F7DCE7; }
+
+.notion-root[data-enc-security] .enc-sec__kb {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 4px;
+  min-width: 0;
+}
+
+.notion-root[data-enc-security] .enc-sec__kn {
+  font-family: var(--type-display), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 19px;
+  letter-spacing: -0.026em;
+  color: #FAFAF8;
+}
+
+.notion-root[data-enc-security] .enc-sec__kt {
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  color: #C9C9C4;
+  text-wrap: pretty;
+}
+
+/* with nothing picked, the fact panel carries its own line instead */
+.notion-root[data-enc-security] p.enc-sec__kempty {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0 !important;
+  padding-top: 6px;
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: 14.5px !important;
+  line-height: 1.4 !important;
+  color: #B4B4B4 !important;
+  max-width: none !important;
+}
+
+.notion-root[data-enc-security] [data-enc-sec="03"][data-enc-key-on]:not([data-enc-key-on=""]) p.enc-sec__kempty {
+  display: none;
 }
 
 /* ── 04 · failover: the segmented control and the stage ── */
@@ -1070,6 +1307,14 @@
   /* the drawing keeps its shape and scrolls inside its frame, as the handoff has it */
   .notion-root[data-enc-security] .enc-sec__canvin {
     padding: 0 24px;
+  }
+
+  .notion-root[data-enc-security] [data-enc-sec="03"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .notion-root[data-enc-security] .enc-sec__hole {
+    align-self: flex-start;
   }
 
   .notion-root[data-enc-security] .enc-sec__verbs {

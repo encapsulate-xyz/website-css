@@ -149,6 +149,41 @@
     return canvas;
   }
 
+  /* ── the keyhole in 03 ────────────────────────────────────────────────────────────────────
+     A circle over a shaft, cut out of the ink in paper. Picking a commitment colours the core
+     and names it in the shaft; with nothing picked the core is empty and the shaft says so. */
+  function keyhole() {
+    var h = el("div", "enc-sec__hole");
+    h.setAttribute("aria-hidden", "true");
+    h.appendChild(el("span", "enc-sec__hshaft"));
+    h.appendChild(el("span", "enc-sec__hcircle"));
+    var core = el("div", "enc-sec__hcore");
+    core.appendChild(el("span", "enc-sec__hnum"));
+    h.appendChild(core);
+    h.appendChild(el("span", "enc-sec__hlabel", "KEY"));
+    var word = el("div", "enc-sec__hword");
+    word.appendChild(el("span", "enc-sec__hw"));
+    h.appendChild(word);
+    return h;
+  }
+
+  function openKey(band, keys, i) {
+    var has = i !== null && i !== undefined && keys[i];
+    band.setAttribute("data-enc-key-on", has ? String(i) : "");
+    Array.prototype.forEach.call(band.querySelectorAll("[data-enc-key]"), function (m) {
+      if (has && m.getAttribute("data-enc-key") === String(i)) m.setAttribute("data-enc-hot", "");
+      else m.removeAttribute("data-enc-hot");
+    });
+    var num = ("0" + ((i || 0) + 1)).slice(-2);
+    band.querySelector(".enc-sec__hnum").textContent = has ? num : "";
+    band.querySelector(".enc-sec__kd").textContent = has ? num : "";
+    var name = has ? label(keys[i]) : "";
+    band.querySelector(".enc-sec__hw").textContent = has ? name : "never assembled";
+    band.querySelector(".enc-sec__kn").textContent = name;
+    var body = has ? keys[i].querySelector(".notion-toggle__content") : null;
+    band.querySelector(".enc-sec__kt").textContent = body ? textOf(body) : "";
+  }
+
   /* ── the stage in 04 ───────────────────────────────────────────────────────────────────────
      The same two hosts and three cosigners, in four states. The step's own words are the Notion
      toggle's; this only draws what is live, standby or lost. */
@@ -216,6 +251,12 @@
      Unwrapping puts the text back the way Notion wrote it — for rows this script marked, and for
      rows an earlier version split before the mark existed. */
   function unsplit(root) {
+    Array.prototype.forEach.call(root.querySelectorAll("[data-enc-key]"), function (m) {
+      m.removeAttribute("data-enc-key");
+      m.removeAttribute("data-enc-hot");
+      m.removeAttribute("tabindex");
+      if (m.parentNode) m.parentNode.replaceChild(m.cloneNode(true), m);
+    });
     Array.prototype.forEach.call(root.querySelectorAll(".enc-sec__row, .enc-sec__fig"), function (n) {
       var bits = Array.prototype.map.call(
         n.querySelectorAll(".enc-sec__term, .enc-sec__verb, .enc-sec__line"), textOf);
@@ -245,7 +286,7 @@
       ".enc-sec__tabs, .enc-sec__panel, .enc-sec__ledger, .enc-sec__seg, .enc-sec__stage," +
       ".enc-sec__table, .enc-sec__pair, .enc-sec__rail, .enc-sec__rows, .enc-sec__spine," +
       ".enc-sec__figs, .enc-sec__half, .enc-sec__bar, .enc-sec__canvas, .enc-sec__verbs," +
-      ".enc-sec__rules, .enc-sec__lhead"), function (n) { n.remove(); });
+      ".enc-sec__rules, .enc-sec__lhead, .enc-sec__kleft, .enc-sec__kright"), function (n) { n.remove(); });
   }
 
   function build() {
@@ -375,6 +416,64 @@
       two.appendChild(ledger);
       pick(two, "a block");
       openRule(rows, 0);
+    }
+
+    // 03 · the sentence on the left, the keyhole and the commitment on the right
+    var three = root.querySelector('[data-enc-sec="03"]');
+    if (three) {
+      var kleft = el("div", "enc-sec__kleft");
+      var kright = el("div", "enc-sec__kright");
+      var keys = [];
+      var kextra = [];
+      var seenToggle = false;
+      Array.prototype.slice.call(three.children).forEach(function (n) {
+        if (n.classList.contains("notion-toggle")) {
+          seenToggle = true;
+          n.classList.add("enc-sec__source");
+          keys.push(n);
+          return;
+        }
+        if (seenToggle && n.tagName === "P") { kextra.push(n); return; }
+        kleft.appendChild(n);
+      });
+      var sentence = kleft.querySelector("p.notion-text:not(.enc-sec__kicker)");
+      if (sentence) sentence.classList.add("enc-sec__ksent");
+      if (kextra[0]) { kextra[0].classList.add("enc-sec__khint"); kleft.appendChild(kextra[0]); }
+      kright.appendChild(keyhole());
+      var fact = el("div", "enc-sec__kfact");
+      fact.setAttribute("role", "status");
+      fact.appendChild(el("span", "enc-sec__kd"));
+      var fb = el("span", "enc-sec__kb");
+      fb.appendChild(el("span", "enc-sec__kn"));
+      fb.appendChild(el("span", "enc-sec__kt"));
+      fact.appendChild(fb);
+      if (kextra[1]) { kextra[1].classList.add("enc-sec__kempty"); fact.appendChild(kextra[1]); }
+      kright.appendChild(fact);
+      three.appendChild(kleft);
+      three.appendChild(kright);
+      keys.forEach(function (t) { three.appendChild(t); });
+
+      // the highlighted phrases are Notion's own background colours, in the toggles' order
+      if (sentence) {
+        var marks = Array.prototype.filter.call(sentence.querySelectorAll("span"), function (sp) {
+          if (!textOf(sp)) return false;
+          var bg = getComputedStyle(sp).backgroundColor;
+          if (!bg || bg === "transparent" || /rgba\(0, 0, 0, 0\)/.test(bg)) return false;
+          return !Array.prototype.some.call(sp.querySelectorAll("span"), function (c) {
+            var b2 = getComputedStyle(c).backgroundColor;
+            return b2 && b2 !== "transparent" && !/rgba\(0, 0, 0, 0\)/.test(b2);
+          });
+        });
+        marks.forEach(function (m, i) {
+          m.setAttribute("data-enc-key", String(i));
+          m.setAttribute("tabindex", "0");
+          m.addEventListener("mouseenter", function () { openKey(three, keys, i); });
+          m.addEventListener("mouseleave", function () { openKey(three, keys, null); });
+          m.addEventListener("focus", function () { openKey(three, keys, i); });
+          m.addEventListener("blur", function () { openKey(three, keys, null); });
+        });
+      }
+      openKey(three, keys, null);
     }
 
     // 05 · the promises read as label and value
