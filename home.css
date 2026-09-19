@@ -58,11 +58,8 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 }
 
 /* the hero runs the full width of the page, the way the stats band under it does — the content
-   keeps the page's measure through the padding. It also takes its own stacking context, so a
-   neighbouring section's decoration can never paint over the headline or the buttons. */
+   keeps the page's measure through the padding */
 .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 {
-  position: relative !important;
-  z-index: 1 !important;
   width: 100vw !important;
   margin-inline: calc(50% - 50vw) !important;
   padding: 0 max(48px, calc(50vw - 864px)) !important;
