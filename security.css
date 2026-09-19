@@ -12,7 +12,7 @@
 .notion-root[data-enc-security] .enc-sec__band {
   width: 100vw;
   margin-inline: calc(50% - 50vw);
-  padding: clamp(56px, 7vw, 96px) max(28px, calc(50vw - 610px));
+  padding: clamp(64px, 7vw, 88px) clamp(28px, 6vw, 96px);
   display: flex;
   flex-direction: column;
   gap: 28px;
@@ -35,22 +35,6 @@
 }
 
 /* ── type, shared ── */
-.notion-root[data-enc-security] .enc-sec__kicker {
-  margin: 0 !important;
-  font-family: var(--type-mono), ui-monospace, monospace !important;
-  font-size: 10.5px !important;
-  letter-spacing: 0.12em !important;
-  text-transform: uppercase !important;
-  color: #575B55 !important;
-}
-
-.notion-root[data-enc-security] [data-enc-sec="01"] .enc-sec__kicker,
-.notion-root[data-enc-security] [data-enc-sec="03"] .enc-sec__kicker,
-.notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__kicker,
-.notion-root[data-enc-security] [data-enc-sec="06"] .enc-sec__kicker {
-  color: #B4B4B4 !important;
-}
-
 .notion-root[data-enc-security] .enc-sec__band h2 {
   margin: 0 !important;
   max-width: 15ch !important;
@@ -84,14 +68,36 @@
   color: #C9C9C4 !important;
 }
 
-/* ── 01 · the commitments ── */
-.notion-root[data-enc-security] .enc-sec__fig {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 6px !important;
+/* the kicker, stated after the band's paragraph rule so it wins on order as well as weight */
+.notion-root[data-enc-security] .enc-sec__band > p.enc-sec__kicker {
+  margin: 0 !important;
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 10.5px !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #575B55 !important;
   max-width: none !important;
 }
 
+.notion-root[data-enc-security] [data-enc-sec="01"] > p.enc-sec__kicker,
+.notion-root[data-enc-security] [data-enc-sec="03"] > p.enc-sec__kicker,
+.notion-root[data-enc-security] [data-enc-sec="05"] > p.enc-sec__kicker,
+.notion-root[data-enc-security] [data-enc-sec="06"] > p.enc-sec__kicker {
+  color: #B4B4B4 !important;
+}
+
+/* the three figures: the figure at 34px over its label, in a row of three under a rule */
+.notion-root[data-enc-security] [data-enc-sec="01"] > p.enc-sec__fig {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  margin: 0 !important;
+  max-width: none !important;
+  font-size: 13.5px !important;
+}
+
+/* ── 01 · the commitments ── */
 .notion-root[data-enc-security] .enc-sec__fig .enc-sec__term {
   font-family: var(--type-display), system-ui, sans-serif;
   font-weight: 600;
