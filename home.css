@@ -48,6 +48,22 @@ The last block identifies the heading callout which says: Others Trust, We Valid
     margin: 4px 0;
     background: linear-gradient(to right, black, rgba(204, 204, 204, 0));
 }
+
+/* 2026-09-19: the lede takes the type from design "Home Hero" (11a) and nothing else — Hanken
+   Grotesk at 21px. The rules above and below it are this block's own ::before and ::after and are
+   left exactly as they were. */
+#block-0dea66c8640e43628360c627219fdb79 {
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: 21px !important;
+}
+
+/* the hero runs the full width of the page, the way the stats band under it does — the content
+   keeps the page's measure through the padding */
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 {
+  width: 100vw !important;
+  margin-inline: calc(50% - 50vw) !important;
+  padding: 0 max(48px, calc(50vw - 864px)) !important;
+}
 /*********************************************/
 /*********************************************/
 
@@ -676,86 +692,6 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   }
 }
 
-/*********************************************/
-/* THE HERO — design "Home Hero", 11a "Paper hero" */
-/*********************************************/
-
-/* The band is paper with the horizon arcs behind it as a watermark: eleven arcs rising from the
-   bottom edge at 8.5% down to 2.5% black, drawn once in svg/hero-horizons.svg and stretched over
-   the band (the file carries preserveAspectRatio="none", which is what lets a 1200x460 drawing
-   take whatever shape the band is).
-
-   WHAT CHANGED IN NOTION (2026-09-19): the hero was a two-column row whose left column held six
-   stacked rules, the headline, eight empty paragraphs and the buttons, and whose right column held
-   a stray rule and an empty paragraph. It is one column now — a rule, the kicker, the headline,
-   the lede, the buttons, a closing rule — which is 11a's own order. Five rules, ten empty
-   paragraphs and the right column were removed. */
-#block-11a2eeaf43d94c23aeaa3d347ec2d749 {
-  position: relative !important;
-  margin: 0 0 56px !important;
-  padding: clamp(56px, 7vw, 92px) clamp(24px, 4vw, 56px) clamp(52px, 6vw, 84px) !important;
-  background: #FAFAF8 url("../svg/hero-horizons.svg") center / 100% 100% no-repeat !important;
-  overflow: hidden !important;
-}
-
-/* one column now, so it takes the band's width whatever inline width Notion wrote on it */
-/* direct children only — the button pair is a column list of its own inside this one, and a
-   descendant selector would stretch its first column to the full width */
-#block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column {
-  width: 100% !important;
-  max-width: none !important;
-  flex: 1 1 100% !important;
-}
-
-/* the two rules the hero keeps, top and bottom */
-#block-f9a89e98cb3f419ebfcbd93b7b4253d4,
-#block-3e0e800a51388119b3e0fabbaddf0fa7 {
-  height: 1px !important;
-  margin: 0 !important;
-  border: 0 !important;
-  border-top: 1px solid #E2E2DB !important;
-  background: transparent !important;
-}
-
-#block-f9a89e98cb3f419ebfcbd93b7b4253d4 { margin-bottom: 28px !important; }
-#block-3e0e800a51388119b3e0fabbaddf0fa7 { margin-top: 34px !important; }
-
-/* the kicker */
-#block-3e0e800a513881e2a361d2dd5be3a9f5 {
-  margin: 0 0 28px !important;
-  padding: 0 !important;
-  font-family: var(--type-mono), ui-monospace, monospace !important;
-  font-size: 11px !important;
-  line-height: 1.4 !important;
-  letter-spacing: 0.14em !important;
-  text-transform: uppercase !important;
-  color: #6B6F68 !important;
-  min-height: 0 !important;
-}
-
-/* the lede */
-#block-0dea66c8640e43628360c627219fdb79 {
-  margin: 0 0 28px !important;
-  padding: 0 !important;
-  font-family: var(--type-body), system-ui, sans-serif !important;
-  font-size: 21px !important;
-  line-height: 1.6 !important;
-  color: #3A3D38 !important;
-  max-width: 56ch !important;
-  text-wrap: pretty !important;
-}
-
-/* the pair of buttons sits 6px under the lede, as the handoff sets it */
-#block-325ddb2d831643b89b6b291b1480b051 {
-  margin: 6px 0 0 !important;
-}
-
-@media (max-width: 760px) {
-  #block-11a2eeaf43d94c23aeaa3d347ec2d749 {
-    background-size: 160% 100% !important;
-  }
-}
-
 /* HERO BUTTONS — the button system's lg size (48px). The grouping itself
    (columns shrunk to their buttons, 12px gap, stacking under 520px) is now
    main.css section 07's BUTTON GROUPS rule, which applies to every button pair. */
@@ -802,18 +738,22 @@ The last block identifies the heading callout which says: Others Trust, We Valid
    Measured live at 1920px after the change: Outfit 600, 104px, line-height
    97.76px, tracking -5.2px, no stroke, no shadow — wrapping to two lines in an
    854px column. */
-/* 2026-09-19: back to 11a's own type — 104px / 0.94 / -0.05em / 16ch — with a clamp so the
-   handoff's flat size is what a wide screen gets and a phone still fits the line. */
+/* TYPE SYSTEM (main.css section 06): the page's one h1 — Outfit 600,
+   clamp(40px, 6.2vw, 92px), 0.96, -0.046em, 15ch. This replaced the flat
+   104px / 0.94 / -0.05em from design 11a on 2026-09-14. */
 #block-803c66b0c67043d691a03f4f9e8bdc15 {
   display: block !important;
-  max-width: 16ch !important;
+  max-width: 15ch !important;
   padding: 0 !important;
-  margin: 0 0 28px !important;
+  margin-left: 0 !important;
+}
+
+#block-803c66b0c67043d691a03f4f9e8bdc15 {
   font-family: "Outfit", sans-serif !important;
   font-weight: 600 !important;
-  font-size: clamp(40px, 6.6vw, 104px) !important;
-  line-height: 0.94 !important;
-  letter-spacing: -0.05em !important;
+  font-size: clamp(40px, 6.2vw, 92px) !important;
+  line-height: 0.96 !important;
+  letter-spacing: -0.046em !important;
   color: #000000 !important;
 }
 
