@@ -1565,8 +1565,8 @@
 .notion-root[data-enc-security] .enc-sec__half--ink   { background: #2A2C28; }
 .notion-root[data-enc-security] .enc-sec__half--paper { background: #FAFAF8; }
 
-.notion-root[data-enc-security] .enc-sec__half--paper .enc-sec__cost { color: #000000 !important; }
-.notion-root[data-enc-security] .enc-sec__half--paper p.notion-text  { color: #3A3D38 !important; }
+.notion-root[data-enc-security] .enc-sec__half--paper p.notion-text:not(.enc-sec__cost):not(.enc-sec__kicker) { color: #3A3D38 !important; }
+.notion-root[data-enc-security] .enc-sec__half--paper p.enc-sec__cost { color: #000000 !important; }
 
 .notion-root[data-enc-security] [data-enc-sec="06"] > .enc-sec__kicker--paper,
 .notion-root[data-enc-security] [data-enc-sec="06"] > .enc-sec__cost,

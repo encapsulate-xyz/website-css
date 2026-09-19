@@ -244,8 +244,8 @@ to{background-position: 14px 0;}
 .notion-root[data-enc-security] .enc-sec__half{display: flex;flex-direction: column;justify-content: space-between;gap: 40px;min-height: 60vh;padding: clamp(48px,6vw,88px) clamp(28px,4vw,64px);}
 .notion-root[data-enc-security] .enc-sec__half--ink{background: #2A2C28;}
 .notion-root[data-enc-security] .enc-sec__half--paper{background: #FAFAF8;}
-.notion-root[data-enc-security] .enc-sec__half--paper .enc-sec__cost{color: #000000 !important;}
-.notion-root[data-enc-security] .enc-sec__half--paper p.notion-text{color: #3A3D38 !important;}
+.notion-root[data-enc-security] .enc-sec__half--paper p.notion-text:not(.enc-sec__cost):not(.enc-sec__kicker){color: #3A3D38 !important;}
+.notion-root[data-enc-security] .enc-sec__half--paper p.enc-sec__cost{color: #000000 !important;}
 .notion-root[data-enc-security] [data-enc-sec="06"] > .enc-sec__kicker--paper,.notion-root[data-enc-security] [data-enc-sec="06"] > .enc-sec__cost,.notion-root[data-enc-security] [data-enc-sec="06"] > .notion-toggle{grid-column: 2;}
 .notion-root[data-enc-security] .enc-sec__costs > .notion-toggle{position: relative;display: grid;grid-template-columns: 30px minmax(0,1fr);gap: 14px;align-items: start;width: 100%;max-width: 420px;margin: 0 !important;padding: 14px 0 !important;border: none !important;border-top: 1px solid #E2E2DB !important;counter-increment: enc-cost;}
 .notion-root[data-enc-security] .enc-sec__costs{counter-reset: enc-cost;}
