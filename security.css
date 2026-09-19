@@ -547,10 +547,47 @@
   align-items: start;
 }
 
-.notion-root[data-enc-security] [data-enc-sec="06"] > *:nth-child(-n+3) { grid-column: 1; }
-.notion-root[data-enc-security] [data-enc-sec="06"] > *:nth-child(n+4)  { grid-column: 2; }
+/* the ink figure on the left, what slashing costs on the right */
+.notion-root[data-enc-security] [data-enc-sec="06"] > .enc-sec__kicker:not(.enc-sec__kicker--paper),
+.notion-root[data-enc-security] [data-enc-sec="06"] > .enc-sec__zero,
+.notion-root[data-enc-security] [data-enc-sec="06"] > p.notion-text:not(.enc-sec__cost):not(.enc-sec__kicker--paper) {
+  grid-column: 1;
+}
 
-.notion-root[data-enc-security] [data-enc-sec="06"] > p.notion-text:nth-child(2) {
+.notion-root[data-enc-security] [data-enc-sec="06"] > .enc-sec__kicker--paper,
+.notion-root[data-enc-security] [data-enc-sec="06"] > .enc-sec__cost,
+.notion-root[data-enc-security] [data-enc-sec="06"] > .notion-toggle {
+  grid-column: 2;
+}
+
+.notion-root[data-enc-security] .enc-sec__table {
+  display: flex;
+  flex-direction: column;
+  max-width: 420px;
+  border-top: 1px solid rgba(250, 250, 248, 0.3);
+}
+
+.notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__row .enc-sec__term {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9FA39B;
+}
+
+.notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__row .enc-sec__line {
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #FAFAF8;
+  text-align: right;
+}
+
+.notion-root[data-enc-security] .enc-sec__kicker--paper {
+  color: #575B55 !important;
+}
+
+.notion-root[data-enc-security] .enc-sec__zero {
   font-family: var(--type-display), system-ui, sans-serif !important;
   font-weight: 600 !important;
   font-size: clamp(120px, 18vw, 300px) !important;
@@ -561,7 +598,7 @@
   max-width: none !important;
 }
 
-.notion-root[data-enc-security] [data-enc-sec="06"] > p.notion-text:nth-child(5) {
+.notion-root[data-enc-security] .enc-sec__cost {
   font-family: var(--type-display), system-ui, sans-serif !important;
   font-weight: 600 !important;
   font-size: clamp(40px, 6vw, 104px) !important;

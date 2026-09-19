@@ -216,6 +216,29 @@
       pick(two, "a block");
     }
 
+    // 05 · the promises read as label and value
+    var five = root.querySelector('[data-enc-sec="05"]');
+    if (five) {
+      var table = el("div", "enc-sec__table");
+      Array.prototype.slice.call(five.children).forEach(function (n) {
+        if (n.tagName !== "P" || n.classList.contains("enc-sec__kicker")) return;
+        if (textOf(n).indexOf("·") < 0) return;
+        if (split(n, 2)) { n.classList.add("enc-sec__row"); table.appendChild(n); }
+      });
+      if (table.children.length) five.appendChild(table);
+    }
+
+    // 06 · the figure and the claim, marked by their own words rather than by position
+    var six = root.querySelector('[data-enc-sec="06"]');
+    if (six) {
+      Array.prototype.forEach.call(six.querySelectorAll(":scope > p.notion-text"), function (n) {
+        var t = textOf(n);
+        if (t === "0") n.classList.add("enc-sec__zero");
+        else if (t === "The seat.") n.classList.add("enc-sec__cost");
+        else if (/^What slashing costs/.test(t)) n.classList.add("enc-sec__kicker", "enc-sec__kicker--paper");
+      });
+    }
+
     // 04 · the failover steps drive the stage
     var four = root.querySelector('[data-enc-sec="04"]');
     if (four) {
