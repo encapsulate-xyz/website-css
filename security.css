@@ -878,7 +878,7 @@
   font-family: var(--type-display), system-ui, sans-serif !important;
   font-weight: 600 !important;
   font-size: clamp(22px, 4.73cqw, 48px) !important;
-  line-height: 1.16 !important;
+  line-height: 1.42 !important;
   letter-spacing: -0.038em !important;
   color: #FAFAF8 !important;
   max-width: none !important;
@@ -887,7 +887,8 @@
 
 /* the highlighted phrases: Notion's own background colours, restated as the design's pastels */
 .notion-root[data-enc-security] p.enc-sec__ksent [data-enc-key] {
-  padding: 0.04em 0.2em;
+  padding: 0 0.2em;
+  line-height: 1.08;
   border-radius: 3px;
   color: #000000 !important;
   box-decoration-break: clone;
