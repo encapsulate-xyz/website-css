@@ -117,7 +117,7 @@
 }
 
 /* the three figures: the figure at 34px over its label, in a row of three under a rule */
-.notion-root[data-enc-security] [data-enc-sec="01"] > p.enc-sec__fig {
+.notion-root[data-enc-security] p.enc-sec__fig {
   display: flex !important;
   flex-direction: column !important;
   gap: 6px !important;
@@ -847,6 +847,10 @@
   align-items: start;
 }
 
+.notion-root[data-enc-security] .enc-sec__kleft {
+  container-type: inline-size;
+}
+
 .notion-root[data-enc-security] .enc-sec__kleft,
 .notion-root[data-enc-security] .enc-sec__kright {
   min-width: 0;
@@ -857,11 +861,13 @@
 .notion-root[data-enc-security] .enc-sec__kleft  { gap: 24px; }
 .notion-root[data-enc-security] .enc-sec__kright { gap: 28px; }
 
+/* 4.73cqw is the design's own ratio — 48px in its 1014px column — so the sentence keeps the
+   same words on every line as the column narrows, instead of piling up more lines */
 .notion-root[data-enc-security] p.enc-sec__ksent {
   margin: 0 !important;
   font-family: var(--type-display), system-ui, sans-serif !important;
   font-weight: 600 !important;
-  font-size: clamp(26px, 3.2vw, 48px) !important;
+  font-size: clamp(22px, 4.73cqw, 48px) !important;
   line-height: 1.16 !important;
   letter-spacing: -0.038em !important;
   color: #FAFAF8 !important;

@@ -25,7 +25,7 @@
      built with, so a newer script unwraps an older build and does it again rather than finding
      bands already there and leaving them — which is what happens on a page still serving the
      previous release from its baked site head. */
-  var VERSION = "5";
+  var VERSION = "6";
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -609,6 +609,28 @@
           });
           if (four.getAttribute("data-enc-step") !== String(pick)) step(four, pick);
         };
+        /* the handoff gives every step the same bottom edge: its height is the block's height
+           less the offset it sticks at, so the pile shows each earlier step's disc row and
+           title and nothing is cut. The block is the taller of the stage and what the last
+           step needs. */
+        var sizeSteps = function () {
+          msteps.forEach(function (n) { n.style.height = ""; n.style.minHeight = ""; });
+          var lastH = msteps[msteps.length - 1].offsetHeight;
+          var stageH = mleft.offsetHeight;
+          var H = Math.ceil(Math.max(stageH, (msteps.length - 1) * STACK_STEP + lastH));
+          msteps.forEach(function (n, i) {
+            n.style.minHeight = "0";
+            n.style.height = (H - i * STACK_STEP) + "px";
+          });
+        };
+        sizeSteps();
+        if (window.ResizeObserver) {
+          // the left column only: observing a step would see the height this sets and loop
+          var ro = new ResizeObserver(function () { sizeSteps(); sync(); });
+          ro.observe(mleft);
+        }
+        window.addEventListener("resize", sizeSteps);
+
         if (syncing) {
           window.removeEventListener("scroll", syncing);
           window.removeEventListener("resize", syncing);
