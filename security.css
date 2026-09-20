@@ -8,6 +8,16 @@
    The old page's rules (pills, the location image border, provider logos) went with the content
    they styled on 2026-09-19. The cover is main.css §14 + covers.js and is untouched. */
 
+/* the last band runs into the footer: Super pads the article and the main below the content */
+.notion-root[data-enc-security] {
+  padding-bottom: 0 !important;
+}
+
+.super-content:has(> .notion-root[data-enc-security]),
+.super-content:has(.notion-root[data-enc-security]) {
+  padding-bottom: 0 !important;
+}
+
 /* ── the bands ── */
 .notion-root[data-enc-security] .enc-sec__band {
   width: 100vw;

@@ -1,3 +1,5 @@
+.notion-root[data-enc-security]{padding-bottom: 0 !important;}
+.super-content:has(> .notion-root[data-enc-security]),.super-content:has(.notion-root[data-enc-security]){padding-bottom: 0 !important;}
 .notion-root[data-enc-security] .enc-sec__band{width: 100vw;margin-inline: calc(50% - 50vw);padding: clamp(64px,7vw,88px) clamp(28px,6vw,96px);display: flex;flex-direction: column;gap: 28px;}
 .notion-root[data-enc-security] [data-enc-sec="01"],.notion-root[data-enc-security] [data-enc-sec="03"],.notion-root[data-enc-security] [data-enc-sec="05"]{background: #2A2C28;color: #FAFAF8;}
 .notion-root[data-enc-security] [data-enc-sec="02"],.notion-root[data-enc-security] [data-enc-sec="04"]{background: #FAFAF8;}
