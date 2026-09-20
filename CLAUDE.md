@@ -471,6 +471,12 @@ load order.
   must be deleted (this is why the covers looked broken until the panels were cleaned).
 - **Clipping:** `.notion-property` has `overflow:hidden`, a 4px gap and min-height 24px; card
   content is overflow hidden — descenders, figures and badges get cut; set `overflow: visible`.
+- **A descender is cut whenever a tight `line-height` meets that clipping** (the g in "Weigh.",
+  the y in "Aditya" — reported more than once). A line-height under 1 makes the line box shorter
+  than the glyphs, and `.notion-property` and `.notion-collection-card__content` clip to it. The
+  fix is `overflow: visible !important` on **both** the property and the card's content box —
+  never a bigger line-height, which changes the design. Check it on every display-scale word set
+  on a property (the pillars' Word, card titles, the figures).
 - **Covers on cards:** Super writes `object-fit/object-position` inline (only `!important` wins)
   and floors height with `min-height`.
 - **Image optimizer:** covers come via `/_next/image?url=…&w=…&q=75` (WebP, only q75 allowed) and
