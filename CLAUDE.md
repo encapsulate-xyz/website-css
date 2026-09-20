@@ -67,6 +67,7 @@ User rules that stand on every task:
 | `brand.css`, `brand.js` | /brand — four spreads with a sticky rail, the marks slab, the colour strip (design *Brand Page*) | page Head + site Head |
 | `blog.css`, `blog.js` | /blog — the index (design J); blog.js builds each card's cover and its band span, and is loaded from the site head | page Head + site Head |
 | `network.css`, `network.js` | /networks (network.js pages the Network Count panels, same gesture rules as home.js decks) | its page Head |
+| `investments.css`, `investments.js` | /investments — two bands (design *Investments Page*): the thesis and the running band of positions on ink, the six questions on paper | page Head + site Head |
 | `governance.css` + `governance.js` (the record page: count band, pillars, controls, rows), `blog.css`, `brand.css`, `contact-us.css`, `guides.css`, `investments.css`, `security.css`, `services.css` | each page's CSS, moved out of Super's page Code panels on 2026-09-15 (old cover rules removed, the rest kept as it was) | each page's Head |
 | `svg/`, `img/` | every drawing and icon the CSS references, served from jsDelivr beside the CSS | referenced as `../svg/…` / `../img/…` from `dist/` |
 | `notion/page-covers.md` | cover copy for the nine inner pages | — |
@@ -119,7 +120,7 @@ Note: `git commit` also commits anything the user has staged — check `git stat
 | `head/brand.html` | /brand → Code → Head (brand.css; brand.js is in the site head) |
 | `head/contact-us.html` | /contact-us → Code → Head |
 | `head/guides.html` | /guides → Code → Head (view-picker + guides.css) |
-| `head/investments.html` | /investments → Code → Head |
+| `head/investments.html` | /investments → Code → Head (investments.css; investments.js is in the site head) |
 | `head/security.html` | /security → Code → Head |
 | `head/services.html` | /services → Code → Head |
 
@@ -359,6 +360,32 @@ keeps showing the old file until the list is updated.
 two dead homepage background rules went with it on 2026-09-16. Keep large content images off jsDelivr: it is
 free for personal and commercial use with no bandwidth cap (20MB per file, 50MB per package), but it
 is a package CDN and sustained media traffic invites a fair-use review.
+
+## /investments (2026-09-21, design *Investments Page*)
+
+Two full-bleed bands after the cover, built by `investments.js` from Notion:
+
+- **01, on ink**: the kicker, "We invest in the chains we operate." at clamp(38,5.6vw,84), the lede,
+  then the positions as a band of pastel discs that runs (30s, `enc-inv-run`) and **pauses on the
+  mark under the pointer**; the line beneath prints that position — name, `category · since YEAR`,
+  and the Validator pill's own words beside a dot that is green when we run one.
+- **02, on paper**: the six questions as a segmented control, one answer at a time with the verdict
+  as a disc (green Yes / ink No), and the ask at the foot with Book a call and **Send the spec**,
+  which links to the contact page's form block (`/contact-us#block-3dee800a5138808c8e81d333a9bb7195`).
+
+**The positions are the `Portfolio` database** (`807c8bde…`), one row per position: Name,
+Description, **Category** (select), **Since** (text), **Validator** (select, whose two options are
+the design's own labels — "we run a validator here" / "not yet in the set"), Files & media (the
+logo, drawn in the disc), Tags, super:Link. The script reads the rendered cards, so nothing about a
+position lives in the code: the category and the validator line are matched by value, not by
+Super's property hashes, and a missing year or pill just drops out of the line.
+
+**Its gallery view must show Category, Since and Validator** — the API cannot switch a view's
+properties on. Without them the band still runs and names each position.
+
+Removed from the page on 2026-09-21: the Tally form column ("Looking for Investments?", its
+paragraph and the quote) and the "Our Investments" heading — the design has neither, and the ask's
+second button goes to the contact page's form instead.
 
 ## The guides picker (/guides, guides.css + guides.js, 2026-09-16)
 
