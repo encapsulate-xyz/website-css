@@ -1,360 +1,397 @@
-/* /investments — page-level CSS, linked from that page's Code → Head (head/investments.html).
-   Moved from the page's Code panel 2026-09-15. The old cover rules (page-covers/investments.png behind the first
-   callout, .direct-parent, .super-content) were removed: the cover is main.css §14 + covers.js. */
+/* /investments — design "Investments Page", built by investments.js.
 
-/*********************************************
- * For the collection gallery
- *********************************************/
+   Two full-bleed bands after the cover: 01 on ink carries the thesis and the positions as a band
+   of marks that runs and pauses under the pointer; 02 on paper answers the six questions one at a
+   time and ends on the ask. Every word is a Notion block; the script only groups them, builds the
+   marks from the Portfolio database's own cards, and swaps the line under the band.
 
-/* Setting up a grid layout for the collection gallery with one equal column, a gap of 30px between grid items, no border, and no padding. Also sets a vertical margin of 80px. */
-.notion-collection-gallery {
-    grid-template-columns: repeat(1, 1fr) !important;
-    grid-gap: 40px !important;
-    margin: 80px 0 !important;
-    border: none !important;
-    padding: 0 !important;
-}
+   The old page's rules (the one-column gallery, the alternating pastel cards, the pill sizing)
+   went with the content they styled on 2026-09-21. The cover is main.css §14 + covers.js. */
 
-/* Styling the content of the collection card BD */
-.notion-collection-card__content {
-    padding-top: 50px;
-}
-
-/* Styling the cover of the collection card */
-/*.notion-collection-card__cover {*/
-/*    width: 40%;*/
-/*}*/
-
-/* Adjusting the font size of the title */
-/*.notion-property__title span {*/
-/*    font-size: 24px;*/
-/*}*/
-
-
-
-/* Styling the collection card with a flex display, setting width and margin, and adding border radius */
-.notion-collection-card {
-    display: flex;
-    width: 48%;
-    margin: 0 auto;
-    border-radius: 20px !important;
-}
-
-/* To make the image stay in center */
-.notion-collection-card__cover {
-  object-position: center!important;
-}
-
-
-
-/* Reversed order and align to left for odd cards, with background color */
-.notion-collection-gallery .notion-collection-card:nth-child(odd) {
-    flex-direction: row-reverse;
-    margin-left: 0;
-    margin-right: auto;
-}
-
-/* Align to right for even cards, with background color */
-.notion-collection-gallery .notion-collection-card:nth-child(even) {
-    margin-right: 0 !important;
-    margin-left: auto;
-}
-
-/*********************************************
- * For page sub heading
- *********************************************/
-
-/* Media query for adjusting font size of sub headings on smaller screens */
-#block-28aaa524e8134c23821970a55d9a03e6, #block-880ddf85b0914bab978e9f055059f86e {
-    font-size: 22px!important;
-    font-family: Georgia;
-}
-
-@media (max-width: 800px) {
-    #block-28aaa524e8134c23821970a55d9a03e6, #block-880ddf85b0914bab978e9f055059f86e {
-        font-size: 18px!important;
-    }
-}
-/*********************************************/
-
-/*********************************************
- * Media query for screens with a maximum width of 1024px
- *********************************************/
-
-/* Adjustments for collection cards and columns on medium-sized screens */
-@media (max-width: 1024px) {
-    .notion-collection-card {
-        width: 100% !important;
-        margin-inline-start: 0 !important;
-    }
-    .notion-column-list:first-of-type {
-        flex-direction: initial !important;
-    }
-    .notion-column {
-        width: 100% !important;
-        margin-inline-start: 0 !important;
-    }
-    .notion-column .notion-image {
-        max-width: 100%;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-        text-align: center !important;
-    }
-    .notion-column .notion-divider {
-        display: none;
-    }
-}
-/*********************************************/
-
-/*********************************************
- * Hiding the icon wrapper of the title property
- *********************************************/
-
-/* Hiding the icon wrapper of the title property */
-.notion-property__title__icon-wrapper {
-    display: none !important;
-}
-/*********************************************/
-
-/*********************************************
- * Adjusting the font size, border radius, padding, and border of the notion pill
- *********************************************/
-
-/* Adjusting the font size, border radius, padding, and border of the notion pill */
-.notion-pill {
-    font-size: 14px !important;
-    border-radius: 18px !important;
-    padding: 8px 8px !important;
-    border: 1px solid black;
-}
-/*********************************************/
-
-/*********************************************
- * Media query for screens with a maximum width of 660px
- *********************************************/
-
-/* Adjustments for select properties on smaller screens */
-@media screen and (max-width: 660px) {
-    .notion-property.notion-property__select.property-526c745b {
-        /*flex-direction: column;BD*/
-    }
-    .notion-property.notion-property__select.property-526c745b .notion-pill {
-        margin-bottom: 10px;
-        overflow: hidden; /* Prevents text from overflowing */
-        text-overflow: ellipsis; /* Truncates overflowing text with an ellipsis (...) */
-        font-size: 10px !important;
-    }
-}
-/*********************************************/
-
-/*********************************************
- * Media query for screens with a maximum width of 475px
- *********************************************/
-
-/* Adjustments for gallery cards on smaller screens */
-@media (max-width: 475px) {
-    .notion-collection-card.gallery.no-click {
-        display: flex !important;
-        flex-direction: column-reverse;
-        align-items: center;
-    }
-    .notion-collection-card.gallery.no-click .notion-collection-card__cover.medium {
-        order: 2;
-    }
-    .notion-collection-card.gallery.no-click .notion-collection-card__content {
-        order: 1;
-    }
-}
-
-/*********************************************/
-
-/*********************************************
- * For page heading
- *********************************************/
-#block-edb3d3876c3c4033b332151cf7fb017a strong {
-  color: var(--color-bg-purple)!important;
-  line-height: 1;
-  margin-top: 0 !important;
-  padding-top: 0 !important;
-  font-size: calc(1px + 9vw) !important;
-  font-weight: 200 !important;
-  font-family: Arial Black, sans-serif;
-  text-shadow: 4px 4px 0px rgba(0, 0, 0, 1) !important;
+/* ── the bands ── */
+.notion-root[data-enc-invest] .enc-inv__band {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  padding: clamp(64px, 7vw, 96px) clamp(28px, 6vw, 96px);
   display: flex;
-  -webkit-text-stroke: 2px black;
-  text-stroke: 2px black !important;
+  flex-direction: column;
+  gap: 40px;
 }
 
-#block-edb3d3876c3c4033b332151cf7fb017a:after {
-    margin-top: 40px!important;
-    content: "";
-    display: block;
-    height: 2px!important;
-    margin: 4px 0;
-
+.notion-root[data-enc-invest] [data-enc-inv="01"] {
+  background: #2A2C28;
+  color: #FAFAF8;
 }
 
+.notion-root[data-enc-invest] [data-enc-inv="02"] {
+  background: #FAFAF8;
+}
 
-#block-edb3d3876c3c4033b332151cf7fb017a::after {
-  content: "";
-  display: block;
-  height: 1px;
+/* Notion's heading anchors are empty siblings; as flex items they would open a gap */
+.notion-root[data-enc-invest] .enc-inv__band .notion-heading__anchor { display: none !important; }
+
+/* the database itself is the source of the marks, not something to draw */
+.notion-root[data-enc-invest] [data-enc-source] { display: none !important; }
+
+/* ── type ── */
+.notion-root[data-enc-invest] p.enc-inv__kicker {
+  margin: 0 !important;
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 10.5px !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #575B55 !important;
+  max-width: none !important;
+}
+
+.notion-root[data-enc-invest] [data-enc-inv="01"] p.enc-inv__kicker { color: #B4B4B4 !important; }
+
+.notion-root[data-enc-invest] p.enc-inv__statement {
+  margin: 0 !important;
+  font-family: var(--type-display), system-ui, sans-serif !important;
+  font-weight: 600 !important;
+  font-size: clamp(38px, 5.6vw, 84px) !important;
+  line-height: 1 !important;
+  letter-spacing: -0.048em !important;
+  color: #FAFAF8 !important;
+  max-width: 16ch !important;
+  text-wrap: pretty !important;
+}
+
+.notion-root[data-enc-invest] p.enc-inv__lede {
+  margin: 0 !important;
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: 18px !important;
+  line-height: 1.52 !important;
+  color: #3A3D38 !important;
+  max-width: 46ch !important;
+  text-wrap: pretty !important;
+}
+
+.notion-root[data-enc-invest] [data-enc-inv="01"] p.enc-inv__lede { color: #C9C9C4 !important; }
+
+.notion-root[data-enc-invest] .enc-inv__band h2 {
+  margin: 0 !important;
+  font-family: var(--type-display), system-ui, sans-serif !important;
+  font-weight: 600 !important;
+  font-size: clamp(34px, 4.2vw, 58px) !important;
+  line-height: 0.98 !important;
+  letter-spacing: -0.044em !important;
+  color: #000000 !important;
+  max-width: 15ch !important;
+}
+
+/* 01 · the head is one block, the band and its line follow */
+.notion-root[data-enc-invest] [data-enc-inv="01"] {
+  gap: 20px;
+}
+
+.notion-root[data-enc-invest] .enc-inv__wall,
+.notion-root[data-enc-invest] p.enc-inv__status { margin-top: 20px; }
+
+/* ── the band of positions ── */
+.notion-root[data-enc-invest] .enc-inv__wall {
+  overflow: hidden;
+  margin-inline: calc(-1 * clamp(28px, 6vw, 96px));
+}
+
+.notion-root[data-enc-invest] .enc-inv__track {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  animation: enc-inv-run 30s linear infinite;
+  will-change: transform;
+}
+
+.notion-root[data-enc-invest] .enc-inv__wall:hover .enc-inv__track,
+.notion-root[data-enc-invest] .enc-inv__wall:focus-within .enc-inv__track {
+  animation-play-state: paused;
+}
+
+@keyframes enc-inv-run {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.notion-root[data-enc-invest] .enc-inv__mark {
+  position: relative;
+  flex: none;
+  width: clamp(140px, 18vw, 220px);
+  aspect-ratio: 1 / 1;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  overflow: hidden;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.16s ease;
+}
+
+.notion-root[data-enc-invest] .enc-inv__mark[data-enc-hot] { border-color: #FAFAF8; }
+
+.notion-root[data-enc-invest] .enc-inv__mark[data-enc-i="0"] { background: #DCEEC7; }
+.notion-root[data-enc-invest] .enc-inv__mark[data-enc-i="1"] { background: #F8E8B3; }
+.notion-root[data-enc-invest] .enc-inv__mark[data-enc-i="2"] { background: #D2E3F6; }
+.notion-root[data-enc-invest] .enc-inv__mark[data-enc-i="3"] { background: #F8DDC6; }
+.notion-root[data-enc-invest] .enc-inv__mark[data-enc-i="4"] { background: #F7DCE7; }
+
+.notion-root[data-enc-invest] .enc-inv__mark img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  margin: 10px 0;
-  background: linear-gradient(to right, black 0%, transparent 60%, transparent 100%);
+  height: 100%;
+  object-fit: contain !important;
+  object-position: center !important;
+  display: block;
+  padding: 18%;
+  box-sizing: border-box;
 }
 
-#block-28360dda34f44521a239d31b2bda2297{
-  font-size: calc(1px + 3vw) !important;
-}
-
-
-/*********************************************/
-
-/* Adjusting the padding-top and font-size of the title in the collection card inside the gallery. */
-.notion-collection-card.gallery .notion-property__title {
-    font-size: 20px !important;
-}
-
-.notion-property.notion-property__text.notion-collection-card__property.property-45745075 {
-    font-size: 15px;
-}
-
-/*********************************************
-VERTICAL LINE
-/*********************************************/
-.notion-collection-gallery {
-    position: relative;
-}
-
-.notion-collection-gallery::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background-color: black;
-    transform: translateX(-50%);
-    z-index: -1; /* Ensures the line is behind the cards */
-}
-
-.notion-collection-card {
-    position: relative;
-}
-
-/*.notion-collection-card::before {*/
-/*    content: "";*/
-/*    position: absolute;*/
-/*    left: 50%;*/
-/*    top: 0;*/
-/*    bottom: 0;*/
-/*    width: 2px;*/
-/*    background-color: black;*/
-/*    transform: translateX(-50%);*/
-/*    z-index: -1;*/
-/*}*/
-
-.notion-collection-gallery .notion-collection-card:nth-child(even):after {
-  left: 0%;
-  overflow: visible!important;
-  transform: translate(-140%, -50%)!important;
-  background-color: var(--color-bg-default);
-
-
-}
-
-.notion-collection-card {
-    overflow: visible;
-}
-
-
-.notion-collection-gallery .notion-collection-card:nth-child(even):before {
-  left: 0%;
-  overflow: visible!important;
-  transform: translate(-48%, -50%)!important;
-  background-color: var(--color-bg-pink);
-
-
-}
-
-.notion-collection-card:before {
-    content: "";
-    position: absolute;
-    right: 0%;
-    top: 50%;
-    width: 200px;
-    height: 200px;
-    background-color: var(--color-bg-green);
-    border-radius: 50%;
-    transform: translate(48%, -50%);
-    border: 2px dashed  black;
-    overflow: visible!important;
-    z-index: -1;
-    opacity: 1;
-    transition: opacity 0.5s ease, width 0.5s ease, height 0.5s ease;
-}
-
-.notion-collection-card:hover:before {
-    width: 280px;
-    height: 280px;
-    z-index: -1;
-    opacity: 0.4;
-
-}
-
-.notion-collection-card {
-    position: relative!important; /* Ensure the parent element has a defined position */
-}
-
-
-.notion-collection-card:after {
-    content: "";
-    position: absolute;
-    right: 0%;
-    top: 50%;
-    width: 40px;
-    height: 40px;
-    background-color: var(--color-bg-default);
-    border-radius: 50%;
-    transform: translate(140%, -50%);
-    border: 2px dashed  black;
-    overflow: visible!important;
-}
-/*********************************************/
-/*********************************************/
-/* NOTION PILL */
-/*********************************************/
-.notion-collection-gallery .notion-collection-card:nth-child(even) .notion-pill {
-  margin: 8px;
-  border: 1px dashed #4444;
+.notion-root[data-enc-invest] .enc-inv__initial {
   position: absolute;
-  top: 0;
-  right: 0;
-  padding: 2px 8px!important;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--type-display), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(40px, 6.5vw, 80px);
+  letter-spacing: -0.04em;
+  color: #000000;
 }
 
-.notion-collection-gallery .notion-collection-card:nth-child(odd) .notion-pill {
-  margin: 8px;
-  border: 1px dashed #4444;
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 2px 8px!important;
-}
-/*********************************************/
-/* Make it clickable */
-/*********************************************/
-.notion-collection-card.gallery a {
-    pointer-events: auto !important;
-}
-/*********************************************/
-
-#block-8c07adb45bb74a8fbcd6946475208325 {
-    padding: 10px;
+/* ── the line under the band ── */
+.notion-root[data-enc-invest] p.enc-inv__status {
+  display: flex !important;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 18px;
+  min-height: 44px;
+  margin: 0 !important;
+  padding-top: 16px;
+  border-top: 1px solid rgba(250, 250, 248, 0.4);
+  max-width: 1180px !important;
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: 14.5px !important;
+  color: #9FA39B !important;
 }
 
-#block-40ff056ad6ad47eb9b0c1dd2f75587f2 {
-    padding: 10px;
+.notion-root[data-enc-invest] .enc-inv__sname {
+  font-family: var(--type-display), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 26px;
+  letter-spacing: -0.032em;
+  color: #FAFAF8;
+}
+
+.notion-root[data-enc-invest] .enc-inv__smeta {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #B4B4B4;
+  white-space: nowrap;
+}
+
+.notion-root[data-enc-invest] .enc-inv__sval {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notion-root[data-enc-invest] .enc-inv__sdot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: transparent;
+  border: 1.5px solid rgba(250, 250, 248, 0.6);
+}
+
+.notion-root[data-enc-invest] .enc-inv__sval[data-enc-live] .enc-inv__sdot {
+  background: #99CC66;
+  border: none;
+}
+
+.notion-root[data-enc-invest] .enc-inv__svlabel {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #FAFAF8;
+  white-space: nowrap;
+}
+
+/* ── 02 · the six questions ── */
+.notion-root[data-enc-invest] .enc-inv__seg {
+  display: inline-flex;
+  align-self: flex-start;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 10px;
+  background: #F2F2ED;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.notion-root[data-enc-invest] .enc-inv__tab {
+  appearance: none;
+  cursor: pointer;
+  height: 36px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.006em;
+  color: #3A3D38;
+  white-space: nowrap;
+  transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+}
+
+.notion-root[data-enc-invest] .enc-inv__tab:hover { border-color: #B9B9B1; }
+
+.notion-root[data-enc-invest] .enc-inv__tab[data-enc-on] {
+  background: #FAFAF8;
+  border-color: #D9D9D2;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  color: #000000;
+}
+
+.notion-root[data-enc-invest] .enc-inv__tn {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: #6B6F68;
+}
+
+.notion-root[data-enc-invest] .enc-inv__tab[data-enc-on] .enc-inv__tn { color: #000000; }
+
+/* the stage: the verdict as a disc, the question and its answer beside it */
+.notion-root[data-enc-invest] .enc-inv__stage {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: start;
+  max-width: 1180px;
+  padding-top: 12px;
+}
+
+.notion-root[data-enc-invest] .enc-inv__disc {
+  flex: none;
+  width: clamp(96px, 12vw, 160px);
+  height: clamp(96px, 12vw, 160px);
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: #000000;
+  color: #FAFAF8;
+  font-family: var(--type-display), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(28px, 3.4vw, 44px);
+  letter-spacing: -0.04em;
+}
+
+.notion-root[data-enc-invest] .enc-inv__disc[data-enc-yes] {
+  background: #DCEEC7;
+  color: #000000;
+}
+
+.notion-root[data-enc-invest] .enc-inv__panels { display: grid; }
+
+.notion-root[data-enc-invest] .enc-inv__panel {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.16s ease;
+}
+
+.notion-root[data-enc-invest] .enc-inv__panel[data-enc-on] {
+  visibility: visible;
+  opacity: 1;
+}
+
+.notion-root[data-enc-invest] .enc-inv__q {
+  font-family: var(--type-display), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(28px, 3.4vw, 48px);
+  line-height: 1;
+  letter-spacing: -0.042em;
+  color: #000000;
+  max-width: 16ch;
+}
+
+.notion-root[data-enc-invest] p.enc-inv__a {
+  margin: 0 !important;
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: 18px !important;
+  line-height: 1.5 !important;
+  color: #3A3D38 !important;
+  max-width: 52ch !important;
+  text-wrap: pretty !important;
+}
+
+/* ── the ask ── */
+.notion-root[data-enc-invest] .enc-inv__ask {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 32px;
+  max-width: 1180px;
+  padding-top: 36px;
+  border-top: 1px solid #000000;
+}
+
+.notion-root[data-enc-invest] .enc-inv__askl {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notion-root[data-enc-invest] p.enc-inv__asktitle {
+  margin: 0 !important;
+  font-family: var(--type-display), system-ui, sans-serif !important;
+  font-weight: 600 !important;
+  font-size: clamp(30px, 3.6vw, 52px) !important;
+  line-height: 0.98 !important;
+  letter-spacing: -0.044em !important;
+  color: #000000 !important;
+  max-width: 14ch !important;
+}
+
+.notion-root[data-enc-invest] p.enc-inv__asksub {
+  margin: 0 !important;
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+  color: #3A3D38 !important;
+  max-width: 44ch !important;
+}
+
+/* the two buttons are the Button System's, at the design's 48 */
+.notion-root[data-enc-invest] .enc-inv__askbtns {
+  --btn-h: 48px;
+  --btn-px: 20px;
+  --btn-fs: 16px;
+  margin: 0 !important;
+  flex: none;
+}
+
+/* ── narrow ── */
+@media (max-width: 860px) {
+  .notion-root[data-enc-invest] .enc-inv__stage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ── reduced motion: the band stands still ── */
+@media (prefers-reduced-motion: reduce) {
+  .notion-root[data-enc-invest] .enc-inv__track { animation: none !important; }
 }
