@@ -13,7 +13,7 @@
 .notion-root[data-enc-invest] .enc-inv__wall,.notion-root[data-enc-invest] p.enc-inv__status{margin-top: 20px;}
 .notion-root[data-enc-invest] .enc-inv__wall{overflow: hidden;margin-inline: calc(-1 * clamp(28px,6vw,96px));}
 .notion-root[data-enc-invest] .enc-inv__track{display: flex;gap: 14px;width: max-content;animation: enc-inv-run 30s linear infinite;will-change: transform;}
-.notion-root[data-enc-invest] .enc-inv__wall:hover .enc-inv__track,.notion-root[data-enc-invest] .enc-inv__wall:focus-within .enc-inv__track{animation-play-state: paused;}
+.notion-root[data-enc-invest] [data-enc-on] .enc-inv__track,.notion-root[data-enc-invest] .enc-inv__wall:hover .enc-inv__track,.notion-root[data-enc-invest] .enc-inv__wall:focus-within .enc-inv__track{animation-play-state: paused;}
 @keyframes enc-inv-run{from{transform: translateX(0);}
 to{transform: translateX(-50%);}
 }
@@ -51,7 +51,8 @@ to{transform: translateX(-50%);}
 .notion-root[data-enc-invest] .enc-inv__askl{display: flex;flex-direction: column;gap: 12px;}
 .notion-root[data-enc-invest] p.enc-inv__asktitle{margin: 0 !important;font-family: var(--type-display),system-ui,sans-serif !important;font-weight: 600 !important;font-size: clamp(30px,3.6vw,52px) !important;line-height: 0.98 !important;letter-spacing: -0.044em !important;color: #000000 !important;max-width: 14ch !important;}
 .notion-root[data-enc-invest] p.enc-inv__asksub{margin: 0 !important;font-family: var(--type-body),system-ui,sans-serif !important;font-size: 16px !important;line-height: 1.5 !important;color: #3A3D38 !important;max-width: 44ch !important;}
-.notion-root[data-enc-invest] .enc-inv__askbtns{--btn-h: 48px;--btn-px: 20px;--btn-fs: 16px;margin: 0 !important;flex: none;}
+.notion-root[data-enc-invest] .enc-inv__askbtns{margin: 0 !important;flex: none;}
+.notion-root[data-enc-invest] .enc-inv__askbtns .notion-callout{--btn-h: 48px;--btn-px: 20px;--btn-fs: 16px;}
 @media (max-width: 860px){.notion-root[data-enc-invest] .enc-inv__stage{grid-template-columns: minmax(0,1fr);}
 }
 @media (prefers-reduced-motion: reduce){.notion-root[data-enc-invest] .enc-inv__track{animation: none !important;}

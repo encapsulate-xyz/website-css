@@ -104,6 +104,7 @@
   will-change: transform;
 }
 
+.notion-root[data-enc-invest] [data-enc-on] .enc-inv__track,
 .notion-root[data-enc-invest] .enc-inv__wall:hover .enc-inv__track,
 .notion-root[data-enc-invest] .enc-inv__wall:focus-within .enc-inv__track {
   animation-play-state: paused;
@@ -377,11 +378,15 @@
 
 /* the two buttons are the Button System's, at the design's 48 */
 .notion-root[data-enc-invest] .enc-inv__askbtns {
+  margin: 0 !important;
+  flex: none;
+}
+
+/* §07 sets the tokens on the callout itself, so they are restated there, not on an ancestor */
+.notion-root[data-enc-invest] .enc-inv__askbtns .notion-callout {
   --btn-h: 48px;
   --btn-px: 20px;
   --btn-fs: 16px;
-  margin: 0 !important;
-  flex: none;
 }
 
 /* ── narrow ── */
