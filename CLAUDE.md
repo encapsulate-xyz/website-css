@@ -13,7 +13,9 @@ The user shares a design handoff. I:
    for the design;
 3. write the CSS/JS in the repo, build, verify on the live page, commit, tag a release;
 4. reply with **one table of what to paste** — `File | Paste into` — listing only the `head/*.html`
-   files that changed. Keep the second column to the name of the target and nothing else: `site`
+   files **whose tag changed in that reply**. A file the user has already pasted never appears
+   again: repeating a row makes them re-do work and hides the one file that is actually new
+   (asked for 2026-09-21). If nothing was rebuilt, there is no paste table at all. Keep the second column to the name of the target and nothing else: `site`
    for the site head, otherwise the page (`brand`, `guides`, `/networks`). The full
    Settings → Code → Head path is noise; the table below says where each file goes.
 5. **and a second table of everything else the user has to do** — `Action | Where | Why` — for
@@ -98,7 +100,9 @@ Repo **github.com/encapsulate-xyz/website-css** (public), served by jsDelivr:
    for a short while**; a test that loads nothing may just be that (reload the link and check
    `performance` entries).
 3. Commit (with the session's attribution trailer), push, `git tag -a vN -m … && git push origin vN`.
-4. Bump only the `head/*.html` files whose dist files changed; tell the user in a table.
+4. Bump only the `head/*.html` files whose dist files changed — check with
+   `git log <lastTag>..HEAD -- <file>` before listing a row — and tell the user in a table.
+   Carry a row forward only if that file changed again since they last pasted it.
 
 Note: `git commit` also commits anything the user has staged — check `git status` first.
 
