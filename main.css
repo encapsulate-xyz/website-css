@@ -276,6 +276,41 @@ body {
   color: #000000 !important;
 }
 
+/* the right-hand cell: Super's actions, holding its CTA if one is set */
+.super-root .super-navbar__actions {
+  justify-self: end !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+/* Super's navbar CTA, drawn as the Button System's primary at 44px (§07). Set the button in
+   Super → Navigation; the design's bar carries one, "Book a call". */
+.super-root .super-navbar__cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 44px !important;
+  padding: 0 18px !important;
+  border: 1px solid var(--btn-1-ring) !important;
+  border-radius: 10px !important;
+  background: var(--btn-1-fill) !important;
+  box-shadow: var(--btn-1-highlight), var(--btn-lift) !important;
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.006em !important;
+  color: #000000 !important;
+  opacity: 1 !important;
+  transition: background-color 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease !important;
+}
+
+.super-root .super-navbar__cta:hover {
+  background: var(--btn-1-fill-hover) !important;
+  border-color: var(--btn-1-ring-hover) !important;
+  box-shadow: var(--btn-1-highlight-hover), var(--btn-lift) !important;
+}
+
 /* Super draws a lucide icon beside each item; the design's bar carries labels only */.super-root nav.super-navbar .super-navbar__item > svg {
   display: none !important;
 }
