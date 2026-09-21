@@ -364,14 +364,26 @@ button row and the newsletter.
 item page.** They are read from `/blog`, which does render them on its cards — one fetch, cached,
 and the page still builds without it. The same fetch gives the next post.
 
-**The rail's ask is in `post.js`'s `CONTENT`**, not in Notion: it is site furniture repeated on
-forty posts with no block of its own, the same exception already made for the footer's CTA and the
-booking drawer's words. Its "Book a call" is a cal.com link, so `booking.js` opens the drawer.
+**Every word is in Notion.** The page's own copy — the rail's ask, the foot's three variants, the
+labels — is a **"Post page copy" toggle on the /blog page**, as `key · value` lines; post.js reads
+them from the index it already fetches, so forty posts share one source, and blog.js marks the
+toggle so blog.css can hide it on the index. `{chain}` and `{ticker}` in those lines are filled
+from the post's own row. `post.js`'s `CONTENT` is only the fallback if that toggle goes missing.
 
-**Not implemented from the handoff**: the design's chain-specific foot ask ("Delegate GNOT" /
-"Join the testnet") needs a chain and a ticker per post, which the database does not carry. The
-foot asks the generic question instead. Add `Chain`, `Ticker` and a live flag to `Blogs`, show
-them on the index's cards, and the foot can read them the same way the head reads the tag.
+**The Blogs database carries the page's facts**: `Lede` (the head's two lines — a post's own
+opening is the fallback, cut to the same length), `Chain`, `Ticker`, `Mainnet` (Live / Not yet
+launched — which picks the foot's ask) and `Author` (the byline). All are read off the index's
+cards, so **they must be shown on the /blog gallery view**; blog.css hides Super's card content, so
+the index looks unchanged.
+
+**The post's own duplicate title and its "Written by" block were removed from all forty posts**
+(2026-09-21): the head is the title now, so the title comes from the header Super always renders,
+and the byline is drawn from `Author`. The read time is derived at 230 words a minute, as the
+handoff insists — stating it is what let it claim six minutes for a one-minute post.
+
+**The index is fetched once and parsed once, but the post is looked up on every build.** Caching
+the lookup gave every post the first one's mark, lede and next, because index → post is a
+client-side navigation and the script stays alive across it.
 
 ## Where each asset comes from — repo vs Notion (settled 2026-09-16)
 
