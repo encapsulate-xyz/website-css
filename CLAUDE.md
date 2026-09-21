@@ -77,6 +77,7 @@ User rules that stand on every task:
 | `home.css`, `home-dial.css`, `home.js` | homepage sections, JS-enhanced styles, homepage scripts | homepage Head |
 | `brand.css`, `brand.js` | /brand — four spreads with a sticky rail, the marks slab, the colour strip (design *Brand Page*) | page Head + site Head |
 | `blog.css`, `blog.js` | /blog — the index (design J); blog.js builds each card's cover and its band span, and is loaded from the site head | page Head + site Head |
+| `post.css`, `post.js` | /blog/&lt;post&gt; — every post page (design *Blog Post Page*, variant J). A post has no page head of its own, so both are in the site head and scoped by path | site Head |
 | `network.css`, `network.js` | /networks (network.js pages the Network Count panels, same gesture rules as home.js decks) | its page Head |
 | `investments.css`, `investments.js` | /investments — two bands (design *Investments Page*): the thesis and the running band of positions on ink, the six questions on paper | page Head + site Head |
 | `governance.css` + `governance.js` (the record page: count band, pillars, controls, rows), `blog.css`, `brand.css`, `contact-us.css`, `guides.css`, `investments.css`, `security.css`, `services.css` | each page's CSS, moved out of Super's page Code panels on 2026-09-15 (old cover rules removed, the rest kept as it was) | each page's Head |
@@ -338,6 +339,39 @@ it does on the homepage. Consequences, all of them learned the hard way:
 - Removed from Notion on 2026-09-18: the fold's "Open the institutional dial" button (the dial is
   in the fold now) and, by the user's own edit, the paragraph "Size, custody and jurisdiction are
   the first things we will ask."
+
+## The blog post page (2026-09-21, design *Blog Post Page*)
+
+Every post is an item of the `Blogs` database (`a148eb7f…`) and Super gives it the same shape:
+Super's own `.notion-header` with the title, then the article — a **two-column block** whose first
+column is a Notion table of contents and whose second is the post (banner image, the byline as a
+quote block, the H1, then the body) — followed by "More Blog Posts", a related collection, a
+button row and the newsletter.
+
+`post.js` re-reads that into the design and writes no copy into a post:
+
+- **The head** is ink and one screen tall (`min(92vh, 940px)`): the meta line, the title at
+  `clamp(38px,5.8vw,92px)` and the lede, over the chain's mark bled off the right at 16%.
+  The **lede is the post's own opening paragraph**, lifted out of the body.
+- **The body** is `236px | 720px`, centred: the reading rail — progress (one anchor 40% down the
+  viewport drives both the percentage and the current section), the contents built from the post's
+  own `h2`s, and the standing ask — beside the article.
+- **The byline** is the post's "Written by …" block, and the **next post** comes from the index.
+- Super's header, the banner image, the Notion contents block, "More Blog Posts" and its
+  collection are marked `data-enc-source` and hidden; the newsletter stays.
+
+**The tag, the date and the mark are database properties, and Super does not render them on an
+item page.** They are read from `/blog`, which does render them on its cards — one fetch, cached,
+and the page still builds without it. The same fetch gives the next post.
+
+**The rail's ask is in `post.js`'s `CONTENT`**, not in Notion: it is site furniture repeated on
+forty posts with no block of its own, the same exception already made for the footer's CTA and the
+booking drawer's words. Its "Book a call" is a cal.com link, so `booking.js` opens the drawer.
+
+**Not implemented from the handoff**: the design's chain-specific foot ask ("Delegate GNOT" /
+"Join the testnet") needs a chain and a ticker per post, which the database does not carry. The
+foot asks the generic question instead. Add `Chain`, `Ticker` and a live flag to `Blogs`, show
+them on the index's cards, and the foot can read them the same way the head reads the tag.
 
 ## Where each asset comes from — repo vs Notion (settled 2026-09-16)
 
