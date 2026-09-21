@@ -96,6 +96,12 @@
   --callout-icon-display: none !important; /* replaces hiding .notion-callout__icon by hand */
   --column-spacing: 20px !important;
 
+  /* The ground. Minima ships #FFFEFC; every design in the project is drawn on #FAFAF8, so the
+     page, the bands and the cards now stand on one colour and the seam where a full-bleed band
+     met the cover is gone (2026-09-21, the user's call). --card-fill follows it by reference,
+     which is also what §09's own rest state asks for. */
+  --color-bg-default: #FAFAF8 !important;
+
   --color-bg-green: rgb(221, 237, 226) !important;
   --color-bg-blue: rgb(221, 235, 255) !important;
   --color-border-default: rgba(32, 32, 32, 0.2) !important;
@@ -832,7 +838,7 @@ h4.notion-heading {
   --card-gap: 13px;
   --card-title-size: 19px;
 
-  --card-fill: var(--color-bg-default); /* the page ground (#FFFEFC) — the user's call, 2026-09-14: cards are the same colour as the ground and are separated by the ring and lift alone. (Design: #FFFFFF on a #F2F2ED ground.) */
+  --card-fill: var(--color-bg-default); /* the page ground — the user's call, 2026-09-14: cards are the same colour as the ground and are separated by the ring and lift alone. Since 2026-09-21 that ground is #FAFAF8, which is also §09's own rest fill. */
   --card-fill-press: #FAFAF8;  /* design: paper becomes the pressed step once the card is white */
   --card-ring: #D9D9D2;
   --card-ring-hover: #B9B9B1;
