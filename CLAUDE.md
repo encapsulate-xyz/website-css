@@ -80,7 +80,7 @@ User rules that stand on every task:
 | `footer.js` | footer 44b, built inside Super's footer | site Head |
 | `covers.js` | inner-page cover graphics ("fields") | site Head |
 | `home.css`, `home-dial.css`, `home.js` | homepage sections, JS-enhanced styles, homepage scripts | homepage Head |
-| `brand.css`, `brand.js` | /brand — four spreads with a sticky rail, the marks slab, the colour strip (design *Brand Page*) | page Head + site Head |
+| `brand.css`, `brand.js` | /brand — four spreads with a sticky rail, the marks slab, the colour band (design *Brand Page*) | page Head + site Head |
 | `blog.css`, `blog.js` | /blog — the index (design J); blog.js builds each card's cover and its band span, and is loaded from the site head | page Head + site Head |
 | `post.css`, `post.js` | /blog/&lt;post&gt; — every post page (design *Blog Post Page*, variant J). A post has no page head of its own, so both are in the site head and scoped by path | site Head |
 | `network.css`, `network.js` | /networks (network.js pages the Network Count panels, same gesture rules as home.js decks) | its page Head |
@@ -251,6 +251,24 @@ drawing the rail with its own pill active; fields are `svg/count-rings.svg` / `s
 items named `Group: Label` become columns ("Legal" group → bottom right, no colon → "More"),
 Socials → "Social" column, Footnote → bottom left. CTA copy, calendar URL and the rotating disc
 glyphs are in footer.js by the user's choice; wordmark `svg/wordmark-reversed.svg`.
+
+## The brand colour band names three sets (2026-09-21)
+
+The handoff's 02 band is the brand pair, then **the grounds**, then the pastels — the grounds were
+missing from Notion and were added: the `Colour` database (`3dee800a…de667797d25c`) gained a
+**Ground** option on Set, a **Job** rich-text property and the two rows (Paper `#FAFAF8` "Every
+light page and slide", Ink ground `#2A2C28` "Every dark section and slide"), and the page gained
+the pair of texts that head them ("The grounds" + "Our paper is not white and our dark sections are
+not black. Put the mark on these, not on #FFF or #000.").
+
+`brand.js` builds one group per set and pairs each strip with the next two Notion paragraphs in
+page order, so the heads are Notion's words and the order is Notion's. A ground swatch is the
+handoff's `swatchJob`: 132px, the name and its job line at the top, the value at the foot, a
+hairline outline. **Job has to be switched on in the gallery view by hand** — the API cannot change
+a view; without it the cell still reads as name and value.
+
+Every property on a Notion card carries `.notion-collection-card__property`, **the title included** —
+a "the property that is not X" reader must skip `.notion-property__title` or it picks up the title.
 
 ## Homepage (home.css, home-dial.css, home.js)
 
