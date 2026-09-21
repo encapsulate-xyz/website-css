@@ -71,6 +71,10 @@ if not sys.argv[1:]:
         js = open('home.js', encoding='utf-8').read()
         open(os.path.join('dist', 'home.js'), 'w', encoding='utf-8').write(js)
         print(f"{'home.js':14} {len(js):>7,} -> dist/home.js (copied)")
+    if os.path.exists('navbar.js'):
+        js = open('navbar.js', encoding='utf-8').read()
+        open(os.path.join('dist', 'navbar.js'), 'w', encoding='utf-8').write(js)
+        print(f"{'navbar.js':14} {len(js):>7,} -> dist/navbar.js (copied)")
     if os.path.exists('footer.js'):
         js = open('footer.js', encoding='utf-8').read()
         open(os.path.join('dist', 'footer.js'), 'w', encoding='utf-8').write(js)

@@ -1,0 +1,214 @@
+/* The navigation bar — design "Navbar 4f Page". Linked from the SITE head, so it runs on every
+   page, and driven by an observer because Super never executes a page's own script on a
+   client-side navigation.
+
+   SUPER OWNS THE MENU. The bar's items, its groups and every link in them are Super's navigation
+   settings, and Super's own dropdown (radix) still opens and closes them, keyboard included —
+   this file adds nothing to that and takes nothing away. What it adds is the 4f panel: the row
+   numbers, the line under each link, the preview of where the link goes, the note beside it and
+   the foot. main.css §04 does the bar itself.
+
+   THE WORDS. A description and a two-line note per page, and one line per group, are held in
+   CONTENT below rather than in Notion — Super's navigation has a label and a URL and nothing
+   else, and the bar is on every page, so there is no block to read. This is the exception
+   already made for the footer's CTA and the booking drawer's copy. Everything keyed by href, so
+   renaming a menu item in Super changes nothing here.
+
+   Add a page to the menu in Super and it appears with its name and its link; give it an entry
+   here and it also carries its line and its note. */
+(function () {
+  var CONTENT = {
+    /* href: [ one line under the link, headline of the note, the note ] */
+    "/networks": ["28 mainnets, 14 testnets",
+      "Every chain we validate, mainnet and testnet.",
+      "Reward rate where the chain publishes one; the role we played where it does not."],
+    "/services": ["Dashboards, playbooks, bots",
+      "What we build and run around the validator.",
+      "Dashboards, playbooks, bots and monitoring — used on our own set first."],
+    "/governance-record": ["How we decide a vote",
+      "How we decide a vote, and the record of every one.",
+      "Read, weigh, vote, publish."],
+    "/security": ["Keys, isolation, no slashing",
+      "Keys, machines and the rules we hold ourselves to.",
+      "First person throughout."],
+    "/guides": ["Step by step, per wallet",
+      "Step by step, per chain and wallet.",
+      "One screen per step, with the wallet's own captures."],
+    "/blog": ["What we learn running nodes",
+      "What we learn running nodes.",
+      "Explainers, field notes and new-network posts."],
+    "/brand": ["Marks, colour, type",
+      "Marks, colour and type, with the rules that bind them.",
+      "Download the files; the page tells you which one goes where."],
+    "/investments": ["What we back",
+      "The networks and teams we have backed.",
+      "Usually before mainnet, usually as an operator first."],
+    "/contact-us": ["The fastest route to us",
+      "Book a call, or write.",
+      "A founder answers within a working day."],
+    "/eigen-layer": ["Restaking, as an operator",
+      "What we run on EigenLayer.",
+      "An operator in the staking group, with the same rules as every other set."]
+  };
+  /* the tertiary line at the foot of a panel, by the group's own name in Super */
+  var FOOT = {
+    "Networks": "See all 28",
+    "Staking": "See all 28",
+    "Services": "What we build for chains",
+    "Practices": "How we conduct ourselves",
+    "Learn": "Read the latest",
+    "Company": "Book a call",
+    "About Us": "Who we are"
+  };
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function path(href) {
+    if (!href) return "";
+    return href.split("#")[0].split("?")[0].replace(/\/$/, "") || "/";
+  }
+  function copyOf(href) { return CONTENT[path(href)] || null; }
+
+  /* the tertiary's arrow badge, the only icon the Button System allows beside a label */
+  function badge() {
+    var b = el("span", "enc-nav__badge");
+    b.setAttribute("aria-hidden", "true");
+    b.innerHTML = '<svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor"' +
+      ' stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+      '<path d="M4.25 10h11.5"/><path d="M11.25 5.5 15.75 10l-4.5 4.5"/></svg>';
+    return b;
+  }
+
+  /* One panel. Super gives the column of links; the rest of the 4f grid is built around it and
+     the preview follows whichever link the pointer is on. */
+  function build(panel) {
+    if (panel.getAttribute("data-enc-nav") === "2") return;
+    var column = panel.querySelector(".super-navbar__list-content-column");
+    if (!column) return;
+    var links = Array.prototype.slice.call(column.querySelectorAll("a.super-navbar__list-item"));
+    if (!links.length) return;
+    panel.setAttribute("data-enc-nav", "2");
+
+    var grid = el("div", "enc-nav__grid");
+    panel.insertBefore(grid, panel.firstChild);
+    grid.appendChild(column);
+
+    // 01, 02 … and the line under each link, from its href
+    links.forEach(function (a, i) {
+      if (a.querySelector(".enc-nav__n")) return;
+      var n = el("span", "enc-nav__n", (i + 9 < 10 ? "0" : "") + (i + 1));
+      var name = a.textContent.trim();
+      var text = el("span", "enc-nav__text");
+      var title = el("span", "enc-nav__title", name);
+      text.appendChild(title);
+      var c = copyOf(a.getAttribute("href"));
+      if (c) text.appendChild(el("span", "enc-nav__desc", c[0]));
+      var icon = a.querySelector(".super-navbar__list-item-icon");
+      a.textContent = "";
+      if (icon) a.appendChild(icon);
+      a.appendChild(n);
+      a.appendChild(text);
+      a.setAttribute("data-enc-name", name);
+    });
+
+    // the preview: the destination, in the panel's middle column
+    var preview = el("a", "enc-nav__preview");
+    var tile = el("span", "enc-nav__tile");
+    var tileName = el("span", "enc-nav__tile-name");
+    tile.appendChild(tileName);
+    var line = el("span", "enc-nav__line");
+    var lineName = el("span", "enc-nav__line-name");
+    var lineDesc = el("span", "enc-nav__line-desc");
+    line.appendChild(lineName);
+    line.appendChild(lineDesc);
+    preview.appendChild(tile);
+    preview.appendChild(line);
+    grid.appendChild(preview);
+
+    // the note: what the page is, and the way in
+    var about = el("div", "enc-nav__about");
+    var aboutHead = el("span", "enc-nav__about-head");
+    var aboutText = el("span", "enc-nav__about-text");
+    var open = el("a", "enc-nav__open");
+    var openLabel = el("span", null, "");
+    open.appendChild(openLabel);
+    open.appendChild(badge());
+    about.appendChild(aboutHead);
+    about.appendChild(aboutText);
+    about.appendChild(open);
+    grid.appendChild(about);
+
+    // the foot: the group's own line, and how many pages are in it
+    var foot = el("div", "enc-nav__foot");
+    var footLink = el("a", "enc-nav__open");
+    var footLabel = el("span", null, "");
+    footLink.appendChild(footLabel);
+    footLink.appendChild(badge());
+    foot.appendChild(footLink);
+    foot.appendChild(el("span", "enc-nav__count",
+      links.length + (links.length === 1 ? " page" : " pages")));
+    panel.appendChild(foot);
+
+    var group = groupOf(panel);
+    footLabel.textContent = FOOT[group] || ("Open " + (group || "the menu").toLowerCase());
+    footLink.href = links[0].getAttribute("href") || "#";
+
+    function show(a) {
+      var name = a.getAttribute("data-enc-name") || a.textContent.trim();
+      var href = a.getAttribute("href") || "#";
+      var c = copyOf(href);
+      tileName.textContent = name;
+      lineName.textContent = name;
+      lineDesc.textContent = c ? c[0] : "";
+      aboutHead.textContent = c ? c[1] : name;
+      aboutText.textContent = c ? c[2] : "";
+      openLabel.textContent = "Open " + name.toLowerCase();
+      open.href = href;
+      preview.href = href;
+      links.forEach(function (x) { x.removeAttribute("data-enc-on"); });
+      a.setAttribute("data-enc-on", "");
+    }
+    links.forEach(function (a) {
+      a.addEventListener("mouseenter", function () { show(a); });
+      a.addEventListener("focus", function () { show(a); });
+    });
+    show(links[0]);
+  }
+
+  /* which of Super's groups this panel belongs to: radix ties trigger and content by id */
+  function groupOf(panel) {
+    var id = panel.id || "";
+    var key = id.replace(/^.*-content-/, "");
+    var trigger = document.querySelector('[aria-controls$="' + key + '"]');
+    return trigger ? trigger.textContent.trim() : "";
+  }
+
+  /* the bar takes its paper ground only while a menu is open — over a cover it is otherwise
+     transparent, which is the whole point of 4f */
+  function paint() {
+    var bar = document.querySelector("nav.super-navbar");
+    if (!bar) return;
+    var open = !!bar.querySelector('.super-navbar__list[data-state="open"], ' +
+      '.super-navbar__list[aria-expanded="true"]');
+    if (open === bar.hasAttribute("data-enc-nav-open")) return;
+    if (open) bar.setAttribute("data-enc-nav-open", "");
+    else bar.removeAttribute("data-enc-nav-open");
+  }
+
+  function tick() {
+    Array.prototype.forEach.call(
+      document.querySelectorAll(".super-navbar__list-content"), build);
+    paint();
+  }
+
+  var t = 0;
+  new MutationObserver(function () { clearTimeout(t); t = setTimeout(tick, 0); })
+    .observe(document.body, { childList: true, subtree: true, attributes: true,
+      attributeFilter: ["data-state", "aria-expanded"] });
+  tick();
+  window.addEventListener("load", tick);
+})();
