@@ -198,7 +198,14 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
 | 16 | Footer 44b |
 | 17 | reduced motion |
 
-**Button System (§07).** A callout is a button when
+**Button System (§07).** *Disabled is a state, not a tier* (design *Button System* 29c/29d,
+implemented 2026-09-21): primary takes the hairline fill `#E2E2DB` with a `#D9D9D2` ring and
+`#575B55` text; secondary keeps paper with a hairline ring and grey text; tertiary greys its label
+and mutes its badge to `#D9D9D2`; on ink the disabled text lifts to `#93978F`. Nothing fades —
+the design holds disabled text above 4.5:1 — and the cursor is `not-allowed`. The tokens are
+`--btn-1-dis-*`, `--btn-2-dis-*`, `--btn-3-dis-text`. Notion cannot mark a callout disabled, so
+this is for buttons a page script builds.
+ A callout is a button when
 `.notion-callout > .notion-callout__content > span.notion-semantic-string > .notion-link` (span, not
 `p` — text blocks share the `notion-semantic-string` class). Tier = callout colour: Gray →
 secondary, Default → tertiary (label + up-right arrow badge, SVG), any other colour (green, purple…)
@@ -739,6 +746,14 @@ flash of empty values and a key in the page.
 at the user's request: they are not in the *Blog Post Page* design and the embedded form was the
 old Tally one. When it comes back it should be a Notion form (main.css §13b renders those
 natively) in one place, not a block copied into every post.
+
+## A page that ends in a band runs into the footer
+
+Super pads the article and the main below the content. Where the last thing on a page is a
+full-bleed band, that padding reads as a strip of ground above the ink footer, so the page zeroes
+it: `/guides`, `/security`, `/investments`, and since 2026-09-21 `/networks`, `/brand` and
+`/contact-us` (`.super-content.page__<slug>` and its `.notion-root`). A page that ends in ordinary
+content keeps the padding — it is breathing space, and on the paper ground it reads as such.
 
 ## Open items
 
