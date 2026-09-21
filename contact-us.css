@@ -439,8 +439,9 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 .notion-root[data-enc-contact] [data-enc-fold] .notion-form__wrapper:not([data-enc-dial]) [class*="notion-form__submit"] > button:hover {
-  background: #8CBF56 !important;
-  border-color: #6F9E41 !important;
+  background: var(--btn-1-fill-hover, #A8D67A) !important;
+  border-color: var(--btn-1-ring-hover, #7CAE48) !important;
+  box-shadow: var(--btn-1-highlight-hover, inset 0 1.5px 0 rgba(255, 255, 255, 1)) !important;
 }
 
 /* the fold's own callout keeps the band's secondary; it only needs to stop being a block */
@@ -853,8 +854,10 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 .notion-root[data-enc-contact] .enc-ct__well [class*="notion-form__submit"] > button:hover {
-  background: #8CBF56 !important;
-  border-color: #6F9E41 !important;
+  background: var(--btn-1-fill-hover, #A8D67A) !important;
+  border-color: var(--btn-1-ring-hover, #7CAE48) !important;
+  box-shadow: var(--btn-1-highlight-hover, inset 0 1.5px 0 rgba(255, 255, 255, 1)),
+              0 1px 2px rgba(0, 0, 0, 0.1) !important;
 }
 
 /* the line beside the button — the last text in the form's well */
@@ -953,7 +956,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 .notion-root[data-enc-contact] .enc-ct__well .notion-callout[data-enc-copied] {
   --btn-2-fill: #99CC66;
   --btn-2-fill-hover: #99CC66;
-  --btn-2-fill-press: #8CBF56;
+  --btn-2-fill-press: #7CAE48;
   --btn-2-ring: #7CAE48;
   --btn-2-ring-hover: #7CAE48;
   --btn-2-highlight: inset 0 1.5px 0 rgba(255, 255, 255, 0.78);

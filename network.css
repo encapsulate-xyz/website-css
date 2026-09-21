@@ -140,8 +140,8 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  height: 50px !important;
-  min-height: 50px !important;
+  height: 48px !important;       /* 48 + the bar's two hairlines = the design's 50 */
+  min-height: 44px !important;   /* the touch floor the design sets on a tab */
   margin: 0 !important;
   padding: 0 14px !important;
   border: 0 !important;
@@ -184,7 +184,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 .notion-root {
   --picker-active-bg-color: transparent !important;
   --picker-active-text-color: #000000 !important;
-  --picker-text-color: #6B6F68 !important;
+  --picker-text-color: #575B55 !important;   /* ON_GROUND, the design's rest label */
   --picker-border-color: transparent !important;
   --picker-border-radius: 0 !important;
   --picker-hover-bg-color: transparent !important;

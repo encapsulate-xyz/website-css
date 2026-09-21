@@ -56,7 +56,7 @@
     hideEventTypeDetails: false,
     cssVarsPerTheme: {
       light: {
-        "cal-brand": "#99CC66", "cal-brand-emphasis": "#8CBF56", "cal-brand-text": "#000000",
+        "cal-brand": "#99CC66", "cal-brand-emphasis": "#A8D67A", "cal-brand-text": "#000000",
         "cal-bg": "#FAFAF8", "cal-bg-emphasis": "#F2F2ED", "cal-bg-subtle": "#F2F2ED",
         "cal-bg-muted": "#F2F2ED", "cal-bg-inverted": "#2A2C28",
         "cal-border": "#D9D9D2", "cal-border-subtle": "#D9D9D2",

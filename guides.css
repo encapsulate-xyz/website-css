@@ -835,8 +835,9 @@ STYLING DROPDOWN MENU
 }
 
 .notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__card:hover .enc-guide__card-button {
-  background: #8CBF56;
-  border-color: #6F9E41;
+  background: var(--btn-1-fill-hover, #A8D67A);
+  border-color: var(--btn-1-ring-hover, #7CAE48);
+  box-shadow: var(--btn-1-highlight-hover, inset 0 1.5px 0 rgba(255, 255, 255, 1));
 }
 
 /* The step count and the reading time are figures, not a sentence: each is the number in the

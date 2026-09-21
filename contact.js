@@ -63,13 +63,13 @@
     cssVarsPerTheme: {
       light: {
         "cal-brand": "#99CC66",
-        "cal-brand-emphasis": "#8CBF56",
+        "cal-brand-emphasis": "#A8D67A",
         "cal-brand-text": "#000000",
         "cal-brand-accent": "#000000",
         "cal-brand-subtle": "#DCEEC7",
         "cal-brand-muted": "#DCEEC7",
         "cal-bg-brand": "#99CC66",
-        "cal-bg-brand-emphasis": "#8CBF56",
+        "cal-bg-brand-emphasis": "#A8D67A",
         "cal-bg-brand-muted": "#DCEEC7",
         "cal-bg": "#FFFEFC",
         "cal-bg-emphasis": "#FAFAF8",
@@ -106,13 +106,13 @@
          the booker dissolves into it instead of sitting in a frame. */
       dark: {
         "cal-brand": "#99CC66",
-        "cal-brand-emphasis": "#8CBF56",
+        "cal-brand-emphasis": "#A8D67A",
         "cal-brand-text": "#000000",
         "cal-brand-accent": "#000000",
         "cal-brand-subtle": "#3F6B27",
         "cal-brand-muted": "#3F6B27",
         "cal-bg-brand": "#99CC66",
-        "cal-bg-brand-emphasis": "#8CBF56",
+        "cal-bg-brand-emphasis": "#A8D67A",
         "cal-bg-brand-muted": "#3F6B27",
         "cal-bg": "#2A2C28",
         "cal-bg-emphasis": "#33352F",

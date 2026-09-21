@@ -295,8 +295,10 @@ body:has(.notion-root[data-enc-post]) .notion-header { display: none !important;
 .notion-root[data-enc-post] .enc-po__btn--wait:focus-visible .enc-po__tip { opacity: 1; }
 
 .notion-root[data-enc-post] .enc-po__btn--primary:hover {
-  background: #8CBF56;
-  border-color: #6F9E41;
+  background: var(--btn-1-fill-hover, #A8D67A);
+  border-color: var(--btn-1-ring-hover, #7CAE48);
+  box-shadow: var(--btn-1-highlight-hover, inset 0 1.5px 0 rgba(255, 255, 255, 1)),
+              0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* ── the article's own type ── */

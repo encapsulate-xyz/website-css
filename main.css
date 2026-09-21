@@ -513,7 +513,8 @@ h4.notion-heading {
 
 /* From design file "Button System" (29a–29h, built on 25b). One construction
    for every button on the site: a fill, a 1px ring in the fill's own hue a step
-   darker, a 1.5px inner highlight along the top, and a 1px lift shadow that is
+   darker, a 1.5px inner highlight along the top that brightens to full white on
+   hover, and a 1px lift shadow that is
    dropped on ink grounds. Radius 10px. Hanken Grotesk 500, -0.006em.
 
    HOW A NOTION CALLOUT BECOMES A BUTTON. A callout whose own text is a link:
@@ -571,6 +572,19 @@ h4.notion-heading {
   --btn-lift: 0 1px 2px rgba(0, 0, 0, 0.10);
   --btn-lift-soft: 0 1px 2px rgba(0, 0, 0, 0.06);
   --btn-focus: rgba(0, 0, 0, 0.32);
+  /* the primary's greens: one colour with its lightness moved at constant hue. HOVER STEPS UP
+     — brighter, so the button reads as lit — and press steps down; the ring stays a step below
+     its fill, and is unchanged on hover (29c, revised 2026-09-21). The old darker hover pair
+     #8CBF56 / #6F9E41 is retired and must not come back. */
+  --btn-1-fill: #99CC66;
+  --btn-1-ring: #7CAE48;
+  --btn-1-fill-hover: #A8D67A;
+  --btn-1-ring-hover: #7CAE48;
+  --btn-1-fill-press: #7CAE48;
+  --btn-1-ring-press: #5F8A37;
+  --btn-1-highlight: inset 0 1.5px 0 rgba(255, 255, 255, 0.78);
+  --btn-1-highlight-hover: inset 0 1.5px 0 rgba(255, 255, 255, 1);
+  --btn-1-press: inset 0 1px 2px rgba(0, 0, 0, 0.18);
   --btn-2-fill: #FAFAF8;
   --btn-2-fill-hover: #FAFAF8;
   --btn-2-fill-press: #F2F2ED;
@@ -653,8 +667,9 @@ h4.notion-heading {
   /* Super's Minima theme sets `.notion-semantic-string .link:hover { opacity: .7 !important }`
      and every button link carries .link — without this every tier fades on hover. */
   opacity: 1 !important;
-  background: #8CBF56 !important;
-  border-color: #6F9E41 !important;
+  background: var(--btn-1-fill-hover) !important;
+  border-color: var(--btn-1-ring-hover) !important;
+  box-shadow: var(--btn-1-highlight-hover), var(--btn-lift) !important;
 }
 
 .notion-callout > .notion-callout__content > span.notion-semantic-string > .notion-link:active {
@@ -1511,8 +1526,9 @@ h4.notion-heading {
 }
 
 .notion-form__wrapper .notion-form__submit-button > button:hover {
-  background: #8CBF56 !important;
-  border-color: #6F9E41 !important;
+  background: var(--btn-1-fill-hover) !important;
+  border-color: var(--btn-1-ring-hover) !important;
+  box-shadow: var(--btn-1-highlight-hover), var(--btn-lift) !important;
 }
 
 .notion-form__wrapper .notion-form__submit-button > button:active {
@@ -2020,8 +2036,9 @@ body:has(.notion-root > .notion-callout:first-child > .notion-callout__content >
 }
 
 .enc-foot__btn:hover {
-  background: #8CBF56;
-  border-color: #6F9E41;
+  background: var(--btn-1-fill-hover, #A8D67A);
+  border-color: var(--btn-1-ring-hover, #7CAE48);
+  box-shadow: var(--btn-1-highlight-hover, inset 0 1.5px 0 rgba(255, 255, 255, 1));
 }
 
 .enc-foot__btn--secondary {
@@ -2545,8 +2562,9 @@ html[data-enc-locked] {
 }
 
 .enc-bk__btn.is-primary:hover {
-  background: #8CBF56;
-  border-color: #6F9E41;
+  background: var(--btn-1-fill-hover, #A8D67A);
+  border-color: var(--btn-1-ring-hover, #7CAE48);
+  box-shadow: var(--btn-1-highlight-hover, inset 0 1.5px 0 rgba(255, 255, 255, 1));
 }
 
 .enc-bk__btn.is-secondary {
