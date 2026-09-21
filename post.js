@@ -19,7 +19,7 @@
    navigation, so this builds off a MutationObserver like the other page scripts. */
 (function () {
   var PATH = /^\/blog\/.+/;
-  var VERSION = "3";
+  var VERSION = "4";
 
   /* The words live on the /blog page, in a toggle called "Post page copy" — one place for all
      forty posts, since Super ships only the current page's blocks and a post has no block of its
@@ -38,7 +38,8 @@
     "foot plain sub": "Tell us what it takes to run it. If we would run it, we will say so in a week.",
     "foot all": "All posts",
     "reading": "Reading",
-    "next": "Next"
+    "next": "Next",
+    "written by": "Written by"
   };
   var CALL = "https://cal.com/aditya-encapsulate/30min";
   var INDEX = "/blog";
@@ -327,7 +328,7 @@
       if (!banner && n.classList.contains("notion-image")) { banner = n; return; }
       if (!byline && n.classList.contains("notion-column-list") &&
           /written by/i.test(textOf(n))) { byline = n; return; }
-      if (!title && /^H1$/.test(n.tagName)) { title = n; return; }
+      if (!title && /^H1$/.test(n.tagName)) { title = n; return; }   // older posts still have one
       if (n.classList.contains("notion-heading__anchor")) return;
       article.appendChild(n);
     });
@@ -342,6 +343,12 @@
     mark.alt = "";
     head.appendChild(mark);
     head.appendChild(el("p", "enc-po__meta"));
+    if (!title) {
+      // the post's own H1 was removed from Notion once the head became the title, so the page
+      // header Super always renders is where the title comes from
+      var hdr = document.querySelector(".notion-header__title");
+      if (hdr) { title = el("h1"); title.textContent = textOf(hdr); }
+    }
     if (title) { title.classList.add("enc-po__title"); head.appendChild(title); }
     head.appendChild(el("p", "enc-po__lede"));
 
@@ -371,6 +378,7 @@
     var colRight = el("div", "enc-po__col");
     colRight.appendChild(article);
     if (byline) { byline.classList.add("enc-po__byline"); colRight.appendChild(byline); }
+    else colRight.appendChild(el("div", "enc-po__byline enc-po__byline--built"));
     colRight.appendChild(foot(null, null));
     bodyWrap.appendChild(colRight);
     wrap.appendChild(head);
@@ -401,6 +409,19 @@
       if (info.me && info.me.date) bits.push(info.me.date);
       bits.push(mins + " min");
       if (meta) meta.textContent = bits.join(" · ");
+      var by = wrap.querySelector(".enc-po__byline--built");
+      if (by) {
+        var who = info.me && info.me.author;
+        if (who) {
+          var disc = el("span", "enc-po__bydisc", who.replace(/[^A-Za-z ]/g, "").split(/\s+/)
+            .map(function (w) { return w.charAt(0); }).join("").slice(0, 2).toUpperCase());
+          var t2 = el("span", "enc-po__bybody");
+          t2.appendChild(el("span", "enc-po__byk", say("written by")));
+          t2.appendChild(el("span", "enc-po__byn", who));
+          by.appendChild(disc);
+          by.appendChild(t2);
+        } else by.remove();
+      }
       var led = wrap.querySelector("p.enc-po__lede");
       if (led) {
         if (info.me && info.me.lede) led.textContent = info.me.lede;

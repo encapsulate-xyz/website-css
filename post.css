@@ -405,6 +405,60 @@ body:has(.notion-root[data-enc-post]) .notion-header { display: none !important;
 }
 
 /* ── the byline ── */
+.notion-root[data-enc-post] .enc-po__byline--built {
+  width: 100%;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #E2E2DB;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.notion-root[data-enc-post] .enc-po__bydisc {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 999px;
+  background: #F8DDC6;
+  display: grid;
+  place-items: center;
+  font-family: var(--type-display), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  color: #000000;
+}
+
+.notion-root[data-enc-post] .enc-po__bybody {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.notion-root[data-enc-post] .enc-po__byk {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6B6F68;
+}
+
+.notion-root[data-enc-post] .enc-po__byn {
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 15.5px;
+  font-weight: 500;
+  color: #000000;
+}
+
+/* the lede holds to two lines: a Lede is written short, and a fallback is cut to the same */
+.notion-root[data-enc-post] p.enc-po__lede {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
 .notion-root[data-enc-post] .enc-po__byline {
   width: 100%;
   margin-top: 24px !important;
