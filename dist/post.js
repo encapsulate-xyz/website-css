@@ -72,7 +72,7 @@
   var indexOnce = null;
   function fromIndex() {
     if (indexOnce) return indexOnce;
-    indexOnce = fetch(CONTENT.index, { credentials: "same-origin" })
+    indexOnce = fetch(INDEX, { credentials: "same-origin" })
       .then(function (r) { return r.text(); })
       .then(function (html) {
         var doc = new DOMParser().parseFromString(html, "text/html");
