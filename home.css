@@ -4319,7 +4319,19 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   pointer-events: none;
 }
 
+/* The homepage has exactly one video, and it is the loop — so the control bar is hidden from
+   the first paint rather than when home.js gets to mark it. Notion renders `<video controls>`,
+   and the script's observer could only ever catch up a frame later, which is the flash of a
+   player bar the page used to show (reported 2026-09-21). */
+.notion-root video::-webkit-media-controls,
+.notion-root video::-webkit-media-controls-enclosure,
+.notion-root video::-webkit-media-controls-panel,
 .notion-root video[data-enc-loop]::-webkit-media-controls,
 .notion-root video[data-enc-loop]::-webkit-media-controls-enclosure {
   display: none !important;
+  -webkit-appearance: none !important;
+}
+
+.notion-root video {
+  pointer-events: none;
 }

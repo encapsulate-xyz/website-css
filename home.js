@@ -1324,8 +1324,11 @@
       if (go && go.catch) go.catch(function () {});
     });
   }
+  /* No debounce here: every frame this waits is a frame of Notion's own control bar. The work
+     is one querySelectorAll("video") on a page with one video, and each is marked once. */
   var t = 0;
-  new MutationObserver(function () { clearTimeout(t); t = setTimeout(loop, 120); })
+  new MutationObserver(function () { clearTimeout(t); t = setTimeout(loop, 0); })
     .observe(document.body, { childList: true, subtree: true });
   loop();
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", loop);
 })();
