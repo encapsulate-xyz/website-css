@@ -110,9 +110,13 @@
     if (rect.bottom > 0 && rect.top < window.innerHeight) {
       /* the panel's stack fills the screen (its children are centred in it), so the box says
          nothing about where the ink is — measure the first thing in it, the index line. */
-      var stacks = box.querySelectorAll(".notion-callout > .notion-callout__content");
-      for (var i = 0; i < stacks.length; i++) {
-        var first = stacks[i].firstElementChild;
+      /* the panels only: the band is a callout too, and its own first child is the kicker —
+         measured against itself the rule was true everywhere. */
+      var panels = box.querySelectorAll(".notion-callout");
+      for (var i = 0; i < panels.length; i++) {
+        var stack = panels[i].querySelector(":scope > .notion-callout__content");
+        if (!stack) continue;
+        var first = stack.firstElementChild;
         while (first && !first.getBoundingClientRect().height) first = first.nextElementSibling;
         if (!first) continue;
         var s = first.getBoundingClientRect();
