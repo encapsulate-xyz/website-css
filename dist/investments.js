@@ -14,7 +14,7 @@
   var PATH = /^\/investments\/?$/;
   /* Bumped when the shape this builds changes, so a page still serving an older release from its
      baked site head is unwrapped and built again rather than left as it is. */
-  var VERSION = "1";
+  var VERSION = "2";
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -40,14 +40,19 @@
      words, so the line under the band is Notion's copy and not this script's. */
   function marks(coll) {
     return Array.prototype.map.call(coll.querySelectorAll(".notion-collection-card"), function (c) {
-      var sel = Array.prototype.map.call(c.querySelectorAll(".notion-property__select"), textOf);
-      var val = "", cat = "";
-      sel.forEach(function (s) {
-        if (/validator|not yet/i.test(s)) val = s; else if (!cat) cat = s;
+      /* Super gives a multi-select the same classes as a select, so Tags and Category could not
+         be told apart there; Category is a text property and the card's texts are read by shape:
+         the year is four digits, the category is the short one, a description is the long one. */
+      var val = "";
+      Array.prototype.forEach.call(c.querySelectorAll(".notion-property__select"), function (t) {
+        if (/validator|not yet/i.test(textOf(t))) val = textOf(t);
       });
-      var since = "";
+      var since = "", cat = "";
       Array.prototype.forEach.call(c.querySelectorAll(".notion-property__text"), function (t) {
-        if (/^\d{4}$/.test(textOf(t))) since = textOf(t);
+        var v = textOf(t);
+        if (/validator|not yet/i.test(v)) { val = val || v; return; }
+        if (/^\d{4}$/.test(v)) { since = v; return; }
+        if (v && v.length <= 28 && (!cat || v.length < cat.length)) cat = v;
       });
       var img = c.querySelector("img");
       return {
