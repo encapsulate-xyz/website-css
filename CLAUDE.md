@@ -321,6 +321,13 @@ a hidden viewport (`nav[data-enc-harvest]`), keeps the paths, and sets `[data-en
 group holding the page. A section link is its own destination, so `CONTENT` is keyed by the whole
 href — `/services#block-…` is not `/services`.
 
+**The third column is the page's own content where the design has it.** `EXTRA` in the handoff
+gives nine variants; the one built is **"All networks" → the set**: the god and high tier chains
+with their reward rates, read from /networks (the page that renders them) once per visit and
+cached, glyphs taken back to their `assets.super.so` originals. Everything else still shows the
+note. The rest of `EXTRA` — the four service tiles, the pillar/section lists, the guides, the posts
+and the portfolio — is not built yet.
+
 **The Services group points at the page's own section headings** (`/services#block-<id>`):
 Dashboards → *Protocol Level Dashboard*, Bots → *Custom Discord Bots*, Monitoring → *Governance
 Alerting*, and **Playbooks**, a section added to the Services page in Notion on 2026-09-21 because
