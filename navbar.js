@@ -100,7 +100,7 @@
     // 01, 02 … and the line under each link, from its href
     links.forEach(function (a, i) {
       if (a.querySelector(".enc-nav__n")) return;
-      var n = el("span", "enc-nav__n", (i + 9 < 10 ? "0" : "") + (i + 1));
+      var n = el("span", "enc-nav__n", (i < 9 ? "0" : "") + (i + 1));
       var name = a.textContent.trim();
       var text = el("span", "enc-nav__text");
       var title = el("span", "enc-nav__title", name);
