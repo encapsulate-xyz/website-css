@@ -185,7 +185,10 @@
       var c = copyOf(href);
       var shot = shotOf(href);
       tile.style.backgroundImage = shot ? 'url("' + shot + '")' : "";
-      tile.setAttribute("data-enc-shot", shot ? "" : "none");
+      /* the attribute is the presence of a capture — absent means the ink tile and its name,
+         which is also what a panel built by an older copy of this file gets */
+      if (shot) tile.setAttribute("data-enc-shot", "");
+      else tile.removeAttribute("data-enc-shot");
       tileName.textContent = name;
       lineName.textContent = name;
       lineDesc.textContent = c ? c[0] : "";
