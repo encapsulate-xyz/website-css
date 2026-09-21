@@ -482,21 +482,40 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   aspect-ratio: 16 / 10;
   border: 1px solid #E2E2DB;
   border-radius: 6px;
-  /* the page's own cover, captured (navbar.js sets the file); the ink tile is the design's
-     fallback where there is no capture */
-  background: #F2F2ED left center / cover no-repeat;   /* the design's objectPosition */
+  background: #2A2C28;              /* no capture: the design's ink tile, carrying the name */
   overflow: hidden;
   transition: border-color 0.16s ease;
 }
 
-/* no capture: the design's own fallback, an ink tile carrying the page's name */
-.enc-nav__tile:not([data-enc-shot]) {
-  background: #2A2C28;
+.enc-nav__tile[data-enc-shot] { background: #F2F2ED; }
+
+.enc-nav__tile img { display: none; }
+
+/* a page's cover fills the tile from its left edge */
+.enc-nav__tile[data-enc-shot="cover"] img {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: left center;
 }
 
-.enc-nav__tile[data-enc-shot] .enc-nav__tile-name {
-  display: none;
-}.enc-nav__preview:hover .enc-nav__tile { border-color: #9B9B94; }.enc-nav__tile-name {
+/* a tool's panel is a true 2x capture, drawn at 170% from its top-left corner */
+.enc-nav__tile[data-enc-shot="panel"] img {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 170%;
+  height: auto;
+  max-width: none;
+}
+
+.enc-nav__preview:hover .enc-nav__tile { border-color: #9B9B94; }
+
+.enc-nav__tile-name {
   position: absolute;
   left: 16px;
   top: 15px;
@@ -507,7 +526,11 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   line-height: 1.1;
   letter-spacing: -0.022em;
   color: #FAFAF8;
-}.enc-nav__line {
+}
+
+.enc-nav__tile[data-enc-shot] .enc-nav__tile-name { display: none; }
+
+.enc-nav__line {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -525,29 +548,43 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   text-align: right;
 }
 
-/* the set, where the design shows it: the god and high tier chains and their rates */
-.enc-nav__chains {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px 16px;
-  min-width: 0;
+/* THE THIRD COLUMN: the page's own content where it has any (navbar.js reads it off the page),
+   the note otherwise. One of the two shows. */
+.enc-nav__third { min-width: 0; }
+
+.enc-nav__extra { display: none; min-width: 0; }
+
+/* the kind rules below turn the column on, and only once it has rows */
+.enc-nav__third[data-enc-filled] .enc-nav__about { display: none; }
+
+/* every row in the column is a link with the ledger's own hover */
+.enc-nav__row {
+  border-radius: 10px;
+  text-decoration: none !important;
+  transition: background-color 0.16s ease;
 }
 
-.enc-nav__chains[hidden] { display: none; }
+.enc-nav__row:hover { background: #F2F2ED; }
 
-.enc-nav__chain {
+/* chains and positions: a mark, a name, a figure — three across for the set, two for the book */
+.enc-nav__third[data-enc-filled] .enc-nav__extra[data-enc-kind="chains"],
+.enc-nav__third[data-enc-filled] .enc-nav__extra[data-enc-kind="holds"] {
+  display: grid;
+  gap: 8px 16px;
+}
+
+.enc-nav__third[data-enc-filled] .enc-nav__extra[data-enc-kind="chains"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.enc-nav__third[data-enc-filled] .enc-nav__extra[data-enc-kind="holds"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.enc-nav__row--mark {
   display: flex;
   align-items: center;
   gap: 10px;
   min-height: 44px;
   padding: 0 8px;
-  border-radius: 10px;
-  transition: background-color 0.16s ease;
 }
 
-.enc-nav__chain:hover { background: #F2F2ED; }
-
-.enc-nav__chain-well {
+.enc-nav__well {
   display: grid;
   place-items: center;
   width: 26px;
@@ -557,29 +594,165 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   overflow: hidden;
 }
 
-.enc-nav__chain-well img {
+.enc-nav__well img {
   width: 90%;
   height: 90%;
   object-fit: contain;
   display: block;
 }
 
-.enc-nav__chain-name {
+.enc-nav__row-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-family: var(--type-body), system-ui, sans-serif;
   font-size: 14px;
   color: #000000;
 }
 
-.enc-nav__chain-rate {
+.enc-nav__row-fig {
   margin-left: auto;
   font-family: var(--type-mono), ui-monospace, monospace;
   font-size: 11px;
-  color: #3F6B27;
+  font-variant-numeric: tabular-nums;
+  color: #6B6F68;
 }
 
-.enc-nav__chain-rate[data-enc-none] { color: #6B6F68; }
+.enc-nav__row-fig[data-enc-rate] { color: #3F6B27; }
 
-.enc-nav__about[hidden] { display: none; }
+/* lists, guides and posts: rows under hairlines */
+.enc-nav__third[data-enc-filled] .enc-nav__extra[data-enc-kind="list"],
+.enc-nav__third[data-enc-filled] .enc-nav__extra[data-enc-kind="guides"],
+.enc-nav__third[data-enc-filled] .enc-nav__extra[data-enc-kind="posts"] {
+  display: flex;
+  flex-direction: column;
+}
+
+.enc-nav__row--line,
+.enc-nav__row--guide,
+.enc-nav__row--post {
+  padding: 0 8px;
+}
+
+.enc-nav__row--line + .enc-nav__row--line,
+.enc-nav__row--guide + .enc-nav__row--guide,
+.enc-nav__row--post + .enc-nav__row--post {
+  border-top: 1px solid #E2E2DB;
+}
+
+.enc-nav__row--line {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-height: 44px;
+}
+
+.enc-nav__row--line .enc-nav__n {
+  letter-spacing: 0.12em;
+}
+
+.enc-nav__row-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 14px;
+  color: #000000;
+}
+
+.enc-nav__row--guide {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 46px;
+}
+
+.enc-nav__row-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 13.5px;
+  color: #000000;
+}
+
+.enc-nav__row-tag {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6B6F68;
+}
+
+.enc-nav__row--post {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+}
+
+/* a post's cover in miniature: ink, with the chain's mark bled off the corner in the pastel green */
+.enc-nav__thumb {
+  position: relative;
+  width: 62px;
+  height: 38px;
+  flex: none;
+  border-radius: 8px;
+  background: #2A2C28;
+  overflow: hidden;
+}
+
+.enc-nav__thumb img {
+  position: absolute;
+  right: -8%;
+  bottom: -22%;
+  width: 56%;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(91%) sepia(18%) saturate(492%) hue-rotate(45deg);
+}
+
+.enc-nav__row-stack {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.enc-nav__row-head {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--type-display), sans-serif;
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: -0.014em;
+  color: #000000;
+}
+
+/* the tools, two across: each its own small preview */
+.enc-nav__third[data-enc-filled] .enc-nav__extra[data-enc-kind="tiles"] {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.enc-nav__preview--tile {
+  gap: 8px;
+  max-width: none;
+}
+
+.enc-nav__tile-label {
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #000000;
+}
 
 /* what the page is */
 .enc-nav__about {
