@@ -57,6 +57,18 @@
     return n;
   }
   function textOf(n) { return ((n && n.textContent) || "").replace(/\s+/g, " ").trim(); }
+  /* two sentences and 220 characters, the length a Lede is written to */
+  function short(t) {
+    if (t.length <= 220) return t;
+    var parts = t.split(/(?<=[.!?])\s+/), out = "";
+    for (var i = 0; i < parts.length; i++) {
+      if (!out) out = parts[i];
+      else if (out.length + 1 + parts[i].length <= 220) out += " " + parts[i];
+      else break;
+    }
+    return (out.length > 240 ? out.slice(0, 220).replace(/\s+\S*$/, "") + "\u2026" : out);
+  }
+
   function slug(t) { return t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
 
   /* Super serves an image through its own optimiser; the original is what the design draws */
@@ -354,9 +366,10 @@
       if (led) {
         if (info.me && info.me.lede) led.textContent = info.me.lede;
         else if (first && textOf(first).length > 60) {
-          // no Lede on the row: the post's own opening stands in, and leaves the body
-          first.classList.add("enc-po__lede");
-          led.replaceWith(first);
+          // no Lede on the row: the post's own opening stands in, cut to the same length the
+          // property is written to, so a post that opens at length cannot fill the head
+          led.textContent = short(textOf(first));
+          first.remove();
         } else led.remove();
       }
       if (info.me && info.me.glyph) mark.src = info.me.glyph;
