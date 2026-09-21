@@ -35,7 +35,7 @@
     "foot soon sub": "Mainnet has not launched yet",
     "foot soon button": "Join the testnet",
     "foot plain title": "Running a chain we should know about?",
-    "foot plain sub": "Tell us what it takes to run it. If we would run it, we will say so in a week.",
+    "foot plain sub": "Tell us what it takes to run it. If it's a fit, you'll hear from us within a week.",
     "foot all": "All posts",
     "reading": "Reading",
     "next": "Next",
