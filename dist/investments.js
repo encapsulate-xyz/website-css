@@ -174,14 +174,13 @@
     var root = document.querySelector(".notion-root");
     if (!root) return;
     if (root.getAttribute("data-enc-invest") === VERSION) return;
+    /* unwrap first: a page built by an older release has three children, so counting before
+       putting it back would make this version give up and never upgrade the page */
+    unwrap(root);
     var kids = Array.prototype.slice.call(root.children).filter(function (n) {
       return !n.classList.contains("notion-heading__anchor");
     });
     if (kids.length < 6) return;
-    unwrap(root);
-    kids = Array.prototype.slice.call(root.children).filter(function (n) {
-      return !n.classList.contains("notion-heading__anchor");
-    });
 
     var start = 1;                                   // the cover stays where covers.js expects it
     var cut = -1;
