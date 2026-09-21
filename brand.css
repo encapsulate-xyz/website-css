@@ -359,7 +359,42 @@
   opacity: 0.74;
 }
 
-/* the pastel set's label and the line beside it */
+/* the grounds: a wider cell carrying the name, its one-line job and the value, in a hairline box */
+.notion-root .enc-swatches[data-set="ground"] {
+  flex-wrap: wrap;
+  border: 1px solid #E2E2DB;
+}
+
+.notion-root .enc-swatch[data-kind="job"] {
+  height: auto;
+  min-height: 132px;
+  flex: 1 1 150px;
+  padding: 16px 16px 14px;
+  justify-content: space-between;
+  gap: 18px;
+  outline: 1px solid #E2E2DB;
+  outline-offset: -1px;
+}
+
+.notion-root .enc-swatch[data-kind="job"]:hover { box-shadow: inset 0 0 0 1px #9B9B94; }
+.notion-root .enc-swatch[data-kind="job"][data-on="dark"]:hover {
+  box-shadow: inset 0 0 0 1px rgba(250, 250, 248, 0.4);
+}
+
+.notion-root .enc-swatch__head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.notion-root .enc-swatch__job {
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  opacity: 0.8;
+}
+
+/* each set's label and the line beside it */
 .notion-root .enc-pastel-head {
   display: flex;
   align-items: baseline;

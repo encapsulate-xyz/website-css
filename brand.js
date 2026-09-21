@@ -12,8 +12,8 @@
      cover    the eyebrow pair, the wordmark with the kit line and the two CTAs, the foot pair
      01       one row per ground, the mark at 30% and the wordmark at 70%, each cell a download
               named in its corner, saying "Click to download" on hover
-     02       the brand pair as one strip and the pastel set as another, each swatch copying its
-              own value on click
+     02       the brand pair as one strip, then the two grounds with their job lines, then the
+              pastel set, each swatch copying its own value on click
      03       one row per face: the specimen at scale, its name and its weights
      04       the four rules beside the clear-space diagram
 
@@ -152,6 +152,16 @@
     var n = fieldOf(card, /^\d+$/);
     return n ? parseInt(n, 10) : 99;
   }
+  // The Job property is a sentence, so it is the one property that is not a hex, a set name or a
+  // number. A view with Job switched off simply gives no line — the swatch still reads.
+  function jobOf(card) {
+    return Array.prototype.slice.call(card.querySelectorAll(".notion-collection-card__property"))
+      .map(function (p) { return p.textContent.trim(); })
+      .filter(function (t) {
+        return t && !/^#[0-9a-fA-F]{6}$/.test(t) && !/^(Brand|Pastel|Ground)$/i.test(t) &&
+          !/^\d+$/.test(t);
+      })[0] || "";
+  }
   function inOrder(list) {
     return list.slice().sort(function (a, b) { return a.order - b.order; });
   }
@@ -223,10 +233,10 @@
   }
 
   /* ── 02 · colour ── */
-  function swatch(name, hex, flex) {
+  function swatch(name, hex, flex, job) {
     var b = el("button", "enc-swatch");
     b.type = "button";
-    b.setAttribute("aria-label", "Copy " + hex);
+    b.setAttribute("aria-label", "Copy " + name + " " + hex);
     b.style.background = hex;
     if (flex) b.setAttribute("data-flex", flex);
     var n = parseInt(hex.slice(1), 16);
@@ -237,7 +247,18 @@
     label.style.color = fg;
     var value = el("span", "enc-swatch__hex", hex);
     value.style.color = fg;
-    b.appendChild(label);
+    // a ground swatch carries its one-line job under the name, so the value is never picked by eye
+    if (job) {
+      b.setAttribute("data-kind", "job");
+      var head = el("span", "enc-swatch__head");
+      head.appendChild(label);
+      var line = el("span", "enc-swatch__job", job);
+      line.style.color = fg;
+      head.appendChild(line);
+      b.appendChild(head);
+    } else {
+      b.appendChild(label);
+    }
     b.appendChild(value);
     b.addEventListener("click", function () {
       if (navigator.clipboard) navigator.clipboard.writeText(hex).catch(function () {});
@@ -258,7 +279,8 @@
       return {
         name: titleOf(c),
         hex: (c.textContent.match(/#[0-9a-fA-F]{6}/) || [""])[0],
-        set: fieldOf(c, /^(Brand|Pastel)$/i),
+        set: fieldOf(c, /^(Brand|Pastel|Ground)$/i),
+        job: jobOf(c),
         order: orderOf(c)
       };
     }).filter(function (r) { return r.hex; });
@@ -269,6 +291,11 @@
     inOrder(rows).filter(function (r) { return /^brand$/i.test(r.set); })
       .forEach(function (r) { brand.appendChild(swatch(r.name, r.hex, FLEX[r.hex.toUpperCase()])); });
 
+    var ground = el("div", "enc-swatches");
+    ground.setAttribute("data-set", "ground");
+    inOrder(rows).filter(function (r) { return /^ground$/i.test(r.set); })
+      .forEach(function (r) { ground.appendChild(swatch(r.name, r.hex, null, r.job || " ")); });
+
     var pastel = el("div", "enc-swatches");
     pastel.setAttribute("data-set", "pastel");
     inOrder(rows).filter(function (r) { return /^pastel$/i.test(r.set); })
@@ -276,19 +303,24 @@
 
     band.insertBefore(brand, band.firstChild);
 
-    // the pastel set's own label and note sit above its strip
+    // each set has its own label and the line beside it: the grounds first, then the pastels.
+    // The texts are Notion's, in the page's order — a missing pair drops that group's head only.
     var ps = textsOf(band);
-    var group = el("div", "enc-pastel");
-    if (ps[0] && ps[1]) {
-      var headRow = el("div", "enc-pastel-head");
-      ps[0].before(group);
-      headRow.appendChild(ps[0]);
-      headRow.appendChild(ps[1]);
-      group.appendChild(headRow);
-    } else {
-      band.appendChild(group);
+    function group(strip, head, note) {
+      var box = el("div", "enc-pastel");
+      if (head && note) {
+        var headRow = el("div", "enc-pastel-head");
+        head.before(box);
+        headRow.appendChild(head);
+        headRow.appendChild(note);
+        box.appendChild(headRow);
+      } else {
+        band.appendChild(box);
+      }
+      box.appendChild(strip);
     }
-    group.appendChild(pastel);
+    if (ground.children.length) group(ground, ps[0], ps[1]);
+    group(pastel, ps[ground.children.length ? 2 : 0], ps[ground.children.length ? 3 : 1]);
     hide(db);
   }
 
