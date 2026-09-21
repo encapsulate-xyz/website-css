@@ -633,6 +633,10 @@
     markCurrent();
   }
 
+  /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
+     against its page from the console without opening the menu */
+  window.encNav = { version: 3, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf };
+
   var t = 0;
   new MutationObserver(function () { clearTimeout(t); t = setTimeout(tick, 0); })
     .observe(document.body, { childList: true, subtree: true, attributes: true,
