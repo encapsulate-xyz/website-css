@@ -98,7 +98,9 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   padding: 0 10px !important;
   border: 1px solid #D9D9D2 !important;
   border-radius: 10px !important;
-  background: var(--color-bg-default) !important;
+  /* the second paper: the bar is a recessed track, not a panel the colour of the page
+     (the handoff moved it from PAPER to PAPER2, 2026-09-21) */
+  background: #F2F2ED !important;
   box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
 }
 
