@@ -247,7 +247,10 @@ Heading 1 figure, Text label, Text note). Two sticky full-screen ink panels in a
 drawing the rail with its own pill active; fields are `svg/count-rings.svg` / `svg/count-dots.svg`
 (referenced as `../svg/…` from dist, so they come from the same tag). The figures are Notion text.
 
-**Footer 44b (§16 + footer.js).** Super's footer (type Stack) is rendered into the design: menu
+**Footer 44b (§16 + footer.js).** Its own top edge carries the `rgba(250,250,248,.2)` paper
+hairline and **nothing sits under the disc field** — the field runs straight into the body
+(handoff, 2026-09-21). The link columns are spaced by the design's 44px rows, not by a gap.
+Super's footer (type Stack) is rendered into the design: menu
 items named `Group: Label` become columns ("Legal" group → bottom right, no colon → "More"),
 Socials → "Social" column, Footnote → bottom left. CTA copy, calendar URL and the rotating disc
 glyphs are in footer.js by the user's choice; wordmark `svg/wordmark-reversed.svg`.
