@@ -206,7 +206,18 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
 | 16 | Footer 44b |
 | 17 | reduced motion |
 
-**Button System (§07).** *Disabled is a state, not a tier* (design *Button System* 29c/29d,
+**Button System (§07).** *The primary's hover steps UP* (29c, revised 2026-09-21): fill
+`#99CC66` → **`#A8D67A`**, the ring stays `#7CAE48`, and the top highlight brightens from
+`rgba(255,255,255,.78)` to full white, so the button reads as lit. Press still steps down
+(`#7CAE48` / `#5F8A37`, inner shadow instead of the lift). The greens are tokens on `:root` —
+`--btn-1-fill/ring/fill-hover/ring-hover/fill-press/ring-press/highlight/highlight-hover/press` —
+and every primary hover on the site reads them, including the ones page CSS draws (the contact
+band's two submits, the guide card, the post foot) and the cal.com embed's `cal-brand-emphasis`.
+**The old darker pair `#8CBF56` / `#6F9E41` is retired**; if it turns up again outside `backups/`,
+it is a mistake. Selection states that happen to be green (the institutional toggle, the guide
+chain pills, the contact Copy button's "Copied") keep the `.78` highlight — they are not hovers.
+
+*Disabled is a state, not a tier* (design *Button System* 29c/29d,
 implemented 2026-09-21): primary takes the hairline fill `#E2E2DB` with a `#D9D9D2` ring and
 `#575B55` text; secondary keeps paper with a hairline ring and grey text; tertiary greys its label
 and mutes its badge to `#D9D9D2`; on ink the disabled text lifts to `#93978F`. Nothing fades —
