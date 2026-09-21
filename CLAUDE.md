@@ -311,8 +311,20 @@ trigger with an inline transform**, which 4f's full-width panel cancels (`transf
 **The panel's preview is the page's own cover, captured**: the design's nine `cover-thumbs`, now in
 `img/nav-covers/` beside the CSS so a capture cannot drift from the page it shows, drawn
 `left center / cover` in a 16/10 box as the file draws them. navbar.js keys them by href and marks
-the tile `[data-enc-shot]`; without one, the tile is the design's ink fallback carrying the page's
-name. **minima frosts the navbar** (`backdrop-filter: blur(12px)` plus a white wash) — 4f's bar is
+the tile `[data-enc-shot]`; without one — "Institutional staking", whose capture the design itself
+does not ship — the tile is the design's ink fallback carrying the page's name.
+
+**The current page is marked** the way the design marks it (paper, ring, inset highlight). Every
+item is a group now, and only Super knows which links a group holds — and only once its panel has
+mounted, which radix does on first open. So navbar.js **harvests once**: it opens each group behind
+a hidden viewport (`nav[data-enc-harvest]`), keeps the paths, and sets `[data-enc-current]` on the
+group holding the page. A section link is its own destination, so `CONTENT` is keyed by the whole
+href — `/services#block-…` is not `/services`.
+
+**The Services group points at the page's own section headings** (`/services#block-<id>`):
+Dashboards → *Protocol Level Dashboard*, Bots → *Custom Discord Bots*, Monitoring → *Governance
+Alerting*, and **Playbooks**, a section added to the Services page in Notion on 2026-09-21 because
+the design lists it and the page had none. **minima frosts the navbar** (`backdrop-filter: blur(12px)` plus a white wash) — 4f's bar is
 plain glass, so both are cancelled, or whatever the bar lies over is smeared.
 
 **The reconstruction banner is on /services only** (§15b, 2026-09-21). Super's Body code is
