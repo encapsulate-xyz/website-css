@@ -19,7 +19,7 @@
    navigation, so this builds off a MutationObserver like the other page scripts. */
 (function () {
   var PATH = /^\/blog\/.+/;
-  var VERSION = "6";
+  var VERSION = "7";
 
   /* The words live on the /blog page, in a toggle called "Post page copy" — one place for all
      forty posts, since Super ships only the current page's blocks and a post has no block of its
@@ -33,7 +33,8 @@
     "foot live button": "Delegate {ticker}",
     "foot soon title": "Running the {chain} testnet?",
     "foot soon sub": "Mainnet has not launched yet",
-    "foot soon button": "Join the testnet",
+    "foot soon button": "Delegate {ticker}",
+    "foot soon note": "Coming soon on mainnet",
     "foot plain title": "Running a chain we should know about?",
     "foot plain sub": "Tell us what it takes to run it. If it's a fit, you'll hear from us within a week.",
     "foot all": "All posts",
@@ -48,7 +49,8 @@
   function say(key, post) {
     var t = CONTENT[key] || "";
     if (!post) return t;
-    return t.replace("{chain}", post.chain || "").replace("{ticker}", post.ticker || "");
+    return t.replace("{chain}", post.chain || "").replace("{ticker}", post.ticker || "")
+      .replace(/\s{2,}/g, " ").trim();
   }
 
   function el(tag, cls, text) {
@@ -129,6 +131,7 @@
       else if (/^[A-Z][a-z]+(\s+[A-Z][a-zA-Z.]+)+$/.test(t) && !author) author = t;
       else if (t.length <= 24 && !chain) chain = t;
     });
+    if (!author) author = textOf(c.querySelector(".notion-property__person"));
     return {
       title: textOf(c.querySelector(".notion-property__title")),
       tag: tag,
@@ -136,7 +139,7 @@
       glyph: img ? original(img.getAttribute("src")) : "",
       href: a ? a.getAttribute("href") : "",
       chain: chain, ticker: ticker, lede: lede, author: author,
-      live: /^live$/i.test(live), ours: /^we run it$/i.test(mine)
+      stage: /^live$/i.test(live) ? "live" : (/^not yet launched$/i.test(live) ? "soon" : "")
     };
   }
 
@@ -204,21 +207,26 @@
   function foot(next, post) {
     var f = el("div", "enc-po__foot");
     var left = el("div", "enc-po__footask");
-    /* the chain-specific asks are only honest where we run the chain: a post about a network we
-       are not on, or about a group of them, gets the standing ask */
-    var kind = (!post || !post.chain || !post.ours) ? "plain" : (post.live ? "live" : "soon");
+    /* the ask follows OUR stage on that chain, which is what the Mainnet property carries: a
+       post about a network we are not on, or about a group of them, gets the standing ask */
+    var kind = (!post || !post.chain || !post.stage) ? "plain" : post.stage;
     left.appendChild(el("span", "enc-po__foottitle", say("foot " + kind + " title", post)));
     left.appendChild(el("span", "enc-po__footsub", say("foot " + kind + " sub", post)));
     var btns = el("div", "enc-po__footbtns");
     var primary;
-    if (kind === "plain") {
-      primary = el("a", "enc-po__btn enc-po__btn--primary", say("rail button"));
-      primary.href = CALL;
-    } else if (kind === "live" && post.ticker) {
+    if (kind === "live") {
       primary = el("a", "enc-po__btn enc-po__btn--primary", say("foot live button", post));
       primary.href = NETWORKS;
+    } else if (kind === "soon") {
+      /* mainnet is not ours yet, so the button is there and does nothing: it says what it will
+         be, and says why on hover rather than sending the reader somewhere else */
+      primary = el("span", "enc-po__btn enc-po__btn--primary enc-po__btn--wait",
+        say("foot soon button", post) || "Delegate");
+      primary.setAttribute("aria-disabled", "true");
+      primary.setAttribute("title", say("foot soon note"));
+      primary.appendChild(el("span", "enc-po__tip", say("foot soon note")));
     } else {
-      primary = el("a", "enc-po__btn enc-po__btn--primary", say("foot soon button", post));
+      primary = el("a", "enc-po__btn enc-po__btn--primary", say("rail button"));
       primary.href = CALL;
     }
     var all = el("a", "enc-po__btn", say("foot all"));

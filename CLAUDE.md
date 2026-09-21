@@ -17,6 +17,11 @@ The user shares a design handoff. I:
    again: repeating a row makes them re-do work and hides the one file that is actually new
    (asked for 2026-09-21). If nothing was rebuilt, there is no paste table at all.
 
+   The same applies to the **Action table**: before repeating an action, **check whether it has
+   already been done** — fetch the page, read the database, look at the live HTML — and drop the
+   row if it has (asked for 2026-09-21). An action the user has completed must not be asked for
+   twice.
+
    **Verify every row before sending it** (asked for 2026-09-21, after /investments was listed
    twice with nothing in it). For each head file you are about to list, run
 
@@ -727,6 +732,13 @@ flash of empty values and a key in the page.
   keeps rendering an ordinary property and any value can still be overridden by hand. Add a
   `Last updated` property so the page can say when, and have the job skip rows marked manual.
 - Publish network APR, not the delegator's figure, unless commission is subtracted — and date it.
+
+## TODO — the newsletter (removed 2026-09-21, to be rebuilt)
+
+"Subscribe to newsletter" and its form were removed from the blog index and from all forty posts
+at the user's request: they are not in the *Blog Post Page* design and the embedded form was the
+old Tally one. When it comes back it should be a Notion form (main.css §13b renders those
+natively) in one place, not a block copied into every post.
 
 ## Open items
 
