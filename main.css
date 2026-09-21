@@ -2127,10 +2127,9 @@ body:has(.notion-root > .notion-callout:first-child > .notion-callout__content >
    type (pastels take ink only), the bold phrase as the mono label step, the
    rest Hanken at 14px, a hairline below. */
 .enc-banner {
-  display: none;
+  display: none;             /* shown again per page, below */
   position: relative;
   z-index: 50;
-  display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
