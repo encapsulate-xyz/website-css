@@ -15,7 +15,18 @@ The user shares a design handoff. I:
 4. reply with **one table of what to paste** — `File | Paste into` — listing only the `head/*.html`
    files **whose tag changed in that reply**. A file the user has already pasted never appears
    again: repeating a row makes them re-do work and hides the one file that is actually new
-   (asked for 2026-09-21). If nothing was rebuilt, there is no paste table at all. Keep the second column to the name of the target and nothing else: `site`
+   (asked for 2026-09-21). If nothing was rebuilt, there is no paste table at all.
+
+   **Verify every row before sending it** (asked for 2026-09-21, after /investments was listed
+   twice with nothing in it). For each head file you are about to list, run
+
+   ```bash
+   git log --oneline <the tag the user last pasted>..HEAD -- <its source files>
+   ```
+
+   and drop the row if that prints nothing. `head/site.html` counts as changed when **any** script
+   it carries changed. Do the check as a command, not from memory — the source of truth is the
+   diff, not what feels recent. Keep the second column to the name of the target and nothing else: `site`
    for the site head, otherwise the page (`brand`, `guides`, `/networks`). The full
    Settings → Code → Head path is noise; the table below says where each file goes.
 5. **and a second table of everything else the user has to do** — `Action | Where | Why` — for
@@ -101,9 +112,10 @@ Repo **github.com/encapsulate-xyz/website-css** (public), served by jsDelivr:
    for a short while**; a test that loads nothing may just be that (reload the link and check
    `performance` entries).
 3. Commit (with the session's attribution trailer), push, `git tag -a vN -m … && git push origin vN`.
-4. Bump only the `head/*.html` files whose dist files changed — check with
-   `git log <lastTag>..HEAD -- <file>` before listing a row — and tell the user in a table.
-   Carry a row forward only if that file changed again since they last pasted it.
+4. Bump only the `head/*.html` files whose dist files changed — prove it with
+   `git log --oneline <lastTag>..HEAD -- <source files>` before bumping or listing a row — and
+   tell the user in a table. Carry a row forward only if that file changed again since they last
+   pasted it; an empty log means no bump and no row.
 
 Note: `git commit` also commits anything the user has staged — check `git status` first.
 
