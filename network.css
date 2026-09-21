@@ -126,7 +126,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   align-items: stretch !important;
   flex-wrap: nowrap !important;
   gap: 0 !important;
-  min-height: 50px !important;
+  min-height: 48px !important;   /* the bar's interior: 48 + its two hairlines = 50 */
   border: 0 !important;
   border-radius: 0 !important;
   background: transparent !important;
