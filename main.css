@@ -203,7 +203,12 @@ body {
   --navbar-height: 64px;
   height: auto !important;
   min-height: 64px !important;
-  margin: 0 !important;
+  /* THE BAR TAKES NO SPACE. 4f lays it over the page: the cover starts at the top edge and the
+     bar is part of it, transparent, scrolling away with it. The negative margin is the design's
+     own construction (`marginBottom: -BAR_H`). */
+  position: relative !important;
+  z-index: 50 !important;
+  margin: 0 0 -64px !important;
   width: 100% !important;
   max-width: none !important;
   background-color: transparent !important;
@@ -274,6 +279,29 @@ body {
   border-color: #E2E2DB !important;
   box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
   color: #000000 !important;
+}
+
+/* WHERE THE PAGE STARTS ON INK. A blog post opens on the ink head, and the bar's ink-7 labels
+   would be invisible on it — so on those pages the bar takes its on-ink variants until a menu
+   opens, when it has its own paper ground again. Super marks a post `parent-page__blog`. */
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__item,
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list {
+  color: #C9C9C4 !important;
+}
+
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__item:hover,
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list:hover,
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list[data-state="open"] {
+  color: #FAFAF8 !important;
+}
+
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__item-list {
+  background: rgba(250, 250, 248, 0.06) !important;
+  border-color: rgba(250, 250, 248, 0.3) !important;
+}
+
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__logo img {
+  filter: brightness(0) invert(1);
 }
 
 /* the right-hand cell: Super's actions, holding its CTA if one is set */
