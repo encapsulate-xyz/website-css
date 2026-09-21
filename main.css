@@ -209,6 +209,10 @@ body {
   position: relative !important;
   z-index: 50 !important;
   margin: 0 0 -64px !important;
+  /* minima frosts the bar (`backdrop-filter: blur(12px)` with a white wash). 4f's bar is plain
+     glass — whatever it lies over is seen through it unchanged. */
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   width: 100% !important;
   max-width: none !important;
   background-color: transparent !important;
@@ -229,7 +233,7 @@ body {
   height: 64px !important;
   max-width: none !important;
   margin: 0 !important;
-  padding: 8px max(44px, calc(50vw - 864px)) !important;
+  padding: 8px 44px !important;   /* the design's own gutter */
   border-radius: 0 !important;
   background: transparent !important;
 }.super-root .super-navbar__logo {
@@ -254,7 +258,7 @@ body {
 }.super-root nav.super-navbar .super-navbar__item, .super-root nav.super-navbar .super-navbar__list {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 5px !important;
+  gap: 0 !important;
   min-height: 44px !important;
   height: auto !important;
   padding: 0 12px !important;
@@ -271,6 +275,7 @@ body {
   transition: color 0.16s ease, background-color 0.16s ease, border-color 0.16s ease !important;
 }.super-root nav.super-navbar .super-navbar__item:hover, .super-root nav.super-navbar .super-navbar__list:hover, .super-root nav.super-navbar .super-navbar__list[data-state="open"] {
   background: transparent !important;
+  border-color: #E2E2DB !important;   /* the design rings a hovered item too */
   color: #000000 !important;
 }
 
@@ -298,6 +303,14 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__item-list {
   background: rgba(250, 250, 248, 0.06) !important;
   border-color: rgba(250, 250, 248, 0.3) !important;
+}
+
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list::before {
+  background: #9FA39B !important;
+}
+
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list:hover::before {
+  background: #FAFAF8 !important;
 }
 
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__logo img {
@@ -351,14 +364,14 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   width: 12px !important;
   height: 12px !important;
   flex: none !important;
-  background: currentColor !important;
-  opacity: 0.55;
+  background: #6B6F68 !important;
+  margin-left: 5px !important;
   -webkit-mask: var(--nav-caret) center / 12px 12px no-repeat;
   mask: var(--nav-caret) center / 12px 12px no-repeat;
   order: 2;
-  transition: opacity 0.16s ease !important;
+  transition: background-color 0.16s ease !important;
 }.super-root nav.super-navbar .super-navbar__list:hover::before, .super-root nav.super-navbar .super-navbar__list[data-state="open"]::before {
-  opacity: 1;
+  background: #000000 !important;
 }:root {
   --nav-caret: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.8%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M5.5 8.25 10 12.75l4.5-4.5%22/%3E%3C/svg%3E");
 }
@@ -390,7 +403,7 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   max-width: none !important;
   min-width: 0 !important;
   margin: 0 !important;
-  padding: 26px max(44px, calc(50vw - 864px)) 22px !important;
+  padding: 26px 44px 22px !important;   /* the design's own gutter */
   border: 0 !important;
   border-bottom: 1px solid #E2E2DB !important;
   border-radius: 0 !important;
