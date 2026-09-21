@@ -11,7 +11,11 @@
      - the browser's own smooth scroll; stops cached, dropped on resize and on DOM changes.
    Under 701px the panels are not sticky and nothing is paged. */
 (function () {
-  var BAND = "block-3dce800a51388154931ac3c9478a65b5";
+  /* NAME THEM APART. Both bands live in this one IIFE, and a second `var BAND` further down
+     (the 5m marks band) overwrote this one at run time — so the count deck and the kicker were
+     both measuring the wrong element, which is why the label would not get out of the figure's
+     way (2026-09-21). */
+  var COUNT_BAND = "block-3dce800a51388154931ac3c9478a65b5";
   window.encNetwork = { version: 2 };   // a marker, so a live page can be asked whether this ran
   var EPS = 2, QUIET = 180, NEW_GAP = 250, MIN_LOCK = 450;
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -22,7 +26,7 @@
     if (cache !== null) return cache;
     // A negative answer is NOT cached: the first call can land before network.css has applied (the
     // panels are not sticky yet), and caching that would leave the deck dead until the next resize.
-    var box = document.getElementById(BAND);
+    var box = document.getElementById(COUNT_BAND);
     if (!box) return false;
     var panels = box.querySelectorAll(".notion-callout");
     if (panels.length < 2 || getComputedStyle(panels[0]).position !== "sticky") return false;
@@ -105,7 +109,7 @@
   var LABEL_TOP = 26, LABEL_BOTTOM = 42;   /* the strip the design's bar occupies */
 
   function paintKicker() {
-    var box = document.getElementById(BAND);
+    var box = document.getElementById(COUNT_BAND);
     if (!box) return;
     var rect = box.getBoundingClientRect();
     var leaving = false;
