@@ -525,7 +525,64 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   text-align: right;
 }
 
-/* what the page is */.enc-nav__about {
+/* the set, where the design shows it: the god and high tier chains and their rates */
+.enc-nav__chains {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px 16px;
+  min-width: 0;
+}
+
+.enc-nav__chains[hidden] { display: none; }
+
+.enc-nav__chain {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 8px;
+  border-radius: 10px;
+  transition: background-color 0.16s ease;
+}
+
+.enc-nav__chain:hover { background: #F2F2ED; }
+
+.enc-nav__chain-well {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.enc-nav__chain-well img {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  display: block;
+}
+
+.enc-nav__chain-name {
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 14px;
+  color: #000000;
+}
+
+.enc-nav__chain-rate {
+  margin-left: auto;
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 11px;
+  color: #3F6B27;
+}
+
+.enc-nav__chain-rate[data-enc-none] { color: #6B6F68; }
+
+.enc-nav__about[hidden] { display: none; }
+
+/* what the page is */
+.enc-nav__about {
   display: flex;
   flex-direction: column;
   gap: 14px;
