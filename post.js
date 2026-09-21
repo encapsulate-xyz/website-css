@@ -19,7 +19,7 @@
    navigation, so this builds off a MutationObserver like the other page scripts. */
 (function () {
   var PATH = /^\/blog\/.+/;
-  var VERSION = "1";
+  var VERSION = "2";
 
   /* The words live on the /blog page, in a toggle called "Post page copy" — one place for all
      forty posts, since Super ships only the current page's blocks and a post has no block of its
@@ -266,11 +266,38 @@
     sync();
   }
 
+  /* put every Notion block back where Super had it, so a newer release can build the page again
+     rather than finding an older build and leaving it. The column that held the post is marked,
+     because that is where the blocks belong. */
+  function unwrap(root) {
+    var home = root.querySelector("[data-enc-home]");
+    Array.prototype.forEach.call(root.querySelectorAll(".enc-po__wrap"), function (w) {
+      var flat = [];
+      (function walk(n) {
+        Array.prototype.forEach.call(n.children, function (c) {
+          if (c.id && c.id.indexOf("block-") === 0) flat.push(c);
+          else walk(c);
+        });
+      })(w);
+      flat.forEach(function (n) { (home || root).appendChild(n); });
+      w.remove();
+    });
+    Array.prototype.forEach.call(root.querySelectorAll("[data-enc-source]"), function (n) {
+      n.removeAttribute("data-enc-source");
+    });
+    Array.prototype.forEach.call(root.querySelectorAll("[class*='enc-po__']"), function (n) {
+      n.className = n.className.split(" ").filter(function (c) {
+        return c.indexOf("enc-po__") !== 0;
+      }).join(" ");
+    });
+  }
+
   function build() {
     if (!PATH.test(location.pathname)) return;
     var root = document.querySelector(".notion-root");
     if (!root) return;
     if (root.getAttribute("data-enc-post") === VERSION) return;
+    unwrap(root);
 
     var cl = root.querySelector(":scope > .notion-column-list");
     if (!cl) return;
@@ -281,6 +308,7 @@
 
     // ── the post as Notion has it: the contents block, then the post itself
     var post = cols[cols.length - 1];
+    post.setAttribute("data-enc-home", "");
     var items = Array.prototype.slice.call(post.children);
     var title = null, banner = null, byline = null;
     var article = el("div", "enc-po__article");
@@ -369,7 +397,7 @@
           // no Lede on the row: the post's own opening stands in, cut to the same length the
           // property is written to, so a post that opens at length cannot fill the head
           led.textContent = short(textOf(first));
-          first.remove();
+          first.setAttribute("data-enc-source", "");
         } else led.remove();
       }
       if (info.me && info.me.glyph) mark.src = info.me.glyph;
