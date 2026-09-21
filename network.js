@@ -115,17 +115,23 @@
       /* the panels only: the band is a callout too, and its own first child is the kicker —
          measured against itself the rule was true everywhere. Every line of a panel is checked,
          not just the first: once the index has passed the label, the figure is the thing in it. */
-      var panels = box.querySelectorAll(".notion-callout");
-      for (var i = 0; i < panels.length && !leaving; i++) {
+      var panels = box.querySelectorAll(".notion-callout"), showing = false;
+      for (var i = 0; i < panels.length; i++) {
         var stack = panels[i].querySelector(":scope > .notion-callout__content");
         if (!stack) continue;
         var line = stack.firstElementChild;
         while (line) {
           var s = line.getBoundingClientRect();
-          if (s.height && s.top < LABEL_BOTTOM + 6 && s.bottom > LABEL_TOP - 6) { leaving = true; break; }
+          if (s.height) {
+            if (s.top < LABEL_BOTTOM + 6 && s.bottom > LABEL_TOP - 6) leaving = true;
+            if (s.bottom > 0 && s.top < window.innerHeight) showing = true;
+          }
           line = line.nextElementSibling;
         }
       }
+      /* and the label does not stand alone: once every panel's lines have gone past, the band is
+         its ground and nothing else, and a lone kicker over it reads as a mistake. */
+      if (!showing) leaving = true;
     }
     if (leaving === box.hasAttribute("data-enc-leaving")) return;
     if (leaving) box.setAttribute("data-enc-leaving", "");
