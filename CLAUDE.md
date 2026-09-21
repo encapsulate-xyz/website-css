@@ -260,7 +260,12 @@ rest within a third of a screen settles onto it, nothing snaps under 701px or wi
 The catch rule is testable in Node (`scratchpad/snaptest.js`); the automation tab fires no scroll
 events.
 
-**Network Count (/networks, network.css + network.js).** Band callout `3dce800a…8154931a…` right
+**Network Count (/networks, network.css + network.js).** Its kicker is written the way the
+homepage's testimonial label is (home.css §09): a **full-viewport sticky layer** whose padding
+places the text and whose negative margin gives the screen back, inset at the panels' own
+`--count-x`. A 16px strip pinned at `top: 26px` stays glued to the viewport until the band's last
+pixel and ends up alone over a sliver of ground — the structure is what makes the label leave with
+the band, and it replaced a fade that hid the symptom (2026-09-21). Band callout `3dce800a…8154931a…` right
 after the cover: Text kicker, then a column list with one callout per panel (callout text "01 / 02",
 Heading 1 figure, Text label, Text note). Two sticky full-screen ink panels in a 2-screen band, each
 drawing the rail with its own pill active; fields are `svg/count-rings.svg` / `svg/count-dots.svg`
