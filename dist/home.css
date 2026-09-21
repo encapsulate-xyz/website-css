@@ -461,3 +461,5 @@
 #block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/mina"]){--net-brand: #FF603B;}
 #block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/avalanche"]){--net-brand: #E84142;}
 #block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/ethereum"]){--net-brand: #627EEA;}
+.notion-root video[data-enc-loop]{width: 100%;height: auto;display: block;background: transparent;pointer-events: none;}
+.notion-root video[data-enc-loop]::-webkit-media-controls,.notion-root video[data-enc-loop]::-webkit-media-controls-enclosure{display: none !important;}

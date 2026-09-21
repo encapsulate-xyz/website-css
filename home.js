@@ -1298,3 +1298,34 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", wire);
   else wire();
 })();
+
+/* The homepage loop (2026-09-21). It was a Wistia embed whose own ground was rgb(253,251,250);
+   the file is now ours, regrounded to the paper the page stands on and served beside the CSS.
+   Notion gives us a plain <video>, so this makes it behave like a background: muted, looping,
+   inline, no controls, and playing as soon as it can. Autoplay is only allowed while muted. */
+(function () {
+  function loop() {
+    Array.prototype.forEach.call(document.querySelectorAll("video"), function (v) {
+      if (v.hasAttribute("data-enc-loop")) return;
+      if (!/home-loop/.test(v.currentSrc || v.src || "")) {
+        var s = v.querySelector("source");
+        if (!s || !/home-loop/.test(s.src || "")) return;
+      }
+      v.setAttribute("data-enc-loop", "");
+      v.muted = true;
+      v.defaultMuted = true;
+      v.loop = true;
+      v.autoplay = true;
+      v.controls = false;
+      v.playsInline = true;
+      v.setAttribute("playsinline", "");
+      v.setAttribute("preload", "auto");
+      var go = v.play();
+      if (go && go.catch) go.catch(function () {});
+    });
+  }
+  var t = 0;
+  new MutationObserver(function () { clearTimeout(t); t = setTimeout(loop, 120); })
+    .observe(document.body, { childList: true, subtree: true });
+  loop();
+})();

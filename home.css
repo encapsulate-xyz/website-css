@@ -4309,3 +4309,17 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 #block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/ethereum"]) {
   --net-brand: #627EEA;
 }
+
+/* the homepage loop: a background, not a player (2026-09-21) */
+.notion-root video[data-enc-loop] {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: transparent;
+  pointer-events: none;
+}
+
+.notion-root video[data-enc-loop]::-webkit-media-controls,
+.notion-root video[data-enc-loop]::-webkit-media-controls-enclosure {
+  display: none !important;
+}
