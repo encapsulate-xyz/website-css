@@ -81,12 +81,13 @@ h4.notion-heading{font-weight: 500 !important;font-size: clamp(18px,1.6vw,21px) 
 .notion-column .notion-divider{visibility: hidden;}
 @media (max-width: 1024px){.notion-column .notion-divider{display: none !important;}
 }
-.notion-code{position: relative;padding-top: 10px;}
-.notion-code > pre{background-color: white !important;border: var(--hard-border);overflow-x: auto !important;}
-.notion-code code,.notion-code pre,.language-bash{font-family: monospace;background-color: white !important;}
-.notion-code .notion-caption{position: absolute;top: 0;left: 10px;padding: 2px 8px;font-size: 14px;color: black;background-color: var(--color-bg-blue);border: var(--hard-border);border-radius: var(--radius-sm);}
-.notion-code__copy-button{padding: 2px;font-size: 14px;border: var(--hard-border);background-color: var(--color-bg-yellow) !important;transform: translate(-4px,-10px);}
-.notion-icon__copy{padding: 2px;transform: scale(1.4);}
+.notion-code{position: relative;margin: 14px 0;padding: 0;}
+.notion-code > pre{margin: 0 !important;padding: 16px 18px !important;border: 1px solid #E2E2DB !important;border-radius: 4px !important;background: #F2F2ED !important;overflow-x: auto !important;}
+.notion-code code,.notion-code pre,.language-bash{font-family: var(--type-mono),ui-monospace,monospace !important;font-size: 13.5px !important;line-height: 1.7 !important;color: #000000 !important;background: transparent !important;}
+.notion-code .notion-caption{position: static;display: block;margin-top: 10px;padding: 0;border: 0;border-radius: 0;background: transparent;font-family: var(--type-mono),ui-monospace,monospace;font-size: 9.5px;letter-spacing: 0.12em;text-transform: uppercase;color: #6B6F68;}
+.notion-code__copy-button{padding: 4px 8px !important;border: 1px solid var(--btn-2-ring,#D9D9D2) !important;border-radius: 8px !important;background: var(--btn-2-fill,#FAFAF8) !important;box-shadow: var(--btn-2-highlight,inset 0 1.5px 0 rgba(255,255,255,1)) !important;font-family: var(--type-mono),ui-monospace,monospace !important;font-size: 10px !important;color: #000000 !important;}
+.notion-quote{margin: 14px 0 !important;padding: clamp(28px,3vw,44px) clamp(32px,4vw,60px) !important;max-width: 680px;box-sizing: border-box;border: 0 !important;border-left: 0 !important;border-radius: 0 !important;background: #DCEEC7 !important;font-family: var(--type-display),system-ui,sans-serif !important;font-weight: 500 !important;font-size: clamp(22px,2.4vw,32px) !important;line-height: 1.2 !important;letter-spacing: -0.032em !important;color: #000000 !important;text-wrap: balance;}
+.notion-quote *{font: inherit !important;color: inherit !important;}
 .notion-external-object,.notion-bookmark{border: 1px solid var(--card-ring) !important;border-radius: var(--card-radius) !important;background-color: var(--card-fill) !important;box-shadow: var(--card-highlight),var(--card-lift) !important;transform: none !important;transition: background-color 0.16s ease,border-color 0.16s ease,box-shadow 0.16s ease !important;}
 .notion-external-object:hover,.notion-bookmark:hover{border-color: var(--card-ring-hover) !important;box-shadow: var(--card-highlight),var(--card-lift-hover) !important;}
 .notion-external-object:active,.notion-bookmark:active{background-color: var(--card-fill-press) !important;box-shadow: var(--card-highlight),var(--card-press) !important;}

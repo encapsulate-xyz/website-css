@@ -191,7 +191,7 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
 | 07 | Button System |
 | 08 | databases and properties |
 | 09 | Card System |
-| 10–13 | pills, column dividers, code blocks, link previews (on card tokens) |
+| 10–13 | pills, column dividers, **code blocks and quotes** (§12, the design's hairline box and pastel pull quote — site-wide since 2026-09-21, a page overrides only its width), link previews (on card tokens) |
 | 13b | Notion forms (22a-light) |
 | 14 | Page covers |
 | 15b | temporary banner `.enc-banner` (markup in `head/site-body.html`) |
