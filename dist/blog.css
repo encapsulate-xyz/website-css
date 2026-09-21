@@ -65,3 +65,4 @@
 @media (max-width: 1240px){.notion-embed__container__wrapper{height: 320px!important;}
 }
 .notion-collection-card.gallery a{pointer-events: auto!important;}
+.notion-root .notion-toggle[data-enc-copy]{display: none !important;}

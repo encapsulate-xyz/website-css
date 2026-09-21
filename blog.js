@@ -294,3 +294,21 @@
   else build();
   window.addEventListener("load", build);
 })();
+
+/* the post pages read their words from a toggle on this page; it is data, so it is marked here
+   and hidden by blog.css rather than left to read as a section (2026-09-21) */
+(function () {
+  function mark() {
+    if (!/^\/blog\/?$/.test(location.pathname)) return;
+    Array.prototype.forEach.call(document.querySelectorAll(".notion-toggle"), function (t) {
+      var s = t.querySelector(".notion-toggle__summary");
+      if (s && /post page copy/i.test((s.textContent || "").trim())) {
+        t.setAttribute("data-enc-copy", "");
+      }
+    });
+  }
+  var t = 0;
+  new MutationObserver(function () { clearTimeout(t); t = setTimeout(mark, 120); })
+    .observe(document.body, { childList: true, subtree: true });
+  mark();
+})();
