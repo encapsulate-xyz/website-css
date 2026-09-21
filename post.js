@@ -19,7 +19,7 @@
    navigation, so this builds off a MutationObserver like the other page scripts. */
 (function () {
   var PATH = /^\/blog\/.+/;
-  var VERSION = "2";
+  var VERSION = "3";
 
   /* The words live on the /blog page, in a toggle called "Post page copy" — one place for all
      forty posts, since Super ships only the current page's blocks and a post has no block of its
@@ -81,46 +81,16 @@
      The tag, the date and the chain's mark are database properties. Super renders them on the
      index and not on the post, so the index is where they are read from — one fetch, cached,
      and the page is built without them if it fails. */
+  /* The index is fetched once and parsed once; the post is looked up on every build, because
+     Super is a single-page app and the next post the reader opens is a different row of the same
+     index. Caching the lookup gave every post the first one's mark, lede and next. */
   var indexOnce = null;
-  function fromIndex() {
+  function indexCards() {
     if (indexOnce) return indexOnce;
     indexOnce = fetch(INDEX, { credentials: "same-origin" })
       .then(function (r) { return r.text(); })
       .then(function (html) {
         var doc = new DOMParser().parseFromString(html, "text/html");
-        var here = location.pathname.replace(/\/$/, "");
-        var cards = Array.prototype.slice.call(doc.querySelectorAll(".notion-collection-card"));
-        var mine = null, idx = -1;
-        cards.forEach(function (c, i) {
-          var a = c.querySelector("a[href]");
-          if (a && a.getAttribute("href").replace(/\/$/, "") === here) { mine = c; idx = i; }
-        });
-        function read(c) {
-          if (!c) return null;
-          var img = c.querySelector("img");
-          var a = c.querySelector("a[href]");
-          var texts = Array.prototype.map.call(
-            c.querySelectorAll(".notion-property__text"), textOf).filter(Boolean);
-          var pills = Array.prototype.map.call(c.querySelectorAll(".notion-pill"), textOf);
-          var live = pills.filter(function (x) { return /^live$|not yet launched/i.test(x); })[0] || "";
-          var tag = pills.filter(function (x) { return x && x !== live; })[0] || "";
-          // the chain is the longer of the two short texts, the ticker the shorter — a ticker has
-          // no spaces and is upper case, which is what tells them apart when both are set
-          var chain = "", ticker = "", lede = "";
-          texts.forEach(function (t) {
-            if (/^[A-Z0-9]{2,6}$/.test(t)) { if (!ticker) ticker = t; }
-            else if (t.length > 60) { if (t.length > lede.length) lede = t; }
-            else if (t.length <= 24 && !chain) chain = t;
-          });
-          return {
-            title: textOf(c.querySelector(".notion-property__title")),
-            tag: tag,
-            date: textOf(c.querySelector(".date")),
-            glyph: img ? original(img.getAttribute("src")) : "",
-            href: a ? a.getAttribute("href") : "",
-            chain: chain, ticker: ticker, lede: lede, live: /^live$/i.test(live)
-          };
-        }
         // the copy block: "key · value" lines in a toggle on the index page
         Array.prototype.forEach.call(doc.querySelectorAll(".notion-toggle"), function (t) {
           if (!/post page copy/i.test(textOf(t.querySelector(".notion-toggle__summary")))) return;
@@ -131,13 +101,54 @@
             if (k && v) CONTENT[k] = v;
           });
         });
-        // the next card in the index, wrapping to the first so the last post still has one
-        var nextCard = idx >= 0 ? (cards[idx + 1] || cards[0]) : null;
-        if (nextCard === mine) nextCard = null;
-        return { me: read(mine), next: read(nextCard) };
+        return Array.prototype.slice.call(doc.querySelectorAll(".notion-collection-card"));
       })
-      .catch(function () { return { me: null, next: null }; });
+      .catch(function () { return []; });
     return indexOnce;
+  }
+
+  function read(c) {
+    if (!c) return null;
+    var img = c.querySelector("img");
+    var a = c.querySelector("a[href]");
+    var texts = Array.prototype.map.call(
+      c.querySelectorAll(".notion-property__text"), textOf).filter(Boolean);
+    var pills = Array.prototype.map.call(c.querySelectorAll(".notion-pill"), textOf);
+    var live = pills.filter(function (x) { return /^live$|not yet launched/i.test(x); })[0] || "";
+    var tag = pills.filter(function (x) { return x && x !== live; })[0] || "";
+    /* the card's text properties are told apart by shape: a ticker is short and upper case, the
+       lede is the long one, the chain is the short one that is left, and the author is a name */
+    var chain = "", ticker = "", lede = "", author = "";
+    texts.forEach(function (t) {
+      if (/^[A-Z0-9]{2,6}$/.test(t)) { if (!ticker) ticker = t; }
+      else if (t.length > 60) { if (t.length > lede.length) lede = t; }
+      else if (/^[A-Z][a-z]+(\s+[A-Z][a-zA-Z.]+)+$/.test(t) && !author) author = t;
+      else if (t.length <= 24 && !chain) chain = t;
+    });
+    return {
+      title: textOf(c.querySelector(".notion-property__title")),
+      tag: tag,
+      date: textOf(c.querySelector(".date")),
+      glyph: img ? original(img.getAttribute("src")) : "",
+      href: a ? a.getAttribute("href") : "",
+      chain: chain, ticker: ticker, lede: lede, author: author,
+      live: /^live$/i.test(live)
+    };
+  }
+
+  /* this post's row, and the one after it — looked up per page, never cached */
+  function fromIndex() {
+    return indexCards().then(function (cards) {
+      var here = location.pathname.replace(/\/$/, "");
+      var mine = null, idx = -1;
+      cards.forEach(function (c, i) {
+        var a = c.querySelector("a[href]");
+        if (a && a.getAttribute("href").replace(/\/$/, "") === here) { mine = c; idx = i; }
+      });
+      var nextCard = idx >= 0 ? (cards[idx + 1] || cards[0]) : null;
+      if (nextCard === mine) nextCard = null;
+      return { me: read(mine), next: read(nextCard) };
+    });
   }
 
   /* ── the reading rail ─────────────────────────────────────────────────────────────────── */
