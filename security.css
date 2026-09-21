@@ -1317,9 +1317,10 @@
 
 .notion-root[data-enc-security] .enc-sec__step {
   position: sticky;
-  /* 124, not the design's 112: at 112 the next card's ground paints over the tail of a g in
-     the title above it (the descender rule in CLAUDE.md, in its other form) */
-  top: calc(56px + var(--enc-i) * 124px);
+  /* 132, not the design's 112: the title's ink ends 122px into the card, so at 112 the next
+     card's ground painted over the tail of a g (the descender rule in CLAUDE.md, in its other
+     form) and at 124 it cleared by 2px. 132 leaves ten. */
+  top: calc(56px + var(--enc-i) * 132px);
   box-sizing: border-box;
   min-height: 56vh;
   margin: 0 !important;
