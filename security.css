@@ -1375,6 +1375,17 @@
   padding: 0 !important;
 }
 
+/* the line box at 1.05 is shorter than the glyphs, and Notion clips the summary to it — the
+   tail of a g goes with it (CLAUDE.md, the descender rule) */
+.notion-root[data-enc-security] .enc-sec__step .notion-toggle__summary,
+.notion-root[data-enc-security] .enc-sec__step .notion-toggle__summary .notion-semantic-string,
+.notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__spine .notion-toggle__summary,
+.notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__spine .notion-toggle__summary .notion-semantic-string,
+.notion-root[data-enc-security] [data-enc-sec="01"] .enc-sec__rows .notion-toggle__summary,
+.notion-root[data-enc-security] [data-enc-sec="01"] .enc-sec__rows .notion-toggle__summary .notion-semantic-string {
+  overflow: visible !important;
+}
+
 .notion-root[data-enc-security] .enc-sec__step .notion-toggle__summary .notion-semantic-string {
   font-family: var(--type-display), system-ui, sans-serif !important;
   font-weight: 600 !important;
