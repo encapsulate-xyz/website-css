@@ -242,7 +242,8 @@ body:has(.notion-root[data-enc-post]) .notion-header { display: none !important;
   background: #FAFAF8;
   box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 1px 2px rgba(0, 0, 0, 0.06);
   font-family: var(--type-body), system-ui, sans-serif;
-  font-size: 15.5px;
+  /* md, not lg: 44px and 18px of padding take the 15px label (Button System 29b) */
+  font-size: 15px;
   font-weight: 500;
   letter-spacing: -0.006em;
   color: #000000 !important;
