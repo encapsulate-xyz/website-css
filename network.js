@@ -108,10 +108,15 @@
     var rect = box.getBoundingClientRect();
     var leaving = false;
     if (rect.bottom > 0 && rect.top < window.innerHeight) {
+      /* the panel's stack fills the screen (its children are centred in it), so the box says
+         nothing about where the ink is — measure the first thing in it, the index line. */
       var stacks = box.querySelectorAll(".notion-callout > .notion-callout__content");
       for (var i = 0; i < stacks.length; i++) {
-        var s = stacks[i].getBoundingClientRect();
-        if (s.height && s.bottom > 0 && s.top < 54) { leaving = true; break; }
+        var first = stacks[i].firstElementChild;
+        while (first && !first.getBoundingClientRect().height) first = first.nextElementSibling;
+        if (!first) continue;
+        var s = first.getBoundingClientRect();
+        if (s.bottom > 0 && s.top < 54) { leaving = true; break; }
       }
     }
     if (leaving === box.hasAttribute("data-enc-leaving")) return;
