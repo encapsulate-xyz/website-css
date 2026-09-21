@@ -655,7 +655,10 @@ STYLING DROPDOWN MENU
 
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-gallery {
   display: grid !important;
-  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  /* the handoff draws four 276px cards on its own 1240px width. The card is built for that
+     width — the disc, the 96px name and the type all sit against it — so the track holds the
+     width and the column count follows the page instead. */
+  grid-template-columns: repeat(auto-fill, minmax(262px, 1fr)) !important;
   gap: 16px !important;
   align-items: start !important;
   padding: 0 !important;
@@ -691,7 +694,7 @@ STYLING DROPDOWN MENU
 /* THE DISC. Super wraps the cover in a bare span; that span becomes the pastel well at 176px,
    pushed past the TOP-right corner (right -44, top -52) so the card is the page's own graphic in
    miniature, and the glyph sits inside it at 50% with the design's nudge back into view. */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card > span {
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card > span:not(.enc-set__hollow) {
   position: absolute !important;
   right: -44px !important;
   top: -52px !important;
@@ -710,7 +713,7 @@ STYLING DROPDOWN MENU
   transition: background-color 0.16s ease !important;
 }
 
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:hover > span {
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:hover > span:not(.enc-set__hollow) {
   background: var(--set-deep, #B4D98F) !important;
 }
 
@@ -738,8 +741,8 @@ STYLING DROPDOWN MENU
 
 /* A testnet card is one showing the Role property, or any card with no rate on it: its disc sits
    at 62% so the stage is legible from the card alone. */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:has(.property-585f6e6c) > span,
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:not(:has(.property-597e3d69)) > span {
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:has(.property-585f6e6c) > span:not(.enc-set__hollow),
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:not(:has(.property-597e3d69)) > span:not(.enc-set__hollow) {
   opacity: 0.62 !important;
 }
 
@@ -783,9 +786,10 @@ STYLING DROPDOWN MENU
   text-overflow: ellipsis !important;
 }
 
-/* the rate — the one figure on a mainnet card */
+/* the rate — the one figure on a mainnet card. It is one number, never two lines. */
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .property-597e3d69 {
   display: block !important;
+  white-space: nowrap !important;
   font-family: var(--type-display) !important;
   font-weight: 600 !important;
   font-size: 22px !important;
