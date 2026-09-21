@@ -126,6 +126,79 @@
     return b;
   }
 
+  /* THE THIRD COLUMN, where the design shows the page's own content rather than a note about it.
+     For "All networks" that is the set itself — the god and high tier chains with their reward
+     rates — so it is read from /networks, the page that renders them, once per visit. Nothing is
+     listed here: the names, the rates and the glyphs are Notion's, as they are on the page. */
+  var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
+  var chains = null;                 /* [{name, rate, glyph}] once fetched */
+
+  function originalSrc(src) {
+    var m = /[?&]url=([^&]+)/.exec(src || "");
+    return m ? decodeURIComponent(m[1]) : (src || "");
+  }
+
+  function readChains(doc) {
+    var db = doc.getElementById("block-3dde800a51388133b7f1d1ccdda08038");
+    var cards = db ? db.querySelectorAll(".notion-collection-card") : [];
+    var out = [];
+    Array.prototype.forEach.call(cards, function (c) {
+      var t = c.querySelector(".notion-property__title");
+      var img = c.querySelector("img");
+      var rate = c.querySelector(".property-597e3d69");
+      if (!t) return;
+      out.push({ name: t.textContent.trim(),
+        rate: rate ? rate.textContent.trim() : "",
+        glyph: img ? originalSrc(img.getAttribute("src")) : "" });
+    });
+    return out.slice(0, 12);         /* the view is sorted by Order: the god and high tiers */
+  }
+
+  function wantChains(then) {
+    if (chains) { then(chains); return; }
+    if (document.getElementById("block-3dde800a51388133b7f1d1ccdda08038")) {
+      chains = readChains(document);
+      if (chains.length) { then(chains); return; }
+      chains = null;
+    }
+    if (wantChains.busy) return;
+    wantChains.busy = true;
+    fetch("/networks", { credentials: "same-origin" })
+      .then(function (r) { return r.text(); })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        chains = readChains(doc);
+        wantChains.busy = false;
+        if (chains.length) then(chains);
+      })
+      .catch(function () { wantChains.busy = false; });
+  }
+
+  function chainGrid(box) {
+    wantChains(function (list) {
+      if (!box.isConnected) return;
+      box.textContent = "";
+      list.forEach(function (c, i) {
+        var row = el("span", "enc-nav__chain");
+        var well = el("span", "enc-nav__chain-well");
+        well.style.background = TINTS[i % TINTS.length];
+        if (c.glyph) {
+          var img = el("img");
+          img.src = c.glyph;
+          img.alt = "";
+          img.loading = "lazy";
+          well.appendChild(img);
+        }
+        row.appendChild(well);
+        row.appendChild(el("span", "enc-nav__chain-name", c.name));
+        var rate = el("span", "enc-nav__chain-rate", c.rate || "\u2014");
+        if (!c.rate) rate.setAttribute("data-enc-none", "");
+        row.appendChild(rate);
+        box.appendChild(row);
+      });
+    });
+  }
+
   /* One panel. Super gives the column of links; the rest of the 4f grid is built around it and
      the preview follows whichever link the pointer is on. */
   function build(panel) {
@@ -172,6 +245,10 @@
     preview.appendChild(line);
     grid.appendChild(preview);
 
+    // the third column: the page's own content where the design shows it, the note otherwise
+    var extra = el("div", "enc-nav__chains");
+    grid.appendChild(extra);
+
     // the note: what the page is, and the way in
     var about = el("div", "enc-nav__about");
     var aboutHead = el("span", "enc-nav__about-head");
@@ -215,6 +292,10 @@
       lineDesc.textContent = c ? c[0] : "";
       aboutHead.textContent = c ? c[1] : name;
       aboutText.textContent = c ? c[2] : "";
+      var isSet = path(href) === "/networks";
+      extra.hidden = !isSet;
+      about.hidden = isSet;
+      if (isSet && !extra.childElementCount) chainGrid(extra);
       openLabel.textContent = "Open " + name.toLowerCase();
       open.href = href;
       preview.href = href;
