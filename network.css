@@ -481,8 +481,11 @@ STYLING DROPDOWN MENU
    That is what makes it leave with the band — a strip at top: 26px stays glued to the viewport
    until the band's last pixel and ends up alone over a sliver of ground (reported 2026-09-21),
    where a 100dvh layer is carried up by the band's own bottom edge, exactly like the panels.
-   It takes no height in the flow: the negative margin gives the screen back. Its inset is the
-   panels' own --count-x, so the label sits on the same left edge as the figure beneath it. */
+   The layer keeps its full height — that is what clamps it to the band and makes it rise in step
+   with the last panel — and the screen it costs is given back by pulling the first panel up by
+   one (below). Its inset is the design's own 26px / 40px bar, NOT the panels' --count-x: at the
+   panels' inset the label lands in the same column as the index and the figure and overprints
+   them as a panel slides (reported 2026-09-21). */
 #block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__content > p.notion-text {
   position: sticky !important;
   top: 0 !important;
@@ -490,9 +493,8 @@ STYLING DROPDOWN MENU
   box-sizing: border-box !important;
   height: 100vh !important;
   height: 100dvh !important;
-  margin: 0 0 -100vh !important;
-  margin: 0 0 -100dvh !important;
-  padding: 26px var(--count-x) 0 !important;
+  margin: 0 !important;
+  padding: 26px 40px 0 !important;   /* the design's bar: 26px down, 40px in — not the panel's inset */
   min-height: 0 !important;
   max-width: none !important;
   pointer-events: none !important;
@@ -502,6 +504,15 @@ STYLING DROPDOWN MENU
   letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
   color: #B4B4B4 !important;
+}
+
+/* The kicker's layer is a screen tall, so the first panel starts a screen higher and the band is
+   still the two screens the design asks for. A negative margin on the label instead would zero
+   its margin box, and sticky would then hold it on its top edge alone — the label outlived its
+   panel and overprinted the one rising past it. */
+#block-3dce800a51388154931ac3c9478a65b5 .notion-column:first-child .notion-callout {
+  margin-top: -100vh !important;
+  margin-top: -100dvh !important;
 }
 
 /* the panels */
