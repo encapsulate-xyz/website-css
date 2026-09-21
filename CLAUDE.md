@@ -22,6 +22,13 @@ The user shares a design handoff. I:
    row if it has (asked for 2026-09-21). An action the user has completed must not be asked for
    twice.
 
+   **Run `python3 scripts/paste_table.py` and copy what it prints** (2026-09-21). It compares
+   what each `head/*.html` pins against what the live page actually serves and prints only the
+   rows that differ — `--why` adds the commits behind each one. The table is never written from
+   memory: the one time it was, /networks was carried into a reply where nothing about it had
+   changed, which is the mistake this exists to stop. If the script cannot reach the site, fall
+   back to the per-file check below.
+
    **Verify every row before sending it** (asked for 2026-09-21, after /investments was listed
    twice with nothing in it). For each head file you are about to list, run
 
@@ -90,6 +97,7 @@ User rules that stand on every task:
 | `notion/page-covers.md` | cover copy for the nine inner pages | — |
 | `notion/guide-screenshots.md` | how guide screenshots are captured and composed (agreed 2026-09-18, not yet applied) | — |
 | `build.py` | strips comments into `dist/`, copies the JS | — |
+| `scripts/paste_table.py` | prints the paste table from head/*.html vs what the live pages serve | — |
 
 **Edit sources, run `python3 build.py`, commit source and `dist/` together. Never edit `dist/`.**
 When a new page CSS file is added, add it to build.py's default list and create `head/<page>.html`.
