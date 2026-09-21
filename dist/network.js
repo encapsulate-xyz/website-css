@@ -202,6 +202,29 @@
     return Array.prototype.slice.call(db.querySelectorAll(".notion-collection-card"));
   }
 
+  /* 5g's hollow name: the card's own title at 96px running off the bottom-right, as two copies —
+     one stroked, one filled in the card's ground over it. CSS cannot repeat a text node, so the
+     span is built here from the title Notion already renders; the words stay Notion's. */
+  function hollow(db) {
+    cardsOf(db).forEach(function (card) {
+      var title = card.querySelector(".notion-property__title");
+      var name = title ? title.textContent.trim() : "";
+      if (!name) return;
+      var box = card.querySelector(":scope > .enc-set__hollow");
+      if (box && box.getAttribute("data-enc-name") === name) return;
+      if (!box) {
+        box = el("span", "enc-set__hollow");
+        box.setAttribute("aria-hidden", "true");
+        box.appendChild(el("span"));
+        box.appendChild(el("span"));
+        card.appendChild(box);
+      }
+      box.setAttribute("data-enc-name", name);
+      box.children[0].textContent = name;
+      box.children[1].textContent = name;
+    });
+  }
+
   function applyControls(db, state) {
     var cards = cardsOf(db);
     var q = (state.q || "").trim().toLowerCase();
@@ -242,6 +265,13 @@
     db.setAttribute("data-enc-shown", String(shown));
     var empty = db.querySelector(".enc-set-empty");
     if (empty) empty.hidden = shown !== 0;
+  }
+
+  /* Super re-renders every card when the view picker swaps Mainnet for Testnet, which takes the
+     hollow names with it — so this runs on the observer, not once inside controls(). */
+  function bleed() {
+    var db = document.getElementById(SET_DB);
+    if (db) hollow(db);
   }
 
   function controls() {
@@ -343,10 +373,11 @@
     applyControls(db, state);
   }
 
-  new MutationObserver(function () { invalidate(); marks(); controls(); }).observe(document.body, { childList: true, subtree: true });
+  new MutationObserver(function () { invalidate(); marks(); controls(); bleed(); }).observe(document.body, { childList: true, subtree: true });
   marks();
   controls();
-  window.addEventListener("load", function () { marks(); controls(); });
+  bleed();
+  window.addEventListener("load", function () { marks(); controls(); bleed(); });
   window.addEventListener("resize", invalidate);
   window.addEventListener("load", function () { invalidate(); paintKicker(); });
   paintKicker();

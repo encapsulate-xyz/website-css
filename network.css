@@ -669,34 +669,34 @@ STYLING DROPDOWN MENU
 
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card {
   position: relative !important;
-  height: 128px !important;
+  height: 168px !important;
   min-height: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
   border: 1px solid #D9D9D2 !important;
   border-radius: 12px !important;
-  background: var(--color-bg-default) !important;
+  background: #F2F2ED !important;
   box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 1px 2px rgba(0, 0, 0, 0.06) !important;
   overflow: hidden !important;
-  transition: border-color 0.16s ease, box-shadow 0.16s ease !important;
+  transition: border-color 0.16s ease !important;
 }
 
+/* hover is the ring darkening, the disc deepening and the hollow name filling — no extra lift */
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:hover {
   border-color: #B9B9B1 !important;
-  background: var(--color-bg-default) !important;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 1px 2px rgba(0, 0, 0, 0.06),
-              0 2px 6px rgba(0, 0, 0, 0.05) !important;
+  background: #F2F2ED !important;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 1px 2px rgba(0, 0, 0, 0.06) !important;
 }
 
-/* THE DISC. Super wraps the cover in a bare span; that span becomes the pastel well, pushed
-   26px past the corner so it is cropped by the card's radius, and the glyph sits inside it at
-   52% with the design's nudge back towards the visible side. */
+/* THE DISC. Super wraps the cover in a bare span; that span becomes the pastel well at 176px,
+   pushed past the TOP-right corner (right -44, top -52) so the card is the page's own graphic in
+   miniature, and the glyph sits inside it at 50% with the design's nudge back into view. */
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card > span {
   position: absolute !important;
-  right: -26px !important;
-  bottom: -26px !important;
-  width: 96px !important;
-  height: 96px !important;
+  right: -44px !important;
+  top: -52px !important;
+  width: 176px !important;
+  height: 176px !important;
   min-height: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -707,12 +707,17 @@ STYLING DROPDOWN MENU
   place-items: center !important;
   overflow: hidden !important;
   z-index: 0 !important;
+  transition: background-color 0.16s ease !important;
+}
+
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:hover > span {
+  background: var(--set-deep, #B4D98F) !important;
 }
 
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card__cover {
   position: static !important;
-  width: 52% !important;
-  height: 52% !important;
+  width: 50% !important;
+  height: 50% !important;
   min-height: 0 !important;
   max-height: none !important;
   margin: 0 !important;
@@ -720,15 +725,16 @@ STYLING DROPDOWN MENU
   object-fit: contain !important;      /* beats Super's inline `cover` */
   object-position: center center !important;
   background: transparent !important;
-  transform: translate(-14%, -14%) !important;
+  transform: translate(-12%, 14%) !important;
 }
 
-/* the five pastels, cycling down the grid as they do on the covers */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:nth-child(5n + 1) { --set-tint: #DCEEC7; }
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:nth-child(5n + 2) { --set-tint: #F8E8B3; }
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:nth-child(5n + 3) { --set-tint: #D2E3F6; }
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:nth-child(5n + 4) { --set-tint: #F8DDC6; }
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:nth-child(5n + 5) { --set-tint: #F7DCE7; }
+/* the five pastels, cycling down the grid as they do on the covers, each with the deeper tone
+   the disc takes on hover */
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:nth-child(5n + 1) { --set-tint: #DCEEC7; --set-deep: #B4D98F; }
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:nth-child(5n + 2) { --set-tint: #F8E8B3; --set-deep: #E8CB72; }
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:nth-child(5n + 3) { --set-tint: #D2E3F6; --set-deep: #A3C3EC; }
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:nth-child(5n + 4) { --set-tint: #F8DDC6; --set-deep: #EDB98A; }
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:nth-child(5n + 5) { --set-tint: #F7DCE7; --set-deep: #E9A9C2; }
 
 /* A testnet card is one showing the Role property, or any card with no rate on it: its disc sits
    at 62% so the stage is legible from the card alone. */
@@ -737,18 +743,21 @@ STYLING DROPDOWN MENU
   opacity: 0.62 !important;
 }
 
-/* THE TYPE. Content sits above the disc, kept to 74% so a long name never runs into it. */
+/* THE TYPE. Content sits above the disc and the hollow name, at the card's top-left corner,
+   kept to 62% so a long name never runs into the disc. */
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card__content {
-  position: relative !important;
-  z-index: 1 !important;
+  position: absolute !important;
+  left: 16px !important;
+  top: 14px !important;
+  z-index: 2 !important;
   display: flex !important;
   flex-direction: column !important;
-  gap: 5px !important;
+  gap: 6px !important;
   width: auto !important;
-  max-width: 74% !important;
+  max-width: 62% !important;
   height: auto !important;
   margin: 0 !important;
-  padding: 16px 16px 0 !important;
+  padding: 0 !important;
   overflow: visible !important;
 }
 
@@ -765,8 +774,8 @@ STYLING DROPDOWN MENU
   display: block !important;
   font-family: var(--type-display) !important;
   font-weight: 600 !important;
-  font-size: 16px !important;
-  line-height: 1.25 !important;
+  font-size: 15px !important;
+  line-height: 1.1 !important;
   letter-spacing: -0.018em !important;
   color: #000000 !important;
   white-space: nowrap !important;
@@ -807,6 +816,47 @@ STYLING DROPDOWN MENU
   letter-spacing: 0.1em !important;
   text-transform: uppercase !important;
   color: #6B6F68 !important;
+}
+
+/* THE HOLLOW NAME. The card's own title again at 96px, running off the bottom-right corner:
+   one copy stroked, one filled over it in the card's ground so only the outline shows — Who We
+   Are's two-copy construction. On hover the fill goes grey and the word reads solid. The text is
+   the Notion title, copied by network.js; nothing here is written. */
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set__hollow {
+  position: absolute;
+  left: 12px;
+  bottom: -18px;
+  right: -80px;
+  z-index: 1;
+  display: block;
+  pointer-events: none;
+}
+
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set__hollow span {
+  display: block;
+  font-family: var(--type-display), sans-serif;
+  font-weight: 600;
+  font-size: 96px;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  white-space: nowrap;
+}
+
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set__hollow span:first-child {
+  color: transparent;
+  -webkit-text-stroke: 2.2px #9B9B94;
+}
+
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set__hollow span:last-child {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #F2F2ED;
+  transition: color 0.16s ease;
+}
+
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:hover .enc-set__hollow span:last-child {
+  color: #9B9B94;
 }
 
 /* THE ARROW BADGE. Only on a card that is genuinely a link — Super marks the others .no-click,
