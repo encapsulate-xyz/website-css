@@ -83,7 +83,10 @@
             href: a ? a.getAttribute("href") : ""
           };
         }
-        return { me: read(mine), next: read(cards[idx + 1] || cards[0] === mine ? cards[idx + 1] : null) };
+        // the next card in the index, wrapping to the first so the last post still has one
+        var nextCard = idx >= 0 ? (cards[idx + 1] || cards[0]) : null;
+        if (nextCard === mine) nextCard = null;
+        return { me: read(mine), next: read(nextCard) };
       })
       .catch(function () { return { me: null, next: null }; });
     return indexOnce;

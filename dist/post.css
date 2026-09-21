@@ -42,7 +42,7 @@ body:has(.notion-root[data-enc-post]) .notion-header{display: none !important;}
 .notion-root[data-enc-post] .enc-po__article .notion-bulleted-list,.notion-root[data-enc-post] .enc-po__article .notion-numbered-list{margin: 0 !important;max-width: 68ch;}
 .notion-root[data-enc-post] .enc-po__article li{font-family: var(--type-body),system-ui,sans-serif !important;font-size: 17px !important;line-height: 1.56 !important;color: #3A3D38 !important;}
 .notion-root[data-enc-post] .enc-po__article .notion-image{width: 100%;max-width: 680px;margin: 0 !important;}
-.notion-root[data-enc-post] .enc-po__article .notion-image img{width: 100%;height: auto;display: block;border-radius: 4px;background: #F2F2ED;border: 1px solid #E2E2DB;}
+.notion-root[data-enc-post] .enc-po__article .notion-image img{width: 100% !important;height: auto !important;display: block !important;border-radius: 4px !important;background: #F2F2ED;border: 1px solid #E2E2DB;object-fit: contain !important;}
 .notion-root[data-enc-post] .enc-po__article .notion-image figcaption,.notion-root[data-enc-post] .enc-po__article .notion-caption{margin-top: 10px !important;font-family: var(--type-body),system-ui,sans-serif !important;font-size: 13.5px !important;line-height: 1.5 !important;color: #6B6F68 !important;max-width: 60ch !important;}
 .notion-root[data-enc-post] .enc-po__article .notion-code{width: 100%;max-width: 680px;margin: 0 !important;padding: 16px 18px !important;border: 1px solid #E2E2DB !important;border-radius: 4px !important;background: #F2F2ED !important;overflow-x: auto;}
 .notion-root[data-enc-post] .enc-po__article .notion-code *{font-family: var(--type-mono),ui-monospace,monospace !important;font-size: 13.5px !important;line-height: 1.7 !important;color: #000000 !important;}

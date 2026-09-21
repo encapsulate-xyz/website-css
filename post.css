@@ -357,13 +357,15 @@ body:has(.notion-root[data-enc-post]) .notion-header { display: none !important;
   margin: 0 !important;
 }
 
+/* Notion writes its own inline styles on an image, so these have to win */
 .notion-root[data-enc-post] .enc-po__article .notion-image img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 4px;
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  border-radius: 4px !important;
   background: #F2F2ED;
   border: 1px solid #E2E2DB;
+  object-fit: contain !important;
 }
 
 .notion-root[data-enc-post] .enc-po__article .notion-image figcaption,
