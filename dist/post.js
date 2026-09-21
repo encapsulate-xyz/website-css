@@ -19,7 +19,7 @@
    navigation, so this builds off a MutationObserver like the other page scripts. */
 (function () {
   var PATH = /^\/blog\/.+/;
-  var VERSION = "7";
+  var VERSION = "8";
 
   /* The words live on the /blog page, in a toggle called "Post page copy" — one place for all
      forty posts, since Super ships only the current page's blocks and a post has no block of its
@@ -141,6 +141,35 @@
       chain: chain, ticker: ticker, lede: lede, author: author,
       stage: /^live$/i.test(live) ? "live" : (/^not yet launched$/i.test(live) ? "soon" : "")
     };
+  }
+
+  /* the team, from the homepage's own section: the face and the role the design's byline wants.
+     One fetch, cached, and the byline still draws with initials if it fails. */
+  var teamOnce = null;
+  function team() {
+    if (teamOnce) return teamOnce;
+    teamOnce = fetch("/", { credentials: "same-origin" })
+      .then(function (r) { return r.text(); })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        var out = [];
+        Array.prototype.forEach.call(doc.querySelectorAll(".notion-collection-card"), function (c) {
+          var img = c.querySelector("img");
+          var role = textOf(c.querySelector(".notion-property__select"));
+          var texts = Array.prototype.map.call(
+            c.querySelectorAll(".notion-property__text"), textOf).filter(Boolean);
+          // a person's card: a name, a role, and a face
+          var name = texts.filter(function (t) {
+            return /^[A-Z][A-Za-z.]*(\s+[A-Z][A-Za-z.]*)+$/.test(t) && t.length < 40;
+          })[0];
+          if (name && role && img) {
+            out.push({ name: name, role: role, img: original(img.getAttribute("src")) });
+          }
+        });
+        return out;
+      })
+      .catch(function () { return []; });
+    return teamOnce;
   }
 
   /* this post's row, and the one after it — looked up per page, never cached */
@@ -432,9 +461,25 @@
             .map(function (w) { return w.charAt(0); }).join("").slice(0, 2).toUpperCase());
           var t2 = el("span", "enc-po__bybody");
           t2.appendChild(el("span", "enc-po__byk", say("written by")));
-          t2.appendChild(el("span", "enc-po__byn", who));
+          var name = el("span", "enc-po__byn", who);
+          t2.appendChild(name);
           by.appendChild(disc);
           by.appendChild(t2);
+          team().then(function (people) {
+            var m = people.filter(function (x) {
+              return x.name.toLowerCase().indexOf(who.toLowerCase()) >= 0 ||
+                     who.toLowerCase().indexOf(x.name.toLowerCase()) >= 0;
+            })[0];
+            if (!m) return;
+            if (m.role) name.textContent = who + " \u00b7 " + m.role;
+            if (m.img) {
+              disc.textContent = "";
+              var face = el("img", "enc-po__byface");
+              face.src = m.img;
+              face.alt = "";
+              disc.appendChild(face);
+            }
+          });
         } else by.remove();
       }
       var led = wrap.querySelector("p.enc-po__lede");

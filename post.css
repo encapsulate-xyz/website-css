@@ -463,6 +463,17 @@ body:has(.notion-root[data-enc-post]) .notion-header { display: none !important;
   color: #000000;
 }
 
+.notion-root[data-enc-post] .enc-po__bydisc:has(img) { padding: 0; }
+
+.notion-root[data-enc-post] .enc-po__byface {
+  width: 100%;
+  height: 100%;
+  object-fit: cover !important;
+  object-position: top center !important;
+  display: block;
+  border-radius: 999px;
+}
+
 .notion-root[data-enc-post] .enc-po__bybody {
   display: flex;
   flex-direction: column;
