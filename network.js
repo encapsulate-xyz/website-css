@@ -102,6 +102,8 @@
      position, measure: the label occupies 26px to 42px, so the moment a panel's content crosses
      that line the label is in the way and fades. It comes back on the way up, and a band that is
      not on screen is left alone. */
+  var LABEL_TOP = 26, LABEL_BOTTOM = 42;   /* the strip the design's bar occupies */
+
   function paintKicker() {
     var box = document.getElementById(BAND);
     if (!box) return;
@@ -111,16 +113,18 @@
       /* the panel's stack fills the screen (its children are centred in it), so the box says
          nothing about where the ink is — measure the first thing in it, the index line. */
       /* the panels only: the band is a callout too, and its own first child is the kicker —
-         measured against itself the rule was true everywhere. */
+         measured against itself the rule was true everywhere. Every line of a panel is checked,
+         not just the first: once the index has passed the label, the figure is the thing in it. */
       var panels = box.querySelectorAll(".notion-callout");
-      for (var i = 0; i < panels.length; i++) {
+      for (var i = 0; i < panels.length && !leaving; i++) {
         var stack = panels[i].querySelector(":scope > .notion-callout__content");
         if (!stack) continue;
-        var first = stack.firstElementChild;
-        while (first && !first.getBoundingClientRect().height) first = first.nextElementSibling;
-        if (!first) continue;
-        var s = first.getBoundingClientRect();
-        if (s.bottom > 0 && s.top < 54) { leaving = true; break; }
+        var line = stack.firstElementChild;
+        while (line) {
+          var s = line.getBoundingClientRect();
+          if (s.height && s.top < LABEL_BOTTOM + 6 && s.bottom > LABEL_TOP - 6) { leaving = true; break; }
+          line = line.nextElementSibling;
+        }
       }
     }
     if (leaving === box.hasAttribute("data-enc-leaving")) return;
