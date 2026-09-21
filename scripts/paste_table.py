@@ -15,6 +15,7 @@ prints. `--why` also prints the commits behind each difference.
 import re
 import sys
 import subprocess
+import time
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 
@@ -44,7 +45,12 @@ def pins(text):
 
 
 def fetch(path):
-    req = urllib.request.Request(SITE + path, headers={"User-Agent": "paste-table"})
+    # No-cache, and a cache-busting parameter: a CDN copy of the page baked before the last
+    # republish reports an old tag and puts a row in the table that the user has already done.
+    sep = "&" if "?" in path else "?"
+    req = urllib.request.Request(
+        SITE + path + sep + "pastecheck=" + str(int(time.time())),
+        headers={"User-Agent": "paste-table", "Cache-Control": "no-cache", "Pragma": "no-cache"})
     with urllib.request.urlopen(req, timeout=30) as r:
         return r.read().decode("utf-8", "replace")
 
