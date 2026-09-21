@@ -308,8 +308,12 @@ wash, and Super's logo inverted to paper.
 Two traps: **Super's own rules carry two classes** (`.super-navbar.simple`), so every rule that
 fights one is anchored on `.super-root`; and **Super slides its dropdown viewport under the
 trigger with an inline transform**, which 4f's full-width panel cancels (`transform: none`).
-The design's preview is a capture of the page; what is built is the design's own fallback — an ink
-tile carrying the page's name — so no thumbnails are in the repo.
+**The panel's preview is the page's own cover, captured**: the design's nine `cover-thumbs`, now in
+`img/nav-covers/` beside the CSS so a capture cannot drift from the page it shows, drawn
+`left center / cover` in a 16/10 box as the file draws them. navbar.js keys them by href and marks
+the tile `[data-enc-shot]`; without one, the tile is the design's ink fallback carrying the page's
+name. **minima frosts the navbar** (`backdrop-filter: blur(12px)` plus a white wash) — 4f's bar is
+plain glass, so both are cancelled, or whatever the bar lies over is smeared.
 
 **The reconstruction banner is on /services only** (§15b, 2026-09-21). Super's Body code is
 site-wide and there is no per-page Body box, so the banner is hidden by default and shown again by
