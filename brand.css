@@ -589,3 +589,11 @@
   .notion-root .enc-rules { grid-template-columns: minmax(0, 1fr); }
   .notion-root .enc-face { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* the page ends on a full-bleed band, so it runs into the footer: Super pads the article and the
+   main below the content, which on a band reads as a strip of ground above the ink (2026-09-21,
+   the same rule as /guides, /security and /investments) */
+.super-content.page__brand,
+.super-content.page__brand .notion-root {
+  padding-bottom: 0 !important;
+}

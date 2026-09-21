@@ -166,3 +166,4 @@
 .notion-root[data-enc-contact] .enc-ct__done .enc-ct__kicker{margin: 0 !important;font-family: var(--type-mono),ui-monospace,monospace !important;font-size: 10px !important;letter-spacing: 0.12em !important;text-transform: uppercase !important;color: #9FA39B !important;}
 @media (max-width: 900px){.notion-root[data-enc-contact][data-enc-booked] .enc-ct__done > .notion-callout__content{grid-template-columns: minmax(0,1fr);}
 }
+.super-content.page__contact-us,.super-content.page__contact-us .notion-root{padding-bottom: 0 !important;}

@@ -547,7 +547,16 @@ h4.notion-heading {
    INK GROUNDS: a dark section redefines the --btn-* ground tokens (see the
    block at the end of this section for the names); page CSS does that per
    section, e.g. home.css for Who we are. Primary drops its lift, secondary
-   becomes a translucent paper wash, the focus ring turns paper at 50%.
+   becomes a translucent paper wash, the focus ring turns paper at 50%, and
+   disabled text lifts to #93978F to clear 4.5:1 on that ground (29d).
+
+   DISABLED (29c): a fourth state, not a tier. Primary takes the hairline fill
+   #E2E2DB with a #D9D9D2 ring and #575B55 text; secondary keeps paper with a
+   hairline ring and grey text; tertiary greys its label and mutes its badge to
+   #D9D9D2. Nothing fades — the design holds disabled text above 4.5:1 — and the
+   cursor is not-allowed. Notion cannot mark a callout disabled, so this state is
+   for the buttons a page script builds (post.js's "Delegate" where mainnet is
+   not ours yet).
 
    The callout icon is hidden globally via --callout-icon-display (section 02). */
 
@@ -571,6 +580,18 @@ h4.notion-heading {
   --btn-2-highlight: inset 0 1.5px 0 rgba(255, 255, 255, 1);
   --btn-2-press: inset 0 1px 2px rgba(0, 0, 0, 0.07); /* on ink the design keeps the highlight instead */
   --btn-3-text: #000;
+  /* disabled (29c): the primary drops to the hairline fill, the secondary keeps paper with a
+     hairline ring, the tertiary only greys its label and mutes its badge. No opacity anywhere —
+     the design keeps disabled text above 4.5:1 rather than fading it. */
+  --btn-1-dis-fill: #E2E2DB;
+  --btn-1-dis-ring: #D9D9D2;
+  --btn-1-dis-text: #575B55;
+  --btn-2-dis-fill: #FAFAF8;
+  --btn-2-dis-ring: #E2E2DB;
+  --btn-2-dis-text: #6B6F68;
+  --btn-3-dis-text: #6B6F68;
+  --btn-badge-dis-fill: #D9D9D2;
+  --btn-badge-dis-icon: #6B6F68;
 }
 
 /* The wrapper: shrinks to the link, draws nothing. */
@@ -770,6 +791,10 @@ h4.notion-heading {
    --btn-2-text: #FAFAF8;
    --btn-2-highlight: inset 0 1.5px 0 rgba(255, 255, 255, 0.26);
    --btn-3-text: #FAFAF8;
+   --btn-2-dis-fill: transparent;
+   --btn-2-dis-ring: rgba(250, 250, 248, 0.18);
+   --btn-2-dis-text: #93978F;
+   --btn-3-dis-text: #93978F;
 */
 
 

@@ -89,3 +89,4 @@
 .notion-root .enc-rules{grid-template-columns: minmax(0,1fr);}
 .notion-root .enc-face{grid-template-columns: minmax(0,1fr);}
 }
+.super-content.page__brand,.super-content.page__brand .notion-root{padding-bottom: 0 !important;}
