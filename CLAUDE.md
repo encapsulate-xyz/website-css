@@ -502,6 +502,11 @@ load order.
   must be deleted (this is why the covers looked broken until the panels were cleaned).
 - **Clipping:** `.notion-property` has `overflow:hidden`, a 4px gap and min-height 24px; card
   content is overflow hidden — descenders, figures and badges get cut; set `overflow: visible`.
+- **A descender can also be cut by the element that paints over it.** In a sticky pile each
+  pinned card shows only the offset the next one sticks at; anything below that line is covered
+  by the next card's own ground. /security's failover steps: the title's ink ends 122px in, and
+  the design's 112 offset painted over the tail of a g. Measure the ink (`Range.getClientRects()`
+  on the last text node) and give the offset ten pixels of clearance — the pile steps 132.
 - **A descender is cut whenever a tight `line-height` meets that clipping** (the g in "Weigh.",
   the y in "Aditya" — reported more than once). A line-height under 1 makes the line box shorter
   than the glyphs, and `.notion-property` and `.notion-collection-card__content` clip to it. The
