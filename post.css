@@ -258,16 +258,16 @@ body:has(.notion-root[data-enc-post]) .notion-header { display: none !important;
   box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.78), 0 1px 2px rgba(0, 0, 0, 0.10);
 }
 
-/* the button for a mainnet that is not ours yet: §07's geometry with §09's disabled emphasis —
-   paper fill, the pale #EDEDE7 ring, no lift — so it reads as inactive in the system's own terms
-   rather than as a second green */
+/* The button for a mainnet that is not ours yet.
+
+   §07 has three tiers and two states, and says in as many words that a state never uses opacity
+   ("no opacity, which would let the ground through"); it defines no disabled tier, and §09's
+   disabled row belongs to cards, not buttons. So this is the primary, verbatim — same fill, ring,
+   highlight and type — and what makes it inert is that it is not a link and says why on hover.
+   Nothing here repaints it. */
 .notion-root[data-enc-post] .enc-po__btn--wait {
   position: relative;
   cursor: default;
-  background: #FAFAF8;
-  border-color: #EDEDE7;
-  color: #6B6F68 !important;
-  box-shadow: none;
 }
 
 .notion-root[data-enc-post] .enc-po__tip {
