@@ -73,6 +73,28 @@
   }
   function copyOf(href) { return CONTENT[path(href)] || null; }
 
+  /* The preview is the page's own cover, captured — the design's `cover-thumbs`, in the repo
+     beside the CSS so a capture cannot drift from the page it shows. A page with no capture
+     falls back to the design's own ink tile carrying its name. */
+  var SHOTS = {
+    "/networks": "networks", "/services": "services", "/governance-record": "governance",
+    "/security": "security", "/guides": "guides", "/blog": "blog", "/brand": "brand-kit",
+    "/investments": "investments", "/contact-us": "contact"
+  };
+  var BASE = (function () {
+    var me = document.currentScript;
+    var src = me && me.src;
+    if (!src) {
+      var all = document.querySelectorAll('script[src*="/dist/navbar.js"]');
+      src = all.length ? all[all.length - 1].src : "";
+    }
+    return src ? src.replace(/\/dist\/navbar\.js.*$/, "/") : "";
+  })();
+  function shotOf(href) {
+    var key = SHOTS[path(href)];
+    return key && BASE ? BASE + "img/nav-covers/" + key + ".png" : null;
+  }
+
   /* the tertiary's arrow badge, the only icon the Button System allows beside a label */
   function badge() {
     var b = el("span", "enc-nav__badge");
@@ -161,6 +183,9 @@
       var name = a.getAttribute("data-enc-name") || a.textContent.trim();
       var href = a.getAttribute("href") || "#";
       var c = copyOf(href);
+      var shot = shotOf(href);
+      tile.style.backgroundImage = shot ? 'url("' + shot + '")' : "";
+      tile.setAttribute("data-enc-shot", shot ? "" : "none");
       tileName.textContent = name;
       lineName.textContent = name;
       lineDesc.textContent = c ? c[0] : "";

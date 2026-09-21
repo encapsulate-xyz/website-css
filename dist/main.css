@@ -38,7 +38,9 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
 .enc-nav__title{font-family: var(--type-body),system-ui,sans-serif;font-size: 14.5px;font-weight: 500;letter-spacing: -0.006em;color: #000000;}
 .enc-nav__desc{font-family: var(--type-body),system-ui,sans-serif;font-size: 12.5px;line-height: 1.4;color: #6B6F68;}
 .enc-nav__preview{display: flex;flex-direction: column;gap: 12px;min-width: 0;max-width: 520px;text-decoration: none !important;}
-.enc-nav__tile{display: block;position: relative;aspect-ratio: 16 / 10;border: 1px solid #E2E2DB;border-radius: 6px;background: #2A2C28;overflow: hidden;transition: border-color 0.16s ease;}
+.enc-nav__tile{display: block;position: relative;aspect-ratio: 16 / 10;border: 1px solid #E2E2DB;border-radius: 6px;background: #F2F2ED left center / cover no-repeat;overflow: hidden;transition: border-color 0.16s ease;}
+.enc-nav__tile[data-enc-shot="none"]{background: #2A2C28;}
+.enc-nav__tile:not([data-enc-shot="none"]) .enc-nav__tile-name{display: none;}
 .enc-nav__preview:hover .enc-nav__tile{border-color: #9B9B94;}
 .enc-nav__tile-name{position: absolute;left: 16px;top: 15px;right: 38%;font-family: var(--type-display),sans-serif;font-weight: 600;font-size: 16px;line-height: 1.1;letter-spacing: -0.022em;color: #FAFAF8;}
 .enc-nav__line{display: flex;align-items: baseline;justify-content: space-between;gap: 12px;}

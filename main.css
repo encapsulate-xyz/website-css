@@ -477,9 +477,20 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   aspect-ratio: 16 / 10;
   border: 1px solid #E2E2DB;
   border-radius: 6px;
-  background: #2A2C28;
+  /* the page's own cover, captured (navbar.js sets the file); the ink tile is the design's
+     fallback where there is no capture */
+  background: #F2F2ED left center / cover no-repeat;   /* the design's objectPosition */
   overflow: hidden;
   transition: border-color 0.16s ease;
+}
+
+.enc-nav__tile[data-enc-shot="none"] {
+  background: #2A2C28;
+}
+
+/* the name is printed on the tile only when there is no capture under it */
+.enc-nav__tile:not([data-enc-shot="none"]) .enc-nav__tile-name {
+  display: none;
 }.enc-nav__preview:hover .enc-nav__tile { border-color: #9B9B94; }.enc-nav__tile-name {
   position: absolute;
   left: 16px;
