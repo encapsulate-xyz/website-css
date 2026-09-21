@@ -679,7 +679,11 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
   (`.property-585f6e6c`) and drop the disc to 62%. The hover arrow badge only appears on cards that
   are links. **Not possible:** the handoff's per-tab counts and its live-on-both / not-launched
   sub-groups — Super ships only the active view's rows, so the other stage cannot be known.
-- **The control bar**: Super's view picker supplies the stage tabs (styled in network.css; the old
+- **The control bar** is the **second paper `#F2F2ED`** on a `#D9D9D2` ring with the full-white
+  inset highlight, 50px overall (the tabs are 48 inside its hairlines) — a recessed track, not a
+  panel the colour of the page; it was `#FAFAF8` until the handoff moved it on 2026-09-21. The
+  active tab is ink with a 2px ink underline, the rest `#575B55`. Super's view picker supplies
+  the stage tabs (styled in network.css; the old
   pill-and-Verdana picker rules were deleted). The **sort menu and the search field are built by
   network.js** — Notion has no block that is an input or a menu, so this is the allowed exception.
   Both work on the cards Super rendered: search hides non-matching cards, sort sets the grid's
