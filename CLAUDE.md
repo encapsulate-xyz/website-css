@@ -260,12 +260,19 @@ rest within a third of a screen settles onto it, nothing snaps under 701px or wi
 The catch rule is testable in Node (`scratchpad/snaptest.js`); the automation tab fires no scroll
 events.
 
-**Network Count (/networks, network.css + network.js).** Its kicker is written the way the
-homepage's testimonial label is (home.css §09): a **full-viewport sticky layer** whose padding
-places the text and whose negative margin gives the screen back, inset at the panels' own
-`--count-x`. A 16px strip pinned at `top: 26px` stays glued to the viewport until the band's last
-pixel and ends up alone over a sliver of ground — the structure is what makes the label leave with
-the band, and it replaced a fade that hid the symptom (2026-09-21). Band callout `3dce800a…8154931a…` right
+**Network Count (/networks, network.css + network.js).** The kicker is the design's fixed bar —
+**26px down, 40px in**, over both panels, taking no height. Two other constructions were tried on
+2026-09-21 and both were worse: at the panels' own `--count-x` the label lands in the figure's
+column and overprints it, and as a full-viewport sticky layer (the way the homepage's testimonial
+label is built, home.css §09) the band clamps it and it leaves a whole screen before the last
+figure. The design's bar is `position: fixed` over a snap scroller, which sticky cannot be inside a
+two-screen band, so what stands in for it is the strip **plus a collision rule**: `paintKicker()`
+measures every line of every panel against the 26–42 strip and marks the band `[data-enc-leaving]`
+while one crosses it, or once no line is on screen at all; network.css fades the label for exactly
+that window. Two traps in writing that rule — the band is a `.notion-callout` too (its own first
+child is the kicker, so it was measuring the label against itself), and a panel's stack fills the
+screen because its children are centred in it, so the stack's box says nothing about where the ink
+is. The logic is testable in Node: `scratchpad/kickertest.js`. Band callout `3dce800a…8154931a…` right
 after the cover: Text kicker, then a column list with one callout per panel (callout text "01 / 02",
 Heading 1 figure, Text label, Text note). Two sticky full-screen ink panels in a 2-screen band, each
 drawing the rail with its own pill active; fields are `svg/count-rings.svg` / `svg/count-dots.svg`
