@@ -1,3 +1,5 @@
+.notion-root[data-enc-invest]{padding-bottom: 0 !important;}
+.super-content:has(> .notion-root[data-enc-invest]),.super-content:has(.notion-root[data-enc-invest]){padding-bottom: 0 !important;}
 .notion-root[data-enc-invest] .enc-inv__band{width: 100vw;margin-inline: calc(50% - 50vw);padding: clamp(64px,7vw,96px) clamp(28px,6vw,96px);display: flex;flex-direction: column;gap: 40px;}
 .notion-root[data-enc-invest] [data-enc-inv="01"]{background: #2A2C28;color: #FAFAF8;}
 .notion-root[data-enc-invest] [data-enc-inv="02"]{background: #FAFAF8;}

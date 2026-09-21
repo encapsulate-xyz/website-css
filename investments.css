@@ -8,6 +8,17 @@
    The old page's rules (the one-column gallery, the alternating pastel cards, the pill sizing)
    went with the content they styled on 2026-09-21. The cover is main.css §14 + covers.js. */
 
+/* the last band runs into the footer: Super pads the article and the main below the content,
+   which on a full-bleed band reads as a strip of page ground above the footer (same as /security) */
+.notion-root[data-enc-invest] {
+  padding-bottom: 0 !important;
+}
+
+.super-content:has(> .notion-root[data-enc-invest]),
+.super-content:has(.notion-root[data-enc-invest]) {
+  padding-bottom: 0 !important;
+}
+
 /* ── the bands ── */
 .notion-root[data-enc-invest] .enc-inv__band {
   width: 100vw;
