@@ -19,7 +19,7 @@
    navigation, so this builds off a MutationObserver like the other page scripts. */
 (function () {
   var PATH = /^\/blog\/.+/;
-  var VERSION = "5";
+  var VERSION = "6";
 
   /* The words live on the /blog page, in a toggle called "Post page copy" — one place for all
      forty posts, since Super ships only the current page's blocks and a post has no block of its
@@ -114,9 +114,12 @@
     var a = c.querySelector("a[href]");
     var texts = Array.prototype.map.call(
       c.querySelectorAll(".notion-property__text"), textOf).filter(Boolean);
+    /* the pills are matched by value, not by order: the state, whether the chain is ours, and
+       whatever is left is the post's tag */
     var pills = Array.prototype.map.call(c.querySelectorAll(".notion-pill"), textOf);
-    var live = pills.filter(function (x) { return /^live$|not yet launched/i.test(x); })[0] || "";
-    var tag = pills.filter(function (x) { return x && x !== live; })[0] || "";
+    var live = pills.filter(function (x) { return /^live$|^not yet launched$/i.test(x); })[0] || "";
+    var mine = pills.filter(function (x) { return /^we run it$|^not ours$/i.test(x); })[0] || "";
+    var tag = pills.filter(function (x) { return x && x !== live && x !== mine; })[0] || "";
     /* the card's text properties are told apart by shape: a ticker is short and upper case, the
        lede is the long one, the chain is the short one that is left, and the author is a name */
     var chain = "", ticker = "", lede = "", author = "";
@@ -133,7 +136,7 @@
       glyph: img ? original(img.getAttribute("src")) : "",
       href: a ? a.getAttribute("href") : "",
       chain: chain, ticker: ticker, lede: lede, author: author,
-      live: /^live$/i.test(live)
+      live: /^live$/i.test(live), ours: /^we run it$/i.test(mine)
     };
   }
 
@@ -201,7 +204,9 @@
   function foot(next, post) {
     var f = el("div", "enc-po__foot");
     var left = el("div", "enc-po__footask");
-    var kind = !post || !post.chain ? "plain" : (post.live ? "live" : "soon");
+    /* the chain-specific asks are only honest where we run the chain: a post about a network we
+       are not on, or about a group of them, gets the standing ask */
+    var kind = (!post || !post.chain || !post.ours) ? "plain" : (post.live ? "live" : "soon");
     left.appendChild(el("span", "enc-po__foottitle", say("foot " + kind + " title", post)));
     left.appendChild(el("span", "enc-po__footsub", say("foot " + kind + " sub", post)));
     var btns = el("div", "enc-po__footbtns");
