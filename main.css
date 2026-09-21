@@ -1910,7 +1910,7 @@ h4.notion-heading {
   box-sizing: border-box !important;
   width: 100vw !important;
   max-width: none !important;
-  min-height: calc(100svh - var(--cover-top, 56px)) !important; /* one screen from where it starts (covers.js measures; the navbar's 56px without it) */
+  min-height: calc(100svh - var(--cover-top, 0px)) !important; /* one screen from where it starts — the bar lies over it now, so nothing is above it unless the banner is (covers.js measures) */
   margin: 0 calc(50% - 50vw) !important;
   padding: 0 !important;
   border: 0 !important;
@@ -1955,7 +1955,9 @@ body:has(.notion-root > .notion-callout:first-child > .notion-callout__content >
   max-width: none !important;
   min-height: inherit !important;
   margin: 0 !important;
-  padding: clamp(24px, 3.4vh, 40px) var(--cover-x) clamp(28px, 4vh, 48px) !important;
+  /* the top row clears the bar, which lies over the cover (§04): the design's own 96px from
+     the page's top edge, and the same breathing room below */
+  padding: calc(64px + clamp(24px, 3.4vh, 40px)) var(--cover-x) clamp(28px, 4vh, 48px) !important;
 }
 
 .notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content > * {
