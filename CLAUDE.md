@@ -286,8 +286,9 @@ drawing the rail with its own pill active; fields are `svg/count-rings.svg` / `s
 
 **The navigation bar (§04 + navbar.js, 2026-09-21, design *Navbar 4f Page*).** The bar is
 **Super's own navigation** — its items, its groups and its radix dropdown, keyboard included —
-drawn as 4f draws it: transparent with no rule at rest so it sits over a page cover, paper and a
-hairline while a menu is open (`nav.super-navbar[data-enc-nav-open]`, set by navbar.js), the
+drawn as 4f draws it: **it takes no space** — `margin-bottom: -64px`, `z-index: 50` — so the page
+starts at the top edge and the bar lies over the cover, transparent with no rule at rest and
+scrolling away with it; paper and a hairline while a menu is open (`nav.super-navbar[data-enc-nav-open]`, set by navbar.js), the
 wordmark at 140px, the items in one recessed pill group (second paper, hairline, 12px radius,
 44px items at 15/500), and Super's CTA drawn from §07's primary tokens.
 
@@ -298,6 +299,11 @@ the third, and a foot carrying the group's line and the page count. The lines an
 bar is on every page, so there is no block to read; the same exception as the footer's CTA and the
 drawer's copy. Add a page to the menu in Super and it appears; give it a CONTENT entry and it also
 carries its line.
+
+Because the bar lies over the page, **the cover's content starts 96px down** (§14 adds the bar's
+64 to its own top padding) and a page that opens on ink — a blog post, `parent-page__blog` —
+takes the bar's on-ink variants until a menu opens: labels `#C9C9C4`, the pill group on the .06
+wash, and Super's logo inverted to paper.
 
 Two traps: **Super's own rules carry two classes** (`.super-navbar.simple`), so every rule that
 fights one is anchored on `.super-root`; and **Super slides its dropdown viewport under the
