@@ -97,12 +97,23 @@
     var t = onStop(d, lastRest) && Math.abs(y - lastRest) < d.h ? nextStop(d, lastRest, dir) : landStop(d, y, dir);
     scrollToY(t === null ? landStop(d, y, dir) : t);
   }
-  /* The kicker is sticky over the whole band, so past the last panel it would sit alone over the
-     band's ground. Mark the band while that is true and network.css fades the label out. */
+  /* The kicker is a strip pinned to the viewport, so at the end of the band — where the last
+     panel rises out — the panel's own stack passes under it. Rather than guess at a scroll
+     position, measure: the label occupies 26px to 42px, so the moment a panel's content crosses
+     that line the label is in the way and fades. It comes back on the way up, and a band that is
+     not on screen is left alone. */
   function paintKicker() {
-    var d = deck(), box = document.getElementById(BAND);
-    if (!box || !d) return;
-    var leaving = window.scrollY > d.stops[d.stops.length - 1] + 8;
+    var box = document.getElementById(BAND);
+    if (!box) return;
+    var rect = box.getBoundingClientRect();
+    var leaving = false;
+    if (rect.bottom > 0 && rect.top < window.innerHeight) {
+      var stacks = box.querySelectorAll(".notion-callout > .notion-callout__content");
+      for (var i = 0; i < stacks.length; i++) {
+        var s = stacks[i].getBoundingClientRect();
+        if (s.height && s.bottom > 0 && s.top < 54) { leaving = true; break; }
+      }
+    }
     if (leaving === box.hasAttribute("data-enc-leaving")) return;
     if (leaving) box.setAttribute("data-enc-leaving", "");
     else box.removeAttribute("data-enc-leaving");

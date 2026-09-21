@@ -476,25 +476,21 @@ STYLING DROPDOWN MENU
   display: contents !important;
 }
 
-/* THE KICKER, written the way the homepage's testimonial label is (home.css §09): not a 16px
-   strip pinned to the viewport, but a FULL-VIEWPORT sticky layer whose padding places the text.
-   That is what makes it leave with the band — a strip at top: 26px stays glued to the viewport
-   until the band's last pixel and ends up alone over a sliver of ground (reported 2026-09-21),
-   where a 100dvh layer is carried up by the band's own bottom edge, exactly like the panels.
-   The layer keeps its full height — that is what clamps it to the band and makes it rise in step
-   with the last panel — and the screen it costs is given back by pulling the first panel up by
-   one (below). Its inset is the design's own 26px / 40px bar, NOT the panels' --count-x: at the
-   panels' inset the label lands in the same column as the index and the figure and overprints
-   them as a panel slides (reported 2026-09-21). */
+/* THE KICKER is the design's fixed bar — 26px down, 40px in, over both panels, taking no height.
+   Two things it must not be, both tried on 2026-09-21: at the panels' own --count-x it lands in
+   the figure's column and overprints it, and as a full-viewport sticky layer (the way the
+   homepage's testimonial label is built) it is clamped by the band and leaves a whole screen
+   before the last figure does. The design's bar is `position: fixed` over a snap scroller, which
+   is a thing sticky cannot be inside a 2-screen band; what stands in for it is this strip plus
+   the collision rule below. */
 #block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__content > p.notion-text {
   position: sticky !important;
-  top: 0 !important;
+  top: 26px !important;
   z-index: 3 !important;
   box-sizing: border-box !important;
-  height: 100vh !important;
-  height: 100dvh !important;
-  margin: 0 !important;
-  padding: 26px 40px 0 !important;   /* the design's bar: 26px down, 40px in — not the panel's inset */
+  height: 16px !important;
+  margin: 0 0 -16px !important;
+  padding: 0 0 0 40px !important;
   min-height: 0 !important;
   max-width: none !important;
   pointer-events: none !important;
@@ -506,13 +502,13 @@ STYLING DROPDOWN MENU
   color: #B4B4B4 !important;
 }
 
-/* The kicker's layer is a screen tall, so the first panel starts a screen higher and the band is
-   still the two screens the design asks for. A negative margin on the label instead would zero
-   its margin box, and sticky would then hold it on its top edge alone — the label outlived its
-   panel and overprinted the one rising past it. */
-#block-3dce800a51388154931ac3c9478a65b5 .notion-column:first-child .notion-callout {
-  margin-top: -100vh !important;
-  margin-top: -100dvh !important;
+/* THE COLLISION RULE. At the end of the band the last panel rises out, and its centred stack
+   passes under a strip that is pinned to the viewport — that overprint is what the band showed
+   before (reported 2026-09-21). network.js measures the showing panel's content against the
+   label's own 42px and marks the band; the label fades for exactly that window. */
+#block-3dce800a51388154931ac3c9478a65b5[data-enc-leaving] > .notion-callout__content > p.notion-text {
+  opacity: 0 !important;
+  transition: opacity 0.18s ease !important;
 }
 
 /* the panels */
