@@ -21,20 +21,34 @@
   var PATH = /^\/blog\/.+/;
   var VERSION = "1";
 
-  /* the rail's ask — site furniture repeated on every post, with no block of its own in Notion */
+  /* The words live on the /blog page, in a toggle called "Post page copy" — one place for all
+     forty posts, since Super ships only the current page's blocks and a post has no block of its
+     own for them. These are the fallback if that toggle is ever missing. */
   var CONTENT = {
-    askTitle: "Launching a chain?",
-    askSub: "We join at testnet and stay.",
-    askBtn: "Book a call",
-    call: "https://cal.com/aditya-encapsulate/30min",
-    footTitle: "Running a chain we should know about?",
-    footSub: "Tell us what it takes to run it. If we would run it, we will say so in a week.",
-    footAll: "All posts",
-    index: "/blog",
-    reading: "Reading",
-    next: "Next",
-    writtenBy: "Written by"
+    "rail title": "Launching a chain?",
+    "rail sub": "We join at testnet and stay.",
+    "rail button": "Book a call",
+    "foot live title": "Delegating on {chain}?",
+    "foot live sub": "Our address, commission and uptime",
+    "foot live button": "Delegate {ticker}",
+    "foot soon title": "Running the {chain} testnet?",
+    "foot soon sub": "Mainnet has not launched yet",
+    "foot soon button": "Join the testnet",
+    "foot plain title": "Running a chain we should know about?",
+    "foot plain sub": "Tell us what it takes to run it. If we would run it, we will say so in a week.",
+    "foot all": "All posts",
+    "reading": "Reading",
+    "next": "Next"
   };
+  var CALL = "https://cal.com/aditya-encapsulate/30min";
+  var INDEX = "/blog";
+  var NETWORKS = "/networks";
+
+  function say(key, post) {
+    var t = CONTENT[key] || "";
+    if (!post) return t;
+    return t.replace("{chain}", post.chain || "").replace("{ticker}", post.ticker || "");
+  }
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -72,17 +86,38 @@
         function read(c) {
           if (!c) return null;
           var img = c.querySelector("img");
-          var pill = c.querySelector(".notion-pill");
-          var date = c.querySelector(".date");
           var a = c.querySelector("a[href]");
+          var texts = Array.prototype.map.call(
+            c.querySelectorAll(".notion-property__text"), textOf).filter(Boolean);
+          var pills = Array.prototype.map.call(c.querySelectorAll(".notion-pill"), textOf);
+          var live = pills.filter(function (x) { return /^live$|not yet launched/i.test(x); })[0] || "";
+          var tag = pills.filter(function (x) { return x && x !== live; })[0] || "";
+          // the chain is the longer of the two short texts, the ticker the shorter — a ticker has
+          // no spaces and is upper case, which is what tells them apart when both are set
+          var chain = "", ticker = "";
+          texts.forEach(function (t) {
+            if (/^[A-Z0-9]{2,6}$/.test(t)) { if (!ticker) ticker = t; }
+            else if (t.length <= 24 && !chain) chain = t;
+          });
           return {
             title: textOf(c.querySelector(".notion-property__title")),
-            tag: textOf(pill),
-            date: textOf(date),
+            tag: tag,
+            date: textOf(c.querySelector(".date")),
             glyph: img ? original(img.getAttribute("src")) : "",
-            href: a ? a.getAttribute("href") : ""
+            href: a ? a.getAttribute("href") : "",
+            chain: chain, ticker: ticker, live: /^live$/i.test(live)
           };
         }
+        // the copy block: "key · value" lines in a toggle on the index page
+        Array.prototype.forEach.call(doc.querySelectorAll(".notion-toggle"), function (t) {
+          if (!/post page copy/i.test(textOf(t.querySelector(".notion-toggle__summary")))) return;
+          Array.prototype.forEach.call(t.querySelectorAll(".notion-toggle__content p, .notion-toggle__content .notion-text"), function (p) {
+            var line = textOf(p), i = line.indexOf("\u00b7");
+            if (i < 0) return;
+            var k = line.slice(0, i).trim(), v = line.slice(i + 1).trim();
+            if (k && v) CONTENT[k] = v;
+          });
+        });
         // the next card in the index, wrapping to the first so the last post still has one
         var nextCard = idx >= 0 ? (cards[idx + 1] || cards[0]) : null;
         if (nextCard === mine) nextCard = null;
@@ -97,7 +132,7 @@
     var r = el("aside", "enc-po__rail");
     var prog = el("div", "enc-po__prog");
     var row = el("div", "enc-po__progrow");
-    row.appendChild(el("span", "enc-po__proglabel", CONTENT.reading));
+    row.appendChild(el("span", "enc-po__proglabel"));
     row.appendChild(el("span", "enc-po__progpct", "0%"));
     var bar = el("div", "enc-po__bar");
     bar.setAttribute("role", "progressbar");
@@ -118,29 +153,48 @@
       });
       r.appendChild(nav);
     }
-
-    var ask = el("div", "enc-po__ask");
-    ask.appendChild(el("span", "enc-po__asktitle", CONTENT.askTitle));
-    ask.appendChild(el("span", "enc-po__asksub", CONTENT.askSub));
-    var b = el("a", "enc-po__btn enc-po__btn--primary", CONTENT.askBtn);
-    b.href = CONTENT.call;          // booking.js catches this href and opens the drawer
-    ask.appendChild(b);
-    r.appendChild(ask);
+    r.appendChild(el("div", "enc-po__ask"));
     return r;
   }
 
-  function foot(next) {
+  /* the rail's standing ask, once the index's copy has arrived */
+  function fillAsk(wrap) {
+    var ask = wrap.querySelector(".enc-po__ask");
+    if (!ask) return;
+    ask.textContent = "";
+    ask.appendChild(el("span", "enc-po__asktitle", say("rail title")));
+    ask.appendChild(el("span", "enc-po__asksub", say("rail sub")));
+    var b = el("a", "enc-po__btn enc-po__btn--primary", say("rail button"));
+    b.href = CALL;               // booking.js catches this href and opens the drawer
+    ask.appendChild(b);
+    var label = wrap.querySelector(".enc-po__proglabel");
+    if (label) label.textContent = say("reading");
+  }
+
+  /* the foot: the post's own ask when the database says which chain it is about, and the
+     standing one when it does not */
+  function foot(next, post) {
     var f = el("div", "enc-po__foot");
     var left = el("div", "enc-po__footask");
-    left.appendChild(el("span", "enc-po__foottitle", CONTENT.footTitle));
-    left.appendChild(el("span", "enc-po__footsub", CONTENT.footSub));
+    var kind = !post || !post.chain ? "plain" : (post.live ? "live" : "soon");
+    left.appendChild(el("span", "enc-po__foottitle", say("foot " + kind + " title", post)));
+    left.appendChild(el("span", "enc-po__footsub", say("foot " + kind + " sub", post)));
     var btns = el("div", "enc-po__footbtns");
-    var b1 = el("a", "enc-po__btn enc-po__btn--primary", CONTENT.askBtn);
-    b1.href = CONTENT.call;
-    var b2 = el("a", "enc-po__btn", CONTENT.footAll);
-    b2.href = CONTENT.index;
-    btns.appendChild(b1);
-    btns.appendChild(b2);
+    var primary;
+    if (kind === "plain") {
+      primary = el("a", "enc-po__btn enc-po__btn--primary", say("rail button"));
+      primary.href = CALL;
+    } else if (kind === "live" && post.ticker) {
+      primary = el("a", "enc-po__btn enc-po__btn--primary", say("foot live button", post));
+      primary.href = NETWORKS;
+    } else {
+      primary = el("a", "enc-po__btn enc-po__btn--primary", say("foot soon button", post));
+      primary.href = CALL;
+    }
+    var all = el("a", "enc-po__btn", say("foot all"));
+    all.href = INDEX;
+    btns.appendChild(primary);
+    btns.appendChild(all);
     left.appendChild(btns);
     f.appendChild(left);
 
@@ -156,7 +210,7 @@
       }
       a.appendChild(disc);
       var t = el("span", "enc-po__nextbody");
-      t.appendChild(el("span", "enc-po__nextk", CONTENT.next));
+      t.appendChild(el("span", "enc-po__nextk", say("next")));
       t.appendChild(el("span", "enc-po__nextt", next.title));
       a.appendChild(t);
       a.appendChild(el("span", "enc-po__nextarrow"));
@@ -265,7 +319,7 @@
     var colRight = el("div", "enc-po__col");
     colRight.appendChild(article);
     if (byline) { byline.classList.add("enc-po__byline"); colRight.appendChild(byline); }
-    colRight.appendChild(foot(null));
+    colRight.appendChild(foot(null, null));
     bodyWrap.appendChild(colRight);
     wrap.appendChild(head);
     wrap.appendChild(bodyWrap);
@@ -297,10 +351,9 @@
       if (meta) meta.textContent = bits.join(" · ");
       if (info.me && info.me.glyph) mark.src = info.me.glyph;
       else mark.remove();
-      if (info.next) {
-        var f = wrap.querySelector(".enc-po__foot");
-        if (f) f.replaceWith(foot(info.next));
-      }
+      fillAsk(wrap);
+      var f = wrap.querySelector(".enc-po__foot");
+      if (f) f.replaceWith(foot(info.next, info.me));
     });
   }
 
