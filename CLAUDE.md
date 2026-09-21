@@ -273,7 +273,12 @@ while one crosses it, or once no line is on screen at all; network.css fades the
 that window. Two traps in writing that rule — the band is a `.notion-callout` too (its own first
 child is the kicker, so it was measuring the label against itself), and a panel's stack fills the
 screen because its children are centred in it, so the stack's box says nothing about where the ink
-is. The logic is testable in Node: `scratchpad/kickertest.js`. Band callout `3dce800a…8154931a…` right
+is. The logic is testable in Node: `scratchpad/kickertest.js`.
+  **And the bug under all of it:** `network.js` declared `var BAND` twice in the one IIFE — the
+  count band at the top, the 5m marks band 140 lines down — so the second overwrote the first
+  before either was used, and both the count deck and the kicker were measuring the marks band.
+  The count band is `COUNT_BAND` now. A second `var` of the same name in the same scope is silent;
+  when a rule that measures correctly in the console does nothing on the page, check the id. Band callout `3dce800a…8154931a…` right
 after the cover: Text kicker, then a column list with one callout per panel (callout text "01 / 02",
 Heading 1 figure, Text label, Text note). Two sticky full-screen ink panels in a 2-screen band, each
 drawing the rail with its own pill active; fields are `svg/count-rings.svg` / `svg/count-dots.svg`
