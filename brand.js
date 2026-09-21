@@ -156,6 +156,7 @@
   // number. A view with Job switched off simply gives no line — the swatch still reads.
   function jobOf(card) {
     return Array.prototype.slice.call(card.querySelectorAll(".notion-collection-card__property"))
+      .filter(function (p) { return !p.classList.contains("notion-property__title"); })
       .map(function (p) { return p.textContent.trim(); })
       .filter(function (t) {
         return t && !/^#[0-9a-fA-F]{6}$/.test(t) && !/^(Brand|Pastel|Ground)$/i.test(t) &&
