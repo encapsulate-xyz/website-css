@@ -641,10 +641,19 @@ load order.
 Status, Tier, Order, Cover (glyph, uploaded via the file-upload API), Link. Two gallery views,
 Mainnet and Testnet, sorted by Order — so the first twelve cards are the god and high tiers.
 
-- **5g, the cards** (network.css "NETWORKS SET"): 128px card, the Cover's span turned into a 96px
-  pastel well pushed 26px past the bottom-right corner, glyph at 52%. Mainnet cards carry the rate
-  (`.property-597e3d69`) as a 22px figure; testnet cards carry the role (`.property-585f6e6c`) and
-  drop the disc to 62%. The hover arrow badge only appears on cards that are links.
+- **5g, "the mark bleeding"** (network.css "NETWORKS SET", redrawn 2026-09-21): a 168px card on
+  the second paper `#F2F2ED`, the Cover's span turned into a **176px** pastel disc pushed past the
+  **top-right** corner (right −44, top −52) with the glyph at 50% and nudged `translate(-12%, 14%)`,
+  and **the chain's name again at 96px running off the bottom-right** — one copy stroked 2.2px
+  `#9B9B94`, a second filled in the card's ground over it, so only the outline shows. Hover darkens
+  the ring to `#B9B9B1`, deepens the disc to the pastel's deeper tone (`--set-deep`:
+  `#B4D98F #E8CB72 #A3C3EC #EDB98A #E9A9C2`) and fills the hollow word `#9B9B94`. CSS cannot repeat
+  a text node, so `network.js` `hollow()` copies the rendered title into the two spans **on the
+  observer** — Super rebuilds every card when the picker swaps Mainnet for Testnet. Mainnet cards
+  carry the rate (`.property-597e3d69`) as a 22px figure; testnet cards carry the role
+  (`.property-585f6e6c`) and drop the disc to 62%. The hover arrow badge only appears on cards that
+  are links. **Not possible:** the handoff's per-tab counts and its live-on-both / not-launched
+  sub-groups — Super ships only the active view's rows, so the other stage cannot be known.
 - **The control bar**: Super's view picker supplies the stage tabs (styled in network.css; the old
   pill-and-Verdana picker rules were deleted). The **sort menu and the search field are built by
   network.js** — Notion has no block that is an input or a menu, so this is the allowed exception.
