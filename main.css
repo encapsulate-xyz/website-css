@@ -1903,12 +1903,12 @@ body:has(.notion-root > .notion-callout:first-child > .notion-callout__content >
   font-family: var(--type-body), system-ui, sans-serif;
 }
 
-/* the disc band */
+/* the disc band — no rule under it: the field runs into the body (the handoff dropped that
+   hairline; the band's own top edge is the only one the footer draws) */
 .enc-foot__band {
   position: relative;
   height: 118px;
   overflow: hidden;
-  border-bottom: 1px solid var(--foot-rule);
 }
 
 .enc-foot__disc {
