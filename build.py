@@ -83,6 +83,14 @@ if not sys.argv[1:]:
         js = open('brand.js', encoding='utf-8').read()
         open(os.path.join('dist', 'brand.js'), 'w', encoding='utf-8').write(js)
         print(f"{'brand.js':14} {len(js):>7,} -> dist/brand.js (copied)")
+    # the homepage's loop, regrounded to paper: copied as-is, like the JS
+    if os.path.exists(os.path.join('video', 'home-loop-paper.mp4')):
+        import shutil
+        os.makedirs(os.path.join('dist', 'video'), exist_ok=True)
+        shutil.copy(os.path.join('video', 'home-loop-paper.mp4'),
+                    os.path.join('dist', 'video', 'home-loop-paper.mp4'))
+        n = os.path.getsize(os.path.join('dist', 'video', 'home-loop-paper.mp4'))
+        print(f"{'home-loop.mp4':14} {n:>7,} -> dist/video/home-loop-paper.mp4 (copied)")
     if os.path.exists('post.js'):
         js = open('post.js', encoding='utf-8').read()
         open(os.path.join('dist', 'post.js'), 'w', encoding='utf-8').write(js)

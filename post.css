@@ -270,6 +270,12 @@ body:has(.notion-root[data-enc-post]) .notion-header { display: none !important;
   cursor: default;
 }
 
+/* it does not respond, because there is nothing to respond to — only the tip appears */
+.notion-root[data-enc-post] .enc-po__btn--wait:hover {
+  background: #99CC66;
+  border-color: #7CAE48;
+}
+
 .notion-root[data-enc-post] .enc-po__tip {
   position: absolute;
   left: 50%;
