@@ -274,6 +274,7 @@ body:has(.notion-root[data-enc-post]) .notion-header { display: none !important;
   text-wrap: pretty !important;
 }
 
+.notion-root[data-enc-post] .enc-po__article h1.enc-po__h2,
 .notion-root[data-enc-post] .enc-po__article h2.enc-po__h2 {
   margin: 18px 0 0 !important;
   scroll-margin-top: 96px;

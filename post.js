@@ -19,7 +19,7 @@
    navigation, so this builds off a MutationObserver like the other page scripts. */
 (function () {
   var PATH = /^\/blog\/.+/;
-  var VERSION = "4";
+  var VERSION = "5";
 
   /* The words live on the /blog page, in a toggle called "Post page copy" — one place for all
      forty posts, since Super ships only the current page's blocks and a post has no block of its
@@ -353,8 +353,10 @@
     head.appendChild(el("p", "enc-po__lede"));
 
     // ── the contents, from the post's own section headings
+    /* the older posts set their sections as Notion Heading 1, so a heading left in the body is a
+       section heading whatever its level — it reads and lists as one */
     var heads = [];
-    Array.prototype.forEach.call(article.querySelectorAll("h2"), function (h) {
+    Array.prototype.forEach.call(article.querySelectorAll("h1, h2"), function (h) {
       var t = textOf(h);
       if (!t) return;
       if (!h.id) h.id = "sec-" + slug(t);
