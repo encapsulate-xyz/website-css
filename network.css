@@ -476,15 +476,25 @@ STYLING DROPDOWN MENU
   display: contents !important;
 }
 
-/* the kicker: top left, over both panels; takes no height */
+/* THE KICKER, written the way the homepage's testimonial label is (home.css §09): not a 16px
+   strip pinned to the viewport, but a FULL-VIEWPORT sticky layer whose padding places the text.
+   That is what makes it leave with the band — a strip at top: 26px stays glued to the viewport
+   until the band's last pixel and ends up alone over a sliver of ground (reported 2026-09-21),
+   where a 100dvh layer is carried up by the band's own bottom edge, exactly like the panels.
+   It takes no height in the flow: the negative margin gives the screen back. Its inset is the
+   panels' own --count-x, so the label sits on the same left edge as the figure beneath it. */
 #block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__content > p.notion-text {
   position: sticky !important;
-  top: 26px !important;
+  top: 0 !important;
   z-index: 3 !important;
-  height: 16px !important;
-  margin: 0 0 -16px !important;
-  padding: 0 0 0 40px !important;
+  box-sizing: border-box !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  margin: 0 0 -100vh !important;
+  margin: 0 0 -100dvh !important;
+  padding: 26px var(--count-x) 0 !important;
   min-height: 0 !important;
+  max-width: none !important;
   pointer-events: none !important;
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 11px !important;
@@ -492,14 +502,6 @@ STYLING DROPDOWN MENU
   letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
   color: #B4B4B4 !important;
-}
-
-/* THE KICKER LEAVES WITH THE PANELS. Its sticky range is the whole band, so once the last panel
-   has been scrolled past, the label would stay pinned over the band's bare ground — dots and no
-   figure. network.js marks the band [data-enc-leaving] past the last stop, and the label fades. */
-#block-3dce800a51388154931ac3c9478a65b5[data-enc-leaving] > .notion-callout__content > p.notion-text {
-  opacity: 0 !important;
-  transition: opacity 0.18s ease !important;
 }
 
 /* the panels */
