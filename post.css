@@ -421,14 +421,23 @@ body:has(.notion-root[data-enc-post]) .notion-header { display: none !important;
   padding: 0 !important;
 }
 
+/* the byline is a quote block in Notion, so it is named here too, not left to the quote rules */
 .notion-root[data-enc-post] .enc-po__byline p,
-.notion-root[data-enc-post] .enc-po__byline .notion-text {
+.notion-root[data-enc-post] .enc-po__byline .notion-text,
+.notion-root[data-enc-post] .enc-po__byline .notion-quote,
+.notion-root[data-enc-post] .enc-po__byline .notion-quote * {
   margin: 0 !important;
   font-family: var(--type-body), system-ui, sans-serif !important;
   font-size: 15.5px !important;
   font-weight: 500 !important;
   color: #000000 !important;
   max-width: none !important;
+}
+
+.notion-root[data-enc-post] .enc-po__byline .notion-quote {
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
 }
 
 .notion-root[data-enc-post] .enc-po__byline img {
