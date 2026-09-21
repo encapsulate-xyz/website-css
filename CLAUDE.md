@@ -755,6 +755,19 @@ it: `/guides`, `/security`, `/investments`, and since 2026-09-21 `/networks`, `/
 `/contact-us` (`.super-content.page__<slug>` and its `.notion-root`). A page that ends in ordinary
 content keeps the padding — it is breathing space, and on the paper ground it reads as such.
 
+## TODO — a design file for code blocks (agreed 2026-09-21)
+
+§12's code block and quote came from `Blog Post Page.dc.html`, which defines them inline for its
+article; there is no "Code blocks" handoff of its own. What is live is that file verbatim — the
+second paper, a hairline ring, 4px, JetBrains Mono 13.5/1.7, the caption as a mono line under the
+block — with two things I decided rather than read: the copy control (built from §07's secondary
+tokens at its smallest) and the site-wide quote size, `clamp(22px, 2.4vw, 32px)` against the
+post's larger `clamp(25px, 2.9vw, 38px)`.
+
+The user is sending a handoff. When it arrives it should settle: the caption, the copy control,
+**inline `code` spans** (untouched so far), long-line overflow, and a code block on an ink band.
+It goes straight into §12 — main.css is the site head, so every page follows at once.
+
 ## Open items
 
 - /services, /investments, /brand, /blog, /guides were still served with site Head v55 at the last
