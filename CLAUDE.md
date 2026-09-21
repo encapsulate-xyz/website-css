@@ -321,12 +321,37 @@ a hidden viewport (`nav[data-enc-harvest]`), keeps the paths, and sets `[data-en
 group holding the page. A section link is its own destination, so `CONTENT` is keyed by the whole
 href — `/services#block-…` is not `/services`.
 
-**The third column is the page's own content where the design has it.** `EXTRA` in the handoff
-gives nine variants; the one built is **"All networks" → the set**: the god and high tier chains
-with their reward rates, read from /networks (the page that renders them) once per visit and
-cached, glyphs taken back to their `assets.super.so` originals. Everything else still shows the
-note. The rest of `EXTRA` — the four service tiles, the pillar/section lists, the guides, the posts
-and the portfolio — is not built yet.
+**The third column is read, not written.** The handoff's rule (Aditya, 2026-09-21): it lists the
+page's own sub-pages or section headings, *taken from the page as built — nothing typed in, so it
+cannot drift* — and only a page with neither carries the note. `navbar.js` `READ` has one reader
+per destination; the page is fetched **once per visit, only when a pointer rests on its row**
+(220ms — a sweep across the bar fetches nothing), parsed with DOMParser and kept. While it loads,
+or if it yields nothing, the note stands in.
+
+| Destination | Column | Read from |
+|---|---|---|
+| /networks | chains, 3 across | the Networks set, first twelve cards of the Order-sorted view, with rates |
+| /services | tiles, 2 across | no fetch — the group's own section links that have a panel capture |
+| /governance-record | list | the four pillars' questions (`Governance Mechanism` gallery) |
+| /security | list | the page's `h2` headings |
+| /guides | guides | Guides database, first four: chain mark (from the set on the same page), chain, wallet |
+| /blog | posts | first three cards: cover in miniature (the design's tint filter), title, first pill |
+| /brand | list | the rail's numbers — `01 · The marks` → *The marks* |
+| /investments | holds, 2 across | the Portfolio cards: logo, name, the four-digit year |
+| /contact-us | list | four blocks by id: the booking headline, "Or write to us", the fold, "Elsewhere" |
+| a section link (Dashboards, Playbooks, Bots, Monitoring, Institutional staking) | the note | — |
+
+The design gives **Dashboards** a "Live now" list; the built Services page names no live instance,
+so it keeps the note until the page does. /governance-record is 405KB gzipped (the record table),
+which is why nothing is fetched on a pass-through.
+
+**Two kinds of capture** in the middle column, as the design draws them: a page's cover
+(`img/nav-covers/`, `cover / left center`) and a tool's panel (`img/nav-panels/`, a true 2× capture
+drawn at **170% from its top-left**); the institutional dial is a panel file drawn as a cover. The
+tile holds an `<img>` and `[data-enc-shot="cover|panel"]` picks the draw. `window.encNav` exposes
+the build's version and its readers, so each can be run against its page from the console — the
+live page's older script otherwise races a newer one for the panels, which is why the end-to-end
+check was done in a clean `srcdoc` frame.
 
 **The Services group points at the page's own section headings** (`/services#block-<id>`):
 Dashboards → *Protocol Level Dashboard*, Bots → *Custom Discord Bots*, Monitoring → *Governance

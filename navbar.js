@@ -5,8 +5,13 @@
    SUPER OWNS THE MENU. The bar's items, its groups and every link in them are Super's navigation
    settings, and Super's own dropdown (radix) still opens and closes them, keyboard included —
    this file adds nothing to that and takes nothing away. What it adds is the 4f panel: the row
-   numbers, the line under each link, the preview of where the link goes, the note beside it and
-   the foot. main.css §04 does the bar itself.
+   numbers, the line under each link, a capture of where the link goes, the page's own content
+   beside it (or a note, where a page has none), and the foot. It also says which item is the
+   page you are on. main.css §04 does the bar itself.
+
+   THE THIRD COLUMN IS READ, NOT WRITTEN. The handoff's rule: it lists the page's own sub-pages or
+   section headings, taken from the page as built, so it cannot drift. Each destination's page is
+   fetched once per visit — only when a pointer rests on its row — parsed, and kept; see READ.
 
    THE WORDS. A description and a two-line note per page, and one line per group, are held in
    CONTENT below rather than in Notion — Super's navigation has a label and a URL and nothing
