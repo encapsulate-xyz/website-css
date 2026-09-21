@@ -1317,7 +1317,9 @@
 
 .notion-root[data-enc-security] .enc-sec__step {
   position: sticky;
-  top: calc(56px + var(--enc-i) * 112px);
+  /* 124, not the design's 112: at 112 the next card's ground paints over the tail of a g in
+     the title above it (the descender rule in CLAUDE.md, in its other form) */
+  top: calc(56px + var(--enc-i) * 124px);
   box-sizing: border-box;
   min-height: 56vh;
   margin: 0 !important;
@@ -1369,6 +1371,14 @@
 
 /* the step's own words: the toggle read as a heading over its paragraph, always open */
 .notion-root[data-enc-security] .enc-sec__step .notion-toggle__trigger { display: none !important; }
+
+/* the step's words are always open, so the summary is a heading and not a control */
+.notion-root[data-enc-security] .enc-sec__step .notion-toggle__summary,
+.notion-root[data-enc-security] [data-enc-sec="05"] .enc-sec__spine .notion-toggle__summary,
+.notion-root[data-enc-security] .enc-sec__costs > .notion-toggle .notion-toggle__summary {
+  pointer-events: none !important;
+  cursor: default !important;
+}
 
 .notion-root[data-enc-security] .enc-sec__step .notion-toggle__summary {
   margin: 0 0 14px !important;

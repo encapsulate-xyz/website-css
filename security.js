@@ -25,7 +25,7 @@
      built with, so a newer script unwraps an older build and does it again rather than finding
      bands already there and leaving them — which is what happens on a page still serving the
      previous release from its baked site head. */
-  var VERSION = "6";
+  var VERSION = "7";
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -699,7 +699,7 @@
     });
   }
 
-  var STACK_TOP = 56, STACK_STEP = 112;
+  var STACK_TOP = 56, STACK_STEP = 124;
   var syncing = null;   // a rebuild replaces the handler rather than stacking another one
 
   function step(band, i) {
