@@ -655,11 +655,11 @@ STYLING DROPDOWN MENU
 
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-gallery {
   display: grid !important;
-  /* The handoff's four columns, across the page's full width (the user's call, 2026-09-21 —
-     trying it against the alternative, which is the card held at the 276px the handoff builds
-     it at and the count left to follow the page: that is tag v217, `repeat(auto-fill,
-     minmax(262px, 1fr))`, if this reads too wide). */
-  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  /* The handoff draws four 276px cards on its own 1240px width. Four columns across this page's
+     1728px made each card 420 wide and the composition came apart — tried on the live page and
+     reverted, 2026-09-21 — so the track holds the card's width and the column count follows the
+     page: six here, four at the handoff's own width. */
+  grid-template-columns: repeat(auto-fill, minmax(262px, 1fr)) !important;
   gap: 16px !important;
   align-items: start !important;
   padding: 0 !important;
