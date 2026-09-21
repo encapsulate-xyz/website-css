@@ -83,6 +83,7 @@ User rules that stand on every task:
 | File | What | Loaded from |
 |---|---|---|
 | `main.css` | site-wide styles, no `#block-…` ids | site Head |
+| `navbar.js` | the bar's panels — design *Navbar 4f Page*; Super still owns the menu | site Head |
 | `booking.js` | the booking drawer — every "Book a call" on the site, except /contact-us | site Head |
 | `footer.js` | footer 44b, built inside Super's footer | site Head |
 | `covers.js` | inner-page cover graphics ("fields") | site Head |
@@ -137,7 +138,7 @@ Note: `git commit` also commits anything the user has staged — check `git stat
 
 | File | Paste into (replace everything) |
 |---|---|
-| `head/site.html` | Super → Settings → Code → Head (minima, main.css, footer.js, covers.js, fonts) |
+| `head/site.html` | Super → Settings → Code → Head (minima, main.css, navbar.js, footer.js, covers.js, fonts) |
 | `head/site-body.html` | Super → Settings → Code → Body (temporary "under reconstruction" banner) |
 | `head/home.html` | Homepage → Code → Head (CSS only — home.js is in the site head) |
 | `head/networks.html` | /networks → Code → Head (view-picker + network.css; network.js is in the site head) |
@@ -277,6 +278,33 @@ after the cover: Text kicker, then a column list with one callout per panel (cal
 Heading 1 figure, Text label, Text note). Two sticky full-screen ink panels in a 2-screen band, each
 drawing the rail with its own pill active; fields are `svg/count-rings.svg` / `svg/count-dots.svg`
 (referenced as `../svg/…` from dist, so they come from the same tag). The figures are Notion text.
+
+**The navigation bar (§04 + navbar.js, 2026-09-21, design *Navbar 4f Page*).** The bar is
+**Super's own navigation** — its items, its groups and its radix dropdown, keyboard included —
+drawn as 4f draws it: transparent with no rule at rest so it sits over a page cover, paper and a
+hairline while a menu is open (`nav.super-navbar[data-enc-nav-open]`, set by navbar.js), the
+wordmark at 140px, the items in one recessed pill group (second paper, hairline, 12px radius,
+44px items at 15/500), and Super's CTA drawn from §07's primary tokens.
+
+`navbar.js` fills each panel with the 4f columns: the numbered ledger of the group's own pages
+with a line under each, the destination in the middle column (a tile and its name), its note in
+the third, and a foot carrying the group's line and the page count. The lines and notes live in
+`CONTENT` **keyed by href** — Super's navigation holds a label and a URL and nothing else, and the
+bar is on every page, so there is no block to read; the same exception as the footer's CTA and the
+drawer's copy. Add a page to the menu in Super and it appears; give it a CONTENT entry and it also
+carries its line.
+
+Two traps: **Super's own rules carry two classes** (`.super-navbar.simple`), so every rule that
+fights one is anchored on `.super-root`; and **Super slides its dropdown viewport under the
+trigger with an inline transform**, which 4f's full-width panel cancels (`transform: none`).
+The design's preview is a capture of the page; what is built is the design's own fallback — an ink
+tile carrying the page's name — so no thumbnails are in the repo.
+
+**The reconstruction banner is on /services only** (§15b, 2026-09-21). Super's Body code is
+site-wide and there is no per-page Body box, so the banner is hidden by default and shown again by
+the class Super puts on its own wrapper: `body:has(.super-content.page__services) .enc-banner`.
+Add a page to that selector as it goes under reconstruction. Watch the rule's own `display` — the
+original `flex` sat after the `none` and kept it visible.
 
 **Footer 44b (§16 + footer.js).** Its own top edge carries the `rgba(250,250,248,.2)` paper
 hairline and **nothing sits under the disc field** — the field runs straight into the body
