@@ -19,7 +19,7 @@
    navigation, so this builds off a MutationObserver like the other page scripts. */
 (function () {
   var PATH = /^\/blog\/.+/;
-  var VERSION = "8";
+  var VERSION = "9";
 
   /* The words live on the /blog page, in a toggle called "Post page copy" — one place for all
      forty posts, since Super ships only the current page's blocks and a post has no block of its
@@ -155,7 +155,10 @@
         var out = [];
         Array.prototype.forEach.call(doc.querySelectorAll(".notion-collection-card"), function (c) {
           var img = c.querySelector("img");
-          var role = textOf(c.querySelector(".notion-property__select"));
+          /* a role can be a multi-select — Aditya's is "Founder" and "Validator" — and reading
+             the whole property ran them together, so the first pill is the role */
+          var role = textOf(c.querySelector(".notion-pill")) ||
+                     textOf(c.querySelector(".notion-property__select"));
           var texts = Array.prototype.map.call(
             c.querySelectorAll(".notion-property__text"), textOf).filter(Boolean);
           // a person's card: a name, a role, and a face
