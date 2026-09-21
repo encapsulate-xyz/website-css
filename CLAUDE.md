@@ -652,9 +652,12 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
   observer** — Super rebuilds every card when the picker swaps Mainnet for Testnet. The disc rules
   select `> span`, and the hollow is a direct span child too, so every one of them is written
   `> span:not(.enc-set__hollow)` — without that the name takes the disc's box (all `!important`)
-  and lands in the top-right corner. The grid is `auto-fill, minmax(262px, 1fr)`, not the handoff's
-  four fixed columns: the card is built for the 276px the handoff gives it, and four columns on a
-  1728px page made it 420 wide. Mainnet cards
+  and lands in the top-right corner. **The grid is on trial** (2026-09-21): it is the
+  handoff's `repeat(4, minmax(0, 1fr))` across the page's full width, which makes the card ~420px
+  on this 1728px page where the handoff builds it at 276 — **v218**. If that reads too wide, the
+  revert is one declaration, `repeat(auto-fill, minmax(262px, 1fr))`, which holds the card's width
+  and lets the count follow the page (six here, four at the handoff's own width) — that is **v217**.
+  Cut a new tag for the revert; never move either. Mainnet cards
   carry the rate (`.property-597e3d69`) as a 22px figure; testnet cards carry the role
   (`.property-585f6e6c`) and drop the disc to 62%. The hover arrow badge only appears on cards that
   are links. **Not possible:** the handoff's per-tab counts and its live-on-both / not-launched
