@@ -356,9 +356,9 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   display: none !important;
 }
 
-/* the caret on a group, stroked rather than the old ▾ glyph */.super-root nav.super-navbar .super-navbar__list {
-  padding-right: 10px !important;
-}.super-root nav.super-navbar .super-navbar__list::before {
+/* the caret on a group, stroked rather than the old ▾ glyph; the item keeps the design's 0 12px
+   and the caret carries its own 5px margin */
+.super-root nav.super-navbar .super-navbar__list::before {
   content: "" !important;
   position: static !important;
   width: 12px !important;
