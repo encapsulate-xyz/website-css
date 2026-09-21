@@ -94,9 +94,10 @@
           var tag = pills.filter(function (x) { return x && x !== live; })[0] || "";
           // the chain is the longer of the two short texts, the ticker the shorter — a ticker has
           // no spaces and is upper case, which is what tells them apart when both are set
-          var chain = "", ticker = "";
+          var chain = "", ticker = "", lede = "";
           texts.forEach(function (t) {
             if (/^[A-Z0-9]{2,6}$/.test(t)) { if (!ticker) ticker = t; }
+            else if (t.length > 60) { if (t.length > lede.length) lede = t; }
             else if (t.length <= 24 && !chain) chain = t;
           });
           return {
@@ -105,7 +106,7 @@
             date: textOf(c.querySelector(".date")),
             glyph: img ? original(img.getAttribute("src")) : "",
             href: a ? a.getAttribute("href") : "",
-            chain: chain, ticker: ticker, live: /^live$/i.test(live)
+            chain: chain, ticker: ticker, lede: lede, live: /^live$/i.test(live)
           };
         }
         // the copy block: "key · value" lines in a toggle on the index page
@@ -269,7 +270,7 @@
     // ── the post as Notion has it: the contents block, then the post itself
     var post = cols[cols.length - 1];
     var items = Array.prototype.slice.call(post.children);
-    var title = null, lede = null, banner = null, byline = null;
+    var title = null, banner = null, byline = null;
     var article = el("div", "enc-po__article");
     items.forEach(function (n) {
       if (!banner && n.classList.contains("notion-image")) { banner = n; return; }
@@ -279,9 +280,9 @@
       if (n.classList.contains("notion-heading__anchor")) return;
       article.appendChild(n);
     });
-    // the lede is the post's own opening paragraph, lifted out of the body
+    // the lede is the Lede property (set below, once the index answers); the post's own opening
+    // paragraph is the fallback, and it stays in the body until it is needed
     var first = article.querySelector("p.notion-text");
-    if (first && textOf(first).length > 60) lede = first;
 
     // ── the head
     var head = el("div", "enc-po__head");
@@ -291,7 +292,7 @@
     head.appendChild(mark);
     head.appendChild(el("p", "enc-po__meta"));
     if (title) { title.classList.add("enc-po__title"); head.appendChild(title); }
-    if (lede) { lede.classList.add("enc-po__lede"); head.appendChild(lede); }
+    head.appendChild(el("p", "enc-po__lede"));
 
     // ── the contents, from the post's own section headings
     var heads = [];
@@ -349,6 +350,15 @@
       if (info.me && info.me.date) bits.push(info.me.date);
       bits.push(mins + " min");
       if (meta) meta.textContent = bits.join(" · ");
+      var led = wrap.querySelector("p.enc-po__lede");
+      if (led) {
+        if (info.me && info.me.lede) led.textContent = info.me.lede;
+        else if (first && textOf(first).length > 60) {
+          // no Lede on the row: the post's own opening stands in, and leaves the body
+          first.classList.add("enc-po__lede");
+          led.replaceWith(first);
+        } else led.remove();
+      }
       if (info.me && info.me.glyph) mark.src = info.me.glyph;
       else mark.remove();
       fillAsk(wrap);
