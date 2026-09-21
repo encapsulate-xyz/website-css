@@ -1885,6 +1885,9 @@ body:has(.notion-root > .notion-callout:first-child > .notion-callout__content >
   border-radius: 0 !important;
   outline: 0 !important;
   box-shadow: none !important;
+  /* the design's own top edge: the band opens on a paper hairline, which is what separates it
+     from the ink of a page that ends in an ink band */
+  border-top: 1px solid var(--foot-rule) !important;
   background: #2A2C28 !important;
   color: #FAFAF8 !important;
   overflow: hidden !important;
@@ -2049,7 +2052,7 @@ body:has(.notion-root > .notion-callout:first-child > .notion-callout__content >
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 13px;
+  gap: 0;
 }
 
 .enc-foot__title {
@@ -2057,6 +2060,9 @@ body:has(.notion-root > .notion-callout:first-child > .notion-callout__content >
 }
 
 .enc-foot__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font-size: 14.5px;
   letter-spacing: normal;
   color: #C9C9C4 !important;
@@ -2089,6 +2095,9 @@ body:has(.notion-root > .notion-callout:first-child > .notion-callout__content >
 }
 
 .enc-foot__mini {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font-size: 10px;
   text-decoration: none !important;
   transition: color 0.16s ease;
