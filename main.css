@@ -279,7 +279,12 @@ body {
   color: #000000 !important;
 }
 
-/* the page you are on: paper and a ring inside the group */.super-root nav.super-navbar .super-navbar__item.active, .super-root nav.super-navbar .super-navbar__item[aria-current="page"] {
+/* while the groups are being read, Super's panel must not flash on screen */
+.super-root nav.super-navbar[data-enc-harvest] .super-navbar__viewport-wrapper {
+  display: none !important;
+}
+
+/* the page you are on: paper and a ring inside the group */.super-root nav.super-navbar .super-navbar__item.active, .super-root nav.super-navbar .super-navbar__item[aria-current="page"], .super-root nav.super-navbar .super-navbar__list[data-enc-current] {
   background: #FAFAF8 !important;
   border-color: #E2E2DB !important;
   box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;

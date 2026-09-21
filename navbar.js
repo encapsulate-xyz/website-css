@@ -46,6 +46,21 @@
     "/contact-us": ["The fastest route to us",
       "Book a call, or write.",
       "A founder answers within a working day."],
+    "/#block-3dbe800a513880af9fe0c4bc175e1975": ["Terms for $200k and above",
+      "For treasuries, funds and foundations delegating at size.",
+      "Terms, reporting and a named contact, agreed before the first delegation."],
+    "/services#block-4e58731953944b8d9382f545307b155b": ["Live chain state, per network",
+      "Live state for every chain we run, one page each.",
+      "Height, peers, missed blocks and upgrade status, read from our own nodes."],
+    "/services#block-3e2e800a5138816990a7da4eb111ef66": ["Ansible for node deploys",
+      "The Ansible we use to deploy and upgrade validators.",
+      "Open, versioned, and the same playbooks that run our own set."],
+    "/services#block-fcf0af8817cc465192c8a50c422084d1": ["Proposals into your own Discord",
+      "Governance proposals delivered into your Discord or Telegram.",
+      "Every new proposal, with the deadline and our vote once cast."],
+    "/services#block-58ad79b056524fd183121d379f8b08dd": ["Alerting and health checks",
+      "Alerting and health checks for nodes we run and nodes we don't.",
+      "Pages a person, not a dashboard."],
     "/eigen-layer": ["Restaking, as an operator",
       "What we run on EigenLayer.",
       "An operator in the staking group, with the same rules as every other set."]
@@ -71,7 +86,13 @@
     if (!href) return "";
     return href.split("#")[0].split("?")[0].replace(/\/$/, "") || "/";
   }
-  function copyOf(href) { return CONTENT[path(href)] || null; }
+  /* a link to a section is its own destination — "/services#block-…" is not "/services" — so the
+     whole href is tried before the page it sits on */
+  function copyOf(href) {
+    if (!href) return null;
+    var whole = href.split("?")[0];
+    return CONTENT[whole] || CONTENT[path(href)] || null;
+  }
 
   /* The preview is the page's own cover, captured — the design's `cover-thumbs`, in the repo
      beside the CSS so a capture cannot drift from the page it shows. A page with no capture
@@ -215,6 +236,77 @@
     return trigger ? trigger.textContent.trim() : "";
   }
 
+  /* WHICH ITEM IS THE PAGE YOU ARE ON. The design gives it paper, a ring and the highlight. Super
+     marks a plain link `.active`, but every item here is a group, and a group is current when the
+     page is one of its own links — which only Super knows. Its panels mount when they first open,
+     so the groups are harvested once, with the viewport hidden, rather than listing them here and
+     letting the code drift from the menu. */
+  var groups = {};          /* trigger id -> [paths] */
+  var harvested = false;
+
+  function triggersOf() {
+    return Array.prototype.slice.call(
+      document.querySelectorAll("nav.super-navbar .super-navbar__list"));
+  }
+  function panelFor(trigger) {
+    var key = (trigger.getAttribute("aria-controls") || "").replace(/^.*-content-/, "");
+    return key ? document.querySelector('[id$="-content-' + key + '"]') : null;
+  }
+  function record(trigger) {
+    var panel = panelFor(trigger);
+    if (!panel) return false;
+    var links = panel.querySelectorAll("a[href]");
+    if (!links.length) return false;
+    var paths = [];
+    Array.prototype.forEach.call(links, function (a) {
+      var href = a.getAttribute("href") || "";
+      if (href.charAt(0) === "/") paths.push(path(href));
+    });
+    groups[trigger.id || trigger.textContent.trim()] = paths;
+    return true;
+  }
+
+  function markCurrent() {
+    var here = path(location.pathname);
+    triggersOf().forEach(function (t) {
+      var paths = groups[t.id || t.textContent.trim()] || [];
+      var on = paths.some(function (p) {
+        return p === here || (p !== "/" && here.indexOf(p + "/") === 0);
+      });
+      if (on) t.setAttribute("data-enc-current", "");
+      else t.removeAttribute("data-enc-current");
+    });
+  }
+
+  /* Open each group once, behind a hidden viewport, so its links are known before a reader
+     touches the bar. Radix mounts a panel on pointerenter and keeps it mounted. */
+  function harvest() {
+    if (harvested) return;
+    var triggers = triggersOf();
+    if (!triggers.length) return;
+    harvested = true;
+    var bar = document.querySelector("nav.super-navbar");
+    if (bar) bar.setAttribute("data-enc-harvest", "");
+    var i = 0;
+    (function step() {
+      if (i >= triggers.length) {
+        if (bar) bar.removeAttribute("data-enc-harvest");
+        markCurrent();
+        return;
+      }
+      var t = triggers[i++];
+      if (record(t)) { step(); return; }
+      t.dispatchEvent(new PointerEvent("pointerenter", { bubbles: true }));
+      t.dispatchEvent(new MouseEvent("mouseenter", { bubbles: true }));
+      setTimeout(function () {
+        record(t);
+        t.dispatchEvent(new PointerEvent("pointerleave", { bubbles: true }));
+        t.dispatchEvent(new MouseEvent("mouseleave", { bubbles: true }));
+        setTimeout(step, 30);
+      }, 90);
+    })();
+  }
+
   /* the bar takes its paper ground only while a menu is open — over a cover it is otherwise
      transparent, which is the whole point of 4f */
   function paint() {
@@ -231,6 +323,9 @@
     Array.prototype.forEach.call(
       document.querySelectorAll(".super-navbar__list-content"), build);
     paint();
+    harvest();
+    Array.prototype.forEach.call(triggersOf(), record);
+    markCurrent();
   }
 
   var t = 0;
@@ -239,4 +334,5 @@
       attributeFilter: ["data-state", "aria-expanded"] });
   tick();
   window.addEventListener("load", tick);
+  window.addEventListener("popstate", markCurrent);
 })();
