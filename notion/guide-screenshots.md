@@ -5,21 +5,36 @@ guide mixes dashboards (wide) with wallet popups (small), so screenshots taken a
 a different size, zoom and crop every time. The fix is to decide the frame once and compose every
 capture inside it, rather than cropping whatever each app happened to give.
 
-## One ratio: 16:9 (2026-09-22)
+## Two frames: 16:9 for dashboards, the popup's own shape for wallets (2026-09-22)
 
-Every slide in a guide — dashboard or wallet — is **one file size, 2800 × 1576** (1400 × 788 CSS
-px at DPR 2), and the guide page's frame is **`aspect-ratio: 16 / 9`**. The frame cover-crops,
-so the frame and the file must share the ratio exactly. 25:12 (1400 × 672) was weighed and
-rejected: it shows 116px less of every screen, runs tall modals off the bottom more often, and
-leaves MetaMask 36px of ground; its only gain was a shorter frame. 788 is also what a 1440 laptop
-actually shows once the browser bars take their share, so a step looks like the reader's screen.
+**Dashboard steps** are **one file size, 2800 × 1576** (1400 × 788 CSS px at DPR 2), in a frame of
+**`aspect-ratio: 16 / 9`**. The frame cover-crops, so the frame and the file must share the ratio
+exactly. 25:12 (1400 × 672) was weighed and rejected: it shows 116px less of every screen, runs
+tall modals off the bottom more often; its only gain was a shorter frame. 788 is also what a 1440
+laptop actually shows once the browser bars take their share, so a step looks like the reader's
+screen.
+
+**Wallet steps** are **the popup alone, at its native size, DPR 2** — no ground, no canvas — shown
+**beside the type at 380px wide, `height: auto`, capped by the viewport's height** (width follows
+the cap, so the popup is never cropped). This is Claude Design's rule and it beats centring the
+popup on a 16:9 ground, which was the plan until 2026-09-22: in a ~640px frame a 1400 ground puts
+Keplr's 360px popup at 165px and its 14px type at about 6px; at 380 wide the same type is 14.8px.
+The wallet frame must **not** cover-crop — it takes the image's own ratio.
+
+| Wallet | Native | File | At 380 wide | 14px type becomes |
+|---|---|---|---|---|
+| Keplr | 360 × 540 | 720 × 1080 | 380 × 570 | 14.8px |
+| MetaMask | 400 × 600 | 800 × 1200 | 380 × 570 | 13.3px |
+
+Both are 2:3, so both render 380 × 570. A wallet's popup cannot be taller than **600px** — Chrome's
+cap — so a "native 345 × 662" is not a popup size; measure it (below).
 
 This replaces the 1528 × 800 (1.91:1) canvas of 2026-09-18.
 
 | | Value |
 |---|---|
-| File | **2800 × 1576** (1400 × 788 @2x) |
-| Ground (wallet steps) | `#F2F2ED` |
+| Dashboard file | **2800 × 1576** (1400 × 788 @2x) |
+| Wallet file | the popup at native size @2x, nothing around it |
 | Surface treatment | 12px radius, 1px `#D9D9D2` border, **no drop shadow** (the site reserves depth for controls; a surface takes a border) |
 | Annotation | `#99CC66`, 2.1px stroke — the same ring the hero and the drawer draw |
 | Redaction | one style for the whole set: same blur radius, or same solid box, never a mix |
@@ -84,27 +99,16 @@ step count is load-bearing — `guides.js` reads it off the last slide for the p
 Time. Only if the scroll is itself easy to miss (a modal that does not look scrollable) does it
 get the step's Watch note, still not a slide of its own.
 
-**Wallet steps — centred, never inset.** The popup sits at **100% of its captured size**, centred
-on a 1400 × 788 ground (exported @2x, 2800 × 1576): Keplr's 540 leaves 124px above and below,
-MetaMask's 600 leaves 94px. Reasons, in order: each step is one action and an inset makes
-the reader hunt for which surface to look at; the picker renders a guide's field at 520×272 and the
-cards are smaller again, so an inset popup's 14px type lands at about 5px; and centred is two
-numbers to get right every time, where an inset is four and drifts across a set.
+**Wallet steps — the popup alone.** Nothing around it: the page draws the surface (12px radius, 1px
+`#D9D9D2`) and sets it beside the step's text at 380px wide. Each step is one action; a popup inset
+into a dashboard makes the reader hunt for which surface to look at.
 
 Keep an inset in reserve for the single case where the dashboard state must be visible *while* the
-wallet is open (a gas figure or validator name the reader is being asked to check). If it appears,
-it appears at the same corner and scale every time.
+wallet is open (a gas figure or validator name the reader is being asked to check). That step is
+then a dashboard step (16:9), with the popup at the same corner and scale every time.
 
-**Never scale a popup to match another wallet's width.** Scaling Keplr's 360 up to MetaMask's 400
-renders its 14px type at 15.6px, so text size jumps between steps. Uniform apparent text size
-matters more than uniform popup width — and within one guide there is only one wallet anyway, so
-the sequence a reader actually sees is uniform by construction.
-
-**If the guides are ever seen side by side** (the gallery, the picker), give the popup a fixed card
-to sit in rather than scaling it: a **440 × 640** card, `#FAFAF8`, 12px radius, 1px `#D9D9D2`,
-centred on the ground, with the popup centred inside it — MetaMask leaves 20px of padding, Keplr
-40 and 50. The card is then what repeats across every guide, and the content inside is allowed to
-be its own size. Not needed while guides are read one at a time.
+**Within one guide there is one wallet**, so the 105% / 95% difference between Keplr and MetaMask
+at 380 wide is never seen side by side.
 
 **Vertical overflow:** do not grow the device to fit a long screen — scroll to the part the step is
 about. If a step genuinely needs the whole scroll, ⌘⇧P → *Capture full size screenshot*, and then
@@ -112,8 +116,7 @@ use that for **every** wallet step in that guide.
 
 ## Everything else that has to stay constant
 
-- **Apparent text size**, not zoom level: dashboard and wallet both sit at 100%, so the app's own
-  14px is 14px in every slide.
+- **Browser zoom 100%** for every capture. The page sets the display size, never the capture.
 - **The state**: same account, same network, same amounts, same light theme, bookmarks bar off,
   clean profile. Nothing breaks a set faster than the balance changing between step 3 and step 4.
 - **Step badges** drawn like the site's — `guides.js` reads the step count off the badge in each
