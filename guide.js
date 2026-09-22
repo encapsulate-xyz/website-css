@@ -22,7 +22,7 @@
   var CONTENT = {
     "crumb": "Encapsulate · Guides",
     "scroll": "Scroll ↓",
-    "screens": "{n} screens",
+    "screens": "{N} screens",
     "of": "of {n}",
     "watch": "Watch out",
     "done": "Done · {n} of {n}",
@@ -32,10 +32,17 @@
     "all": "All guides"
   };
   var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
+  /* the design spells the count where it reads as a sentence ("Eight screens") and keeps digits
+     where it is a counter ("of 8", "Done · 8 of 8"), so a copy line asks for {N} or {n} */
+  var SPELL = ["no", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+    "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
+    "Eighteen"];
 
   function say(key, vars) {
     var t = CONTENT[key] || "";
-    Object.keys(vars || {}).forEach(function (k) {
+    vars = vars || {};
+    if (vars.n != null && vars.N == null) vars.N = SPELL[vars.n] || vars.n;
+    Object.keys(vars).forEach(function (k) {
       t = t.split("{" + k + "}").join(vars[k] == null ? "" : vars[k]);
     });
     return t.trim();
