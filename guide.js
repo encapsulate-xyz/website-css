@@ -106,7 +106,9 @@
   function steps(root) {
     var out = [];
     Array.prototype.forEach.call(root.querySelectorAll(".notion-toggle"), function (t) {
-      var head = textOf(t.querySelector(".notion-toggle__summary")) || textOf(t.firstElementChild);
+      /* the summary carries Super's own ‣ trigger, so the label is the string inside it */
+      var head = textOf(t.querySelector(".notion-toggle__summary .notion-semantic-string")) ||
+        textOf(t.querySelector(".notion-toggle__summary")).replace(/^[^0-9A-Za-z]+/, "");
       var m = /^(\d+)\s*[·.\-]\s*(.+)$/.exec(head);
       if (!m) return;
       t.setAttribute("data-enc-source", "step");
