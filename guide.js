@@ -77,27 +77,33 @@
      The slides are the inline collection Super renders; a step's words are a toggle named
      "NN · Title". Both are marked [data-enc-source] so guide.css can hide the originals. */
   function slides(root) {
-    var out = [];
+    var best = [], bestCol = null;
     Array.prototype.forEach.call(root.querySelectorAll(".notion-collection"), function (col) {
-      var cards = col.querySelectorAll(".notion-collection-card");
-      if (!cards.length) return;
       var imgs = [];
-      Array.prototype.forEach.call(cards, function (c) {
+      Array.prototype.forEach.call(col.querySelectorAll(".notion-collection-card"), function (c) {
         var img = c.querySelector("img");
         if (img) imgs.push(original(img));
       });
-      if (imgs.length < 2) return;
-      // the gallery whose files are numbered is the slide deck; the other is "View More Guides"
-      var numbered = imgs.filter(function (u) { return /\/(\d+)\.[a-z0-9]+(\?|$)/i.test(u); });
-      if (numbered.length < 2) return;
-      col.setAttribute("data-enc-source", "slides");
-      numbered.sort(function (a, b) {
-        return num(a) - num(b);
+      /* the slide deck is the gallery whose files are numbered 1…n — one number each. The other
+         collection on a guide page is "View More Guides", whose covers repeat a number or carry
+         none, so distinct numbers are what tells them apart. */
+      var seen = {}, numbered = [];
+      imgs.forEach(function (u) {
+        var k = num(u);
+        if (!k || seen[k]) return;
+        seen[k] = 1;
+        numbered.push(u);
       });
-      out = numbered;
+      if (numbered.length > best.length) { best = numbered; bestCol = col; }
     });
-    return out;
+    if (bestCol && best.length > 1) {
+      bestCol.setAttribute("data-enc-source", "slides");
+      best.sort(function (a, b) { return num(a) - num(b); });
+      return best;
+    }
+    return [];
   }
+
   function num(url) {
     var m = /\/(\d+)\.[a-z0-9]+(\?|$)/i.exec(url);
     return m ? parseInt(m[1], 10) : 0;
