@@ -95,6 +95,13 @@ the sizes come from **the real window**, not from devices:
 4. **Shoot** each from its own DevTools: ⌘⇧P → Capture screenshot. Dashboard **2800 × 1576**,
    wallet **720 × 1576** — both at the screen's 2×, no browser chrome.
 
+**If a prompt opens in its own small window instead of the panel** (popup mode), size that window
+from its own console — right-click in it → Inspect → Console:
+`chrome.windows.getCurrent(w => chrome.windows.update(w.id, {width: w.width + 360 - innerWidth, height: w.height + 788 - innerHeight}))`
+Each new prompt opens at the wallet's default size again, so run it on every one (↑ in the
+console brings it back), check `360×788`, then ⌘⇧P → Capture screenshot. The toolbar popup cannot
+be sized this way — Chrome caps it at 600 tall.
+
 The window is ~1780 wide, so this needs a screen at least that wide (in "looks like" points). On a
 narrower one, shoot the dashboard with the `Guide dashboard` device and the side panel closed, and
 open the panel only for the wallet steps.
