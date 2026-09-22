@@ -79,29 +79,27 @@
   function slides(root) {
     var best = [], bestCol = null;
     Array.prototype.forEach.call(root.querySelectorAll(".notion-collection"), function (col) {
+      var cards = col.querySelectorAll(".notion-collection-card");
+      if (cards.length < 2) return;
+      /* two collections are on a guide page: the slide deck and "View More Guides". The deck's
+         cards are `no-click` — they carry no link — which is what tells them apart; the files
+         are not a test, since a guide's first slide is often named after the chain. */
+      var linked = col.querySelectorAll(".notion-collection-card a[href]").length;
+      if (linked) return;
       var imgs = [];
-      Array.prototype.forEach.call(col.querySelectorAll(".notion-collection-card"), function (c) {
+      Array.prototype.forEach.call(cards, function (c) {
         var img = c.querySelector("img");
         if (img) imgs.push(original(img));
       });
-      /* the slide deck is the gallery whose files are numbered 1…n — one number each. The other
-         collection on a guide page is "View More Guides", whose covers repeat a number or carry
-         none, so distinct numbers are what tells them apart. */
-      var seen = {}, numbered = [];
-      imgs.forEach(function (u) {
-        var k = num(u);
-        if (!k || seen[k]) return;
-        seen[k] = 1;
-        numbered.push(u);
-      });
-      if (numbered.length > best.length) { best = numbered; bestCol = col; }
+      if (imgs.length > best.length) { best = imgs; bestCol = col; }
     });
-    if (bestCol && best.length > 1) {
-      bestCol.setAttribute("data-enc-source", "slides");
+    if (!bestCol || best.length < 2) return [];
+    bestCol.setAttribute("data-enc-source", "slides");
+    // numbered files are the author's own order; anything unnumbered keeps where it was rendered
+    if (best.every(function (u) { return num(u); })) {
       best.sort(function (a, b) { return num(a) - num(b); });
-      return best;
     }
-    return [];
+    return best;
   }
 
   function num(url) {
