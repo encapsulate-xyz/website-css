@@ -1,4 +1,4 @@
-:root{--callout-border-radii: 20px !important;--callout-padding: 20px !important;--callout-icon-display: none !important;--column-spacing: 20px !important;--color-bg-default: #FAFAF8 !important;--color-bg-green: rgb(221,237,226) !important;--color-bg-blue: rgb(221,235,255) !important;--color-border-default: rgba(32,32,32,0.2) !important;--brand-green: #99CC66;--brand-green-tint: #BDDE9C;--brand-green-pale: #DCEEC7;--brand-ink: #000000;--hard-border: 1px solid black;--hard-shadow: 8px 8px 0px rgba(0,0,0,0.4);--hard-shadow-lg: 12px 12px 0px rgba(0,0,0,0.4);--hover-lift: -5px;--ease: cubic-bezier(0.4,0,0.2,1);--transition: transform 0.3s var(--ease),box-shadow 0.3s var(--ease),border-color 0.3s var(--ease),background-color 0.3s var(--ease);--radius-card: 20px;--radius-nav: 20px;--radius-sm: 4px;--nav-icon-size: 48px;--nav-icon-gutter: 70px;--nav-close-width: 60px;--nav-icon-fade: linear-gradient( to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100% );}
+:root{--callout-border-radii: 20px !important;--callout-padding: 20px !important;--callout-icon-display: none !important;--column-spacing: 20px !important;--color-bg-default: #FAFAF8 !important;--color-bg-green: rgb(221,237,226) !important;--color-bg-blue: rgb(221,235,255) !important;--color-border-default: rgba(32,32,32,0.2) !important;--brand-green: #99CC66;--brand-green-tint: #BDDE9C;--brand-green-pale: #DCEEC7;--brand-ink: #000000;--hard-border: 1px solid black;--hard-shadow: 8px 8px 0px rgba(0,0,0,0.4);--hard-shadow-lg: 12px 12px 0px rgba(0,0,0,0.4);--hover-lift: -5px;--ease: cubic-bezier(0.4,0,0.2,1);--transition: transform 0.3s var(--ease),box-shadow 0.3s var(--ease),border-color 0.3s var(--ease),background-color 0.3s var(--ease);--radius-card: 20px;--radius-sm: 4px;}
 .notion-header{display: none !important;}
 .super-content{margin-top: 0 !important;}
 body{overflow-x: hidden;}
@@ -95,21 +95,6 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
 @media (max-width: 1100px){.enc-nav__grid{grid-template-columns: 240px minmax(0,1fr);}
 .enc-nav__about{display: none;}
 }
-.super-navbar__menu .super-navigation-menu__item:is( [href="/networks"],[href="/services"],[href="/snapshots"],[href="/governance-record"],[href="/rewards-calculator"],[href="/blog"],[href="/team"],[href="/contact-us"] ){--nav-icon-guard: "";--nav-gutter: var(--nav-icon-gutter);--nav-svg-display: none;min-height: var(--nav-icon-size);}
-.super-navbar__menu .super-navigation-menu__item{position: relative;padding-left: var(--nav-gutter,8px);font-family: "Manrope",sans-serif;font-weight: bold;}
-.super-navbar__menu .super-navigation-menu__item > svg{display: var(--nav-svg-display,block);}
-.super-navbar__menu .super-navigation-menu__item::before{content: var(--nav-icon-guard,none);position: absolute;left: 8px;top: 50%;transform: translateY(-50%);width: var(--nav-icon-size);height: var(--nav-icon-size);background-image: var(--nav-icon-fade),var(--nav-icon);background-size: cover;}
-.super-navbar__menu .super-navigation-menu__item:hover::before{background-image: var(--nav-icon);}
-.super-navbar__menu .super-navigation-menu__item-title{margin: 0;}
-.super-navbar__menu .super-navigation-menu__item-content::after{content: var(--nav-desc,none);display: block;margin-top: 2px;font-family: "Manrope",sans-serif;font-size: 0.9em;font-weight: normal;color: #666;}
-.super-navbar__menu .super-navigation-menu__item[href="/networks"]{--nav-icon: url("../img/nav-networks.png");--nav-desc: "Choose a network and start earning rewards";}
-.super-navbar__menu .super-navigation-menu__item[href="/services"]{--nav-icon: url("../img/nav-services1.png");--nav-desc: "View our community services";}
-.super-navbar__menu .super-navigation-menu__item[href="/snapshots"]{--nav-icon: url("../img/nav-snapshots.png");--nav-desc: "Sync in hours with our snapshots";}
-.super-navbar__menu .super-navigation-menu__item[href="/governance-record"]{--nav-icon: url("../img/nav-governance.png");--nav-desc: "View our voting principles and history";}
-.super-navbar__menu .super-navigation-menu__item[href="/rewards-calculator"]{--nav-icon: url("../img/nav-calculator.png");--nav-desc: "Calculate staking rewards";}
-.super-navbar__menu .super-navigation-menu__item[href="/blog"]{--nav-icon: url("../img/nav-blog.png");--nav-desc: "Read things we are interested in";}
-.super-navbar__menu .super-navigation-menu__item[href="/team"]{--nav-icon: url("../img/nav-team.png");--nav-desc: "Curious to know us ?";}
-.super-navbar__menu .super-navigation-menu__item[href="/contact-us"]{--nav-icon: url("../img/nav-contact.png");--nav-desc: "Feel free to reach out to us";}
 :root{--type-display: "Outfit",system-ui,sans-serif;--type-body: "Hanken Grotesk",system-ui,sans-serif;--type-mono: "JetBrains Mono",ui-monospace,monospace;}
 h1.notion-heading,h2.notion-heading,h3.notion-heading,h4.notion-heading{margin-top: 0 !important;padding-top: 0 !important;font-family: var(--type-display) !important;color: inherit;text-wrap: balance !important;}
 h1.notion-heading{font-weight: 600 !important;font-size: clamp(40px,6.2vw,92px) !important;line-height: 0.96 !important;--h1-line-height: 0.96 !important;letter-spacing: -0.046em !important;max-width: 15ch !important;margin-bottom: 20px !important;}

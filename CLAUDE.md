@@ -161,7 +161,8 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
 
 - **minima.min.css is required** — Super does not load its theme itself on this site.
 - Fonts rendered: Inter (Super, /fonts), Outfit, Hanken Grotesk, JetBrains Mono, Architects
-  Daughter, Manrope 700 (menu). Arial Black, Georgia, Verdana, Monaco are system fonts.
+  Daughter. Manrope went with the old slide-out menu (2026-09-22). Arial Black, Georgia, Verdana,
+  Monaco are system fonts.
 - Headings use `sans-serif` where "Archivo" was once asked for but never loaded — do not add an
   Archivo link.
 - `@import` is stripped from Super's Custom CSS box; use `<link>` in a Head.
@@ -195,7 +196,7 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
 
 | § | Section |
 |---|---|
-| 01–05 | fonts, tokens (`--color-bg-default` = #FFFEFC ground), layout, navbar, slide-out menu |
+| 01–04 | fonts, tokens (`--color-bg-default` = #FAFAF8 ground), layout, the 4f navbar (§04 + navbar.js). The old slide-out menu section (§05) and its per-page icons were removed on 2026-09-22; under 1220px the hamburger and menu are Super's own until a mobile bar is designed |
 | 06 | Type System: Notion Heading 1–4 → h1–h4, one to one (h1 clamp(40,6.2vw,92) … h4). No bold/underline on headings |
 | 07 | Button System |
 | 08 | databases and properties |
@@ -551,7 +552,7 @@ can never drift from the CSS that positions it.
 | Section fields and drawings | `svg/stat-field-*.svg`, `svg/circle-online.svg`, `svg/fork-arcs-*.svg`, `svg/5k-fan-and-rings.svg`, `svg/5o-twin-fans.svg`, `svg/9c-inverted-horizons.svg`, `svg/rail-dots.svg`, `svg/team-crew.svg` |
 | Cover fields (/networks count) | `svg/count-rings.svg`, `svg/count-dots.svg` |
 | Brand | `svg/wordmark-reversed.svg` (footer), `svg/mark-a.svg` (/brand cover) |
-| Slide-out menu icons | `img/nav-*.png` — 8 icons, resized to 144px from the 500px originals (they render at 48px) |
+| Navbar captures | `img/nav-covers/` (the nine page covers) and `img/nav-panels/` (the four tools and the institutional dial), the design's own files |
 
 **Notion — anything that is content.** None of it is in the repo; Super stores and serves it.
 
