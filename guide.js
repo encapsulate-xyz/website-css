@@ -80,63 +80,49 @@
     return b;
   }
 
-  /* ── what the guide page itself holds ─────────────────────────────────────────────────────
-     The slides are the inline collection Super renders; a step's words are a toggle named
-     "NN · Title". Both are marked [data-enc-source] so guide.css can hide the originals. */
-  function slides(root) {
-    var best = [], bestCol = null;
-    Array.prototype.forEach.call(root.querySelectorAll(".notion-collection"), function (col) {
-      var cards = col.querySelectorAll(".notion-collection-card");
-      if (cards.length < 2) return;
-      /* two collections are on a guide page: the slide deck and "View More Guides". The deck's
-         cards are `no-click` — they carry no link — which is what tells them apart; the files
-         are not a test, since a guide's first slide is often named after the chain. */
-      var linked = col.querySelectorAll(".notion-collection-card a[href]").length;
-      if (linked) return;
-      var imgs = [];
-      Array.prototype.forEach.call(cards, function (c) {
-        var img = c.querySelector("img");
-        if (img) imgs.push(original(img));
-      });
-      if (imgs.length > best.length) { best = imgs; bestCol = col; }
+  /* ── the steps: the guide's own slide database ───────────────────────────────────────────
+     One row per step, so a step's capture and its words are the same record: Name ("01 · Unlock
+     Keplr"), Step, Body, Watch, Surface and Link, with the capture as the row's Cover. They must
+     be shown on that gallery's view — the API cannot switch a view's properties on — and a guide
+     whose slides carry none of them is simply left as it was.
+
+     The deck is the collection whose cards are NOT links: the other one on a guide page is
+     "View More Guides". */
+  function deck(root) {
+    var found = [], col = null;
+    Array.prototype.forEach.call(root.querySelectorAll(".notion-collection"), function (c) {
+      var cards = c.querySelectorAll(".notion-collection-card");
+      if (cards.length < 2 || c.querySelectorAll(".notion-collection-card a[href]").length) return;
+      if (!col || cards.length > col.querySelectorAll(".notion-collection-card").length) col = c;
     });
-    if (!bestCol || best.length < 2) return [];
-    bestCol.setAttribute("data-enc-source", "slides");
-    // numbered files are the author's own order; anything unnumbered keeps where it was rendered
-    if (best.every(function (u) { return num(u); })) {
-      best.sort(function (a, b) { return num(a) - num(b); });
-    }
-    return best;
-  }
-
-  function num(url) {
-    var m = /\/(\d+)\.[a-z0-9]+(\?|$)/i.exec(url);
-    return m ? parseInt(m[1], 10) : 0;
-  }
-
-  function steps(root) {
-    var out = [];
-    Array.prototype.forEach.call(root.querySelectorAll(".notion-toggle"), function (t) {
-      /* the summary carries Super's own ‣ trigger, so the label is the string inside it */
-      var head = textOf(t.querySelector(".notion-toggle__summary .notion-semantic-string")) ||
-        textOf(t.querySelector(".notion-toggle__summary")).replace(/^[^0-9A-Za-z]+/, "");
-      var m = /^(\d+)\s*[·.\-]\s*(.+)$/.exec(head);
-      if (!m) return;
-      t.setAttribute("data-enc-source", "step");
-      var body = t.querySelectorAll(".notion-toggle__content p, .notion-toggle__content .notion-text");
-      var link = t.querySelector(".notion-toggle__content a[href]");
-      var note = t.querySelector(".notion-toggle__content .notion-callout");
-      out.push({
-        n: parseInt(m[1], 10),
-        title: m[2],
-        body: textOf(body[0]),
-        surface: textOf(link),
-        href: link ? link.getAttribute("href") : "",
-        watch: note ? textOf(note.querySelector(".notion-callout__content") || note) : ""
+    if (!col) return [];
+    Array.prototype.forEach.call(col.querySelectorAll(".notion-collection-card"), function (card) {
+      var name = textOf(card.querySelector(".notion-property__title"));
+      var m = /^(\d+)\s*[·.\-]?\s*(.*)$/.exec(name);
+      var n = m ? parseInt(m[1], 10) : parseInt(textOf(card.querySelector(".notion-property__number")), 10);
+      if (!n) return;                                   // the cover row carries no step
+      /* the two text properties are Body and Watch; the longer one is the body. Reading them by
+         position would break the moment a step has no note, and Super's property hashes differ
+         from one guide's database to the next. */
+      var texts = Array.prototype.map.call(
+        card.querySelectorAll(".notion-property__text"), textOf).filter(Boolean);
+      texts.sort(function (a, b) { return b.length - a.length; });
+      var img = card.querySelector("img");
+      var url = card.querySelector(".notion-property__url a[href], .notion-property a[href^='http']");
+      found.push({
+        n: n,
+        title: (m && m[2]) || name,
+        body: texts[0] || "",
+        watch: texts[1] || "",
+        surface: textOf(card.querySelector(".notion-property__select .notion-pill")) ||
+                 textOf(card.querySelector(".notion-property__select")),
+        href: url ? url.getAttribute("href") : "",
+        shot: img ? original(img) : ""
       });
     });
-    out.sort(function (a, b) { return a.n - b.n; });
-    return out;
+    if (found.length) col.setAttribute("data-enc-source", "slides");
+    found.sort(function (a, b) { return a.n - b.n; });
+    return found;
   }
 
   /* ── the facts that live on /guides ───────────────────────────────────────────────────────
@@ -384,8 +370,7 @@
   }
 
   function build(root) {
-    var shots = slides(root);
-    var list = steps(root);
+    var list = deck(root);
     if (!list.length) return;
 
     /* claim the page before the fetch: the observer fires again while the index is loading, and
@@ -394,8 +379,6 @@
     return fromIndex().then(function (info) {
       var me = info.me || { name: textOf(document.querySelector(".notion-header__title")) };
       var wrap = el("div", "enc-gd");
-      list.forEach(function (st, i) { st.shot = shots[i] || shots[shots.length - 1] || ""; });
-
       wrap.appendChild(head(me, info.marks || {}, list.length));
       list.forEach(function (st, i) { wrap.appendChild(stepBand(st, i, list.length)); });
       wrap.appendChild(close(me, info.next, list.length));
@@ -439,6 +422,6 @@
   new MutationObserver(function () { tick(); })
     .observe(document.documentElement, { childList: true, subtree: true });
 
-  window.encGuide = { version: VERSION, progress: progress, steps: steps, slides: slides };
+  window.encGuide = { version: VERSION, progress: progress, deck: deck };
   if (typeof module !== "undefined" && module.exports) module.exports = { progress: progress };
 })();
