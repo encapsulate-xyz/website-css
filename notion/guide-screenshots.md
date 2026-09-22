@@ -73,9 +73,13 @@ Measured 2026-09-22: **Keplr and MetaMask both `360×944`** — the side panel, 
 can move between popup and side panel with an update — re-run the one-liner when starting a new
 guide set; a height over 600 means side panel.
 
-### Opening a popup as a page
+### Opening the side panel as a page
 
-`chrome-extension://<id>/popup.html`, with the wallet device selected.
+Open **the side panel's own file**, not `popup.html`, with `Wallet panel` selected. They are
+different layouts: MetaMask's `popup.html` holds itself at 400 wide whatever the device, and only
+its side-panel file lays out at 360 (measured 2026-09-22). The file name is
+`side_panel.default_path` in `chrome-extension://<id>/manifest.json` (`action.default_popup` is
+the popup's).
 
 | Wallet | ID |
 |---|---|
@@ -83,12 +87,12 @@ guide set; a height over 600 means side panel.
 | Keplr | `dmkamcknogkgcdfhhbddcghachkejeap` |
 
 Find any other extension's id at `chrome://extensions` with Developer mode on, or from the URL of
-its **Details** page; the right file name is `action.default_popup` in
-`chrome-extension://<id>/manifest.json`. Flask/beta/unpacked builds have different ids.
+its **Details** page. Flask/beta/unpacked builds have different ids.
 
-Some wallets detect being opened in a tab and redirect to their expanded view. When that happens,
-shoot from **Inspect popup** instead — its DevTools window captures the popup exactly, at DPR 2,
-with no chrome.
+**Check the page before shooting:** run the one-liner in it — it must read `360×788`. A wider
+width means the popup layout has loaded. If a wallet redirects a tab to its expanded view, shoot
+from the side panel's own DevTools (right-click in the panel → Inspect → ⌘⇧P) — that captures
+at the screen's 2×, not 3×, so do the whole guide that way.
 
 ## Composing
 
