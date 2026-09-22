@@ -313,11 +313,22 @@
     paint();
   }
 
+  /* the guide pages' own words live in a toggle on this page ("Guide page copy", read by
+     guide.js with one fetch). It is a source, not content of the index, so it is marked and
+     guides.css hides it — the same as the blog index's "Post page copy". */
+  function hideCopy() {
+    Array.prototype.forEach.call(document.querySelectorAll(".notion-toggle"), function (tg) {
+      var head = (tg.querySelector(".notion-toggle__summary") || {}).textContent || "";
+      if (/guide page copy/i.test(head)) tg.setAttribute("data-enc-source", "copy");
+    });
+  }
+
   var t = 0;
-  new MutationObserver(function () { clearTimeout(t); t = setTimeout(build, 120); })
+  new MutationObserver(function () { clearTimeout(t); hideCopy(); t = setTimeout(build, 120); })
     .observe(document.body, { childList: true, subtree: true });
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
-  else build();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function () { hideCopy(); build(); });
+  } else { hideCopy(); build(); }
   window.addEventListener("load", build);
 })();
 
