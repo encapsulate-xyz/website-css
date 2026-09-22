@@ -77,6 +77,13 @@ with no chrome.
 step is the same 2800 × 1576 file, so text is the same size on every step. If a modal or list runs
 past 788, scroll to the part the step is about; never make the device taller.
 
+**A scroll is not a step.** When the button a step is about sits below the fold, capture the
+screen already scrolled so the button is in the frame, and put the scroll in the step's text
+("Scroll down to Delegate and click it"). A step is one action the reader can get wrong, and the
+step count is load-bearing — `guides.js` reads it off the last slide for the picker's Step and
+Time. Only if the scroll is itself easy to miss (a modal that does not look scrollable) does it
+get the step's Watch note, still not a slide of its own.
+
 **Wallet steps — centred, never inset.** The popup sits at **100% of its captured size**, centred
 on a 1400 × 788 ground (exported @2x, 2800 × 1576): Keplr's 540 leaves 124px above and below,
 MetaMask's 600 leaves 94px. Reasons, in order: each step is one action and an inset makes
