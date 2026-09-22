@@ -36,7 +36,7 @@ This replaces the 1528 × 800 (1.91:1) canvas of 2026-09-18.
 | Dashboard file | **2800 × 1576** (1400 × 788 @2x) |
 | Wallet file | **720 × 1576** (360 × 788 @2x), nothing around it |
 | Surface treatment | 12px radius, 1px `#D9D9D2` border, **no drop shadow** (the site reserves depth for controls; a surface takes a border) |
-| Annotation | one ring: 2px `#FAFAF8` gap, 3px `#99CC66`, 1px `#3F6B27` edge, the control's own radius — drawn in the page before capture (see *Annotating*) |
+| Annotation | drawn by the page over a clean capture — ring, chip, .18 dim — from one measured box per slide (see *Annotating*) |
 | Redaction | one style for the whole set: same blur radius, or same solid box, never a mix |
 
 ## Chrome custom devices
@@ -139,29 +139,29 @@ use that for **every** wallet step in that guide.
 
 ## Annotating (agreed 2026-09-22)
 
-**One ring per slide, on the one control the step's text names** — Approve, Delegate, Stake. No
-arrows, numbers, words or dimming in the image: the words are the step's text in Notion, the number
-is on the page. A slide with nothing to click gets no ring, or a ring on the one thing to check.
+**The capture stays clean; the page draws the annotation.** Claude Design's form: over the image,
+a ring on the one control the step names, a paper chip with its name in mono (4px radius), and
+the rest of the capture dimmed `rgba(0,0,0,.18)` by a mask. The chip sits above the ring, below it
+when the ring is in the top 12%, and left of the ring's right edge when the ring is in the right
+30%. No step number on the chip — it is on the page twice already. The chip's words are content,
+so they live in Notion with the slide, never in the image.
 
-**Draw it in the page, then capture** — no editing app, so the ring is at the capture's own scale
-and identical on every slide. Pick the control with DevTools' **inspect arrow** (the line itself,
-not a `::after` under it), then in the console:
+A ring baked into the capture (drawn in the page before shooting) was tried and dropped: it cannot
+be restyled without reshooting, cannot be dimmed around, and a chip in the image is text in a
+picture.
+
+**Each slide stores one box, `[x, y, w, h, r]`, in the capture's CSS px** (the 360 × 788 or
+1400 × 788 space; the file is 2× that). **Measure it, never estimate it**: pick the control with
+DevTools' inspect arrow (the element's own line, not a `::after`), then run this saved Snippet
+(Sources → Snippets, ⌘↵) — it prints the box and copies it:
 
 ```js
-(b => { const r = b.getBoundingClientRect(), rad = [b, ...b.querySelectorAll("*")].map(e => parseFloat(getComputedStyle(e).borderRadius) || 0).find(x => x > 0) || 0, m = document.createElement("div"); document.getElementById("enc-mark")?.remove(); m.id = "enc-mark"; Object.assign(m.style, {position: "fixed", left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px", borderRadius: rad + "px", boxShadow: "0 0 0 2px #FAFAF8, 0 0 0 5px #99CC66, 0 0 0 6px #3F6B27", pointerEvents: "none", zIndex: 2147483647}); document.body.append(m); })($0)
+(b => { const r = b.getBoundingClientRect(), rad = [b, ...b.querySelectorAll("*")].map(e => parseFloat(getComputedStyle(e).borderRadius) || 0).find(x => x > 0) || 0, box = JSON.stringify([r.left, r.top, r.width, r.height, rad].map(Math.round)); copy(box); console.log(box); })($0)
 ```
 
-Saved as a DevTools **Snippet** (Sources → Snippets, ⌘↵ to run) it needs no editing: pick, run,
-capture. Running it again replaces the last ring; remove it with
-`document.getElementById("enc-mark").remove()`, and redraw after any resize (it does not follow the
-button). Where a label is easier than picking, replace `($0)` with
-`([...document.querySelectorAll("button, [role=button], a")].find(e => e.textContent.trim() === "Approve"))`.
-
-Why this shape: the ring is a **separate fixed layer**, not a shadow on the button — Keplr's
-buttons sit in boxes that clip anything past their edge, which cut a shadow down to a strip along
-the top (2026-09-22). It takes **the first rounded corner** in the picked element — picking the
-wrapper instead of the button once gave square corners. The paper gap and the dark-green edge keep it legible on Keplr's white
-and on a dark dashboard; `#3F6B27` is the design's "Watch" green, so ring and note match.
+Measured in the same window at the same size as the capture, the box cannot drift from it; a
+reshoot is re-measured the same way in a few seconds. It takes the first rounded corner inside the
+picked element, so picking a wrapper still gives the button's radius.
 
 ## Everything else that has to stay constant
 
