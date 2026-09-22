@@ -381,6 +381,9 @@
     var list = steps(root);
     if (!list.length) return;
 
+    /* claim the page before the fetch: the observer fires again while the index is loading, and
+       two builds in flight appended two sets of bands */
+    root.setAttribute("data-enc-guide", VERSION);
     return fromIndex().then(function (info) {
       var me = info.me || { name: textOf(document.querySelector(".notion-header__title")) };
       var wrap = el("div", "enc-gd");
@@ -390,8 +393,9 @@
       list.forEach(function (st, i) { wrap.appendChild(stepBand(st, i, list.length)); });
       wrap.appendChild(close(me, info.next, list.length));
 
+      var old = root.querySelector(".enc-gd");
+      if (old) old.remove();
       root.insertBefore(wrap, root.firstChild);
-      root.setAttribute("data-enc-guide", VERSION);
 
       var bands = wrap.querySelectorAll(".enc-gd__step");
       function paint() {
