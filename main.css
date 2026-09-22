@@ -408,6 +408,7 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
      of it under a short list. Stretch is what makes the three tracks the same on every panel. */
   align-items: stretch !important;
   gap: 22px !important;
+  box-sizing: border-box !important;   /* the 44px gutters are inside the width, never added */
   width: 100% !important;
   max-width: none !important;
   min-width: 0 !important;
