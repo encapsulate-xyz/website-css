@@ -91,6 +91,7 @@ User rules that stand on every task:
 | `brand.css`, `brand.js` | /brand — four spreads with a sticky rail, the marks slab, the colour band (design *Brand Page*) | page Head + site Head |
 | `blog.css`, `blog.js` | /blog — the index (design J); blog.js builds each card's cover and its band span, and is loaded from the site head | page Head + site Head |
 | `post.css`, `post.js` | /blog/&lt;post&gt; — every post page (design *Blog Post Page*, variant J). A post has no page head of its own, so both are in the site head and scoped by path | site Head |
+| `guide.css`, `guide.js` | /guides/&lt;stage&gt;/&lt;chain&gt; — every guide page (design *Staking Guide Variation 1d*). A guide has no page head of its own, so both are in the site head and scoped by path | site Head |
 | `network.css`, `network.js` | /networks (network.js pages the Network Count panels, same gesture rules as home.js decks) | its page Head |
 | `investments.css`, `investments.js` | /investments — two bands (design *Investments Page*): the thesis and the running band of positions on ink, the six questions on paper | page Head + site Head |
 | `governance.css` + `governance.js` (the record page: count band, pillars, controls, rows), `blog.css`, `brand.css`, `contact-us.css`, `guides.css`, `investments.css`, `security.css`, `services.css` | each page's CSS, moved out of Super's page Code panels on 2026-09-15 (old cover rules removed, the rest kept as it was) | each page's Head |
@@ -600,6 +601,40 @@ properties on. Without them the band still runs and names each position.
 Removed from the page on 2026-09-21: the Tally form column ("Looking for Investments?", its
 paragraph and the quote) and the "Our Investments" heading — the design has neither, and the ask's
 second button goes to the contact page's form instead.
+
+## The guide page (2026-09-22, design *Staking Guide Variation 1d*)
+
+One step per screen. An ink head with the chain's disc and the wallet's mark, the Title and the
+Lede; a paper band per step carrying the number, the surface as a link, the title, the body, the
+"Watch out" note and the capture, with the step's numeral hollow at the bottom right and its green
+fill rising with the reader's progress; an ink close with the next guide.
+
+**Every word is Notion's**, in three places:
+
+| What | Where |
+|---|---|
+| A step: title, body, surface + link, note | a **toggle on the guide page** named `01 · Unlock Keplr`, holding a paragraph (body), a paragraph whose link is the surface, and a callout (the note) |
+| The head's Title and Lede | **properties of the `Guides Database` row** (added 2026-09-22) — Super does not render a row's properties on its own page, so they are read off /guides, as post.js reads the blog index |
+| The crumb, "Watch out", "{N} screens", the close band | the **"Guide page copy" toggle on /guides**, `key · value` lines — one place for 33 guides. `{n}` is the step count, `{N}` the same spelled ("Eight screens"), `{next}` and `{chain}` the next guide |
+
+`guide.js` reads them and nothing else: the captures are the guide's own slide gallery, which is
+**the collection whose cards are not links** (the other one is "View More Guides"); a mark is the
+`data-full-size` on the Networks set's and the Wallet Set's own cards, never a guide card, or
+"Axelar" answers with the guide's cover instead of the chain's glyph.
+
+**The frame follows the capture**: a wallet shot is tall (360:788) and stands beside the note; a
+dashboard shot is wide (16:9) and runs under the header. `guide.js` reads the file's own
+proportions on load and sets `[data-enc-shot]`. The band is one grid, so opening a note never
+squeezes the capture. Sizes and how the captures are taken: `notion/guide-screenshots.md`.
+
+**Two traps, both paid for:** the toggle's label is the string *inside* `.notion-toggle__summary`
+(the summary also carries Super's `‣` trigger), and the build has to claim the page
+(`[data-enc-guide]`) **before** the index fetch — the observer fires again while it is in flight
+and two builds appended two sets of bands.
+
+Snapping is the design's, moved to the document: Super is the scroller, so
+`scroll-snap-type: y mandatory` is set on `html` for this page and every band is a stop, the
+footer included, off under 701px and with reduced motion.
 
 ## The guides picker (/guides, guides.css + guides.js, 2026-09-16)
 
