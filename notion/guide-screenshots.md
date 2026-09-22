@@ -36,7 +36,7 @@ This replaces the 1528 × 800 (1.91:1) canvas of 2026-09-18.
 | Dashboard file | **2800 × 1576** (1400 × 788 @2x) |
 | Wallet file | **720 × 1576** (360 × 788 @2x), nothing around it |
 | Surface treatment | 12px radius, 1px `#D9D9D2` border, **no drop shadow** (the site reserves depth for controls; a surface takes a border) |
-| Annotation | one ring, drawn by the page over a clean capture from one measured box per slide (see *Annotating*) |
+| Annotation | one ink ring, 3px outside the control, baked into the capture (see *Annotating*) |
 | Redaction | one style for the whole set: same blur radius, or same solid box, never a mix |
 
 ## Chrome custom devices
@@ -139,45 +139,37 @@ use that for **every** wallet step in that guide.
 
 ## Annotating (agreed 2026-09-22)
 
-**The capture stays clean; the page draws one ring** on the one control the step names — nothing
-else. **No chip and no dim** (settled 2026-09-22 with Claude Design): the step's title and body
-already name the element, so a label would say it a third time and go stale when the copy changes;
-a dim is a second annotation device, and one ring is the whole vocabulary. No arrows, numbers or
-words in the image. A slide with nothing to press gets no ring — except a "check it worked" slide,
-which rings the proof (on the delegation step's last slide: our row in the delegations list).
+**One ring per slide, on the one control the step names — baked into the capture.** No chip, no
+dim, no arrows, numbers or words: the step's title and body already name the element, and one ring
+is the whole vocabulary. A slide with nothing to press gets no ring — except a "check it worked"
+slide, which rings the proof (on the delegation guide's last slide: our row in the delegations
+list).
 
-A ring baked into the capture (drawn in the page before shooting) was tried and dropped: it cannot
-be restyled without reshooting.
+**The ring is drawn in the captured page, then shot with it** (the user's choice, 2026-09-22): no
+box to measure, store or hand over, and the page just shows the image. The cost, accepted: a new
+ring style means reshooting.
 
-**The ring is the handoff's** (*Staking Guide Variation 1d*): 2px, 4px radius, drawn inside the
-box, with a 2px separator outside it — one construction, colours set by the capture's theme:
+| | Value |
+|---|---|
+| Ring | 2px ink `#000`, no separator |
+| Position | **3px outside** the control's box — a gap of the capture's own ground between them |
+| Corner | the control's own radius + 5px, so it follows the curve |
 
-| Capture | Ring | Separator |
-|---|---|---|
-| **Light** (every new capture — the recipe shoots the light theme) | ink `#000` | `rgba(250,250,248,.35)` |
-| Dark (the old captures, until reshot) | paper `#FAFAF8` | `rgba(0,0,0,.35)` |
+Drawn flush inside the control's edge (the first form) it read as the button's own border, and the
+.35 paper separator vanished on a light capture; the 3px gap is what makes it a mark.
 
-Paper on a light capture is invisible — only the faint separator would show — hence the flip.
-Not green: `#99CC66` is a field and the primary fill on this site, never a small shape.
-
-**Each slide stores one box, `[x, y, w, h]`, in the capture's CSS px** (the 360 × 788 or
-1400 × 788 space; the file is 2× that). **Measure it, never estimate it.** Order per slide:
-
-1. Capture the slide **clean** (Capture node screenshot on `<html>`).
-2. Pick the control with DevTools' inspect arrow (the element's own line, not a `::after`).
-3. Run the saved Snippet `ring` (Sources → Snippets, ⌘↵). It draws the handoff's light-theme ring
-   over the control as a preview, and copies the box:
+**Per slide:** pick the control with DevTools' inspect arrow (the element's own line, not a
+`::after`), run the saved Snippet `ring` (Sources → Snippets, ⌘↵), check it, then Capture node
+screenshot on `<html>`. Running it again replaces the last ring; clear it with
+`document.getElementById("enc-mark").remove()`; redraw after any resize.
 
 ```js
-(b => { const r = b.getBoundingClientRect(), m = document.createElement("div"), box = JSON.stringify([r.left, r.top, r.width, r.height].map(Math.round)); document.getElementById("enc-mark")?.remove(); m.id = "enc-mark"; Object.assign(m.style, {position: "fixed", left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px", boxSizing: "border-box", border: "2px solid #000", borderRadius: "4px", boxShadow: "0 0 0 2px rgba(250,250,248,.35)", pointerEvents: "none", zIndex: 2147483647}); document.body.append(m); copy(box); console.log(box); })($0)
+(b => { const r = b.getBoundingClientRect(), g = 3, rad = [b, ...b.querySelectorAll("*")].map(e => parseFloat(getComputedStyle(e).borderRadius) || 0).find(x => x > 0) || 4, m = document.createElement("div"); document.getElementById("enc-mark")?.remove(); m.id = "enc-mark"; Object.assign(m.style, {position: "fixed", left: r.left - g - 2 + "px", top: r.top - g - 2 + "px", width: r.width + 2 * (g + 2) + "px", height: r.height + 2 * (g + 2) + "px", boxSizing: "border-box", border: "2px solid #000", borderRadius: rad + g + 2 + "px", pointerEvents: "none", zIndex: 2147483647}); document.body.append(m); })($0)
 ```
 
-4. If the preview sits right, the copied box goes with the slide; if it rings the wrong thing, pick
-   again and re-run (it replaces the last one). Clear it with
-   `document.getElementById("enc-mark").remove()`. Never capture with the preview on.
-
-Measured in the same window at the same size as the capture, the box cannot drift from it; a
-reshoot is re-measured the same way in a few seconds.
+It is a separate fixed layer, not a shadow on the control — Keplr's buttons sit in boxes that clip
+anything past their edge — and it takes the first rounded corner inside the picked element, so
+picking a wrapper still follows the button's curve.
 
 ## Everything else that has to stay constant
 
