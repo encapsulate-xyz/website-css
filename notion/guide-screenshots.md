@@ -74,11 +74,13 @@ guide set; a height over 600 means side panel.
 2. Right-click inside that window → **Inspect**. Its DevTools opens as a separate window.
 3. In that DevTools' **Console**:
    `chrome.windows.getCurrent(w => chrome.windows.update(w.id, {width: w.width + 360 - innerWidth, height: w.height + 788 - innerHeight}))`
-   then `innerWidth + "×" + innerHeight` → **360×788** (run the first line again if a pixel off).
+   then `innerWidth + "×" + innerHeight` → **360×788** and `devicePixelRatio` → **2**. A wallet window takes
+   the pixel ratio of **the screen it is on**: on a 1× external monitor (1920 × 1080) the capture
+   comes out 360 × 788. Drag it to the Mac's Retina screen first (measured 2026-09-22). (run the first line again if a pixel off).
 4. **Shoot.** DevTools' own Capture screenshot is not offered for a wallet window ("No commands
    found"), and the wallet may not capture itself (`captureVisibleTab` needs a permission Keplr
    lacks). So, in order:
-   - Elements → right-click `<html>` → **Capture node screenshot**, if offered; or
+   - Elements → right-click `<html>` → **Capture node screenshot** (works, 2026-09-22); or
    - in the console, `chrome.windows.getCurrent(w => console.log(\`screencapture -x -R${w.left},${w.top + w.height - innerHeight},${innerWidth},${innerHeight} ~/Downloads/wallet-step.png\`))`
      prints a `screencapture` command for exactly the wallet's area, below the title bar; run it
      in Terminal (main display only). Either gives **720 × 1576**.
