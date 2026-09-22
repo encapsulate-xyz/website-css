@@ -613,22 +613,32 @@ fill rising with the reader's progress; an ink close with the next guide.
 
 | What | Where |
 |---|---|
-| A step: title, body, surface + link, note | a **toggle on the guide page** named `01 · Unlock Keplr`, holding a paragraph (body), a paragraph whose link is the surface, and a callout (the note) |
+| A step: its capture and its words | **one row of the guide's own slide database** — `Name` ("01 · Unlock Keplr"), `Step`, `Body`, `Watch`, `Surface`, `Link`, and the capture as the row's `Cover`. Everything about a step is one record (asked for 2026-09-22; the copy was briefly in toggles on the page and that is gone) |
 | The head's Title and Lede | **properties of the `Guides Database` row** (added 2026-09-22) — Super does not render a row's properties on its own page, so they are read off /guides, as post.js reads the blog index |
 | The crumb, "Watch out", "{N} screens", the close band | the **"Guide page copy" toggle on /guides**, `key · value` lines — one place for 33 guides. `{n}` is the step count, `{N}` the same spelled ("Eight screens"), `{next}` and `{chain}` the next guide |
 
-`guide.js` reads them and nothing else: the captures are the guide's own slide gallery, which is
-**the collection whose cards are not links** (the other one is "View More Guides"); a mark is the
-`data-full-size` on the Networks set's and the Wallet Set's own cards, never a guide card, or
-"Axelar" answers with the guide's cover instead of the chain's glyph.
+**Each guide's slide view must show Step, Body, Watch, Surface and Link** — the API cannot switch
+a view's properties on, and it is one view per guide. A guide whose slides carry none of them is
+left exactly as it was, so the set can be converted one guide at a time.
+
+`guide.js` reads the deck and nothing else: it is **the collection whose cards are not links**
+(the other one is "View More Guides"), a row without a `Step` is skipped (the cover slide), the
+**longer of the two text properties is the body** and the other is the note — position would break
+on a step with no note, and Super's property hashes differ from one guide's database to the next.
+A mark is the `data-full-size` on the Networks set's and the Wallet Set's own cards on /guides,
+never a guide card, or "Axelar" answers with the guide's cover instead of the chain's glyph.
 
 **The frame follows the capture**: a wallet shot is tall (360:788) and stands beside the note; a
 dashboard shot is wide (16:9) and runs under the header. `guide.js` reads the file's own
 proportions on load and sets `[data-enc-shot]`. The band is one grid, so opening a note never
 squeezes the capture. Sizes and how the captures are taken: `notion/guide-screenshots.md`.
 
-**Two traps, both paid for:** the toggle's label is the string *inside* `.notion-toggle__summary`
-(the summary also carries Super's `‣` trigger), and the build has to claim the page
+**Axelar is nine steps, not eight.** The handoff writes eight; the guide's own slides number nine
+(its second file carries steps 1–3 in one frame, and the last is the dashboard confirmation), so
+"Check us before you pick" is split into *Find us in the list* and *Check our numbers*. The row's
+`Step` is what the picker and the head count, so it follows the slides.
+
+**The trap paid for:** the build has to claim the page
 (`[data-enc-guide]`) **before** the index fetch — the observer fires again while it is in flight
 and two builds appended two sets of bands.
 
