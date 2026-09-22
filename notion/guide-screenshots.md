@@ -14,20 +14,24 @@ tall modals off the bottom more often; its only gain was a shorter frame. 788 is
 laptop actually shows once the browser bars take their share, so a step looks like the reader's
 screen.
 
-**Wallet steps** are **the popup alone, at its native size, DPR 2** — no ground, no canvas — shown
-**beside the type at 380px wide, `height: auto`, capped by the viewport's height** (width follows
-the cap, so the popup is never cropped). This is Claude Design's rule and it beats centring the
-popup on a 16:9 ground, which was the plan until 2026-09-22: in a ~640px frame a 1400 ground puts
-Keplr's 360px popup at 165px and its 14px type at about 6px; at 380 wide the same type is 14.8px.
-The wallet frame must **not** cover-crop — it takes the image's own ratio.
+**Wallet steps** are **the popup alone, at its native size** — no ground, no canvas — beside the
+type, in a frame that **takes the popup's own ratio** (Keplr 360 × 600 → **3:5**, `aspect-ratio:
+3 / 5`, or `height: auto`), capped by the viewport's height. Never a fixed 1:2 frame: it
+cover-crops ~17% off the bottom of every popup. Centring the popup on a 16:9 ground (the plan
+until 2026-09-22) was dropped: in a ~640px frame it puts Keplr's 14px type at about 6px.
 
-| Wallet | Native | File | At 380 wide | 14px type becomes |
+| Wallet | Native | DPR | File | Frame |
 |---|---|---|---|---|
-| Keplr | 360 × 540 | 720 × 1080 | 380 × 570 | 14.8px |
-| MetaMask | 400 × 600 | 800 × 1200 | 380 × 570 | 13.3px |
+| Keplr | **360 × 600** | 3 | 1080 × 1800 | 3:5 — ~467 × 778 on a laptop, 14px type at ~18px |
+| MetaMask | 400 × 600 | 3 | 1200 × 1800 | 2:3 (its own ratio; a 3:5 frame would crop its sides) |
 
-Both are 2:3, so both render 380 × 570. A wallet's popup cannot be taller than **600px** — Chrome's
-cap — so a "native 345 × 662" is not a popup size; measure it (below).
+**DPR 3, not 2, for wallets:** shown ~467px wide on a Retina screen the frame needs ~934 pixels
+across; a 2× Keplr file has 720 and looks soft. Capture from the popup opened as a page with the
+device selected — Inspect popup captures at the screen's own 2×.
+
+A popup cannot be taller than **600px** (Chrome's cap), so shots of 345 × 690 (1:2) are not native
+— they are scaled or cropped windows. Keplr was written down as 360 × 540 on 2026-09-18 and as
+360 × 600 from Keplr's own popup size since; **measure before a set** (below) and trust that.
 
 This replaces the 1528 × 800 (1.91:1) canvas of 2026-09-18.
 
@@ -48,8 +52,8 @@ optional: at DPR 1 the captures are soft once scaled into the canvas.
 | Device | Size | DPR | For |
 |---|---|---|---|
 | `Guide dashboard` | 1400 × 788 | 2 | dashboards, explorers, any web page — the capture *is* the slide |
-| `Wallet 400` | 400 × 600 | 2 | MetaMask |
-| `Wallet 360` | 360 × 540 | 2 | Keplr |
+| `Wallet 400` | 400 × 600 | 3 | MetaMask |
+| `Wallet 360` | 360 × 600 | 3 | Keplr |
 
 Why 1400: Keplr's dashboard changes layout at 1280px (then 1024, 768, 640), so anything narrower
 captures its tablet layout. Browser zoom stays at **100%** — zoom changes the app's layout.
@@ -65,7 +69,7 @@ Right-click the extension's toolbar icon → **Inspect popup**, then in that con
 document.documentElement.clientWidth + "×" + document.documentElement.clientHeight
 ```
 
-Measured 2026-09-18: **MetaMask `400×600`**, **Keplr `360×540`**. These are the wallets' own layout
+Measured 2026-09-18: **MetaMask `400×600`**, **Keplr `360×540`** — Keplr's popup is 360 × 600 by its own code, so re-measure. These are the wallets' own layout
 sizes (Chrome's hard cap on a popup is 800×600), so they can move with an update — re-run the
 one-liner when starting a new guide set.
 
@@ -100,15 +104,15 @@ Time. Only if the scroll is itself easy to miss (a modal that does not look scro
 get the step's Watch note, still not a slide of its own.
 
 **Wallet steps — the popup alone.** Nothing around it: the page draws the surface (12px radius, 1px
-`#D9D9D2`) and sets it beside the step's text at 380px wide. Each step is one action; a popup inset
+`#D9D9D2`) and sets it beside the step's text in the popup's own ratio. Each step is one action; a popup inset
 into a dashboard makes the reader hunt for which surface to look at.
 
 Keep an inset in reserve for the single case where the dashboard state must be visible *while* the
 wallet is open (a gas figure or validator name the reader is being asked to check). That step is
 then a dashboard step (16:9), with the popup at the same corner and scale every time.
 
-**Within one guide there is one wallet**, so the 105% / 95% difference between Keplr and MetaMask
-at 380 wide is never seen side by side.
+**Within one guide there is one wallet**, so Keplr's 3:5 and MetaMask's 2:3 are never seen side by
+side.
 
 **Vertical overflow:** do not grow the device to fit a long screen — scroll to the part the step is
 about. If a step genuinely needs the whole scroll, ⌘⇧P → *Capture full size screenshot*, and then
