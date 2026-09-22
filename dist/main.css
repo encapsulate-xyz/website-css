@@ -268,7 +268,7 @@ body:has(.super-content.page__services) .enc-banner{display: flex;}
 }
 @media (prefers-reduced-motion: reduce){.enc-foot__disc{transition: none;}
 }
-@media (prefers-reduced-motion: reduce){.notion-collection-card,.notion-collection-card__cover,.notion-callout:has(> .notion-callout__content > span.notion-semantic-string > .notion-link),.notion-external-object,.notion-bookmark,.super-navbar__item{transition: none !important;}
+@media (prefers-reduced-motion: reduce){.notion-collection-card,.notion-collection-card__cover,.notion-callout:has(> .notion-callout__content > span.notion-semantic-string > .notion-link),.notion-external-object,.notion-bookmark,.super-navbar__item,.super-navbar__list{transition: none !important;}
 .notion-collection-card:hover,.notion-external-object:hover,.notion-bookmark:hover{transform: none;}
 }
 html[data-enc-locked]{overflow: hidden !important;}

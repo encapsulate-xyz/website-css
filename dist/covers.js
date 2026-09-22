@@ -236,7 +236,7 @@
     }
   };
 
-  // the cover fills the rest of the first screen, below the navbar and any banner above it
+  // the cover fills the first screen from where it starts — the bar lies over it; only the banner sits above
   function setVar(el, name, value) {
     if (el.style.getPropertyValue(name) !== value) el.style.setProperty(name, value);
   }
