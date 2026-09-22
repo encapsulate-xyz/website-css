@@ -5,18 +5,20 @@ guide mixes dashboards (wide) with wallet popups (small), so screenshots taken a
 a different size, zoom and crop every time. The fix is to decide the frame once and compose every
 capture inside it, rather than cropping whatever each app happened to give.
 
-## One ratio: 25:12 (2026-09-22)
+## One ratio: 16:9 (2026-09-22)
 
-Every slide in a guide — dashboard or wallet — is **one file size, 2800 × 1344** (1400 × 672 CSS
-px at DPR 2), and the guide page's frame is **`aspect-ratio: 25 / 12`** (2.083:1). The frame
-cover-crops, so the frame and the file must share the ratio exactly: at 16:9 it would cut ~15% off
-the bottom of every dashboard. Write it as `25 / 12`, not `2.08`, so not even a pixel row goes.
+Every slide in a guide — dashboard or wallet — is **one file size, 2800 × 1576** (1400 × 788 CSS
+px at DPR 2), and the guide page's frame is **`aspect-ratio: 16 / 9`**. The frame cover-crops,
+so the frame and the file must share the ratio exactly. 25:12 (1400 × 672) was weighed and
+rejected: it shows 116px less of every screen, runs tall modals off the bottom more often, and
+leaves MetaMask 36px of ground; its only gain was a shorter frame. 788 is also what a 1440 laptop
+actually shows once the browser bars take their share, so a step looks like the reader's screen.
 
 This replaces the 1528 × 800 (1.91:1) canvas of 2026-09-18.
 
 | | Value |
 |---|---|
-| File | **2800 × 1344** (1400 × 672 @2x) |
+| File | **2800 × 1576** (1400 × 788 @2x) |
 | Ground (wallet steps) | `#F2F2ED` |
 | Surface treatment | 12px radius, 1px `#D9D9D2` border, **no drop shadow** (the site reserves depth for controls; a surface takes a border) |
 | Annotation | `#99CC66`, 2.1px stroke — the same ring the hero and the drawer draw |
@@ -30,7 +32,7 @@ optional: at DPR 1 the captures are soft once scaled into the canvas.
 
 | Device | Size | DPR | For |
 |---|---|---|---|
-| `Guide dashboard` | 1400 × 672 | 2 | dashboards, explorers, any web page — the capture *is* the slide |
+| `Guide dashboard` | 1400 × 788 | 2 | dashboards, explorers, any web page — the capture *is* the slide |
 | `Wallet 400` | 400 × 600 | 2 | MetaMask |
 | `Wallet 360` | 360 × 540 | 2 | Keplr |
 
@@ -72,12 +74,12 @@ with no chrome.
 ## Composing
 
 **Dashboard steps — the capture is the slide.** No canvas, no crop, no scaling: every dashboard
-step is the same 2800 × 1344 file, so text is the same size on every step. If a modal or list runs
-past 672, scroll to the part the step is about; never make the device taller.
+step is the same 2800 × 1576 file, so text is the same size on every step. If a modal or list runs
+past 788, scroll to the part the step is about; never make the device taller.
 
 **Wallet steps — centred, never inset.** The popup sits at **100% of its captured size**, centred
-on a 1400 × 672 ground (exported @2x, 2800 × 1344): Keplr's 540 leaves 66px above and below,
-MetaMask's 600 leaves 36px. Reasons, in order: each step is one action and an inset makes
+on a 1400 × 788 ground (exported @2x, 2800 × 1576): Keplr's 540 leaves 124px above and below,
+MetaMask's 600 leaves 94px. Reasons, in order: each step is one action and an inset makes
 the reader hunt for which surface to look at; the picker renders a guide's field at 520×272 and the
 cards are smaller again, so an inset popup's 14px type lands at about 5px; and centred is two
 numbers to get right every time, where an inset is four and drifts across a set.
