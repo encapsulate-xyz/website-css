@@ -15,25 +15,26 @@ laptop actually shows once the browser bars take their share, so a step looks li
 screen.
 
 **Wallet steps** are **the wallet alone** — no ground, no canvas — beside the type, in a
-**1:2** frame (`aspect-ratio: 1 / 2`), capped by the viewport's height. Centring it on a 16:9
+**360:788** frame (`aspect-ratio: 360 / 788`), whose height is set by the band (`100vh − 240px`, 778px
+on a 1018px viewport) and whose width follows — 355 × 778 there. Centring it on a 16:9
 ground (the plan until 2026-09-22) was dropped: in a ~640px frame it puts Keplr's 14px type at
 about 6px.
 
 | Wallet | Capture | DPR | File | Frame |
 |---|---|---|---|---|
-| Keplr and MetaMask | **360 × 720** | 2 | 720 × 1440 | 1:2 |
+| Keplr and MetaMask | **360 × 788** | 2 | 720 × 1576 | 360:788 |
 
 The wallet is shot in **its approval window**, resized to 360 × 720 (below), and the dashboard with
-the `Guide dashboard` device — two separate setups, so the heights are independent. 720 is plenty:
-the wallets design their prompts for a 600-tall popup, and 1:2 is the frame the design already has.
-Shown at up to ~400px wide, a 2× file stays sharp.
+the `Guide dashboard` device — two separate setups. 788 rather than 720 (a 1:2 frame): in a
+band-height frame 360 × 788 is shown at **99%** — the wallet's 14px type at 13.9px and the 2× file
+pixel-sharp — where 360 × 720 in a 1:2 frame is enlarged to 108% and goes slightly soft.
 
 This replaces the 1528 × 800 (1.91:1) canvas of 2026-09-18.
 
 | | Value |
 |---|---|
 | Dashboard file | **2800 × 1576** (1400 × 788 @2x) |
-| Wallet file | **720 × 1440** (360 × 720 @2x), nothing around it |
+| Wallet file | **720 × 1576** (360 × 788 @2x), nothing around it |
 | Surface treatment | 12px radius, 1px `#D9D9D2` border, **no drop shadow** (the site reserves depth for controls; a surface takes a border) |
 | Annotation | `#99CC66`, 2.1px stroke — the same ring the hero and the drawer draw |
 | Redaction | one style for the whole set: same blur radius, or same solid box, never a mix |
@@ -72,10 +73,15 @@ guide set; a height over 600 means side panel.
    the prompt opens in its own small window.
 2. Right-click inside that window → **Inspect**. Its DevTools opens as a separate window.
 3. In that DevTools' **Console**:
-   `chrome.windows.getCurrent(w => chrome.windows.update(w.id, {width: w.width + 360 - innerWidth, height: w.height + 720 - innerHeight}))`
-   then `innerWidth + "×" + innerHeight` → **360×720** (run the first line again if a pixel off).
-4. With that DevTools window focused: **⌘⇧P**, type `screenshot`, pick **Capture screenshot**. The
-   PNG lands in Downloads at **720 × 1440**.
+   `chrome.windows.getCurrent(w => chrome.windows.update(w.id, {width: w.width + 360 - innerWidth, height: w.height + 788 - innerHeight}))`
+   then `innerWidth + "×" + innerHeight` → **360×788** (run the first line again if a pixel off).
+4. **Shoot.** DevTools' own Capture screenshot is not offered for a wallet window ("No commands
+   found"), and the wallet may not capture itself (`captureVisibleTab` needs a permission Keplr
+   lacks). So, in order:
+   - Elements → right-click `<html>` → **Capture node screenshot**, if offered; or
+   - in the console, `chrome.windows.getCurrent(w => console.log(\`screencapture -x -R${w.left},${w.top + w.height - innerHeight},${innerWidth},${innerHeight} ~/Downloads/wallet-step.png\`))`
+     prints a `screencapture` command for exactly the wallet's area, below the title bar; run it
+     in Terminal (main display only). Either gives **720 × 1576**.
 
 Every new prompt opens at the wallet's default size again, so repeat 2–4 each time (↑ in the
 console brings the line back). The toolbar popup cannot be sized this way — Chrome caps it at 600
@@ -99,7 +105,7 @@ the popup's).
 Find any other extension's id at `chrome://extensions` with Developer mode on, or from the URL of
 its **Details** page. Flask/beta/unpacked builds have different ids.
 
-**Check the page before shooting:** run the one-liner in it — it must read `360×720`. A wider
+**Check the page before shooting:** run the one-liner in it — it must read `360×788`. A wider
 width means the popup layout has loaded.
 
 ## Composing
@@ -123,7 +129,7 @@ Keep an inset in reserve for the single case where the dashboard state must be v
 wallet is open (a gas figure or validator name the reader is being asked to check). That step is
 then a dashboard step (16:9), with the popup at the same corner and scale every time.
 
-**Within one guide there is one wallet**, and every wallet step is the same 360 × 720.
+**Within one guide there is one wallet**, and every wallet step is the same 360 × 788.
 
 **Vertical overflow:** do not grow the device to fit a long screen — scroll to the part the step is
 about. If a step genuinely needs the whole scroll, ⌘⇧P → *Capture full size screenshot*, and then
