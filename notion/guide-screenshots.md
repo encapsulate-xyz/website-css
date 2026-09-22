@@ -144,20 +144,23 @@ arrows, numbers, words or dimming in the image: the words are the step's text in
 is on the page. A slide with nothing to click gets no ring, or a ring on the one thing to check.
 
 **Draw it in the page, then capture** — no editing app, so the ring is at the capture's own scale
-and identical on every slide. In the window's DevTools console:
+and identical on every slide. Pick the control with DevTools' **inspect arrow** (the line itself,
+not a `::after` under it), then in the console:
 
 ```js
-(label => { const b = [...document.querySelectorAll("button, [role=button], a")].find(e => e.textContent.trim() === label), r = b.getBoundingClientRect(), m = document.createElement("div"); m.id = "enc-mark"; Object.assign(m.style, {position: "fixed", left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px", borderRadius: (parseFloat(getComputedStyle(b).borderRadius) || 8) + "px", boxShadow: "0 0 0 2px #FAFAF8, 0 0 0 5px #99CC66, 0 0 0 6px #3F6B27", pointerEvents: "none", zIndex: 2147483647}); document.body.append(m); })("Approve")
+(b => { const r = b.getBoundingClientRect(), rad = [b, ...b.querySelectorAll("*")].map(e => parseFloat(getComputedStyle(e).borderRadius) || 0).find(x => x > 0) || 0, m = document.createElement("div"); document.getElementById("enc-mark")?.remove(); m.id = "enc-mark"; Object.assign(m.style, {position: "fixed", left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px", borderRadius: rad + "px", boxShadow: "0 0 0 2px #FAFAF8, 0 0 0 5px #99CC66, 0 0 0 6px #3F6B27", pointerEvents: "none", zIndex: 2147483647}); document.body.append(m); })($0)
 ```
 
-Change the label at the end for each step; remove it with
+Saved as a DevTools **Snippet** (Sources → Snippets, ⌘↵ to run) it needs no editing: pick, run,
+capture. Running it again replaces the last ring; remove it with
 `document.getElementById("enc-mark").remove()`, and redraw after any resize (it does not follow the
-button). Save it once as a DevTools **Snippet** (Sources → Snippets) so it survives restarts.
+button). Where a label is easier than picking, replace `($0)` with
+`([...document.querySelectorAll("button, [role=button], a")].find(e => e.textContent.trim() === "Approve"))`.
 
 Why this shape: the ring is a **separate fixed layer**, not a shadow on the button — Keplr's
 buttons sit in boxes that clip anything past their edge, which cut a shadow down to a strip along
-the top (2026-09-22). It is **found by label**, not `$0` — selecting the wrapper instead of the
-button gave square corners. The paper gap and the dark-green edge keep it legible on Keplr's white
+the top (2026-09-22). It takes **the first rounded corner** in the picked element — picking the
+wrapper instead of the button once gave square corners. The paper gap and the dark-green edge keep it legible on Keplr's white
 and on a dark dashboard; `#3F6B27` is the design's "Watch" green, so ring and note match.
 
 ## Everything else that has to stay constant
