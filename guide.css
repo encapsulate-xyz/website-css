@@ -290,12 +290,15 @@ body:has(.notion-root[data-enc-guide]) .notion-header { display: none !important
 
 /* the note: a row that opens under the body */
 .enc-gd__watch {
+  justify-self: end;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-top: 2px;
-  max-width: 52ch;
+  max-width: 64ch;
 }
+.enc-gd__note { max-width: 52ch; }
 .enc-gd__watchbtn {
   appearance: none;
   cursor: pointer;
