@@ -36,7 +36,7 @@ This replaces the 1528 × 800 (1.91:1) canvas of 2026-09-18.
 | Dashboard file | **2800 × 1576** (1400 × 788 @2x) |
 | Wallet file | **720 × 1576** (360 × 788 @2x), nothing around it |
 | Surface treatment | 12px radius, 1px `#D9D9D2` border, **no drop shadow** (the site reserves depth for controls; a surface takes a border) |
-| Annotation | `#99CC66`, 2.1px stroke — the same ring the hero and the drawer draw |
+| Annotation | one ring: 2px `#FAFAF8` gap, 3px `#99CC66`, 1px `#3F6B27` edge, the control's own radius — drawn in the page before capture (see *Annotating*) |
 | Redaction | one style for the whole set: same blur radius, or same solid box, never a mix |
 
 ## Chrome custom devices
@@ -136,6 +136,29 @@ then a dashboard step (16:9), with the popup at the same corner and scale every 
 **Vertical overflow:** do not grow the device to fit a long screen — scroll to the part the step is
 about. If a step genuinely needs the whole scroll, ⌘⇧P → *Capture full size screenshot*, and then
 use that for **every** wallet step in that guide.
+
+## Annotating (agreed 2026-09-22)
+
+**One ring per slide, on the one control the step's text names** — Approve, Delegate, Stake. No
+arrows, numbers, words or dimming in the image: the words are the step's text in Notion, the number
+is on the page. A slide with nothing to click gets no ring, or a ring on the one thing to check.
+
+**Draw it in the page, then capture** — no editing app, so the ring is at the capture's own scale
+and identical on every slide. In the window's DevTools console:
+
+```js
+(label => { const b = [...document.querySelectorAll("button, [role=button], a")].find(e => e.textContent.trim() === label), r = b.getBoundingClientRect(), m = document.createElement("div"); m.id = "enc-mark"; Object.assign(m.style, {position: "fixed", left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px", borderRadius: (parseFloat(getComputedStyle(b).borderRadius) || 8) + "px", boxShadow: "0 0 0 2px #FAFAF8, 0 0 0 5px #99CC66, 0 0 0 6px #3F6B27", pointerEvents: "none", zIndex: 2147483647}); document.body.append(m); })("Approve")
+```
+
+Change the label at the end for each step; remove it with
+`document.getElementById("enc-mark").remove()`, and redraw after any resize (it does not follow the
+button). Save it once as a DevTools **Snippet** (Sources → Snippets) so it survives restarts.
+
+Why this shape: the ring is a **separate fixed layer**, not a shadow on the button — Keplr's
+buttons sit in boxes that clip anything past their edge, which cut a shadow down to a strip along
+the top (2026-09-22). It is **found by label**, not `$0` — selecting the wrapper instead of the
+button gave square corners. The paper gap and the dark-green edge keep it legible on Keplr's white
+and on a dark dashboard; `#3F6B27` is the design's "Watch" green, so ring and note match.
 
 ## Everything else that has to stay constant
 
