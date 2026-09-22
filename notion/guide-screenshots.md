@@ -14,24 +14,24 @@ tall modals off the bottom more often; its only gain was a shorter frame. 788 is
 laptop actually shows once the browser bars take their share, so a step looks like the reader's
 screen.
 
-**Wallet steps** are **the popup alone, at its native size** — no ground, no canvas — beside the
-type, in a frame that **takes the popup's own ratio** (Keplr 360 × 600 → **3:5**, `aspect-ratio:
-3 / 5`, or `height: auto`), capped by the viewport's height. Never a fixed 1:2 frame: it
-cover-crops ~17% off the bottom of every popup. Centring the popup on a 16:9 ground (the plan
-until 2026-09-22) was dropped: in a ~640px frame it puts Keplr's 14px type at about 6px.
+**Wallet steps** are **the wallet alone** — no ground, no canvas — beside the type, in a frame that
+takes the capture's own ratio (`aspect-ratio: 360 / 788`, or `height: auto`), capped by the
+viewport's height. Centring it on a 16:9 ground (the plan until 2026-09-22) was dropped: in a
+~640px frame it puts Keplr's 14px type at about 6px.
 
-| Wallet | Native | DPR | File | Frame |
+**Keplr opens in Chrome's side panel, not a popup** (measured 2026-09-22: `360×944` from the
+wallet's own console). A popup is capped at 800 × 600; a side panel is as tall as the window, so
+Keplr has no native height — it is whatever the reader's window gives it. The capture therefore
+takes **the same 788 as the dashboard**, which is what a 1440 laptop's window gives the panel:
+
+| Wallet | Capture | DPR | File | Frame |
 |---|---|---|---|---|
-| Keplr | **360 × 600** | 3 | 1080 × 1800 | 3:5 — ~467 × 778 on a laptop, 14px type at ~18px |
-| MetaMask | 400 × 600 | 3 | 1200 × 1800 | 2:3 (its own ratio; a 3:5 frame would crop its sides) |
+| Keplr (side panel) | **360 × 788** | 3 | 1080 × 2364 | `360 / 788` (≈ 1:2.2) |
+| MetaMask (popup) | 400 × 600 | 3 | 1200 × 1800 | 2:3 |
 
-**DPR 3, not 2, for wallets:** shown ~467px wide on a Retina screen the frame needs ~934 pixels
-across; a 2× Keplr file has 720 and looks soft. Capture from the popup opened as a page with the
-device selected — Inspect popup captures at the screen's own 2×.
-
-A popup cannot be taller than **600px** (Chrome's cap), so shots of 345 × 690 (1:2) are not native
-— they are scaled or cropped windows. Keplr was written down as 360 × 540 on 2026-09-18 and as
-360 × 600 from Keplr's own popup size since; **measure before a set** (below) and trust that.
+**DPR 3, not 2, for wallets:** shown ~360–470px wide on a Retina screen, a 2× file is at or under
+the pixels the frame needs. Capture from `popup.html` opened as a page with the device selected —
+Inspect captures at the screen's own 2×.
 
 This replaces the 1528 × 800 (1.91:1) canvas of 2026-09-18.
 
@@ -53,7 +53,7 @@ optional: at DPR 1 the captures are soft once scaled into the canvas.
 |---|---|---|---|
 | `Guide dashboard` | 1400 × 788 | 2 | dashboards, explorers, any web page — the capture *is* the slide |
 | `Wallet 400` | 400 × 600 | 3 | MetaMask |
-| `Wallet 360` | 360 × 600 | 3 | Keplr |
+| `Wallet 360` | 360 × 788 | 3 | Keplr (side panel) |
 
 Why 1400: Keplr's dashboard changes layout at 1280px (then 1024, 768, 640), so anything narrower
 captures its tablet layout. Browser zoom stays at **100%** — zoom changes the app's layout.
@@ -69,7 +69,7 @@ Right-click the extension's toolbar icon → **Inspect popup**, then in that con
 document.documentElement.clientWidth + "×" + document.documentElement.clientHeight
 ```
 
-Measured 2026-09-18: **MetaMask `400×600`**, **Keplr `360×540`** — Keplr's popup is 360 × 600 by its own code, so re-measure. These are the wallets' own layout
+Measured: **MetaMask `400×600`** (2026-09-18); **Keplr `360×944`** (2026-09-22) — the side panel, whose height is the window's, so only its width is Keplr's own. These are the wallets' own layout
 sizes (Chrome's hard cap on a popup is 800×600), so they can move with an update — re-run the
 one-liner when starting a new guide set.
 
