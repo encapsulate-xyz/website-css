@@ -87,6 +87,11 @@ the sizes come from **the real window**, not from devices:
    the panel's (right-click → Inspect) → **360×788**. Change the third number by the width
    difference and the fourth by the height difference, run again. The panel and the page share a
    height, so once one is 788 both are.
+   **Or set it from the panel's console** — the wallet is an extension page, so it can resize its
+   own window (not in full screen):
+   `chrome.windows.getCurrent(w => chrome.windows.update(w.id, {height: w.height + 788 - innerHeight}))`
+   and for the width, with the dashboard tab's `innerWidth` read as N:
+   `chrome.windows.getCurrent(w => chrome.windows.update(w.id, {width: w.width + 1400 - N}))`.
 4. **Shoot** each from its own DevTools: ⌘⇧P → Capture screenshot. Dashboard **2800 × 1576**,
    wallet **720 × 1576** — both at the screen's 2×, no browser chrome.
 
