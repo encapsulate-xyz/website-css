@@ -149,6 +149,12 @@ which rings the proof (on the delegation step's last slide: our row in the deleg
 A ring baked into the capture (drawn in the page before shooting) was tried and dropped: it cannot
 be restyled without reshooting.
 
+**The ring is the handoff's** (*Staking Guide Variation 1d*): a **2px paper `#FAFAF8` border with
+a 2px `rgba(0,0,0,.35)` edge outside it** (`box-shadow: 0 0 0 2px rgba(0,0,0,.35)`), 4px radius.
+Not green: green is the page's own progress and action colour (the numeral's fill, the badges, the
+primary button), so a green ring would read as part of the page rather than the screen. Paper with
+a dark edge holds on Keplr's white and on a dark dashboard alike.
+
 **Each slide stores one box, `[x, y, w, h, r]`, in the capture's CSS px** (the 360 × 788 or
 1400 × 788 space; the file is 2× that). **Measure it, never estimate it**: pick the control with
 DevTools' inspect arrow (the element's own line, not a `::after`), then run this saved Snippet
