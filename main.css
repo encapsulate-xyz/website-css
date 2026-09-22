@@ -403,6 +403,10 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   position: static !important;
   display: flex !important;
   flex-direction: column !important;
+  /* Super's panel is a flex row with align-items: flex-start, which it keeps when the direction
+     turns — so the grid inside shrank to its content: full width under the chains grid, a third
+     of it under a short list. Stretch is what makes the three tracks the same on every panel. */
+  align-items: stretch !important;
   gap: 22px !important;
   width: 100% !important;
   max-width: none !important;
@@ -416,6 +420,7 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   box-shadow: none !important;
 }.enc-nav__grid {
   display: grid;
+  width: 100%;
   grid-template-columns: 260px minmax(0, 1.15fr) minmax(0, 1fr);
   gap: 36px;
   align-items: start;
@@ -799,6 +804,7 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   transition: transform 0.16s ease;
 }.enc-nav__open:hover .enc-nav__badge { transform: translateX(3px); }.enc-nav__foot {
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
