@@ -36,7 +36,7 @@ This replaces the 1528 × 800 (1.91:1) canvas of 2026-09-18.
 | Dashboard file | **2800 × 1576** (1400 × 788 @2x) |
 | Wallet file | **720 × 1576** (360 × 788 @2x), nothing around it |
 | Surface treatment | 12px radius, 1px `#D9D9D2` border, **no drop shadow** (the site reserves depth for controls; a surface takes a border) |
-| Annotation | drawn by the page over a clean capture — ring, chip, .18 dim — from one measured box per slide (see *Annotating*) |
+| Annotation | one ring, drawn by the page over a clean capture from one measured box per slide (see *Annotating*) |
 | Redaction | one style for the whole set: same blur radius, or same solid box, never a mix |
 
 ## Chrome custom devices
@@ -139,16 +139,15 @@ use that for **every** wallet step in that guide.
 
 ## Annotating (agreed 2026-09-22)
 
-**The capture stays clean; the page draws the annotation.** Claude Design's form: over the image,
-a ring on the one control the step names, a paper chip with its name in mono (4px radius), and
-the rest of the capture dimmed `rgba(0,0,0,.18)` by a mask. The chip sits above the ring, below it
-when the ring is in the top 12%, and left of the ring's right edge when the ring is in the right
-30%. No step number on the chip — it is on the page twice already. The chip's words are content,
-so they live in Notion with the slide, never in the image.
+**The capture stays clean; the page draws one ring** on the one control the step names — nothing
+else. **No chip and no dim** (settled 2026-09-22 with Claude Design): the step's title and body
+already name the element, so a label would say it a third time and go stale when the copy changes;
+a dim is a second annotation device, and one ring is the whole vocabulary. No arrows, numbers or
+words in the image. A slide with nothing to press gets no ring — except a "check it worked" slide,
+which rings the proof (on the delegation step's last slide: our row in the delegations list).
 
 A ring baked into the capture (drawn in the page before shooting) was tried and dropped: it cannot
-be restyled without reshooting, cannot be dimmed around, and a chip in the image is text in a
-picture.
+be restyled without reshooting.
 
 **Each slide stores one box, `[x, y, w, h, r]`, in the capture's CSS px** (the 360 × 788 or
 1400 × 788 space; the file is 2× that). **Measure it, never estimate it**: pick the control with
