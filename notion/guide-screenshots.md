@@ -26,13 +26,12 @@ takes **the same 788 as the dashboard**, which is what a 1440 laptop's window gi
 
 | Wallet | Capture | DPR | File | Frame |
 |---|---|---|---|---|
-| Keplr and MetaMask (side panel) | **360 × 788** | 3 | 1080 × 2364 | `360 / 788` (≈ 1:2.2) |
+| Keplr and MetaMask (side panel) | **360 × 788** | 2 | 720 × 1576 | `360 / 788` (≈ 1:2.2) |
 
 One device, one file size, one frame for every wallet step in every guide.
 
-**DPR 3, not 2, for wallets:** shown ~360–470px wide on a Retina screen, a 2× file is at or under
-the pixels the frame needs. Capture from `popup.html` opened as a page with the device selected —
-Inspect captures at the screen's own 2×.
+**Wallets are captured from the real side panel** (see *Capturing a prompt the dashboard
+opens*), at the screen's 2×; show them at up to ~400px wide.
 
 This replaces the 1528 × 800 (1.91:1) canvas of 2026-09-18.
 
@@ -53,7 +52,7 @@ optional: at DPR 1 the captures are soft once scaled into the canvas.
 | Device | Size | DPR | For |
 |---|---|---|---|
 | `Guide dashboard` | 1400 × 788 | 2 | dashboards, explorers, any web page — the capture *is* the slide |
-| `Wallet panel` | 360 × 788 | 3 | Keplr, MetaMask — any wallet in the side panel |
+| `Wallet panel` | 360 × 788 | 2 | Keplr, MetaMask — any wallet in the side panel |
 
 Why 1400: Keplr's dashboard changes layout at 1280px (then 1024, 768, 640), so anything narrower
 captures its tablet layout. Browser zoom stays at **100%** — zoom changes the app's layout.
@@ -72,6 +71,26 @@ document.documentElement.clientWidth + "×" + document.documentElement.clientHei
 Measured 2026-09-22: **Keplr and MetaMask both `360×944`** — the side panel, whose height is the window's, so only the 360 width is the wallet's own. (MetaMask measured `400×600` as a popup on 2026-09-18.) A wallet
 can move between popup and side panel with an update — re-run the one-liner when starting a new
 guide set; a height over 600 means side panel.
+
+### Capturing a prompt the dashboard opens (the usual case)
+
+An approval (connect, sign, delegate) belongs to the request that opened it, so it cannot be
+opened as a page with a device. Capture it where it appears — and make that always the side
+panel, at the same size:
+
+1. **Approvals in the side panel.** Keplr and MetaMask both have a side-panel setting; with it on
+   and the panel open, the prompt appears in the panel. Test once per wallet: if the prompt opens
+   as a separate small window instead, the wallet is still in popup mode.
+2. **Size the window once** so the panel is 788 tall. With Chrome in front:
+   `osascript -e 'tell application "Google Chrome" to set bounds of front window to {0, 25, 1800, 900}'`
+   then right-click in the panel → Inspect → run the one-liner, and change the last number by
+   the difference until it reads `360×788`. Chrome keeps the window size; bookmarks bar off.
+3. **Shoot from the panel's DevTools:** ⌘⇧P → Capture screenshot. 360 × 788 at the screen's 2× →
+   **720 × 1576**, no browser chrome.
+
+Every wallet step in a guide is taken this way, including the ones the reader opens from the
+toolbar, so the whole set is one size and one sharpness. That makes wallets **2×, not 3×**: shown
+at up to ~400px wide they stay sharp; much wider and they soften.
 
 ### Opening the side panel as a page
 
