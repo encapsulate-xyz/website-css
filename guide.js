@@ -161,10 +161,17 @@
      are two of those galleries, so one map answers both */
   function marks(doc) {
     var map = {};
-    Array.prototype.forEach.call(doc.querySelectorAll(".notion-collection-card"), function (c) {
-      var name = textOf(c.querySelector(".notion-property__title"));
-      var img = c.querySelector("img");
-      if (name && img && !map[name.toLowerCase()]) map[name.toLowerCase()] = original(img);
+    /* The chain's mark and the wallet's are the Networks set and the Wallet Set on the same page
+       — one a gallery, the other a table (a view can be either, as guides.js found). A mark is a
+       `data-full-size` on the card, not an <img>: Super draws a collection's Cover as a span with
+       the original on that attribute. Guide cards are skipped, or "Axelar" would answer with the
+       guide's own cover instead of the chain's glyph. */
+    Array.prototype.forEach.call(doc.querySelectorAll(".notion-collection-card, tbody tr"), function (c) {
+      if (c.querySelector("a[href^='/guides/']")) return;
+      var name = textOf(c.querySelector(".notion-property__title") || c.querySelector("td"));
+      var shot = c.querySelector("[data-full-size]");
+      var url = shot ? (shot.getAttribute("data-full-size") || original(shot)) : "";
+      if (name && url && !map[name.toLowerCase()]) map[name.toLowerCase()] = url;
     });
     return map;
   }
