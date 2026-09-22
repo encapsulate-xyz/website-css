@@ -94,7 +94,8 @@ at up to ~400px wide they stay sharp; much wider and they soften.
 
 ### Opening the side panel as a page
 
-Open **the side panel's own file**, not `popup.html`, with `Wallet panel` selected. They are
+Only for checking a layout — the set itself is shot in the real panel (above). Open **the side
+panel's own file**, not `popup.html`, with `Wallet panel` selected. They are
 different layouts: MetaMask's `popup.html` holds itself at 400 wide whatever the device, and only
 its side-panel file lays out at 360 (measured 2026-09-22). The file name is
 `side_panel.default_path` in `chrome-extension://<id>/manifest.json` (`action.default_popup` is
@@ -109,9 +110,7 @@ Find any other extension's id at `chrome://extensions` with Developer mode on, o
 its **Details** page. Flask/beta/unpacked builds have different ids.
 
 **Check the page before shooting:** run the one-liner in it — it must read `360×788`. A wider
-width means the popup layout has loaded. If a wallet redirects a tab to its expanded view, shoot
-from the side panel's own DevTools (right-click in the panel → Inspect → ⌘⇧P) — that captures
-at the screen's 2×, not 3×, so do the whole guide that way.
+width means the popup layout has loaded.
 
 ## Composing
 
