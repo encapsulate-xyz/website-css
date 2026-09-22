@@ -30,8 +30,7 @@ takes **the same 788 as the dashboard**, which is what a 1440 laptop's window gi
 
 One device, one file size, one frame for every wallet step in every guide.
 
-**Wallets are captured from the real side panel** (see *Capturing a prompt the dashboard
-opens*), at the screen's 2×; show them at up to ~400px wide.
+**Wallets are captured from the real side panel** (see *One window for the whole guide*), at the screen's 2×; show them at up to ~400px wide.
 
 This replaces the 1528 × 800 (1.91:1) canvas of 2026-09-18.
 
@@ -72,29 +71,34 @@ Measured 2026-09-22: **Keplr and MetaMask both `360×944`** — the side panel, 
 can move between popup and side panel with an update — re-run the one-liner when starting a new
 guide set; a height over 600 means side panel.
 
-### Capturing a prompt the dashboard opens (the usual case)
+### One window for the whole guide — no device mode (2026-09-22)
 
-An approval (connect, sign, delegate) belongs to the request that opened it, so it cannot be
-opened as a page with a device. Capture it where it appears — and make that always the side
-panel, at the same size:
+The dashboard and the wallet have to be on screen together (a click on the dashboard opens the
+prompt in the panel), and device mode on the dashboard tab gets in the way of the side panel. So
+the sizes come from **the real window**, not from devices:
 
-1. **Approvals in the side panel.** Keplr and MetaMask both have a side-panel setting; with it on
-   and the panel open, the prompt appears in the panel. Test once per wallet: if the prompt opens
-   as a separate small window instead, the wallet is still in popup mode.
-2. **Size the window once** so the panel is 788 tall. With Chrome in front:
-   `osascript -e 'tell application "Google Chrome" to set bounds of front window to {0, 25, 1800, 900}'`
-   then right-click in the panel → Inspect → run the one-liner, and change the last number by
-   the difference until it reads `360×788`. Chrome keeps the window size; bookmarks bar off.
-3. **Shoot from the panel's DevTools:** ⌘⇧P → Capture screenshot. 360 × 788 at the screen's 2× →
-   **720 × 1576**, no browser chrome.
+1. **Undock DevTools** (⋮ → Dock side → separate window) — docked, it eats the page's viewport.
+   Bookmarks bar off.
+2. **Open the wallet's side panel**, with approvals set to appear in it (Keplr and MetaMask both
+   have a side-panel setting; test once — a prompt in a separate small window means popup mode).
+3. **Size the window** so the page is 1400 × 788 beside the 360-wide panel:
+   `osascript -e 'tell application "Google Chrome" to set bounds of front window to {0, 25, 1780, 900}'`
+   then check both: the dashboard tab's console `innerWidth + "×" + innerHeight` → **1400×788**,
+   the panel's (right-click → Inspect) → **360×788**. Change the third number by the width
+   difference and the fourth by the height difference, run again. The panel and the page share a
+   height, so once one is 788 both are.
+4. **Shoot** each from its own DevTools: ⌘⇧P → Capture screenshot. Dashboard **2800 × 1576**,
+   wallet **720 × 1576** — both at the screen's 2×, no browser chrome.
 
-Every wallet step in a guide is taken this way, including the ones the reader opens from the
-toolbar, so the whole set is one size and one sharpness. That makes wallets **2×, not 3×**: shown
-at up to ~400px wide they stay sharp; much wider and they soften.
+The window is ~1780 wide, so this needs a screen at least that wide (in "looks like" points). On a
+narrower one, shoot the dashboard with the `Guide dashboard` device and the side panel closed, and
+open the panel only for the wallet steps.
+
+Wallets are therefore **2×, not 3×** — sharp up to ~400px wide on the page.
 
 ### Opening the side panel as a page
 
-Only for checking a layout — the set itself is shot in the real panel (above). Open **the side
+Only for checking a layout — the set itself is shot in the real window (above). Open **the side
 panel's own file**, not `popup.html`, with `Wallet panel` selected. They are
 different layouts: MetaMask's `popup.html` holds itself at 400 wide whatever the device, and only
 its side-panel file lays out at 360 (measured 2026-09-22). The file name is
