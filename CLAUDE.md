@@ -305,7 +305,11 @@ Because the bar lies over the page, **the cover's content starts 96px down** (§
 takes the bar's on-ink variants until a menu opens: labels `#C9C9C4`, the pill group on the .06
 wash, and Super's logo inverted to paper.
 
-Two traps: **Super's own rules carry two classes** (`.super-navbar.simple`), so every rule that
+Three traps: **Super's `.super-navbar__list-content` is a flex row with `align-items: flex-start`**,
+which it keeps when the direction is turned to column — the 4f grid inside then shrinks to its
+content, full width under the chains grid and a third of it under a short list, so the preview
+was 520px on one group and 184px on another; it is `align-items: stretch` now, with the grid and
+the foot at `width: 100%`. **Super's own rules carry two classes** (`.super-navbar.simple`), so every rule that
 fights one is anchored on `.super-root`; and **Super slides its dropdown viewport under the
 trigger with an inline transform**, which 4f's full-width panel cancels (`transform: none`).
 **The panel's preview is the page's own cover, captured**: the design's nine `cover-thumbs`, now in
