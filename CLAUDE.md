@@ -331,7 +331,7 @@ or if it yields nothing, the note stands in.
 | Destination | Column | Read from |
 |---|---|---|
 | /networks | chains, 3 across | the Networks set, first twelve cards of the Order-sorted view, with rates |
-| /services | tiles, 2 across | no fetch — the group's own section links that have a panel capture |
+| /services | tiles, 2 across | no fetch — the group's own section links that have a panel capture. **TODO:** once /services is redesigned, read them from the page by block id like the others |
 | /governance-record | list | the four pillars' questions (`Governance Mechanism` gallery) |
 | /security | list | the page's `h2` headings |
 | /guides | guides | Guides database, first four: chain mark (from the set on the same page), chain, wallet |
@@ -912,6 +912,15 @@ full-bleed band, that padding reads as a strip of ground above the ink footer, s
 it: `/guides`, `/security`, `/investments`, and since 2026-09-21 `/networks`, `/brand` and
 `/contact-us` (`.super-content.page__<slug>` and its `.notion-root`). A page that ends in ordinary
 content keeps the padding — it is breathing space, and on the paper ground it reads as such.
+
+## TODO — the Services tiles come from the menu, not the page (agreed 2026-09-22)
+
+The navbar's third column for "Services and tooling" is the only one not read from its page: the
+four tool tiles are the Services group's own section links (`navbar.js` `build()`, `tools`),
+because the built /services page has no database of tools to read — only eight old `h2` sections.
+When /services is redesigned, give it a tools gallery (name, link, capture) and read that block by
+id in `READ["/services"]`, the way every other row is read, so the column cannot drift from the
+page. The four `img/nav-panels` captures would then come from that gallery too.
 
 ## TODO — a design file for code blocks (agreed 2026-09-21)
 

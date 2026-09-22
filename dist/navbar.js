@@ -472,7 +472,10 @@
       links.length + (links.length === 1 ? " page" : " pages")));
     panel.appendChild(foot);
 
-    /* the tools of a group are its own section links that have a panel capture */
+    /* the tools of a group are its own section links that have a panel capture.
+       TODO (2026-09-22): when /services is redesigned, read them from the page by block id like
+       every other row in READ — the tools database on the page, its names, links and captures —
+       instead of from the menu's own links, so the column cannot drift from the page. */
     var tools = links.map(function (a) {
       var href = a.getAttribute("href") || "";
       var shot = shotOf(href);
