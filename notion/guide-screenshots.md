@@ -149,24 +149,35 @@ which rings the proof (on the delegation step's last slide: our row in the deleg
 A ring baked into the capture (drawn in the page before shooting) was tried and dropped: it cannot
 be restyled without reshooting.
 
-**The ring is the handoff's** (*Staking Guide Variation 1d*): a **2px paper `#FAFAF8` border with
-a 2px `rgba(0,0,0,.35)` edge outside it** (`box-shadow: 0 0 0 2px rgba(0,0,0,.35)`), 4px radius.
-Not green: green is the page's own progress and action colour (the numeral's fill, the badges, the
-primary button), so a green ring would read as part of the page rather than the screen. Paper with
-a dark edge holds on Keplr's white and on a dark dashboard alike.
+**The ring is the handoff's** (*Staking Guide Variation 1d*): 2px, 4px radius, drawn inside the
+box, with a 2px separator outside it — one construction, colours set by the capture's theme:
 
-**Each slide stores one box, `[x, y, w, h, r]`, in the capture's CSS px** (the 360 × 788 or
-1400 × 788 space; the file is 2× that). **Measure it, never estimate it**: pick the control with
-DevTools' inspect arrow (the element's own line, not a `::after`), then run this saved Snippet
-(Sources → Snippets, ⌘↵) — it prints the box and copies it:
+| Capture | Ring | Separator |
+|---|---|---|
+| **Light** (every new capture — the recipe shoots the light theme) | ink `#000` | `rgba(250,250,248,.35)` |
+| Dark (the old captures, until reshot) | paper `#FAFAF8` | `rgba(0,0,0,.35)` |
+
+Paper on a light capture is invisible — only the faint separator would show — hence the flip.
+Not green: `#99CC66` is a field and the primary fill on this site, never a small shape.
+
+**Each slide stores one box, `[x, y, w, h]`, in the capture's CSS px** (the 360 × 788 or
+1400 × 788 space; the file is 2× that). **Measure it, never estimate it.** Order per slide:
+
+1. Capture the slide **clean** (Capture node screenshot on `<html>`).
+2. Pick the control with DevTools' inspect arrow (the element's own line, not a `::after`).
+3. Run the saved Snippet `ring` (Sources → Snippets, ⌘↵). It draws the handoff's light-theme ring
+   over the control as a preview, and copies the box:
 
 ```js
-(b => { const r = b.getBoundingClientRect(), rad = [b, ...b.querySelectorAll("*")].map(e => parseFloat(getComputedStyle(e).borderRadius) || 0).find(x => x > 0) || 0, box = JSON.stringify([r.left, r.top, r.width, r.height, rad].map(Math.round)); copy(box); console.log(box); })($0)
+(b => { const r = b.getBoundingClientRect(), m = document.createElement("div"), box = JSON.stringify([r.left, r.top, r.width, r.height].map(Math.round)); document.getElementById("enc-mark")?.remove(); m.id = "enc-mark"; Object.assign(m.style, {position: "fixed", left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px", boxSizing: "border-box", border: "2px solid #000", borderRadius: "4px", boxShadow: "0 0 0 2px rgba(250,250,248,.35)", pointerEvents: "none", zIndex: 2147483647}); document.body.append(m); copy(box); console.log(box); })($0)
 ```
 
+4. If the preview sits right, the copied box goes with the slide; if it rings the wrong thing, pick
+   again and re-run (it replaces the last one). Clear it with
+   `document.getElementById("enc-mark").remove()`. Never capture with the preview on.
+
 Measured in the same window at the same size as the capture, the box cannot drift from it; a
-reshoot is re-measured the same way in a few seconds. It takes the first rounded corner inside the
-picked element, so picking a wrapper still gives the button's radius.
+reshoot is re-measured the same way in a few seconds.
 
 ## Everything else that has to stay constant
 
