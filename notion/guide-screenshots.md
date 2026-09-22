@@ -24,7 +24,7 @@ about 6px.
 |---|---|---|---|---|
 | Keplr and MetaMask | **360 × 788** | 2 | 720 × 1576 | 360:788 |
 
-The wallet is shot in **its approval window**, resized to 360 × 720 (below), and the dashboard with
+The wallet is shot in **its approval window**, resized to 360 × 788 (below), and the dashboard with
 the `Guide dashboard` device — two separate setups. 788 rather than 720 (a 1:2 frame): in a
 band-height frame 360 × 788 is shown at **99%** — the wallet's 14px type at 13.9px and the 2× file
 pixel-sharp — where 360 × 720 in a 1:2 frame is enlarged to 108% and goes slightly soft.
