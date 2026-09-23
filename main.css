@@ -549,15 +549,27 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   object-position: left center;
 }
 
-/* a tool's panel is a true 2x capture, drawn at 170% from its top-left corner */
+/* a tool's panel fills the preview from its top-left corner (handoff, 2026-09-23: the captures
+   are now the Services page's own sections, drawn whole rather than at 170%) */
 .enc-nav__tile[data-enc-shot="panel"] img {
   display: block;
   position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: left top;
+}
+
+/* the four tool tiles in the Services column still show a corner, at 170% from the top-left */
+.enc-nav__preview--tile .enc-nav__tile[data-enc-shot="panel"] img {
+  inset: auto;
   left: 0;
   top: 0;
   width: 170%;
   height: auto;
   max-width: none;
+  object-fit: fill;
 }
 
 .enc-nav__preview:hover .enc-nav__tile { border-color: #9B9B94; }

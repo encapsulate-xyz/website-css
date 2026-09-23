@@ -46,7 +46,8 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
 .enc-nav__tile[data-enc-shot]{background: #F2F2ED;}
 .enc-nav__tile img{display: none;}
 .enc-nav__tile[data-enc-shot="cover"] img{display: block;position: absolute;inset: 0;width: 100%;height: 100%;object-fit: cover;object-position: left center;}
-.enc-nav__tile[data-enc-shot="panel"] img{display: block;position: absolute;left: 0;top: 0;width: 170%;height: auto;max-width: none;}
+.enc-nav__tile[data-enc-shot="panel"] img{display: block;position: absolute;inset: 0;width: 100%;height: 100%;object-fit: cover;object-position: left top;}
+.enc-nav__preview--tile .enc-nav__tile[data-enc-shot="panel"] img{inset: auto;left: 0;top: 0;width: 170%;height: auto;max-width: none;object-fit: fill;}
 .enc-nav__preview:hover .enc-nav__tile{border-color: #9B9B94;}
 .enc-nav__tile-name{position: absolute;left: 16px;top: 15px;right: 38%;font-family: var(--type-display),sans-serif;font-weight: 600;font-size: 16px;line-height: 1.1;letter-spacing: -0.022em;color: #FAFAF8;}
 .enc-nav__tile[data-enc-shot] .enc-nav__tile-name{display: none;}

@@ -27,7 +27,7 @@
     "/networks": ["28 mainnets, 14 testnets",
       "Every chain we validate, mainnet and testnet.",
       "Reward rate where the chain publishes one; the role we played where it does not."],
-    "/services": ["Dashboards, playbooks, bots",
+    "/services": ["Dashboards, playbooks, bots, monitoring",
       "What we build and run around the validator.",
       "Dashboards, playbooks, bots and monitoring — used on our own set first."],
     "/governance-record": ["How we decide a vote",
@@ -183,6 +183,8 @@
   var GUIDES = "block-1f6e800a5138818195f9ed0a1403479e";       /* the Guides database */
   var PILLARS = "block-10fb4619625b43cd82d572d6b806ead7";      /* Governance Mechanism */
   var PORTFOLIO = "block-807c8bde92a74f3a95bf8d798f39c02b";
+  var DASHBOARDS = "block-3e4e800a51388119a5eeee126cb6b18b";   /* the Dashboards table on /services */
+  var DASH_LINK = "/services#block-3e4e800a513881cf8a82c41c2f9f8c78";  /* the menu's Dashboards */
   var CONTACT = ["block-3dee800a513881cda7b7dd5b6474afca",      /* the booking band's headline */
     "block-3dee800a51388127b675dd612c34c790",                   /* "Or write to us" */
     "block-3dee800a513881b58eaedff6e0135806",                   /* the institutional fold */
@@ -298,9 +300,29 @@
       }).filter(function (r) { return r.name; });
     }
   };
+  /* Dashboards — "Live now": one line per dashboard, from the Dashboards table on /services, in
+     its Order. The line is the row's Menu property ("Sui RGP dashboard"), the link its Link. */
+  READ[DASH_LINK] = function (doc) {
+    var t = doc.getElementById(DASHBOARDS);
+    var table = t && t.querySelector("table");
+    if (!table) return [];
+    var heads = all(table, "thead th").map(function (th) { return th.textContent.trim().toLowerCase(); });
+    var col = function (name) { return heads.indexOf(name); };
+    return all(table, "tbody tr").map(function (tr) {
+      var cell = function (name) { var i = col(name); return i < 0 ? null : tr.children[i]; };
+      var menu = cell("menu"), nm = cell("name"), ln = cell("link"), ord = cell("order");
+      var a = ln && ln.querySelector("a[href]");
+      return { text: ((menu && menu.textContent.trim()) || (nm && nm.textContent.trim()) || ""),
+        href: a ? a.getAttribute("href") : DASH_LINK,
+        order: ord ? parseFloat(ord.textContent) : NaN };
+    }).filter(function (r) { return r.text; }).sort(function (a, b) {
+      return (isNaN(a.order) ? 1e9 : a.order) - (isNaN(b.order) ? 1e9 : b.order);
+    });
+  };
   var KIND = { "/networks": "chains", "/governance-record": "list", "/security": "list",
     "/brand": "list", "/contact-us": "list", "/guides": "guides", "/blog": "posts",
     "/investments": "holds", "/services": "tiles" };
+  KIND[DASH_LINK] = "list";
 
   function outward(a, href) {
     a.href = href || "#";
@@ -498,9 +520,10 @@
     var current = null, timer = 0;
 
     function fill(href) {
-      var bare = (href || "").split("?")[0];
-      var key = bare.indexOf("#") >= 0 ? "" : path(href);
+      var bare = whole(href || "");
+      var key = bare.indexOf("#") >= 0 ? bare : path(href);
       var kind = KIND[key];
+      var page = path(href);
       extra.textContent = "";
       extra.removeAttribute("data-enc-kind");
       third.removeAttribute("data-enc-filled");
@@ -515,7 +538,7 @@
       /* a pointer passing over the row does not fetch a page; one that rests on it does */
       clearTimeout(timer);
       timer = setTimeout(function () {
-        pageOf(key).then(function (doc) {
+        pageOf(page).then(function (doc) {
           if (!doc || current !== href) return;
           var rows = [];
           try { rows = READ[key](doc) || []; } catch (e) { rows = []; }
@@ -525,7 +548,7 @@
           DRAW[kind](extra, rows);
           third.setAttribute("data-enc-filled", "");
         });
-      }, docs[key] ? 0 : 220);
+      }, docs[page] ? 0 : 220);
     }
 
     function show(a) {
