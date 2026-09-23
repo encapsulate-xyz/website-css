@@ -401,10 +401,15 @@ the build's version and its readers, so each can be run against its page from th
 live page's older script otherwise races a newer one for the panels, which is why the end-to-end
 check was done in a clean `srcdoc` frame.
 
-**The Services group points at the page's own section headings** (`/services#block-<id>`):
-Dashboards → *Protocol Level Dashboard*, Bots → *Custom Discord Bots*, Monitoring → *Governance
-Alerting*, and **Playbooks**, a section added to the Services page in Notion on 2026-09-21 because
-the design lists it and the page had none. **minima frosts the navbar** (`backdrop-filter: blur(12px)` plus a white wash) — 4f's bar is
+**The Services group points at the page's own bands** (`/services#block-<callout id>`), re-pointed
+in Super → Navigation → Menu items on 2026-09-23 when the page was rebuilt: Dashboards
+`…81cf8a82c41c2f9f8c78`, Playbooks `…81719a14e42a6532c579`, Bots `…81598024c57e15cbd370`,
+Monitoring `…8115ac0dd17fb46b383d` (all `3e4e800a5138…`). navbar.js keys its copy by those hrefs
+and aliases the four old ids (`MOVED`) for a page Super has not republished yet. **Super's editor
+can be driven from the automation tab** even though the tab is hidden and paints nothing: route by
+clicking its own links from JS (a direct load of `/site/<id>/…` stays blank), expand a group with
+its first button, open an item with the pencil (the row's first `button`), set `input[name=link]`
+with the native value setter plus `input`/`change`, click Save, then reopen the item to confirm. **minima frosts the navbar** (`backdrop-filter: blur(12px)` plus a white wash) — 4f's bar is
 plain glass, so both are cancelled, or whatever the bar lies over is smeared.
 
 **The reconstruction banner is on no page now** (§15b). It was on /services alone from
@@ -670,6 +675,11 @@ the navbar's section links and the cover's "See services" — still lands on the
   the display sentence and the ask heading keep the design's 16ch as **10.56em** (Outfit 600's
   `0` is 0.66em); under reduced motion the dashboards still follow the scroll, only without the
   zoom (the design pinned the last board, which left the pills dead).
+- **The Bots band's link is "Contact us for a bot" → /contact-us** (the user's wording, 2026-09-23);
+  the design's "Add one to your server" pointed nowhere.
+- **Gno.land is Order 33** in the Networks set (Pell 34, Spicenet 35), with no Tier, so it is a
+  1×1 tile. The ask's tiles read a **gallery** view of the set on /services, sorted by Order, whose
+  cards show Tier and Order.
 - **Kept as drawn:** the tertiary link sits 6px above a primary beside it (the design's tertiary
   carries `alignSelf: flex-start` inside a centred row), and "See it land" shows the previous
   event's card dimmed while the new one flies — on the first press that is the third event.
