@@ -45,6 +45,14 @@ body:has(.notion-root[data-enc-guide]) .notion-header { display: none !important
    snap is set on the document and every band is a stop — including Super's footer, which would
    otherwise be hard to reach under a mandatory snap. Off on a small screen and under reduced
    motion, the rule the site follows everywhere else. */
+/* the bands are built above whatever the reader is looking at, and scroll anchoring answered by
+   holding the footer in place — the page opened at its end. */
+html:has(.notion-root[data-enc-guide]),
+html:has(.notion-root[data-enc-guide]) body,
+.notion-root[data-enc-guide] {
+  overflow-anchor: none;
+}
+
 @media (min-width: 701px) and (prefers-reduced-motion: no-preference) {
   html:has(.notion-root[data-enc-guide]) {
     scroll-snap-type: y mandatory;

@@ -4,6 +4,7 @@ body:has(.notion-root[data-enc-guide]) .notion-header{display: none !important;}
 .notion-root[data-enc-guide],.super-content:has(.notion-root[data-enc-guide]){padding: 0 !important;max-width: none !important;}
 .super-content:has(.notion-root[data-enc-guide]) .notion-root{padding-bottom: 0 !important;}
 .enc-gd{--gd-ink: #2A2C28;--gd-paper: #FAFAF8;--gd-paper2: #F2F2ED;--gd-ink7: #3A3D38;--gd-grey: #6B6F68;--gd-on: #575B55;--gd-hair: #E2E2DB;--gd-mid: #9B9B94;--gd-green: #99CC66;--gd-p: 0;width: 100vw;margin-inline: calc(50% - 50vw);display: flex;flex-direction: column;font-family: "Hanken Grotesk",system-ui,sans-serif;}
+html:has(.notion-root[data-enc-guide]),html:has(.notion-root[data-enc-guide]) body,.notion-root[data-enc-guide]{overflow-anchor: none;}
 @media (min-width: 701px) and (prefers-reduced-motion: no-preference){html:has(.notion-root[data-enc-guide]){scroll-snap-type: y mandatory;scroll-behavior: smooth;}
 .enc-gd__band,body:has(.notion-root[data-enc-guide]) .super-footer,body:has(.notion-root[data-enc-guide]) footer{scroll-snap-align: start;scroll-snap-stop: always;}
 }

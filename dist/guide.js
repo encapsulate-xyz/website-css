@@ -409,7 +409,23 @@
 
       var old = root.querySelector(".enc-gd");
       if (old) old.remove();
+      /* the reader is at the top of a page that is about to grow by ten screens above them:
+         Chrome's scroll anchoring holds the content they were looking at — the footer — so the
+         page opened at the bottom (2026-09-23). Anchoring is off for this page in guide.css, and
+         the top is restored here for the frames where it has already happened; a link to a band
+         (#block-…) is left alone. */
+      var atTop = (window.scrollY || document.documentElement.scrollTop || 0) < 40;
       root.insertBefore(wrap, root.firstChild);
+      if (atTop && !location.hash) {
+        var top = function () {
+          window.scrollTo(0, 0);
+          if (document.documentElement.scrollTop) document.documentElement.scrollTop = 0;
+        };
+        top();
+        requestAnimationFrame(top);
+        setTimeout(top, 0);
+        setTimeout(top, 120);
+      }
 
       var bands = wrap.querySelectorAll(".enc-gd__step");
       function paint() {
