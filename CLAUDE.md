@@ -514,12 +514,13 @@ button row and the newsletter.
   viewport drives both the percentage and the current section), the contents built from the post's
   own `h2`s, and the standing ask — beside the article.
 - **The byline** is the post's "Written by …" block, and the **next post** comes from the index.
-- Super's header, the banner image, the Notion contents block, "More Blog Posts" and its
-  collection are marked `data-enc-source` and hidden; the newsletter stays.
-- **The banner is the image a post OPENS with, not its first image.** Hiding the first
-  `.notion-image` anywhere in the post took the Gno.land post's first figure, which sits after
-  three paragraphs (reported 2026-09-23). Of the first fourteen posts, seven open with a banner —
-  those still lose it, as the design wants — and seven do not, and keep every figure they have.
+- Super's header, the Notion contents block, "More Blog Posts" and its collection are marked
+  `data-enc-source` and hidden; the newsletter stays.
+- **No image is hidden.** post.js used to hide a post's first `.notion-image` as "the banner",
+  which cost the Gno.land post its first figure (reported 2026-09-23). Checked through the API
+  that day: **none of the forty posts opens with an image** — the banner blocks went when the head
+  became the title — and the 114 images left are the bodies' own. A page that still shows a banner
+  is one Super has not republished.
 
 **The tag, the date and the mark are database properties, and Super does not render them on an
 item page.** They are read from `/blog`, which does render them on its cards — one fetch, cached,
