@@ -292,7 +292,7 @@ body {
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__list,
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__item,
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list {
-  color: #FAFAF8 !important;   /* paper type on ink (handoff 2026-09-23; it was #C9C9C4) */
+  color: #C9C9C4 !important;   /* at rest; paper on hover, below (handoff, read 2026-09-23) */
 }
 
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__item:hover,
@@ -302,6 +302,17 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list:hover,
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list[data-state="open"] {
   color: #FAFAF8 !important;
+  background: rgba(250, 250, 248, 0.1) !important;
+  border-color: transparent !important;
+}
+
+/* the current page's pill is paper on both grounds, and on ink it carries no ring */
+.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__list[data-enc-current],
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list[data-enc-current] {
+  background: #FAFAF8 !important;
+  border-color: transparent !important;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
+  color: #000000 !important;
 }
 
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__item-list,
@@ -314,7 +325,7 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
 
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__list::before,
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list::before {
-  background: #FAFAF8 !important;
+  background: #9FA39B !important;
 }
 
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__list:hover::before,
