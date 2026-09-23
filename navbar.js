@@ -701,6 +701,57 @@
     else bar.removeAttribute("data-enc-nav-open");
   }
 
+  /* ── the bar is one hover band (handoff 2026-09-23) ──────────────────────────────────────
+     Radix opens a panel on its trigger and closes it as soon as the pointer is on neither the
+     trigger nor the panel — so the gaps beside the logo and before Book a call, which are part
+     of the same bar, shut it. The band keeps it: while the pointer is anywhere over the bar or
+     its panel, the open trigger is told the pointer is still on it; the panel closes only when
+     the pointer leaves both. The gaps never OPEN a panel — nothing is dispatched unless one is
+     already open — and Book a call closes it, as the design says. */
+  function band() {
+    var bar = document.querySelector("nav.super-navbar");
+    if (!bar || bar.hasAttribute("data-enc-band")) return;
+    bar.setAttribute("data-enc-band", "");
+
+    function openTrigger() {
+      return bar.querySelector('.super-navbar__list[data-state="open"], ' +
+        '.super-navbar__list[aria-expanded="true"]');
+    }
+    function panel() {
+      return document.querySelector(".super-navbar__list-content, .super-navbar__viewport");
+    }
+    function hold(t) {
+      t.dispatchEvent(new PointerEvent("pointerenter", { bubbles: true }));
+      t.dispatchEvent(new MouseEvent("mouseenter", { bubbles: true }));
+    }
+    function shut(t) {
+      t.dispatchEvent(new PointerEvent("pointerleave", { bubbles: true }));
+      t.dispatchEvent(new MouseEvent("mouseleave", { bubbles: true }));
+    }
+
+    var last = 0;
+    bar.addEventListener("pointermove", function (e) {
+      var t = openTrigger();
+      if (!t) return;
+      var actions = bar.querySelector(".super-navbar__actions");
+      if (actions && actions.contains(e.target)) { shut(t); return; }
+      // over a trigger radix is already holding it open; only the gaps need telling
+      if (e.target.closest && e.target.closest(".super-navbar__list")) return;
+      var now = Date.now();
+      if (now - last < 120) return;
+      last = now;
+      hold(t);
+    });
+
+    document.addEventListener("pointermove", function (e) {
+      var t = openTrigger();
+      if (!t) return;
+      var p = panel();
+      var inside = bar.contains(e.target) || (p && p.contains(e.target));
+      if (!inside) shut(t);
+    }, true);
+  }
+
   function tick() {
     Array.prototype.forEach.call(
       document.querySelectorAll(".super-navbar__list-content"), build);
@@ -709,12 +760,14 @@
     harvest();
     Array.prototype.forEach.call(triggersOf(), record);
     markCurrent();
+    band();
   }
 
   /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
      against its page from the console without opening the menu */
   window.encNav = { version: 4, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
-    ground: ground, isInk: isInk, groundUnder: groundUnder, wordmark: wearWordmark };
+    ground: ground, isInk: isInk, groundUnder: groundUnder, wordmark: wearWordmark,
+    band: band };
 
   var t = 0;
   new MutationObserver(function () { clearTimeout(t); t = setTimeout(tick, 0); })
