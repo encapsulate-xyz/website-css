@@ -89,18 +89,23 @@
      The deck is the collection whose cards are NOT links: the other one on a guide page is
      "View More Guides". */
   function deck(root) {
-    var found = [], col = null;
+    var found = [], col = null, best = 0;
+    var STEP = /^(\d+)\s*[·.\-]\s*(.*)$/;
     Array.prototype.forEach.call(root.querySelectorAll(".notion-collection"), function (c) {
-      var cards = c.querySelectorAll(".notion-collection-card");
-      if (cards.length < 2 || c.querySelectorAll(".notion-collection-card a[href]").length) return;
-      if (!col || cards.length > col.querySelectorAll(".notion-collection-card").length) col = c;
+      /* the deck is the collection whose cards are numbered steps. "The cards are not links" was
+         the first test and it stopped working the moment Link was switched on: Super renders a
+         card with a url property as an anchor, so both collections were links (2026-09-23). */
+      var n = 0;
+      Array.prototype.forEach.call(c.querySelectorAll(".notion-property__title"), function (t) {
+        if (STEP.test(textOf(t))) n++;
+      });
+      if (n > best) { best = n; col = c; }
     });
-    if (!col) return [];
+    if (!col || best < 2) return [];
     Array.prototype.forEach.call(col.querySelectorAll(".notion-collection-card"), function (card) {
       var name = textOf(card.querySelector(".notion-property__title"));
-      var m = /^(\d+)\s*[·.\-]?\s*(.*)$/.exec(name);
-      var n = m ? parseInt(m[1], 10) : parseInt(textOf(card.querySelector(".notion-property__number")), 10);
-      if (!n) return;                                   // the cover row carries no step
+      var m = STEP.exec(name);
+      if (!m) return;                                   // the cover slide carries no step
       /* the two text properties are Body and Watch; the longer one is the body. Reading them by
          position would break the moment a step has no note, and Super's property hashes differ
          from one guide's database to the next. */
@@ -108,10 +113,13 @@
         card.querySelectorAll(".notion-property__text"), textOf).filter(Boolean);
       texts.sort(function (a, b) { return b.length - a.length; });
       var img = card.querySelector("img");
-      var url = card.querySelector(".notion-property__url a[href], .notion-property a[href^='http']");
+      /* Link renders as the card's own anchor when the view shows it, and as a url property when
+         it does not, so take whichever is there */
+      var url = card.querySelector(".notion-property__url a[href]") ||
+                card.querySelector("a[href^='http']");
       found.push({
-        n: n,
-        title: (m && m[2]) || name,
+        n: parseInt(m[1], 10),
+        title: m[2] || name,
         body: texts[0] || "",
         watch: texts[1] || "",
         surface: textOf(card.querySelector(".notion-property__select .notion-pill")) ||
