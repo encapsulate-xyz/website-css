@@ -84,8 +84,14 @@ which screen the window is on.
    ```
 3. Open that address in a **second window** (⌘N, so the dashboard keeps its device), and select the
    **`Extension`** device — 360 × 788, DPR 2, Desktop.
-4. Check it before shooting: `innerWidth + "×" + innerHeight` → **360×788**, `devicePixelRatio`
-   → **2**. A wider width means the wallet loaded its popup layout instead of the panel one.
+4. Check it before shooting, in that window's console:
+
+   ```js
+   innerWidth + "×" + innerHeight + " @" + devicePixelRatio
+   ```
+
+   It must read **`360×788 @2`**. A wider width means the wallet loaded its popup layout instead
+   of the panel one.
 5. Elements → right-click `<html>` → **Capture node screenshot** → **720 × 1576**. (DevTools'
    ⌘⇧P Capture screenshot is not offered on a wallet target, and the wallet cannot capture itself:
    `captureVisibleTab` needs a permission it does not hold.)
@@ -93,9 +99,14 @@ which screen the window is on.
 **If the address opens the wallet's home instead of the screen you were on**, that screen belongs
 to a pending request and cannot be re-opened. Shoot it where it is: put the window on the Mac's
 Retina screen (a wallet window takes the pixel ratio of the screen it is on — on a 1× monitor the
-file comes out 360 × 788, not 720 × 1576), size it from its own console with
-`chrome.windows.getCurrent(w => chrome.windows.update(w.id, {width: w.width + 360 - innerWidth, height: w.height + 788 - innerHeight}))`,
-then Capture node screenshot as above.
+file comes out 360 × 788, not 720 × 1576), size it from its own console:
+
+```js
+chrome.windows.getCurrent(w => chrome.windows.update(w.id, {width: w.width + 360 - innerWidth, height: w.height + 788 - innerHeight}))
+```
+
+then Capture node screenshot as above. Every new prompt opens at the wallet's default size, so run
+it again on each one (↑ in the console brings it back).
 
 ### Opening the side panel as a page
 
@@ -114,8 +125,13 @@ the popup's).
 Find any other extension's id at `chrome://extensions` with Developer mode on, or from the URL of
 its **Details** page. Flask/beta/unpacked builds have different ids.
 
-**Check the page before shooting:** run the one-liner in it — it must read `360×788` at
-`devicePixelRatio` 2. A wider width means the popup layout has loaded.
+**Check the page before shooting**, in its console:
+
+```js
+innerWidth + "×" + innerHeight + " @" + devicePixelRatio
+```
+
+It must read `360×788 @2`; a wider width means the popup layout has loaded.
 
 ## Composing
 
@@ -167,8 +183,13 @@ Drawn flush inside the control's edge (the first form) it read as the button's o
 
 **Per slide:** pick the control with DevTools' inspect arrow (the element's own line, not a
 `::after`), run the saved Snippet `ring` (Sources → Snippets, ⌘↵), check it, then Capture node
-screenshot on `<html>`. Running it again replaces the last ring; clear it with
-`document.getElementById("enc-mark").remove()`; redraw after any resize.
+screenshot on `<html>`. Running it again replaces the last ring. To clear it:
+
+```js
+document.getElementById("enc-mark").remove()
+```
+
+Redraw after any resize — the ring does not follow the button.
 
 ```js
 (b => { const r = b.getBoundingClientRect(), g = 3, rad = [b, ...b.querySelectorAll("*")].map(e => parseFloat(getComputedStyle(e).borderRadius) || 0).find(x => x > 0) || 4, m = document.createElement("div"); document.getElementById("enc-mark")?.remove(); m.id = "enc-mark"; Object.assign(m.style, {position: "fixed", left: r.left - g - 2 + "px", top: r.top - g - 2 + "px", width: r.width + 2 * (g + 2) + "px", height: r.height + 2 * (g + 2) + "px", boxSizing: "border-box", border: "2px solid #000", borderRadius: rad + g + 2 + "px", pointerEvents: "none", zIndex: 2147483647}); document.body.append(m); })($0)
