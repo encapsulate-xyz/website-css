@@ -692,10 +692,13 @@
     if (!bar) return;
     var open = !!bar.querySelector('.super-navbar__list[data-state="open"], ' +
       '.super-navbar__list[aria-expanded="true"]');
+    /* the mark is settled on every tick, not only when the open state changes here: another
+       instance of this script may have set the attribute first (an older build left running on
+       the page), and then this one would return before the mark was put right */
+    wearWordmark(!open && bar.hasAttribute("data-enc-nav-ink"));
     if (open === bar.hasAttribute("data-enc-nav-open")) return;
     if (open) bar.setAttribute("data-enc-nav-open", "");
     else bar.removeAttribute("data-enc-nav-open");
-    wearWordmark(!open && bar.hasAttribute("data-enc-nav-ink"));
   }
 
   function tick() {
