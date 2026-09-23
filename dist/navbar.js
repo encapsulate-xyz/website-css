@@ -601,10 +601,19 @@
     return new PointerEvent(type, { bubbles: true, pointerType: "mouse" });
   }
 
+  /* The first tick runs before radix has attached its handlers: the events land on nothing, no
+     panel mounts, and a one-shot latch then kept the bar unmarked for the whole visit (seen live
+     2026-09-23 on /networks, served v253). So the latch only holds once a group has actually been
+     recorded; until then each tick may try again, no closer than 400ms apart. */
+  var harvestTries = 0, harvestAt = 0;
   function harvest() {
     if (harvested) return;
     var triggers = triggersOf();
     if (!triggers.length) return;
+    var now = Date.now();
+    if (now - harvestAt < 400 || harvestTries >= 25) return;
+    harvestAt = now;
+    harvestTries++;
     harvested = true;
     var bar = document.querySelector("nav.super-navbar");
     if (bar) bar.setAttribute("data-enc-harvest", "");
@@ -612,6 +621,7 @@
     (function step() {
       if (i >= triggers.length) {
         if (bar) bar.removeAttribute("data-enc-harvest");
+        if (!Object.keys(groups).length) { harvested = false; return; }   // nothing answered yet
         markCurrent();
         return;
       }
