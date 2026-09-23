@@ -762,10 +762,16 @@
     if (list.length) {
       tiles.setAttribute("aria-label", list.map(function (x) { return x.name; }).join(", "));
       box.appendChild(tiles);
+      box.appendChild(foot);
+      row.appendChild(box);
+      s.appendChild(row);
+    } else {
+      /* no view of the Networks set on the page: the card stands alone and the link to the
+         networks follows it, rather than an empty frame */
+      s.appendChild(row);
+      foot.classList.add("is-alone");
+      s.appendChild(foot);
     }
-    box.appendChild(foot);
-    row.appendChild(box);
-    s.appendChild(row);
 
     var lastW = 0;
     function layout() {

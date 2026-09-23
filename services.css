@@ -601,7 +601,7 @@
   line-height: 1.02;
   letter-spacing: -0.045em;
   color: #C9C9C4;
-  max-width: 9.3em;   /* the design's 16ch, in em */
+  max-width: 10.56em;   /* the design's 16ch, in em (Outfit 600: 1ch = 0.66em) */
   text-wrap: pretty;
 }
 .enc-svc__hole {
@@ -666,7 +666,7 @@
   line-height: 1.02 !important;
   letter-spacing: -0.04em !important;
   color: var(--svc-ink) !important;
-  max-width: 8.6em !important;   /* the design's 16ch, in em */
+  max-width: 10.56em !important;   /* the design's 16ch, in em (Outfit 600: 1ch = 0.66em) */
   text-wrap: balance;
 }
 .enc-svc__band p.enc-svc__asklead {
@@ -747,6 +747,7 @@
   padding: 0 8px;
   margin-top: auto;
 }
+.enc-svc__setfoot.is-alone { justify-content: flex-start; padding: 0; margin-top: 0; }
 .enc-svc__band .enc-svc__setstatus { font-size: 10px; }
 .enc-svc__band .enc-svc__setstatus.is-on { color: var(--svc-ink); }
 
