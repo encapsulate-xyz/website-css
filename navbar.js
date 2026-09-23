@@ -631,7 +631,15 @@
     var bar = document.querySelector("nav.super-navbar");
     if (!bar) return "";
     var r = bar.getBoundingClientRect();
-    var n = document.elementFromPoint(Math.max(8, r.left + 24), r.bottom + 8);
+    /* elementsFromPoint, not elementFromPoint: the bar itself is the topmost thing at its own
+       line, and walking up from it leaves its subtree without ever reaching what is under it */
+    var stack = document.elementsFromPoint
+      ? document.elementsFromPoint(Math.max(8, r.left + 24), r.bottom + 8)
+      : [document.elementFromPoint(Math.max(8, r.left + 24), r.bottom + 8)];
+    var n = null, i;
+    for (i = 0; i < stack.length; i++) {
+      if (stack[i] && !bar.contains(stack[i])) { n = stack[i]; break; }
+    }
     while (n && n !== document.documentElement) {
       if (bar.contains(n)) { n = n.parentElement; continue; }
       var bg = getComputedStyle(n).backgroundColor;
