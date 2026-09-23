@@ -302,6 +302,22 @@ bar is on every page, so there is no block to read; the same exception as the fo
 drawer's copy. Add a page to the menu in Super and it appears; give it a CONTENT entry and it also
 carries its line.
 
+**The ink bar at rest** (handoff, read 2026-09-23): labels `#C9C9C4` with the caret at `#9FA39B`,
+paper on hover over a `rgba(250,250,248,.1)` wash and **no hairline** — the design rings an item on
+paper only; an **opaque `#373834` track** on a `rgba(250,250,248,.18)` border, so the cover's discs
+do not show through it; Book a call keeps the inset lift and drops the shadow under it; the current
+page's pill is paper on both grounds. The geometry is the same on both: 44px, 15px, 12px, 10px.
+Opening a menu is a **colour-only change, .16s**, and the whole bar turns paper on ink too, so bar
+and panel read as one sheet; the panel itself is paper everywhere. The change list for that round
+said "paper type on the nav items", which read as `#FAFAF8` at rest — the file says otherwise, and
+the file is what the values come from.
+
+**The bar is one hover band.** Radix closes a panel the moment the pointer is on neither the
+trigger nor the panel, so the gaps beside the logo and before the CTA shut it. `navbar.js`
+`band()` holds it open while the pointer is anywhere over the bar or its panel — the gaps never
+*open* one, since nothing is dispatched unless a panel is already open — and hovering Book a call
+closes it, as the design does.
+
 Because the bar lies over the page, **the cover's content starts 96px down** (§14 adds the bar's
 64 to its own top padding) and a page that opens on ink takes the bar's on-ink variants until a
 menu opens: labels `#C9C9C4`, the pill group on the .06 wash, and **`svg/wordmark-reversed.svg`
