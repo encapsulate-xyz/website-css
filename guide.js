@@ -4,9 +4,9 @@
    one band per step carrying the number, the surface it happens on, the title, the body, the
    "Watch out" note and the capture; then an ink close with the next guide.
 
-   Everything is Notion's. The captures are the guide's own slide gallery, in file order. Each
-   step's words are a toggle on the guide page, named "01 · Unlock Keplr", holding the body, the
-   surface as a link, and the note as a callout. The title and the lede are properties of the
+   Everything is Notion's. A step is one row of the guide's own slide database — Name
+   ("01 · Unlock Keplr"), Step, Body, Watch, Surface and Link, with the capture as its Cover — so
+   a step's picture and its words are one record. The title and the lede are properties of the
    Guides Database row, which Super renders on /guides and not on the guide — the same as the
    blog post page, so they are read from the index with one fetch. The page's own shared words
    (the crumb, "Watch out", the close band) are a "Guide page copy" toggle on /guides.
@@ -86,8 +86,7 @@
      be shown on that gallery's view — the API cannot switch a view's properties on — and a guide
      whose slides carry none of them is simply left as it was.
 
-     The deck is the collection whose cards are NOT links: the other one on a guide page is
-     "View More Guides". */
+     The deck is found by content — the collection whose cards are numbered steps. */
   function deck(root) {
     var found = [], col = null, best = 0;
     var STEP = /^(\d+)\s*[·.\-]\s*(.*)$/;
