@@ -24,8 +24,9 @@ about 6px.
 |---|---|---|---|---|
 | Keplr and MetaMask | **360 × 788** | 2 | 720 × 1576 | 360:788 |
 
-The wallet is shot in **its approval window**, resized to 360 × 788 (below), and the dashboard with
-the `Guide dashboard` device — two separate setups. 788 rather than 720 (a 1:2 frame): in a
+The wallet is shot from **its own page in a second window with the `Extension` device** (below),
+the dashboard with `Guide dashboard` — one device each, both DPR 2, so neither depends on which
+monitor the window is on. 788 rather than 720 (a 1:2 frame): in a
 band-height frame 360 × 788 is shown at **99%** — the wallet's 14px type at 13.9px and the 2× file
 pixel-sharp — where 360 × 720 in a 1:2 frame is enlarged to 108% and goes slightly soft.
 
@@ -48,6 +49,7 @@ optional: at DPR 1 the captures are soft once scaled into the canvas.
 | Device | Size | DPR | For |
 |---|---|---|---|
 | `Guide dashboard` | 1400 × 788 | 2 | dashboards, explorers, any web page — the capture *is* the slide |
+| `Extension` | 360 × 788 | 2 | the wallet's own screens, opened as a page in a second window |
 
 Why 1400: Keplr's dashboard changes layout at 1280px (then 1024, 768, 640), so anything narrower
 captures its tablet layout. Browser zoom stays at **100%** — zoom changes the app's layout.
@@ -67,33 +69,38 @@ Measured 2026-09-22: **Keplr and MetaMask both `360×944`** — the side panel, 
 can move between popup and side panel with an update — re-run the one-liner when starting a new
 guide set; a height over 600 means side panel.
 
-### Shooting a wallet step — the approval window (2026-09-22)
+### Shooting a wallet step — the wallet's page in a second window (2026-09-23)
 
-1. On the dashboard (with `Guide dashboard` selected), click the button that asks the wallet —
-   the prompt opens in its own small window.
-2. Right-click inside that window → **Inspect**. Its DevTools opens as a separate window.
-3. In that DevTools' **Console**:
-   `chrome.windows.getCurrent(w => chrome.windows.update(w.id, {width: w.width + 360 - innerWidth, height: w.height + 788 - innerHeight}))`
-   then `innerWidth + "×" + innerHeight` → **360×788** and `devicePixelRatio` → **2**. A wallet window takes
-   the pixel ratio of **the screen it is on**: on a 1× external monitor (1920 × 1080) the capture
-   comes out 360 × 788. Drag it to the Mac's Retina screen first (measured 2026-09-22). (run the first line again if a pixel off).
-4. **Shoot.** DevTools' own Capture screenshot is not offered for a wallet window ("No commands
-   found"), and the wallet may not capture itself (`captureVisibleTab` needs a permission Keplr
-   lacks). So, in order:
-   - Elements → right-click `<html>` → **Capture node screenshot** (works, 2026-09-22); or
-   - in the console, `chrome.windows.getCurrent(w => console.log(\`screencapture -x -R${w.left},${w.top + w.height - innerHeight},${innerWidth},${innerHeight} ~/Downloads/wallet-step.png\`))`
-     prints a `screencapture` command for exactly the wallet's area, below the title bar; run it
-     in Terminal (main display only). Either gives **720 × 1576**.
+The wallet still opens while the dashboard tab is in device mode: `Guide dashboard` emulates the
+page, not the browser. So the wallet's own screen is **re-opened as a page with the `Extension`
+device**, and device emulation forces DPR 2 on any monitor — no window resizing, no dependence on
+which screen the window is on.
 
-Every new prompt opens at the wallet's default size again, so repeat 2–4 each time (↑ in the
-console brings the line back). The toolbar popup cannot be sized this way — Chrome caps it at 600
-tall — so screens opened from the wallet icon are shot the same way from the expanded window or
-the side panel, sized with the same line.
+1. On the dashboard (with `Guide dashboard` selected), click the button that asks the wallet. The
+   wallet opens — its own window, or the side panel.
+2. Right-click inside the wallet → **Inspect**, and in that console:
+   ```js
+   location.href
+   ```
+3. Open that address in a **second window** (⌘N, so the dashboard keeps its device), and select the
+   **`Extension`** device — 360 × 788, DPR 2, Desktop.
+4. Check it before shooting: `innerWidth + "×" + innerHeight` → **360×788**, `devicePixelRatio`
+   → **2**. A wider width means the wallet loaded its popup layout instead of the panel one.
+5. Elements → right-click `<html>` → **Capture node screenshot** → **720 × 1576**. (DevTools'
+   ⌘⇧P Capture screenshot is not offered on a wallet target, and the wallet cannot capture itself:
+   `captureVisibleTab` needs a permission it does not hold.)
+
+**If the address opens the wallet's home instead of the screen you were on**, that screen belongs
+to a pending request and cannot be re-opened. Shoot it where it is: put the window on the Mac's
+Retina screen (a wallet window takes the pixel ratio of the screen it is on — on a 1× monitor the
+file comes out 360 × 788, not 720 × 1576), size it from its own console with
+`chrome.windows.getCurrent(w => chrome.windows.update(w.id, {width: w.width + 360 - innerWidth, height: w.height + 788 - innerHeight}))`,
+then Capture node screenshot as above.
 
 ### Opening the side panel as a page
 
-Only for checking a layout — the set itself is shot in the approval window (above). Open **the side
-panel's own file**, not `popup.html`, sized with the console line. They are
+Only when `location.href` is not to hand — the set itself is shot from that address (above). Open
+**the side panel's own file**, not `popup.html`, with the `Extension` device selected. They are
 different layouts: MetaMask's `popup.html` holds itself at 400 wide whatever the device, and only
 its side-panel file lays out at 360 (measured 2026-09-22). The file name is
 `side_panel.default_path` in `chrome-extension://<id>/manifest.json` (`action.default_popup` is
@@ -107,8 +114,8 @@ the popup's).
 Find any other extension's id at `chrome://extensions` with Developer mode on, or from the URL of
 its **Details** page. Flask/beta/unpacked builds have different ids.
 
-**Check the page before shooting:** run the one-liner in it — it must read `360×788`. A wider
-width means the popup layout has loaded.
+**Check the page before shooting:** run the one-liner in it — it must read `360×788` at
+`devicePixelRatio` 2. A wider width means the popup layout has loaded.
 
 ## Composing
 
