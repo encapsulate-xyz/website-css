@@ -183,17 +183,19 @@ Drawn flush inside the control's edge (the first form) it read as the button's o
 
 **Per slide:** pick the control with DevTools' inspect arrow (the element's own line, not a
 `::after`), run the saved Snippet `ring` (Sources → Snippets, ⌘↵), check it, then Capture node
-screenshot on `<html>`. Running it again replaces the last ring. To clear it:
+screenshot on `<html>`.
+
+```js
+(b => { const r = b.getBoundingClientRect(), g = 3, rad = [b, ...b.querySelectorAll("*")].map(e => parseFloat(getComputedStyle(e).borderRadius) || 0).find(x => x > 0) || 4, m = document.createElement("div"); document.getElementById("enc-mark")?.remove(); m.id = "enc-mark"; Object.assign(m.style, {position: "fixed", left: r.left - g - 2 + "px", top: r.top - g - 2 + "px", width: r.width + 2 * (g + 2) + "px", height: r.height + 2 * (g + 2) + "px", boxSizing: "border-box", border: "2px solid #000", borderRadius: rad + g + 2 + "px", pointerEvents: "none", zIndex: 2147483647}); document.body.append(m); })($0)
+```
+
+Running it again replaces the last ring. To clear it:
 
 ```js
 document.getElementById("enc-mark").remove()
 ```
 
 Redraw after any resize — the ring does not follow the button.
-
-```js
-(b => { const r = b.getBoundingClientRect(), g = 3, rad = [b, ...b.querySelectorAll("*")].map(e => parseFloat(getComputedStyle(e).borderRadius) || 0).find(x => x > 0) || 4, m = document.createElement("div"); document.getElementById("enc-mark")?.remove(); m.id = "enc-mark"; Object.assign(m.style, {position: "fixed", left: r.left - g - 2 + "px", top: r.top - g - 2 + "px", width: r.width + 2 * (g + 2) + "px", height: r.height + 2 * (g + 2) + "px", boxSizing: "border-box", border: "2px solid #000", borderRadius: rad + g + 2 + "px", pointerEvents: "none", zIndex: 2147483647}); document.body.append(m); })($0)
-```
 
 It is a separate fixed layer, not a shadow on the control — Keplr's buttons sit in boxes that clip
 anything past their edge — and it takes the first rounded corner inside the picked element, so
