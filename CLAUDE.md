@@ -615,7 +615,7 @@ fill rising with the reader's progress; an ink close with the next guide.
 |---|---|
 | A step: its capture and its words | **one row of the guide's own slide database** — `Name` ("01 · Unlock Keplr"), `Step`, `Body`, `Watch`, `Surface`, `Link`, and the capture as the row's `Cover`. Everything about a step is one record (asked for 2026-09-22; the copy was briefly in toggles on the page and that is gone) |
 | The head's Title and Lede | **properties of the `Guides Database` row** (added 2026-09-22) — Super does not render a row's properties on its own page, so they are read off /guides, as post.js reads the blog index |
-| The crumb, "Watch out", "{N} screens", the close band | the **"Guide page copy" toggle on /guides**, `key · value` lines — one place for 33 guides. `{n}` is the step count, `{N}` the same spelled ("Eight screens"), `{next}` and `{chain}` the next guide |
+| The crumb, "Watch out", "{N} screens", the close band, the Discord line | the **"Guide page copy" toggle on /guides**, `key · value` lines — one place for 33 guides. `{n}` is the step count, `{N}` the same spelled ("Eight screens"), `{next}` and `{chain}` the next guide |
 
 **Each guide's slide view must show Step, Body, Watch, Surface and Link** — the API cannot switch
 a view's properties on, and it is one view per guide. A guide whose slides carry none of them is
@@ -628,6 +628,12 @@ on a step with no note, and Super's property hashes differ from one guide's data
 A mark is the `data-full-size` on the Networks set's and the Wallet Set's own cards on /guides,
 never a guide card, or "Axelar" answers with the guide's cover instead of the chain's glyph.
 
+**The close band carries a way out** (handoff, 2026-09-23): "Need help? Ask on Discord" on its own
+line under the two buttons, so it is not weighed against them — its words and its URL are two more
+lines of the copy toggle (`help`, `help url`). The **capture frame is 4px on paper with a 1px ink
+border** — the selected-state hairline, because on this page the capture is the one thing to look
+at; it was 12px on ink with a `#D9D9D2` ring until that pass.
+
 **The frame follows the capture**: a wallet shot is tall (360:788) and stands beside the note; a
 dashboard shot is wide (16:9) and runs under the header. `guide.js` reads the file's own
 proportions on load and sets `[data-enc-shot]`. The band is one grid, so opening a note never
@@ -638,7 +644,14 @@ squeezes the capture. Sizes and how the captures are taken: `notion/guide-screen
 "Check us before you pick" is split into *Find us in the list* and *Check our numbers*. The row's
 `Step` is what the picker and the head count, so it follows the slides.
 
-**The trap paid for:** the build has to claim the page
+**Three traps paid for.** The deck was found by "the cards that are not links" until `Link` was
+switched on — Super renders a card with a url property as an anchor, so both collections became
+links and the page fell back to raw Notion; it is found by **numbered titles** now. The body and
+the note were told apart by length, which swapped them on every step whose note was the longer
+line; they are read **in the view's order** (Body, then Watch — Super drops an empty property, so
+a step with no note simply has one text), and a text repeating the step's title is skipped, which
+is a `Title` property left on beside `Name` (the slide database had one; it was deleted). And the
+build has to claim the page
 (`[data-enc-guide]`) **before** the index fetch — the observer fires again while it is in flight
 and two builds appended two sets of bands.
 
