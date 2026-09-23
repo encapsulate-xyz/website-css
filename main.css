@@ -189,7 +189,8 @@ body {
    filling the middle column, its note in the third, and a foot with the group's own line. */.super-root nav.super-navbar {
   /* Super sizes the bar from its own variable; the design's bar is 64 */
   --navbar-height: 64px;
-  height: auto !important;
+  box-sizing: border-box !important;
+  height: 64px !important;
   min-height: 64px !important;
   /* THE BAR TAKES NO SPACE. 4f lays it over the page: the cover starts at the top edge and the
      bar is part of it, transparent, scrolling away with it. The negative margin is the design's
@@ -221,7 +222,10 @@ body {
   grid-template-columns: 1fr auto 1fr !important;
   align-items: center !important;
   gap: 6px !important;
-  height: 64px !important;
+  /* 63, not 64: the design's bar is 64 tall WITH its 1px rule (border-box), and the rule sits on
+     the nav around this box — at 64 the bar measured 65 and left a pixel of itself in the flow
+     under the -64px margin (2026-09-23) */
+  height: 63px !important;
   max-width: none !important;
   margin: 0 !important;
   padding: 8px 44px !important;   /* the design's own gutter */
