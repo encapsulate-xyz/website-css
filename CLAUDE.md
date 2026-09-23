@@ -303,9 +303,16 @@ drawer's copy. Add a page to the menu in Super and it appears; give it a CONTENT
 carries its line.
 
 Because the bar lies over the page, **the cover's content starts 96px down** (§14 adds the bar's
-64 to its own top padding) and a page that opens on ink — a blog post, `parent-page__blog` —
-takes the bar's on-ink variants until a menu opens: labels `#C9C9C4`, the pill group on the .06
-wash, and Super's logo inverted to paper.
+64 to its own top padding) and a page that opens on ink takes the bar's on-ink variants until a
+menu opens: labels `#C9C9C4`, the pill group on the .06 wash, and **`svg/wordmark-reversed.svg`
+in place of Super's logo** — the brand's own reversed drawing, not the logo turned inside out by
+a filter (the user's file, 2026-09-23; the filter is left only for the instant before the swap).
+**Which pages those are is measured, not listed:** `navbar.js` `ground()` reads the ground under
+the bar's own line — `elementsFromPoint`, since the bar is the topmost thing at that line and
+walking up from it never reaches what it lies over — and marks the bar `[data-enc-nav-ink]` when
+its luminance is under half. It was keyed off Super's `parent-page__blog` until then, which is
+why a guide page kept the paper bar over its ink head; that class stays as the no-JS fallback
+for a post. The bar scrolls away with the page, so the measurement is only taken at the top.
 
 Three traps: **Super's `.super-navbar__list-content` is a flex row with `align-items: flex-start`**,
 which it keeps when the direction is turned to column — the 4f grid inside then shrinks to its
