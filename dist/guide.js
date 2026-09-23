@@ -105,12 +105,15 @@
       var name = textOf(card.querySelector(".notion-property__title"));
       var m = STEP.exec(name);
       if (!m) return;                                   // the cover slide carries no step
-      /* the two text properties are Body and Watch; the longer one is the body. Reading them by
-         position would break the moment a step has no note, and Super's property hashes differ
-         from one guide's database to the next. */
+      /* Body then Watch, in the view's own order — Super renders a card's properties in it and
+         drops an empty one, so a step with no note simply has one text. Sorting them by length
+         was tried first and swapped the two on any step whose note was the longer line
+         (2026-09-23). A text that repeats the step's title is skipped: that is a Title property
+         left switched on beside Name. */
       var texts = Array.prototype.map.call(
-        card.querySelectorAll(".notion-property__text"), textOf).filter(Boolean);
-      texts.sort(function (a, b) { return b.length - a.length; });
+        card.querySelectorAll(".notion-property__text"), textOf).filter(function (t) {
+          return t && t !== (m[2] || "") && t !== name;
+        });
       var img = card.querySelector("img");
       /* Link renders as the card's own anchor when the view shows it, and as a url property when
          it does not, so take whichever is there */
