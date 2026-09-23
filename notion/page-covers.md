@@ -97,8 +97,8 @@ Scroll ↓
 ```markdown
 Encapsulate · Services
 What we do
-# What we actually do.
-Node operations for new chains — provisioning, upgrades, monitoring, and the on-call that goes with them.
-Node operations
+# We ship tools, not promises.
+Public dashboards, open-source playbooks, alert bots and monitoring — every one running right now.
+Dashboards · Playbooks · Bots · Monitoring
 Scroll ↓
 ```
