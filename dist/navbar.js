@@ -659,18 +659,15 @@
     return (0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2]) < 128;
   }
   var WORDMARK = BASE ? BASE + "svg/wordmark-reversed.svg" : "";
-  function ground() {
+  /* the reversed wordmark is a drawing of its own, not Super's logo turned inside out by a
+     filter — the user's file, so the mark on ink is the brand's own (2026-09-23). It is worn
+     only while the bar is actually on ink: the moment a menu opens the bar takes its paper
+     ground, and a paper mark on paper is invisible (reported the same day). */
+  function wearWordmark(on) {
     var bar = document.querySelector("nav.super-navbar");
-    if (!bar || window.scrollY > 8) return;
-    var ink = isInk(groundUnder());
-    if (ink === bar.hasAttribute("data-enc-nav-ink")) return;
-    if (ink) bar.setAttribute("data-enc-nav-ink", "");
-    else bar.removeAttribute("data-enc-nav-ink");
-    /* the reversed wordmark is a drawing of its own, not Super's logo turned inside out by a
-       filter — the user's file, so the mark on ink is the brand's own (2026-09-23) */
-    var img = bar.querySelector(".super-navbar__logo img");
+    var img = bar && bar.querySelector(".super-navbar__logo img");
     if (!img || !WORDMARK) return;
-    if (ink) {
+    if (on) {
       if (!img.hasAttribute("data-enc-logo")) img.setAttribute("data-enc-logo", img.src);
       if (img.src !== WORDMARK) img.src = WORDMARK;
       img.removeAttribute("srcset");
@@ -678,6 +675,14 @@
       img.src = img.getAttribute("data-enc-logo");
       img.removeAttribute("data-enc-logo");
     }
+  }
+  function ground() {
+    var bar = document.querySelector("nav.super-navbar");
+    if (!bar || window.scrollY > 8) return;
+    var ink = isInk(groundUnder());
+    if (ink) bar.setAttribute("data-enc-nav-ink", "");
+    else bar.removeAttribute("data-enc-nav-ink");
+    wearWordmark(ink && !bar.hasAttribute("data-enc-nav-open"));
   }
 
   /* the bar takes its paper ground only while a menu is open — over a cover it is otherwise
@@ -690,6 +695,7 @@
     if (open === bar.hasAttribute("data-enc-nav-open")) return;
     if (open) bar.setAttribute("data-enc-nav-open", "");
     else bar.removeAttribute("data-enc-nav-open");
+    wearWordmark(!open && bar.hasAttribute("data-enc-nav-ink"));
   }
 
   function tick() {
@@ -705,7 +711,7 @@
   /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
      against its page from the console without opening the menu */
   window.encNav = { version: 4, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
-    ground: ground, isInk: isInk, groundUnder: groundUnder };
+    ground: ground, isInk: isInk, groundUnder: groundUnder, wordmark: wearWordmark };
 
   var t = 0;
   new MutationObserver(function () { clearTimeout(t); t = setTimeout(tick, 0); })
