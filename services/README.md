@@ -16,14 +16,6 @@ Screenshots are in `shots/`, taken at **1400×788 @2x** (2800×1576) in headless
 | Solana Network Visualization | Solana | https://graph.solana.mainnet.encapsulate.xyz | The Solana staking ecosystem as a graph: network → clients → validators → top delegators, sized by stake; hover for stake, commission, Jito commission, APY, version, country | Live | `shots/solana-graph.png` |
 | Aptos Validator Network | Aptos | https://graph.aptos.mainnet.encapsulate.xyz | The Aptos validator set on a map, from Aptos's own `validator_stats_v2.json` | Live (URL answers 200) — see open questions | — |
 
-Also live, and not on the first list — say whether they belong on the page:
-
-| Tool | Chain | URL | What it is |
-|---|---|---|---|
-| Celestia node checker | Celestia | https://healthchecker.celestia.mainnet.encapsulate.xyz | Checks a Celestia node's health (repo public: `celestia-node-checker-ui`) |
-| Celestia Pay-for-Blob | Celestia | https://pfb.celestia.mainnet.encapsulate.xyz | Submit a PayForBlob transaction from the browser (repo public: `celestia-pay-for-blob-ui`) |
-| Rewards calculator | Multi-chain | https://calculator.encapsulate.xyz | Staking rewards calculator |
-
 ---
 
 ## Playbooks

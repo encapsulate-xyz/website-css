@@ -307,6 +307,11 @@ Because the bar lies over the page, **the cover's content starts 96px down** (§
 menu opens: labels `#C9C9C4`, the pill group on the .06 wash, and **`svg/wordmark-reversed.svg`
 in place of Super's logo** — the brand's own reversed drawing, not the logo turned inside out by
 a filter (the user's file, 2026-09-23; the filter is left only for the instant before the swap).
+The reversed mark is worn **only while the bar is actually on ink**: the moment a menu opens the
+bar takes its paper ground, and a paper mark on paper is invisible (reported 2026-09-23), so
+Super's own logo goes back for that moment. `paint()` settles the mark on every tick rather than
+only when the open state changes there — an older build left running on the page can set the
+attribute first, and this one would return before putting the mark right.
 **Which pages those are is measured, not listed:** `navbar.js` `ground()` reads the ground under
 the bar's own line — `elementsFromPoint`, since the bar is the topmost thing at that line and
 walking up from it never reaches what it lies over — and marks the bar `[data-enc-nav-ink]` when
@@ -677,6 +682,11 @@ and two builds appended two sets of bands.
 Snapping is the design's, moved to the document: Super is the scroller, so
 `scroll-snap-type: y mandatory` is set on `html` for this page and every band is a stop, the
 footer included, off under 701px and with reduced motion.
+
+**The page opened at its foot** until 2026-09-23: ten screens are inserted above the reader on
+build, and Chrome's scroll anchoring answered by holding what they were looking at — the footer —
+in place. `overflow-anchor: none` for the page, and guide.js restores the top when the build
+started there (a `#block-…` link is left alone).
 
 ## The guides picker (/guides, guides.css + guides.js, 2026-09-16)
 
