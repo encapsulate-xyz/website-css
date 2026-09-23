@@ -505,6 +505,13 @@ column is a Notion table of contents and whose second is the post (banner image,
 quote block, the H1, then the body) — followed by "More Blog Posts", a related collection, a
 button row and the newsletter.
 
+**The post is the column block carrying Notion's contents**, not the page's first one. The XMTP
+post keeps its article at the *foot* of its page, after "More Blog Posts", so the first column
+list there is a divider beside the "View More Blog Posts" button — and that button was the entire
+article until 2026-09-23. Checked across all thirty-nine posts: every one is found by its contents
+block, and only XMTP changes (1 block → 50). The longest column list is the fallback if a post has
+no contents block.
+
 `post.js` re-reads that into the design and writes no copy into a post:
 
 - **The head** is ink and one screen tall (`min(92vh, 940px)`): the meta line, the title at
