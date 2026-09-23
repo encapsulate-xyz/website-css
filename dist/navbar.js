@@ -593,6 +593,14 @@
 
   /* Open each group once, behind a hidden viewport, so its links are known before a reader
      touches the bar. Radix mounts a panel on pointerenter and keeps it mounted. */
+  /* Radix answers a pointer event only when it came from a mouse (`whenMouse`: pointerType
+     === "mouse"), and a PointerEvent built without one reports "" — so every synthetic enter and
+     leave was ignored, the harvest opened no panel, no group was recorded and no item could be
+     marked as the page you are on (2026-09-23). */
+  function mouse(type) {
+    return new PointerEvent(type, { bubbles: true, pointerType: "mouse" });
+  }
+
   function harvest() {
     if (harvested) return;
     var triggers = triggersOf();
@@ -609,11 +617,12 @@
       }
       var t = triggers[i++];
       if (record(t)) { step(); return; }
-      t.dispatchEvent(new PointerEvent("pointerenter", { bubbles: true }));
+      t.dispatchEvent(mouse("pointerenter"));
+      t.dispatchEvent(mouse("pointermove"));
       t.dispatchEvent(new MouseEvent("mouseenter", { bubbles: true }));
       setTimeout(function () {
         record(t);
-        t.dispatchEvent(new PointerEvent("pointerleave", { bubbles: true }));
+        t.dispatchEvent(mouse("pointerleave"));
         t.dispatchEvent(new MouseEvent("mouseleave", { bubbles: true }));
         setTimeout(step, 30);
       }, 90);
@@ -721,11 +730,12 @@
       return document.querySelector(".super-navbar__list-content, .super-navbar__viewport");
     }
     function hold(t) {
-      t.dispatchEvent(new PointerEvent("pointerenter", { bubbles: true }));
+      t.dispatchEvent(mouse("pointerenter"));
+      t.dispatchEvent(mouse("pointermove"));
       t.dispatchEvent(new MouseEvent("mouseenter", { bubbles: true }));
     }
     function shut(t) {
-      t.dispatchEvent(new PointerEvent("pointerleave", { bubbles: true }));
+      t.dispatchEvent(mouse("pointerleave"));
       t.dispatchEvent(new MouseEvent("mouseleave", { bubbles: true }));
     }
 
