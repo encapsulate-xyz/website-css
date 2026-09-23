@@ -138,7 +138,10 @@
 .enc-svc__spacer,.enc-svc__dot{display: none;}
 .enc-svc__bots{grid-template-columns: 1fr;}
 .enc-svc__seam{position: relative;left: auto;top: auto;transform: none;width: auto;margin: 0 20px 28px;}
-.enc-svc__dashhead{flex-wrap: wrap;}
+.enc-svc__dashhead{flex-direction: column;align-items: flex-start;}
+.enc-svc__dashhead > .enc-svc__head{flex: none;}
+.enc-svc__botpills{flex-wrap: wrap;justify-content: flex-end;}
+.enc-svc__botpill{white-space: nowrap;}
 }
 @media (prefers-reduced-motion: reduce){.enc-svc__band *{transition-duration: 0.01ms !important;}
 }

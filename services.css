@@ -768,7 +768,12 @@
     width: auto;
     margin: 0 20px 28px;
   }
-  .enc-svc__dashhead { flex-wrap: wrap; }
+  /* the head takes the row and the pills go under it, as the design's wrapping row does when
+     its 56ch head no longer fits beside them */
+  .enc-svc__dashhead { flex-direction: column; align-items: flex-start; }
+  .enc-svc__dashhead > .enc-svc__head { flex: none; }
+  .enc-svc__botpills { flex-wrap: wrap; justify-content: flex-end; }
+  .enc-svc__botpill { white-space: nowrap; }
 }
 
 @media (prefers-reduced-motion: reduce) {

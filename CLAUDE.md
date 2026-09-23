@@ -93,6 +93,7 @@ User rules that stand on every task:
 | `post.css`, `post.js` | /blog/&lt;post&gt; — every post page (design *Blog Post Page*, variant J). A post has no page head of its own, so both are in the site head and scoped by path | site Head |
 | `guide.css`, `guide.js` | /guides/&lt;stage&gt;/&lt;chain&gt; — every guide page (design *Staking Guide Variation 1d*). A guide has no page head of its own, so both are in the site head and scoped by path | site Head |
 | `network.css`, `network.js` | /networks (network.js pages the Network Count panels, same gesture rules as home.js decks) | its page Head |
+| `services.css`, `services.js` | /services — four services and the ask under the cover (design *Services Categories Chosen*), built from the page's callouts, four inline tables and a copy toggle | page Head + site Head |
 | `investments.css`, `investments.js` | /investments — two bands (design *Investments Page*): the thesis and the running band of positions on ink, the six questions on paper | page Head + site Head |
 | `governance.css` + `governance.js` (the record page: count band, pillars, controls, rows), `blog.css`, `brand.css`, `contact-us.css`, `guides.css`, `investments.css`, `security.css`, `services.css` | each page's CSS, moved out of Super's page Code panels on 2026-09-15 (old cover rules removed, the rest kept as it was) | each page's Head |
 | `svg/`, `img/` | every drawing and icon the CSS references, served from jsDelivr beside the CSS | referenced as `../svg/…` / `../img/…` from `dist/` |
@@ -406,10 +407,11 @@ Alerting*, and **Playbooks**, a section added to the Services page in Notion on 
 the design lists it and the page had none. **minima frosts the navbar** (`backdrop-filter: blur(12px)` plus a white wash) — 4f's bar is
 plain glass, so both are cancelled, or whatever the bar lies over is smeared.
 
-**The reconstruction banner is on /services only** (§15b, 2026-09-21). Super's Body code is
-site-wide and there is no per-page Body box, so the banner is hidden by default and shown again by
-the class Super puts on its own wrapper: `body:has(.super-content.page__services) .enc-banner`.
-Add a page to that selector as it goes under reconstruction. Watch the rule's own `display` — the
+**The reconstruction banner is on no page now** (§15b). It was on /services alone from
+2026-09-21 until that page was rebuilt on 2026-09-23. Super's Body code is site-wide and there is
+no per-page Body box, so the banner is hidden by default and shown again by the class Super puts
+on its own wrapper: `body:has(.super-content.page__<slug>) .enc-banner { display: flex; }` for a
+page going under reconstruction. Watch the rule's own `display` — the
 original `flex` sat after the `none` and kept it visible.
 
 **Footer 44b (§16 + footer.js).** Its own top edge carries the `rgba(250,250,248,.2)` paper
@@ -628,6 +630,51 @@ keeps showing the old file until the list is updated.
 two dead homepage background rules went with it on 2026-09-16. Keep large content images off jsDelivr: it is
 free for personal and commercial use with no bandwidth cap (20MB per file, 50MB per package), but it
 is a package CDN and sustained media traffic invites a fair-use review.
+
+## /services (2026-09-23, design *Services Categories Chosen*)
+
+Everything under the cover was deleted on 2026-09-23 (the old column lists: Governance Alerting,
+Network Visualization, Celestia Node Health Checker and PFB Submit UI, Faucet Bot, Aptos Validator
+Geographical Distribution, Super Sui, Protocol Level Dashboard, Custom Discord Bots, their images
+and "Contact Us" buttons, and the Playbooks heading and paragraph). The page is now, in Notion
+order: the cover, then six **band callouts** — each a Heading 2, texts and button callouts — with
+an **inline database after four of them**, then a **"Services page copy" toggle**:
+
+| Band callout | What it holds | Database after it |
+|---|---|---|
+| Dashboards `3e4e800a…81cf…` | H2, line | `Dashboards` — Name, Address, Status, Description, Link, **Capture** (the 1400×788 @2x shot), Order |
+| Playbooks `3e4e800a…8171…` | H2, line, then the seven steps as **Heading 3 + text** pairs | — |
+| Repositories `3e4e800a…81f4…` | the mono label, the paragraph, "All repositories on GitHub" | `Playbooks` — Name, Repository, Visibility (Public/Private), Description, Link (public only), **Glyph**, Order |
+| Bots `3e4e800a…8159…` | H2, line, "Chain", "Discord", "Add one to your server" | `Bot events` — Name (the pill), Event, **Earlier** (two log lines, one per line), Headline, Detail, Glyph, Order |
+| Monitoring `3e4e800a…8115…` | H2, line, the sentence with `___` for the hole, the resting line, two buttons | `Monitoring builds` — Name (the word), Repository, Description, Link, Order |
+| Ask `3e4e800a…8156…` | H2, lead, "Your chain", Book a call, All networks | — |
+
+`services.js` (site head) finds each band **by id**, reads the table after it **by header
+labels**, and sorts by **Order** — Super serves the rows newest first. The tables are API-made
+table views with every property shown, so nothing has to be switched on; **a table turned into a
+gallery would stop being read**. Each built band is inserted right after its callout and the
+callout is folded to no height (`[data-enc-anchor]`), not hidden, so `/services#block-<callout>` —
+the navbar's section links and the cover's "See services" — still lands on the band.
+
+- **Numbers** 01–04 are derived from the order of the headed bands; the repositories' big count is
+  the row count. The ask's lead starts with the number of chains in the set, spelled; the script
+  rewrites that first word from the set, so the Notion line reads right on its own ("Thirty-six").
+- **The ask's tiles are a linked view of the Networks set** placed anywhere on the page (the user
+  adds it — the API cannot create a linked view). It is found by content: the collection whose
+  rows carry a tier. One tile per chain name, sorted by Order, sized by Tier (god 3, high and
+  medium 2, low and filth 1). Without it the "Your chain" card stands alone with the link under it.
+- **The packing is the design's exact-rectangle algorithm**, which it checked for 8–30 columns. A
+  window past ~1800px lands on counts with no exact fit, so `pack()` retries one column fewer
+  until one packs — tested for every width 300–2600 in Node.
+- **Deviations, on purpose:** no `ch` caps on body or lead text (the ask's lead gets half the row);
+  the display sentence and the ask heading keep the design's 16ch as **10.56em** (Outfit 600's
+  `0` is 0.66em); under reduced motion the dashboards still follow the scroll, only without the
+  zoom (the design pinned the last board, which left the pills dead).
+- **Kept as drawn:** the tertiary link sits 6px above a primary beside it (the design's tertiary
+  carries `alignSelf: flex-start` inside a centred row), and "See it land" shows the previous
+  event's card dimmed while the new one flies — on the first press that is the third event.
+- The Aptos capture was missing on 2026-09-23 (its map is WebGL and renders black headless);
+  the frame shows the second paper until a `Capture` is added to the Aptos row.
 
 ## /investments (2026-09-21, design *Investments Page*)
 
@@ -1035,6 +1082,11 @@ it: `/guides`, `/security`, `/investments`, and since 2026-09-21 `/networks`, `/
 content keeps the padding — it is breathing space, and on the paper ground it reads as such.
 
 ## TODO — the Services tiles come from the menu, not the page (agreed 2026-09-22)
+
+**Half done (2026-09-23):** /services now has the Dashboards table (name, address, link,
+capture), so "Dashboards" can carry the design's "Live now" list read from it; the other three
+tiles still come from the menu.
+
 
 The navbar's third column for "Services and tooling" is the only one not read from its page: the
 four tool tiles are the Services group's own section links (`navbar.js` `build()`, `tools`),
