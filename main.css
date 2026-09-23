@@ -419,8 +419,10 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
 /* THE PANEL. Super positions a 320px card under the trigger; 4f is the full width of the bar. */.super-root .super-navbar__viewport-wrapper {
   /* from the bar's bottom edge, not a pixel above it: Super hangs the wrapper at 63px, which
      painted the panel over the bar's own hairline — the design keeps that rule visible between
-     bar and panel (its panel starts 10px up with a transparent top border, painting from 64) */
-  top: 100% !important;
+     bar and panel (its panel starts 10px up with a transparent top border, painting from 64).
+     100% of the containing block is the nav's padding box, which stops above its border, so the
+     border's own pixel is added back. */
+  top: calc(100% + 1px) !important;
   left: 0 !important;
   right: 0 !important;
   width: 100% !important;

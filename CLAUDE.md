@@ -318,6 +318,14 @@ trigger nor the panel, so the gaps beside the logo and before the CTA shut it. `
 *open* one, since nothing is dispatched unless a panel is already open — and hovering Book a call
 closes it, as the design does.
 
+**Read against the file element by element on 2026-09-23** (bar, track, item, caret, CTA, panel,
+ledger row, preview, third column, about, foot — every size, colour and string) and two pixels
+were off: the bar measured **65** (the design's 64 is border-box *with* its rule; the content
+row is 63 now, the nav 64), and Super hangs the panel at **63px**, painting it over the bar's own
+hairline, where the design paints from 64 and keeps the rule visible between bar and panel — the
+wrapper's `top` is `calc(100% + 1px)`, since 100% of an absolute box's containing block is the
+padding box, which stops above the border. Everything else matched.
+
 Because the bar lies over the page, **the cover's content starts 96px down** (§14 adds the bar's
 64 to its own top padding) and a page that opens on ink takes the bar's on-ink variants until a
 menu opens: labels `#C9C9C4`, the pill group on the .06 wash, and **`svg/wordmark-reversed.svg`
