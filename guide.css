@@ -328,15 +328,16 @@ body:has(.notion-root[data-enc-guide]) .notion-header { display: none !important
 }
 .enc-gd__note[hidden] { display: none; }
 
-/* the capture */
+/* the capture — 4px, on paper, with the selected-state ink hairline: on this page the capture is
+   the one thing to look at (handoff, 2026-09-23; it was 12px on ink with a #D9D9D2 ring) */
 .enc-gd__shot {
   position: relative;
   z-index: 1;
   margin: 24px 0 0;
-  border-radius: 12px;
+  border-radius: 4px;
   overflow: hidden;
-  background: var(--gd-ink);
-  border: 1px solid #D9D9D2;
+  background: var(--gd-paper);
+  border: 1px solid #000;
   align-self: flex-start;
   width: min(100%, 1180px, calc((100vh - 340px) * 16 / 9));
   aspect-ratio: 16 / 9;
@@ -438,6 +439,22 @@ body:has(.notion-root[data-enc-guide]) .notion-header { display: none !important
   margin-top: 6px;
   flex-wrap: wrap;
 }
+
+/* the way out for the stuck: its own line under the two buttons */
+.enc-gd a.enc-gd__help {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 10px;
+  min-height: 44px;
+  margin-top: 4px;
+  text-decoration: none !important;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.006em;
+  color: var(--gd-paper);
+}
+.enc-gd a.enc-gd__help:hover .enc-gd__badge { transform: translateX(3px); }
 
 /* the buttons are §07's, on ink */
 .enc-gd a.enc-gd__btn {

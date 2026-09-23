@@ -29,7 +29,9 @@
     "close title": "Staked with Encapsulate.",
     "close line": "Rewards accrue from the next block. Next up: {next}.",
     "next": "Next: {chain}",
-    "all": "All guides"
+    "all": "All guides",
+    "help": "Need help? Ask on Discord",
+    "help url": "https://discord.gg/q6cmGycxsr"
   };
   var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
   /* the design spells the count where it reads as a sentence ("Eight screens") and keeps digits
@@ -369,6 +371,18 @@
     all.href = INDEX;
     row.appendChild(all);
     s.appendChild(row);
+
+    /* the design's way out for the stuck, on its own line so it is not weighed against the two
+       ways forward */
+    if (say("help") && say("help url")) {
+      var help = el("a", "enc-gd__help");
+      help.href = say("help url");
+      help.target = "_blank";
+      help.rel = "noopener";
+      help.appendChild(el("span", null, say("help")));
+      help.appendChild(badge("arrow"));
+      s.appendChild(help);
+    }
     return s;
   }
 
