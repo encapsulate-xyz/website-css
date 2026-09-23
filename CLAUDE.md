@@ -359,14 +359,22 @@ the tile `[data-enc-shot]`; without one — "Institutional staking", whose captu
 does not ship — the tile is the design's ink fallback carrying the page's name.
 
 **The current page is marked** the way the design marks it (paper, ring, inset highlight). Every
-item is a group now, and only Super knows which links a group holds — and only once its panel has
-mounted, which radix does on first open. So navbar.js **harvests once**: it opens each group behind
-a hidden viewport (`nav[data-enc-harvest]`), keeps the paths, and sets `[data-enc-current]` on the
-group holding the page — by prefix, so a guide or a post marks the group that holds `/guides` or
-`/blog`. **Radix answers a pointer event only when it came from a mouse** (`whenMouse`:
-`pointerType === "mouse"`), and a `PointerEvent` built without one reports `""`. Every synthetic
-enter and leave was therefore ignored: no panel mounted, no group was recorded, and nothing could
-be marked as the current page (found 2026-09-23). `mouse(type)` builds them properly now. A section link is its own destination, so `CONTENT` is keyed by the whole
+item is a group, and a group is current when the page is one of its links — by prefix, so a guide
+or a post marks the group that holds `/guides` or `/blog`. **Which links a group holds is read
+from Super's own data** (v258): Super embeds the whole navbar configuration in the page's inline
+data scripts — each group `{"id": <uuid>, "type": "list", …, "list": [{…"link": "/networks"}]}`
+— and that uuid is the one in the group's trigger (`aria-controls="…-content-<uuid>"`). The quotes
+are escaped once in the HTML and three deep in the browser's script text, so every run of
+backslashes before a quote is dropped before reading. Groups are keyed by the uuid, not the
+trigger's element id, which radix regenerates after hydration.
+  **Never open the menu with synthetic events again.** Until v258 the groups were harvested by
+  opening each one behind a hidden viewport; each was held 90ms, under radix's open delay, so
+  nothing mounted, the harvest retried for half a minute, and its enters and leaves fought the
+  reader's pointer — pointing at Services opened Company, and no page was ever marked current.
+  Reproduced in headless Chrome with real mouse events (`scratchpad/svc/navshot.mjs`, which
+  reroutes a tag's files to a commit or to the local repo); with the harvest off, Services opened
+  Services. `mouse(type)` (a `PointerEvent` with `pointerType: "mouse"`, the only kind radix
+  answers) is still used by `band()` to hold an open panel open. A section link is its own destination, so `CONTENT` is keyed by the whole
 href — `/services#block-…` is not `/services`.
 
 **The third column is read, not written.** The handoff's rule (Aditya, 2026-09-21): it lists the
@@ -379,7 +387,8 @@ or if it yields nothing, the note stands in.
 | Destination | Column | Read from |
 |---|---|---|
 | /networks | chains, 3 across | the Networks set, first twelve cards of the Order-sorted view, with rates |
-| /services | tiles, 2 across | no fetch — the group's own section links that have a panel capture. **TODO:** once /services is redesigned, read them from the page by block id like the others |
+| /services | tiles, 2 across | no fetch — the group's own section links that have a panel capture, each tile drawn at 170% from its top-left |
+| Dashboards (`/services#block-…81cf…`) | list, "Live now" | the Dashboards table on /services, in Order: each row's **Menu** property ("Sui RGP dashboard"), linked to its Link. Menu was added to the table for this on 2026-09-23 |
 | /governance-record | list | the four pillars' questions (`Governance Mechanism` gallery) |
 | /security | list | the page's `h2` headings |
 | /guides | guides | Guides database, first four: chain mark (from the set on the same page), chain, wallet |
@@ -387,15 +396,18 @@ or if it yields nothing, the note stands in.
 | /brand | list | the rail's numbers — `01 · The marks` → *The marks* |
 | /investments | holds, 2 across | the Portfolio cards: logo, name, the four-digit year |
 | /contact-us | list | four blocks by id: the booking headline, "Or write to us", the fold, "Elsewhere" |
-| a section link (Dashboards, Playbooks, Bots, Monitoring, Institutional staking) | the note | — |
+| any other section link (Playbooks, Bots, Monitoring, Institutional staking) | the note | — |
 
-The design gives **Dashboards** a "Live now" list; the built Services page names no live instance,
-so it keeps the note until the page does. /governance-record is 405KB gzipped (the record table),
+A section link is its own key in `READ` and `KIND` (after the `MOVED` alias), and its page is
+fetched by path. /governance-record is 405KB gzipped (the record table),
 which is why nothing is fetched on a pass-through.
 
 **Two kinds of capture** in the middle column, as the design draws them: a page's cover
-(`img/nav-covers/`, `cover / left center`) and a tool's panel (`img/nav-panels/`, a true 2× capture
-drawn at **170% from its top-left**); the institutional dial is a panel file drawn as a cover. The
+(`img/nav-covers/`, `cover / left center`) and a tool's panel (`img/nav-panels/`, drawn
+`cover / left top` since the handoff of 2026-09-23 — the four tool captures are now the Services
+page's own sections, 1100×619 and 1491 wide; the Services column's small tiles still draw them at
+170% from the top-left); the institutional dial is a panel file drawn as a cover. The Services
+cover capture was re-exported with the new cover text the same day. The
 tile holds an `<img>` and `[data-enc-shot="cover|panel"]` picks the draw. `window.encNav` exposes
 the build's version and its readers, so each can be run against its page from the console — the
 live page's older script otherwise races a newer one for the panels, which is why the end-to-end
