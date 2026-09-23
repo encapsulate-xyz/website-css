@@ -304,9 +304,17 @@ bar is on every page, so there is no block to read; the same exception as the fo
 drawer's copy. Add a page to the menu in Super and it appears; give it a CONTENT entry and it also
 carries its line.
 
-**The ink bar at rest** (handoff, read 2026-09-23): labels `#C9C9C4` with the caret at `#9FA39B`,
-paper on hover over a `rgba(250,250,248,.1)` wash and **no hairline** — the design rings an item on
-paper only; an **opaque `#373834` track** on a `rgba(250,250,248,.18)` border, so the cover's discs
+**One ring, one job** (handoff, 2026-09-23, v259): the ring — paper `#FAFAF8`, the `#E2E2DB`
+hairline, the full-white top highlight, ink type — marks the current page while the bar is at
+rest, and moves to the hovered or open group while anything in the bar is under the pointer
+(Book a call included, which lights nothing), then returns. Never two rings at once: the current
+pill's rule carries `:not([data-enc-nav-open]):not(:has(… :hover))`. Lit is the same on ink as on
+paper, the current pill on ink included. The caret is ink on the hovered group, `#6B6F68` on a lit
+pill at rest, and `#9FA39B` on ink only where a pill is not lit. Measured on /networks (paper) and
+the Axelar guide (ink) with real mouse moves in headless Chrome (`scratchpad/svc/navstate.mjs`).
+
+**The ink bar at rest** (handoff, read 2026-09-23): labels `#C9C9C4` with the caret at `#9FA39B`
+(the hover wash and the paper-only ring described here were replaced by the one-ring rule above); an **opaque `#373834` track** on a `rgba(250,250,248,.18)` border, so the cover's discs
 do not show through it; Book a call keeps the inset lift and drops the shadow under it; the current
 page's pill is paper on both grounds. The geometry is the same on both: 44px, 15px, 12px, 10px.
 Opening a menu is a **colour-only change, .16s**, and the whole bar turns paper on ink too, so bar
