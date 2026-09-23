@@ -1,7 +1,7 @@
 /* /blog/<post> — design "Blog Post Page" (variant J, the type cover).
 
    Every post in the Blogs database is the same shape in Notion: a two-column block whose first
-   column is a table of contents and whose second is the post — a banner image, the byline, the
+   column is a table of contents and whose second is the post — the byline, the
    title, then the body — followed by "More Blog Posts", its collection, and the newsletter.
 
    This script re-reads that into the design: an ink head carrying the meta, the title and the
@@ -367,18 +367,13 @@
     var post = cols[cols.length - 1];
     post.setAttribute("data-enc-home", "");
     var items = Array.prototype.slice.call(post.children);
-    var title = null, banner = null, byline = null;
+    var title = null, byline = null;
     var article = el("div", "enc-po__article");
-    /* The design's head replaces the post's banner, so the banner is hidden — but only a banner.
-       It is the image the post OPENS with; an image further down is the body's own. Hiding "the
-       first image in the post" cost the Gno.land post its first illustration, which sits at block
-       14 after three paragraphs (2026-09-23). */
-    var started = false;
+    /* No image is hidden any more. The banner block was deleted from every post in Notion when
+       the head became the title, so "hide the first image" only ever reached the body's own
+       figures — it cost the Gno.land post its first illustration (2026-09-23). A post that still
+       shows one is a page Super has not republished yet. */
     items.forEach(function (n) {
-      if (!banner && !started && n.classList.contains("notion-image")) { banner = n; return; }
-      if (!/^(SPAN)$/.test(n.tagName) && !n.classList.contains("notion-heading__anchor")) {
-        started = true;
-      }
       if (!byline && n.classList.contains("notion-column-list") &&
           /written by/i.test(textOf(n))) { byline = n; return; }
       if (!title && /^H1$/.test(n.tagName)) { title = n; return; }   // older posts still have one
@@ -441,7 +436,6 @@
     root.insertBefore(wrap, root.firstChild);
 
     // what the design does not draw stays on the page but out of the way
-    if (banner) banner.setAttribute("data-enc-source", "");
     if (cols[0]) cols[0].setAttribute("data-enc-source", "");
     cl.setAttribute("data-enc-source", "");
     tail.forEach(function (n) {
