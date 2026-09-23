@@ -589,12 +589,19 @@
      page is one of its own links — which only Super knows. Its panels mount when they first open,
      so the groups are harvested once, with the viewport hidden, rather than listing them here and
      letting the code drift from the menu. */
-  var groups = {};          /* trigger id -> [paths] */
+  var groups = {};          /* the group's uuid (its trigger's aria-controls) -> [paths] */
   var harvested = false;
 
   function triggersOf() {
     return Array.prototype.slice.call(
       document.querySelectorAll("nav.super-navbar .super-navbar__list"));
+  }
+  /* keyed by the menu item's own uuid: radix's element ids change when React re-renders after
+     hydration ("_R_b59…_" at load, "_r_0_" after), so a map keyed by id stopped matching and the
+     current page was never marked */
+  function keyOf(trigger) {
+    return (trigger.getAttribute("aria-controls") || "").replace(/^.*-content-/, "") ||
+      trigger.textContent.trim();
   }
   function panelFor(trigger) {
     var key = (trigger.getAttribute("aria-controls") || "").replace(/^.*-content-/, "");
@@ -610,14 +617,14 @@
       var href = a.getAttribute("href") || "";
       if (href.charAt(0) === "/") paths.push(path(href));
     });
-    groups[trigger.id || trigger.textContent.trim()] = paths;
+    groups[keyOf(trigger)] = paths;
     return true;
   }
 
   function markCurrent() {
     var here = path(location.pathname);
     triggersOf().forEach(function (t) {
-      var paths = groups[t.id || t.textContent.trim()] || [];
+      var paths = groups[keyOf(t)] || [];
       var on = paths.some(function (p) {
         return p === here || (p !== "/" && here.indexOf(p + "/") === 0);
       });
@@ -626,52 +633,71 @@
     });
   }
 
-  /* Open each group once, behind a hidden viewport, so its links are known before a reader
-     touches the bar. Radix mounts a panel on pointerenter and keeps it mounted. */
   /* Radix answers a pointer event only when it came from a mouse (`whenMouse`: pointerType
-     === "mouse"), and a PointerEvent built without one reports "" — so every synthetic enter and
-     leave was ignored, the harvest opened no panel, no group was recorded and no item could be
-     marked as the page you are on (2026-09-23). */
+     === "mouse"), and a PointerEvent built without one reports "" (2026-09-23). band() uses these
+     to hold an open panel open across the bar's gaps. */
   function mouse(type) {
     return new PointerEvent(type, { bubbles: true, pointerType: "mouse" });
   }
 
-  /* The first tick runs before radix has attached its handlers: the events land on nothing, no
-     panel mounts, and a one-shot latch then kept the bar unmarked for the whole visit (seen live
-     2026-09-23 on /networks, served v253). So the latch only holds once a group has actually been
-     recorded; until then each tick may try again, no closer than 400ms apart. */
-  var harvestTries = 0, harvestAt = 0;
+  /* WHICH LINKS EACH GROUP HOLDS — read from Super's own data, not by opening the menu.
+     Super embeds the whole navbar configuration in the page's inline data scripts: every group as
+     {"id": <uuid>, "type": "list", "label": …, "list": [ {…, "link": "/networks"}, … ]} — its
+     quotes escaped once in the HTML and three deep in the browser's script text, so every run of
+     backslashes before a quote is dropped before it is read — and that
+     uuid is the one radix puts in the group's trigger (`aria-controls="…-content-<uuid>"`). So the
+     groups are known on the first tick, on every page, without a single synthetic event.
+
+     Until 2026-09-23 they were harvested by opening each group behind a hidden viewport. That
+     held each trigger for 90ms — shorter than radix's open delay — so nothing mounted, the harvest
+     retried twenty-five times over the first half minute, and its enters and leaves fought the
+     reader's own pointer: pointing at Services opened Company, the last group it had touched
+     (reproduced in headless Chrome with real mouse events; with the harvest off, Services opened
+     Services). The current page's mark never appeared either. */
+  function linksOf(text, key) {
+    var at = text.indexOf(key);
+    while (at >= 0) {
+      if (/^[0-9a-f-]+","type":"list"/.test(text.slice(at, at + 300).replace(/\\+"/g, '"'))) break;
+      at = text.indexOf(key, at + key.length);
+    }
+    if (at < 0) return null;
+    var open = text.indexOf("[", text.indexOf("list", text.indexOf("label", at)));
+    if (open < 0) return null;
+    var depth = 0, end = -1, i;
+    for (i = open; i < text.length; i++) {
+      var ch = text.charAt(i);
+      if (ch === "[") depth++;
+      else if (ch === "]") { depth--; if (!depth) { end = i; break; } }
+    }
+    if (end < 0) return null;
+    var body = text.slice(open, end + 1).replace(/\\+"/g, '"');
+    var links = [], m, re = /"link":"([^"]*)"/g;
+    while ((m = re.exec(body))) links.push(m[1]);
+    return links;
+  }
+
+  var harvestTries = 0;
   function harvest() {
-    if (harvested) return;
+    if (harvested || harvestTries >= 20) return;
     var triggers = triggersOf();
     if (!triggers.length) return;
-    var now = Date.now();
-    if (now - harvestAt < 400 || harvestTries >= 25) return;
-    harvestAt = now;
     harvestTries++;
-    harvested = true;
-    var bar = document.querySelector("nav.super-navbar");
-    if (bar) bar.setAttribute("data-enc-harvest", "");
-    var i = 0;
-    (function step() {
-      if (i >= triggers.length) {
-        if (bar) bar.removeAttribute("data-enc-harvest");
-        if (!Object.keys(groups).length) { harvested = false; return; }   // nothing answered yet
-        markCurrent();
-        return;
-      }
-      var t = triggers[i++];
-      if (record(t)) { step(); return; }
-      t.dispatchEvent(mouse("pointerenter"));
-      t.dispatchEvent(mouse("pointermove"));
-      t.dispatchEvent(new MouseEvent("mouseenter", { bubbles: true }));
-      setTimeout(function () {
-        record(t);
-        t.dispatchEvent(mouse("pointerleave"));
-        t.dispatchEvent(new MouseEvent("mouseleave", { bubbles: true }));
-        setTimeout(step, 30);
-      }, 90);
-    })();
+    var text = Array.prototype.map.call(document.querySelectorAll("script:not([src])"),
+      function (sc) { return sc.textContent; }).join("\n");
+    var found = 0;
+    triggers.forEach(function (t) {
+      var key = (t.getAttribute("aria-controls") || "").replace(/^.*-content-/, "");
+      var links = key ? linksOf(text, key) : null;
+      if (!links || !links.length) return;
+      groups[keyOf(t)] = links.filter(function (h) {
+        return h.charAt(0) === "/";
+      }).map(path);
+      found++;
+    });
+    if (found) {
+      harvested = true;
+      markCurrent();
+    }
   }
 
   /* ── ink or paper under the bar ──────────────────────────────────────────────────────────
@@ -820,7 +846,8 @@
 
   /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
      against its page from the console without opening the menu */
-  window.encNav = { version: 4, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
+  window.encNav = { version: 5, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
+    groups: function () { return groups; }, harvest: function () { return { done: harvested, tries: harvestTries }; },
     ground: ground, isInk: isInk, groundUnder: groundUnder, wordmark: wearWordmark,
     band: band };
 
