@@ -401,15 +401,17 @@ the build's version and its readers, so each can be run against its page from th
 live page's older script otherwise races a newer one for the panels, which is why the end-to-end
 check was done in a clean `srcdoc` frame.
 
-**The Services group points at the page's own bands** (`/services#block-<callout id>`), re-pointed
-in Super → Navigation → Menu items on 2026-09-23 when the page was rebuilt: Dashboards
-`…81cf8a82c41c2f9f8c78`, Playbooks `…81719a14e42a6532c579`, Bots `…81598024c57e15cbd370`,
-Monitoring `…8115ac0dd17fb46b383d` (all `3e4e800a5138…`). navbar.js keys its copy by those hrefs
-and aliases the four old ids (`MOVED`) for a page Super has not republished yet. **Super's editor
-can be driven from the automation tab** even though the tab is hidden and paints nothing: route by
-clicking its own links from JS (a direct load of `/site/<id>/…` stays blank), expand a group with
-its first button, open an item with the pencil (the row's first `button`), set `input[name=link]`
-with the native value setter plus `input`/`change`, click Save, then reopen the item to confirm. **minima frosts the navbar** (`backdrop-filter: blur(12px)` plus a white wash) — 4f's bar is
+**The Services group points at the page's own bands** (`/services#block-<callout id>`) since the
+page was rebuilt on 2026-09-23: Dashboards `…81cf8a82c41c2f9f8c78`, Playbooks
+`…81719a14e42a6532c579`, Bots `…81598024c57e15cbd370`, Monitoring `…8115ac0dd17fb46b383d` (all
+`3e4e800a5138…`) — set in Super → Navigation → Menu items. navbar.js keys its copy by those hrefs
+and aliases the four old ids (`MOVED`), so the panels read right either way; a click on an old id
+lands at the top of /services. **Super's editor cannot be trusted from the automation tab:**
+editing an item there (native value setter + `input`, then Save) updated the editor's own list and
+read back correctly when the item was reopened, but a fresh load showed the old link — nothing
+had reached Super's server. A second try with real key events and a real click could not be
+checked, because the hidden tab then stopped rendering the app at all (throttled timers). Menu
+edits are the user's to make. **minima frosts the navbar** (`backdrop-filter: blur(12px)` plus a white wash) — 4f's bar is
 plain glass, so both are cancelled, or whatever the bar lies over is smeared.
 
 **The reconstruction banner is on no page now** (§15b). It was on /services alone from
