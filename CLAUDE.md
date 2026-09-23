@@ -673,8 +673,11 @@ the navbar's section links and the cover's "See services" — still lands on the
 - **Kept as drawn:** the tertiary link sits 6px above a primary beside it (the design's tertiary
   carries `alignSelf: flex-start` inside a centred row), and "See it land" shows the previous
   event's card dimmed while the new one flies — on the first press that is the third event.
-- The Aptos capture was missing on 2026-09-23 (its map is WebGL and renders black headless);
-  the frame shows the second paper until a `Capture` is added to the Aptos row.
+- **The three Captures are the design's own frames** (`exports/dashboards/dash-*.png` from
+  Claude Design, 2800×1576, sent 2026-09-23): the dashboards redrawn in the brand with a browser
+  bar carrying the address and LIVE. They replaced the raw headless shots of the live sites
+  (`img/shots/dash-sui.png`, `dash-solana.png`), which stay in the repo as records; Aptos could not
+  be shot headless at all — its map is WebGL and renders black.
 
 ## /investments (2026-09-21, design *Investments Page*)
 
