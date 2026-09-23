@@ -333,17 +333,6 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   background: #FAFAF8 !important;
 }
 
-/* Book a call on ink keeps the lift inside and drops the shadow under it */
-.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__cta,
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__cta {
-  box-shadow: var(--btn-1-highlight) !important;
-}
-
-.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__cta:hover,
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__cta:hover {
-  box-shadow: var(--btn-1-highlight-hover) !important;
-}
-
 /* the mark on ink is the brand's own reversed wordmark, which navbar.js swaps in — the filter is
    only for the moment before the swap, and for a post if the script has not run */
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__logo img:not([data-enc-logo]) {
@@ -386,6 +375,17 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   background: var(--btn-1-fill-hover) !important;
   border-color: var(--btn-1-ring-hover) !important;
   box-shadow: var(--btn-1-highlight-hover), var(--btn-lift) !important;
+}
+
+/* Book a call on ink keeps the lift inside and drops the shadow under it */
+.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__cta,
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__cta {
+  box-shadow: var(--btn-1-highlight) !important;
+}
+
+.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__cta:hover,
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__cta:hover {
+  box-shadow: var(--btn-1-highlight-hover) !important;
 }
 
 /* Super draws a lucide icon beside each item; the design's bar carries labels only */.super-root nav.super-navbar .super-navbar__item > svg {
