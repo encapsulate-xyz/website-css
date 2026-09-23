@@ -352,7 +352,11 @@ does not ship — the tile is the design's ink fallback carrying the page's name
 item is a group now, and only Super knows which links a group holds — and only once its panel has
 mounted, which radix does on first open. So navbar.js **harvests once**: it opens each group behind
 a hidden viewport (`nav[data-enc-harvest]`), keeps the paths, and sets `[data-enc-current]` on the
-group holding the page. A section link is its own destination, so `CONTENT` is keyed by the whole
+group holding the page — by prefix, so a guide or a post marks the group that holds `/guides` or
+`/blog`. **Radix answers a pointer event only when it came from a mouse** (`whenMouse`:
+`pointerType === "mouse"`), and a `PointerEvent` built without one reports `""`. Every synthetic
+enter and leave was therefore ignored: no panel mounted, no group was recorded, and nothing could
+be marked as the current page (found 2026-09-23). `mouse(type)` builds them properly now. A section link is its own destination, so `CONTENT` is keyed by the whole
 href — `/services#block-…` is not `/services`.
 
 **The third column is read, not written.** The handoff's rule (Aditya, 2026-09-21): it lists the
