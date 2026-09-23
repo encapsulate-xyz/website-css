@@ -369,8 +369,16 @@
     var items = Array.prototype.slice.call(post.children);
     var title = null, banner = null, byline = null;
     var article = el("div", "enc-po__article");
+    /* The design's head replaces the post's banner, so the banner is hidden — but only a banner.
+       It is the image the post OPENS with; an image further down is the body's own. Hiding "the
+       first image in the post" cost the Gno.land post its first illustration, which sits at block
+       14 after three paragraphs (2026-09-23). */
+    var started = false;
     items.forEach(function (n) {
-      if (!banner && n.classList.contains("notion-image")) { banner = n; return; }
+      if (!banner && !started && n.classList.contains("notion-image")) { banner = n; return; }
+      if (!/^(SPAN)$/.test(n.tagName) && !n.classList.contains("notion-heading__anchor")) {
+        started = true;
+      }
       if (!byline && n.classList.contains("notion-column-list") &&
           /written by/i.test(textOf(n))) { byline = n; return; }
       if (!title && /^H1$/.test(n.tagName)) { title = n; return; }   // older posts still have one
