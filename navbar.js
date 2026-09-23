@@ -54,16 +54,16 @@
     "/#block-3dbe800a513880af9fe0c4bc175e1975": ["Terms for $200k and above",
       "For treasuries, funds and foundations delegating at size.",
       "Terms, reporting and a named contact, agreed before the first delegation."],
-    "/services#block-4e58731953944b8d9382f545307b155b": ["Live chain state, per network",
+    "/services#block-3e4e800a513881cf8a82c41c2f9f8c78": ["Live chain state, per network",
       "Live state for every chain we run, one page each.",
       "Height, peers, missed blocks and upgrade status, read from our own nodes."],
-    "/services#block-3e2e800a5138816990a7da4eb111ef66": ["Ansible for node deploys",
+    "/services#block-3e4e800a513881719a14e42a6532c579": ["Ansible for node deploys",
       "The Ansible we use to deploy and upgrade validators.",
       "Open, versioned, and the same playbooks that run our own set."],
-    "/services#block-fcf0af8817cc465192c8a50c422084d1": ["Proposals into your own Discord",
+    "/services#block-3e4e800a513881598024c57e15cbd370": ["Proposals into your own Discord",
       "Governance proposals delivered into your Discord or Telegram.",
       "Every new proposal, with the deadline and our vote once cast."],
-    "/services#block-58ad79b056524fd183121d379f8b08dd": ["Alerting and health checks",
+    "/services#block-3e4e800a51388115ac0dd17fb46b383d": ["Alerting and health checks",
       "Alerting and health checks for nodes we run and nodes we don't.",
       "Pages a person, not a dashboard."],
     "/eigen-layer": ["Restaking, as an operator",
@@ -95,10 +95,22 @@
   }
   /* a link to a section is its own destination — "/services#block-…" is not "/services" — so the
      whole href is tried before the page it sits on */
+  /* the Services sections were rebuilt on 2026-09-23 and their blocks have new ids; a menu link
+     still pointing at an old one reads as the new one until it is re-pointed in Super */
+  var MOVED = {
+    "/services#block-4e58731953944b8d9382f545307b155b": "/services#block-3e4e800a513881cf8a82c41c2f9f8c78",
+    "/services#block-3e2e800a5138816990a7da4eb111ef66": "/services#block-3e4e800a513881719a14e42a6532c579",
+    "/services#block-fcf0af8817cc465192c8a50c422084d1": "/services#block-3e4e800a513881598024c57e15cbd370",
+    "/services#block-58ad79b056524fd183121d379f8b08dd": "/services#block-3e4e800a51388115ac0dd17fb46b383d"
+  };
+  function whole(href) {
+    var w = href.split("?")[0];
+    return MOVED[w] || w;
+  }
   function copyOf(href) {
     if (!href) return null;
-    var whole = href.split("?")[0];
-    return CONTENT[whole] || CONTENT[path(href)] || null;
+    var whole_ = whole(href);
+    return CONTENT[whole_] || CONTENT[path(href)] || null;
   }
 
   /* THE PREVIEW is a capture of where the link goes, in the repo beside the CSS so it cannot
@@ -113,10 +125,10 @@
   };
   var PANELS = {
     "/#block-3dbe800a513880af9fe0c4bc175e1975": "institutional",
-    "/services#block-4e58731953944b8d9382f545307b155b": "dashboards",
-    "/services#block-3e2e800a5138816990a7da4eb111ef66": "playbooks",
-    "/services#block-fcf0af8817cc465192c8a50c422084d1": "bots",
-    "/services#block-58ad79b056524fd183121d379f8b08dd": "monitoring"
+    "/services#block-3e4e800a513881cf8a82c41c2f9f8c78": "dashboards",
+    "/services#block-3e4e800a513881719a14e42a6532c579": "playbooks",
+    "/services#block-3e4e800a513881598024c57e15cbd370": "bots",
+    "/services#block-3e4e800a51388115ac0dd17fb46b383d": "monitoring"
   };
   var BASE = (function () {
     var me = document.currentScript;
@@ -130,12 +142,12 @@
   /* -> { src, mode } : mode "panel" is the 170% top-left draw, "cover" fills the tile */
   function shotOf(href) {
     if (!href || !BASE) return null;
-    var whole = href.split("?")[0];
-    if (PANELS[whole]) {
-      return { src: BASE + "img/nav-panels/" + PANELS[whole] + ".png",
-        mode: PANELS[whole] === "institutional" ? "cover" : "panel" };
+    var w = whole(href);
+    if (PANELS[w]) {
+      return { src: BASE + "img/nav-panels/" + PANELS[w] + ".png",
+        mode: PANELS[w] === "institutional" ? "cover" : "panel" };
     }
-    if (whole.indexOf("#") >= 0) return null;
+    if (w.indexOf("#") >= 0) return null;
     var key = COVERS[path(href)];
     return key ? { src: BASE + "img/nav-covers/" + key + ".png", mode: "cover" } : null;
   }
@@ -486,8 +498,8 @@
     var current = null, timer = 0;
 
     function fill(href) {
-      var whole = (href || "").split("?")[0];
-      var key = whole.indexOf("#") >= 0 ? "" : path(href);
+      var bare = (href || "").split("?")[0];
+      var key = bare.indexOf("#") >= 0 ? "" : path(href);
       var kind = KIND[key];
       extra.textContent = "";
       extra.removeAttribute("data-enc-kind");

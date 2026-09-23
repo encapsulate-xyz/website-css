@@ -131,6 +131,10 @@ if not sys.argv[1:]:
         js = open('network.js', encoding='utf-8').read()
         open(os.path.join('dist', 'network.js'), 'w', encoding='utf-8').write(js)
         print(f"{'network.js':14} {len(js):>7,} -> dist/network.js (copied)")
+    if os.path.exists('services.js'):
+        js = open('services.js', encoding='utf-8').read()
+        open(os.path.join('dist', 'services.js'), 'w', encoding='utf-8').write(js)
+        print(f"{'services.js':14} {len(js):>7,} -> dist/services.js (copied)")
     if os.path.exists('covers.js'):
         js = open('covers.js', encoding='utf-8').read()
         open(os.path.join('dist', 'covers.js'), 'w', encoding='utf-8').write(js)

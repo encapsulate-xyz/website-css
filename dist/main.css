@@ -231,7 +231,6 @@ body:has(.notion-root > .notion-callout:first-child > .notion-callout__content >
 .enc-cover__box{top: auto;bottom: 0;left: -60%;right: 0;transform: none;}
 }
 .enc-banner{display: none;position: relative;z-index: 50;flex-wrap: wrap;align-items: center;justify-content: center;gap: 6px 12px;width: 100%;box-sizing: border-box;padding: 10px max(20px,calc(50vw - 864px));border-bottom: 1px solid rgba(0,0,0,0.1);background: #F8E8B3;font-family: var(--type-body),system-ui,sans-serif;font-size: 14px;line-height: 1.45;color: #000000;text-align: center;}
-body:has(.super-content.page__services) .enc-banner{display: flex;}
 .enc-banner strong,.enc-banner b{font-family: var(--type-mono),ui-monospace,monospace;font-size: 10.5px;font-weight: 500;letter-spacing: 0.12em;text-transform: uppercase;color: #000000;}
 .enc-banner a{color: #000000;text-decoration: underline;text-underline-offset: 3px;}
 .super-footer[data-enc-footer]{--foot-gutter: max(48px,calc(50vw - 864px));--foot-rule: rgba(250,250,248,0.2);display: block !important;width: 100vw !important;max-width: none !important;margin: 0 0 0 calc(50% - 50vw) !important;padding: 0 !important;border: 0 !important;border-radius: 0 !important;outline: 0 !important;box-shadow: none !important;border-top: 1px solid var(--foot-rule) !important;background: #2A2C28 !important;color: #FAFAF8 !important;overflow: hidden !important;}

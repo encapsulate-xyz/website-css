@@ -67,3 +67,28 @@ def set_text(page_id, prop, text):
     return api("PATCH", "pages/" + page_id,
                {"properties": {prop: {"rich_text": [{"type": "text",
                                                      "text": {"content": text[:2000]}}]}}})
+
+
+def upload(path, filename=None, content_type="image/png"):
+    """Upload a local file through Notion's file-upload API and return its file_upload id, ready to
+    attach as {"type": "file_upload", "file_upload": {"id": ...}} on a files property or a block.
+    Two steps: create the upload, then send the bytes as multipart form data."""
+    import uuid
+    filename = filename or os.path.basename(path)
+    made = api("POST", "file_uploads", {"filename": filename, "content_type": content_type})
+    if "id" not in made:
+        raise RuntimeError(json.dumps(made)[:300])
+    data = open(path, "rb").read()
+    boundary = uuid.uuid4().hex
+    body = (("--%s\r\nContent-Disposition: form-data; name=\"file\"; filename=\"%s\"\r\n"
+             "Content-Type: %s\r\n\r\n") % (boundary, filename, content_type)).encode() + data + \
+        ("\r\n--%s--\r\n" % boundary).encode()
+    req = urllib.request.Request(
+        "https://api.notion.com/v1/file_uploads/%s/send" % made["id"], method="POST", data=body,
+        headers={"Authorization": "Bearer " + TOKEN, "Notion-Version": "2022-06-28",
+                 "Content-Type": "multipart/form-data; boundary=" + boundary})
+    with urllib.request.urlopen(req, timeout=120) as r:
+        sent = json.load(r)
+    if sent.get("status") != "uploaded":
+        raise RuntimeError(json.dumps(sent)[:300])
+    return made["id"]

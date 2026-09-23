@@ -2295,10 +2295,12 @@ body:has(.notion-root > .notion-callout:first-child > .notion-callout__content >
    Super → Settings → Code → Body (repo copy: head/site-body.html), Super's own "Top banner"
    pattern; this only styles it. Delete the Body snippet to remove the banner; this rule can stay.
 
-   IT IS ON /services ONLY (2026-09-21). Super's Body code is site-wide and there is no per-page
-   Body box, so the banner is hidden everywhere and shown again on the one page, by the class
-   Super puts on its own content wrapper for that page. A page that is not yet redesigned gets it
-   by adding a `page__<slug>` to the list below; nothing in the Body snippet changes.
+   IT IS ON NO PAGE NOW. It was on /services alone from 2026-09-21 until that page was rebuilt
+   on 2026-09-23. Super's Body code is site-wide and there is no per-page Body box, so the banner
+   is hidden everywhere and shown again per page, by the class Super puts on its own content
+   wrapper for that page: a page going under reconstruction gets it with a rule like
+   `body:has(.super-content.page__<slug>) .enc-banner { display: flex; }`; nothing in the Body
+   snippet changes.
 
    Built from the system: the yellow pastel as a thin full-width band, black
    type (pastels take ink only), the bold phrase as the mono label step, the
@@ -2321,11 +2323,6 @@ body:has(.notion-root > .notion-callout:first-child > .notion-callout__content >
   line-height: 1.45;
   color: #000000;
   text-align: center;
-}
-
-/* the pages that still carry it */
-body:has(.super-content.page__services) .enc-banner {
-  display: flex;
 }
 
 .enc-banner strong,
