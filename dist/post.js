@@ -356,7 +356,25 @@
     if (root.getAttribute("data-enc-post") === VERSION) return;
     unwrap(root);
 
-    var cl = root.querySelector(":scope > .notion-column-list");
+    /* the post's own two-column block is the one carrying Notion's contents — the longest one
+       if a post has no contents block. Taking the first column list put the XMTP post's whole
+       article off the page: its blocks sit at the FOOT of that page, after "More Blog Posts",
+       and the first column list there is a divider beside the "View More Blog Posts" button
+       (reported 2026-09-23). */
+    var lists = Array.prototype.filter.call(
+      root.querySelectorAll(":scope > .notion-column-list"), function (n) {
+        return Array.prototype.filter.call(n.children, function (c) {
+          return c.classList.contains("notion-column");
+        }).length >= 2;
+      });
+    var cl = lists.filter(function (n) {
+      return n.querySelector(".notion-table-of-contents");
+    })[0];
+    if (!cl) {
+      lists.forEach(function (n) {
+        if (!cl || textOf(n).length > textOf(cl).length) cl = n;
+      });
+    }
     if (!cl) return;
     var cols = Array.prototype.filter.call(cl.children, function (c) {
       return c.classList.contains("notion-column");
