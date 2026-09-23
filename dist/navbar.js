@@ -620,6 +620,58 @@
     })();
   }
 
+  /* ── ink or paper under the bar ──────────────────────────────────────────────────────────
+     The bar lies over whatever the page opens with, so its labels have to read against that —
+     ink on a blog post's head, on a guide's head, on any future band. It was keyed off Super's
+     `parent-page__blog` class, which is why the guide page kept the paper bar over its ink head
+     (2026-09-23). It is measured now: the ground under the bar's own line, walked up until an
+     element paints something, and its luminance decides. The bar scrolls away with the page, so
+     the top of the page is the only place this is asked. */
+  function groundUnder() {
+    var bar = document.querySelector("nav.super-navbar");
+    if (!bar) return "";
+    var r = bar.getBoundingClientRect();
+    var n = document.elementFromPoint(Math.max(8, r.left + 24), r.bottom + 8);
+    while (n && n !== document.documentElement) {
+      if (bar.contains(n)) { n = n.parentElement; continue; }
+      var bg = getComputedStyle(n).backgroundColor;
+      var m = /rgba?\(([^)]+)\)/.exec(bg);
+      if (m) {
+        var v = m[1].split(",").map(parseFloat);
+        if ((v[3] == null || v[3] > 0.4)) return bg;
+      }
+      n = n.parentElement;
+    }
+    return "";
+  }
+  function isInk(colour) {
+    var m = /rgba?\(([^)]+)\)/.exec(colour || "");
+    if (!m) return false;
+    var v = m[1].split(",").map(parseFloat);
+    return (0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2]) < 128;
+  }
+  var WORDMARK = BASE ? BASE + "svg/wordmark-reversed.svg" : "";
+  function ground() {
+    var bar = document.querySelector("nav.super-navbar");
+    if (!bar || window.scrollY > 8) return;
+    var ink = isInk(groundUnder());
+    if (ink === bar.hasAttribute("data-enc-nav-ink")) return;
+    if (ink) bar.setAttribute("data-enc-nav-ink", "");
+    else bar.removeAttribute("data-enc-nav-ink");
+    /* the reversed wordmark is a drawing of its own, not Super's logo turned inside out by a
+       filter — the user's file, so the mark on ink is the brand's own (2026-09-23) */
+    var img = bar.querySelector(".super-navbar__logo img");
+    if (!img || !WORDMARK) return;
+    if (ink) {
+      if (!img.hasAttribute("data-enc-logo")) img.setAttribute("data-enc-logo", img.src);
+      if (img.src !== WORDMARK) img.src = WORDMARK;
+      img.removeAttribute("srcset");
+    } else if (img.hasAttribute("data-enc-logo")) {
+      img.src = img.getAttribute("data-enc-logo");
+      img.removeAttribute("data-enc-logo");
+    }
+  }
+
   /* the bar takes its paper ground only while a menu is open — over a cover it is otherwise
      transparent, which is the whole point of 4f */
   function paint() {
@@ -636,6 +688,7 @@
     Array.prototype.forEach.call(
       document.querySelectorAll(".super-navbar__list-content"), build);
     paint();
+    ground();
     harvest();
     Array.prototype.forEach.call(triggersOf(), record);
     markCurrent();
@@ -643,7 +696,8 @@
 
   /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
      against its page from the console without opening the menu */
-  window.encNav = { version: 3, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf };
+  window.encNav = { version: 4, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
+    ground: ground, isInk: isInk, groundUnder: groundUnder };
 
   var t = 0;
   new MutationObserver(function () { clearTimeout(t); t = setTimeout(tick, 0); })
@@ -651,5 +705,6 @@
       attributeFilter: ["data-state", "aria-expanded"] });
   tick();
   window.addEventListener("load", tick);
+  window.addEventListener("resize", ground);
   window.addEventListener("popstate", markCurrent);
 })();
