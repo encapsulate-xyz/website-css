@@ -11,8 +11,8 @@
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land each time we vote on a cross-chain poll.",
    "wallet": {
     "label": "Delegate with Keplr",
-    "url": "https://wallet.keplr.app/chains/axelar?modal=validator&chain=axelar-dojo-1&validator_address=axelarvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtwq9yct",
-    "verified": true
+    "url": "https://www.notion.so/20de800a513880b0bc7acac8184261f0",
+    "guide": "/guides/mainnet (AXELAR)"
    },
    "work": [
     [
@@ -80,8 +80,8 @@
     "notes": "Axelar is the one chain here where the Cosmos default ('every block') is untrue: base inflation is 0, fees are burned, and rewards arrive per completed cross-chain poll, not per block (outstanding rewards were flat for most blocks when read block by block). Downtime: signed_blocks_window 94,426 (~43 h at 1.63 s), min_signed 50%, slash 0.01%, jail 2 h minimum; the nexus chain-maintainer thresholds are 100/100, so missed votes cost rewards but do not deregister us. Our earlier Axelar validator axelarvaloper1s0lankh33kprer2l22nank5rvsuh9ksa6utflp ('Redelegate to Encapsulate') is jailed and unbonded; it was not in the Axelar genesis (one gentx), and when it started was not established — so 'since' is for the new address only. Keplr link loaded and opened our validator's modal (Encapsulate, 9%, Stake button)."
    },
    "other": {
-    "label": "Other wallets",
-    "url": "https://www.axelar.network/blog/how-to-stake-the-axl-token-on-the-axelar-network"
+    "label": "Our validator",
+    "url": "https://www.mintscan.io/axelar/validators/axelarvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtwq9yct"
    }
   },
   {
@@ -94,8 +94,8 @@
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
    "wallet": {
     "label": "Delegate with Keplr",
-    "url": "https://wallet.keplr.app/chains/terra?modal=validator&chain=phoenix-1&validator_address=terravaloper1yh4u76y405t3ff9lyrzhhe8legjx9k3as5mujs",
-    "verified": true
+    "url": "https://www.notion.so/241e800a513880239af6cbdf34c4c318",
+    "guide": "/guides/mainnet (TERRA)"
    },
    "work": [
     [
@@ -156,8 +156,8 @@
     "notes": "Downtime: window 10,000 blocks (~16 h at 5.78 s), min_signed 5%, slash 0.01%, jail 10 min minimum. Terra's docs say inflation rewards are minted and released every block. Keplr link loaded and opened our validator's modal ('Encapsulate (fka KingSuper)', 10%, Stake button)."
    },
    "other": {
-    "label": "Other wallets",
-    "url": "https://docs.station.money/using/stake"
+    "label": "Our validator",
+    "url": "https://www.mintscan.io/terra/validators/terravaloper1yh4u76y405t3ff9lyrzhhe8legjx9k3as5mujs"
    }
   },
   {
@@ -170,8 +170,8 @@
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
    "wallet": {
     "label": "Delegate with Keplr",
-    "url": "https://wallet.keplr.app/chains/agoric?modal=validator&chain=agoric-3&validator_address=agoricvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtg25ldj",
-    "verified": true
+    "url": "https://www.notion.so/23ae800a51388006a1dcf38eb5467926",
+    "guide": "/guides/mainnet (Agoric)"
    },
    "work": [
     [
@@ -230,6 +230,10 @@
      "https://agoric.com/validators/"
     ],
     "notes": "slash_fraction_downtime is 0 on Agoric: downtime only jails (window 5,000 blocks ~7.8 h, min_signed 5%, jail 10 min minimum); double-signing still slashes 5%. 'Since' is for the address given; Encapsulate has run Agoric mainnet longer through the 'fka KingSuper' validator agoricvaloper1fy8r6z…mv32, whose start was not researched. Keplr link loaded and opened our validator's modal (Encapsulate, 5%, Stake button)."
+   },
+   "other": {
+    "label": "Our validator",
+    "url": "https://agoric.explorers.guru/validator/agoricvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtg25ldj"
    }
   },
   {
@@ -241,9 +245,9 @@
    "compounding": "Manual",
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
    "wallet": {
-    "label": "Delegate with Althea Link",
-    "url": "https://althea.link/staking",
-    "verified": true
+    "label": "Delegate with MetaMask",
+    "url": "https://www.notion.so/2d1e800a5138800daae5e7127e2c5d52",
+    "guide": "/guides/mainnet (Althea)"
    },
    "work": [
     [
@@ -306,8 +310,8 @@
     "notes": "Keplr's dashboard has no Althea page (wallet.keplr.app/chains/althea is a 404). Althea's docs send stakers to althea.link with MetaMask, so it is the primary; it has no validator deep link (loaded: our validator is #5 with a Delegate button, and pressing it leaves the URL at /staking), hence the plain staking page. A deep link that does open our validator: https://restake.app/althea/altheavaloper1d2x0t42a6anth3lt38ld5997m6e5ya5fw72axt (loaded, 'Stake' in the modal), but REStake flags Althea as added automatically and not thoroughly tested, and Althea's docs say Keplr cannot sign on other sites for EVM-style addresses. Downtime: window 10,000 blocks (~16 h), min_signed 50%, slash_fraction_downtime 0, jail 86,400 s."
    },
    "other": {
-    "label": "Other wallets",
-    "url": "https://docs.althea.net/pages/L1/althea-l1-basics.html"
+    "label": "Our validator",
+    "url": "https://www.mintscan.io/althea/validators/altheavaloper1d2x0t42a6anth3lt38ld5997m6e5ya5fw72axt"
    }
   },
   {
@@ -319,9 +323,9 @@
    "compounding": "Manual",
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
    "wallet": {
-    "label": "Delegate with REStake",
-    "url": "https://restake.app/gitopia/gitopiavaloper1s0lankh33kprer2l22nank5rvsuh9ksag3grfh",
-    "verified": true
+    "label": "Delegate with Keplr",
+    "url": "https://www.notion.so/2fce800a513880aeb6d2eb361e8830f0",
+    "guide": "/guides/mainnet (GITOPIA)"
    },
    "work": [
     [
@@ -383,8 +387,8 @@
     "notes": "Keplr's dashboard has no Gitopia page (wallet.keplr.app/chains/gitopia is a 404); Leap's web dashboard is gone (app.leapwallet.io redirects to a Framer 'Site Not Found'); ping.pub's Gitopia validator page loads but its default endpoint (api.gitopia.nodestake.top) is down, so it shows no data. REStake loaded and opened our validator's modal ('Encapsulate (fka KingSuper)', 5%, 'Never slashed', Stake tab); signing is through a browser wallet such as Keplr, and REStake flags Gitopia as added automatically and not thoroughly tested. The button would read 'Delegate with REStake' — confirm you are happy with a third-party dashboard. Block time is ~1.8 s now, so 'about 2 seconds'. Downtime: window 50,000 blocks (~24.5 h), min_signed 5%, slash 0.01%, jail 10 min minimum."
    },
    "other": {
-    "label": "Other wallets",
-    "url": "https://docs.gitopia.com/wallet-faq"
+    "label": "Our validator",
+    "url": "https://ping.pub/gitopia/staking/gitopiavaloper1s0lankh33kprer2l22nank5rvsuh9ksag3grfh"
    }
   },
   {
@@ -396,9 +400,9 @@
    "compounding": "Manual",
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
    "wallet": {
-    "label": "Delegate with REStake",
-    "url": "https://restake.app/gravitybridge/gravityvaloper1s0lankh33kprer2l22nank5rvsuh9ksatgqzfn",
-    "verified": true
+    "label": "Delegate with Keplr",
+    "url": "https://www.notion.so/314e800a513880e190cec7713b4727cd",
+    "guide": "/guides/mainnet (GRAVITY BRIDGE)"
    },
    "work": [
     [
@@ -464,8 +468,8 @@
     "notes": "Downtime alone only jails (x/slashing window 10,000 blocks ~16 h, min_signed 50%, slash_fraction_downtime 0, jail 10 min minimum). The gravity module separately slashes 0.1% and jails a bonded validator that has not confirmed a valset or batch within 10,000 blocks (slash_fraction_valset/_batch 0.001; logic calls 0); confirmed in x/gravity/abci.go. REStake's page for us — the link the button opens — shows 'Slashed 3 times (0.3% total stake)': the three 0.1% bridge slashes you set to 0 Slashing events, so a delegator will see them there. Our validator was also jailed/unbonded at height 18,999,722 (2025-09-25T01:08:39Z) and re-bonded 212 blocks later. 'Since' uses the genesis time; gravity-bridge-1's actual first block was not found, though launch is reported as December 2021. Keplr's dashboard has no Gravity Bridge page (404) and Leap's web dashboard is gone; REStake loaded and opened our validator's modal (10%, Stake tab). Gravity's official delegating doc links a Cosmostation guide on stakeking.notion.site — your own workspace."
    },
    "other": {
-    "label": "Other wallets",
-    "url": "https://github.com/Gravity-Bridge/Gravity-Docs/blob/main/docs/delegating.md"
+    "label": "Our validator",
+    "url": "https://www.mintscan.io/gravity-bridge/validators/gravityvaloper1s0lankh33kprer2l22nank5rvsuh9ksatgqzfn"
    }
   },
   {
@@ -477,9 +481,9 @@
    "compounding": "Manual",
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
    "wallet": {
-    "label": "Delegate with REStake",
-    "url": "https://restake.app/humans/humanvaloper1d2x0t42a6anth3lt38ld5997m6e5ya5fsqguy3",
-    "verified": true
+    "label": "Delegate with Keplr",
+    "url": "https://www.notion.so/32ce800a513880068cd0c43b61afc2cc",
+    "guide": "/guides/mainnet (Humans)"
    },
    "work": [
     [
@@ -543,7 +547,7 @@
     "notes": "Downtime slash fraction is 0 on humans.ai (double-sign is 5%), so an offline validator is only jailed (10 minutes minimum) and earns nothing until unjailed. Keplr’s dashboard does not support humans.ai (community chain in Keplr’s registry, not in the dashboard’s chain list; every /chains/<slug> tried returns 404), so the primary button is REStake — it would read “Delegate with REStake”; REStake connects Keplr, Leap or Cosmostation. The REStake link opens our validator’s card (checked in headless Chrome). humans.ai’s company site no longer links to the chain, and docs.humans.ai / blog.humans.ai did not load on 2026-09-24 — worth watching whether the chain is being wound down. 24 validators are active; we are 14th."
    },
    "other": {
-    "label": "Other wallets",
+    "label": "Our validator",
     "url": "https://www.mintscan.io/humans/validators/humanvaloper1d2x0t42a6anth3lt38ld5997m6e5ya5fsqguy3"
    }
   },
@@ -556,9 +560,9 @@
    "compounding": "Manual",
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land once a day.",
    "wallet": {
-    "label": "Delegate with REStake",
-    "url": "https://restake.app/impacthub/ixovaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtlmt2an",
-    "verified": true
+    "label": "Delegate with Keplr",
+    "url": "https://www.notion.so/309e800a51388075bf1aeb977eeaaaaa",
+    "guide": "/guides/mainnet (IXO)"
    },
    "work": [
     [
@@ -621,6 +625,10 @@
      "https://www.ixo.world/ixo-token"
     ],
     "notes": "The default “every epoch” is not wrong here, but the epoch is a day, so the lede and Q3 say so. Keplr’s dashboard does not support ixo (Impact Hub is a community chain in Keplr’s registry; /chains/ixo, /impact-hub, /impacthub all 404), hence REStake (connects Keplr, Leap or Cosmostation; opens our validator’s card). The ping.pub page carries a third-party gambling banner ad. “since” is for this address only: our earlier ixo validator ixovaloper1s0lank…t8986e (Encapsulate fka KingSuper, commission set 2022-06-24) is jailed and unbonded — if the page should say Encapsulate has run ixo since 2022, that is a different claim for the user to decide. ixo also has liquid staking (stIXO); plain delegation is unaffected. 17 validators are active; we are 11th."
+   },
+   "other": {
+    "label": "Our validator",
+    "url": "https://ping.pub/ixo/staking/ixovaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtlmt2an"
    }
   },
   {
@@ -633,8 +641,8 @@
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
    "wallet": {
     "label": "Delegate with Keplr",
-    "url": "https://wallet.keplr.app/chains/lumera?modal=validator&chain=lumera-mainnet-1&validator_address=lumeravaloper18qpd0yrk0gkcvah0zpyq89uqzd2y6q25dlmcux",
-    "verified": true
+    "url": "https://www.notion.so/2ede800a5138804992ffddc62eaf51ac",
+    "guide": "/guides/mainnet (Lumera)"
    },
    "work": [
     [
@@ -698,7 +706,7 @@
     "notes": "Lumera’s downtime threshold is 90% missed (min_signed_per_window 0.10), not the usual 95%; jail lasts 1 hour. The Keplr link was loaded in headless Chrome and opens our validator’s card (“Encapsulate, Commission 8%”) with Stake/Redelegate. Lumera’s portal has an “EVM Migration” section and Lumera has published an account-migration-to-EVM guide (testnet) — if mainnet accounts move to EVM keys, the wallet link may need revisiting. 50 validators are active; we are 30th."
    },
    "other": {
-    "label": "Other wallets",
+    "label": "Our validator",
     "url": "https://portal.lumera.io/lumera-mainnet-1/staking/lumeravaloper18qpd0yrk0gkcvah0zpyq89uqzd2y6q25dlmcux"
    }
   },
@@ -712,8 +720,8 @@
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
    "wallet": {
     "label": "Delegate with Keplr",
-    "url": "https://wallet.keplr.app/chains/passage?modal=validator&chain=passage-2&validator_address=pasgvaloper1s0lankh33kprer2l22nank5rvsuh9ksawhck2v",
-    "verified": true
+    "url": "https://www.notion.so/241e800a5138801282b7c36436409f43",
+    "guide": "/guides/mainnet (PASSAGE)"
    },
    "work": [
     [
@@ -777,8 +785,8 @@
     "notes": "Passage jails at 50% missed (min_signed_per_window 0.50) and slashes 0.5% for downtime — stricter than most Cosmos chains. The Keplr link was loaded in headless Chrome and opens our validator’s card. The Networks-set Explorer link (mintscan.io/passage/…) now lands on Mintscan’s 404 — Mintscan has dropped Passage — and ping.pub’s Passage page defaults to a dead endpoint; the explorer the passage-2 repo names (passage.aneka.io) did not resolve. So the “Public record” line needs a working explorer link from the user. 24 validators are active; we are 14th."
    },
    "other": {
-    "label": "Other wallets",
-    "url": "https://restake.app/passage/pasgvaloper1s0lankh33kprer2l22nank5rvsuh9ksawhck2v"
+    "label": "Our validator",
+    "url": "https://wallet.keplr.app/chains/passage?modal=validator&chain=passage-2&validator_address=pasgvaloper1s0lankh33kprer2l22nank5rvsuh9ksawhck2v"
    }
   },
   {
@@ -790,9 +798,9 @@
    "compounding": "Manual",
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block, though today they are close to zero.",
    "wallet": {
-    "label": "Delegate with Keplr",
-    "url": "https://wallet.keplr.app/chains/sommelier?modal=validator&chain=sommelier-3&validator_address=sommvaloper1s0lankh33kprer2l22nank5rvsuh9ksa8324s2",
-    "verified": true
+    "label": "Delegate with MetaMask",
+    "url": "https://www.notion.so/2a1e800a51388009b3bee55f5eb93eb9",
+    "guide": "/guides/mainnet (Sommelier)"
    },
    "work": [
     [
@@ -859,8 +867,8 @@
     "notes": "Confirmed both claims: slash_fraction_downtime and slash_fraction_double_sign are both 0 (jail only, 8,640 s = 2.4 hours), and the reward rate is effectively 0% (Keplr’s dashboard also shows “Staking APR 0%”). “Cannot slash” holds under today’s params; governance could change them. Somm’s staking page says rewards are funded by vault fees, so they could return if the fee auctions restart — the Q3/lede wording should then be revisited. Only 9 validators are active and the Sommelier Foundation holds 70.6% of voting power; we are 5th with 1.28%. The Networks-set Explorer link (mintscan.io/sommelier/…) now lands on Mintscan’s 404, sommscan.io redirects to an unrelated domain (bbi.events), and ping.pub’s Sommelier page is disconnected — the “Public record” line needs a working explorer link. The Keplr link was loaded in headless Chrome and opens our validator’s card."
    },
    "other": {
-    "label": "Other wallets",
-    "url": "https://restake.app/sommelier/sommvaloper1s0lankh33kprer2l22nank5rvsuh9ksa8324s2"
+    "label": "Our validator",
+    "url": "https://wallet.keplr.app/chains/sommelier?modal=validator&chain=sommelier-3&validator_address=sommvaloper1s0lankh33kprer2l22nank5rvsuh9ksa8324s2"
    }
   },
   {
@@ -872,9 +880,8 @@
    "compounding": "Manual",
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
    "wallet": {
-    "label": "Delegate with REStake",
-    "url": "https://restake.app/chain4energy/c4evaloper1s0lankh33kprer2l22nank5rvsuh9ksad20r7x",
-    "verified": true
+    "label": "Delegate with Keplr",
+    "url": "https://explorer.mainnet.dteam.tech/chain4energy/staking/c4evaloper1s0lankh33kprer2l22nank5rvsuh9ksad20r7x"
    },
    "work": [
     [
@@ -941,8 +948,8 @@
     "notes": "Keplr’s dashboard does not support C4E (perun-1 is a community chain in Keplr’s registry; /chains/chain4energy and /perun 404), and C4E’s own staking dashboard (wallet.c4e.io/staking, which its docs point to) returned 522 or a blank page, so the primary button is REStake — it opens our validator’s card and connects Keplr, Leap or Cosmostation. The Networks-set Explorer link (ping.pub/chain4energy/…) loads but shows “Disconnected” on its default endpoint; explorer.mainnet.dteam.tech/chain4energy/staking/<valoper> and explorer.stavr.tech/c4e/staking/<valoper> load our validator with a Delegate button, if a working explorer is wanted. 25 validators are active; we are 12th."
    },
    "other": {
-    "label": "Other wallets",
-    "url": "https://docs.c4e.io/usersGuide/walletBasics.html"
+    "label": "Our validator",
+    "url": "https://explorer.stavr.tech/c4e/staking/c4evaloper1s0lankh33kprer2l22nank5rvsuh9ksad20r7x"
    }
   },
   {
@@ -955,8 +962,8 @@
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards arrive in one sum when your staking period ends.",
    "wallet": {
     "label": "Delegate with Core",
-    "url": "https://core.app/stake/delegate/",
-    "verified": true
+    "url": "https://www.notion.so/202e800a5138808291a3c3b62d70d8ba",
+    "guide": "/guides/mainnet (AVALANCHE)"
    },
    "work": [
     [
@@ -1036,6 +1043,10 @@
      "https://support.avax.network/en/articles/6088395-how-do-i-stake-avax-on-avalanche"
     ],
     "notes": "CAPACITY: at 2026-09-24 the node holds 2,002 AVAX of its own and 7,960.63 AVAX from 37 delegators; the cap is 5 × 2,002 = 10,010, so only ~47 AVAX can be delegated right now (not ~111), which fits one more delegator at the 25 AVAX minimum. Keep this off the page but the Delegate button will fail for most people until the node restakes with more AVAX. GAP: the node did not validate 2026-02-02 → 2026-05-15 (Glacier shows no period in that window). HELICON went live on mainnet 2026-09-22 15:00 UTC: (a) ACP-267 raises the uptime bar to 90% for validators whose period STARTS after Helicon — our current period started 2026-05-15, so 80% holds until 2027-05-14; when the node restakes, the Q4 answer must say 90%; (b) Helicon cut the minimum VALIDATOR period to 48 h, but delegators still use MinStakeDuration = 2 weeks (getDelegatorRules), so '2 weeks to 1 year' stays true; (c) ACP-285 lowers the minimum reward rate towards 7.5% over 90 days, so rates will change. A delegation cannot end after the validator's end (2027-05-14), so today the longest possible delegation is ~232 days, not a year. CORE: no deep link — the delegate route reads no URL parameters (checked in the bundle); the reader filters by Node ID in 'Advanced filters' and pastes NodeID-N3e9W3EngjabGnTZVqyZwunVcbCdrY5Qy. Core's 'Fast Stake' charges 10% of rewards; the Delegate flow linked here does not. WORK: Avalanche validators cast no on-chain votes and explorers show uptime, not signatures — hence the Public record change. 'A missed block' is left as it is (validators do propose blocks under Snowman++), though uptime is what the chain measures."
+   },
+   "other": {
+    "label": "Our validator",
+    "url": "https://avascan.info/staking/validator/NodeID-N3e9W3EngjabGnTZVqyZwunVcbCdrY5Qy"
    }
   },
   {
@@ -1047,9 +1058,9 @@
    "compounding": "Auto",
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 7 hours.",
    "wallet": {
-    "label": "Delegate with MyNearWallet",
-    "url": "https://app.mynearwallet.com/staking/encapsulate.pool.near/stake",
-    "verified": true
+    "label": "Delegate with Meteor",
+    "url": "https://www.notion.so/27ae800a513880aea9fad4b57231b7db",
+    "guide": "/guides/mainnet (Near)"
    },
    "work": [
     [
@@ -1112,8 +1123,8 @@
     "notes": "The pool is the upgradeable pool.near 'staking-farm' contract, not the classic poolv1 one. It keeps the 4-epoch unlock, and its code can only be replaced by code the pool.near factory already holds. UNSTAKE: the contract frees unstaked NEAR at epoch_height ≥ request epoch + 4, so the wait is 3–4 epochs of wall time, i.e. 22–30 h at today's 7.2–7.5 h epochs. If block times change, this figure changes too. The Notion value 'About 1–1.5 days' agrees. ROLE: on 2026-09-24 the pool is a chunk-validator only (0 expected blocks and chunks, 6,497 expected endorsements), which is why Monitoring and Public record are changed. If its stake reaches a block-producer seat (top 100) it will also produce blocks and chunks, and the default Monitoring line would be true again. The kickout thresholds are 80% for block and chunk producers and 70% for chunk-validator-only nodes; the answer says 'further down' so as not to name one. WALLET: MyNearWallet's /staking/:validator/stake route is in its source, reads the pool id from the path, and the URL loads (200); the stake form itself was not driven. Meteor, the most-used NEAR wallet, picks a validator from a dropdown and no deep link to a validator was found. MyNearWallet is not on wallet.near.org, so the user may prefer Meteor with no deep link."
    },
    "other": {
-    "label": "Other wallets",
-    "url": "https://wallet.near.org"
+    "label": "Our validator",
+    "url": "https://nearblocks.io/node-explorer/encapsulate.pool.near"
    }
   },
   {
@@ -1125,9 +1136,9 @@
    "compounding": "Auto",
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 24 hours.",
    "wallet": {
-    "label": "Delegate with Slush",
-    "url": "https://my.slush.app/staking/native-stake?validatorAddress=0x01d03daf1dc3540b62014b0a6837f21ba72bf9218d6c4b3a2ee65465dde26ff7&validatorName=Encapsulate",
-    "verified": false
+    "label": "Delegate with Suiet",
+    "url": "https://www.notion.so/1f9e800a51388064a224e68a2157775b",
+    "guide": "/guides/mainnet (SUI)"
    },
    "work": [
     [
@@ -1190,8 +1201,8 @@
     "notes": "WALLET LINK NOT VERIFIED. Slush's documented deep links include staking/native-stake with no parameters. In the Slush bundle, that screen (StakeSuiScreen, titled 'Stake with {validatorName}') reads route.params.validatorAddress, and React Navigation passes query parameters into route params, so the URL above should open 'Stake with Encapsulate'. It could not be loaded: my.slush.app answers 451 'not available in your region' from here (India) and to the fetcher. Test it from a phone with Slush installed. Fallback: https://my.slush.app/staking/native-stake (documented; the reader picks Encapsulate) — note that Slush's own docs say deep links do not work for the browser extension. UNSTAKE: request_withdraw_stake returns principal plus rewards in the same transaction ('TODO: implement withdraw bonding period'). Rewards count up to the start of the current epoch, so that epoch's rewards are forfeited. Stake added this epoch comes back whole with no rewards. OFFLINE: the tallying rule slashes 100% of a reported validator's epoch rewards (reward_slashing_rate 10000 bps) once reporters hold ≥ 6,667/10,000 voting power; principal is never touched. SINCE: the earlier validator 'Encapsulate (fka KingSuper)' 0x970f9006… ran from Sui's genesis (2023-05-03) through epoch 848. The new address joined at 849; the two were never in the active set together. If the page means the operator rather than this address, the date is 2023-05-03. WORK: Sui validators vote on the reference gas price each epoch (shown per validator on Suiscan) and report peers. Checkpoint signatures are aggregated and not shown per validator, so 'our signing … on the explorer' is loose but left unchanged — confirm."
    },
    "other": {
-    "label": "Other wallets",
-    "url": "https://www.sui.io/get-started"
+    "label": "Our validator",
+    "url": "https://suiscan.xyz/mainnet/validator/0x01d03daf1dc3540b62014b0a6837f21ba72bf9218d6c4b3a2ee65465dde26ff7"
    }
   },
   {
@@ -1204,8 +1215,8 @@
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 24 hours.",
    "wallet": {
     "label": "Delegate with IOTA Wallet",
-    "url": "https://wallet-dashboard.iota.org/staking",
-    "verified": true
+    "url": "https://www.notion.so/1f9e800a5138808185b9da692f4e98cf",
+    "guide": "/guides/mainnet (IOTA)"
    },
    "work": [
     [
@@ -1268,8 +1279,8 @@
     "notes": "WALLET: the IOTA Wallet Dashboard is IOTA Foundation's web staking app, used with the IOTA Wallet extension (or Nightly). Its /staking route exists in source and loads (200), but it reads no URL parameters, so the reader picks Encapsulate from the list. The IOTA Wallet extension has a /stake/new?address= route, but an extension page cannot be linked from a website. UNSTAKE: the code returns principal plus rewards immediately, as on Sui. IOTA's own docs say earned rewards are 'distributed at the end of the current epoch', which the Move code does not do — the answer follows the code. OFFLINE: reward_slashing_rate is 100% for a validator reported by ≥ 6,667/10,000 committee voting power. Score-based reward adjustment exists but is switched off (adjust_rewards_by_score false). A validator that falls out of the committee (below the stake cut) earns nothing while out; not in the copy. WORK: same caveat as Sui on 'our signing'."
    },
    "other": {
-    "label": "Other wallets",
-    "url": "https://www.iota.org/products/wallet"
+    "label": "Our validator",
+    "url": "https://iotascan.com/mainnet/validator/0xedd654b226cbfbdfd2f7329928ba1b8784493354f92326e9d368494a9227c9ab"
    }
   },
   {
@@ -1281,9 +1292,9 @@
    "compounding": "Auto",
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 24 hours.",
    "wallet": {
-    "label": "Delegate with Stakereef",
-    "url": "https://stakereef.com/",
-    "verified": true
+    "label": "Delegate with Suiet",
+    "url": "https://www.notion.so/2cbe800a513880a09054d0555cae3e5d",
+    "guide": "/guides/mainnet (Ika)"
    },
    "work": [
     [
@@ -1345,8 +1356,8 @@
     "notes": "WALLET: Ika has no official staking app that I could find — not on ika.xyz nor docs.ika.xyz. Stakereef is community-built (announced by @swyke_ai, 2025-09), and Stakin and Nodes.Guru send delegators there. It has a single route and reads no URL parameters, so the reader searches for Encapsulate. Ikascan's operator page has a 'Stake' button (Blockberry's generic wallet popup), which may be a better deep link, but I could not confirm it stakes IKA. Please choose. UNSTAKE is two transactions. A request before the mid-epoch committee selection (12 h in) makes the stake withdrawable at the next epoch (12–24 h later); a request after it, while we are in the next committee, at the epoch after that (24–36 h). The stake keeps earning until then (rewards are counted to the withdraw epoch), which is why the copy does not say rewards stop. Brand-new stake that is not yet active can be withdrawn at once. OFFLINE: reward_slashing_rate is 10000 (100%). Ika counts reporters by number (quorum 37 of the 56 committee members), not by stake, hence 'two-thirds of the committee'. Principal is never cut. SINCE: Ika's epoch 1 began 2025-07-24; the public 'Mainnet is live' announcement came later (late July 2025) — confirm which date the page should carry. Rewards are split equally per committee member, not by stake — not in the copy. WORK: Ika validators sign checkpoints and approve protocol upgrades; Ikascan shows operators' stake and status, not per-validator signatures — same caveat as Sui."
    },
    "other": {
-    "label": "Other wallets",
-    "url": "https://www.sui.io/get-started"
+    "label": "Our validator",
+    "url": "https://ikascan.io/mainnet/operator/0x351f2db45c0aa849265b2605535ac84f2bed663c819044045953d579a74312f1"
    }
   },
   {
@@ -1358,9 +1369,9 @@
    "compounding": "Manual",
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue with every block we propose.",
    "wallet": {
-    "label": "Delegate with MonadVision",
-    "url": "https://monadvision.com/validator/0x79129e1306dc1e81F3a2cC5e3B5171fb92FFd99d",
-    "verified": true
+    "label": "Delegate with MetaMask",
+    "url": "https://www.notion.so/2b5e800a51388069b5ffdb665eca0d5f",
+    "guide": "/guides/mainnet (Monad)"
    },
    "work": [
     [
@@ -1422,6 +1433,10 @@
      "https://www.coindesk.com/tech/2025/11/24/monad-blockchain-goes-live-with-100b-token-supply-and-airdrop"
     ],
     "notes": "Cadence: the design’s “rewards land every epoch” is not true for Monad — rewards accrue per proposed block (docs + on-chain), so the lede and Q3 were changed; epochs (50,000 blocks, ~4.2 h at 0.30 s) only govern when stake changes take effect. Unbonding computed from the docs’ rule (withdrawable in epoch n+1+WITHDRAWAL_DELAY, or n+2+1 after the boundary block) with a 4.2 h epoch and a ~25 min boundary delay: ~4.6 to ~8.8 hours — the Notion figure “About 4.5–9 hours” holds. Minimum: only the 1 gwei DUST_THRESHOLD, so the default stands. Custody: delegated MON is held by the staking precompile under the delegator’s address (wallets show it as staked, not as balance); the default wording was kept because this is the design’s own chain — confirm you are happy with “stay in your wallet”. Offline: docs say automated in-protocol slashing is not implemented, and nothing removes a validator for downtime (only for falling under the stake thresholds). The wallet link could not be loaded here (Cloudflare challenge), but the format is confirmed: Stakin’s guide links monadvision.com/validator/0xC9ae…2b74, which is the address derived from Stakin’s SECP key (id 10), exactly as ours (0x79129e…d99d) derives from our SECP key 02f9eb11…581b. Public record: MonadVision and gmonads show proposed blocks; per-validator consensus votes are aggregated into quorum certificates and not listed, and Monad has no on-chain governance — if “and votes” should be literal, consider “Our signing is on the explorer for anyone to check.” (not proposed, since validators do vote in MonadBFT). The app.monad.xyz portal no longer carries a Stake entry."
+   },
+   "other": {
+    "label": "Our validator",
+    "url": "https://monadvision.com/validator/0x79129e1306dc1e81F3a2cC5e3B5171fb92FFd99d"
    }
   },
   {
@@ -1433,9 +1448,9 @@
    "compounding": "Manual",
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about an hour.",
    "wallet": {
-    "label": "Delegate with Endur",
-    "url": "https://dashboard.endur.fi/validator/0x0359e252e663765989b04c266a4daec77662b506ce5f026994cb8ad53628df2a",
-    "verified": true
+    "label": "Delegate with Braavos",
+    "url": "https://www.notion.so/233e800a513880059a91ebeebdaf0c71",
+    "guide": "/guides/mainnet (Starknet)"
    },
    "work": [
     [
@@ -1496,8 +1511,8 @@
     "notes": "Full STRK pool address: 0x04e828f5e405368159dd0938c9a2a2256aa30f3cddd7fbbb6b03934ba70bb3f6 (16.84M STRK delegated, commission 500 = 5%). The staker also has four empty BTC pools (LBTC, WBTC, tBTC, solvBTC) created 2025-09-25. Endur’s page loaded in headless Chrome and shows “Encapsulate Limited”, the pool and a Stake button — it lists only 4 STRK delegators. Voyager’s equivalent is https://voyager.online/staking?validator=0x0359…df2a (format confirmed from Luganodes’ guide; Cloudflare blocked loading it). Exit: exit_wait_window is 604,800 s on-chain (7 days); per the spec the intent pauses rewards for that amount at once. Switching to another pool (switch_delegation_pool) needs no wait. No minimum for delegators (starknet.io: “Delegators can delegate their STRK with no minimum”). Watch: when StarkWare activates v3 consensus rewards, rewards become per block and the lede/Q3 need revisiting. Work lines changed because Starknet validators neither produce blocks (StarkWare’s sequencer does) nor vote; they attest once per epoch. “Node operation” left as is (Starknet validators do run their own full node + attestation)."
    },
    "other": {
-    "label": "Other wallets",
-    "url": "https://www.starknet.io/staking/"
+    "label": "Our validator",
+    "url": "https://voyager.online/staking?validator=0x0359e252e663765989b04c266a4daec77662b506ce5f026994cb8ad53628df2a"
    }
   },
   {
@@ -1510,8 +1525,8 @@
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 2 hours.",
    "wallet": {
     "label": "Delegate with StarKey",
-    "url": "https://starkey.app/",
-    "verified": true
+    "url": "https://www.notion.so/237e800a513880efad23eeb818007817",
+    "guide": "/guides/mainnet (Supra)"
    },
    "work": [
     [
@@ -1573,6 +1588,10 @@
      "https://chainwire.org/2024/11/27/supra-announces-tge-as-mainnet-goes-live-in-partnership-with-multiple-exchanges/"
     ],
     "notes": "Minimum: MIN_COINS_ON_SHARES_POOL = 100,000,000 quants = 1 SUPRA (8 decimals, CoinInfo) — read from the framework source (dev branch), not from deployed bytecode; StarKey may impose its own UI minimum (unchecked). A stake added mid-epoch pays an add_stake fee equal to that epoch’s reward, returned to the pool at the epoch end. Unbonding: recurring_lockup_duration_secs = 172,800; our pool’s current lockup ends 2026-09-25 17:17 UTC, so an unlock today waits ~28 h. Offline: no jailing or slashing in stake.move; rewards scale by successful/(successful+failed) proposals (the FAQ’s “we do not currently record failed proposals” is outdated — ValidatorPerformance shows a validator with 77 failed). Custody caveat to confirm: this is a PBO delegation pool whose multisig admin (0x5944…d342, the Supra Foundation) keeps powers the code calls temporary — lock_delegators_stakes can re-lock a delegator’s stake up to a set principal, and replace_delegator applies to original stakeholders; hence the answer says “we cannot move it” rather than “only you can”. No deep link exists: staking is inside the StarKey extension, where pools are picked from a numbered list (“Delegation Pool 121” in DAIC’s guide) — which number is ours was not found. Supra has no other staking route, so the “Other wallets” button could be dropped. Since: 8,064 × 2 h puts the first epoch near 2024-11-21, i.e. the chain may have run a few days before the public launch; the launch date was used per the brief."
+   },
+   "other": {
+    "label": "Our validator",
+    "url": "https://suprascan.io/address/0x15ac9afcd6a042bd61239305ad13663f2423663d6ea83ce5293561b77766cd3a/f"
    }
   },
   {
@@ -1584,9 +1603,9 @@
    "compounding": "Manual",
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue with every block we propose.",
    "wallet": {
-    "label": "Delegate with Espresso Staking",
-    "url": "https://stake.espresso.network/",
-    "verified": true
+    "label": "Delegate with MetaMask",
+    "url": "https://www.notion.so/37ce800a513880e89cf4ed4aa08a7b8d",
+    "guide": "/guides/mainnet (Espresso)"
    },
    "work": [
     [
@@ -1647,6 +1666,10 @@
      "https://espressonodes.com/operator/0xea452aed0ea405e2d9b4038a6e1433028ad8991b?network=mainnet"
     ],
     "notes": "ESP lives on Ethereum, so delegating, undelegating, withdrawing and claiming are Ethereum transactions (approve + delegate; gas in ETH). Exit escrow is 604,800 s on-chain; governance can change it (contract floor 2 days). No slash function in StakeTable v2/v3. The staking dashboard has no validator deep link: the only URL parameters it reads are intent=claim-and-stake, address and amount (a claim-then-restake flow), so the button opens the dashboard and the delegator picks Encapsulate from the list. Since: old stake tables are not served by the public query node, so the first epoch in the active set rests on espressonodes’ record (≈22 h after the L1 delegation, consistent with the epoch delay). Public record: espressonodes shows per-epoch vote and proposal rates for us — proposals 100%, but “Vote” at ~20–25% each epoch; worth understanding that metric before the page invites people to check our votes. Custody answer changed from the default because ESP leaves the wallet for the stake table contract."
+   },
+   "other": {
+    "label": "Our validator",
+    "url": "https://espressonodes.com/operator/0xea452aed0ea405e2d9b4038a6e1433028ad8991b?network=mainnet"
    }
   },
   {
@@ -1658,9 +1681,9 @@
    "compounding": "Auto",
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block, about a second.",
    "wallet": {
-    "label": "Delegate with Zilliqa Staking",
-    "url": "https://stake.zilliqa.com/?poolId=MHgxMzEx",
-    "verified": true
+    "label": "Delegate with MetaMask",
+    "url": "https://www.notion.so/222e800a51388005afc7c0a055a60839",
+    "guide": "/guides/mainnet (ZILLIQA)"
    },
    "work": [
     [
@@ -1728,8 +1751,8 @@
     "notes": "Deep link read from the portal’s own bundle (pool id “MHgxMzEx” = base64 “0x1311”; selecting a pool pushes ?poolId=) and loaded in headless Chrome: it opens the Encapsulate/encapZIL panel. Unbonding: 461,680 blocks on-chain (deposit_v8 withdrawal_period since block 25,902,000) — 5.9 days at today’s 1.1 s blocks, but the portal displays “Unbonding Period: ~7 days” (it assumes slower blocks); the page says “about 6 days” and days = 6 — confirm which you prefer. Offline: jailing live since block 13,514,400 — a leader that failed 3 times in the last 600 views is skipped as proposer but still votes and earns the cosigner share. No slash function in the deployed deposit contracts (v7/v8/v9); Zilliqa’s 2.0 blog describes slashing for equivocation as a design goal, not something live. Minimum 100 ZIL on-chain and in the portal (which also warns of ~12 ZIL transaction cost). encapZIL is transferable, so a holder can also sell it instead of waiting out the unbonding — not mentioned in the answers."
    },
    "other": {
-    "label": "Other wallets",
-    "url": "https://blog.zilliqa.com/how-to-stake-on-zilliqa-evm/"
+    "label": "Our validator",
+    "url": "https://otterscan.zilliqa.com/address/0x1311059DD836D7000Dc673eA4Cc834fe04e9933C"
    }
   },
   {
@@ -1741,9 +1764,9 @@
    "compounding": "Manual",
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every era, about 24 hours.",
    "wallet": {
-    "label": "Delegate with Avail Staking",
-    "url": "https://staking.availproject.org/#/nominate",
-    "verified": true
+    "label": "Delegate with SubWallet",
+    "url": "https://www.notion.so/220e800a5138805380ddc663626833a9",
+    "guide": "/guides/mainnet (Avail)"
    },
    "work": [
     [
@@ -1812,8 +1835,8 @@
     "notes": "No wallet or dashboard can open a nomination of a specific validator from a link: the Avail staking dashboard (a 2024 fork of the Polkadot staking dashboard) reads only ?n (network), ?a (account), ?l (language) and ?t (tab); Nova’s app links, SubWallet’s deep links (open-in-browser only) and polkadot.js apps have no such action. So the button opens the dashboard’s Nominate page and the reader picks ‘Encapsulate’ under manual selection. ‘Delegate with Avail Staking Dashboard’ is long — consider ‘Avail Staking’. On-chain (spec 56): minNominatorBond 1,000 AVAIL; pool minJoinBond 100 AVAIL (100 pools); minimumActiveStake ≈ 0, so every nominator is in the election; up to 16 nominations. Q4 is read from the runtime’s own code (polkadot-sdk 1.7.1 fork): im-online reports a validator that neither authored a block nor sent a heartbeat all session; the slash is 0 unless more than n/10+1 are reported (with 70 validators that is 9 or more), then it rises linearly to 7% of validator and nominator stake; and every offence — even a zero slash — chills the validator (kick_out_if_recent → chill_stash), which is ‘dropped from the next election’ until it validates again. Our own record matches: after the 2026-08-31 outage the validator was out of the set for eras 790–792, and the 7% slash reported then (4,272 AVAIL) was cancelled by the Technical Committee (slashes wait 27 eras). Payouts: 18 eras unclaimed (795–812) on 2026-09-24; the oldest can be claimed until era 879. Q3 is true as written (‘once anyone claims’), but ‘every era’ only holds in practice if payouts are run — consider a payout bot. Compounding is ‘Manual’ because payout_stakers must be called; with payee Staked (the dashboard default) the paid reward joins the bond. Our validator: commission 20%, payee Account 5CmsVjfD…, own 61,034 AVAIL, 2 nominators, 63.45M AVAIL total. Subscan lists 600 eras for us, against the 613 in the set by my count; the first era is the same. Other wallets: I used the ‘Stake on Avail’ overview (staking tools); the wallets themselves (SubWallet, Talisman, PolkadotJS, Nova Wallet) are named on https://docs.availproject.org/docs/da/user-guides/accounts — pick whichever the button should mean. WORK: ‘Public record’ changed because Avail has no token-holder on-chain voting (governance is the Technical Committee), GRANDPA finality votes are not shown on explorers, and the Governance Record has no Avail rows; Subscan does show our blocks and era points. The other three lines are true as written."
    },
    "other": {
-    "label": "Other wallets",
-    "url": "https://docs.availproject.org/docs/da/user-guides/staking-governance/stake-on-avail/overview"
+    "label": "Our validator",
+    "url": "https://avail.subscan.io/validator/5FqQ3hKubNnejLwquQXjouX1ogwdzcL3xCU2ZqFcZs9NKSTN"
    }
   },
   {
@@ -1826,8 +1849,7 @@
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every era, about 12 hours.",
    "wallet": {
     "label": "Delegate with Vara Staking",
-    "url": "https://staking.vara.network/#/nominate",
-    "verified": true
+    "url": "https://staking.vara.network/#/nominate"
    },
    "work": [
     [
@@ -1892,8 +1914,8 @@
     "notes": "No deep link to our validator exists: the Vara Staking Dashboard (same Polkadot-dashboard fork) reads only ?n, ?a, ?l and ?t; the wiki itself links https://staking.vara.network/#/nominate. The reader chooses ‘Encapsulate’ under manual selection. ‘Delegate with Vara Staking Dashboard’ is long — consider ‘Vara Staking’. On-chain: minNominatorBond 50 VARA and pool minJoinBond 1 VARA (the wiki says the same); minimumActiveStake 0.027 VARA; up to 16 nominations; 81 pools. Bonding 14 eras × 12 h = 7 days (wiki: ‘Bonding duration 7 days’). Q4 is read from the live runtime (gear v1.10.0 on polkadot-sdk stable2409): im-online reports a validator that neither authored a block nor sent a heartbeat all session; the slash is 0 unless more than n/10+1 are reported (with 59 validators, 7 or more), then it rises to 7% of validator and nominator stake; unlike Avail, this version does not chill the validator, but it may disable it for the rest of the era (UpToLimitDisablingStrategy) — left out of the copy. Slashes wait 13 eras (~6.5 days) and can be cancelled by governance. ‘Missed blocks earn nothing’: era points come from authored blocks, and a validator’s reward is its share of points. Payouts: 25 eras unclaimed on 2026-09-24 (2311–2339, except 2312, 2316, 2317 and 2320, which someone claimed); the oldest expires after era 2395, about 27 days from now. As with Avail, Q3 is true as written, but ‘every era’ holds in practice only if payouts are run. Our validator: commission 5%, payee Account kGgFA3D5…, own 102,000 VARA, 46 nominators, 45.23M VARA total. WORK: ‘Public record’ changed because the Governance Record has no Vara votes; Vara does have OpenGov (ConvictionVoting/Referenda), so if Encapsulate votes there, keep the default ‘Our signing and votes …’. The other three lines are true as written."
    },
    "other": {
-    "label": "Other wallets",
-    "url": "https://wiki.vara.network/docs/vara-network/staking/nominate"
+    "label": "Our validator",
+    "url": "https://vara.subscan.io/validator/kGjJgbAji2v1NXHCApCJ9VTTAKfhE8XBeUK6u4a3txuuH6Qq6"
    }
   },
   {
@@ -1903,11 +1925,11 @@
    "unbonding": "None",
    "unbonding_days": 0,
    "compounding": "Auto",
-   "lede": "Delegate in two minutes. Your keys never leave your wallet; we pay your share of block rewards monthly.",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; we pay your share of block rewards every two epochs.",
    "wallet": {
-    "label": "Delegate with Auro",
-    "url": "https://minascan.io/mainnet/validator/B62qjWmFMiYUiWGvisVof9mbiKi2sB1FhZdwiDyXi8nMCoLDJuFaRYY/delegations",
-    "verified": true
+    "label": "Delegate with Auro Wallet",
+    "url": "https://www.notion.so/1f6e800a513880408150f76555bea95e",
+    "guide": "/guides/mainnet (MINA)"
    },
    "work": [
     [
@@ -1938,7 +1960,7 @@
     ],
     [
      "How often are rewards paid?",
-     "Mina pays each block’s reward to us, not to you. We pay delegators their share, less our 5% fee, once a month."
+     "Mina pays each block’s reward to us, not to you. We pay delegators their share, less our 5% fee, every two epochs — about 15 days."
     ],
     [
      "What happens if you go offline?",
@@ -1976,8 +1998,8 @@
     "notes": "The Q3 answer and the lede say ‘once a month’ — CONFIRM that this is still the policy. It is what Minascan’s profile states (‘payout period 1 / month’) and what the chain shows from 2024-10 to 2026-01, but there has been no block since about 2025-12-04, so nothing has been paid since January. At today’s 5,093 MINA (16 delegators, about 0.0004% of stake) the expected rate is about 0.039 blocks per epoch: one block every ~26 epochs, roughly every 6 months now that epochs are 7.44 days. That is why the rate is left blank. Compounding is ‘Auto’ because our payment lands in the delegator’s account and the whole balance is always delegated, so it counts after 1–2 epochs — but it depends on us paying. Mesa has happened (2026-09-03): slots 90 s, epochs halved to 7.44 days, coinbase halved to 360 MINA. The docs’ ‘How to Delegate’ page says delegation becomes active in 1–2 weeks (1–2 epochs); the older ‘Delegating MINA’ page still says 2–4 weeks, which is pre-Mesa. There is no minimum and no lock; the only cost is the delegation’s transaction fee (the docs say ‘No minimum amount required’). Wallet: Auro has no delegation deep link — its app links support only action=openurl. Minascan’s validator page has a ‘Stake’ button that opens a ‘Stake MINA’ dialog prefilled with our block producer and calls Auro’s provider (mina.sendStakeDelegation, seen in Minascan’s bundle). I opened the dialog and cancelled it; nothing was sent. So the link works on desktop with the Auro extension, but not on a phone. The alternative is for our page to call window.mina.sendStakeDelegation({to}) itself (documented by Auro) — that is page JS, your call. Minascan still names us ‘Encapsulate (fka KingSuper)’, links Twitter @_KingSuper_ and marks us isActive: false; it may be worth updating that profile. The block-producer account also receives 900 MINA a month in delegation-program grants (memos ‘MF Grant …’, ‘o1DP_…’); these are not delegator rewards. WORK: ‘Public record’ changed because Mina has no signing or attestations to show, but blocks are there, and so are votes: the account sent MIP6–MIP9 vote transactions on 2025-12-15. ‘Upgrade handling’: the Governance Record has Mina upgrades through Mesa, but at this stake no block is expected, so the chain cannot show whether our node is running post-Mesa — confirm the node is up. ‘Node operation’ is untouched as asked. A caution on Q4’s fixed first sentence: on Mina, two nodes running one block-producer key at the same time can both produce in the same slot. There is no slashing for it, but the ‘hot standby’ must be a cold failover."
    },
    "other": {
-    "label": "Other wallets",
-    "url": "https://docs.minaprotocol.com/using-mina/how-to-delegate"
+    "label": "Our validator",
+    "url": "https://minascan.io/mainnet/validator/B62qjWmFMiYUiWGvisVof9mbiKi2sB1FhZdwiDyXi8nMCoLDJuFaRYY/delegations"
    }
   },
   {
@@ -1990,8 +2012,7 @@
    "lede": "Stake in two minutes. Your keys never leave your wallet; your stETH grows once a day.",
    "wallet": {
     "label": "Stake with Lido",
-    "url": "https://stake.lido.fi",
-    "verified": true
+    "url": "https://stake.lido.fi"
    },
    "work": [
     [
@@ -2125,8 +2146,8 @@
     "notes": "Q4 does NOT open with “A standby node takes over.” — for a DVT cluster that sentence misdescribes the mechanism: the validator key is split into seven shares held by seven operators, and SSV’s 3f+1 rule lets a 7-operator cluster keep signing with any 5 up (2 may fail). There is no single node for a standby to replace, and whatever standby we keep behind SSV operator 924 is invisible to the staker. Proposed first sentence instead: “Any five of the cluster’s seven operators keep it signing.” The chain part is Ethereum’s: downtime is never slashed; missed source/target votes are penalised by exactly what they would have paid (no penalty for a missed head vote or proposal); the inactivity leak only applies when the chain goes more than four epochs without finality. Losses are pooled across all stETH holders, so a staker’s exposure to our cluster is diluted to our share of Lido. — Primary button must read “Stake with Lido”, not “Delegate with …”: a staker cannot choose us; Lido’s StakingRouter allocates deposits. The lede and Q1 drop “Delegate” for the same reason. — Withdrawal queue measured today (wq-api.lido.fi, 2026-09-24): ~2 days for a small request, ~3 days for 10,000 ETH, ~5 days for 100,000 ETH; Lido states 1–5 days normally, longer in “bunker mode”. Requests are 100 wei to 1,000 stETH each (larger ones split automatically). — Rate 2.2% matches stETH’s 7-day SMA APR 2.24% (eth-api.lido.fi, reports to 2026-09-23 12:23 UTC). — Operator #43 on-chain: active, 500 vetted/added/deposited, 0 exited. — Kept “Monitoring: A missed block wakes someone up” because Ethereum validators do propose blocks; if you prefer the everyday duty, “A missed attestation wakes someone up, at any hour.” is also true. Kept “Upgrade handling” (Pectra 2025-05-07 and Fusaka 2025-12-03 fall after our start; “on schedule” is our claim, not checked). “Node operation” left as is, per the rules, but note SSV lists operator 924 in one location (Finland, Nethermind + Lighthouse) — confirm “two regions, with a hot standby” is true for the SSV node. — Aside, not page copy: operator #43’s reward address changed three times on-chain (2025-09-08, 2025-10-24, 2026-02-02; now 0x257b5FF9…eEa0), and the cluster’s operator 2029 “2xStake” joined when the validators were re-registered on SSV (2025-10-13). The 0xSplits address and the 2/7 + 5/49 split recorded in notion/networks-set-values.md (0xcddc0b19…) may be out of date — worth a re-check before the fee split is quoted anywhere."
    },
    "other": {
-    "label": "Other wallets",
-    "url": "https://lido.fi/lido-ecosystem"
+    "label": "Our validator",
+    "url": "https://operators.lido.fi/module/2/43"
    }
   },
   {
@@ -2138,9 +2159,9 @@
    "compounding": "Manual",
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards are posted weekly, for you to claim.",
    "wallet": {
-    "label": "Delegate with EigenLayer",
-    "url": "https://app.eigenlayer.xyz/operator/0xA6c3F159242855ba09D9f445679eD0b244C22062",
-    "verified": true
+    "label": "Delegate with MetaMask",
+    "url": "https://www.notion.so/22de800a513880c7adfeee372f41a4e1",
+    "guide": "/guides/mainnet (Eigen Layer)"
    },
    "work": [
     [
@@ -2207,6 +2228,10 @@
      "https://app.eigenlayer.xyz/operator/0xA6c3F159242855ba09D9f445679eD0b244C22062"
     ],
     "notes": "Checked on-chain 2026-09-24: withdrawal delay = DelegationManager.minWithdrawalDelayBlocks() = 100,800 blocks (14 days at 12 s); AllocationManager getRegisteredSets / getAllocatedSets for our operator are both empty (no operator sets, no allocations, allocation delay never set) → 0% slashable, which is what “Nothing delegated to us is slashable today” rests on; if we ever allocate to an operator set, Q4 must change. Operator split: getOperatorPISplit and getOperatorAVSSplit for every AVS = 1000 bips (the 10% default). — AVSDirectory still shows FIVE registrations, all status “registered”: EigenDA (2024-04-18), eOracle (2024-04-19), Omni (2024-04-20), Witness Chain (2024-04-30), primev mev-commit (2024-11-29). The recorded note says EigenDA and eOracle only (the app likely hides inactive AVSs) — confirm which we actually run; the Monitoring line assumes AVS work is attesting (EigenDA nodes attest to blobs). — In EigenDA we are registered in quorum 1 only (the EIGEN quorum; ~4,070 EIGEN of stake weight), not quorum 0 (ETH and LSTs). EigenCloud’s docs (pi-split, “as at March 2026”) direct all ETH incentives to EigenDA, so ETH/LST restaked with us probably earns nothing — that is why Q1 names EIGEN only, not “EIGEN or a supported LST”. Confirm before adding LSTs back (the stETH, rETH and EIGEN strategies are all open for deposit). — Q4’s chain part: EigenDA’s SLA lets it eject an operator that stops attesting (ejection = out of the quorum, 3-day cooldown to re-register), and PI need an operator supporting EigenDA, so rewards stop. — Wallet URL: format confirmed in third-party source and docs (primev mev-commit docs, Cosmostation’s extension, ether.fi scripts all link app.eigenlayer.xyz/operator/<address>); the page answers curl with HTTP 500 (bot/SSR) and in the automation browser reached the title “Eigenlayer App” but never finished loading, so its content could not be read. — “Other wallets” is weak for EigenCloud: there is no official wallet list (the app takes any Web3 wallet), and liquid-restaking protocols pick their own operators, so none of them reaches us. The link is the docs’ restake-and-delegate guide (URL from the search index; docs.eigencloud.xyz serves a Cloudflare challenge to scripts). Consider relabelling the button (“How restaking works”) or dropping it. — “Delegate in two minutes” holds, though a first restake is two or three transactions (approve, deposit, delegate). “Upgrade handling” kept: operators upgrade AVS software rather than a chain, but the line is not untrue; “Every AVS upgrade since we joined, on schedule.” would be more exact if you prefer. “Node operation” left as is, per the rules. — Rate 5.7% (the app’s 7-day APR for EIGEN, the user’s screenshot) was not re-checked: EigenExplorer was paused and the app refuses scripts."
+   },
+   "other": {
+    "label": "Our validator",
+    "url": "https://app.eigenlayer.xyz/operator/0xA6c3F159242855ba09D9f445679eD0b244C22062"
    }
   }
  ]

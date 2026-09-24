@@ -15,11 +15,13 @@ html:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])){overflow-ancho
 .enc-ch__crumb{display: flex;align-items: center;gap: 9px;flex-wrap: wrap;}
 .enc-ch__sep{width: 1px;height: 12px;background: #A5A5A5;}
 .enc-ch__crumb-here{color: var(--ink);}
-.enc-ch__h2{margin: 0;font-family: "Outfit",sans-serif;font-weight: 600;font-size: 40px;line-height: 1.1;letter-spacing: -0.028em;color: var(--ink);}
+.enc-ch h2.enc-ch__h2{margin: 0 !important;font-family: "Outfit",sans-serif !important;font-weight: 600 !important;font-size: 40px !important;line-height: 1.1 !important;letter-spacing: -0.028em !important;color: var(--ink) !important;max-width: none !important;}
 .enc-ch__hero{position: relative;min-height: 100vh;display: grid;grid-template-columns: minmax(0,1fr) minmax(0,1fr);background: var(--paper);overflow: hidden;}
 .enc-ch__field{grid-column: 2;grid-row: 1;}
 .enc-ch__type{grid-column: 1;grid-row: 1;display: flex;flex-direction: column;justify-content: center;gap: 24px;padding: 40px var(--padx) 44px;padding-right: clamp(140px,22vw,360px);z-index: 2;}
-.enc-ch__name{margin: 0;font-family: "Outfit",sans-serif;font-weight: 600;font-size: clamp(56px,8vw,120px);line-height: 0.9;letter-spacing: -0.058em;color: var(--ink);overflow-wrap: anywhere;}
+.enc-ch h1.enc-ch__name{margin: 0 !important;font-family: "Outfit",sans-serif !important;font-weight: 600 !important;font-size: clamp(56px,8vw,120px) !important;line-height: 0.9 !important;--h1-line-height: 0.9 !important;letter-spacing: -0.058em !important;color: var(--ink) !important;max-width: none !important;overflow-wrap: anywhere;}
+.enc-ch .enc-ch__lede,.enc-ch .enc-ch__note,.enc-ch .enc-ch__intro,.enc-ch .enc-ch__disc-note,.enc-ch .enc-ch__row-a,.enc-ch .enc-ch__row-b,.enc-ch .enc-ch__pn,.enc-ch .enc-ch__vline{letter-spacing: normal !important;}
+.enc-ch .enc-ch__faq .enc-ch__row-a{letter-spacing: -0.016em !important;}
 .enc-ch__lede{margin: 0;font-family: "Hanken Grotesk",system-ui,sans-serif;font-size: 17px;line-height: 1.56;color: var(--ink7);text-wrap: pretty;}
 .enc-ch__ctas{--btn-h: 48px;--btn-px: 20px;--btn-fs: 16px;display: flex;gap: 10px;flex-wrap: wrap;}
 .enc-ch__ctas .notion-column-list{gap: 10px !important;margin: 0 !important;}
@@ -128,7 +130,7 @@ button.enc-ch__disc:focus-visible{outline: 3px solid rgba(0,0,0,0.32);outline-of
 .enc-ch__faq .enc-ch__row-a{font-family: "Outfit",sans-serif;font-weight: 600;font-size: 15px;letter-spacing: -0.016em;color: var(--ink);}
 .enc-ch__faq .enc-ch__row-b{font-size: 13.5px;line-height: 1.45;color: var(--ink7);}
 .enc-ch__more{display: flex;flex-direction: column;gap: 14px;margin-top: 40px;}
-.enc-ch__marquee{overflow: hidden;position: relative;left: 50%;width: 100vw;margin-left: -50vw;padding: 2px 0;}
+.enc-ch__marquee{overflow: hidden;position: relative;width: 100vw;margin-left: calc(-1 * var(--padx));padding: 2px 0;}
 .enc-ch__mq{display: flex;gap: 10px;width: max-content;padding-left: var(--padx);animation: enc-ch-mq 48s linear infinite;}
 .enc-ch__marquee:hover .enc-ch__mq,.enc-ch__marquee:focus-within .enc-ch__mq{animation-play-state: paused;}
 @keyframes enc-ch-mq{from{transform: translateX(0);}

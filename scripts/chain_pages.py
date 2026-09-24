@@ -21,6 +21,8 @@ where each fact came from.
     python3 scripts/chain_pages.py --dry            print what would be written
     python3 scripts/chain_pages.py [Name ...]       write (only the named chains, if given)
     python3 scripts/chain_pages.py --replace Name   empty that page first, then write it
+    python3 scripts/chain_pages.py --buttons [Name ...]   replace only the button block (after the line)
+    python3 scripts/chain_pages.py --texts [Name ...]     rewrite the line and the answers in place
 
 A page that already has blocks is left alone unless --replace names it.
 """
@@ -108,8 +110,61 @@ def children(pid):
         cur = r["next_cursor"]
 
 
+def buttons_block(c):
+    return body(c)[1]
+
+
+def text_of(b):
+    t = b["type"]
+    return "".join(x["plain_text"] for x in (b.get(t) or {}).get("rich_text", []) or [])
+
+
+def update_buttons(pid, c):
+    """The button block is the first column list, or a lone callout, before the first heading."""
+    have = children(pid)
+    lede = have[0] if have and have[0]["type"] == "paragraph" else None
+    for b in have:
+        if b["type"] in ("heading_1", "heading_2", "heading_3"):
+            break
+        if b["type"] in ("column_list", "callout"):
+            api("DELETE", "blocks/" + b["id"])
+    r = api("PATCH", "blocks/%s/children" % pid,
+            {"children": [buttons_block(c)], **({"after": lede["id"]} if lede else {})})
+    return "error" not in r
+
+
+def update_texts(pid, c):
+    """The line under the name and the five answers, rewritten where they differ."""
+    have = children(pid)
+    n = 0
+    if have and have[0]["type"] == "paragraph" and text_of(have[0]) != c["lede"]:
+        api("PATCH", "blocks/" + have[0]["id"], {"paragraph": {"rich_text": rt(c["lede"])}}); n += 1
+    answers = dict(c["faq"])
+    for i, b in enumerate(have[:-1]):
+        if b["type"] == "heading_3" and have[i + 1]["type"] == "paragraph":
+            want = answers.get(text_of(b))
+            if want and text_of(have[i + 1]) != want:
+                api("PATCH", "blocks/" + have[i + 1]["id"], {"paragraph": {"rich_text": rt(want)}}); n += 1
+    return n
+
+
 def main(argv):
     dry = "--dry" in argv
+    if "--buttons" in argv or "--texts" in argv:
+        names = [a for a in argv if not a.startswith("--")]
+        chains = json.load(open(SRC))["chains"]
+        pages = {val(r, "Name"): r["id"] for r in rows(DB) if val(r, "Stage") == "Mainnet"}
+        for c in chains:
+            if names and c["name"] not in names:
+                continue
+            pid = pages[c["name"]]
+            if dry:
+                print("==", c["name"], c["wallet"], c.get("other")); continue
+            if "--buttons" in argv:
+                print("buttons", c["name"], update_buttons(pid, c))
+            if "--texts" in argv:
+                print("texts", c["name"], update_texts(pid, c))
+        return
     replace = set()
     names = []
     i = 0
