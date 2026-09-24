@@ -131,7 +131,10 @@ Repo **github.com/encapsulate-xyz/website-css** (public), served by jsDelivr:
 2. Verify live: swap the page's `link`/`script` URLs to the commit SHA (`@<sha>/dist/…`) in the
    browser and measure. React may restore hrefs — swap again. **A brand-new tag can 404 on jsDelivr
    for a short while**; a test that loads nothing may just be that (reload the link and check
-   `performance` entries).
+   `performance` entries). Seen again on 2026-09-24: for the first minutes after v273 the Axelar
+   page ran no chain.js at all (no `window.encChain`, no resource entry) and showed its raw blocks
+   after the 5s reveal; five fresh loads later all built. `NETLOG=1 scripts/livecheck.mjs …` prints
+   every website-css request that fails.
 3. Commit (with the session's attribution trailer), push, `git tag -a vN -m … && git push origin vN`.
 4. Bump only the `head/*.html` files whose dist files changed — prove it with
    `git log --oneline <lastTag>..HEAD -- <source files>` before bumping or listing a row — and

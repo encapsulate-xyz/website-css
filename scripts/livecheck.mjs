@@ -66,6 +66,17 @@ const at = async (body) => {
 const move = (x, y) => send("Input.dispatchMouseEvent", { type: "mouseMoved", x, y, pointerType: "mouse" });
 const shot = async (out) => { const s = await send("Page.captureScreenshot", { format: "png" }); writeFileSync(out, Buffer.from(s.result.data, "base64")); };
 
+/* NETLOG=1 prints every website-css request that fails or answers with an error */
+if (process.env.NETLOG) {
+  await send("Network.enable");
+  const reqs = {};
+  ws.addEventListener("message", e => {
+    const m = JSON.parse(e.data);
+    if (m.method === "Network.requestWillBeSent" && /website-css/.test(m.params.request.url)) reqs[m.params.requestId] = m.params.request.url;
+    if (m.method === "Network.responseReceived" && reqs[m.params.requestId] && m.params.response.status >= 400) console.log("NET", m.params.response.status, reqs[m.params.requestId]);
+    if (m.method === "Network.loadingFailed" && reqs[m.params.requestId]) console.log("NET failed", m.params.errorText, m.params.blockedReason || "", reqs[m.params.requestId]);
+  });
+}
 await send("Emulation.setDeviceMetricsOverride", { width: W, height: H, deviceScaleFactor: 1, mobile: W < 700 });
 await send("Fetch.enable", { patterns: TAGS.map(t => ({ urlPattern: "*website-css@" + t + "/*" })) });
 await send("Page.enable");
