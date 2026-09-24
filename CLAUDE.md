@@ -1232,6 +1232,28 @@ flash of empty values and a key in the page.
   Networks Supported", /networks's "Networks secured", navbar.js ("27 mainnets", "See all 27"), and
   /services's "Thirty-five chain teams" (35 distinct chains).
 
+## TODO — three chain pages still point outside the site (2026-09-24)
+
+Every chain page's green button opens **our own guide** for that chain, except the three chains
+that have no guide yet. Until their guides exist the button goes elsewhere:
+
+| Chain | Green button now | Goes to |
+|---|---|---|
+| Lido DVT | Stake with Lido | https://stake.lido.fi |
+| Vara | Delegate with Vara Staking | https://staking.vara.network/#/nominate |
+| Chain4Energy | Delegate with Keplr | DTEAM's explorer, our validator's page (Delegate connects Keplr) |
+
+**When a guide for one of them is added** to the Guides Database (with its Networks set relation
+pointing at the mainnet row, so it gets /guides/mainnet/&lt;chain&gt;), switch that page over:
+
+1. in `notion/chain-pages.json`, set the chain's `wallet` to `{"label": "Delegate with <the guide's
+   wallet>", "url": "https://www.notion.so/<the guide's page id, no dashes>"}` — the same shape as
+   the other 24;
+2. `python3 scripts/chain_pages.py --buttons "<Name>"` (replaces only the button block);
+3. after Super republishes, check the chain page's green button reads /guides/mainnet/&lt;chain&gt;.
+
+Raise this whenever guides are being worked on.
+
 ## TODO — the newsletter (removed 2026-09-21, to be rebuilt)
 
 "Subscribe to newsletter" and its form were removed from the blog index and from all forty posts
