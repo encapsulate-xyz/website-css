@@ -996,7 +996,15 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
   text block in the band that the script moves onto the row, for the same reason.
 - **Every script now prefers this database:** `covers.js` reads it by id, `home.js` uses it when a
   view of it is on the homepage (old gallery is the fallback), `network.js` builds 5m from it.
-- **The rates are the design's invented figures** — its own note says so. See the TODO below.
+- **Staking values (2026-09-24):** the 28 mainnet rows carry Address, Reward rate (real, **after
+  our commission**, as text), Rate updated, Commission (percent), Compounding (Auto/Manual),
+  Unbonding (words), Chain slashes (principal can be taken), Slashing events (applied, any validator
+  of ours on the chain) and Explorer — every value read from the chains, with method and sources in
+  `notion/networks-set-values.md`. They are **not shown on the Mainnet view** yet; a chain page will
+  read them off /networks (the Mainnet tab ships all 28 rows), so they must be switched on there and
+  hidden on the cards by network.css when that page is built. Testnet rows stay empty.
+- **"No slashing" is not true everywhere**: Gravity Bridge (3 × 0.1%), and old jailed validators on
+  Gitopia and ixo (0.01% each). /security and the homepage say "No slashing".
 - **Both views must be sorted by Order ascending** — without a sort Notion returns rows in reverse
   creation order, which puts the smallest chains first and gives 5m the wrong twelve marks.
 - The old gallery's CSS (pill, pastel tiles, side image; 456 lines) was removed on 2026-09-16: every
@@ -1075,12 +1083,12 @@ Both scripts above are written to be run unattended; nothing about them needs a 
 - the same Action is the natural home for the APY job below — one scheduled job that writes Notion,
   rather than two.
 
-## TODO — the rates in the Networks set are placeholders (2026-09-16)
+## Done — the Networks set's rates are real (2026-09-24)
 
-Every "Reward rate" in the `Networks set` database came from the design file, whose own note says
-the figures are invented to populate the column and exercise the sort. They must be replaced with
-published rates before the page is public — the plan is to fetch them and write them into Notion
-(same job as the Action below), not to type them.
+The design's invented rates were replaced on 2026-09-24 with rates read from each chain (after our
+commission, dated in **Rate updated**) for the 28 mainnet rows. Mina, EigenCloud and SSV.network
+are blank on purpose — see `notion/networks-set-values.md`. They drift: refresh them by hand or
+with the Action below, always with the date.
 
 ## TODO — a GitHub Action to fill the APY property (agreed 2026-09-16, not built)
 
