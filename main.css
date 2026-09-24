@@ -93,6 +93,11 @@
   --callout-border-radii: 20px !important;
   --callout-padding: 20px !important;
   --callout-icon-display: none !important; /* replaces hiding .notion-callout__icon by hand */
+  /* minima gives every callout a soft drop shadow (2px 8.1px 20.1px at 3% black). Every callout
+     here is a cover, a band or a button, and no design draws one with a drop shadow; covers and
+     buttons restated it, the bands did not, and on the /brand cover's paper it showed as a grey
+     smear over the band below (2026-09-24). Off at the source. */
+  --callout-shadow: none !important;
   --column-spacing: 20px !important;
 
   /* The ground. Minima ships #FFFEFC; every design in the project is drawn on #FAFAF8, so the

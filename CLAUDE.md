@@ -1041,6 +1041,10 @@ load order.
 - **Do not make two links out of one fact.** A value and the line under it are not both links: the
   label stays plain text and the line under it carries the link.
 
+- **minima gives every callout a drop shadow** (`--callout-shadow`, 2px 8.1px 20.1px at 3%). No
+  design has one; it showed as a grey smear under the /brand cover once that went paper, and sat
+  unseen on the ink bands (/networks count and chain-teams, the record's count band, the guides
+  picker, the homepage stats panels). main.css §02 sets the variable to `none` (v276).
 - **Minima `!important`s:** `.notion-semantic-string .link:hover{opacity:.7}`,
   `.notion-collection-card:hover{background:…}`, `h3{font-size:var(--h3-size)!important}`.
 - **Old page Code-panel rules use `#id … !important`** — nothing in a stylesheet beats them; they
