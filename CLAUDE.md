@@ -785,8 +785,19 @@ Only a page under /networks/mainnet or a bare row id is looked at, so other page
   "Signed every day since launch" is not true everywhere — Avalanche's node missed three months),
   and a chain that cannot slash says so ("{chain} does not slash stake. The line cannot break").
 - The Lido band sits **after the hero** (the file shows it first, above its own note).
-- A chain whose other ways to stake are listed nowhere gets **one button** (Monad, Avalanche,
-  Agoric, Espresso, ixo, Supra, EigenCloud).
+- **The buttons (the user, 2026-09-24):** the green one is **our own guide** for that chain —
+  "Delegate with <the guide's wallet>", linked as the guide's Notion page so Super writes
+  /guides/mainnet/<chain> — and the gray one is **"Our validator"**, the row's Explorer. Lido,
+  Vara and Chain4Energy have no guide and keep an external staking link (stake.lido.fi, the Vara
+  dashboard, DTEAM's ping.pub-style explorer with Keplr). No REStake anywhere: Passage's and
+  Sommelier's explorer is Keplr's validator card (Mintscan dropped both; ping.pub, stavr and
+  explorers.guru did not show them). Gitopia's ping.pub loads without the validator's data.
+- **Headings are stated with !important.** minima sets every heading's size, weight and tracking
+  that way — the name measured Outfit 800 at 48px and the band headings 500 at 35.2px until v266.
+  Check computed styles against the file whenever a script builds an h1–h3.
+- **The marquee runs the window's width**: it starts one gutter left of the content column. The
+  design's `left: 50%; margin-left: -50vw` centres on the parent, which here is the 1280px column
+  set against the left padding, so it stopped 270px short on a 1920 screen.
 - The address ring repeats a short address more than twice so it is not stretched thin; a value
   that is not an address (Lido's "Simple DVT node operator #43") is not a copy button.
 - "Since" is the **current** validator's start (Axelar, Agoric, ixo and Sui ran older validators).
