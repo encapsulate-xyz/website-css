@@ -405,9 +405,9 @@ the file's absolutely positioned inner box). The counts are chosen to fill it: 2
 guides, 4 posts, 6 votes; lists are 51px rows. **The foot lines go somewhere**: See all →
 /networks, "What we build for chains" → /services, "Read the governance record" → the record,
 "Read the blog" → /blog, Company's "Book a call" → the drawer (`FOOT_HREF` in navbar.js).
-**Captures**: the file's covers were recaptured at 1496px with the page chrome painted out; the
-Networks cover and the Dashboards panel are over DesignSync's 256 KB read limit (they come back
-truncated), so those two are still the older files until the user drops them in.
+**Captures**: the file's covers were recaptured at 1496px with the page chrome painted out. DesignSync's
+`get_file` stops at 256 KB — a larger image comes back cut off (no IEND chunk; check for it) — so
+the Networks cover and the Dashboards panel came as the user's export (v269).
 
 **The third column is read, not written.** The handoff's rule (Aditya, 2026-09-21): it lists the
 page's own sub-pages or section headings, *taken from the page as built — nothing typed in, so it
@@ -1244,13 +1244,6 @@ flash of empty values and a key in the page.
   The mainnet count went 28 → 27 everywhere: the homepage's "Number of
   Networks Supported", /networks's "Networks secured", navbar.js ("27 mainnets", "See all 27"), and
   /services's "Thirty-five chain teams" (35 distinct chains).
-
-## TODO — two navbar captures to replace (2026-09-24)
-
-The design's recaptured `cover-thumbs/networks.png` and `panel-thumbs-2x/dashboards.png` are
-larger than DesignSync's 256 KB read limit — `get_file` returns them cut off (no IEND). The repo
-keeps the older `img/nav-covers/networks.png` and `img/nav-panels/dashboards.png` until the user
-exports those two from the design project into the repo; then build, tag and bump the site head.
 
 ## TODO — three chain pages still point outside the site (2026-09-24)
 
