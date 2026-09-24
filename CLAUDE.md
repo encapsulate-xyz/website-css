@@ -409,6 +409,12 @@ guides, 4 posts, 6 votes; lists are 51px rows. **The foot lines go somewhere**: 
 `get_file` stops at 256 KB — a larger image comes back cut off (no IEND chunk; check for it) — so
 the Networks cover and the Dashboards panel came as the user's export (v269).
 
+**The Services column** is two by two, filling the panel's height, each capture drawn whole from its
+top-left (handoff, 2026-09-24; it was a corner at 170%). **The wide bar holds down to 860px**: it
+collapsed into Super's hamburger below 1220 until 2026-09-24, which a laptop window reached; under
+1000px it runs at 24px gutters and 8px item sides so all five items fit (at 44 and 12 "Company"
+was cut off at 920). Below 860 the hamburger and menu are Super's own.
+
 **The third column is read, not written.** The handoff's rule (Aditya, 2026-09-21): it lists the
 page's own sub-pages or section headings, *taken from the page as built — nothing typed in, so it
 cannot drift* — and only a page with neither carries the note. `navbar.js` `READ` has one reader
@@ -792,6 +798,10 @@ Super server-renders on every chain page, `.super-content.parent-page__networks-
 5s `visibility` reveal in case the build never comes. The shared words and the chain list live in
 localStorage (`enc-chain-copy`, `enc-chain-list`), used at once and re-read in the background
 past half an hour, so a repeat visit is built at ~140ms.
+
+**The dock** rises once the hero has gone and slides away as the last band's foot reaches the
+viewport's (`hero.bottom < 80 && last.bottom > innerHeight − 8`), so it never lies over the
+footer; the last band carries `[data-enc-last]` (handoff, 2026-09-24).
 
 **Page id.** Super names the page after its path (`main#page-networks-mainnet-monad`, class
 `parent-page__networks-mainnet`), so chain.js finds the row id in the page's data by `"uri"`.
