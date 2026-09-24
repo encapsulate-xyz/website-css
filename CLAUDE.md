@@ -1164,6 +1164,8 @@ flash of empty values and a key in the page.
   and Lido's treasury 2%; the module's share for our cluster goes to a 0xSplits wallet
   (`0xcddc0b19…a187`) that returns 2/7 to Lido's Agent (`0x3e40D73E…9C8c`) and shares 5/7 equally
   among the seven operators, 10.2% of it each — about 0.82% of the rewards our validators earn.
+  Operator #48 "Lido x SSV: Mysterious Manta" (160 keys, all exited) was also ours, shut down on
+  purpose (the user, 2026-09-24), so it counts toward nothing.
   The mainnet count went 28 → 27 everywhere: the homepage's "Number of
   Networks Supported", /networks's "Networks secured", navbar.js ("27 mainnets", "See all 27"), and
   /services's "Thirty-five chain teams" (35 distinct chains).
