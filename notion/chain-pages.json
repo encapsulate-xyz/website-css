@@ -1,0 +1,2213 @@
+{
+ "about": "Chain page words and facts, researched 2026-09-24 (design Chain Page Combined). Written into each Networks set row by scripts/chain_pages.py.",
+ "chains": [
+  {
+   "name": "Axelar",
+   "token": "AXL",
+   "since": "2026-01-28",
+   "unbonding": "7 days",
+   "unbonding_days": 7,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land each time we vote on a cross-chain poll.",
+   "wallet": {
+    "label": "Delegate with Keplr",
+    "url": "https://wallet.keplr.app/chains/axelar?modal=validator&chain=axelar-dojo-1&validator_address=axelarvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtwq9yct",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Delegate any amount the chain itself allows."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Each time we vote on a cross-chain poll — many times an hour — to a balance you claim."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Missed cross-chain polls forfeit their rewards; past half of 94,426 blocks missed, the chain jails it and slashes 0.01%."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Unbonding takes 7 days; rewards stop the moment you ask."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "MsgCreateValidator for this valoper, tx 6038B8D6FBA441BE26BDA799DCC65042F2649CCF190B02E874AB4BB8180B611E at height 23,517,225 (2026-01-28T05:56:26Z), found by REST tx search. Its slashing signing-info start_height is the same height and its index_offset (11,687,986) equals the blocks since, so it has been in the active set continuously from that block.",
+    "cadence": "Not per block. x/mint inflation is 0 (min/max 0) and transaction fees are burned by Axelar's distribution override, so staking rewards come only from chain-maintainer voting inflation (0.2%/yr per activated chain; /axelar/reward/v1beta1/inflation_rate = 3.4% total). It accrues each block in a per-chain reward pool and is released into x/distribution to each validator that voted correctly when a cross-chain poll completes; a missed or wrong vote clears that validator's pending pool. Measured on our validator: releases in 23 of 120 consecutive 25-block intervals over ~81 minutes (at least ~17 an hour). Block time 1.63 s. Delegators then claim from x/distribution.",
+    "other wallets": {
+     "url": "https://www.axelar.network/blog/how-to-stake-the-axl-token-on-the-axelar-network",
+     "what": "Axelar's own guide to staking AXL (2023-11-21) — names Keplr, the Keplr dashboard, Cosmostation and Ledger"
+    },
+    "sources": [
+     "https://rest.cosmos.directory/axelar/cosmos/slashing/v1beta1/params",
+     "https://rest.cosmos.directory/axelar/cosmos/staking/v1beta1/params",
+     "https://axelar-api.polkachu.com/cosmos/mint/v1beta1/params",
+     "https://axelar-api.polkachu.com/axelar/reward/v1beta1/inflation_rate",
+     "https://rest.cosmos.directory/axelar/axelar/reward/v1beta1/params",
+     "https://rest.cosmos.directory/axelar/axelar/nexus/v1beta1/params",
+     "https://github.com/axelarnetwork/axelar-core/blob/main/x/reward/abci.go",
+     "https://github.com/axelarnetwork/axelar-core/blob/main/x/reward/keeper/reward_pool.go",
+     "https://github.com/axelarnetwork/axelar-core/blob/main/x/evm/keeper/vote_handler.go",
+     "https://github.com/axelarnetwork/axelar-core/blob/main/x/distribution/keeper/keeper.go",
+     "https://rest.cosmos.directory/axelar/cosmos/tx/v1beta1/txs?query=create_validator.validator%3D%27axelarvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtwq9yct%27",
+     "https://rest.cosmos.directory/axelar/cosmos/slashing/v1beta1/signing_infos/axelarvalcons1yunqyuckvpjcguzh73aw5x378n3ma0h9zyadt4",
+     "https://www.axelar.network/blog/how-to-stake-the-axl-token-on-the-axelar-network"
+    ],
+    "notes": "Axelar is the one chain here where the Cosmos default ('every block') is untrue: base inflation is 0, fees are burned, and rewards arrive per completed cross-chain poll, not per block (outstanding rewards were flat for most blocks when read block by block). Downtime: signed_blocks_window 94,426 (~43 h at 1.63 s), min_signed 50%, slash 0.01%, jail 2 h minimum; the nexus chain-maintainer thresholds are 100/100, so missed votes cost rewards but do not deregister us. Our earlier Axelar validator axelarvaloper1s0lankh33kprer2l22nank5rvsuh9ksa6utflp ('Redelegate to Encapsulate') is jailed and unbonded; it was not in the Axelar genesis (one gentx), and when it started was not established — so 'since' is for the new address only. Keplr link loaded and opened our validator's modal (Encapsulate, 9%, Stake button)."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://www.axelar.network/blog/how-to-stake-the-axl-token-on-the-axelar-network"
+   }
+  },
+  {
+   "name": "Terra",
+   "token": "LUNA",
+   "since": "2022-05-28",
+   "unbonding": "21 days",
+   "unbonding_days": 21,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
+   "wallet": {
+    "label": "Delegate with Keplr",
+    "url": "https://wallet.keplr.app/chains/terra?modal=validator&chain=phoenix-1&validator_address=terravaloper1yh4u76y405t3ff9lyrzhhe8legjx9k3as5mujs",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Delegate any amount the chain itself allows."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every block, about 6 seconds, to a balance you claim."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Past 95% missed of 10,000 blocks, the chain jails it and slashes 0.01%."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Unbonding takes 21 days; rewards stop the moment you ask."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "Genesis validator: our gentx (moniker then 'KingSuper | 0% Commission', same valoper) is in the phoenix-1 genesis, genesis_time 2022-05-28T06:00:00Z. Signing-info start_height is 0 and index_offset equals the chain height, so it has signed continuously since genesis.",
+    "cadence": "Every block via x/distribution (inflation plus fees), claimable. Our validator's outstanding rewards rose on each of three consecutive blocks (~0.0406 LUNA each). Block time measured 5.78 s over 10,000 blocks (phoenix-1).",
+    "other wallets": {
+     "url": "https://docs.station.money/using/stake",
+     "what": "Station docs — staking LUNA with Station, Terra's own wallet and dashboard (Terra's docs keep no multi-wallet list)"
+    },
+    "sources": [
+     "https://rest.cosmos.directory/terra2/cosmos/slashing/v1beta1/params",
+     "https://rest.cosmos.directory/terra2/cosmos/staking/v1beta1/params",
+     "https://rest.cosmos.directory/terra2/cosmos/slashing/v1beta1/signing_infos/terravalcons1f0aj3v4ktq5h8k39awlmwpl8ynm73shdzysjm7",
+     "https://tfl-phoenix-1.s3.amazonaws.com/genesis.json",
+     "https://docs.terra.money/learn/protocol/",
+     "https://docs.station.money/using/stake"
+    ],
+    "notes": "Downtime: window 10,000 blocks (~16 h at 5.78 s), min_signed 5%, slash 0.01%, jail 10 min minimum. Terra's docs say inflation rewards are minted and released every block. Keplr link loaded and opened our validator's modal ('Encapsulate (fka KingSuper)', 10%, Stake button)."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://docs.station.money/using/stake"
+   }
+  },
+  {
+   "name": "Agoric",
+   "token": "BLD",
+   "since": "2026-03-12",
+   "unbonding": "21 days",
+   "unbonding_days": 21,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
+   "wallet": {
+    "label": "Delegate with Keplr",
+    "url": "https://wallet.keplr.app/chains/agoric?modal=validator&chain=agoric-3&validator_address=agoricvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtg25ldj",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Delegate any amount the chain itself allows."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every block, about 6 seconds, to a balance you claim."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Past 95% missed of 5,000 blocks, the chain jails it — rewards stop; stake is not cut."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Unbonding takes 21 days; rewards stop the moment you ask."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "Signing-info start_height 24,454,668 = block time 2026-03-12T06:29:59Z (main.rpc.agoric.net); index_offset 3,037,204 equals the blocks since, so bonded continuously from then. That block carries a 1.73M BLD redelegation into it, after a 1M BLD redelegation from our older 'fka KingSuper' validator at 24,454,613 (06:24:53Z). The create tx was not in any tx index reached; the commission update_time 2026-01-22 suggests it was created then but sat outside the 30-validator active set until 2026-03-12.",
+    "cadence": "Every block via x/distribution, claimable. Our validator's outstanding rewards rose by the same amount (~0.0509 BLD) on each of three consecutive blocks. Block time measured 5.63 s over 10,000 blocks (agoric-3).",
+    "other wallets": {
+     "url": "https://agoric.com/validators/",
+     "what": "Agoric's own BLD staking and governance page — points to delegating but names no wallets (no official wallet list exists)"
+    },
+    "sources": [
+     "https://rest.cosmos.directory/agoric/cosmos/slashing/v1beta1/params",
+     "https://rest.cosmos.directory/agoric/cosmos/staking/v1beta1/params",
+     "https://rest.cosmos.directory/agoric/cosmos/slashing/v1beta1/signing_infos/agoricvalcons1pnzx3phvfceevhx5jt6ec7lej9nzk8tt2gr9jh",
+     "https://main.rpc.agoric.net/block?height=24454668",
+     "https://main.rpc.agoric.net/tx_search?query=%22redelegate.destination_validator='agoricvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtg25ldj'%22",
+     "https://agoric.com/validators/"
+    ],
+    "notes": "slash_fraction_downtime is 0 on Agoric: downtime only jails (window 5,000 blocks ~7.8 h, min_signed 5%, jail 10 min minimum); double-signing still slashes 5%. 'Since' is for the address given; Encapsulate has run Agoric mainnet longer through the 'fka KingSuper' validator agoricvaloper1fy8r6z…mv32, whose start was not researched. Keplr link loaded and opened our validator's modal (Encapsulate, 5%, Stake button)."
+   }
+  },
+  {
+   "name": "Althea",
+   "token": "ALTHEA",
+   "since": "2024-04-25",
+   "unbonding": "21 days",
+   "unbonding_days": 21,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
+   "wallet": {
+    "label": "Delegate with Althea Link",
+    "url": "https://althea.link/staking",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Delegate any amount the chain itself allows."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every block, about 6 seconds, to a balance you claim."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Past half of 10,000 blocks missed, the chain jails it for at least 24 hours; stake is not cut."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Unbonding takes 21 days; rewards stop the moment you ask."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "Genesis validator: our gentx ('KingSuper', committed as 'add KingSuper gentx for althea_258432-1' on 2024-04-25) is in the mainnet genesis. The genesis_time is back-dated to 2024-03-25T00:00:00Z, which block 1 carries, but block 2 is 2024-04-25T18:34:22Z (Mintscan) — the chain started that day. Signing-info start_height 0 and index_offset equal to the chain height: continuous since.",
+    "cadence": "Every block via x/distribution, claimable (Althea docs: rewards are collected in althea.link's staking section). Our validator's outstanding rewards rose on each of three consecutive blocks. Block time measured 5.92 s over 10,000 blocks (althea_258432-1).",
+    "other wallets": {
+     "url": "https://docs.althea.net/pages/L1/althea-l1-basics.html",
+     "what": "Althea's docs — how to stake ALTHEA: althea.link with MetaMask (recommended), Keplr for Cosmos-style addresses"
+    },
+    "sources": [
+     "https://rest.cosmos.directory/althea/cosmos/slashing/v1beta1/params",
+     "https://rest.cosmos.directory/althea/cosmos/staking/v1beta1/params",
+     "https://rest.cosmos.directory/althea/cosmos/slashing/v1beta1/signing_infos/altheavalcons1rhfda5c2w0xch7mtccurp2jnkusvjvvv9kjed3",
+     "https://raw.githubusercontent.com/AltheaFoundation/althea-L1-docs/main/althea-l1-mainnet-genesis.json",
+     "https://github.com/AltheaFoundation/althea-L1-genesis/commits/main",
+     "https://www.mintscan.io/althea/block/2",
+     "https://docs.althea.net/pages/L1/althea-l1-basics.html",
+     "https://althea.link/staking"
+    ],
+    "notes": "Keplr's dashboard has no Althea page (wallet.keplr.app/chains/althea is a 404). Althea's docs send stakers to althea.link with MetaMask, so it is the primary; it has no validator deep link (loaded: our validator is #5 with a Delegate button, and pressing it leaves the URL at /staking), hence the plain staking page. A deep link that does open our validator: https://restake.app/althea/altheavaloper1d2x0t42a6anth3lt38ld5997m6e5ya5fw72axt (loaded, 'Stake' in the modal), but REStake flags Althea as added automatically and not thoroughly tested, and Althea's docs say Keplr cannot sign on other sites for EVM-style addresses. Downtime: window 10,000 blocks (~16 h), min_signed 50%, slash_fraction_downtime 0, jail 86,400 s."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://docs.althea.net/pages/L1/althea-l1-basics.html"
+   }
+  },
+  {
+   "name": "Gitopia",
+   "token": "LORE",
+   "since": "2023-05-17",
+   "unbonding": "21 days",
+   "unbonding_days": 21,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
+   "wallet": {
+    "label": "Delegate with REStake",
+    "url": "https://restake.app/gitopia/gitopiavaloper1s0lankh33kprer2l22nank5rvsuh9ksag3grfh",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Delegate any amount the chain itself allows."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every block, about 2 seconds, to a balance you claim."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Past 95% missed of 50,000 blocks, the chain jails it and slashes 0.01%."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Unbonding takes 21 days; rewards stop the moment you ask."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "Genesis validator: our gentx ('KingSuper', 5%) is in the Gitopia mainnet genesis (github.com/gitopia/mainnet), genesis_time 2023-05-17T17:05:17Z; Gitopia's blog says mainnet has run since 17:05 UTC on May 17. Signing-info start_height 0, index_offset equal to the chain height.",
+    "cadence": "Every block via x/distribution, claimable. Our validator's outstanding rewards rose by the same amount (~0.062 LORE) on each of three consecutive blocks. Block time measured 1.77 s over 10,000 blocks (chain id 'gitopia').",
+    "other wallets": {
+     "url": "https://docs.gitopia.com/wallet-faq",
+     "what": "Gitopia's wallet FAQ — supported wallets: the Gitopia web wallet, Keplr extension and Ledger"
+    },
+    "sources": [
+     "https://rest.cosmos.directory/gitopia/cosmos/slashing/v1beta1/params",
+     "https://rest.cosmos.directory/gitopia/cosmos/staking/v1beta1/params",
+     "https://rest.cosmos.directory/gitopia/cosmos/slashing/v1beta1/signing_infos/gitopiavalcons1z2gye6rgj04767c52snpp7sfu4kazm4tjfv4cp",
+     "https://github.com/gitopia/mainnet/raw/master/genesis.tar.gz",
+     "https://blog.gitopia.com/post/2023/07/community-update/",
+     "https://docs.gitopia.com/wallet-faq",
+     "https://restake.app/gitopia/gitopiavaloper1s0lankh33kprer2l22nank5rvsuh9ksag3grfh"
+    ],
+    "notes": "Keplr's dashboard has no Gitopia page (wallet.keplr.app/chains/gitopia is a 404); Leap's web dashboard is gone (app.leapwallet.io redirects to a Framer 'Site Not Found'); ping.pub's Gitopia validator page loads but its default endpoint (api.gitopia.nodestake.top) is down, so it shows no data. REStake loaded and opened our validator's modal ('Encapsulate (fka KingSuper)', 5%, 'Never slashed', Stake tab); signing is through a browser wallet such as Keplr, and REStake flags Gitopia as added automatically and not thoroughly tested. The button would read 'Delegate with REStake' — confirm you are happy with a third-party dashboard. Block time is ~1.8 s now, so 'about 2 seconds'. Downtime: window 50,000 blocks (~24.5 h), min_signed 5%, slash 0.01%, jail 10 min minimum."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://docs.gitopia.com/wallet-faq"
+   }
+  },
+  {
+   "name": "Gravity Bridge",
+   "token": "GRAV",
+   "since": "2021-12-10",
+   "unbonding": "21 days",
+   "unbonding_days": 21,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
+   "wallet": {
+    "label": "Delegate with REStake",
+    "url": "https://restake.app/gravitybridge/gravityvaloper1s0lankh33kprer2l22nank5rvsuh9ksatgqzfn",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Delegate any amount the chain itself allows."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every block, about 6 seconds, to a balance you claim."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Past half of 10,000 blocks missed, the chain jails it; an Ethereum-side signature missing for 10,000 blocks slashes 0.1%."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Unbonding takes 21 days; rewards stop the moment you ask."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "Genesis validator: our gentx ('KingSuper') is in the gravity-bridge-1 genesis (Gravity-Docs past-genesis), genesis_time 2021-12-10T14:45:49Z. The same validator is carried through the gravity-bridge-2 (initial height 309,528) and gravity-bridge-3 (initial height 487,540; first block 2022-01-19T02:56:45Z on Mintscan) state exports with signing-info start_height 0 and an unbroken index_offset.",
+    "cadence": "Every block via x/distribution, claimable. Our validator's outstanding rewards rose by the same amount (~0.98 GRAV) on each of three consecutive blocks. Block time measured 5.90 s over 1,000 blocks (gravity-bridge-3).",
+    "other wallets": {
+     "url": "https://github.com/Gravity-Bridge/Gravity-Docs/blob/main/docs/delegating.md",
+     "what": "Gravity Bridge's official docs — delegating via Cosmostation or the command line (web interface still marked 'coming soon')"
+    },
+    "sources": [
+     "https://rest.cosmos.directory/gravitybridge/cosmos/slashing/v1beta1/params",
+     "https://rest.cosmos.directory/gravitybridge/cosmos/staking/v1beta1/params",
+     "https://rest.cosmos.directory/gravitybridge/gravity/v1beta/params",
+     "https://github.com/Gravity-Bridge/Gravity-Bridge/blob/main/module/x/gravity/abci.go",
+     "https://rest.cosmos.directory/gravitybridge/cosmos/slashing/v1beta1/signing_infos/gravityvalcons1lnj2p7knspqspj2gwr5c8sjaqy7v8ast449u83",
+     "https://raw.githubusercontent.com/Gravity-Bridge/Gravity-Docs/main/past-genesis/gravity-bridge-1.json",
+     "https://raw.githubusercontent.com/Gravity-Bridge/Gravity-Docs/main/past-genesis/gravity-bridge-2.json",
+     "https://raw.githubusercontent.com/Gravity-Bridge/Gravity-Docs/main/genesis.json",
+     "https://www.mintscan.io/gravity-bridge/block/487541",
+     "https://www.businesswire.com/news/home/20220119005471/en/Gravity-Bridge-Launches-Unlocking-Inter-Chain-Liquidity-",
+     "https://github.com/Gravity-Bridge/Gravity-Docs/blob/main/docs/delegating.md"
+    ],
+    "notes": "Downtime alone only jails (x/slashing window 10,000 blocks ~16 h, min_signed 50%, slash_fraction_downtime 0, jail 10 min minimum). The gravity module separately slashes 0.1% and jails a bonded validator that has not confirmed a valset or batch within 10,000 blocks (slash_fraction_valset/_batch 0.001; logic calls 0); confirmed in x/gravity/abci.go. REStake's page for us — the link the button opens — shows 'Slashed 3 times (0.3% total stake)': the three 0.1% bridge slashes you set to 0 Slashing events, so a delegator will see them there. Our validator was also jailed/unbonded at height 18,999,722 (2025-09-25T01:08:39Z) and re-bonded 212 blocks later. 'Since' uses the genesis time; gravity-bridge-1's actual first block was not found, though launch is reported as December 2021. Keplr's dashboard has no Gravity Bridge page (404) and Leap's web dashboard is gone; REStake loaded and opened our validator's modal (10%, Stake tab). Gravity's official delegating doc links a Cosmostation guide on stakeking.notion.site — your own workspace."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://github.com/Gravity-Bridge/Gravity-Docs/blob/main/docs/delegating.md"
+   }
+  },
+  {
+   "name": "humans.ai",
+   "token": "HEART",
+   "since": "2023-05-29",
+   "unbonding": "14 days",
+   "unbonding_days": 14,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
+   "wallet": {
+    "label": "Delegate with REStake",
+    "url": "https://restake.app/humans/humanvaloper1d2x0t42a6anth3lt38ld5997m6e5ya5fsqguy3",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Delegate any amount the chain itself allows."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every block, about 6 seconds, to a balance you claim."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Past 95% missed of 5,000 blocks — about 7.5 hours — the chain jails it; stake is not cut, but rewards stop."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Unbonding takes 14 days, with no rewards in that time; then the tokens are free to move."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "Genesis validator: our MsgCreateValidator (moniker KingSuper, same valoper and consensus key) is a gentx in the humans_1089-1 genesis (genesis_time 2023-05-29T18:00:00Z; 50 gentxs for 50 seats, so active from block 1). Signing-info start_height is 0 and Mintscan labels it GENESIS, D+1213.",
+    "cadence": "Standard x/mint (inflation fixed at 7.56%) and x/distribution: rewards are allocated every block. Measured block time 5.70 s over the last 20,000 blocks; our validator’s outstanding rewards rose in each of 4 consecutive blocks checked. Delegators withdraw with a claim transaction (no auto-compounding).",
+    "other wallets": {
+     "url": "https://www.mintscan.io/humans/validators/humanvaloper1d2x0t42a6anth3lt38ld5997m6e5ya5fsqguy3",
+     "what": "Mintscan’s page for our validator (marked Genesis Validator), with its own Connect Wallet. Humans.ai’s own docs and blog, which named Keplr, Leap and REStake, are offline."
+    },
+    "sources": [
+     "https://rest.cosmos.directory/humans/cosmos/slashing/v1beta1/params",
+     "https://rest.cosmos.directory/humans/cosmos/staking/v1beta1/params",
+     "https://api.humans.nodestake.org/cosmos/mint/v1beta1/params",
+     "https://api.humans.nodestake.org/cosmos/distribution/v1beta1/validators/humanvaloper1d2x0t42a6anth3lt38ld5997m6e5ya5fsqguy3/outstanding_rewards",
+     "https://api.humans.nodestake.org/cosmos/slashing/v1beta1/signing_infos/humanvalcons14fz5hn7sj5s9xz9slu6yvc56pcq00gv5lmnl86",
+     "https://raw.githubusercontent.com/humansdotai/mainnets/main/mainnet/1/genesis_1089-1.json",
+     "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/cosmos/humans_1089.json",
+     "https://restake.app/humans/humanvaloper1d2x0t42a6anth3lt38ld5997m6e5ya5fsqguy3",
+     "https://www.mintscan.io/humans/validators/humanvaloper1d2x0t42a6anth3lt38ld5997m6e5ya5fsqguy3"
+    ],
+    "notes": "Downtime slash fraction is 0 on humans.ai (double-sign is 5%), so an offline validator is only jailed (10 minutes minimum) and earns nothing until unjailed. Keplr’s dashboard does not support humans.ai (community chain in Keplr’s registry, not in the dashboard’s chain list; every /chains/<slug> tried returns 404), so the primary button is REStake — it would read “Delegate with REStake”; REStake connects Keplr, Leap or Cosmostation. The REStake link opens our validator’s card (checked in headless Chrome). humans.ai’s company site no longer links to the chain, and docs.humans.ai / blog.humans.ai did not load on 2026-09-24 — worth watching whether the chain is being wound down. 24 validators are active; we are 14th."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://www.mintscan.io/humans/validators/humanvaloper1d2x0t42a6anth3lt38ld5997m6e5ya5fsqguy3"
+   }
+  },
+  {
+   "name": "ixo",
+   "token": "IXO",
+   "since": "2026-01-31",
+   "unbonding": "21 days",
+   "unbonding_days": 21,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land once a day.",
+   "wallet": {
+    "label": "Delegate with REStake",
+    "url": "https://restake.app/impacthub/ixovaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtlmt2an",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Delegate any amount the chain itself allows."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Once a day, when the chain mints at its daily epoch, to a balance you claim."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Past 95% missed of 10,000 blocks — about 15 hours — the chain jails it and slashes 0.01% of stake."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Unbonding takes 21 days, with no rewards in that time; then the tokens are free to move."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "REST tx search: MsgCreateValidator C8C67EC98B3242348A1813512520B9AAA02410D8206E55A655BE6E4B503363E5 at height 15,640,293, 2026-01-31T05:20:38Z; the signing-info start_height is the same height, so it was bonded in that block and has not re-bonded since.",
+    "cadence": "No x/mint: ixo’s own mint module (/ixo/mint/v1beta1) mints once per daily epoch (identifier “day”, 86,400 s, starting about 05:09 UTC) — 29,000 IXO a day now, 100% to staking, cut by a third every 365 epochs — and x/distribution pays it out in the next block. Measured: our validator’s outstanding rewards were flat, then jumped ~425 IXO at height 19,290,593 (epoch start 19,290,592). Between epochs only transaction fees trickle in per block. Block time 5.57 s.",
+    "other wallets": {
+     "url": "https://ping.pub/ixo/staking/ixovaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtlmt2an",
+     "what": "ping.pub’s page for our validator, with a Delegate button (Keplr, Leap, Ledger or MetaMask). ixo publishes no wallet list of its own."
+    },
+    "sources": [
+     "https://impacthub.ixo.world/rest/cosmos/slashing/v1beta1/params",
+     "https://impacthub.ixo.world/rest/cosmos/staking/v1beta1/params",
+     "https://impacthub.ixo.world/rest/ixo/mint/v1beta1/params",
+     "https://impacthub.ixo.world/rest/ixo/epochs/v1beta1/epochs",
+     "https://impacthub.ixo.world/rest/ixo/mint/v1beta1/epoch_provisions",
+     "https://rest.cosmos.directory/impacthub/cosmos/distribution/v1beta1/validators/ixovaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtlmt2an/outstanding_rewards",
+     "https://rest.cosmos.directory/impacthub/cosmos/tx/v1beta1/txs?query=create_validator.validator%3D%27ixovaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtlmt2an%27",
+     "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/cosmos/ixo.json",
+     "https://restake.app/impacthub/ixovaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtlmt2an",
+     "https://www.ixo.world/ixo-token"
+    ],
+    "notes": "The default “every epoch” is not wrong here, but the epoch is a day, so the lede and Q3 say so. Keplr’s dashboard does not support ixo (Impact Hub is a community chain in Keplr’s registry; /chains/ixo, /impact-hub, /impacthub all 404), hence REStake (connects Keplr, Leap or Cosmostation; opens our validator’s card). The ping.pub page carries a third-party gambling banner ad. “since” is for this address only: our earlier ixo validator ixovaloper1s0lank…t8986e (Encapsulate fka KingSuper, commission set 2022-06-24) is jailed and unbonded — if the page should say Encapsulate has run ixo since 2022, that is a different claim for the user to decide. ixo also has liquid staking (stIXO); plain delegation is unaffected. 17 validators are active; we are 11th."
+   }
+  },
+  {
+   "name": "Lumera",
+   "token": "LUME",
+   "since": "2025-08-13",
+   "unbonding": "21 days",
+   "unbonding_days": 21,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
+   "wallet": {
+    "label": "Delegate with Keplr",
+    "url": "https://wallet.keplr.app/chains/lumera?modal=validator&chain=lumera-mainnet-1&validator_address=lumeravaloper18qpd0yrk0gkcvah0zpyq89uqzd2y6q25dlmcux",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Delegate any amount the chain itself allows."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every block, about 6 seconds, to a balance you claim."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Past 90% missed of 10,000 blocks — about 14 hours — the chain jails it and slashes 0.1% of stake."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Unbonding takes 21 days, with no rewards in that time; then the tokens are free to move."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "REST tx search: MsgCreateValidator F7D1AE522B7DAA807E0A6DE17BFB65245646958BA5928CFCD1F9972F95F36002 at height 869,744, 2025-08-13T17:32:57Z; signing-info start_height is the same height (bonded in that block, never re-bonded).",
+    "cadence": "Standard x/mint (inflation 20%, the top of its 5–20% band) and x/distribution: rewards are allocated every block. Measured block time 5.70 s over 100,000 blocks; our validator’s outstanding rewards rose ~0.12 LUME in each of 4 consecutive blocks. Claimed with a withdraw transaction.",
+    "other wallets": {
+     "url": "https://portal.lumera.io/lumera-mainnet-1/staking/lumeravaloper18qpd0yrk0gkcvah0zpyq89uqzd2y6q25dlmcux",
+     "what": "Lumera’s own portal, open on our validator with a Delegate button; Lumera says it takes Keplr, Leap and Cosmostation."
+    },
+    "sources": [
+     "https://lcd.lumera.io/cosmos/slashing/v1beta1/params",
+     "https://lcd.lumera.io/cosmos/staking/v1beta1/params",
+     "https://lcd.lumera.io/cosmos/mint/v1beta1/params",
+     "https://lcd.lumera.io/cosmos/mint/v1beta1/inflation",
+     "https://lcd.lumera.io/cosmos/distribution/v1beta1/validators/lumeravaloper18qpd0yrk0gkcvah0zpyq89uqzd2y6q25dlmcux/outstanding_rewards",
+     "https://lcd.lumera.io/cosmos/tx/v1beta1/txs?query=create_validator.validator%3D%27lumeravaloper18qpd0yrk0gkcvah0zpyq89uqzd2y6q25dlmcux%27",
+     "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/cosmos/lumera-mainnet.json",
+     "https://lumera.io/keplr-wallet-welcomes-lumera-full-support-for-dashboard-validator-and-multisig/",
+     "https://portal.lumera.io/lumera-mainnet-1/staking/lumeravaloper18qpd0yrk0gkcvah0zpyq89uqzd2y6q25dlmcux"
+    ],
+    "notes": "Lumera’s downtime threshold is 90% missed (min_signed_per_window 0.10), not the usual 95%; jail lasts 1 hour. The Keplr link was loaded in headless Chrome and opens our validator’s card (“Encapsulate, Commission 8%”) with Stake/Redelegate. Lumera’s portal has an “EVM Migration” section and Lumera has published an account-migration-to-EVM guide (testnet) — if mainnet accounts move to EVM keys, the wallet link may need revisiting. 50 validators are active; we are 30th."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://portal.lumera.io/lumera-mainnet-1/staking/lumeravaloper18qpd0yrk0gkcvah0zpyq89uqzd2y6q25dlmcux"
+   }
+  },
+  {
+   "name": "Passage",
+   "token": "PASG",
+   "since": "2022-08-17",
+   "unbonding": "21 days",
+   "unbonding_days": 21,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
+   "wallet": {
+    "label": "Delegate with Keplr",
+    "url": "https://wallet.keplr.app/chains/passage?modal=validator&chain=passage-2&validator_address=pasgvaloper1s0lankh33kprer2l22nank5rvsuh9ksawhck2v",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Delegate any amount the chain itself allows."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every block, about 6 seconds, to a balance you claim."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Past 50% missed of 10,000 blocks — about 8 hours — the chain jails it and slashes 0.5% of stake."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Unbonding takes 21 days, with no rewards in that time; then the tokens are free to move."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "Genesis validator of passage-1: our gentx (moniker KingSuper, same valoper and consensus key) is in the passage-1 genesis (genesis_time 2022-08-17T15:00:00Z; 72 gentxs for 100 seats). passage-2 (2023-07-31) was relaunched from a passage-1 state export at height 4,088,500 and carries our validator; signing-info start_height 0 and commission update_time 2022-08-17T15:00:00Z agree.",
+    "cadence": "Standard x/mint (inflation fixed at 2.1%) and x/distribution: rewards are allocated every block. Measured block time 5.76 s over 100,000 blocks; our validator’s outstanding rewards rose in each of 4 consecutive blocks. Claimed with a withdraw transaction.",
+    "other wallets": {
+     "url": "https://restake.app/passage/pasgvaloper1s0lankh33kprer2l22nank5rvsuh9ksawhck2v",
+     "what": "REStake, open on our validator — it connects Keplr, Leap or Cosmostation; Passage’s own mainnet repo lists REStake among its wallets."
+    },
+    "sources": [
+     "https://passage-api.stakeandrelax.net/cosmos/slashing/v1beta1/params",
+     "https://passage-api.stakeandrelax.net/cosmos/staking/v1beta1/params",
+     "https://passage-api.stakeandrelax.net/cosmos/mint/v1beta1/params",
+     "https://passage-api.stakeandrelax.net/cosmos/distribution/v1beta1/validators/pasgvaloper1s0lankh33kprer2l22nank5rvsuh9ksawhck2v/outstanding_rewards",
+     "https://raw.githubusercontent.com/envadiv/mainnet/main/passage-1/genesis.json",
+     "https://raw.githubusercontent.com/envadiv/mainnet/main/passage-2/README.md",
+     "https://raw.githubusercontent.com/envadiv/mainnet/main/passage-1/wallets.txt",
+     "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/cosmos/passage.json",
+     "https://wallet.keplr.app/chains/passage?modal=validator&chain=passage-2&validator_address=pasgvaloper1s0lankh33kprer2l22nank5rvsuh9ksawhck2v"
+    ],
+    "notes": "Passage jails at 50% missed (min_signed_per_window 0.50) and slashes 0.5% for downtime — stricter than most Cosmos chains. The Keplr link was loaded in headless Chrome and opens our validator’s card. The Networks-set Explorer link (mintscan.io/passage/…) now lands on Mintscan’s 404 — Mintscan has dropped Passage — and ping.pub’s Passage page defaults to a dead endpoint; the explorer the passage-2 repo names (passage.aneka.io) did not resolve. So the “Public record” line needs a working explorer link from the user. 24 validators are active; we are 14th."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://restake.app/passage/pasgvaloper1s0lankh33kprer2l22nank5rvsuh9ksawhck2v"
+   }
+  },
+  {
+   "name": "Sommelier",
+   "token": "SOMM",
+   "since": null,
+   "unbonding": "28 days",
+   "unbonding_days": 28,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block, though today they are close to zero.",
+   "wallet": {
+    "label": "Delegate with Keplr",
+    "url": "https://wallet.keplr.app/chains/sommelier?modal=validator&chain=sommelier-3&validator_address=sommvaloper1s0lankh33kprer2l22nank5rvsuh9ksa8324s2",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Delegate any amount the chain itself allows."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every block, about 5 seconds, to a balance you claim. Inflation and incentives have ended, so today that is close to 0%."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Past 95% missed of 5,000 blocks the chain jails it, but Sommelier cannot slash: stake is not cut."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Unbonding takes 28 days, with no rewards in that time; then the tokens are free to move."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "Not established. Not in the sommelier-3 genesis (2021-09-13); every reachable node has pruned the create_validator tx (tx search returns 0; the lowest block kept is 23,991,019) and Mintscan no longer covers Sommelier. On-chain bounds only: commission update_time 2022-02-24T20:02:24Z (set at creation, or at a later commission edit) and a jail record ending 2022-05-14, so the validator existed by 2022-02-24. The signing-info start_height (13,020,646, Feb 2024) is a re-bond, not the first.",
+    "cadence": "Mechanically x/distribution every block (5.12 s over 100,000 blocks), but there is almost nothing to distribute: mint inflation is 0 (inflation_min = inflation_max = 0); the incentives module’s cutoffs (14,740,000 for delegators, 23,500,000 for validators) have passed — the chain is at 27.93 million — and its APY query returns 0; the cellarfees module (vault-fee auctions that fund staking) also returns APY 0, with ~$2.2k of fee tokens against a $10k auction threshold. Our validator’s outstanding rewards grew 0 over 5 consecutive blocks and 0.018 SOMM over the last 10,000 blocks (transaction fees only).",
+    "other wallets": {
+     "url": "https://restake.app/sommelier/sommvaloper1s0lankh33kprer2l22nank5rvsuh9ksa8324s2",
+     "what": "REStake, open on our validator — it connects Keplr, Leap or Cosmostation. Somm’s own staking page (somm.finance/staking) names only the Keplr Dashboard."
+    },
+    "sources": [
+     "https://sommelier-api.polkachu.com/cosmos/slashing/v1beta1/params",
+     "https://sommelier-api.polkachu.com/cosmos/staking/v1beta1/params",
+     "https://sommelier-api.polkachu.com/cosmos/mint/v1beta1/params",
+     "https://sommelier-api.polkachu.com/sommelier/incentives/v1/params",
+     "https://sommelier-api.polkachu.com/sommelier/incentives/v1/apy",
+     "https://sommelier-api.polkachu.com/sommelier/cellarfees/v2/params",
+     "https://sommelier-api.polkachu.com/sommelier/cellarfees/v2/apy",
+     "https://sommelier-api.polkachu.com/sommelier/cellarfees/v2/fee_token_balances",
+     "https://sommelier-api.polkachu.com/cosmos/distribution/v1beta1/validators/sommvaloper1s0lankh33kprer2l22nank5rvsuh9ksa8324s2/outstanding_rewards",
+     "https://raw.githubusercontent.com/PeggyJV/sommelier/main/contrib/mainnet/sommelier-3/genesis.json",
+     "https://somm.finance/staking",
+     "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/cosmos/sommelier.json"
+    ],
+    "notes": "Confirmed both claims: slash_fraction_downtime and slash_fraction_double_sign are both 0 (jail only, 8,640 s = 2.4 hours), and the reward rate is effectively 0% (Keplr’s dashboard also shows “Staking APR 0%”). “Cannot slash” holds under today’s params; governance could change them. Somm’s staking page says rewards are funded by vault fees, so they could return if the fee auctions restart — the Q3/lede wording should then be revisited. Only 9 validators are active and the Sommelier Foundation holds 70.6% of voting power; we are 5th with 1.28%. The Networks-set Explorer link (mintscan.io/sommelier/…) now lands on Mintscan’s 404, sommscan.io redirects to an unrelated domain (bbi.events), and ping.pub’s Sommelier page is disconnected — the “Public record” line needs a working explorer link. The Keplr link was loaded in headless Chrome and opens our validator’s card."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://restake.app/sommelier/sommvaloper1s0lankh33kprer2l22nank5rvsuh9ksa8324s2"
+   }
+  },
+  {
+   "name": "Chain4Energy",
+   "token": "C4E",
+   "since": "2022-12-03",
+   "unbonding": "21 days",
+   "unbonding_days": 21,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
+   "wallet": {
+    "label": "Delegate with REStake",
+    "url": "https://restake.app/chain4energy/c4evaloper1s0lankh33kprer2l22nank5rvsuh9ksad20r7x",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Delegate any amount the chain itself allows."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every block, about 6 seconds, to a balance you claim."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Past 95% missed of 10,000 blocks — about 16 hours — the chain jails it and slashes 0.1% of stake."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Unbonding takes 21 days, with no rewards in that time; then the tokens are free to move."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "Tx search on a full-history archive node (23.88.13.39:26657, from the kjnodes RPC scan): MsgCreateValidator D9C1FB3841FBFDF676DDD3C87717286D3661E948396ED26AC62689D5671F2813 at height 1,104,558, block time 2022-12-03T13:56:16Z. Signing-info start_height is the same height (the chain ran SDK 0.45 then, where start_height is the first bond), so it was active from that block. It later left the set (unbonding from height 1,130,458, 2022-12-05) and came back.",
+    "cadence": "No x/mint: C4E’s cfeminter mints every block (exponential step minting, 32M C4E per 4-year step, halving; inflation now 2.51%; last_mint_block_time equals the latest block) and cfedistributor sends 70% of it, with fees, to validators_rewards_collector every block (30% to usage incentives), which x/distribution pays out. Measured block time 5.95 s over 100,000 blocks; our validator’s outstanding rewards rose ~0.026 C4E in each of 4 consecutive blocks. Claimed with a withdraw transaction.",
+    "other wallets": {
+     "url": "https://docs.c4e.io/usersGuide/walletBasics.html",
+     "what": "C4E’s own guide to the wallets it supports (Keplr and Leap), which leads to its staking dashboard wallet.c4e.io — that dashboard did not load on 2026-09-24."
+    },
+    "sources": [
+     "https://rest.cosmos.directory/chain4energy/cosmos/slashing/v1beta1/params",
+     "https://rest.cosmos.directory/chain4energy/cosmos/staking/v1beta1/params",
+     "https://api.c4e.stakeup.tech/c4e/minter/v1beta1/params",
+     "https://api.c4e.stakeup.tech/c4e/minter/v1beta1/state",
+     "https://api.c4e.stakeup.tech/c4e/distributor/v1beta1/params",
+     "https://api.c4e.stakeup.tech/cosmos/distribution/v1beta1/validators/c4evaloper1s0lankh33kprer2l22nank5rvsuh9ksad20r7x/outstanding_rewards",
+     "http://23.88.13.39:26657/tx_search?query=%22create_validator.validator%3D%27c4evaloper1s0lankh33kprer2l22nank5rvsuh9ksad20r7x%27%22",
+     "https://raw.githubusercontent.com/chain4energy/c4e-chains/main/perun-1/genesis.json",
+     "https://docs.c4e.io/usersGuide/walletBasics.html",
+     "https://docs.c4e.io/usersGuide/validators/delegate.html",
+     "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/cosmos/perun.json",
+     "https://restake.app/chain4energy/c4evaloper1s0lankh33kprer2l22nank5rvsuh9ksad20r7x"
+    ],
+    "notes": "Keplr’s dashboard does not support C4E (perun-1 is a community chain in Keplr’s registry; /chains/chain4energy and /perun 404), and C4E’s own staking dashboard (wallet.c4e.io/staking, which its docs point to) returned 522 or a blank page, so the primary button is REStake — it opens our validator’s card and connects Keplr, Leap or Cosmostation. The Networks-set Explorer link (ping.pub/chain4energy/…) loads but shows “Disconnected” on its default endpoint; explorer.mainnet.dteam.tech/chain4energy/staking/<valoper> and explorer.stavr.tech/c4e/staking/<valoper> load our validator with a Delegate button, if a working explorer is wanted. 25 validators are active; we are 12th."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://docs.c4e.io/usersGuide/walletBasics.html"
+   }
+  },
+  {
+   "name": "Avalanche",
+   "token": "AVAX",
+   "since": "2023-08-03",
+   "unbonding": "2 weeks–1 year",
+   "unbonding_days": 14,
+   "compounding": "End",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards arrive in one sum when your staking period ends.",
+   "wallet": {
+    "label": "Delegate with Core",
+    "url": "https://core.app/stake/delegate/",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our uptime is on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "25 AVAX — the smallest delegation the chain accepts."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "In one sum when your staking period ends, sent to your P-Chain address with your stake."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. If the node is up under 80% of its staking period, the chain pays no rewards; stake is never cut."
+    ],
+    [
+     "Can I unstake at any time?",
+     "No. Your AVAX is locked for the period you choose — 2 weeks to 1 year — then returns with its rewards."
+    ]
+   ],
+   "copy": [
+    [
+     "unbonding",
+     "Staking period"
+    ],
+    [
+     "unbonding note",
+     "Locked for the period you choose"
+    ],
+    [
+     "unbonding lands",
+     "The shortest period ends · {date}"
+    ],
+    [
+     "unbonding caption",
+     "Live dates · the shortest period, 2 weeks"
+    ]
+   ],
+   "research": {
+    "since how": "Glacier API (validators/NodeID-N3e9W3EngjabGnTZVqyZwunVcbCdrY5Qy, all statuses): the first validation period, tx xcB5q1iH1N2cQsm7R7tshTAdgts5ATjEh9W6JPLwKaLFo6zYM, started 2023-08-03 11:20:23 UTC. Periods after it: 2024-08-02→2025-08-02, 2025-08-02→2026-02-02, then 2026-05-15→2027-05-14 (active).",
+    "cadence": "Paid once, when the delegation period ends (2 weeks to 1 year, chosen when you delegate; it cannot end after the validator's own period, 2027-05-14), to the reward address on the P-Chain together with the returned stake. The amount is set by the period length, minus our 2% fee, and is paid only if the validator met the uptime requirement (avalanchego block/executor/options.go).",
+    "other wallets": {
+     "url": "https://support.avax.network/en/articles/6088395-how-do-i-stake-avax-on-avalanche",
+     "what": "Avalanche Support's own staking guide. It names Core (web and mobile) as the wallet for delegating; Avalanche publishes no wider list of staking wallets."
+    },
+    "sources": [
+     "https://api.avax.network/ext/bc/P (platform.getCurrentValidators, 2026-09-24)",
+     "https://glacier-api.avax.network/v1/networks/mainnet/validators/NodeID-N3e9W3EngjabGnTZVqyZwunVcbCdrY5Qy",
+     "https://github.com/ava-labs/avalanchego/blob/master/genesis/genesis_mainnet.go",
+     "https://github.com/ava-labs/avalanchego/blob/master/upgrade/upgrade.go",
+     "https://github.com/ava-labs/avalanchego/blob/master/vms/platformvm/block/executor/options.go",
+     "https://github.com/ava-labs/avalanchego/blob/master/vms/platformvm/txs/executor/staker_tx_verification_helpers.go",
+     "https://build.avax.network/docs/primary-network/validate/how-to-stake",
+     "https://support.core.app/en/articles/8117272-core-web-how-do-i-delegate-in-core-stake",
+     "https://core.app/assets/manifest-26ec8a26.js (route stake/delegate)",
+     "https://support.avax.network/en/articles/6088395-how-do-i-stake-avax-on-avalanche"
+    ],
+    "notes": "CAPACITY: at 2026-09-24 the node holds 2,002 AVAX of its own and 7,960.63 AVAX from 37 delegators; the cap is 5 × 2,002 = 10,010, so only ~47 AVAX can be delegated right now (not ~111), which fits one more delegator at the 25 AVAX minimum. Keep this off the page but the Delegate button will fail for most people until the node restakes with more AVAX. GAP: the node did not validate 2026-02-02 → 2026-05-15 (Glacier shows no period in that window). HELICON went live on mainnet 2026-09-22 15:00 UTC: (a) ACP-267 raises the uptime bar to 90% for validators whose period STARTS after Helicon — our current period started 2026-05-15, so 80% holds until 2027-05-14; when the node restakes, the Q4 answer must say 90%; (b) Helicon cut the minimum VALIDATOR period to 48 h, but delegators still use MinStakeDuration = 2 weeks (getDelegatorRules), so '2 weeks to 1 year' stays true; (c) ACP-285 lowers the minimum reward rate towards 7.5% over 90 days, so rates will change. A delegation cannot end after the validator's end (2027-05-14), so today the longest possible delegation is ~232 days, not a year. CORE: no deep link — the delegate route reads no URL parameters (checked in the bundle); the reader filters by Node ID in 'Advanced filters' and pastes NodeID-N3e9W3EngjabGnTZVqyZwunVcbCdrY5Qy. Core's 'Fast Stake' charges 10% of rewards; the Delegate flow linked here does not. WORK: Avalanche validators cast no on-chain votes and explorers show uptime, not signatures — hence the Public record change. 'A missed block' is left as it is (validators do propose blocks under Snowman++), though uptime is what the chain measures."
+   }
+  },
+  {
+   "name": "Near",
+   "token": "NEAR",
+   "since": "2025-09-26",
+   "unbonding": "22–30 hours",
+   "unbonding_days": 1.25,
+   "compounding": "Auto",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 7 hours.",
+   "wallet": {
+    "label": "Delegate with MyNearWallet",
+    "url": "https://app.mynearwallet.com/staking/encapsulate.pool.near/stake",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed endorsement wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our endorsements and uptime are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Delegate any amount the chain itself allows."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. Your NEAR sits in the pool’s contract as your stake shares; only your account can unstake or withdraw it."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every epoch — about 7 hours — added to your stake."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Below 90% uptime an epoch earns no rewards, and further down the chain removes the validator; stake is never cut."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Unstaked NEAR unlocks at the fourth epoch change — 22 to 30 hours — and earns nothing while it waits."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "The pool encapsulate.pool.near was created 2025-09-22 13:20 UTC (encapsulate.near → pool.near create_staking_pool, tx 4JMrWgPaJKVsc7nxU97roYoSN2Ws6Ha6tUt5fgyvumDa, NearBlocks). From the pool's own ping logs: until the ping in epoch 3607 only gas-sized amounts (<0.001 NEAR) had come in; the ping in epoch 3608 logged 3.29 NEAR, the first validator reward, which was for epoch 3607. Meta Pool's 40,000 NEAR deposit came in epoch 3605, and stake is seated two epochs later. Epoch 3607 began at block 165,642,716, 2025-09-26 01:58:26 UTC (archival RPC, found by binary search on epoch_id).",
+    "cadence": "Epoch = 43,200 blocks. Blocks come every ~0.62 s now, so an epoch lasts 7.2–7.5 h (measured on 19 three-epoch spans, 2026-09-06 → 09-24). At each epoch end the protocol adds rewards to the pool's locked stake; the pool contract books them on its next ping (Meta Pool's operator pings every epoch) and each share's value rises, after our 5% fee. Rewards are paid in full at ≥99% uptime, scaled between 90% and 99%, and are zero below 90%.",
+    "other wallets": {
+     "url": "https://wallet.near.org",
+     "what": "NEAR's official wallet directory (Meteor, HOT, NEAR Mobile, Intear, Nightly, Sweat, EVM wallets). It does not list MyNearWallet, and it does not say which of them can stake."
+    },
+    "sources": [
+     "https://rpc.mainnet.near.org (EXPERIMENTAL_protocol_config, validators, pool views: get_reward_fee_fraction 5/100, owner encapsulate.near)",
+     "https://archival-rpc.mainnet.fastnear.com (block timestamps, epoch boundaries)",
+     "https://api.nearblocks.io/v1/account/encapsulate.pool.near",
+     "https://github.com/referencedev/staking-farm (pool.near contract: NUM_EPOCHS_TO_UNLOCK = 4, withdraw check, factory-only upgrades)",
+     "https://github.com/near/nearcore/blob/master/chain/epoch-manager/src/reward_calculator.rs",
+     "https://near-nodes.io/validator/staking-pool-migration",
+     "https://github.com/mynearwallet/my-near-wallet/blob/master/packages/frontend/src/components/staking/StakingContainer.js",
+     "https://wallet.near.org"
+    ],
+    "notes": "The pool is the upgradeable pool.near 'staking-farm' contract, not the classic poolv1 one. It keeps the 4-epoch unlock, and its code can only be replaced by code the pool.near factory already holds. UNSTAKE: the contract frees unstaked NEAR at epoch_height ≥ request epoch + 4, so the wait is 3–4 epochs of wall time, i.e. 22–30 h at today's 7.2–7.5 h epochs. If block times change, this figure changes too. The Notion value 'About 1–1.5 days' agrees. ROLE: on 2026-09-24 the pool is a chunk-validator only (0 expected blocks and chunks, 6,497 expected endorsements), which is why Monitoring and Public record are changed. If its stake reaches a block-producer seat (top 100) it will also produce blocks and chunks, and the default Monitoring line would be true again. The kickout thresholds are 80% for block and chunk producers and 70% for chunk-validator-only nodes; the answer says 'further down' so as not to name one. WALLET: MyNearWallet's /staking/:validator/stake route is in its source, reads the pool id from the path, and the URL loads (200); the stake form itself was not driven. Meteor, the most-used NEAR wallet, picks a validator from a dropdown and no deep link to a validator was found. MyNearWallet is not on wallet.near.org, so the user may prefer Meteor with no deep link."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://wallet.near.org"
+   }
+  },
+  {
+   "name": "Sui",
+   "token": "SUI",
+   "since": "2025-08-08",
+   "unbonding": "None",
+   "unbonding_days": 0,
+   "compounding": "Auto",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 24 hours.",
+   "wallet": {
+    "label": "Delegate with Slush",
+    "url": "https://my.slush.app/staking/native-stake?validatorAddress=0x01d03daf1dc3540b62014b0a6837f21ba72bf9218d6c4b3a2ee65465dde26ff7&validatorName=Encapsulate",
+    "verified": false
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "1 SUI — the smallest stake the chain accepts."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every epoch — about 24 hours — added to your stake."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. If two-thirds of stake report a validator, the chain withholds that epoch’s rewards; stake is never cut."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Withdrawn SUI is back in your wallet at once; only the current epoch’s rewards are given up."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "System state gives stakingPoolActivationEpoch 848. Sui's validator_set.move activates a pending validator with ctx.epoch() during the 848→849 change, so its first epoch in the active set is 849. Confirmed with GraphQL epoch validator sets (paginated): the address is absent at 848 and present at 849. Epoch 849 began 2025-08-08 17:41:01 UTC.",
+    "cadence": "Epoch = 24 h (epochDurationMs 86,400,000; epoch 1260 on 2026-09-24). New stake becomes active at the next epoch. At each epoch end the validator's rewards, after our 8% commission, go into its staking pool and raise the pool's exchange rate — auto-compounding. The staker's StakedSui object pays out principal plus rewards on withdrawal.",
+    "other wallets": {
+     "url": "https://www.sui.io/get-started",
+     "what": "Sui's official Get Started page: its wallet list (Slush, Backpack, Bitget, Nightly, OKX, Suiet, Surf, Ledger, Keystone…) and a 'Stake your SUI' section linking the staking guides."
+    },
+    "sources": [
+     "https://sui-rpc.publicnode.com (suix_getLatestSuiSystemState, sui_getProtocolConfig: reward_slashing_rate 10000)",
+     "https://graphql.mainnet.sui.io/graphql (epochs 846–850 validator sets and start times)",
+     "https://github.com/MystenLabs/sui/blob/main/crates/sui-framework/packages/sui-system/sources/staking_pool.move",
+     "https://github.com/MystenLabs/sui/blob/main/crates/sui-framework/packages/sui-system/sources/validator_set.move",
+     "https://docs.sui.io/develop/sui-architecture/tokenomics-overview",
+     "https://sdk.mystenlabs.com/slush-wallet/deep-linking",
+     "Slush Chrome extension v26.20.0 bundle (linking config Staking/native-stake → StakeSuiScreen, reads params.validatorAddress)",
+     "https://www.sui.io/get-started"
+    ],
+    "notes": "WALLET LINK NOT VERIFIED. Slush's documented deep links include staking/native-stake with no parameters. In the Slush bundle, that screen (StakeSuiScreen, titled 'Stake with {validatorName}') reads route.params.validatorAddress, and React Navigation passes query parameters into route params, so the URL above should open 'Stake with Encapsulate'. It could not be loaded: my.slush.app answers 451 'not available in your region' from here (India) and to the fetcher. Test it from a phone with Slush installed. Fallback: https://my.slush.app/staking/native-stake (documented; the reader picks Encapsulate) — note that Slush's own docs say deep links do not work for the browser extension. UNSTAKE: request_withdraw_stake returns principal plus rewards in the same transaction ('TODO: implement withdraw bonding period'). Rewards count up to the start of the current epoch, so that epoch's rewards are forfeited. Stake added this epoch comes back whole with no rewards. OFFLINE: the tallying rule slashes 100% of a reported validator's epoch rewards (reward_slashing_rate 10000 bps) once reporters hold ≥ 6,667/10,000 voting power; principal is never touched. SINCE: the earlier validator 'Encapsulate (fka KingSuper)' 0x970f9006… ran from Sui's genesis (2023-05-03) through epoch 848. The new address joined at 849; the two were never in the active set together. If the page means the operator rather than this address, the date is 2023-05-03. WORK: Sui validators vote on the reference gas price each epoch (shown per validator on Suiscan) and report peers. Checkpoint signatures are aggregated and not shown per validator, so 'our signing … on the explorer' is loose but left unchanged — confirm."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://www.sui.io/get-started"
+   }
+  },
+  {
+   "name": "IOTA",
+   "token": "IOTA",
+   "since": "2025-05-09",
+   "unbonding": "None",
+   "unbonding_days": 0,
+   "compounding": "Auto",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 24 hours.",
+   "wallet": {
+    "label": "Delegate with IOTA Wallet",
+    "url": "https://wallet-dashboard.iota.org/staking",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "1 IOTA — the smallest stake the chain accepts."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every epoch — about 24 hours — added to your stake."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. If two-thirds of stake report a validator, the chain withholds that epoch’s rewards; stake is never cut."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Withdrawn IOTA is back in your wallet at once; only the current epoch’s rewards are given up."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "System state gives stakingPoolActivationEpoch 4. IOTA's validator_set.move activates with new_epoch, so 4 is the first epoch in the set. Confirmed with IOTA GraphQL: the address is absent from the epoch 3 active set and present at 4 and 5. Epoch 4 began 2025-05-09 07:39:06 UTC; IOTA Rebased mainnet's epoch 0 began 2025-05-05.",
+    "cadence": "Epoch = 24 h (epochDurationMs 86,400,000; epoch 507 on 2026-09-24). New stake becomes active at the next epoch. Each epoch the committee validators share the fixed validator_target_reward (767,000 IOTA per epoch), and each validator's share goes into its staking pool after our 8% commission — auto-compounding. Only committee members earn: at most 100 are chosen from the active validators, and ours is in it (voting power 43).",
+    "other wallets": {
+     "url": "https://www.iota.org/products/wallet",
+     "what": "IOTA's official wallets page: the IOTA Wallet extension, the IOTA Wallet Dashboard (staking) and Nightly."
+    },
+    "sources": [
+     "https://api.mainnet.iota.cafe (iotax_getLatestIotaSystemState, iota_getProtocolConfig: reward_slashing_rate 10000, max_committee_members_count 100, adjust_rewards_by_score false)",
+     "https://graphql.mainnet.iota.cafe (epochs 3–5 validator sets and start times)",
+     "https://github.com/iotaledger/iota/blob/develop/crates/iota-framework/packages/iota-system/sources/staking_pool.move",
+     "https://github.com/iotaledger/iota/blob/develop/crates/iota-framework/packages/iota-system/sources/validator_set.move",
+     "https://github.com/iotaledger/iota/blob/develop/crates/iota-framework/packages/iota-system/sources/voting_power.move",
+     "https://docs.iota.org/users/iota-wallet-dashboard/how-to/stake",
+     "https://github.com/iotaledger/ts-packages/tree/develop/apps/wallet-dashboard/app/(protected)/staking",
+     "https://www.iota.org/products/wallet"
+    ],
+    "notes": "WALLET: the IOTA Wallet Dashboard is IOTA Foundation's web staking app, used with the IOTA Wallet extension (or Nightly). Its /staking route exists in source and loads (200), but it reads no URL parameters, so the reader picks Encapsulate from the list. The IOTA Wallet extension has a /stake/new?address= route, but an extension page cannot be linked from a website. UNSTAKE: the code returns principal plus rewards immediately, as on Sui. IOTA's own docs say earned rewards are 'distributed at the end of the current epoch', which the Move code does not do — the answer follows the code. OFFLINE: reward_slashing_rate is 100% for a validator reported by ≥ 6,667/10,000 committee voting power. Score-based reward adjustment exists but is switched off (adjust_rewards_by_score false). A validator that falls out of the committee (below the stake cut) earns nothing while out; not in the copy. WORK: same caveat as Sui on 'our signing'."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://www.iota.org/products/wallet"
+   }
+  },
+  {
+   "name": "Ika",
+   "token": "IKA",
+   "since": "2025-07-24",
+   "unbonding": "12–36 hours",
+   "unbonding_days": 1.5,
+   "compounding": "Auto",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 24 hours.",
+   "wallet": {
+    "label": "Delegate with Stakereef",
+    "url": "https://stakereef.com/",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "1 IKA — the smallest stake the network accepts."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every epoch — about 24 hours — added to your stake."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. If two-thirds of the committee report a validator, the network withholds that epoch’s rewards; stake is never cut."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. After you request it, your IKA can be withdrawn in 12–36 hours, depending on when in the epoch you ask."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "The validator object 0x351f2db4… has activation_epoch 1. Sui events for <ika_system v1>::validator_set::ValidatorJoinEvent (103 scanned) include ours with epoch 1, at 2025-07-24 18:09:23 UTC, the start of Ika's epoch 1. ValidatorLeaveEvent (48 scanned) has none for us, so we have been in the committee since the first epoch — a genesis operator.",
+    "cadence": "Ika's epoch = 24 h (SystemInner.epoch_duration_ms 86,400,000; epoch 421 began 2026-09-24 10:23 UTC). The next committee is chosen at mid-epoch (12 h). New stake is active from the next epoch if it arrives before mid-epoch, otherwise from the one after. Each epoch the rewards are split equally across committee members; our share, after 10% commission, joins the validator's balance and raises the exchange rate — auto-compounding. It is paid out with the principal on withdrawal.",
+    "other wallets": {
+     "url": "https://www.sui.io/get-started",
+     "what": "Sui's official wallet list. IKA is a Sui token and is staked by connecting any of these wallets to a staking app; Ika itself publishes no list of staking wallets or dashboards."
+    },
+    "sources": [
+     "https://github.com/dwallet-labs/ika/tree/main/deployed_contracts/mainnet (address.yaml, ika_system validator.move, validator_set.move, staked_ika.move, system_inner.move)",
+     "https://sui-rpc.publicnode.com (Ika SystemInner object 0xce100496…, validator object via ObjectTable 0x5c0b7a63…, suix_queryEvents ValidatorJoinEvent/LeaveEvent/SystemEpochInfoEvent)",
+     "https://stakereef.com/ (bundle: routes '/' and '/404' only)",
+     "https://stakin.com/blog/how-to-stake-ika",
+     "https://nodes.guru/staking/ika",
+     "https://x.com/swyke_ai/status/1966539778909704290",
+     "https://ikascan.io/mainnet/operator/0x351f2db45c0aa849265b2605535ac84f2bed663c819044045953d579a74312f1"
+    ],
+    "notes": "WALLET: Ika has no official staking app that I could find — not on ika.xyz nor docs.ika.xyz. Stakereef is community-built (announced by @swyke_ai, 2025-09), and Stakin and Nodes.Guru send delegators there. It has a single route and reads no URL parameters, so the reader searches for Encapsulate. Ikascan's operator page has a 'Stake' button (Blockberry's generic wallet popup), which may be a better deep link, but I could not confirm it stakes IKA. Please choose. UNSTAKE is two transactions. A request before the mid-epoch committee selection (12 h in) makes the stake withdrawable at the next epoch (12–24 h later); a request after it, while we are in the next committee, at the epoch after that (24–36 h). The stake keeps earning until then (rewards are counted to the withdraw epoch), which is why the copy does not say rewards stop. Brand-new stake that is not yet active can be withdrawn at once. OFFLINE: reward_slashing_rate is 10000 (100%). Ika counts reporters by number (quorum 37 of the 56 committee members), not by stake, hence 'two-thirds of the committee'. Principal is never cut. SINCE: Ika's epoch 1 began 2025-07-24; the public 'Mainnet is live' announcement came later (late July 2025) — confirm which date the page should carry. Rewards are split equally per committee member, not by stake — not in the copy. WORK: Ika validators sign checkpoints and approve protocol upgrades; Ikascan shows operators' stake and status, not per-validator signatures — same caveat as Sui."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://www.sui.io/get-started"
+   }
+  },
+  {
+   "name": "Monad",
+   "token": "MON",
+   "since": "2025-11-24",
+   "unbonding": "4.5–9 hours",
+   "unbonding_days": 0.375,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue with every block we propose.",
+   "wallet": {
+    "label": "Delegate with MonadVision",
+    "url": "https://monadvision.com/validator/0x79129e1306dc1e81F3a2cC5e3B5171fb92FFd99d",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our blocks are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Delegate any amount the chain itself allows."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "With each block we propose — many times an hour — into a balance you claim or compound."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. The chain pays nothing for blocks we fail to propose; there is no slashing."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Undelegated MON can be withdrawn one epoch after it leaves the set — about 4.5 to 9 hours."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "Staking precompile logs (rpc1.monad.xyz): ValidatorCreated for id 91 (auth 0x232bfa6b…d27d) at block 35,589,472, 2025-11-14 17:46 UTC; 10M MON delegated 2025-11-15 00:33; first block proposed 2025-11-15 06:40 UTC (epoch 715), all before the public launch, with zero block rewards until 2025-11-22 18:03. So the validator was in the set when Monad’s public mainnet launched on 2025-11-24 (CoinDesk/The Block) — the brief’s genesis-set rule gives the launch date.",
+    "cadence": "Per block, not per epoch. Each block our validator proposes mints an 18 MON block reward (REWARD); after our 15% commission, 15.3 MON is shared pro rata by stake with our delegators — seen on-chain in ValidatorRewarded events for validator 91 (15.3 MON each). Measured 2026-09-24: 681 of our blocks in 16.7 hours (~41 an hour, about one every 90 seconds; ~0.30 s blocks). Rewards accumulate in the staking precompile (0x1000) until the delegator calls claimRewards (immediate) or compound (active from the next epoch). Priority fees go to the validator only unless it shares them via externalReward.",
+    "other wallets": {
+     "url": "https://monadvision.com/validators",
+     "what": "MonadVision’s validator list (BlockVision’s explorer, listed in Monad’s docs): stake with any validator from MetaMask, Phantom, OKX or another EVM wallet. Monad publishes no official list of staking dashboards; gmonads.com/staking is the other one validators point to."
+    },
+    "sources": [
+     "https://docs.monad.xyz/monad-arch/consensus/staking",
+     "https://docs.monad.xyz/reference/staking/overview",
+     "https://docs.monad.xyz/reference/staking/api",
+     "https://rpc1.monad.xyz (eth_getLogs on 0x…1000: ValidatorCreated / ValidatorRewarded for id 91; getEpoch)",
+     "https://github.com/monad-developers/validator-info (mainnet/02f9eb11…581b.json: id 91, Encapsulate)",
+     "https://stakin.com/blog/how-to-stake-monad-mon-with-metamask",
+     "https://p2p.org/economy/how-to-stake-mon-with-p2p-org/",
+     "https://docs.monad.xyz/tooling-and-infra/block-explorers",
+     "https://www.coindesk.com/tech/2025/11/24/monad-blockchain-goes-live-with-100b-token-supply-and-airdrop"
+    ],
+    "notes": "Cadence: the design’s “rewards land every epoch” is not true for Monad — rewards accrue per proposed block (docs + on-chain), so the lede and Q3 were changed; epochs (50,000 blocks, ~4.2 h at 0.30 s) only govern when stake changes take effect. Unbonding computed from the docs’ rule (withdrawable in epoch n+1+WITHDRAWAL_DELAY, or n+2+1 after the boundary block) with a 4.2 h epoch and a ~25 min boundary delay: ~4.6 to ~8.8 hours — the Notion figure “About 4.5–9 hours” holds. Minimum: only the 1 gwei DUST_THRESHOLD, so the default stands. Custody: delegated MON is held by the staking precompile under the delegator’s address (wallets show it as staked, not as balance); the default wording was kept because this is the design’s own chain — confirm you are happy with “stay in your wallet”. Offline: docs say automated in-protocol slashing is not implemented, and nothing removes a validator for downtime (only for falling under the stake thresholds). The wallet link could not be loaded here (Cloudflare challenge), but the format is confirmed: Stakin’s guide links monadvision.com/validator/0xC9ae…2b74, which is the address derived from Stakin’s SECP key (id 10), exactly as ours (0x79129e…d99d) derives from our SECP key 02f9eb11…581b. Public record: MonadVision and gmonads show proposed blocks; per-validator consensus votes are aggregated into quorum certificates and not listed, and Monad has no on-chain governance — if “and votes” should be literal, consider “Our signing is on the explorer for anyone to check.” (not proposed, since validators do vote in MonadBFT). The app.monad.xyz portal no longer carries a Stake entry."
+   }
+  },
+  {
+   "name": "Starknet",
+   "token": "STRK",
+   "since": "2025-07-07",
+   "unbonding": "7 days",
+   "unbonding_days": 7,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about an hour.",
+   "wallet": {
+    "label": "Delegate with Endur",
+    "url": "https://dashboard.endur.fi/validator/0x0359e252e663765989b04c266a4daec77662b506ce5f026994cb8ad53628df2a",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed attestation wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our attestations are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Delegate any amount the chain itself allows."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. Your STRK sits in our delegation pool contract, and only your address can withdraw it."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every epoch — about an hour — once we attest; rewards wait in the pool until you claim them."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. The chain pays nothing for an epoch without our attestation; there is no slashing."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Rewards stop the moment you ask; your STRK can be withdrawn 7 days later."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "NewStaker event for staker 0x0359…df2a on the staking contract at block 1,553,853, 2025-07-07 07:47 UTC (20,050 STRK own stake, STRK pool created with 5% commission in the same tx); first StakerAttestationSuccessful at block 1,554,209, 2025-07-07 10:50 UTC (epoch 472).",
+    "cadence": "Staking contract 0x00ca1702…84a7 reports version 3.0.0 but is still on attestation rewards: the per-block “consensus rewards” path exists in v3 code but has not been switched on (no ConsensusRewardsFirstEpochSet event on mainnet). An epoch is 2,132 blocks, ~3,560 s measured (about an hour). Once per epoch, when our attestation lands, the staking contract credits the staker and sends the pool its share (last four epochs 13151–13154, ~136.6 STRK to the pool each). Pool members collect with claim_rewards to their reward address; nothing compounds by itself.",
+    "other wallets": {
+     "url": "https://www.starknet.io/staking/",
+     "what": "Starknet’s staking page: wallets with in-app staking (Braavos, Ready, Keplr) and dashboards (Endur, Voyager), plus the delegation guide"
+    },
+    "sources": [
+     "https://github.com/starkware-libs/starknet-staking/blob/main/docs/spec.md",
+     "https://www.starknet.io/staking/",
+     "https://www.starknet.io/staking/a-guide-to-delegate-your-stake/",
+     "https://api.cartridge.gg/x/starknet/mainnet (starknet_call: version, get_epoch_info, contract_parameters_v1, staker_pool_info, staker_info_v1; starknet_getEvents: NewStaker, StakerRewardsUpdated, RewardsSuppliedToDelegationPool, StakerAttestationSuccessful)",
+     "https://dashboard.endur.fi/validator/0x0359e252e663765989b04c266a4daec77662b506ce5f026994cb8ad53628df2a",
+     "https://www.luganodes.com/blog/starknet-staking-rewards-guide"
+    ],
+    "notes": "Full STRK pool address: 0x04e828f5e405368159dd0938c9a2a2256aa30f3cddd7fbbb6b03934ba70bb3f6 (16.84M STRK delegated, commission 500 = 5%). The staker also has four empty BTC pools (LBTC, WBTC, tBTC, solvBTC) created 2025-09-25. Endur’s page loaded in headless Chrome and shows “Encapsulate Limited”, the pool and a Stake button — it lists only 4 STRK delegators. Voyager’s equivalent is https://voyager.online/staking?validator=0x0359…df2a (format confirmed from Luganodes’ guide; Cloudflare blocked loading it). Exit: exit_wait_window is 604,800 s on-chain (7 days); per the spec the intent pauses rewards for that amount at once. Switching to another pool (switch_delegation_pool) needs no wait. No minimum for delegators (starknet.io: “Delegators can delegate their STRK with no minimum”). Watch: when StarkWare activates v3 consensus rewards, rewards become per block and the lede/Q3 need revisiting. Work lines changed because Starknet validators neither produce blocks (StarkWare’s sequencer does) nor vote; they attest once per epoch. “Node operation” left as is (Starknet validators do run their own full node + attestation)."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://www.starknet.io/staking/"
+   }
+  },
+  {
+   "name": "Supra",
+   "token": "SUPRA",
+   "since": "2024-11-27",
+   "unbonding": "Up to 48 hours",
+   "unbonding_days": 2,
+   "compounding": "Auto",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 2 hours.",
+   "wallet": {
+    "label": "Delegate with StarKey",
+    "url": "https://starkey.app/",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "Yes — 1 SUPRA, the smallest stake a delegation pool accepts."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. Your SUPRA sits in our delegation pool as shares in your name; we cannot move it."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every epoch — about 2 hours — added to your stake."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Each epoch’s reward shrinks by the share of proposals we miss; there is no slashing."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Unlocked SUPRA becomes withdrawable when the pool’s 48-hour lockup cycle ends — at most 48 hours."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "Genesis set: our node (validator.supra.mainnet.encapsulate.xyz) is in Supra’s mainnet genesis-ceremony data (supra-nodeops-data, release_round7_data/operators/supra_mainnet_176.9.8.81, Nov 2024), and the pool’s StakePool shows join_validator_set_events = 1 with 8,064 reward distributions at chain epoch 8,065 — a reward every epoch since the first. Public mainnet launch 2024-11-27 (Chainwire). Blocks before 48,994,882 are pruned from the public RPC, so the genesis block itself could not be read.",
+    "cadence": "Every epoch — epoch_interval 7,200,000,000 µs = 2 hours (0x1::block::BlockResource). At each epoch change the chain mints the pool’s reward into its stake pool: stake × rewards_rate (29,794 / 1e9 per epoch, ~13% a year gross) × our successful ÷ (successful + failed) proposals that epoch. The delegation pool takes the 38.72% commission (operator_commission_percentage 3872) and the rest raises every delegator’s share — nothing to claim. Our pool has 8,064 DistributeRewards events at chain epoch 8,065.",
+    "other wallets": {
+     "url": "https://starkey.app/faq",
+     "what": "StarKey’s FAQ — staking SUPRA is done in StarKey, Supra’s official wallet; Supra lists no other staking wallet or dashboard"
+    },
+    "sources": [
+     "https://rpc-mainnet.supra.com/rpc/v3/accounts/0x1/resources/0x1::staking_config::StakingConfig",
+     "https://rpc-mainnet.supra.com/rpc/v3/accounts/0x1/resources/0x1::block::BlockResource",
+     "https://rpc-mainnet.supra.com/rpc/v3/accounts/0x15ac9afcd6a042bd61239305ad13663f2423663d6ea83ce5293561b77766cd3a/resources",
+     "https://github.com/Entropy-Foundation/aptos-core/blob/dev/aptos-move/framework/supra-framework/sources/pbo_delegation_pool.move",
+     "https://github.com/Entropy-Foundation/aptos-core/blob/dev/aptos-move/framework/supra-framework/sources/stake.move",
+     "https://docs.supra.com/network/node/node-operator-faq",
+     "https://starkey.app/faq",
+     "https://daic.capital/blog/how-to-stake-supra",
+     "https://chainwire.org/2024/11/27/supra-announces-tge-as-mainnet-goes-live-in-partnership-with-multiple-exchanges/"
+    ],
+    "notes": "Minimum: MIN_COINS_ON_SHARES_POOL = 100,000,000 quants = 1 SUPRA (8 decimals, CoinInfo) — read from the framework source (dev branch), not from deployed bytecode; StarKey may impose its own UI minimum (unchecked). A stake added mid-epoch pays an add_stake fee equal to that epoch’s reward, returned to the pool at the epoch end. Unbonding: recurring_lockup_duration_secs = 172,800; our pool’s current lockup ends 2026-09-25 17:17 UTC, so an unlock today waits ~28 h. Offline: no jailing or slashing in stake.move; rewards scale by successful/(successful+failed) proposals (the FAQ’s “we do not currently record failed proposals” is outdated — ValidatorPerformance shows a validator with 77 failed). Custody caveat to confirm: this is a PBO delegation pool whose multisig admin (0x5944…d342, the Supra Foundation) keeps powers the code calls temporary — lock_delegators_stakes can re-lock a delegator’s stake up to a set principal, and replace_delegator applies to original stakeholders; hence the answer says “we cannot move it” rather than “only you can”. No deep link exists: staking is inside the StarKey extension, where pools are picked from a numbered list (“Delegation Pool 121” in DAIC’s guide) — which number is ours was not found. Supra has no other staking route, so the “Other wallets” button could be dropped. Since: 8,064 × 2 h puts the first epoch near 2024-11-21, i.e. the chain may have run a few days before the public launch; the launch date was used per the brief."
+   }
+  },
+  {
+   "name": "Espresso",
+   "token": "ESP",
+   "since": "2026-06-02",
+   "unbonding": "7 days",
+   "unbonding_days": 7,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue with every block we propose.",
+   "wallet": {
+    "label": "Delegate with Espresso Staking",
+    "url": "https://stake.espresso.network/",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "Yes — 1 ESP, the stake table’s minimum delegation."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. Your ESP sits in Espresso’s stake table contract on Ethereum; only your address can withdraw it."
+    ],
+    [
+     "How often are rewards paid?",
+     "With each block we propose, into a balance you claim on Ethereum."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. The chain pays nothing for blocks we miss; there is no slashing."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Undelegated ESP can be withdrawn after the 7-day exit escrow, with one undelegation pending per validator at a time."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "Stake table 0xCeF474D3…4451 on Ethereum (Blockscout logs): ValidatorRegisteredV2 2026-05-18 (block 25,123,359); first delegation, 1,000,000 ESP, 2026-06-01 14:26 UTC (block 25,223,112); espressonodes.com’s delegation history records our stake going 0 → 1,000,000 on 2026-06-02 12:25 UTC, when it entered Espresso’s stake table.",
+    "cadence": "Per block we propose: Espresso’s docs say “Validators and delegators accrue rewards every block their validator proposes.” Rewards are tracked in Espresso’s reward Merkle tree and claimed on Ethereum through the Reward Claim contract (0x67c966a0…78d8), which mints lifetime-earned minus already-claimed; they never compound on their own. Only the top 100 validators by stake earn (92 in the epoch-614 table, ours included). Blocks ~0.78 s; an epoch is 40,000 blocks (~8.7 h). Our 5,000,010 ESP is 0.48% of the 1.035B ESP staked in epoch 614.",
+    "other wallets": {
+     "url": "https://docs.espressosys.com/network/network/delegation-ui",
+     "what": "Espresso’s delegation guide: the official staking dashboard (any Ethereum wallet connects) and the staking-cli for Ledger and multisig"
+    },
+    "sources": [
+     "https://docs.espressosys.com/network/network/delegation-ui",
+     "https://docs.espressosys.com/network/network/networks",
+     "https://github.com/EspressoSystems/espresso-network/blob/main/staking-cli/README.md",
+     "https://eth.drpc.org (StakeTable 0xCeF474D372B5b09dEfe2aF187bf17338Dc704451: exitEscrowPeriod = 604800, minDelegateAmount = 1e18, validators(0xea45…991b) = 5,000,010 ESP, Active, version 3.0.0)",
+     "https://eth.blockscout.com/api?module=logs&action=getLogs&address=0xCeF474D372B5b09dEfe2aF187bf17338Dc704451",
+     "https://cache.main.net.espresso.network/v1/config/hotshot (epoch_height 40000, num_nodes_with_stake 100)",
+     "https://cache.main.net.espresso.network/v1/node/validators/614",
+     "https://espressonodes.com/operator/0xea452aed0ea405e2d9b4038a6e1433028ad8991b?network=mainnet"
+    ],
+    "notes": "ESP lives on Ethereum, so delegating, undelegating, withdrawing and claiming are Ethereum transactions (approve + delegate; gas in ETH). Exit escrow is 604,800 s on-chain; governance can change it (contract floor 2 days). No slash function in StakeTable v2/v3. The staking dashboard has no validator deep link: the only URL parameters it reads are intent=claim-and-stake, address and amount (a claim-then-restake flow), so the button opens the dashboard and the delegator picks Encapsulate from the list. Since: old stake tables are not served by the public query node, so the first epoch in the active set rests on espressonodes’ record (≈22 h after the L1 delegation, consistent with the epoch delay). Public record: espressonodes shows per-epoch vote and proposal rates for us — proposals 100%, but “Vote” at ~20–25% each epoch; worth understanding that metric before the page invites people to check our votes. Custody answer changed from the default because ESP leaves the wallet for the stake table contract."
+   }
+  },
+  {
+   "name": "Zilliqa",
+   "token": "ZIL",
+   "since": "2025-06-30",
+   "unbonding": "About 6 days",
+   "unbonding_days": 6,
+   "compounding": "Auto",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block, about a second.",
+   "wallet": {
+    "label": "Delegate with Zilliqa Staking",
+    "url": "https://stake.zilliqa.com/?poolId=MHgxMzEx",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "Yes — 100 ZIL, our delegation contract’s minimum."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. You hold encapZIL, a liquid token worth a rising amount of ZIL; the ZIL itself sits in our delegation contract."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every block, about a second — each encapZIL is worth more ZIL as they land."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Missed blocks earn nothing; 3 misses in 600 views bench a validator from proposing. There is no slashing."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Unstaking fixes your ZIL at that moment’s price; you claim it after 461,680 blocks — about 6 days."
+    ]
+   ],
+   "copy": [
+    [
+     "rewards auto",
+     "Compounded every block — each encapZIL is worth more ZIL as rewards land."
+    ]
+   ],
+   "research": {
+    "since how": "Zilliqa 2.0 EVM RPC (api.zilliqa.com): the delegation proxy was deployed 2025-06-27 06:46 UTC (block 4,918,582, from 0xa1512da7…d7ae); a 10M ZIL stake() landed 2025-06-30 10:10 UTC (block 4,968,045) and the encapZIL price first rose above 1.0 at block 4,978,800, 2025-06-30 16:46 UTC — the pool’s first rewards. Zilliqa 2.0’s own genesis was 2025-06-25 (first block 4,770,089), so we were not in the genesis set.",
+    "cadence": "Every block (~1.1 s; 461,680 blocks took 5.9 days to 2026-09-24). Zilliqa 2.0 pays 51,000 ZIL an hour network-wide (consensus.rewards_per_hour), half to block proposers and half to the fastest two-thirds of cosigners by stake, straight to the delegation contract. The encapZIL price (getPrice) rises block by block (1.1395669 → 1.1395737 ZIL over 3,000 blocks observed); the 8% commission is deducted from untaxed rewards on stake/unstake/stakeRewards. The per-epoch distribution fork (distribute_rewards_every_epoch) is only scheduled at placeholder height 999,999,999, so it is not active.",
+    "other wallets": {
+     "url": "https://blog.zilliqa.com/how-to-stake-on-zilliqa-evm/",
+     "what": "Zilliqa’s own staking guide: the staking portal (liquid and non-liquid pools) with MetaMask, ZilPay or Ledger"
+    },
+    "sources": [
+     "https://github.com/Zilliqa/delegated_staking (BaseDelegation.sol MIN_DELEGATION = 100 ether; LiquidDelegation.sol)",
+     "https://api.zilliqa.com (eth_call on 0x1311059D…933C: getMinDelegation, unbondingPeriod = 461680, getCommission = 800/10000, getLST = encapZIL 0x8E3073b2…02d2, getPrice at successive blocks)",
+     "https://github.com/Zilliqa/zq2/blob/main/z2/resources/chain-specs/zq2-mainnet.toml",
+     "https://github.com/Zilliqa/zq2/blob/main/docs/jailing.md",
+     "https://github.com/Zilliqa/zq2/blob/main/zilliqa/src/constants.rs",
+     "https://stake.zilliqa.com/?poolId=MHgxMzEx",
+     "https://blog.zilliqa.com/how-to-stake-on-zilliqa-evm/",
+     "https://blog.zilliqa.com/how-staking-will-change-with-zilliqa-2-0/"
+    ],
+    "notes": "Deep link read from the portal’s own bundle (pool id “MHgxMzEx” = base64 “0x1311”; selecting a pool pushes ?poolId=) and loaded in headless Chrome: it opens the Encapsulate/encapZIL panel. Unbonding: 461,680 blocks on-chain (deposit_v8 withdrawal_period since block 25,902,000) — 5.9 days at today’s 1.1 s blocks, but the portal displays “Unbonding Period: ~7 days” (it assumes slower blocks); the page says “about 6 days” and days = 6 — confirm which you prefer. Offline: jailing live since block 13,514,400 — a leader that failed 3 times in the last 600 views is skipped as proposer but still votes and earns the cosigner share. No slash function in the deployed deposit contracts (v7/v8/v9); Zilliqa’s 2.0 blog describes slashing for equivocation as a design goal, not something live. Minimum 100 ZIL on-chain and in the portal (which also warns of ~12 ZIL transaction cost). encapZIL is transferable, so a holder can also sell it instead of waiting out the unbonding — not mentioned in the answers."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://blog.zilliqa.com/how-to-stake-on-zilliqa-evm/"
+   }
+  },
+  {
+   "name": "Avail",
+   "token": "AVAIL",
+   "since": "2025-01-18",
+   "unbonding": "28 days",
+   "unbonding_days": 28,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every era, about 24 hours.",
+   "wallet": {
+    "label": "Delegate with Avail Staking",
+    "url": "https://staking.availproject.org/#/nominate",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our blocks and era points are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "Yes — 1,000 AVAIL to nominate us directly. Nomination pools take 100 AVAIL, but the pool chooses its validators."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every era — about 24 hours — once anyone claims the era’s payout; it goes to your stake or your balance, as you chose."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. A whole 4-hour session offline drops a validator from the next election; if over 10% are down, stake is slashed up to 7%."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Unbonding takes 28 days (28 eras); the amount earns nothing meanwhile, then you withdraw it."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "Chain storage on an archive node (wss://avail.api.onfinality.io/public-ws): session.validators first includes the stash at block 855,184 (2025-01-18 08:38 UTC, era 198), when the active set grew from 77 to 87. The stash was bonded on 2024-07-23 (block 82,322, era 19) and waited as a candidate until then; a day-by-day check of eras 19–197 found it in no active set. A daily check from era 198 to 813 finds it in every set except eras 790–792 (2026-09-01 → 09-03).",
+    "cadence": "Era = 6 sessions × 720 BABE slots × 20 s = 24 hours (Avail docs: 'An era is a period of 24 hours'; active era 813 began 2026-09-24 04:38 UTC). Rewards are fixed at the end of each era and paid only when someone calls payout_stakers for that era and validator — the validator, a nominator (the dashboard's Pending payouts), or anyone. Claimable for 84 eras (history depth), then forfeited. Where they go is the nominator's payee: Staked (the dashboard's default 'Compound') adds them to the bond; Stash or Account pays free balance. Docs lifecycle: stake in era N, active N+1, accruing N+2, first payout N+3. All nominators are paid (256 per exposure page, paged).",
+    "other wallets": {
+     "url": "https://docs.availproject.org/docs/da/user-guides/staking-governance/stake-on-avail/overview",
+     "what": "Avail docs, ‘Stake on Avail’: the ways to stake — the official staking dashboard, the Avail Apps explorer’s staking page, third-party staking UIs — plus direct nomination vs pools and the payout lifecycle"
+    },
+    "sources": [
+     "wss://avail-rpc.publicnode.com — staking.minNominatorBond, nominationPools.minJoinBond, staking.bondingDuration/sessionsPerEra/historyDepth/slashDeferDuration, babe.epochDuration/expectedBlockTime, staking.validators/payee/erasStakersOverview/claimedRewards (read 2026-09-24)",
+     "wss://avail.api.onfinality.io/public-ws — archive state: session.validators and staking.bonded by block",
+     "https://github.com/availproject/avail/blob/main/runtime/src/constants.rs",
+     "https://github.com/availproject/avail/blob/main/runtime/src/impls.rs",
+     "https://github.com/availproject/polkadot-sdk/blob/polkadot-1.7.1-patch-14/substrate/frame/staking/src/slashing.rs",
+     "https://github.com/availproject/polkadot-sdk/blob/polkadot-1.7.1-patch-14/substrate/frame/im-online/src/lib.rs",
+     "https://docs.availproject.org/docs/da/user-guides/staking-governance/stake-on-avail/overview",
+     "https://docs.availproject.org/docs/da/user-guides/staking-governance/stake-on-avail/direct-nomination",
+     "https://docs.availproject.org/docs/da/user-guides/accounts",
+     "https://staking.availproject.org/ (bundle index-BjLGUGG-.js: URL params and payout-destination labels)",
+     "https://github.com/availproject/avail-staking-dashboard",
+     "https://avail.subscan.io/validator/5FqQ3hKubNnejLwquQXjouX1ogwdzcL3xCU2ZqFcZs9NKSTN",
+     "https://docs.novawallet.io/nova-wallet-wiki/misc/developer-documentation/app-links",
+     "https://deeplink.subwallet.app/"
+    ],
+    "notes": "No wallet or dashboard can open a nomination of a specific validator from a link: the Avail staking dashboard (a 2024 fork of the Polkadot staking dashboard) reads only ?n (network), ?a (account), ?l (language) and ?t (tab); Nova’s app links, SubWallet’s deep links (open-in-browser only) and polkadot.js apps have no such action. So the button opens the dashboard’s Nominate page and the reader picks ‘Encapsulate’ under manual selection. ‘Delegate with Avail Staking Dashboard’ is long — consider ‘Avail Staking’. On-chain (spec 56): minNominatorBond 1,000 AVAIL; pool minJoinBond 100 AVAIL (100 pools); minimumActiveStake ≈ 0, so every nominator is in the election; up to 16 nominations. Q4 is read from the runtime’s own code (polkadot-sdk 1.7.1 fork): im-online reports a validator that neither authored a block nor sent a heartbeat all session; the slash is 0 unless more than n/10+1 are reported (with 70 validators that is 9 or more), then it rises linearly to 7% of validator and nominator stake; and every offence — even a zero slash — chills the validator (kick_out_if_recent → chill_stash), which is ‘dropped from the next election’ until it validates again. Our own record matches: after the 2026-08-31 outage the validator was out of the set for eras 790–792, and the 7% slash reported then (4,272 AVAIL) was cancelled by the Technical Committee (slashes wait 27 eras). Payouts: 18 eras unclaimed (795–812) on 2026-09-24; the oldest can be claimed until era 879. Q3 is true as written (‘once anyone claims’), but ‘every era’ only holds in practice if payouts are run — consider a payout bot. Compounding is ‘Manual’ because payout_stakers must be called; with payee Staked (the dashboard default) the paid reward joins the bond. Our validator: commission 20%, payee Account 5CmsVjfD…, own 61,034 AVAIL, 2 nominators, 63.45M AVAIL total. Subscan lists 600 eras for us, against the 613 in the set by my count; the first era is the same. Other wallets: I used the ‘Stake on Avail’ overview (staking tools); the wallets themselves (SubWallet, Talisman, PolkadotJS, Nova Wallet) are named on https://docs.availproject.org/docs/da/user-guides/accounts — pick whichever the button should mean. WORK: ‘Public record’ changed because Avail has no token-holder on-chain voting (governance is the Technical Committee), GRANDPA finality votes are not shown on explorers, and the Governance Record has no Avail rows; Subscan does show our blocks and era points. The other three lines are true as written."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://docs.availproject.org/docs/da/user-guides/staking-governance/stake-on-avail/overview"
+   }
+  },
+  {
+   "name": "Vara",
+   "token": "VARA",
+   "since": "2023-08-24",
+   "unbonding": "7 days",
+   "unbonding_days": 7,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every era, about 12 hours.",
+   "wallet": {
+    "label": "Delegate with Vara Staking",
+    "url": "https://staking.vara.network/#/nominate",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our blocks and era points are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "Yes — 50 VARA to nominate us directly. Nomination pools take 1 VARA, but the pool chooses its validators."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every era — about 12 hours — once anyone claims the era’s payout; it goes to your stake or your balance, as you chose."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Missed blocks earn nothing; if over 10% of validators are offline in a session, stake is slashed up to 7%."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Unbonding takes 7 days (14 eras); the amount earns nothing meanwhile, then you withdraw it."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "Chain storage on wss://archive-rpc.vara.network: session.validators first includes the stash at block 4,438,221 (2023-08-24 12:09 UTC, era 86) — the first era after the chain’s fixed-set phase, when the era counter sat at 85 from 2023-05-11 to 2023-08-24. The stash was bonded three days earlier (block 4,342,986, 2023-08-21). It is in the set at every 14-day sample since.",
+    "cadence": "Era = 6 sessions × 2,400 BABE slots × 3 s = 12 hours (Vara wiki: 'An era lasts for 12 hours', sessions 2 hours). Rewards come from Vara's StakingRewards pallet each era, shared among active validators by era points (nearly equal per validator, whatever the stake), then split with nominators by stake after commission. Paid only when someone calls payout_stakers — typically the validator, but any nominator can (the dashboard's Claim for Pending Payouts). Claimable for 84 eras (~42 days), then forfeited. Payee options on the dashboard: Compound (re-bonded) or To Your Account.",
+    "other wallets": {
+     "url": "https://wiki.vara.network/docs/vara-network/staking/nominate",
+     "what": "Vara wiki, ‘Become Nominator’: nominating through the Vara Staking Dashboard, SubWallet or Polkadot.js apps, and nomination pools"
+    },
+    "sources": [
+     "wss://rpc.vara.network — staking.minNominatorBond, nominationPools.minJoinBond, staking consts, babe consts, staking.validators/payee/erasStakersOverview/claimedRewards, stakingRewards (read 2026-09-24)",
+     "wss://archive-rpc.vara.network — archive state: session.validators, staking.bonded, staking.activeEra by block",
+     "https://github.com/gear-tech/gear/blob/v1.10.0/runtime/vara/src/lib.rs (spec_version 1_10_00 = live 11000)",
+     "https://github.com/gear-tech/polkadot-sdk/blob/gear-polkadot-stable2409-wasm32v1-none/substrate/frame/staking/src/slashing.rs",
+     "https://github.com/gear-tech/polkadot-sdk/blob/gear-polkadot-stable2409-wasm32v1-none/substrate/frame/im-online/src/lib.rs",
+     "https://wiki.vara.network/docs/vara-network/staking",
+     "https://wiki.vara.network/docs/vara-network/staking/nominate",
+     "https://wiki.vara.network/docs/vara-network/account",
+     "https://staking.vara.network/ (bundle index-U4TkxU7O.js: URL params)",
+     "https://vara.subscan.io/validator/kGjJgbAji2v1NXHCApCJ9VTTAKfhE8XBeUK6u4a3txuuH6Qq6"
+    ],
+    "notes": "No deep link to our validator exists: the Vara Staking Dashboard (same Polkadot-dashboard fork) reads only ?n, ?a, ?l and ?t; the wiki itself links https://staking.vara.network/#/nominate. The reader chooses ‘Encapsulate’ under manual selection. ‘Delegate with Vara Staking Dashboard’ is long — consider ‘Vara Staking’. On-chain: minNominatorBond 50 VARA and pool minJoinBond 1 VARA (the wiki says the same); minimumActiveStake 0.027 VARA; up to 16 nominations; 81 pools. Bonding 14 eras × 12 h = 7 days (wiki: ‘Bonding duration 7 days’). Q4 is read from the live runtime (gear v1.10.0 on polkadot-sdk stable2409): im-online reports a validator that neither authored a block nor sent a heartbeat all session; the slash is 0 unless more than n/10+1 are reported (with 59 validators, 7 or more), then it rises to 7% of validator and nominator stake; unlike Avail, this version does not chill the validator, but it may disable it for the rest of the era (UpToLimitDisablingStrategy) — left out of the copy. Slashes wait 13 eras (~6.5 days) and can be cancelled by governance. ‘Missed blocks earn nothing’: era points come from authored blocks, and a validator’s reward is its share of points. Payouts: 25 eras unclaimed on 2026-09-24 (2311–2339, except 2312, 2316, 2317 and 2320, which someone claimed); the oldest expires after era 2395, about 27 days from now. As with Avail, Q3 is true as written, but ‘every era’ holds in practice only if payouts are run. Our validator: commission 5%, payee Account kGgFA3D5…, own 102,000 VARA, 46 nominators, 45.23M VARA total. WORK: ‘Public record’ changed because the Governance Record has no Vara votes; Vara does have OpenGov (ConvictionVoting/Referenda), so if Encapsulate votes there, keep the default ‘Our signing and votes …’. The other three lines are true as written."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://wiki.vara.network/docs/vara-network/staking/nominate"
+   }
+  },
+  {
+   "name": "Mina",
+   "token": "MINA",
+   "since": "2024-09-18",
+   "unbonding": "None",
+   "unbonding_days": 0,
+   "compounding": "Auto",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; we pay your share of block rewards monthly.",
+   "wallet": {
+    "label": "Delegate with Auro",
+    "url": "https://minascan.io/mainnet/validator/B62qjWmFMiYUiWGvisVof9mbiKi2sB1FhZdwiDyXi8nMCoLDJuFaRYY/delegations",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our blocks and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Mina delegates your whole balance, whatever its size; there is no partial delegation."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Mina pays each block’s reward to us, not to you. We pay delegators their share, less our 5% fee, once a month."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Mina has no slashing — a missed slot costs only that block’s reward; stake is never cut."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Nothing is locked and your MINA stays spendable; a change of delegation takes effect after one to two epochs, 7–15 days."
+    ]
+   ],
+   "copy": [
+    [
+     "rewards auto",
+     "Mina pays block rewards to us; we pay your share, and your whole balance stays delegated."
+    ]
+   ],
+   "research": {
+    "since how": "Minascan’s block list for the key (read through its web app): 818 blocks, the earliest at height 388,464 on 2024-09-18 20:18 UTC (post-Berkeley epoch 7). The account first appears on 2023-08-19, when it delegated to itself with about 22 MINA (memo ‘KingSuper’), far too little to win a slot. The first outside delegations came on 2024-08-29 (O(1) Labs, 368,001 + 51,074 MINA), and that stake produced the first block after the usual lag.",
+    "cadence": "The protocol pays each block's coinbase — 360 MINA since the Mesa hard fork (Mesa genesis 2026-09-03 18:00 UTC; 720 before) — plus fees to the block producer's coinbase receiver (ours: B62qjHJ4…5yyAwWRntvjazei). Delegators receive nothing from the protocol; the producer pays them itself. Ours: fee 5% (Auro's list; Minascan also shows 5% and payout period '1 / month'). On-chain, our block-producer account made 138 payouts (memo 8e9f63c5…) monthly from 2024-10 to 2026-01. None since, because the last block was about 2025-12-04: 818 blocks in all (396 canonical), the first on 2024-09-18. Blocks come by VRF slot lottery: 90 s slots, 7,140 per epoch, so an epoch is 7.44 days (was 14.875).",
+    "other wallets": {
+     "url": "https://docs.minaprotocol.com/using-mina/how-to-delegate",
+     "what": "Mina docs, ‘How to Delegate’: delegating from Auro, Clorio, Ledger (through Auro) and Pallad, with the 1–2 epoch activation delay"
+    },
+    "sources": [
+     "https://api.minascan.io/node/mainnet/v1/graphql — daemonStatus.consensusConfiguration: slotDuration 90000 ms, slotsPerEpoch 7140, epochDuration 642,600,000 ms, genesisStateTimestamp 2026-09-03 18:00 UTC (read 2026-09-24)",
+     "https://docs.minaprotocol.com/using-mina/how-to-delegate",
+     "https://docs.minaprotocol.com/node-operators/validator-node/staking-and-snarking",
+     "https://docs.minaprotocol.com/network-upgrades/mesa",
+     "https://docs.minaprotocol.com/network-upgrades/mesa/fork-schedule",
+     "https://minascan.io/mainnet/validator/B62qjWmFMiYUiWGvisVof9mbiKi2sB1FhZdwiDyXi8nMCoLDJuFaRYY/delegations (validator record, blocks, account activity; Stake dialog)",
+     "https://docs.aurowallet.com/general/auro-mobile/pull-up-auro-wallet-with-deeplink",
+     "https://docs.aurowallet.com/general/reference/api-reference/methods/mina_sendstakedelegation",
+     "Auro validator list (scratchpad stake/auro_list.json, read 2026-09-24): Encapsulate, fee 5"
+    ],
+    "notes": "The Q3 answer and the lede say ‘once a month’ — CONFIRM that this is still the policy. It is what Minascan’s profile states (‘payout period 1 / month’) and what the chain shows from 2024-10 to 2026-01, but there has been no block since about 2025-12-04, so nothing has been paid since January. At today’s 5,093 MINA (16 delegators, about 0.0004% of stake) the expected rate is about 0.039 blocks per epoch: one block every ~26 epochs, roughly every 6 months now that epochs are 7.44 days. That is why the rate is left blank. Compounding is ‘Auto’ because our payment lands in the delegator’s account and the whole balance is always delegated, so it counts after 1–2 epochs — but it depends on us paying. Mesa has happened (2026-09-03): slots 90 s, epochs halved to 7.44 days, coinbase halved to 360 MINA. The docs’ ‘How to Delegate’ page says delegation becomes active in 1–2 weeks (1–2 epochs); the older ‘Delegating MINA’ page still says 2–4 weeks, which is pre-Mesa. There is no minimum and no lock; the only cost is the delegation’s transaction fee (the docs say ‘No minimum amount required’). Wallet: Auro has no delegation deep link — its app links support only action=openurl. Minascan’s validator page has a ‘Stake’ button that opens a ‘Stake MINA’ dialog prefilled with our block producer and calls Auro’s provider (mina.sendStakeDelegation, seen in Minascan’s bundle). I opened the dialog and cancelled it; nothing was sent. So the link works on desktop with the Auro extension, but not on a phone. The alternative is for our page to call window.mina.sendStakeDelegation({to}) itself (documented by Auro) — that is page JS, your call. Minascan still names us ‘Encapsulate (fka KingSuper)’, links Twitter @_KingSuper_ and marks us isActive: false; it may be worth updating that profile. The block-producer account also receives 900 MINA a month in delegation-program grants (memos ‘MF Grant …’, ‘o1DP_…’); these are not delegator rewards. WORK: ‘Public record’ changed because Mina has no signing or attestations to show, but blocks are there, and so are votes: the account sent MIP6–MIP9 vote transactions on 2025-12-15. ‘Upgrade handling’: the Governance Record has Mina upgrades through Mesa, but at this stake no block is expected, so the chain cannot show whether our node is running post-Mesa — confirm the node is up. ‘Node operation’ is untouched as asked. A caution on Q4’s fixed first sentence: on Mina, two nodes running one block-producer key at the same time can both produce in the same slot. There is no slashing for it, but the ‘hot standby’ must be a cold failover."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://docs.minaprotocol.com/using-mina/how-to-delegate"
+   }
+  },
+  {
+   "name": "Lido DVT",
+   "token": "ETH",
+   "since": "2024-09-24",
+   "unbonding": "1–5 days",
+   "unbonding_days": 5,
+   "compounding": "Auto",
+   "lede": "Stake in two minutes. Your keys never leave your wallet; your stETH grows once a day.",
+   "wallet": {
+    "label": "Stake with Lido",
+    "url": "https://stake.lido.fi",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing is on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Lido pools deposits, so you can stake any amount of ETH."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. Your ETH goes into Lido’s contracts, and you hold stETH, a liquid token, in your own wallet."
+    ],
+    [
+     "How often are rewards paid?",
+     "Once a day, around 12:30 UTC — your stETH balance grows, after Lido’s 10% fee."
+    ],
+    [
+     "What happens if you go offline?",
+     "Any five of the cluster’s seven operators keep it signing. Downtime is never slashed; a missed attestation costs about what it would have paid."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Lido’s withdrawal queue usually takes 1–5 days, without rewards meanwhile — or swap stETH for ETH at market price."
+    ]
+   ],
+   "copy": [
+    [
+     "commission",
+     "Lido’s fee"
+    ],
+    [
+     "commission note",
+     "Ours is inside it, not on top"
+    ],
+    [
+     "commission ours",
+     "Lido · {n}"
+    ],
+    [
+     "rate caption",
+     "After Lido’s fee · as of {date}"
+    ],
+    [
+     "unbonding note",
+     "Lido’s withdrawal queue"
+    ],
+    [
+     "rewards auto",
+     "Compounded daily — your stETH balance grows as Lido adds rewards."
+    ],
+    [
+     "disclaimer",
+     "{rewards} After Lido’s {commission}% fee. An estimate at today’s rate, which the chain can change."
+    ],
+    [
+     "validators label",
+     "Validators · Lido"
+    ],
+    [
+     "validators",
+     "Validators"
+    ],
+    [
+     "each",
+     "ETH each"
+    ],
+    [
+     "each value",
+     "32"
+    ],
+    [
+     "stake",
+     "ETH at stake"
+    ],
+    [
+     "line 1",
+     "Ethereum validators we operate for Lido."
+    ],
+    [
+     "line 2",
+     "The protocol fixes 32 ETH behind each,"
+    ],
+    [
+     "line 3",
+     "so together they hold {stake} ETH at stake."
+    ]
+   ],
+   "research": {
+    "since how": "Simple DVT module 0xaE7B191A…B433: NodeOperatorAdded for #43 “Lido x SSV: Arid Anubis” at block 20556770 (2024-08-18, tx 0x5b1462ce…ccdd); its first keys were deposited at block 20817346 (2024-09-24 02:04 UTC, DepositedSigningKeysCountChanged → 9, tx 0x27f2c050…e768); key #0 (validator 1588212, pubkey 0x997ea5d3…89d6) was activated at epoch 313502 = 2024-09-24 20:13 UTC (beacon API, lodestar and publicnode agree). SSV operator 924 “Lido - Encapsulate” was created 2024-08-14.",
+    "cadence": "stETH rebases once a day, at Lido’s AccountingOracle report (one 225-epoch frame = 24 h; Lido says the rebase lands around 12:30 UTC — the last seven reports in eth-api.lido.fi were at 12:2x UTC). Lido’s fee is 10% of rewards: StakingRouter aggregate on 2026-09-24 = 3.80% to modules + 6.19% to treasury (9.99%); the Simple DVT module (id 2) is 8% module / 2% treasury. Rewards are restaked by the protocol and show as a growing stETH balance, so no claim.",
+    "other wallets": {
+     "url": "https://lido.fi/lido-ecosystem",
+     "what": "Lido’s ecosystem directory — the wallets and apps where you can stake ETH with Lido or hold stETH (Ledger, MetaMask, Trust Wallet, Argent, Safe, Coinbase Wallet and others, filterable by Get / Hold)"
+    },
+    "sources": [
+     "https://etherscan.io/address/0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433",
+     "https://etherscan.io/tx/0x5b1462ce15261071ad9066f0d0b922c2fcabb3f1caee1fdbff069290a56accdd",
+     "https://etherscan.io/tx/0x27f2c0509425284f85aa31a6db0df057e9656452a98d20ba6c691dcfbedde768",
+     "https://lodestar-mainnet.chainsafe.io/eth/v1/beacon/states/head/validators/0x997ea5d3b154223c5a7e9ff2499f715dbe877d809476b1101b0edfa4361cc6f38ec1e594485fb005637ab7c5f71689d6",
+     "https://operators.lido.fi/module/2/43",
+     "https://etherscan.io/address/0xFdDf38947aFB03C621C71b06C9C70bce73f12999",
+     "https://api.ssv.network/api/v4/mainnet/operators/924",
+     "https://api.ssv.network/api/v4/mainnet/validators/997ea5d3b154223c5a7e9ff2499f715dbe877d809476b1101b0edfa4361cc6f38ec1e594485fb005637ab7c5f71689d6",
+     "https://docs.ssv.network/learn/network-overview/clusters/cluster-creation/",
+     "https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/rewards-and-penalties/",
+     "https://lido.fi/how-lido-works/rewards-and-penalties",
+     "https://docs.lido.fi/guides/lido-tokens-integration-guide",
+     "https://help.lido.fi/en/articles/7858315-how-long-does-an-ethereum-withdrawal-take",
+     "https://help.lido.fi/en/articles/7858292-faq-ethereum-withdrawals",
+     "https://wq-api.lido.fi/v2/request-time/calculate?amount=1",
+     "https://eth-api.lido.fi/v1/protocol/steth/apr/sma",
+     "https://stake.lido.fi",
+     "https://lido.fi/lido-ecosystem"
+    ],
+    "notes": "Q4 does NOT open with “A standby node takes over.” — for a DVT cluster that sentence misdescribes the mechanism: the validator key is split into seven shares held by seven operators, and SSV’s 3f+1 rule lets a 7-operator cluster keep signing with any 5 up (2 may fail). There is no single node for a standby to replace, and whatever standby we keep behind SSV operator 924 is invisible to the staker. Proposed first sentence instead: “Any five of the cluster’s seven operators keep it signing.” The chain part is Ethereum’s: downtime is never slashed; missed source/target votes are penalised by exactly what they would have paid (no penalty for a missed head vote or proposal); the inactivity leak only applies when the chain goes more than four epochs without finality. Losses are pooled across all stETH holders, so a staker’s exposure to our cluster is diluted to our share of Lido. — Primary button must read “Stake with Lido”, not “Delegate with …”: a staker cannot choose us; Lido’s StakingRouter allocates deposits. The lede and Q1 drop “Delegate” for the same reason. — Withdrawal queue measured today (wq-api.lido.fi, 2026-09-24): ~2 days for a small request, ~3 days for 10,000 ETH, ~5 days for 100,000 ETH; Lido states 1–5 days normally, longer in “bunker mode”. Requests are 100 wei to 1,000 stETH each (larger ones split automatically). — Rate 2.2% matches stETH’s 7-day SMA APR 2.24% (eth-api.lido.fi, reports to 2026-09-23 12:23 UTC). — Operator #43 on-chain: active, 500 vetted/added/deposited, 0 exited. — Kept “Monitoring: A missed block wakes someone up” because Ethereum validators do propose blocks; if you prefer the everyday duty, “A missed attestation wakes someone up, at any hour.” is also true. Kept “Upgrade handling” (Pectra 2025-05-07 and Fusaka 2025-12-03 fall after our start; “on schedule” is our claim, not checked). “Node operation” left as is, per the rules, but note SSV lists operator 924 in one location (Finland, Nethermind + Lighthouse) — confirm “two regions, with a hot standby” is true for the SSV node. — Aside, not page copy: operator #43’s reward address changed three times on-chain (2025-09-08, 2025-10-24, 2026-02-02; now 0x257b5FF9…eEa0), and the cluster’s operator 2029 “2xStake” joined when the validators were re-registered on SSV (2025-10-13). The 0xSplits address and the 2/7 + 5/49 split recorded in notion/networks-set-values.md (0xcddc0b19…) may be out of date — worth a re-check before the fee split is quoted anywhere."
+   },
+   "other": {
+    "label": "Other wallets",
+    "url": "https://lido.fi/lido-ecosystem"
+   }
+  },
+  {
+   "name": "EigenCloud",
+   "token": "EIGEN",
+   "since": "2024-04-09",
+   "unbonding": "14 days",
+   "unbonding_days": 14,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards are posted weekly, for you to claim.",
+   "wallet": {
+    "label": "Delegate with EigenLayer",
+    "url": "https://app.eigenlayer.xyz/operator/0xA6c3F159242855ba09D9f445679eD0b244C22062",
+    "verified": true
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed attestation wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our AVS registrations and delegated stake are on-chain for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Restake any amount of EIGEN and delegate it to us."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. Your tokens are restaked in EigenLayer’s contracts, and only you can withdraw them."
+    ],
+    [
+     "How often are rewards paid?",
+     "Weekly, to a balance you claim in the EigenLayer app — each week becomes claimable about ten days after it ends."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Nothing delegated to us is slashable today; an AVS can eject an operator that misses work, and its rewards stop."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. A withdrawal waits 14 days in escrow, earning nothing, then you complete it in the EigenLayer app."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "DelegationManager 0x39053D51…F37A: OperatorRegistered for 0xA6c3F159…2062 at block 19618778 (2024-04-09 14:47 UTC, tx 0x955a5e5c…b6e8, sent by the operator itself) — the day EigenLayer opened operator registration. First AVS registration (AVSDirectory OperatorAVSRegistrationStatusUpdated): EigenDA at block 19682949, 2024-04-18.",
+    "cadence": "RewardsCoordinator 0x7750d328…adda: rewards are calculated per day (CALCULATION_INTERVAL_SECONDS = 86400) and a distribution root is posted weekly on mainnet — roots 107–116 each cover a week ending Sunday 00:00 UTC, posted the following Tuesday ~15:00 UTC — then activationDelay = 604800 s (7 days), so each week becomes claimable ~9.6 days after it ends. The staker claims (app or CLI); nothing compounds. Operator split on-chain: PI split 1000 bips and all five AVS splits 1000 bips (= the default 10%). Docs: accrual shows ~2 days after delegating; queued withdrawals stop earning.",
+    "other wallets": {
+     "url": "https://docs.eigencloud.xyz/eigenlayer/restakers/restaking-guides/restaking-user-guide/liquid-restaking/restake-lsts",
+     "what": "EigenCloud’s “Restake and Delegate” guide for the EigenLayer app, which connects any Web3 wallet — EigenCloud publishes no list of wallets"
+    },
+    "sources": [
+     "https://etherscan.io/tx/0x955a5e5c9e9c9ee861915f36725b6356c8fcd209ad2044eaddac7878afdeb6e8",
+     "https://etherscan.io/address/0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+     "https://etherscan.io/address/0x7750d328b314EfFa365A0402CcfD489B80B0adda",
+     "https://etherscan.io/address/0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39",
+     "https://etherscan.io/address/0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
+     "https://etherscan.io/address/0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+     "https://github.com/Layr-Labs/eigencloud-docs/blob/main/docs/eigenlayer/concepts/rewards/rewards-claiming-faq.md",
+     "https://github.com/Layr-Labs/eigencloud-docs/blob/main/docs/eigenlayer/concepts/rewards/rewards-concept.md",
+     "https://github.com/Layr-Labs/eigencloud-docs/blob/main/docs/eigenlayer/concepts/rewards/pi-split.md",
+     "https://github.com/Layr-Labs/eigencloud-docs/blob/main/docs/eigenlayer/restakers/restaking-guides/0-restaking-user-guide/liquid-restaking/withdraw-from-eigenlayer.md",
+     "https://github.com/Layr-Labs/eigencloud-docs/blob/main/docs/eigenlayer/restakers/restaking-guides/0-restaking-user-guide/restaker-delegation/delegate-to-an-operator.md",
+     "https://docs.eigencloud.xyz/eigenda/operator-guides/requirements/protocol-SLA",
+     "https://docs.eigencloud.xyz/eigenlayer/restakers/restaking-guides/restaking-user-guide/liquid-restaking/restake-lsts",
+     "https://app.eigenlayer.xyz/operator/0xA6c3F159242855ba09D9f445679eD0b244C22062"
+    ],
+    "notes": "Checked on-chain 2026-09-24: withdrawal delay = DelegationManager.minWithdrawalDelayBlocks() = 100,800 blocks (14 days at 12 s); AllocationManager getRegisteredSets / getAllocatedSets for our operator are both empty (no operator sets, no allocations, allocation delay never set) → 0% slashable, which is what “Nothing delegated to us is slashable today” rests on; if we ever allocate to an operator set, Q4 must change. Operator split: getOperatorPISplit and getOperatorAVSSplit for every AVS = 1000 bips (the 10% default). — AVSDirectory still shows FIVE registrations, all status “registered”: EigenDA (2024-04-18), eOracle (2024-04-19), Omni (2024-04-20), Witness Chain (2024-04-30), primev mev-commit (2024-11-29). The recorded note says EigenDA and eOracle only (the app likely hides inactive AVSs) — confirm which we actually run; the Monitoring line assumes AVS work is attesting (EigenDA nodes attest to blobs). — In EigenDA we are registered in quorum 1 only (the EIGEN quorum; ~4,070 EIGEN of stake weight), not quorum 0 (ETH and LSTs). EigenCloud’s docs (pi-split, “as at March 2026”) direct all ETH incentives to EigenDA, so ETH/LST restaked with us probably earns nothing — that is why Q1 names EIGEN only, not “EIGEN or a supported LST”. Confirm before adding LSTs back (the stETH, rETH and EIGEN strategies are all open for deposit). — Q4’s chain part: EigenDA’s SLA lets it eject an operator that stops attesting (ejection = out of the quorum, 3-day cooldown to re-register), and PI need an operator supporting EigenDA, so rewards stop. — Wallet URL: format confirmed in third-party source and docs (primev mev-commit docs, Cosmostation’s extension, ether.fi scripts all link app.eigenlayer.xyz/operator/<address>); the page answers curl with HTTP 500 (bot/SSR) and in the automation browser reached the title “Eigenlayer App” but never finished loading, so its content could not be read. — “Other wallets” is weak for EigenCloud: there is no official wallet list (the app takes any Web3 wallet), and liquid-restaking protocols pick their own operators, so none of them reaches us. The link is the docs’ restake-and-delegate guide (URL from the search index; docs.eigencloud.xyz serves a Cloudflare challenge to scripts). Consider relabelling the button (“How restaking works”) or dropping it. — “Delegate in two minutes” holds, though a first restake is two or three transactions (approve, deposit, delegate). “Upgrade handling” kept: operators upgrade AVS software rather than a chain, but the line is not untrue; “Every AVS upgrade since we joined, on schedule.” would be more exact if you prefer. “Node operation” left as is, per the rules. — Rate 5.7% (the app’s 7-day APR for EIGEN, the user’s screenshot) was not re-checked: EigenExplorer was paused and the app refuses scripts."
+   }
+  }
+ ]
+}
