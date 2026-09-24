@@ -10,24 +10,30 @@
    Tokens from the handoff: INK #000, INK7 #3A3D38, PAPER #FAFAF8, PAPER2 #F2F2ED, DARK #2A2C28,
    GREY #6B6F68, HAIR #E2E2DB, GREEN #99CC66, and PAD = clamp(28px, 7vw, 110px). */
 
-/* the page's own top padding would show as a white strip above the ink cover */
+/* the cover starts at the top edge, under the bar, as every 4f page does */
 .super-content.page__brand {
   padding-top: 0 !important;
 }
 
 /* ── THE COVER ─────────────────────────────────────────────────────────────────────────────────
-   Ink, one screen, centred: the eyebrow above, the wordmark with the kit line and two CTAs in the
-   middle, the foot below. No headline — the wordmark is the headline. */
+   Paper, one screen, centred: the eyebrow above, the wordmark with the kit line and two CTAs in the
+   middle, the foot below. No headline — the wordmark is the headline. It was ink until 2026-09-24,
+   when the handoff put its paper cover (`coverPaper`) first: the paper ground under a 22px dot
+   grid, the light wordmark, ink-7 type and the Button System's paper buttons. */
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 {
   position: relative !important;
   overflow: hidden !important;
   width: 100vw !important;
   max-width: none !important;
   margin: 0 calc(50% - 50vw) !important;
-  padding: clamp(40px, 6vh, 72px) clamp(28px, 7vw, 110px) !important;
+  /* the top clears the bar that lies over the cover */
+  padding: clamp(96px, 12vh, 128px) clamp(28px, 7vw, 110px) clamp(40px, 6vh, 72px) !important;
   min-height: calc(100svh - var(--enc-cover-top, 56px)) !important;
   display: flex !important;
-  background: #2A2C28 !important;
+  background-color: #FAFAF8 !important;
+  background-image: radial-gradient(rgba(0, 0, 0, 0.22) 1px, transparent 1.2px) !important;
+  background-size: 22px 22px !important;
+  background-position: 11px 11px !important;
   border: 0 !important;
   border-radius: 0 !important;
 }
@@ -78,7 +84,7 @@
   line-height: 1.3 !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
-  color: #B4B4B4 !important;
+  color: #3A3D38 !important;
 }
 
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair[data-pair="foot"] > p.notion-text { font-size: 10.5px !important; }
@@ -100,7 +106,7 @@
   transform: translateY(-50%);
   width: 1px;
   height: 12px;
-  background: rgba(250, 250, 248, 0.4);
+  background: #A5A5A5;
 }
 
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-pair[data-pair="foot"] > p.notion-text + p.notion-text::before {
@@ -121,7 +127,7 @@
   width: min(100%, 600px);
   aspect-ratio: 5376.7 / 906.31;
   display: block;
-  background: url("../svg/wordmark-reversed.svg") center / contain no-repeat;
+  background: url("../svg/wordmark.svg") center / contain no-repeat;
 }
 
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-mid > p.notion-text {
@@ -131,23 +137,31 @@
   line-height: 1.52 !important;
   letter-spacing: 0 !important;
   text-transform: none !important;
-  color: #C9C9C4 !important;
+  color: #3A3D38 !important;
   max-width: 38ch !important;
   text-wrap: pretty !important;
+  position: relative !important;
+  z-index: 0 !important;
+}
+
+/* a paper screen behind the kit line, so the dot grid does not run through the words */
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-mid > p.notion-text::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -14%;
+  right: -14%;
+  top: -30%;
+  bottom: -30%;
+  display: block;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, #FAFAF8 0%, #FAFAF8 55%, transparent 100%);
 }
 
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-mid > .notion-column-list {
   justify-content: center !important;
   gap: 12px !important;
   width: auto !important;
-}
-
-/* the secondary CTA in its on-ink form, as the handoff draws it */
-.notion-root #block-3dee800a5138811b9298fe700f0a4d09 .notion-callout.color-gray_background .notion-link {
-  background: rgba(250, 250, 248, 0.06) !important;
-  border-color: rgba(250, 250, 248, 0.3) !important;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.26) !important;
-  color: #FAFAF8 !important;
 }
 
 /* ── THE SPREADS ───────────────────────────────────────────────────────────────────────────── */

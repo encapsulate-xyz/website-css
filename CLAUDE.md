@@ -695,7 +695,7 @@ can never drift from the CSS that positions it.
 |---|---|
 | Section fields and drawings | `svg/stat-field-*.svg`, `svg/circle-online.svg`, `svg/fork-arcs-*.svg`, `svg/5k-fan-and-rings.svg`, `svg/5o-twin-fans.svg`, `svg/9c-inverted-horizons.svg`, `svg/rail-dots.svg`, `svg/team-crew.svg` |
 | Cover fields (/networks count) | `svg/count-rings.svg`, `svg/count-dots.svg` |
-| Brand | `svg/wordmark-reversed.svg` (footer), `svg/mark-a.svg` (/brand cover) |
+| Brand | `svg/wordmark-reversed.svg` (footer, the ink navbar), `svg/wordmark.svg` (the /brand cover, paper since 2026-09-24 — the reversed file with its letters and band in `#000000`), `svg/mark-a.svg` (covers.js's /brand field) |
 | Navbar captures | `img/nav-covers/` (the nine page covers) and `img/nav-panels/` (the four tools and the institutional dial), the design's own files |
 
 **Notion — anything that is content.** None of it is in the repo; Super stores and serves it.
