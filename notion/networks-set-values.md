@@ -53,7 +53,7 @@ are summarised below.
 |---|---|---|
 | Avalanche | `NodeID-N3e9W3EngjabGnTZVqyZwunVcbCdrY5Qy` | Rate depends on the delegation length (5.1–5.7% net for 14–232 days). **Only ~111 AVAX of delegation capacity left** on 2026-09-24. The node did not validate 2026-02-02 → 05-15 |
 | Lido | Simple DVT node operator #43 (SSV cluster "Arid Anubis") | Stakers pay Lido's 10%; the rate is stETH's 7-day APR. Only #43 is ours and active (the user, 2026-09-24); #48 "Mysterious Manta" is exited and not listed |
-| Monad | `ID 91 · 0x79129e1306dc1e81F3a2cC5e3B5171fb92FFd99d` | Both shown, as asked: delegators stake to the ID, explorers show the address. No slashing implemented |
+| Monad | `0x79129e1306dc1e81F3a2cC5e3B5171fb92FFd99d` | The address only, as asked (delegators stake to validator ID 91). No slashing implemented |
 | Near | `encapsulate.pool.near` | 4 epochs to unlock (~21–31 h at today's epoch length) |
 | Sui | `0x01d03daf…26ff7` | Old validator "fka KingSuper" `0x970f9006…` ran epochs 0–849, never penalised. Tallying rule removes rewards, never principal |
 | Axelar | `axelarvaloper1p8uxq4…9yct` | Old "Redelegate to Encapsulate" validator is jailed, no slashes |
@@ -88,10 +88,15 @@ together and leave the hand-set properties alone.
 
 ## Open (2026-09-24)
 
-- **EigenCloud reward rate** — needs an EigenExplorer API key (free, developer.eigenexplorer.com);
-  the key goes in `~/.eigenexplorer-key` (chmod 600), never in chat.
+- **EigenCloud reward rate** — EigenExplorer's site showed "This deployment is temporarily paused"
+  on 2026-09-24, and app.eigenlayer.xyz answers 500 to scripts and renders nothing headless. Read
+  it from the operator page in a normal browser, or retry EigenExplorer later (free key at
+  developer.eigenexplorer.com, kept in `~/.eigenexplorer-key`, chmod 600, never in chat).
 - **Mina reward rate** — left blank; to decide later (TODO).
 - **Mina fee** — Auro's validator list says 5%; the current chain page at /networks/mainnet/mina
   names no fee at all (only the generic "Commission is set per chain" line). To confirm (TODO).
-- **How SSV.network (and Lido) read on a chain page** — nobody delegates to our SSV operator; see
-  the proposal in the conversation of 2026-09-24.
+- **Lido or SSV.network — keep one.** They are the same 500 validators (Lido's Simple DVT module run
+  on an SSV cluster). Keeping **Lido** needs no new layout: its four numbers are the standard ones
+  (stETH rate, Lido's 10% fee, 1–5 days, 0 slashing events). Keeping **SSV.network** would need the
+  operator reading instead: validators run (500), 30-day performance (99.6%), operator fee (0),
+  slashing events (0). Removing a row changes every "28 mainnets" on the site.

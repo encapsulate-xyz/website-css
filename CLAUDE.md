@@ -995,6 +995,9 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
 - **5m, the chain-teams band** (callout `3dde800a…9995f7…`): ink, full-bleed, with the marks row
   built by `network.js` from the set's own gallery — first twelve cards. The "+23 more" is a Notion
   text block in the band that the script moves onto the row, for the same reason.
+- **The old `Networks` database is not to be used for anything** (the user, 2026-09-24) — not for
+  values, not for chain pages. Its item pages (/networks/mainnet/<chain>) carry stale "Expected
+  Reward Rate" lists.
 - **Every script now prefers this database:** `covers.js` reads it by id, `home.js` uses it when a
   view of it is on the homepage (old gallery is the fallback), `network.js` builds 5m from it.
 - **Staking values (2026-09-24):** the 28 mainnet rows carry Address, Reward rate (real, **after
@@ -1118,14 +1121,18 @@ flash of empty values and a key in the page.
 
 ## TODO — the Networks set's open values (2026-09-24)
 
-- **EigenCloud reward rate:** waiting on an EigenExplorer API key (free at
-  developer.eigenexplorer.com). Keep it in `~/.eigenexplorer-key`, chmod 600 — never in chat.
+- **EigenCloud reward rate:** EigenExplorer is paused ("This deployment is temporarily paused",
+  2026-09-24) and app.eigenlayer.xyz answers 500 to scripts. Read it from the operator page in a
+  normal browser, or retry EigenExplorer (free key at developer.eigenexplorer.com, kept in
+  `~/.eigenexplorer-key`, chmod 600 — never in chat).
 - **Mina reward rate:** blank on purpose (our pool is too small for a steady rate); decide later.
 - **Mina fee:** Auro's list says 5%; /networks/mainnet/mina (an existing chain page, from the old
   Networks database, whose "Expected Reward Rate" list is stale) names no fee. Confirm.
-- **SSV.network / Lido on a chain page:** nobody delegates to our SSV operator; the page needs an
-  operator reading (operator id, validators run, performance, "stake through Lido") rather than
-  the four staking numbers.
+- **Lido or SSV.network — keep one** (the user, 2026-09-24): they are the same 500 validators, Lido's
+  Simple DVT module on an SSV cluster. Keeping Lido keeps the standard four numbers (stETH rate,
+  Lido's 10% fee, 1–5 days, slashing events). Keeping SSV.network changes the chain-page design: its
+  four slots become **validators run (500), 30-day performance (99.6%), operator fee (0), slashing
+  events (0)**. Removing either row changes every "28 mainnets" on the site.
 
 ## TODO — the newsletter (removed 2026-09-21, to be rebuilt)
 
