@@ -924,19 +924,35 @@
     return ids[path];
   }
   var building = null;
+  /* Build at once from what is at hand — the row's own data is in the page, and the shared words
+     and the chain list come from localStorage (or the fallback words and no list on a first ever
+     visit) — then read both fresh and build again only if they differ. The first visit used to
+     wait for /networks and /services before drawing anything, which kept the page blank for four
+     seconds on a slow connection (measured 2026-09-24). */
   function build(root, id, key) {
     building = key;
     root.setAttribute("data-enc-chain", "pending");
     var src = blocks(root);
-    var wait = function (p, ms, dflt) {
-      return Promise.race([p, new Promise(function (r) { setTimeout(function () { r(dflt); }, ms); })]);
-    };
-    Promise.all([rowOf(id), wait(shared(), 4000, {}), wait(chains(), 4000, [])]).then(function (res) {
-      var row = res[0];
+    var kept = function (k, dflt) { var v = stored(k); return v ? v.value : dflt; };
+    rowOf(id).then(function (row) {
       if (pageKey() !== key) { building = null; return; }
       if (!isChain(row)) { root.removeAttribute("data-enc-chain"); building = null; return; }
-      var words = Object.assign({}, res[1] || {}, linesOf(src.toggle));
-      var P = new Page(root, id, row, words, res[2] || [], src);
+      var had = { words: kept("enc-chain-copy", {}), list: kept("enc-chain-list", []) };
+      render(root, id, key, row, src, had.words, had.list);
+      Promise.all([shared(), chains()]).then(function (res) {
+        var words = res[0] || {}, list = res[1] || [];
+        if (!live || live.key !== key || pageKey() !== key) return;
+        if (JSON.stringify(words) === JSON.stringify(had.words) && JSON.stringify(list) === JSON.stringify(had.list)) return;
+        var y = window.scrollY;
+        render(root, id, key, row, src, words, list);
+        if (y) window.scrollTo(0, y);
+      });
+    });
+  }
+
+  function render(root, id, key, row, src, shared, list) {
+      var words = Object.assign({}, shared || {}, linesOf(src.toggle));
+      var P = new Page(root, id, row, words, list || [], src);
       var wrap = el("div", "enc-ch");
       wrap.appendChild(P.hero());
       var vals = P.validators();
@@ -954,18 +970,18 @@
       if (src.lede) src.lede.setAttribute("data-enc-source", "");
       if (src.toggle) src.toggle.setAttribute("data-enc-source", "");
       var old = root.querySelector(":scope > .enc-ch");
-      if (old) old.remove();
       root.insertBefore(wrap, root.firstChild);
+      if (old) old.remove();
       wrap.style.setProperty("--sbw", Math.max(0, window.innerWidth - document.documentElement.clientWidth) + "px");
       document.querySelectorAll(".enc-ch-dock").forEach(function (n) { n.remove(); });
       var dock = P.dock();
       document.body.appendChild(dock);
+      var first = !live || live.key !== key;
       live = { id: id, key: key, wrap: wrap, dock: dock, docked: false };
       root.setAttribute("data-enc-chain", VERSION);
       building = null;
-      if ((window.scrollY || 0) < 40 && !location.hash) window.scrollTo(0, 0);
+      if (first && (window.scrollY || 0) < 40 && !location.hash) window.scrollTo(0, 0);
       onScroll();
-    });
   }
 
   function tick() {
