@@ -1,4 +1,7 @@
 .notion-toggle[data-enc-chain-copy]{display: none !important;}
+.super-content.parent-page__networks-mainnet .notion-root > *:not(.enc-ch),.super-content.parent-page__networks-mainnet .notion-header{visibility: hidden;animation: enc-ch-reveal 0s linear 5s forwards;}
+@keyframes enc-ch-reveal{to{visibility: visible;}
+}
 .notion-root[data-enc-chain]:not([data-enc-chain="no"]) > *:not(.enc-ch){display: none !important;}
 body:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])) .notion-header{display: none !important;}
 .notion-root[data-enc-chain]:not([data-enc-chain="no"]),.super-content:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])){padding: 0 !important;max-width: none !important;}

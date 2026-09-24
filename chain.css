@@ -11,6 +11,19 @@
 
 .notion-toggle[data-enc-chain-copy] { display: none !important; }
 
+/* ── no raw Notion before the build ───────────────────────────────────────────────────────
+   chain.js runs deferred, after the first paint, and Super's hydration strips the attribute it
+   sets once more before it settles (measured 2026-09-24: raw blocks at 437ms, hidden at 564,
+   back at 664, built at 967). So the blocks are hidden from the first paint by the class Super
+   itself server-renders on every chain page — the page's parent, /networks/mainnet — and shown
+   again after 5s if the build never comes, so a failed script cannot leave a blank page. */
+.super-content.parent-page__networks-mainnet .notion-root > *:not(.enc-ch),
+.super-content.parent-page__networks-mainnet .notion-header {
+  visibility: hidden;
+  animation: enc-ch-reveal 0s linear 5s forwards;
+}
+@keyframes enc-ch-reveal { to { visibility: visible; } }
+
 /* ── what the design does not draw ───────────────────────────────────────────────────────── */
 .notion-root[data-enc-chain]:not([data-enc-chain="no"]) > *:not(.enc-ch) { display: none !important; }
 body:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])) .notion-header { display: none !important; }

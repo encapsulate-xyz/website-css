@@ -103,14 +103,17 @@
   }
   function day(d) { return d.getDate() + " " + MON[d.getMonth()]; }
   function num(t) { var m = /-?\d+(?:\.\d+)?/.exec(String(t == null ? "" : t).replace(/,/g, "")); return m ? parseFloat(m[0]) : NaN; }
+  /* The shared words and the chain list are kept in localStorage and used at once, however old —
+     so a chain page builds from what it has without waiting on two fetches — and read again in
+     the background once they are older than half an hour, for the next page. */
   function stored(key) {
     try {
-      var v = JSON.parse(sessionStorage.getItem(key) || "null");
-      return v && Date.now() - v.at < KEEP ? v.value : null;
+      var v = JSON.parse(localStorage.getItem(key) || "null");
+      return v ? { value: v.value, fresh: Date.now() - v.at < KEEP } : null;
     } catch (e) { return null; }
   }
   function store(key, value) {
-    try { sessionStorage.setItem(key, JSON.stringify({ at: Date.now(), value: value })); } catch (e) { /* fine */ }
+    try { localStorage.setItem(key, JSON.stringify({ at: Date.now(), value: value })); } catch (e) { /* fine */ }
   }
   function pageOf(p) {
     if (window.encNav && typeof window.encNav.page === "function") return window.encNav.page(p);
@@ -236,16 +239,21 @@
     return hit;
   }
   var sharedOnce = null;
-  function shared() {
-    if (sharedOnce) return sharedOnce;
-    var kept = stored("enc-chain-copy");
-    if (kept) return (sharedOnce = Promise.resolve(kept));
-    sharedOnce = pageOf(COPY_PAGE).then(function (doc) {
+  function readShared() {
+    return pageOf(COPY_PAGE).then(function (doc) {
       var map = doc ? linesOf(copyToggle(doc)) : {};
       if (Object.keys(map).length) store("enc-chain-copy", map);
       return map;
     });
-    return sharedOnce;
+  }
+  function shared() {
+    if (sharedOnce) return sharedOnce;
+    var kept = stored("enc-chain-copy");
+    if (kept) {
+      if (!kept.fresh) readShared();
+      return (sharedOnce = Promise.resolve(kept.value));
+    }
+    return (sharedOnce = readShared());
   }
 
   /* ── the other chains: the set's view on /services, which shows Stage, Tier and Order ──── */
@@ -253,8 +261,14 @@
   function chains() {
     if (listOnce) return listOnce;
     var kept = stored("enc-chain-list");
-    if (kept) return (listOnce = Promise.resolve(kept));
-    listOnce = pageOf(LIST_PAGE).then(function (doc) {
+    if (kept) {
+      if (!kept.fresh) readChains();
+      return (listOnce = Promise.resolve(kept.value));
+    }
+    return (listOnce = readChains());
+  }
+  function readChains() {
+    return pageOf(LIST_PAGE).then(function (doc) {
       var best = [];
       if (doc) Array.prototype.forEach.call(doc.querySelectorAll(".notion-collection"), function (coll) {
         var out = [];
@@ -288,7 +302,6 @@
       if (main.length) store("enc-chain-list", main);
       return main;
     });
-    return listOnce;
   }
 
   /* ── the page's own blocks ─────────────────────────────────────────────────────────────── */
