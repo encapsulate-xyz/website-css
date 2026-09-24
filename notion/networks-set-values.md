@@ -1,6 +1,6 @@
 # The Networks set's staking values — where each came from (researched 2026-09-24)
 
-The 28 **mainnet** rows of the `Networks set` database (`3dde800a…33b7f1…`) carry eight properties
+The 27 **mainnet** rows (28 until Lido and SSV.network became one) of the `Networks set` database (`3dde800a…33b7f1…`) carry eight properties
 added on 2026-09-24 for the chain pages: **Address, Rate updated, Commission, Compounding,
 Unbonding, Chain slashes, Slashing events, Explorer**, beside the existing **Reward rate**. Testnet
 rows are left empty — there are no testnet chain pages.
@@ -52,12 +52,12 @@ are summarised below.
 | Chain | Address (what a staker uses) | Notes |
 |---|---|---|
 | Avalanche | `NodeID-N3e9W3EngjabGnTZVqyZwunVcbCdrY5Qy` | Rate depends on the delegation length (5.1–5.7% net for 14–232 days). **Only ~111 AVAX of delegation capacity left** on 2026-09-24. The node did not validate 2026-02-02 → 05-15 |
-| Lido | Simple DVT node operator #43 (SSV cluster "Arid Anubis") | Stakers pay Lido's 10%; the rate is stETH's 7-day APR. Only #43 is ours and active (the user, 2026-09-24); #48 "Mysterious Manta" is exited and not listed |
+| Lido DVT | Simple DVT node operator #43 (SSV cluster "Arid Anubis") | The Lido and SSV.network rows combined into one (the user, 2026-09-24); the SSV.network row is archived. **Stake at** = https://stake.lido.fi. Stakers pay Lido's 10%; the rate is stETH's 7-day APR |
 | Monad | `0x79129e1306dc1e81F3a2cC5e3B5171fb92FFd99d` | The address only, as asked (delegators stake to validator ID 91). No slashing implemented |
 | Near | `encapsulate.pool.near` | 4 epochs to unlock (~21–31 h at today's epoch length) |
 | Sui | `0x01d03daf…26ff7` | Old validator "fka KingSuper" `0x970f9006…` ran epochs 0–849, never penalised. Tallying rule removes rewards, never principal |
 | Axelar | `axelarvaloper1p8uxq4…9yct` | Old "Redelegate to Encapsulate" validator is jailed, no slashes |
-| EigenCloud | `0xA6c3F159…22062` | Reward rate not readable (app 500, API keyed). Registered to EigenDA and eOracle, but in no operator set, so none of our stake is slashable today |
+| EigenCloud | `0xA6c3F159…22062` | Rate 5.7%: the EigenLayer app's 7-day APR for EIGEN restaked with us (the user's screenshot, 2026-09-24; EigenExplorer was paused and the app refuses scripts). Registered to EigenDA and eOracle, in no operator set, 0% slashable |
 | IOTA | `0xedd654b2…27c9ab` | |
 | Mina | `B62qjWmF…FaRYY` | **Rate left blank**: ~5,100 MINA delegated, ~one block expected every 8 months, so any APR would mislead. Fee 5% is advertised, paid off-chain |
 | Starknet | staker `0x0359e252…df2a` (pool `0x04e828f5…b3f6`) | The staker address is shown, as asked. 44 of 12,675 attestation epochs missed; Voyager still shows an old reward address |
@@ -66,7 +66,6 @@ are summarised below.
 | Avail | `5FqQ3hKu…KSTN` | Commission 20% — intended. A 7% offline slash (4,272 AVAIL) reported in the 2026-08-31 outage was cancelled by the Technical Committee — not applied, so 0. 18 eras of payouts unclaimed on 2026-09-24 |
 | Espresso | `0xea452aed…991b` | Explorer: espressonodes.com (the user's link) |
 | Ika | operator `0x351f2db4…12f1` | |
-| SSV.network | Operator 924 "Lido - Encapsulate" | Private to Lido's cluster — nobody stakes to it directly, so rate, compounding and unbonding are blank. The old "KingSuper" operator 469 is ignored (the user: very old) |
 | Supra | pool `0x15ac9afc…cd3a` | Commission 38.72% on-chain — intended (the user, 2026-09-24) |
 | Vara | `kGjJgbAj…Q6q6` | 24 eras of payouts unclaimed on 2026-09-24 (they expire after 84 eras) |
 | Agoric | `agoricvaloper1p8uxq4…5ldj` | **Two** active validators of ours; the "Encapsulate" one is listed, as asked. The other, "fka KingSuper", is `agoricvaloper1fy8r6z…mv32` (~8.9M BLD) |
@@ -88,15 +87,6 @@ together and leave the hand-set properties alone.
 
 ## Open (2026-09-24)
 
-- **EigenCloud reward rate** — EigenExplorer's site showed "This deployment is temporarily paused"
-  on 2026-09-24, and app.eigenlayer.xyz answers 500 to scripts and renders nothing headless. Read
-  it from the operator page in a normal browser, or retry EigenExplorer later (free key at
-  developer.eigenexplorer.com, kept in `~/.eigenexplorer-key`, chmod 600, never in chat).
 - **Mina reward rate** — left blank; to decide later (TODO).
 - **Mina fee** — Auro's validator list says 5%; the current chain page at /networks/mainnet/mina
   names no fee at all (only the generic "Commission is set per chain" line). To confirm (TODO).
-- **Lido or SSV.network — keep one.** They are the same 500 validators (Lido's Simple DVT module run
-  on an SSV cluster). Keeping **Lido** needs no new layout: its four numbers are the standard ones
-  (stETH rate, Lido's 10% fee, 1–5 days, 0 slashing events). Keeping **SSV.network** would need the
-  operator reading instead: validators run (500), 30-day performance (99.6%), operator fee (0),
-  slashing events (0). Removing a row changes every "28 mainnets" on the site.

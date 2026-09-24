@@ -1121,18 +1121,16 @@ flash of empty values and a key in the page.
 
 ## TODO — the Networks set's open values (2026-09-24)
 
-- **EigenCloud reward rate:** EigenExplorer is paused ("This deployment is temporarily paused",
-  2026-09-24) and app.eigenlayer.xyz answers 500 to scripts. Read it from the operator page in a
-  normal browser, or retry EigenExplorer (free key at developer.eigenexplorer.com, kept in
-  `~/.eigenexplorer-key`, chmod 600 — never in chat).
 - **Mina reward rate:** blank on purpose (our pool is too small for a steady rate); decide later.
 - **Mina fee:** Auro's list says 5%; /networks/mainnet/mina (an existing chain page, from the old
   Networks database, whose "Expected Reward Rate" list is stale) names no fee. Confirm.
-- **Lido or SSV.network — keep one** (the user, 2026-09-24): they are the same 500 validators, Lido's
-  Simple DVT module on an SSV cluster. Keeping Lido keeps the standard four numbers (stETH rate,
-  Lido's 10% fee, 1–5 days, slashing events). Keeping SSV.network changes the chain-page design: its
-  four slots become **validators run (500), 30-day performance (99.6%), operator fee (0), slashing
-  events (0)**. Removing either row changes every "28 mainnets" on the site.
+- **Lido and SSV.network are one row, "Lido DVT"** (the user, 2026-09-24): the same 500 validators,
+  Lido's Simple DVT module on an SSV cluster. The Lido row was renamed and carries Lido's values;
+  the SSV.network row was archived (Notion trash, restorable). A new **Stake at** URL property holds
+  `https://stake.lido.fi` for it — the chain page's action goes there instead of an address to copy
+  (blank on every other row). The mainnet count went 28 → 27 everywhere: the homepage's "Number of
+  Networks Supported", /networks's "Networks secured", navbar.js ("27 mainnets", "See all 27"), and
+  /services's "Thirty-five chain teams" (35 distinct chains).
 
 ## TODO — the newsletter (removed 2026-09-21, to be rebuilt)
 

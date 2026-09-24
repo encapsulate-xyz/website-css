@@ -24,7 +24,7 @@
 (function () {
   var CONTENT = {
     /* href: [ one line under the link, headline of the note, the note ] */
-    "/networks": ["28 mainnets, 14 testnets",
+    "/networks": ["27 mainnets, 14 testnets",
       "Every chain we validate, mainnet and testnet.",
       "Reward rate where the chain publishes one; the role we played where it does not."],
     "/services": ["Dashboards, playbooks, bots, monitoring",
@@ -72,8 +72,8 @@
   };
   /* the tertiary line at the foot of a panel, by the group's own name in Super */
   var FOOT = {
-    "Networks": "See all 28",
-    "Staking": "See all 28",
+    "Networks": "See all 27",
+    "Staking": "See all 27",
     "Services": "What we build for chains",
     "Practices": "How we conduct ourselves",
     "Learn": "Read the latest",
