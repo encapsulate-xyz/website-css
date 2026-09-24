@@ -588,17 +588,6 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   object-position: left top;
 }
 
-/* the four tool tiles in the Services column still show a corner, at 170% from the top-left */
-.enc-nav__preview--tile .enc-nav__tile[data-enc-shot="panel"] img {
-  inset: auto;
-  left: 0;
-  top: 0;
-  width: 170%;
-  height: auto;
-  max-width: none;
-  object-fit: fill;
-}
-
 .enc-nav__preview:hover .enc-nav__tile { border-color: #9B9B94; }
 
 .enc-nav__tile-name {
@@ -882,16 +871,28 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
 .enc-nav__vote-dot[data-enc-vote="no"] { background: #000000; }
 .enc-nav__vote-dot[data-enc-vote="abstain"] { border: 1.5px solid #9B9B94; }
 
-/* the tools, two across: each its own small preview */
+/* the tools, two by two, filling the column's height; each capture drawn whole, from its
+   top-left (handoff, 2026-09-24 — it was a corner at 170% until then) */
 .enc-nav__third[data-enc-filled] .enc-nav__extra[data-enc-kind="tiles"] {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
   gap: 12px;
+  height: 100%;
+  min-height: 0;
 }
 
 .enc-nav__preview--tile {
   gap: 8px;
+  min-height: 0;
   max-width: none;
+}
+
+/* the tile takes what the cell leaves after its label, up to the 16:10 it would have */
+.enc-nav__preview--tile .enc-nav__tile {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: calc(100% - 28px);
 }
 
 .enc-nav__tile-label {
@@ -960,15 +961,36 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   color: #6B6F68;
 }
 
-/* Below 1220px Super collapses the items into its own hamburger and menu, which are Super's own
-   until a mobile bar is designed — the 4f handoff draws the wide bar only. */@media (max-width: 1220px) {.super-root nav.super-navbar .super-navbar__item-list {
-    display: none !important;
-  }.super-root nav.super-navbar .super-navbar__button {
+/* THE WIDE BAR HOLDS DOWN TO 860px. It collapsed into Super's own hamburger below 1220px until
+   2026-09-24, which a laptop window reached quickly (the user's report). Below 860 Super's
+   hamburger and menu are still its own, until a mobile bar is designed. Super hides the items by
+   its own rules on narrower widths, so above 860 they are stated here. */
+@media (min-width: 861px) {
+  .super-root nav.super-navbar .super-navbar__item-list {
     display: flex !important;
   }
-}@media (max-width: 1100px) {.enc-nav__grid {
-    grid-template-columns: 240px minmax(0, 1fr);
-  }.enc-nav__about { display: none; }
+  .super-root nav.super-navbar .super-navbar__button {
+    display: none !important;
+  }
+}
+/* under 1000px the bar is the design's at a tighter set — 24px gutters and 8px item sides — so
+   the five items fit beside the mark and the CTA down to ~830px; at the design's 44px and 12px
+   they need 960 and "Company" was cut off at 920 */
+@media (min-width: 861px) and (max-width: 1000px) {
+  .super-root .super-navbar__content { padding-left: 24px !important; padding-right: 24px !important; }
+  .super-root nav.super-navbar .super-navbar__item, .super-root nav.super-navbar .super-navbar__list { padding: 0 8px !important; }
+}
+@media (max-width: 860px) {
+  .super-root nav.super-navbar .super-navbar__item-list {
+    display: none !important;
+  }
+  .super-root nav.super-navbar .super-navbar__button {
+    display: flex !important;
+  }
+}
+/* a narrower panel keeps the design's three columns; the chains keep their marks only (the file's
+   own rule at 1100) */
+@media (max-width: 1100px) {
   .enc-nav__row--mark .enc-nav__row-name,
   .enc-nav__row--mark .enc-nav__row-fig { display: none; }
   .enc-nav__row--mark { justify-content: center; }
