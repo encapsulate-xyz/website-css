@@ -87,6 +87,7 @@ User rules that stand on every task:
 | `booking.js` | the booking drawer — every "Book a call" on the site, except /contact-us | site Head |
 | `footer.js` | footer 44b, built inside Super's footer | site Head |
 | `covers.js` | inner-page cover graphics ("fields") | site Head |
+| `blocks.js` | Notion's generic blocks (design *Blog Article Blocks*): the code block's line numbers, prompts, colours, kicker and copy tick — the rest of the four blocks is main.css §12–13 | site Head |
 | `home.css`, `home-dial.css`, `home.js` | homepage sections, JS-enhanced styles, homepage scripts | homepage Head |
 | `brand.css`, `brand.js` | /brand — four spreads with a sticky rail, the marks slab, the colour band (design *Brand Page*) | page Head + site Head |
 | `blog.css`, `blog.js` | /blog — the index (design J); blog.js builds each card's cover and its band span, and is loaded from the site head | page Head + site Head |
@@ -216,7 +217,7 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
 | 07 | Button System |
 | 08 | databases and properties |
 | 09 | Card System |
-| 10–13 | pills, column dividers, **code blocks and quotes** (§12, the design's hairline box and pastel pull quote — site-wide since 2026-09-21, a page overrides only its width), link previews (on card tokens) |
+| 10–13 | pills, column dividers, **article blocks** (§12: code block, comparison table, toggle — design *Blog Article Blocks*, 2026-09-25 — and the pastel pull quote), link previews (§13, the same design's card) |
 | 13b | Notion forms (22a-light) |
 | 14 | Page covers |
 | 15b | temporary banner `.enc-banner` (markup in `head/site-body.html`) |
@@ -1349,18 +1350,48 @@ When /services is redesigned, give it a tools gallery (name, link, capture) and 
 id in `READ["/services"]`, the way every other row is read, so the column cannot drift from the
 page. The four `img/nav-panels` captures would then come from that gallery too.
 
-## TODO — a design file for code blocks (agreed 2026-09-21)
+## Article blocks — the four generic Notion blocks (2026-09-25, design *Blog Article Blocks*)
 
-§12's code block and quote came from `Blog Post Page.dc.html`, which defines them inline for its
-article; there is no "Code blocks" handoff of its own. What is live is that file verbatim — the
-second paper, a hairline ring, 4px, JetBrains Mono 13.5/1.7, the caption as a mono line under the
-block — with two things I decided rather than read: the copy control (built from §07's secondary
-tokens at its smallest) and the site-wide quote size, `clamp(22px, 2.4vw, 32px)` against the
-post's larger `clamp(25px, 2.9vw, 38px)`.
+main.css §12–13 and `blocks.js` give four Notion blocks their house form **wherever a page has not
+drawn that block itself** — in practice the blog posts, and any future page. The chosen variants:
 
-The user is sending a handoff. When it arrives it should settle: the caption, the copy control,
-**inline `code` spans** (untouched so far), long-line overflow, and a code block on an ink band.
-It goes straight into §12 — main.css is the site head, so every page follows at once.
+| Block | Design | Built from |
+|---|---|---|
+| Code block | **H**, the terminal well: paper-2 `#F2F2ED`, 4px, no border; JetBrains Mono 13.5/1.6; line numbers and, in a shell, a `$` prompt (`›` on a continued line, nothing on a comment or a heredoc body), both grey and unselectable; four type colours (ink, ink 700, green ink `#3F6B27`, grey); Super's own copy button as the 32px icon control, a tick while it reads "Copied"; a mono kicker above and a grey caption beneath | CSS + `blocks.js` (Super serves the code as plain text, so numbering and colour need a script) |
+| Comparison table | **A**, the hairline table: mono heads over a black rule, hairlines, the header column in Outfit 600 and pinned when the table scrolls (min width max(480, 112 × columns)) | CSS only. Notion's own options pick the parts: **Header row** → `.col-header`, **Header column** → `.row-header`. A table with no header row stands on the black rule |
+| Toggle | **B**, hairline rows under a black rule, Outfit 600 17, the 20px green badge with a plus at rest and a minus open | CSS only (Super's `.open`/`.closed`) |
+| Link preview | **D**, the 12px ring-and-highlight card: a 160px field (the page's image, or a paper-2 well with the site's icon), the domain in mono, the title, a two-line lede | CSS only; a bookmark and an external object (GitHub) take the same card |
+
+**The claims.** Each family's selector excludes the scopes that draw the block themselves, entirely —
+not property by property: toggles skip `[data-enc-security]`, `[data-enc-invest]`, `[data-enc-fold]`
+and the hidden copy toggles; tables skip `[data-enc-chain]`; every family skips `[data-enc-source]`.
+**A page that styles one of these blocks itself adds its scope to that family's claims in §12.**
+Checked on 2026-09-25 by snapshotting 324 elements' computed styles on the eight pages with claims
+(/security, /contact-us, /investments, a chain page, /services, /blog, /guides, /networks) before
+and after: no differences.
+
+**The kicker is written in Notion**: start the code block's caption with the file name as inline
+code — `` `install.sh` Run as a user with sudo… `` — and blocks.js lifts it into the kicker ("bash ·
+install.sh"); the rest stays the caption. No inline code at the start, no kicker. The language is
+the block's own; **Plain text** is read as output (no numbers, no prompt; timestamps and levels
+grey) or, when every line has the same number of commas, as a CSV grid. Notion has no CSV or log
+language.
+
+**Posts:** post.css caps a toggle at the code block's 680px and takes the article's 24px gap back
+between two toggles, so a run reads as one list. The post's link rule (a green rule under
+`.notion-link`) is one class more specific than a card, so the card's anchor is selected as
+`a.notion-link`. Super fixes a bookmark's description at `height: 2rem` and `opacity: .6`; both
+are undone.
+
+**Notion changes made for it (2026-09-25):** Header row switched on for FogoChain's phases table,
+Aleo's ports table and the second Zk-SNARKs table (their first rows were column labels); Header
+column for Aleo's hardware table (CPU, Memory, Disk… are row labels); the Avalanche guide's NodeID
+block from bash to plain text (a value, not a command — it would have carried a `$`).
+
+**Not in the handoff, still open:** inline `code` spans, a code block on an ink band (the file
+defines dark token colours but no ink well), a toggle heading (a heading block made toggleable),
+and an internal link preview's field drawn from the post's chain glyph (every bookmark on the site
+today is external).
 
 ## Open items
 

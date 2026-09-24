@@ -409,6 +409,15 @@ body:has(.notion-root[data-enc-post]) .notion-header { display: none !important;
   margin: 0 !important;
 }
 
+/* toggles: the system's rows (§12) at the code block's width; a run of them is one list of rows,
+   so the article's 24px gap between blocks is taken back between two toggles */
+.notion-root[data-enc-post] .enc-po__article .notion-toggle {
+  max-width: 680px;
+}
+.notion-root[data-enc-post] .enc-po__article .notion-toggle + .notion-toggle {
+  margin-top: -24px !important;
+}
+
 .notion-root[data-enc-post] .enc-po__article .notion-divider {
   width: 100%;
   max-width: 680px;
