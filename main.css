@@ -249,7 +249,7 @@ body {
   padding: 2px !important;
   border: 1px solid #E2E2DB !important;
   border-radius: 12px !important;
-  background: #F2F2ED !important;
+  background: #FAFAF8 !important;   /* paper, not the second paper (handoff, 2026-09-24) */
 }.super-root nav.super-navbar .super-navbar__item, .super-root nav.super-navbar .super-navbar__list {
   display: inline-flex !important;
   align-items: center !important;
@@ -273,17 +273,19 @@ body {
 /* ONE RING, ONE JOB (handoff, 2026-09-23). The ring — paper, the hairline and the top highlight —
    marks the page you are on while the bar is at rest, and moves to the hovered group while a
    panel is open or the pointer is on the bar, then returns. Never two rings at once: while
-   anything in the bar is under the pointer or open, the current page's pill is plain. */
+   anything in the bar is under the pointer or open, the current page's pill is plain.
+   Since 2026-09-24 the ring is the whole mark: the pill stays transparent on the paper track and
+   carries a #D9D9D2 ring and the white top highlight (it was a paper fill on the #F2F2ED track). */
 .super-root nav.super-navbar .super-navbar__item:hover, .super-root nav.super-navbar .super-navbar__list:hover, .super-root nav.super-navbar .super-navbar__list[data-state="open"] {
-  background: #FAFAF8 !important;
-  border-color: #E2E2DB !important;
+  background: transparent !important;
+  border-color: #D9D9D2 !important;
   box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
   color: #000000 !important;
 }
 
 /* the page you are on, at rest */.super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__item.active, .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__item[aria-current="page"], .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current] {
-  background: #FAFAF8 !important;
-  border-color: #E2E2DB !important;
+  background: transparent !important;
+  border-color: #D9D9D2 !important;
   box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
   color: #000000 !important;
 }
@@ -307,21 +309,21 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__item:hover,
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list:hover,
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list[data-state="open"] {
-  /* lit on ink as on paper: the same paper pill, ring and highlight (it was a .1 wash with paper
-     type and no ring until the "one ring" handoff) */
-  color: #000000 !important;
-  background: #FAFAF8 !important;
-  border-color: #E2E2DB !important;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
+  /* lit on ink: paper type in a rgba(250,250,248,.4) ring, no fill and no highlight (handoff,
+     2026-09-24; it was the paper pill of the "one ring" round) */
+  color: #FAFAF8 !important;
+  background: transparent !important;
+  border-color: rgba(250, 250, 248, 0.4) !important;
+  box-shadow: none !important;
 }
 
-/* the current page's pill at rest is the same on ink, ring included */
+/* the current page's pill at rest, on ink: the same ring */
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current],
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current] {
-  background: #FAFAF8 !important;
-  border-color: #E2E2DB !important;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
-  color: #000000 !important;
+  background: transparent !important;
+  border-color: rgba(250, 250, 248, 0.4) !important;
+  box-shadow: none !important;
+  color: #FAFAF8 !important;
 }
 
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__item-list,
@@ -338,10 +340,12 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
 }
 
 /* the caret follows the ring: ink on the hovered group, grey on a lit pill at rest, and the
-   on-ink grey only where the pill is not lit */
+   on-ink grey only where the pill is not lit. On ink a hovered pill is transparent with paper type
+   (2026-09-24) for the moment before radix opens the panel and the bar turns paper — its caret
+   is paper with it */
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__list:hover::before,
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list:hover::before {
-  background: #000000 !important;
+  background: #FAFAF8 !important;
 }
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current]::before,
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current]::before {
@@ -476,8 +480,20 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   width: 100%;
   grid-template-columns: 260px minmax(0, 1.15fr) minmax(0, 1fr);
   gap: 36px;
-  align-items: start;
+  align-items: stretch;
   text-align: left;
+}
+
+/* ONE ROW HEIGHT FOR EVERY GROUP (handoff, 2026-09-24): the preview sets it — a 16:10 capture
+   and its name line — and the ledger and the third column fill it without growing it, clipping
+   what does not fit. The file does this with an absolutely positioned inner box; size containment
+   does the same here without wrapping Super's own column: a contained box contributes no height
+   of its own, so the stretched row is the preview's. The third column's counts are chosen to fill
+   that height at the design width — 21 chains, 7 guides, 4 posts, 6 votes. */
+.super-root .super-navbar__list-content .enc-nav__grid > .super-navbar__list-content-column,
+.enc-nav__grid > .enc-nav__third {
+  contain: size;
+  overflow: hidden;
 }
 
 /* the ledger of the group's pages */.super-root .super-navbar__list-content .super-navbar__list-content-column {
@@ -716,7 +732,7 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   grid-template-columns: 24px minmax(0, 1fr);
   gap: 10px;
   align-items: center;
-  min-height: 44px;
+  min-height: 51px;
 }
 
 .enc-nav__row--line .enc-nav__n {
@@ -762,15 +778,15 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
 .enc-nav__row--post {
   display: flex;
   align-items: center;
-  gap: 12px;
-  min-height: 56px;
+  gap: 14px;
+  min-height: 89px;
 }
 
 /* a post's cover in miniature: ink, with the chain's mark bled off the corner in the pastel green */
 .enc-nav__thumb {
   position: relative;
-  width: 62px;
-  height: 38px;
+  width: 112px;
+  height: 70px;
   flex: none;
   border-radius: 8px;
   background: #2A2C28;
@@ -804,6 +820,67 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   letter-spacing: -0.014em;
   color: #000000;
 }
+
+/* the latest votes: a small mark, the chain and reference, the vote as a dot and a word, the day */
+.enc-nav__third[data-enc-filled] .enc-nav__extra[data-enc-kind="votes"] {
+  display: flex;
+  flex-direction: column;
+}
+
+.enc-nav__row--vote {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 59px;
+  padding: 0 8px;
+}
+
+.enc-nav__row--vote + .enc-nav__row--vote { border-top: 1px solid #E2E2DB; }
+
+.enc-nav__well--small { width: 22px; height: 22px; }
+
+.enc-nav__well--small img { width: 52%; height: 52%; }
+
+.enc-nav__vote-id,
+.enc-nav__vote-word,
+.enc-nav__vote-date {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.enc-nav__vote-id {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 10px;
+  color: #000000;
+}
+
+.enc-nav__vote-word,
+.enc-nav__vote-date {
+  font-size: 9.5px;
+  color: #6B6F68;
+}
+
+.enc-nav__vote {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.enc-nav__vote-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  box-sizing: border-box;
+}
+
+.enc-nav__vote-dot[data-enc-vote="yes"] { background: #99CC66; }
+.enc-nav__vote-dot[data-enc-vote="no"] { background: #000000; }
+.enc-nav__vote-dot[data-enc-vote="abstain"] { border: 1.5px solid #9B9B94; }
 
 /* the tools, two across: each its own small preview */
 .enc-nav__third[data-enc-filled] .enc-nav__extra[data-enc-kind="tiles"] {
@@ -892,6 +969,9 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
 }@media (max-width: 1100px) {.enc-nav__grid {
     grid-template-columns: 240px minmax(0, 1fr);
   }.enc-nav__about { display: none; }
+  .enc-nav__row--mark .enc-nav__row-name,
+  .enc-nav__row--mark .enc-nav__row-fig { display: none; }
+  .enc-nav__row--mark { justify-content: center; }
 }
 
 

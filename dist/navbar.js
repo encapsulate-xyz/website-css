@@ -30,7 +30,7 @@
     "/services": ["Dashboards, playbooks, bots, monitoring",
       "What we build and run around the validator.",
       "Dashboards, playbooks, bots and monitoring — used on our own set first."],
-    "/governance-record": ["How we decide a vote",
+    "/governance-record": ["Voting principles and history",
       "How we decide a vote, and the record of every one.",
       "Read, weigh, vote, publish."],
     "/security": ["Keys, isolation, no slashing",
@@ -75,10 +75,20 @@
     "Networks": "See all 27",
     "Staking": "See all 27",
     "Services": "What we build for chains",
-    "Practices": "How we conduct ourselves",
-    "Learn": "Read the latest",
+    "Practices": "Read the governance record",
+    "Learn": "Read the blog",
     "Company": "Book a call",
     "About Us": "Who we are"
+  };
+
+  /* each foot line has a destination (handoff, 2026-09-24): the group's index, or — for
+     "Book a call" — the booking drawer. A group not listed goes to its first page. */
+  var FOOT_HREF = {
+    "Networks": "/networks",
+    "Staking": "/networks",
+    "Services": "/services",
+    "Practices": "/governance-record",
+    "Learn": "/blog"
   };
 
   var BOOKING = "https://cal.com/aditya-encapsulate/30min";
@@ -212,7 +222,7 @@
   function readCounts(doc) {
     var best = null;
     Array.prototype.forEach.call(doc.querySelectorAll(".notion-collection"), function (coll) {
-      var m = 0, t = 0, names = {};
+      var m = 0, t = 0, names = {}, glyphs = {};
       Array.prototype.forEach.call(coll.querySelectorAll(".notion-collection-card, tbody tr"), function (it) {
         var stage = "";
         Array.prototype.forEach.call(it.querySelectorAll(".notion-pill, td"), function (x) {
@@ -223,9 +233,11 @@
         if (stage === "Mainnet") m++; else t++;
         var n = it.querySelector(".notion-property__title");
         if (n) names[n.textContent.trim()] = 1;
+        var f = it.querySelector("[data-full-size]");
+        if (n && f && !glyphs[keyOfName(n.textContent)]) glyphs[keyOfName(n.textContent)] = f.getAttribute("data-full-size");
       });
       if (m + t && (!best || m + t > best.mainnet + best.testnet)) {
-        best = { mainnet: m, testnet: t, chains: Object.keys(names).length };
+        best = { mainnet: m, testnet: t, chains: Object.keys(names).length, glyphs: glyphs };
       }
     });
     return best;
@@ -234,7 +246,8 @@
     if (countsOnce) return countsOnce;
     try {
       var kept = JSON.parse(sessionStorage.getItem("enc-counts") || "null");
-      if (kept && Date.now() - kept.at < 1800000) return (countsOnce = Promise.resolve(kept));
+      /* a count kept before the glyphs were collected (v7) is read again */
+      if (kept && kept.glyphs && Date.now() - kept.at < 1800000) return (countsOnce = Promise.resolve(kept));
     } catch (e) { /* storage blocked: read the page */ }
     countsOnce = pageOf(COUNTS_PAGE).then(function (doc) {
       var c = doc ? readCounts(doc) : null;
@@ -288,6 +301,8 @@
     var a = card.matches("a[href]") ? card : (card.querySelector("a[href]") || card.closest("a[href]"));
     return a ? a.getAttribute("href") : "";
   }
+  /* "Gravity Bridge" → "gravitybridge", the key covers.js publishes its glyphs under */
+  function keyOfName(text) { return String(text || "").toLowerCase().replace(/[^a-z0-9]/g, ""); }
   function glyphOf(card) {
     var img = card.querySelector("img");
     return img ? originalSrc(img.getAttribute("src")) : "";
@@ -296,21 +311,44 @@
   var READ = {
     "/networks": function (doc) {
       var db = doc.getElementById(SET);
-      return (db ? all(db, ".notion-collection-card") : []).slice(0, 12).map(function (c) {
+      /* twenty-one: seven rows of three fill the column beside a 520px preview (handoff,
+         2026-09-24); the column clips whatever does not fit */
+      return (db ? all(db, ".notion-collection-card") : []).slice(0, 21).map(function (c) {
         var rate = c.querySelector(".property-597e3d69");
         return { name: titleOf(c), rate: rate ? rate.textContent.trim() : "",
           glyph: glyphOf(c), href: linkOf(c) || "/networks" };
       }).filter(function (r) { return r.name; });
     },
-    "/governance-record": function (doc) {
-      var db = doc.getElementById(PILLARS);
-      /* a pillar's card carries its number, its word, its question and its line — the question
-         is the one that reads as a sentence fragment and is not the longest */
-      return (db ? all(db, ".notion-collection-card") : []).slice(0, 4).map(function (c) {
-        var texts = propsOf(c).filter(function (t) { return !/^\d+$/.test(t); });
-        var q = texts.length > 1 ? texts[1] : texts[0];
-        return { text: q || "", href: "/governance-record#" + PILLARS };
-      }).filter(function (r) { return r.text; });
+    /* the latest votes (handoff, 2026-09-24): the record's own table, newest first — the chain,
+       the proposal's reference, our vote and the day. Columns are found by their header labels,
+       as governance.js finds them, and the glyph comes from the set (counts) or covers.js. */
+    "/governance-record": function (doc, extra) {
+      var table = doc.querySelector("table.notion-collection-table");
+      if (!table) return [];
+      var heads = all(table, "thead th").map(function (th) { return th.textContent.trim().toLowerCase(); });
+      var at = function (names) {
+        for (var i = 0; i < names.length; i++) { var k = heads.indexOf(names[i]); if (k >= 0) return k; }
+        return -1;
+      };
+      var cNet = at(["network", "chain"]), cRef = at(["reference", "proposal id"]),
+        cVote = at(["our vote", "vote option"]), cDate = at(["voted on"]);
+      var glyphs = (extra && extra.glyphs) || {};
+      var more = typeof window.encGlyphs === "function" ? window.encGlyphs() : {};
+      var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      return all(table, "tbody tr").map(function (tr) {
+        var cell = function (i) { return i < 0 || !tr.children[i] ? "" : tr.children[i].textContent.trim(); };
+        var net = cell(cNet), ref = cell(cRef), vote = cell(cVote), when = new Date(cell(cDate));
+        if (!net || isNaN(when)) return null;
+        var v = vote.toLowerCase();
+        return {
+          id: ref ? net + " · " + ref : net,
+          vote: /veto/.test(v) ? "No with veto" : /^no/.test(v) ? "No" : /^abst/.test(v) ? "Abstain" : /^yes/.test(v) ? "Yes" : vote,
+          date: MON[when.getMonth()] + " " + when.getDate(),
+          t: when.getTime(),
+          glyph: glyphs[keyOfName(net)] || more[keyOfName(net)] || "",
+          href: "/governance-record"
+        };
+      }).filter(Boolean).sort(function (a, b) { return b.t - a.t; }).slice(0, 6);
     },
     "/security": function (doc) {
       return all(doc, ".notion-root h2.notion-heading").slice(0, 4).map(function (h) {
@@ -343,7 +381,7 @@
         var n = titleOf(c), g = glyphOf(c);
         if (n && g && !marks[n.toLowerCase()]) marks[n.toLowerCase()] = g;
       });
-      return (db ? all(db, ".notion-collection-card") : []).slice(0, 4).map(function (c) {
+      return (db ? all(db, ".notion-collection-card") : []).slice(0, 7).map(function (c) {
         var title = titleOf(c);
         var texts = propsOf(c).filter(function (t) { return !/^\d+$/.test(t); });
         var chain = texts.filter(function (t) { return marks[t.toLowerCase()]; })[0] ||
@@ -354,7 +392,7 @@
       }).filter(function (r) { return r.name; });
     },
     "/blog": function (doc) {
-      return all(doc, ".notion-collection-card").slice(0, 3).map(function (c) {
+      return all(doc, ".notion-collection-card").slice(0, 4).map(function (c) {
         var pill = c.querySelector(".notion-pill");
         return { name: titleOf(c), tag: pill ? pill.textContent.trim() : "",
           glyph: glyphOf(c), href: linkOf(c) || "/blog" };
@@ -387,7 +425,7 @@
       return (isNaN(a.order) ? 1e9 : a.order) - (isNaN(b.order) ? 1e9 : b.order);
     });
   };
-  var KIND = { "/networks": "chains", "/governance-record": "list", "/security": "list",
+  var KIND = { "/networks": "chains", "/governance-record": "votes", "/security": "list",
     "/brand": "list", "/contact-us": "list", "/guides": "guides", "/blog": "posts",
     "/investments": "holds", "/services": "tiles" };
   KIND[DASH_LINK] = "list";
@@ -417,6 +455,7 @@
     chains: function (box, rows) {
       rows.forEach(function (c, i) {
         var row = outward(el("a", "enc-nav__row enc-nav__row--mark"), c.href);
+        row.setAttribute("aria-label", c.name);
         row.appendChild(well(c.glyph, i));
         row.appendChild(el("span", "enc-nav__row-name", c.name));
         var rate = el("span", "enc-nav__row-fig", c.rate || "—");
@@ -467,6 +506,25 @@
         if (p.tag) text.appendChild(el("span", "enc-nav__row-tag", p.tag));
         row.appendChild(thumb);
         row.appendChild(text);
+        box.appendChild(row);
+      });
+    },
+    /* a vote: the chain's mark, "Terra · 4851", the vote as a dot (green yes, ink no, hollow
+       abstain) and its word, and the day */
+    votes: function (box, rows) {
+      rows.forEach(function (v, i) {
+        var row = outward(el("a", "enc-nav__row enc-nav__row--vote"), v.href);
+        var w = well(v.glyph, i);
+        w.classList.add("enc-nav__well--small");
+        row.appendChild(w);
+        row.appendChild(el("span", "enc-nav__vote-id", v.id));
+        var o = el("span", "enc-nav__vote");
+        var dot = el("span", "enc-nav__vote-dot");
+        dot.setAttribute("data-enc-vote", /veto|^no/i.test(v.vote) ? "no" : /abst/i.test(v.vote) ? "abstain" : /^yes/i.test(v.vote) ? "yes" : "other");
+        o.appendChild(dot);
+        o.appendChild(el("span", "enc-nav__vote-word", v.vote));
+        row.appendChild(o);
+        row.appendChild(el("span", "enc-nav__vote-date", v.date));
         box.appendChild(row);
       });
     },
@@ -565,10 +623,10 @@
     footLink.appendChild(el("span", null,
       FOOT[group] || ("Open " + (group || "the menu").toLowerCase())));
     footLink.appendChild(badge());
-    /* "Book a call" is the booking link, which booking.js opens in the drawer; every other
-       group's line goes to its first page */
+    /* "Book a call" is the booking link, which booking.js opens in the drawer; the others go to
+       their group's index, or the group's first page */
     outward(footLink, /book a call/i.test(FOOT[group] || "") ? BOOKING
-      : (links[0].getAttribute("href") || "#"));
+      : (FOOT_HREF[group] || links[0].getAttribute("href") || "#"));
     foot.appendChild(footLink);
     foot.appendChild(el("span", "enc-nav__count",
       links.length + (links.length === 1 ? " page" : " pages")));
@@ -611,10 +669,11 @@
       /* a pointer passing over the row does not fetch a page; one that rests on it does */
       clearTimeout(timer);
       timer = setTimeout(function () {
-        pageOf(page).then(function (doc) {
+        Promise.all([pageOf(page), kind === "votes" ? counts() : null]).then(function (got) {
+          var doc = got[0];
           if (!doc || current !== href) return;
           var rows = [];
-          try { rows = READ[key](doc) || []; } catch (e) { rows = []; }
+          try { rows = READ[key](doc, got[1]) || []; } catch (e) { rows = []; }
           if (!rows.length) return;               // the note stands
           extra.textContent = "";
           extra.setAttribute("data-enc-kind", kind);
@@ -919,7 +978,7 @@
 
   /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
      against its page from the console without opening the menu */
-  window.encNav = { version: 6, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
+  window.encNav = { version: 7, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
     groups: function () { return groups; }, harvest: function () { return { done: harvested, tries: harvestTries }; },
     ground: ground, isInk: isInk, groundUnder: groundUnder, wordmark: wearWordmark,
     band: band };
