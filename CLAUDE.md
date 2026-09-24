@@ -315,8 +315,10 @@ bar is on every page, so there is no block to read; the same exception as the fo
 drawer's copy. Add a page to the menu in Super and it appears; give it a CONTENT entry and it also
 carries its line.
 
-**One ring, one job** (handoff, 2026-09-23, v259): the ring — paper `#FAFAF8`, the `#E2E2DB`
-hairline, the full-white top highlight, ink type — marks the current page while the bar is at
+**One ring, one job** (handoff, 2026-09-23, v259; restyled 2026-09-24, v267): the ring — since
+v267 a **transparent** pill with a `#D9D9D2` ring and the full-white top highlight, ink type, on a
+**paper** track (it was a paper fill on the `#F2F2ED` track); on ink, paper type in a
+`rgba(250,250,248,.4)` ring with no highlight — marks the current page while the bar is at
 rest, and moves to the hovered or open group while anything in the bar is under the pointer
 (Book a call included, which lights nothing), then returns. Never two rings at once: the current
 pill's rule carries `:not([data-enc-nav-open]):not(:has(… :hover))`. Lit is the same on ink as on
@@ -396,6 +398,17 @@ trigger's element id, which radix regenerates after hydration.
   answers) is still used by `band()` to hold an open panel open. A section link is its own destination, so `CONTENT` is keyed by the whole
 href — `/services#block-…` is not `/services`.
 
+**One row height for every group** (handoff, 2026-09-24): the preview — the 16:10 capture and its
+name line — sets the panel's row (357px at the design width); the ledger and the third column
+fill it without growing it and clip what does not fit (`contain: size` on both, standing in for
+the file's absolutely positioned inner box). The counts are chosen to fill it: 21 chains, 7
+guides, 4 posts, 6 votes; lists are 51px rows. **The foot lines go somewhere**: See all →
+/networks, "What we build for chains" → /services, "Read the governance record" → the record,
+"Read the blog" → /blog, Company's "Book a call" → the drawer (`FOOT_HREF` in navbar.js).
+**Captures**: the file's covers were recaptured at 1496px with the page chrome painted out; the
+Networks cover and the Dashboards panel are over DesignSync's 256 KB read limit (they come back
+truncated), so those two are still the older files until the user drops them in.
+
 **The third column is read, not written.** The handoff's rule (Aditya, 2026-09-21): it lists the
 page's own sub-pages or section headings, *taken from the page as built — nothing typed in, so it
 cannot drift* — and only a page with neither carries the note. `navbar.js` `READ` has one reader
@@ -405,13 +418,13 @@ or if it yields nothing, the note stands in.
 
 | Destination | Column | Read from |
 |---|---|---|
-| /networks | chains, 3 across | the Networks set, first twelve cards of the Order-sorted view, with rates |
+| /networks | chains, 3 across | the Networks set, first **twenty-one** cards of the Order-sorted view, with rates — seven rows fill the column |
 | /services | tiles, 2 across | no fetch — the group's own section links that have a panel capture, each tile drawn at 170% from its top-left |
 | Dashboards (`/services#block-…81cf…`) | list, "Live now" | the Dashboards table on /services, in Order: each row's **Menu** property ("Sui RGP dashboard"), linked to its Link. Menu was added to the table for this on 2026-09-23 |
-| /governance-record | list | the four pillars' questions (`Governance Mechanism` gallery) |
+| /governance-record | votes, "The latest votes" | the record's own table, newest first, six rows: the chain's mark (the set's glyph from the counts, else covers.js), "Terra · 4851" (Network · Reference), the vote as a dot — green yes, ink no, hollow abstain — and the day (since 2026-09-24; it was the four pillars' questions) |
 | /security | list | the page's `h2` headings |
-| /guides | guides | Guides database, first four: chain mark (from the set on the same page), chain, wallet |
-| /blog | posts | first three cards: cover in miniature (the design's tint filter), title, first pill |
+| /guides | guides | Guides database, first **seven**: chain mark (from the set on the same page), chain, wallet |
+| /blog | posts | first **four** cards, 89px rows: cover in miniature at 112×70 (the design's tint filter), title, first pill |
 | /brand | list | the rail's numbers — `01 · The marks` → *The marks* |
 | /investments | holds, 2 across | the Portfolio cards: logo, name, the four-digit year |
 | /contact-us | list | four blocks by id: the booking headline, "Or write to us", the fold, "Elsewhere" |
@@ -1231,6 +1244,13 @@ flash of empty values and a key in the page.
   The mainnet count went 28 → 27 everywhere: the homepage's "Number of
   Networks Supported", /networks's "Networks secured", navbar.js ("27 mainnets", "See all 27"), and
   /services's "Thirty-five chain teams" (35 distinct chains).
+
+## TODO — two navbar captures to replace (2026-09-24)
+
+The design's recaptured `cover-thumbs/networks.png` and `panel-thumbs-2x/dashboards.png` are
+larger than DesignSync's 256 KB read limit — `get_file` returns them cut off (no IEND). The repo
+keeps the older `img/nav-covers/networks.png` and `img/nav-panels/dashboards.png` until the user
+exports those two from the design project into the repo; then build, tag and bump the site head.
 
 ## TODO — three chain pages still point outside the site (2026-09-24)
 
