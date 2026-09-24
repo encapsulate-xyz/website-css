@@ -83,7 +83,7 @@ User rules that stand on every task:
 | File | What | Loaded from |
 |---|---|---|
 | `main.css` | site-wide styles, no `#block-…` ids | site Head |
-| `navbar.js` | the bar's panels — design *Navbar 4f Page*; Super still owns the menu | site Head |
+| `navbar.js` | the bar's panels — design *Navbar 4f Page*; Super still owns the menu — and, under 960px, the compact bar's Menu button and sheet | site Head |
 | `booking.js` | the booking drawer — every "Book a call" on the site, except /contact-us | site Head |
 | `footer.js` | footer 44b, built inside Super's footer | site Head |
 | `covers.js` | inner-page cover graphics ("fields") | site Head |
@@ -103,7 +103,7 @@ User rules that stand on every task:
 | `notion/guide-screenshots.md` | how guide screenshots are captured and composed (agreed 2026-09-18, not yet applied) | — |
 | `build.py` | strips comments into `dist/`, copies the JS | — |
 | `scripts/paste_table.py` | prints the paste table from head/*.html vs what the live pages serve | — |
-| `scripts/livecheck.mjs` | loads a live page in headless Chrome with pinned tags' files served from this repo (or a pushed commit) — pass every tag the page pins, comma-separated (`v263,v227,v220`), runs a check in the page, optional real mouse steps and a screenshot. The scratchpad copies it replaced were lost on 2026-09-24 | — |
+| `scripts/livecheck.mjs` | loads a live page in headless Chrome with pinned tags' files served from this repo (or a pushed commit) — pass every tag the page pins, comma-separated (`v263,v227,v220`), runs a check in the page, optional real mouse steps (`move`, and `click` — a real press and release) and a screenshot. The scratchpad copies it replaced were lost on 2026-09-24 | — |
 | `scripts/shots.py`, `img/shots/` | panel captures of the live tools (Sui RGP, the Solana graph), 1100×750 at DPR 2 from headless Chrome — the extension's screenshots time out on those pages, and a WebGL graph needs swiftshader or it comes back blank. Not wired into any page yet (2026-09-23): the tools table that names their tiles arrived cut off | — |
 
 **Edit sources, run `python3 build.py`, commit source and `dist/` together. Never edit `dist/`.**
@@ -211,7 +211,7 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
 
 | § | Section |
 |---|---|
-| 01–04 | fonts, tokens (`--color-bg-default` = #FAFAF8 ground), layout, the 4f navbar (§04 + navbar.js). The old slide-out menu section (§05) and its per-page icons were removed on 2026-09-22; under 1220px the hamburger and menu are Super's own until a mobile bar is designed |
+| 01–04 | fonts, tokens (`--color-bg-default` = #FAFAF8 ground), layout, the 4f navbar (§04 + navbar.js). The old slide-out menu section (§05) and its per-page icons were removed on 2026-09-22; under 960px the compact bar (navbar.js's sheet) replaces Super's hamburger and menu |
 | 06 | Type System: Notion Heading 1–4 → h1–h4, one to one (h1 clamp(40,6.2vw,92) … h4). No bold/underline on headings |
 | 07 | Button System |
 | 08 | databases and properties |
@@ -413,10 +413,38 @@ guides, 4 posts, 6 votes; lists are 51px rows. **The foot lines go somewhere**: 
 the Networks cover and the Dashboards panel came as the user's export (v269).
 
 **The Services column** is two by two, filling the panel's height, each capture drawn whole from its
-top-left (handoff, 2026-09-24; it was a corner at 170%). **The wide bar holds down to 860px**: it
-collapsed into Super's hamburger below 1220 until 2026-09-24, which a laptop window reached; under
-1000px it runs at 24px gutters and 8px item sides so all five items fit (at 44 and 12 "Company"
-was cut off at 920). Below 860 the hamburger and menu are Super's own.
+top-left (handoff, 2026-09-24; it was a corner at 170%). **The wide bar holds down to 960px**, the
+design's own switch, at its own 44px gutters — five items, the mark and the CTA fit from 960 up
+(measured: items 222–738, Book a call ending at 916). **Super pads the logo link `0 16px` and the
+actions `0 8px 0 16px`, the CTA's link `0 8px 0 0`**, which had set the mark at 60 and Book a
+call 16px short of the gutter since the bar was built; all three are zeroed (2026-09-24).
+
+**The compact bar, under 960px** (handoff 2026-09-24, *Navbar 4f Page*, "D2" in its comments):
+the wordmark at 124, Super's Book a call, and one icon-only **Menu** button (44px, the
+secondary's paper and ring; `.06` fill and `.3` ring on ink) that navbar.js puts in Super's
+actions. It opens **a sheet under the bar**: a rail on ink (both grounds) carrying the groups as
+01–05 in Outfit 44 — paper when chosen, otherwise an ink glyph ringed in paper by eight
+text-shadows (never text-stroke; Outfit's digits are overlapping contours) — and beside it the
+chosen group: its first page's cover (16:10, 4px, the nav-covers capture), the group's name in
+mono, its pages as 20px Outfit rows with their line. It opens on the first group, one at a time.
+The bar comes back to the top (`position: fixed`) with its ground while it is open, the page is
+locked (`html[data-enc-sheet]`), and the sheet sits at z 55 — over the chain dock (50), under the
+booking drawer (60). Escape, the button, a row or a resize past 959 close it.
+- **Super's hamburger and accordion are hidden, not restyled**: the accordion opens several groups
+  at once and the design shows exactly one. The sheet is built from **Super's own navigation
+  data** (the same harvest as the panels' groups, `pagesOf`), so the groups, their names, their
+  pages and their order stay Super's; the line under a page is the description Super holds for
+  the link if one is set (none are), else `CONTENT`'s.
+- **A row opens its page through `window.next.router.push`** — the app router Super's own links
+  use — so it stays a client-side navigation (checked: same document, /networks → /services).
+- **The rail is 98px, not the file's `128px` grid track**: the file's `.nav-compact {display:
+  flex !important}` also lands on the sheet, so the design renders as a flex row and the rail takes
+  its numerals' width. The render is what the user sees, and every number matched it at 390
+  (rail 98, cover 260×163, tabs 66×60, rows 67). Its comment's "88px rail, Outfit 34" is stale.
+- **`ground()` does not measure while the sheet is open** — the ground under the bar is then the
+  sheet's own ink rail, and the paper bar turned ink (seen on /networks).
+- The design's row hover (`.nav-row:hover`, the second paper) is kept on paper only; on ink it
+  would put paper type on a paper wash.
 
 **The third column is read, not written.** The handoff's rule (Aditya, 2026-09-21): it lists the
 page's own sub-pages or section headings, *taken from the page as built — nothing typed in, so it

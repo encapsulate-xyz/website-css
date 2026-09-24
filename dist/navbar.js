@@ -272,7 +272,7 @@
       var d = a.querySelector(".enc-nav__desc");
       if (d && d.textContent !== line) d.textContent = line;
     });
-    all(document, ".enc-nav__line-desc").forEach(function (d) {
+    all(document, ".enc-nav__line-desc, .enc-sheet__line").forEach(function (d) {
       if (/^\d+ mainnets, \d+ testnets$/.test(d.textContent.trim()) && d.textContent !== line) d.textContent = line;
     });
     all(document, ".enc-nav__foot .enc-nav__open > span").forEach(function (sp) {
@@ -786,13 +786,16 @@
      reader's own pointer: pointing at Services opened Company, the last group it had touched
      (reproduced in headless Chrome with real mouse events; with the harvest off, Services opened
      Services). The current page's mark never appeared either. */
-  function linksOf(text, key) {
+  /* the group's own entry in Super's data -> { label, body }: its name, and its list of links as
+     plain JSON text */
+  function listOf(text, key) {
     var at = text.indexOf(key);
     while (at >= 0) {
       if (/^[0-9a-f-]+","type":"list"/.test(text.slice(at, at + 300).replace(/\\+"/g, '"'))) break;
       at = text.indexOf(key, at + key.length);
     }
     if (at < 0) return null;
+    var head = text.slice(at, at + 300).replace(/\\+"/g, '"');
     var open = text.indexOf("[", text.indexOf("list", text.indexOf("label", at)));
     if (open < 0) return null;
     var depth = 0, end = -1, i;
@@ -802,10 +805,30 @@
       else if (ch === "]") { depth--; if (!depth) { end = i; break; } }
     }
     if (end < 0) return null;
-    var body = text.slice(open, end + 1).replace(/\\+"/g, '"');
+    return { label: unicode((/"label":"([^"]*)"/.exec(head) || [])[1]),
+      body: text.slice(open, end + 1).replace(/\\+"/g, '"') };
+  }
+  function unicode(s) {
+    return String(s || "").replace(/\\+u([0-9a-fA-F]{4})/g, function (m, h) {
+      return String.fromCharCode(parseInt(h, 16));
+    });
+  }
+  function linksOf(text, key) {
+    var l = listOf(text, key);
+    if (!l) return null;
     var links = [], m, re = /"link":"([^"]*)"/g;
-    while ((m = re.exec(body))) links.push(m[1]);
+    while ((m = re.exec(l.body))) links.push(m[1]);
     return links;
+  }
+  /* the same entry as the compact sheet reads it: each page's name, its link, and the
+     description Super holds for it (empty unless one is set in Super → Navigation) */
+  function pagesOf(text, key) {
+    var l = listOf(text, key);
+    if (!l) return null;
+    var items = [], m,
+      re = /"label":"([^"]*)","link":"([^"]*)"(?:[^{}\[\]]*?"description":"([^"]*)")?/g;
+    while ((m = re.exec(l.body))) items.push({ label: unicode(m[1]), href: m[2], desc: unicode(m[3]) });
+    return { label: l.label, items: items };
   }
 
   var harvestTries = 0;
@@ -816,7 +839,7 @@
     harvestTries++;
     var text = Array.prototype.map.call(document.querySelectorAll("script:not([src])"),
       function (sc) { return sc.textContent; }).join("\n");
-    var found = 0;
+    var found = 0, sheetGroups = [];
     triggers.forEach(function (t) {
       var key = (t.getAttribute("aria-controls") || "").replace(/^.*-content-/, "");
       var links = key ? linksOf(text, key) : null;
@@ -824,10 +847,13 @@
       groups[keyOf(t)] = links.filter(function (h) {
         return h.charAt(0) === "/";
       }).map(path);
+      var g = pagesOf(text, key);
+      if (g && g.items.length) sheetGroups.push({ label: g.label || t.textContent.trim(), items: g.items });
       found++;
     });
     if (found) {
       harvested = true;
+      menu = sheetGroups;
       markCurrent();
     }
   }
@@ -890,7 +916,8 @@
   }
   function ground() {
     var bar = document.querySelector("nav.super-navbar");
-    if (!bar || window.scrollY > 8) return;
+    /* with the compact sheet open, what lies under the bar is the sheet's own ink rail */
+    if (!bar || window.scrollY > 8 || sheetOpen()) return;
     var ink = isInk(groundUnder());
     if (ink) bar.setAttribute("data-enc-nav-ink", "");
     else bar.removeAttribute("data-enc-nav-ink");
@@ -965,6 +992,198 @@
     }, true);
   }
 
+  /* ── THE COMPACT BAR, under 960px (handoff 2026-09-24) ──────────────────────────────────
+     Under 960 the bar is the wordmark, Book a call and one icon-only Menu button, and the menu is
+     a sheet under the bar: an ink rail carrying the groups as 01–05 — the chosen one in paper, the
+     rest as outlines — and beside it the chosen group, led by its first page's cover, then the
+     group's name and its pages, each with its line. No panels, no third column: those do not
+     survive a narrow screen. Tap to choose, so it serves touch, where hover does not exist; paper
+     on a paper page, ink on an ink one — the rail is ink on both.
+
+     SUPER STILL OWNS THE MENU. The groups, their names, their pages and their order are Super's
+     navigation, read from the same data as the panels' groups (harvest), so a page added in Super
+     appears here too. The lines are CONTENT's, or the description Super holds for a link where
+     one is set. Super's own hamburger and its accordion are hidden under 960 (main.css §04) rather
+     than restyled: the accordion opens several groups at once, and the design shows exactly one.
+     A page is opened through Next's own router, as Super's links do, so the site stays a
+     single-page app from here too. */
+  var menu = [];            /* [{ label, items: [{ label, href, desc }] }], Super's groups in order */
+  var COMPACT = "(max-width: 959px)";
+  var sheet = null, menuBtn = null, sheetAt = "";
+  var SVGNS = "http://www.w3.org/2000/svg";
+
+  function menuIcon(open) {
+    var svg = document.createElementNS(SVGNS, "svg");
+    svg.setAttribute("width", "18");
+    svg.setAttribute("height", "18");
+    svg.setAttribute("viewBox", "0 0 18 18");
+    svg.setAttribute("fill", "none");
+    svg.setAttribute("stroke", "currentColor");
+    svg.setAttribute("stroke-width", "1.8");
+    svg.setAttribute("stroke-linecap", "round");
+    svg.setAttribute("aria-hidden", "true");
+    (open ? ["M4 4l10 10", "M14 4L4 14"] : ["M3 5.5h12", "M3 9h12", "M3 12.5h12"]).forEach(function (d) {
+      var p = document.createElementNS(SVGNS, "path");
+      p.setAttribute("d", d);
+      svg.appendChild(p);
+    });
+    return svg;
+  }
+  function sheetOpen() { return !!(sheet && !sheet.hidden); }
+  function setButton(open) {
+    if (!menuBtn) return;
+    menuBtn.setAttribute("aria-label", open ? "Close menu" : "Menu");
+    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    menuBtn.textContent = "";
+    menuBtn.appendChild(menuIcon(open));
+  }
+
+  /* a page opens as Super's own links open it — through the app's router — unless the reader
+     asked for a new tab */
+  function go(e) {
+    var href = e.currentTarget.getAttribute("href") || "";
+    if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    closeSheet(false);
+    var router = window.next && window.next.router;
+    if (href.charAt(0) === "/" && router && typeof router.push === "function") {
+      e.preventDefault();
+      router.push(href);
+    }
+  }
+
+  function choose(i, focus) {
+    var g = menu[i];
+    if (!g || !sheet) return;
+    var tabs = all(sheet, ".enc-sheet__tab");
+    tabs.forEach(function (t, j) {
+      t.setAttribute("aria-selected", j === i ? "true" : "false");
+      t.tabIndex = j === i ? 0 : -1;
+    });
+    if (focus && tabs[i]) tabs[i].focus();
+    var pane = sheet.querySelector(".enc-sheet__pane");
+    pane.textContent = "";
+    pane.setAttribute("aria-labelledby", tabs[i] ? tabs[i].id : "");
+    pane.scrollTop = 0;
+
+    // the group's first page, as its cover
+    var first = g.items[0], shot = first && shotOf(first.href);
+    if (shot) {
+      var thumb = el("a", "enc-sheet__thumb");
+      thumb.href = first.href;
+      thumb.setAttribute("aria-label", first.label);
+      thumb.setAttribute("data-enc-shot", shot.mode);
+      var img = el("img");
+      img.src = shot.src;
+      img.alt = "";
+      thumb.appendChild(img);
+      thumb.addEventListener("click", go);
+      pane.appendChild(thumb);
+    }
+    pane.appendChild(el("span", "enc-sheet__group", g.label));
+    var list = el("div", "enc-sheet__list");
+    g.items.forEach(function (p) {
+      var row = el("a", "enc-sheet__row");
+      row.href = p.href;
+      var c = copyOf(p.href);
+      row.appendChild(el("span", "enc-sheet__name", p.label));
+      row.appendChild(el("span", "enc-sheet__line", p.desc || (c ? c[0] : "")));
+      row.addEventListener("click", go);
+      list.appendChild(row);
+    });
+    pane.appendChild(list);
+    // "N mainnets, N testnets" is counted from the set, as in the panel
+    if (g.items.some(function (p) { return path(p.href) === "/networks" && p.href.indexOf("#") < 0; })) {
+      counts().then(applyCounts);
+    }
+  }
+
+  function buildSheet() {
+    if (sheet) return;
+    sheet = el("div", "enc-sheet");
+    sheet.id = "enc-sheet";
+    sheet.hidden = true;
+    sheet.setAttribute("role", "dialog");
+    sheet.setAttribute("aria-label", "Site menu");
+    var rail = el("div", "enc-sheet__rail");
+    rail.setAttribute("role", "tablist");
+    rail.setAttribute("aria-orientation", "vertical");
+    var pane = el("div", "enc-sheet__pane");
+    pane.setAttribute("role", "tabpanel");
+    pane.id = "enc-sheet-pane";
+    menu.forEach(function (g, i) {
+      var tab = el("button", "enc-sheet__tab", (i < 9 ? "0" : "") + (i + 1));
+      tab.type = "button";
+      tab.id = "enc-sheet-tab-" + i;
+      tab.setAttribute("role", "tab");
+      tab.setAttribute("aria-label", g.label);
+      tab.setAttribute("aria-controls", pane.id);
+      tab.addEventListener("click", function () { choose(i); });
+      rail.appendChild(tab);
+    });
+    rail.addEventListener("keydown", function (e) {
+      var tabs = all(rail, ".enc-sheet__tab"), at = tabs.indexOf(document.activeElement);
+      if (at < 0) return;
+      var to = e.key === "ArrowDown" ? (at + 1) % tabs.length
+        : e.key === "ArrowUp" ? (at - 1 + tabs.length) % tabs.length
+        : e.key === "Home" ? 0 : e.key === "End" ? tabs.length - 1 : -1;
+      if (to < 0) return;
+      e.preventDefault();
+      choose(to, true);
+    });
+    sheet.appendChild(rail);
+    sheet.appendChild(pane);
+    document.body.appendChild(sheet);
+  }
+
+  function openSheet() {
+    var bar = document.querySelector("nav.super-navbar");
+    if (!bar || !menu.length) return;
+    buildSheet();
+    /* the ground the bar has on this page: ink stays ink with the sheet open */
+    if (bar.hasAttribute("data-enc-nav-ink")) sheet.setAttribute("data-enc-ink", "");
+    else sheet.removeAttribute("data-enc-ink");
+    choose(0);
+    sheet.hidden = false;
+    sheetAt = location.pathname;
+    bar.setAttribute("data-enc-sheet", "");
+    document.documentElement.setAttribute("data-enc-sheet", "");
+    setButton(true);
+  }
+  function closeSheet(focusBack) {
+    if (!sheetOpen()) return;
+    sheet.hidden = true;
+    var bar = document.querySelector("nav.super-navbar");
+    if (bar) bar.removeAttribute("data-enc-sheet");
+    document.documentElement.removeAttribute("data-enc-sheet");
+    setButton(false);
+    if (focusBack && menuBtn) menuBtn.focus();
+  }
+
+  /* the Menu button sits in Super's actions, after its Book a call; the observer puts it back if
+     a re-render drops it */
+  function compact() {
+    var actions = document.querySelector("nav.super-navbar .super-navbar__actions");
+    if (!actions || !menu.length) return;
+    if (!menuBtn) {
+      menuBtn = el("button", "enc-nav__menu");
+      menuBtn.type = "button";
+      menuBtn.setAttribute("aria-controls", "enc-sheet");
+      setButton(false);
+      menuBtn.addEventListener("click", function () {
+        if (sheetOpen()) closeSheet(false); else openSheet();
+      });
+    }
+    if (menuBtn.parentNode !== actions) actions.appendChild(menuBtn);
+    // a client-side navigation to another page closes it
+    if (sheetOpen() && location.pathname !== sheetAt) closeSheet(false);
+  }
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && sheetOpen()) closeSheet(true);
+  });
+  window.addEventListener("resize", function () {
+    if (sheetOpen() && !window.matchMedia(COMPACT).matches) closeSheet(false);
+  });
+
   function tick() {
     Array.prototype.forEach.call(
       document.querySelectorAll(".super-navbar__list-content"), build);
@@ -974,11 +1193,12 @@
     Array.prototype.forEach.call(triggersOf(), record);
     markCurrent();
     band();
+    compact();
   }
 
   /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
      against its page from the console without opening the menu */
-  window.encNav = { version: 7, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
+  window.encNav = { version: 8, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
     groups: function () { return groups; }, harvest: function () { return { done: harvested, tries: harvestTries }; },
     ground: ground, isInk: isInk, groundUnder: groundUnder, wordmark: wearWordmark,
     band: band };

@@ -10,7 +10,8 @@
 // `sleep(ms)`. Pass `--from-cdn <sha>` instead of a local repo to reroute to a pushed commit.
 //
 // Real pointer events (radix answers only those) come from `move(x, y)` in a step file passed with
-// `--steps steps.mjs`, which exports `async (ctx) => {}` and gets { at, move, sleep, shot }.
+// `--steps steps.mjs`, which exports `async (ctx) => {}` and gets { at, move, click, sleep, shot } —
+// `click(x, y)` is a real press and release at that point.
 import { spawn } from "node:child_process";
 import { mkdtempSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -64,6 +65,11 @@ const at = async (body) => {
   return r.result?.result?.value;
 };
 const move = (x, y) => send("Input.dispatchMouseEvent", { type: "mouseMoved", x, y, pointerType: "mouse" });
+const click = async (x, y) => {
+  await move(x, y);
+  await send("Input.dispatchMouseEvent", { type: "mousePressed", x, y, button: "left", clickCount: 1, pointerType: "mouse" });
+  await send("Input.dispatchMouseEvent", { type: "mouseReleased", x, y, button: "left", clickCount: 1, pointerType: "mouse" });
+};
 const shot = async (out) => { const s = await send("Page.captureScreenshot", { format: "png" }); writeFileSync(out, Buffer.from(s.result.data, "base64")); };
 
 /* NETLOG=1 prints every website-css request that fails or answers with an error */
@@ -82,7 +88,7 @@ await send("Fetch.enable", { patterns: TAGS.map(t => ({ urlPattern: "*website-cs
 await send("Page.enable");
 await send("Page.navigate", { url: url + (url.includes("?") ? "&" : "?") + "lc=" + Date.now() });
 await sleep(+(process.env.WAIT || 9000));
-if (stepsFile) await (await import(resolve(stepsFile))).default({ at, move, sleep, shot });
+if (stepsFile) await (await import(resolve(stepsFile))).default({ at, move, click, sleep, shot });
 if (checkFile) console.log(JSON.stringify(await at(readFileSync(checkFile, "utf8")), null, 1));
 if (shotOut) await shot(shotOut);
 ws.close(); chrome.kill();
