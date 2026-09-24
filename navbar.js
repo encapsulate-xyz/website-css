@@ -925,12 +925,17 @@
   }
 
   /* the bar takes its paper ground only while a menu is open — over a cover it is otherwise
-     transparent, which is the whole point of 4f */
+     transparent, which is the whole point of 4f. "Open" is the file's own: a group under the
+     pointer counts from the moment the pointer arrives (`open = hov is a group`), not from when
+     radix mounts the panel ~200ms later. Until 2026-09-25 the ink bar spent those 200ms lit the
+     at-rest way — a paper pill under the pointer — and then flipped to the paper bar and its ink
+     tab, with the reversed wordmark on paper in between (reported on ink pages). */
   function paint() {
     var bar = document.querySelector("nav.super-navbar");
     if (!bar) return;
     var open = !!bar.querySelector('.super-navbar__list[data-state="open"], ' +
-      '.super-navbar__list[aria-expanded="true"]');
+      '.super-navbar__list[aria-expanded="true"], .super-navbar__list:hover, ' +
+      '.super-navbar__item-list .super-navbar__item:hover');
     /* the mark is settled on every tick, not only when the open state changes here: another
        instance of this script may have set the attribute first (an older build left running on
        the page), and then this one would return before the mark was put right */
@@ -968,6 +973,10 @@
       t.dispatchEvent(mouse("pointerleave"));
       t.dispatchEvent(new MouseEvent("mouseleave", { bubbles: true }));
     }
+
+    // hover is not a mutation, so the ground is painted on the pointer's own events too
+    bar.addEventListener("pointerover", function () { setTimeout(paint, 0); });
+    bar.addEventListener("pointerout", function () { setTimeout(paint, 0); });
 
     var last = 0;
     bar.addEventListener("pointermove", function (e) {
@@ -1198,7 +1207,7 @@
 
   /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
      against its page from the console without opening the menu */
-  window.encNav = { version: 8, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
+  window.encNav = { version: 9, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
     groups: function () { return groups; }, harvest: function () { return { done: harvested, tries: harvestTries }; },
     ground: ground, isInk: isInk, groundUnder: groundUnder, wordmark: wearWordmark,
     band: band };

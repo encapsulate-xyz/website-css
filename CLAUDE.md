@@ -330,6 +330,14 @@ gap plus the caret's 5). The file's own pill renders 34px — its `top: 4, botto
 at `opacity: .7` until hovered** (super.css `.super-navbar__item, .super-navbar__list`): the resting
 labels had shown at 70% since the bar was built; §04 now sets 1. The history below is the ring the
 tab replaced.
+**A hovered group is "open" from the moment the pointer arrives** (v279): the file's `open` is
+simply "hov is a group", so the bar turns paper, the paper wordmark returns and the hovered group
+becomes the ink tab at once. Ours waited for radix to mount the panel (~200ms), and on an ink page
+spent that time lighting the hovered item the at-rest ink way — a paper pill — before flipping to
+the ink tab on the paper bar (the user's report, 2026-09-25). `navbar.js` `paint()` counts
+`.super-navbar__list:hover` as open and repaints on the bar's `pointerover`/`pointerout`; the
+ink bar's hover rules were deleted. Book a call is not a group: over it the bar stays ink and
+nothing is lit, as in the file.
 
 **One ring, one job** (handoff, 2026-09-23, v259; restyled 2026-09-24, v267): the ring — since
 v267 a **transparent** pill with a `#D9D9D2` ring and the full-white top highlight, ink type, on a

@@ -345,27 +345,10 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   color: #C9C9C4 !important;   /* at rest; paper on hover, below (handoff, read 2026-09-23) */
 }
 
-.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__item:hover,
-.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__list:hover,
-.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__list[data-state="open"],
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__item:hover,
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list:hover,
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list[data-state="open"] {
-  /* lit on ink: a paper fill with ink type (handoff, 2026-09-25; it was paper type in a
-     rgba(250,250,248,.4) ring) */
-  color: #000000 !important;
-  background: transparent !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
-}
-.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__item:hover::after,
-.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__list:hover::after,
-.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__list[data-state="open"]::after,
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__item:hover::after,
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list:hover::after,
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list[data-state="open"]::after {
-  background: #FAFAF8;
-}
+/* A group under the pointer never lights on the ink bar: hovering one is "open" (navbar.js
+   paint(), the file's own `open`), so the bar turns paper at once and the paper bar's ink tab
+   applies. The paper pill that stood here for the hovered group on ink is gone (2026-09-25) — it
+   showed for the ~200ms before radix opened the panel, then flipped to ink. */
 
 /* the current page's item at rest, on ink: the same paper tab */
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current],
@@ -393,14 +376,7 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   background: #9FA39B !important;
 }
 
-/* the caret follows the ring: ink on the hovered group, grey on a lit pill at rest, and the
-   on-ink grey only where the pill is not lit. On ink a hovered pill is transparent with paper type
-   (2026-09-24) for the moment before radix opens the panel and the bar turns paper — its caret
-   is paper with it */
-.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__list:hover::before,
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list:hover::before {
-  background: #000000 !important;   /* on the paper tab */
-}
+/* the caret on ink: the on-ink grey where a pill is not lit, #6B6F68 on the paper tab at rest */
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current]::before,
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current]::before {
   background: #6B6F68 !important;
