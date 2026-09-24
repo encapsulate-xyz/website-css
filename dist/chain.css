@@ -130,6 +130,7 @@ button.enc-ch__disc:focus-visible{outline: 3px solid rgba(0,0,0,0.32);outline-of
 .enc-ch__faq .enc-ch__row-a{font-family: "Outfit",sans-serif;font-weight: 600;font-size: 15px;letter-spacing: -0.016em;color: var(--ink);}
 .enc-ch__faq .enc-ch__row-b{font-size: 13.5px;line-height: 1.45;color: var(--ink7);}
 .enc-ch__more{display: flex;flex-direction: column;gap: 14px;margin-top: 40px;}
+.enc-ch__more-head{display: flex;align-items: center;justify-content: space-between;gap: 16px;flex-wrap: wrap;width: calc(100vw - 2 * var(--padx) - var(--sbw,0px));max-width: none;}
 .enc-ch__marquee{overflow: hidden;position: relative;width: 100vw;margin-left: calc(-1 * var(--padx));padding: 2px 0;}
 .enc-ch__mq{display: flex;gap: 10px;width: max-content;padding-left: var(--padx);animation: enc-ch-mq 48s linear infinite;}
 .enc-ch__marquee:hover .enc-ch__mq,.enc-ch__marquee:focus-within .enc-ch__mq{animation-play-state: paused;}
@@ -172,9 +173,10 @@ to{transform: translateX(-50%);}
 .enc-ch-dock .enc-ch__mark,.enc-ch__mark{width: 40px;height: 40px;border-radius: 999px;display: grid;place-items: center;flex: none;overflow: hidden;}
 .enc-ch-dock .enc-ch__mark img{width: 34px;height: 34px;display: block;object-fit: contain;}
 .enc-ch-dock__n{display: flex;flex-direction: column;gap: 2px;}
-.enc-ch-dock a.enc-ch__tert{display: inline-flex;align-items: center;gap: 10px;font-size: 15px;font-weight: 500;color: var(--ink) !important;text-decoration: none !important;}
+.enc-ch a.enc-ch__tert,.enc-ch-dock a.enc-ch__tert{letter-spacing: normal;display: inline-flex;align-items: center;gap: 10px;font-size: 15px;font-weight: 500;color: var(--ink) !important;text-decoration: none !important;}
 .enc-ch__badge{width: 20px;height: 20px;border-radius: 999px;background: var(--green);color: var(--ink);display: grid;place-items: center;transition: transform 0.16s ease;}
 .enc-ch-dock a.enc-ch__tert:hover .enc-ch__badge{transform: translate(2px,-2px);}
+.enc-ch a.enc-ch__tert:hover .enc-ch__badge--on{transform: translateX(3px);}
 .enc-ch-dock__facts{display: flex;align-items: center;justify-content: center;min-width: 0;}
 .enc-ch-dock__fact{display: flex;flex-direction: column;gap: 3px;padding: 0 18px;}
 .enc-ch-dock__fact + .enc-ch-dock__fact{border-left: 1px solid var(--hair);}

@@ -68,6 +68,8 @@
     "rewards end": "Paid in one sum when the period ends.",
     "disclaimer": "{rewards} After our {commission}% commission. An estimate at today’s rate, which the chain can change.",
     "more": "Also stake with us on",
+    "all networks": "See all networks",
+    "all networks url": "/networks",
     "our validator": "Our validator"
   };
   var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
@@ -710,7 +712,18 @@
     var P = this;
     if (!P.others.length) return null;
     var w = el("div", "enc-ch__more");
-    w.appendChild(P.mono(P.say("more")));
+    /* the label and "See all networks" across the window's width, over the drifting row
+       (handoff, 2026-09-24) */
+    var head = el("div", "enc-ch__more-head");
+    head.appendChild(P.mono(P.say("more")));
+    var all = el("a", "enc-ch__tert");
+    all.href = P.say("all networks url") || "/networks";
+    all.appendChild(el("span", null, P.say("all networks")));
+    var badge = el("span", "enc-ch__badge enc-ch__badge--on");
+    badge.innerHTML = '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 5h7M5 1.5L8.5 5 5 8.5"/></svg>';
+    all.appendChild(badge);
+    head.appendChild(all);
+    w.appendChild(head);
     var band = el("div", "enc-ch__marquee"), track = el("div", "enc-ch__mq");
     P.others.concat(P.others).forEach(function (x, i) {
       var a = el("a", "enc-ch__pill");
@@ -930,6 +943,7 @@
       var old = root.querySelector(":scope > .enc-ch");
       if (old) old.remove();
       root.insertBefore(wrap, root.firstChild);
+      wrap.style.setProperty("--sbw", Math.max(0, window.innerWidth - document.documentElement.clientWidth) + "px");
       document.querySelectorAll(".enc-ch-dock").forEach(function (n) { n.remove(); });
       var dock = P.dock();
       document.body.appendChild(dock);

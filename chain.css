@@ -461,6 +461,18 @@ button.enc-ch__disc:focus-visible { outline: 3px solid rgba(0, 0, 0, 0.32); outl
 
 /* the other chains as pills, drifting left behind the label */
 .enc-ch__more { display: flex; flex-direction: column; gap: 14px; margin-top: 40px; }
+/* the label and "See all networks" span the window inside its gutters, as the row under them
+   does: the column starts one gutter in, so the head is the window less two gutters (and less
+   the scrollbar, measured by chain.js as --sbw) */
+.enc-ch__more-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  width: calc(100vw - 2 * var(--padx) - var(--sbw, 0px));
+  max-width: none;
+}
 .enc-ch__marquee {
   /* the design's left: 50% / -50vw centres the row on its parent, which here is the 1280px
      content column set against the left padding, not the window — on a 1920 screen the row
@@ -583,7 +595,9 @@ button.enc-ch__disc:focus-visible { outline: 3px solid rgba(0, 0, 0, 0.32); outl
 }
 .enc-ch-dock .enc-ch__mark img { width: 34px; height: 34px; display: block; object-fit: contain; }
 .enc-ch-dock__n { display: flex; flex-direction: column; gap: 2px; }
+.enc-ch a.enc-ch__tert,
 .enc-ch-dock a.enc-ch__tert {
+  letter-spacing: normal;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -603,6 +617,7 @@ button.enc-ch__disc:focus-visible { outline: 3px solid rgba(0, 0, 0, 0.32); outl
   transition: transform 0.16s ease;
 }
 .enc-ch-dock a.enc-ch__tert:hover .enc-ch__badge { transform: translate(2px, -2px); }
+.enc-ch a.enc-ch__tert:hover .enc-ch__badge--on { transform: translateX(3px); }
 .enc-ch-dock__facts { display: flex; align-items: center; justify-content: center; min-width: 0; }
 .enc-ch-dock__fact { display: flex; flex-direction: column; gap: 3px; padding: 0 18px; }
 .enc-ch-dock__fact + .enc-ch-dock__fact { border-left: 1px solid var(--hair); }
