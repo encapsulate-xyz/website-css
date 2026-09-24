@@ -785,6 +785,14 @@ is now `id="block-networks-mainnet-<chain>"` with a `.notion-collection-card__an
 | A chain's own words where the shared ones are untrue (Lido's fee, Avalanche's staking period, Mina's and Zilliqa's reward lines) and the Lido validators band | the row page's own **"Chain page copy" toggle**, which overrides the shared one key by key |
 | The other chains (the drifting pills) and each page's tint | the set's view on **/services** (it shows Tier, Stage and Order): god, high and medium tiers, Order-sorted; the tint is the chain's position in that order, the same pastel as its /networks card |
 
+**No raw Notion before the build.** chain.js runs deferred, after the first paint, and Super's
+hydration strips its attribute once more before it settles — the raw blocks showed twice (437ms,
+and again at 664 before the build at 967). chain.css hides them from the first paint by the class
+Super server-renders on every chain page, `.super-content.parent-page__networks-mainnet`, with a
+5s `visibility` reveal in case the build never comes. The shared words and the chain list live in
+localStorage (`enc-chain-copy`, `enc-chain-list`), used at once and re-read in the background
+past half an hour, so a repeat visit is built at ~140ms.
+
 **Page id.** Super names the page after its path (`main#page-networks-mainnet-monad`, class
 `parent-page__networks-mainnet`), so chain.js finds the row id in the page's data by `"uri"`.
 Only a page under /networks/mainnet or a bare row id is looked at, so other pages cost nothing.
