@@ -52,22 +52,22 @@ are summarised below.
 | Chain | Address (what a staker uses) | Notes |
 |---|---|---|
 | Avalanche | `NodeID-N3e9W3EngjabGnTZVqyZwunVcbCdrY5Qy` | Rate depends on the delegation length (5.1–5.7% net for 14–232 days). **Only ~111 AVAX of delegation capacity left** on 2026-09-24. The node did not validate 2026-02-02 → 05-15 |
-| Lido | Simple DVT node operator #43 (SSV cluster "Arid Anubis") | Stakers pay Lido's 10%; the rate is stETH's 7-day APR. #48 ("Mysterious Manta", all exited) may also be ours — unverified |
-| Monad | `0x79129e1306dc1e81F3a2cC5e3B5171fb92FFd99d` — validator **ID 91** | Delegators stake to the ID; no slashing implemented |
+| Lido | Simple DVT node operator #43 (SSV cluster "Arid Anubis") | Stakers pay Lido's 10%; the rate is stETH's 7-day APR. Only #43 is ours and active (the user, 2026-09-24); #48 "Mysterious Manta" is exited and not listed |
+| Monad | `ID 91 · 0x79129e1306dc1e81F3a2cC5e3B5171fb92FFd99d` | Both shown, as asked: delegators stake to the ID, explorers show the address. No slashing implemented |
 | Near | `encapsulate.pool.near` | 4 epochs to unlock (~21–31 h at today's epoch length) |
 | Sui | `0x01d03daf…26ff7` | Old validator "fka KingSuper" `0x970f9006…` ran epochs 0–849, never penalised. Tallying rule removes rewards, never principal |
 | Axelar | `axelarvaloper1p8uxq4…9yct` | Old "Redelegate to Encapsulate" validator is jailed, no slashes |
 | EigenCloud | `0xA6c3F159…22062` | Reward rate not readable (app 500, API keyed). Registered to EigenDA and eOracle, but in no operator set, so none of our stake is slashable today |
 | IOTA | `0xedd654b2…27c9ab` | |
 | Mina | `B62qjWmF…FaRYY` | **Rate left blank**: ~5,100 MINA delegated, ~one block expected every 8 months, so any APR would mislead. Fee 5% is advertised, paid off-chain |
-| Starknet | staker `0x0359e252…df2a` (pool `0x04e828f5…b3f6`) | 44 of 12,675 attestation epochs missed; Voyager still shows an old reward address |
+| Starknet | staker `0x0359e252…df2a` (pool `0x04e828f5…b3f6`) | The staker address is shown, as asked. 44 of 12,675 attestation epochs missed; Voyager still shows an old reward address |
 | Terra | `terravaloper1yh4u76…mujs` | |
 | Zilliqa | delegation contract `0x1311059D…933C` (encapZIL) | Our pool's rewards ran at 69–79% of its stake share; peer pools with the same 8% earned 11–12.5% |
-| Avail | `5FqQ3hKu…KSTN` | A 7% offline slash (4,272 AVAIL) was reported in the 2026-08-31 outage and **cancelled** by the Technical Committee — not applied, so 0. 18 eras of payouts unclaimed on 2026-09-24 |
-| Espresso | `0xea452aed…991b` | No per-validator explorer page |
+| Avail | `5FqQ3hKu…KSTN` | Commission 20% — intended. A 7% offline slash (4,272 AVAIL) reported in the 2026-08-31 outage was cancelled by the Technical Committee — not applied, so 0. 18 eras of payouts unclaimed on 2026-09-24 |
+| Espresso | `0xea452aed…991b` | Explorer: espressonodes.com (the user's link) |
 | Ika | operator `0x351f2db4…12f1` | |
-| SSV.network | Operator 924 "Lido - Encapsulate" | Private to Lido's cluster — nobody stakes to it directly, so rate, compounding and unbonding are blank |
-| Supra | pool `0x15ac9afc…cd3a` | **Commission 38.72%** on-chain, unchanged since at least 2025-05 |
+| SSV.network | Operator 924 "Lido - Encapsulate" | Private to Lido's cluster — nobody stakes to it directly, so rate, compounding and unbonding are blank. The old "KingSuper" operator 469 is ignored (the user: very old) |
+| Supra | pool `0x15ac9afc…cd3a` | Commission 38.72% on-chain — intended (the user, 2026-09-24) |
 | Vara | `kGjJgbAj…Q6q6` | 24 eras of payouts unclaimed on 2026-09-24 (they expire after 84 eras) |
 | Agoric | `agoricvaloper1p8uxq4…5ldj` | **Two** active validators of ours; the "Encapsulate" one is listed, as asked. The other, "fka KingSuper", is `agoricvaloper1fy8r6z…mv32` (~8.9M BLD) |
 | Althea | `altheavaloper1d2x0t4…2axt` | |
@@ -75,13 +75,23 @@ are summarised below.
 | Gravity Bridge | `gravityvaloper1s0lank…qzfn` | **0, by the user's decision (2026-09-24).** The chain records three 0.1% slashes — the bridge module's penalty for a missed Ethereum-side confirmation (`slash_fraction_valset`/`_batch` = 0.001). They cannot be dated (the chain keys them by reward period, not height); the 26 active validators carry 1 to 163 such slashes |
 | humans.ai | `humanvaloper1d2x0t4…guy3` | |
 | ixo | `ixovaloper1p8uxq4…t2an` | 0 — the one 0.01% slash is on the old validator `…t8986e`, shut down on purpose |
-| Lumera | `lumeravaloper18qpd0y…mcux` | Explorer blank — no validator page confirmed |
+| Lumera | `lumeravaloper18qpd0y…mcux` | Explorer: the Lumera portal (the user's link) |
 | Passage | `pasgvaloper1s0lank…ck2v` | |
 | Sommelier | `sommvaloper1s0lank…24s2` | **0%**: both incentive programmes ended (cutoff heights passed); the chain's own APY query returns 0. Slash fractions are both 0, so it cannot slash |
-| Chain4Energy | `c4evaloper1s0lank…0r7x` | Explorer blank — no validator page confirmed |
+| Chain4Energy | `c4evaloper1s0lank…0r7x` | Explorer: ping.pub (the user's link) |
 
 ## Refreshing
 
 Rates drift; re-read them and set **Rate updated** in the same edit. The planned scheduled job
 (CLAUDE.md, "a GitHub Action to fill the APY property") should write Reward rate and Rate updated
 together and leave the hand-set properties alone.
+
+## Open (2026-09-24)
+
+- **EigenCloud reward rate** — needs an EigenExplorer API key (free, developer.eigenexplorer.com);
+  the key goes in `~/.eigenexplorer-key` (chmod 600), never in chat.
+- **Mina reward rate** — left blank; to decide later (TODO).
+- **Mina fee** — Auro's validator list says 5%; the current chain page at /networks/mainnet/mina
+  names no fee at all (only the generic "Commission is set per chain" line). To confirm (TODO).
+- **How SSV.network (and Lido) read on a chain page** — nobody delegates to our SSV operator; see
+  the proposal in the conversation of 2026-09-24.

@@ -1116,6 +1116,17 @@ flash of empty values and a key in the page.
   `Last updated` property so the page can say when, and have the job skip rows marked manual.
 - Publish network APR, not the delegator's figure, unless commission is subtracted — and date it.
 
+## TODO — the Networks set's open values (2026-09-24)
+
+- **EigenCloud reward rate:** waiting on an EigenExplorer API key (free at
+  developer.eigenexplorer.com). Keep it in `~/.eigenexplorer-key`, chmod 600 — never in chat.
+- **Mina reward rate:** blank on purpose (our pool is too small for a steady rate); decide later.
+- **Mina fee:** Auro's list says 5%; /networks/mainnet/mina (an existing chain page, from the old
+  Networks database, whose "Expected Reward Rate" list is stale) names no fee. Confirm.
+- **SSV.network / Lido on a chain page:** nobody delegates to our SSV operator; the page needs an
+  operator reading (operator id, validators run, performance, "stake through Lido") rather than
+  the four staking numbers.
+
 ## TODO — the newsletter (removed 2026-09-21, to be rebuilt)
 
 "Subscribe to newsletter" and its form were removed from the blog index and from all forty posts
