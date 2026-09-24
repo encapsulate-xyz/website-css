@@ -101,7 +101,7 @@ User rules that stand on every task:
 | `notion/guide-screenshots.md` | how guide screenshots are captured and composed (agreed 2026-09-18, not yet applied) | — |
 | `build.py` | strips comments into `dist/`, copies the JS | — |
 | `scripts/paste_table.py` | prints the paste table from head/*.html vs what the live pages serve | — |
-| `scripts/livecheck.mjs` | loads a live page in headless Chrome with a pinned tag's files served from this repo (or a pushed commit), runs a check in the page, optional real mouse steps and a screenshot. The scratchpad copies it replaced were lost on 2026-09-24 | — |
+| `scripts/livecheck.mjs` | loads a live page in headless Chrome with pinned tags' files served from this repo (or a pushed commit) — pass every tag the page pins, comma-separated (`v263,v227,v220`), runs a check in the page, optional real mouse steps and a screenshot. The scratchpad copies it replaced were lost on 2026-09-24 | — |
 | `scripts/shots.py`, `img/shots/` | panel captures of the live tools (Sui RGP, the Solana graph), 1100×750 at DPR 2 from headless Chrome — the extension's screenshots time out on those pages, and a WebGL graph needs swiftshader or it comes back blank. Not wired into any page yet (2026-09-23): the tools table that names their tiles arrived cut off | — |
 
 **Edit sources, run `python3 build.py`, commit source and `dist/` together. Never edit `dist/`.**
@@ -287,7 +287,9 @@ is. The logic is testable in Node: `scratchpad/kickertest.js`.
 after the cover: Text kicker, then a column list with one callout per panel (callout text "01 / 02",
 Heading 1 figure, Text label, Text note). Two sticky full-screen ink panels in a 2-screen band, each
 drawing the rail with its own pill active; fields are `svg/count-rings.svg` / `svg/count-dots.svg`
-(referenced as `../svg/…` from dist, so they come from the same tag). The figures are Notion text.
+(referenced as `../svg/…` from dist, so they come from the same tag). The figures are Notion text
+whose digits `network.js` `figures()` replaces with the set's own counts (see "Every network count
+is the Networks set's own", under The Networks set).
 
 **The navigation bar (§04 + navbar.js, 2026-09-21, design *Navbar 4f Page*).** The bar is
 **Super's own navigation** — its items, its groups and its radix dropdown, keyboard included —
@@ -875,9 +877,9 @@ menu got `display: flex` from our own CSS, so both stayed visible. Always pair i
 - rate-style sorts: parse the property's text (`parseFloat` after stripping `%`), nulls last;
 - re-apply on the MutationObserver that already watches for Super's re-renders.
 
-**6. What cannot be done this way.** Counts per tab (Super only ships the active view's rows — the
-same reason the marks row's "+23 more" is a Notion text block), and searching rows Super did not
-render (a view limited to N cards).
+**6. What cannot be done this way.** Counts per tab from the page itself (Super only ships the
+active view's rows — the site's counts are read from /services's all-stages view instead, see The
+Networks set), and searching rows Super did not render (a view limited to N cards).
 
 **7. Testing.** The automation browser delivers no real mouse clicks and freezes transitions, so
 click-to-focus cannot be verified there — drive it with `input.focus()` plus a native value setter
@@ -994,7 +996,28 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
   only sends the active view's rows, so the other tab's count cannot be known client-side.
 - **5m, the chain-teams band** (callout `3dde800a…9995f7…`): ink, full-bleed, with the marks row
   built by `network.js` from the set's own gallery — first twelve cards. The "+23 more" is a Notion
-  text block in the band that the script moves onto the row, for the same reason.
+  text block in the band that the script moves onto the row; its number is rewritten from the set
+  (chains − marks shown), as is the heading's "Thirty-five teams said yes.".
+- **Every network count is the Networks set's own** (the user, 2026-09-24: one source). Super ships
+  only the rendered view's rows, so no page can count the whole set from itself — except /services,
+  whose linked view of the set shows every stage with **Stage switched on** (the user did that on
+  2026-09-24). `navbar.js` `counts()` fetches /services once per visit (kept 30 minutes in
+  `sessionStorage["enc-counts"]`), counts the cards whose Stage pill reads Mainnet or Testnet, and
+  the distinct names, and publishes `window.encCounts()` → `{mainnet, testnet, chains}`. Readers:
+
+  | Where | What | Script |
+  |---|---|---|
+  | navbar, Networks group | "27 mainnets, 20 testnets" (item line and preview), "See all 27" | navbar.js `applyCounts()` |
+  | /networks count band | the two figures (27, 20) | network.js `figures()` |
+  | /networks 5m band | "Thirty-five teams said yes.", "+23 more" | network.js `figures()` |
+  | homepage stats band | "Number of Networks Supported" (27) | home.js, Why Stake IIFE |
+  | homepage Why Stake | "27 secured" and the dots | home.js — falls back to the homepage gallery's cards |
+  | /services ask | "Thirty-five chain teams…" | services.js — counts its own view of the set |
+
+  Only the digits (or the leading spelled number) are replaced, so the words stay Notion's. **The
+  numbers typed in Notion, and CONTENT/FOOT in navbar.js, are the fallback** — keep them right when
+  the set changes, since they are what shows if /services cannot be read or before it arrives. If
+  the view on /services loses its Stage property, every count falls back.
 - **The old `Networks` database is not to be used for anything** (the user, 2026-09-24) — not for
   values, not for chain pages. Its item pages (/networks/mainnet/<chain>) carry stale "Expected
   Reward Rate" lists.
@@ -1128,7 +1151,14 @@ flash of empty values and a key in the page.
   Lido's Simple DVT module on an SSV cluster. The Lido row was renamed and carries Lido's values;
   the SSV.network row was archived (Notion trash, restorable). A new **Stake at** URL property holds
   `https://stake.lido.fi` for it — the chain page's action goes there instead of an address to copy
-  (blank on every other row). The mainnet count went 28 → 27 everywhere: the homepage's "Number of
+  (blank on every other row). **Validators run** (number, 500, from Lido's Simple DVT module:
+  operator #43 "Lido x SSV: Arid Anubis", 500 deposited, 0 exited) is set on that row only; the
+  30-day performance is not stored — uptime is shown nowhere else on the site. **Lido's 10% is the
+  whole fee a staker pays, and ours is inside it**: the StakingRouter gives the Simple DVT module 8%
+  and Lido's treasury 2%; the module's share for our cluster goes to a 0xSplits wallet
+  (`0xcddc0b19…a187`) that returns 2/7 to Lido's Agent (`0x3e40D73E…9C8c`) and shares 5/7 equally
+  among the seven operators, 10.2% of it each — about 0.82% of the rewards our validators earn.
+  The mainnet count went 28 → 27 everywhere: the homepage's "Number of
   Networks Supported", /networks's "Networks secured", navbar.js ("27 mainnets", "See all 27"), and
   /services's "Thirty-five chain teams" (35 distinct chains).
 

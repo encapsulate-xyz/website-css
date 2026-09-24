@@ -1151,7 +1151,13 @@
    DERIVED FIGURES (the user's explicit choice, so they never go stale): the first card's
    "Caption right" is written as "<networks> secured", and the second card's "Figure" as the
    years since 2020 and its "Caption right" as "<this year> in progress". Everything else on the
-   cards is Notion text. Styles: home-dial.css, "WHY STAKE GRAPHICS"; layout: home.css §09. */
+   cards is Notion text. Styles: home-dial.css, "WHY STAKE GRAPHICS"; layout: home.css §09.
+
+   THE NETWORK COUNT is the Networks set's own: its mainnet rows, read once per visit from the
+   all-stages view on /services (navbar.js, window.encCounts). It drives the first card's dots
+   and caption and the stats band's "Number of Networks Supported" figure, whose digits are
+   replaced and nothing else. Until it arrives, or if it cannot be read, the homepage gallery's
+   card count is used, and the stats figure keeps Notion's number. */
 (function () {
   var GALLERY = "block-bd1e4d485a0d424394add746d8e3cd35";
   var NETWORKS = "block-d07ab52b60ba4788bd8df0c9e74c5ad4";
@@ -1160,6 +1166,8 @@
   var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
   var BARS = [58, 74, 46, 88, 62, 70, 52, 80, 66, 44, 76, 60];
   var FIGURE = ".property-70594a51", CAPTION_RIGHT = ".property-6f505657";
+  var STAT = "block-5a0aab755b8e46faa72c1be176e0eb9f";   /* "Number of Networks Supported" */
+  var fromSet = 0, asked = false;
 
   function span(cls) { var e = document.createElement("span"); e.className = cls; return e; }
 
@@ -1200,14 +1208,33 @@
 
   function setText(el, text) { if (el && el.textContent !== text) el.textContent = text; }
 
+  function setNumber(el, n) {
+    if (!el || !(n >= 0)) return;
+    var walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), node;
+    while ((node = walk.nextNode())) {
+      if (!/\d/.test(node.nodeValue)) continue;
+      var v = node.nodeValue.replace(/\d+/, String(n));
+      if (v !== node.nodeValue) node.nodeValue = v;
+      return;
+    }
+  }
+
   function apply() {
+    if (!asked && typeof window.encCounts === "function" &&
+        (document.getElementById(GALLERY) || document.getElementById(STAT))) {
+      asked = true;
+      window.encCounts().then(function (c) {
+        if (c && c.mainnet) { fromSet = c.mainnet; apply(); }
+      });
+    }
+    if (fromSet) setNumber(document.getElementById(STAT), fromSet);
     var block = document.getElementById(GALLERY);
     if (!block) return;
     var cards = block.querySelectorAll(".notion-collection-card");
     if (cards.length < 3) return;
     // count from the new "Networks set" where it is on the page, the old gallery otherwise
     var netBox = document.getElementById(SET_DB) || document.getElementById(NETWORKS);
-    var nets = netBox ? netBox.querySelectorAll(".notion-collection-card").length : 0;
+    var nets = fromSet || (netBox ? netBox.querySelectorAll(".notion-collection-card").length : 0);
     var now = new Date().getFullYear();
     var sig = nets + "|" + now;
 
@@ -1233,7 +1260,10 @@
 
   var t = 0;
   new MutationObserver(function (muts) {
-    if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-why__graphic, " + FIGURE + ", " + CAPTION_RIGHT); })) return;
+    if (muts.every(function (m) {
+      var el = m.target.nodeType === 1 ? m.target : m.target.parentElement;
+      return el && el.closest && el.closest(".enc-why__graphic, " + FIGURE + ", " + CAPTION_RIGHT + ", #" + STAT);
+    })) return;
     clearTimeout(t); t = setTimeout(apply, 60);
   }).observe(document.body, { childList: true, subtree: true, characterData: true });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply);

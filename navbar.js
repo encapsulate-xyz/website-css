@@ -24,7 +24,7 @@
 (function () {
   var CONTENT = {
     /* href: [ one line under the link, headline of the note, the note ] */
-    "/networks": ["27 mainnets, 14 testnets",
+    "/networks": ["27 mainnets, 20 testnets",
       "Every chain we validate, mainnet and testnet.",
       "Reward rate where the chain publishes one; the role we played where it does not."],
     "/services": ["Dashboards, playbooks, bots, monitoring",
@@ -199,6 +199,74 @@
         .catch(function () { delete docs[p]; return null; });
     }
     return docs[p];
+  }
+
+  /* ── THE COUNTS, from the Networks set itself ──────────────────────────────────────────
+     Every count of networks on the site is the Networks set's own rows. /services carries the
+     one view of the set that ships every stage — its cards show Stage (switched on 2026-09-24) —
+     so that page is read once per visit and the counts kept in the session for half an hour:
+     mainnets, testnets, and distinct chains. The navbar's own line and foot take them here;
+     network.js (the count band, "+N more") and home.js ask through window.encCounts(). The
+     numbers typed in Notion and in CONTENT/FOOT are only what shows if this cannot run. */
+  var COUNTS_PAGE = "/services", countsOnce = null;
+  function readCounts(doc) {
+    var best = null;
+    Array.prototype.forEach.call(doc.querySelectorAll(".notion-collection"), function (coll) {
+      var m = 0, t = 0, names = {};
+      Array.prototype.forEach.call(coll.querySelectorAll(".notion-collection-card, tbody tr"), function (it) {
+        var stage = "";
+        Array.prototype.forEach.call(it.querySelectorAll(".notion-pill, td"), function (x) {
+          var v = (x.textContent || "").trim();
+          if (!stage && (v === "Mainnet" || v === "Testnet")) stage = v;
+        });
+        if (!stage) return;
+        if (stage === "Mainnet") m++; else t++;
+        var n = it.querySelector(".notion-property__title");
+        if (n) names[n.textContent.trim()] = 1;
+      });
+      if (m + t && (!best || m + t > best.mainnet + best.testnet)) {
+        best = { mainnet: m, testnet: t, chains: Object.keys(names).length };
+      }
+    });
+    return best;
+  }
+  function counts() {
+    if (countsOnce) return countsOnce;
+    try {
+      var kept = JSON.parse(sessionStorage.getItem("enc-counts") || "null");
+      if (kept && Date.now() - kept.at < 1800000) return (countsOnce = Promise.resolve(kept));
+    } catch (e) { /* storage blocked: read the page */ }
+    countsOnce = pageOf(COUNTS_PAGE).then(function (doc) {
+      var c = doc ? readCounts(doc) : null;
+      if (!c) return null;   /* Notion's numbers stand for this visit; no retry on every tick */
+      c.at = Date.now();
+      try { sessionStorage.setItem("enc-counts", JSON.stringify(c)); } catch (e) { /* fine */ }
+      return c;
+    });
+    return countsOnce;
+  }
+  window.encCounts = counts;
+
+  /* the Networks group's own words: the line under "All networks", the preview's line, the foot */
+  function applyCounts(c) {
+    if (!c) return;
+    var line = c.mainnet + " mainnets, " + c.testnet + " testnets";
+    if (CONTENT["/networks"]) CONTENT["/networks"][0] = line;
+    FOOT.Networks = FOOT.Staking = "See all " + c.mainnet;
+    all(document, "a.super-navbar__list-item").forEach(function (a) {
+      var href = a.getAttribute("href") || "";
+      if (href.indexOf("#") >= 0 || path(href) !== "/networks") return;
+      var d = a.querySelector(".enc-nav__desc");
+      if (d && d.textContent !== line) d.textContent = line;
+    });
+    all(document, ".enc-nav__line-desc").forEach(function (d) {
+      if (/^\d+ mainnets, \d+ testnets$/.test(d.textContent.trim()) && d.textContent !== line) d.textContent = line;
+    });
+    all(document, ".enc-nav__foot .enc-nav__open > span").forEach(function (sp) {
+      if (/^See all \d+$/.test(sp.textContent.trim()) && sp.textContent !== "See all " + c.mainnet) {
+        sp.textContent = "See all " + c.mainnet;
+      }
+    });
   }
 
   function originalSrc(src) {
@@ -505,6 +573,11 @@
     foot.appendChild(el("span", "enc-nav__count",
       links.length + (links.length === 1 ? " page" : " pages")));
     panel.appendChild(foot);
+    /* a panel that carries the Networks page takes its counts from the set */
+    if (links.some(function (a) {
+      var h = a.getAttribute("href") || "";
+      return h.indexOf("#") < 0 && path(h) === "/networks";
+    })) counts().then(applyCounts);
 
     /* the tools of a group are its own section links that have a panel capture.
        TODO (2026-09-22): when /services is redesigned, read them from the page by block id like
@@ -846,7 +919,7 @@
 
   /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
      against its page from the console without opening the menu */
-  window.encNav = { version: 5, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
+  window.encNav = { version: 6, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
     groups: function () { return groups; }, harvest: function () { return { done: harvested, tries: harvestTries }; },
     ground: ground, isInk: isInk, groundUnder: groundUnder, wordmark: wearWordmark,
     band: band };

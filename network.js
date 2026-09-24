@@ -162,6 +162,7 @@
   var SET_DB = "block-3dde800a51388133b7f1d1ccdda08038";
   var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
   var SHOWN = 12;
+  var shown = 0;   /* how many marks the row carries, for "+N more" */
 
   function original(src) {
     var m = /[?&]url=([^&]+)/.exec(src || "");
@@ -182,6 +183,7 @@
       if (img && name) rows.push({ src: original(img.currentSrc || img.src), name: name.textContent.trim() });
     }
     if (!rows.length) return;
+    shown = rows.length;
     var sig = rows.map(function (r) { return r.name; }).join("|") + "/" + cards.length;
     var old = content.querySelector(":scope > .enc-set-marks");
     if (old && old.getAttribute("data-sig") === sig) return;
@@ -203,9 +205,9 @@
       wrap.appendChild(span);
     });
     content.appendChild(wrap);
-    /* THE "+N MORE" IS NOTION'S. Super sends only the rendered view's rows, so a count taken from
-       the page would describe one tab (16 of the mainnet set) rather than the whole set (35).
-       The band carries the line as its own text block; this only moves it onto the row. */
+    /* "+N more" is a Notion text block in the band, moved onto the row. Its number is the set's
+       own: Super sends only the rendered tab's rows, so it is counted from the all-stages view on
+       /services (navbar.js, window.encCounts) in figures() below — Notion's number is the fallback. */
     var more = null;
     Array.prototype.forEach.call(content.querySelectorAll(":scope > p.notion-text"), function (p) {
       if (/^\s*\+\s*\d+\s*more\b/i.test(p.textContent)) more = p;
@@ -214,6 +216,58 @@
       more.classList.add("enc-set-more");
       wrap.appendChild(more);
     }
+  }
+
+  /* ── the counts, from the Networks set ──
+     The count band's two figures (mainnets, testnets), the 5m heading's "Thirty-five teams said
+     yes." (the chains, spelled) and the marks row's "+N more" are Notion text, rewritten here
+     from the set's own rows — the same counts the navbar carries, read once
+     per visit from the all-stages view on /services (navbar.js). Only the digits are replaced, so
+     the words around them stay Notion's; if the counts cannot be read, Notion's numbers stand. */
+  var FIG_MAIN = "block-3dce800a5138818e8123ed8b8471935d";
+  var FIG_TEST = "block-3dce800a5138812a995cd075afdf49a2";
+  var TEAMS = "block-3dde800a513881b7ae8dc2e00b42d7f9";   /* "Thirty-five teams said yes." */
+  var ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split(" ");
+  var TENS = "  twenty thirty forty fifty sixty seventy eighty ninety".split(" ");
+  var NUMWORD = /^(\d+|(?:zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)(?:-[a-z]+)?)\b/i;
+  function spell(n) {
+    var w = n < 20 ? ONES[n] : TENS[Math.floor(n / 10)] + (n % 10 ? "-" + ONES[n % 10] : "");
+    return w.charAt(0).toUpperCase() + w.slice(1);
+  }
+  /* the leading number of a heading, in the form it was written in: digits stay digits */
+  function setLead(el, n) {
+    if (!el || !(n > 0) || n > 99) return;
+    var walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), node;
+    while ((node = walk.nextNode())) {
+      if (!node.nodeValue.trim()) continue;
+      var lead = node.nodeValue.match(/^\s*/)[0], rest = node.nodeValue.slice(lead.length);
+      var m = NUMWORD.exec(rest);
+      if (!m) return;
+      var v = lead + (/^\d/.test(m[1]) ? String(n) : spell(n)) + rest.slice(m[1].length);
+      if (v !== node.nodeValue) node.nodeValue = v;
+      return;
+    }
+  }
+  function setNumber(el, n) {
+    if (!el || !(n >= 0)) return;
+    var walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), node;
+    while ((node = walk.nextNode())) {
+      if (!/\d/.test(node.nodeValue)) continue;
+      var v = node.nodeValue.replace(/\d+/, String(n));
+      if (v !== node.nodeValue) node.nodeValue = v;
+      return;
+    }
+  }
+  function figures() {
+    if (typeof window.encCounts !== "function") return;
+    if (!document.getElementById(FIG_MAIN) && !document.getElementById(BAND)) return;
+    window.encCounts().then(function (c) {
+      if (!c) return;
+      setNumber(document.getElementById(FIG_MAIN), c.mainnet);
+      setNumber(document.getElementById(FIG_TEST), c.testnet);
+      setLead(document.getElementById(TEAMS), c.chains);
+      if (shown) setNumber(document.querySelector("#" + BAND + " .enc-set-more"), c.chains - shown);
+    });
   }
 
   /* ── the control bar's sort and search ──
@@ -407,7 +461,7 @@
     applyControls(db, state);
   }
 
-  new MutationObserver(function () { invalidate(); marks(); controls(); bleed(); }).observe(document.body, { childList: true, subtree: true });
+  new MutationObserver(function () { invalidate(); marks(); figures(); controls(); bleed(); }).observe(document.body, { childList: true, subtree: true });
   marks();
   controls();
   bleed();
