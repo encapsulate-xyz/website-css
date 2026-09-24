@@ -861,9 +861,12 @@
   var live = null;
   function onScroll() {
     if (!live) return;
-    var hero = live.wrap.querySelector(".enc-ch__hero");
+    /* the dock rises once the hero has gone and slides away as the last band's foot reaches the
+       viewport's, so it never lies over the footer (handoff, 2026-09-24) */
+    var hero = live.wrap.querySelector(".enc-ch__hero"), last = live.wrap.querySelector("[data-enc-last]");
     if (hero && live.dock) {
-      var on = hero.getBoundingClientRect().bottom < 80;
+      var on = hero.getBoundingClientRect().bottom < 80 &&
+        (!last || last.getBoundingClientRect().bottom > window.innerHeight - 8);
       if (on !== live.docked) {
         live.docked = on;
         live.dock.toggleAttribute("data-enc-on", on);
@@ -963,8 +966,12 @@
         var kids = [el("h2", "enc-ch__h2", sec.title)];
         if (sec.rows.length) kids.push(P.list(sec.rows, "enc-ch__work"));
         if (sec.faq.length) kids.push(P.list(sec.faq, "enc-ch__faq"));
-        if (i === src.sections.length - 1) kids.push(P.more());
-        wrap.appendChild(P.band("s" + i, sec.title, kids));
+        var last = i === src.sections.length - 1;
+        if (last) kids.push(P.more());
+        var band = P.band("s" + i, sec.title, kids);
+        /* the dock is bound to the last band by this mark, not by position (handoff, 2026-09-24) */
+        if (last) band.setAttribute("data-enc-last", "");
+        wrap.appendChild(band);
         sec.nodes.forEach(function (n) { n.setAttribute("data-enc-source", ""); });
       });
       if (src.lede) src.lede.setAttribute("data-enc-source", "");
