@@ -275,27 +275,61 @@ body {
   white-space: nowrap !important;
   color: #3A3D38 !important;
   cursor: pointer !important;
+  /* Super draws every item at 70% until it is hovered; the design's labels and the tab are at
+     full strength — the resting labels had been showing at .7 since the bar was built */
+  opacity: 1 !important;
+  position: relative !important;
+  isolation: isolate;
   transition: color 0.16s ease, background-color 0.16s ease, border-color 0.16s ease !important;
 }
 
-/* ONE RING, ONE JOB (handoff, 2026-09-23). The ring — paper, the hairline and the top highlight —
-   marks the page you are on while the bar is at rest, and moves to the hovered group while a
-   panel is open or the pointer is on the bar, then returns. Never two rings at once: while
-   anything in the bar is under the pointer or open, the current page's pill is plain.
-   Since 2026-09-24 the ring is the whole mark: the pill stays transparent on the paper track and
-   carries a #D9D9D2 ring and the white top highlight (it was a paper fill on the #F2F2ED track). */
+/* THE LIT ITEM IS AN INK TAB (handoff, 2026-09-25 — "M" in Navbar Rest State Patterns): the page
+   you are on at rest, and the hovered or open group while anything in the bar is under the pointer,
+   takes an ink fill with paper type; on the ink bar, a paper fill with ink type. The fill is a
+   36px pill inside the 44px hit area, drawn behind the label. It replaced the #D9D9D2 ring and its
+   top highlight (2026-09-24 → 25); the paper-2 group well and a capsule mark were tried in the
+   file and reverted. Still one mark, on one item. */
+.super-root nav.super-navbar .super-navbar__item::after,
+.super-root nav.super-navbar .super-navbar__list::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 0;
+  right: 0;
+  top: 3px;      /* 44 − the 1px border twice, less 3 + 3: a 36px pill */
+  bottom: 3px;
+  z-index: -1;
+  border-radius: 10px;
+  background: transparent;
+  pointer-events: none;
+  transition: background-color 0.16s ease;
+}
+
+/* ONE MARK, ONE JOB (handoff, 2026-09-23; the mark is the ink tab since 2026-09-25). It marks
+   the page you are on while the bar is at rest, and moves to the hovered group while a panel is
+   open or the pointer is on the bar, then returns. Never two at once: while anything in the bar is
+   under the pointer or open, the current page's item is plain. */
 .super-root nav.super-navbar .super-navbar__item:hover, .super-root nav.super-navbar .super-navbar__list:hover, .super-root nav.super-navbar .super-navbar__list[data-state="open"] {
   background: transparent !important;
-  border-color: #D9D9D2 !important;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
-  color: #000000 !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  color: #FAFAF8 !important;
+}
+.super-root nav.super-navbar .super-navbar__item:hover::after, .super-root nav.super-navbar .super-navbar__list:hover::after, .super-root nav.super-navbar .super-navbar__list[data-state="open"]::after {
+  background: #000000;
 }
 
 /* the page you are on, at rest */.super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__item.active, .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__item[aria-current="page"], .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current] {
   background: transparent !important;
-  border-color: #D9D9D2 !important;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
-  color: #000000 !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  color: #FAFAF8 !important;
+}
+.super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__item.active::after, .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__item[aria-current="page"]::after, .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current]::after {
+  background: #000000;
+}
+/* its caret: the on-ink grey, paper once the group is hovered or open (below) */
+.super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current]::before {
+  background: #9FA39B !important;
 }
 
 /* WHERE THE PAGE STARTS ON INK. The bar lies over whatever the page opens with, so on an ink
@@ -317,21 +351,33 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__item:hover,
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list:hover,
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list[data-state="open"] {
-  /* lit on ink: paper type in a rgba(250,250,248,.4) ring, no fill and no highlight (handoff,
-     2026-09-24; it was the paper pill of the "one ring" round) */
-  color: #FAFAF8 !important;
+  /* lit on ink: a paper fill with ink type (handoff, 2026-09-25; it was paper type in a
+     rgba(250,250,248,.4) ring) */
+  color: #000000 !important;
   background: transparent !important;
-  border-color: rgba(250, 250, 248, 0.4) !important;
+  border-color: transparent !important;
   box-shadow: none !important;
 }
+.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__item:hover::after,
+.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__list:hover::after,
+.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__list[data-state="open"]::after,
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__item:hover::after,
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list:hover::after,
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list[data-state="open"]::after {
+  background: #FAFAF8;
+}
 
-/* the current page's pill at rest, on ink: the same ring */
+/* the current page's item at rest, on ink: the same paper tab */
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current],
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current] {
   background: transparent !important;
-  border-color: rgba(250, 250, 248, 0.4) !important;
+  border-color: transparent !important;
   box-shadow: none !important;
-  color: #FAFAF8 !important;
+  color: #000000 !important;
+}
+.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current]::after,
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current]::after {
+  background: #FAFAF8;
 }
 
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__item-list,
@@ -353,7 +399,7 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
    is paper with it */
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__list:hover::before,
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list:hover::before {
-  background: #FAFAF8 !important;
+  background: #000000 !important;   /* on the paper tab */
 }
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current]::before,
 body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current]::before {
@@ -434,13 +480,13 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   height: 12px !important;
   flex: none !important;
   background: #6B6F68 !important;
-  margin-left: 5px !important;
+  margin-left: 11px !important;   /* the file's 6px gap and the caret's own 5 (2026-09-25) */
   -webkit-mask: var(--nav-caret) center / 12px 12px no-repeat;
   mask: var(--nav-caret) center / 12px 12px no-repeat;
   order: 2;
   transition: background-color 0.16s ease !important;
 }.super-root nav.super-navbar .super-navbar__list:hover::before, .super-root nav.super-navbar .super-navbar__list[data-state="open"]::before {
-  background: #000000 !important;
+  background: #FAFAF8 !important;   /* on the ink tab (it was ink on the ring, until 2026-09-25) */
 }:root {
   --nav-caret: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.8%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M5.5 8.25 10 12.75l4.5-4.5%22/%3E%3C/svg%3E");
 }

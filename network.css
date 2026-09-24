@@ -1108,7 +1108,10 @@ STYLING DROPDOWN MENU
   position: absolute !important;
   top: 0 !important;
   right: 10px !important;
-  z-index: 5 !important;
+  /* above the cards: since the set's rows became pages (2026-09-24) every card carries Super's
+     link overlay at z-index 10, and at 5 this wrapper — the menu's stacking context — sat under
+     them, so a click on a sort option opened the chain page behind it (reported 2026-09-25) */
+  z-index: 30 !important;
   height: 50px !important;
   display: flex !important;
   align-items: stretch !important;

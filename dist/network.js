@@ -389,6 +389,7 @@
     button.setAttribute("aria-expanded", "false");
     var label = el("span", "enc-set-sort__label", SORTS[0][1]);
     button.appendChild(label);
+    var pressed = 0;
     var menu = el("div", "enc-set-sort__menu");
     menu.setAttribute("role", "listbox");
     menu.setAttribute("aria-label", "Sort the networks");
@@ -399,15 +400,30 @@
       item.setAttribute("role", "option");
       item.setAttribute("data-icon", o[0]);   // network.css draws the design's icon per option
       item.setAttribute("aria-selected", o[0] === state.sort ? "true" : "false");
-      item.addEventListener("pointerdown", function (e) {
-        e.preventDefault();
+      function choose() {
         state.sort = o[0];
         label.textContent = o[1];
         Array.prototype.forEach.call(menu.children, function (c) {
           c.setAttribute("aria-selected", c === item ? "true" : "false");
         });
-        toggleMenu(false);
         applyControls(db, state);
+      }
+      /* chosen on pointerdown (a cancelled click cannot swallow it), but the menu closes only once
+         the press is over: hidden under the pointer mid-press, the click that follows would land
+         on the card beneath it — a link to that chain's page */
+      item.addEventListener("pointerdown", function (e) {
+        e.preventDefault();
+        pressed = Date.now();
+        choose();
+        window.addEventListener("pointerup", function up() {
+          window.removeEventListener("pointerup", up, true);
+          setTimeout(function () { toggleMenu(false); }, 0);
+        }, true);
+      });
+      // the keyboard: Enter or Space on an option clicks it without a pointer
+      item.addEventListener("click", function () {
+        if (Date.now() - pressed > 700) choose();
+        toggleMenu(false);
       });
       menu.appendChild(item);
     });

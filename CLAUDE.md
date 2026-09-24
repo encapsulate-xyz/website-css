@@ -319,6 +319,18 @@ bar is on every page, so there is no block to read; the same exception as the fo
 drawer's copy. Add a page to the menu in Super and it appears; give it a CONTENT entry and it also
 carries its line.
 
+**The lit item is an ink tab** (handoff 2026-09-25, v278 — "M" in the file's Navbar Rest State
+Patterns): the page you are on at rest, and the hovered or open group while anything in the bar
+is under the pointer, is a **36px ink pill with paper type** drawn behind the label (`::after`, inset
+3px inside the 44px item's 1px border); on the ink bar a **paper pill with ink type**. Its caret is
+`#9FA39B` on the ink pill at rest and paper once hovered or open; `#6B6F68` on the paper pill at
+rest, ink hovered. No ring and no highlight. The caret sits 11px from its label (the file's 6px
+gap plus the caret's 5). The file's own pill renders 34px — its `top: 4, bottom: 4` sit inside a
+1px border — and the user's note says 36, which is what is built. **Super draws every navbar item
+at `opacity: .7` until hovered** (super.css `.super-navbar__item, .super-navbar__list`): the resting
+labels had shown at 70% since the bar was built; §04 now sets 1. The history below is the ring the
+tab replaced.
+
 **One ring, one job** (handoff, 2026-09-23, v259; restyled 2026-09-24, v267): the ring — since
 v267 a **transparent** pill with a `#D9D9D2` ring and the full-white top highlight, ink type, on a
 **paper** track (it was a paper fill on the `#F2F2ED` track); on ink, paper type in a
@@ -1011,6 +1023,14 @@ menu got `display: flex` from our own CSS, so both stayed visible. Always pair i
 **6. What cannot be done this way.** Counts per tab from the page itself (Super only ships the
 active view's rows — the site's counts are read from /services's all-stages view instead, see The
 Networks set), and searching rows Super did not render (a view limited to N cards).
+
+**8. Stack the controls above the cards.** Since the set's rows became pages (2026-09-24) every
+card carries Super's link overlay (`.notion-collection-card__anchor`, `position: absolute; z-index:
+10`). The controls wrapper is a stacking context of its own, so the menu's z-index counts only
+inside it; at `z-index: 5` the open sort menu lay under the cards and a click on an option opened
+the chain page behind it (reported 2026-09-25). It is 30 now. And an option closes the menu only
+after the press ends — hidden mid-press, the click that follows would land on the card. Checked
+with `document.elementFromPoint` at the option's centre and a real click.
 
 **7. Testing.** The automation browser delivers no real mouse clicks and freezes transitions, so
 click-to-focus cannot be verified there — drive it with `input.focus()` plus a native value setter
