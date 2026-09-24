@@ -72,7 +72,7 @@ are summarised below.
 | Agoric | `agoricvaloper1p8uxq4…5ldj` | **Two** active validators of ours; the "Encapsulate" one is listed, as asked. The other, "fka KingSuper", is `agoricvaloper1fy8r6z…mv32` (~8.9M BLD) |
 | Althea | `altheavaloper1d2x0t4…2axt` | |
 | Gitopia | `gitopiavaloper1s0lank…grfh` | 0 — the one 0.01% slash is on the old validator `…udxwwa`, shut down on purpose |
-| Gravity Bridge | `gravityvaloper1s0lank…qzfn` | **3** — three 0.1% slashes, the bridge module's penalty for a missed Ethereum-side confirmation (`slash_fraction_valset`/`_batch` = 0.001), which is what a down or stuck orchestrator causes. Not provably network-wide: the chain stores these records under the reward period, not the block height, so they cannot be dated, and the 26 active validators carry anything from 1 to 163 such slashes (5 have 1; we, Polkachu, uquad and PS350 have 3). Lower it only if our own ops history shows an incident was bridge-wide |
+| Gravity Bridge | `gravityvaloper1s0lank…qzfn` | **0, by the user's decision (2026-09-24).** The chain records three 0.1% slashes — the bridge module's penalty for a missed Ethereum-side confirmation (`slash_fraction_valset`/`_batch` = 0.001). They cannot be dated (the chain keys them by reward period, not height); the 26 active validators carry 1 to 163 such slashes |
 | humans.ai | `humanvaloper1d2x0t4…guy3` | |
 | ixo | `ixovaloper1p8uxq4…t2an` | 0 — the one 0.01% slash is on the old validator `…t8986e`, shut down on purpose |
 | Lumera | `lumeravaloper18qpd0y…mcux` | Explorer blank — no validator page confirmed |

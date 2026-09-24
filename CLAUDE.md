@@ -1008,10 +1008,9 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
   Testnet rows stay empty.
 - **Slashing events count only our own incidents on a live validator** (the user's rule,
   2026-09-24): network-wide incidents and old validators we shut down deliberately do not count.
-  So the old jailed Gitopia and ixo validators' 0.01% slashes are 0. Gravity Bridge stays **3**:
-  its 0.1% slashes are the bridge module's missed-confirmation penalty (a down orchestrator), they
-  cannot be dated (the chain keys them by reward period, not height), and the active set's counts
-  run from 1 to 163 — nothing shows ours were network-wide.
+  So the old jailed Gitopia and ixo validators' 0.01% slashes are 0. Gravity Bridge is **0 by the
+  user's decision** (2026-09-24), though the chain records three 0.1% slashes on our live validator
+  (the bridge module's missed-confirmation penalty) that could not be dated or shown network-wide.
   Agoric lists the "Encapsulate" validator, not the "fka KingSuper" one.
 - **Both views must be sorted by Order ascending** — without a sort Notion returns rows in reverse
   creation order, which puts the smallest chains first and gives 5m the wrong twelve marks.
