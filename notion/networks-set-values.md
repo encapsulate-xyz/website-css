@@ -9,6 +9,10 @@ rows are left empty — there are no testnet chain pages.
 
 | Property | Meaning |
 |---|---|
+| Token | the ticker the chain page writes ("Of every 100 MON staked") |
+| Since | when our current validator went live on mainnet (the chain page's "N months") — see notion/chain-pages.json for how each was found |
+| Unbonding days | the wait the chain page's calendar draws, the upper bound in days (9 hours = 0.375; 0 = none) |
+| Compounding | now also **End** — paid in one sum when a fixed period ends (Avalanche) |
 | Address | what a staker delegates to: valoper / stash / pool / node id / operator |
 | Reward rate | what a staker earns **with us, after our commission**, as text ("7.3%", a range where the chain's own rules give one). Measured or computed from on-chain data — never a marketing figure. Blank where no honest single figure exists |
 | Rate updated | the day the rate was read; blank with the rate |

@@ -91,6 +91,8 @@ User rules that stand on every task:
 | `brand.css`, `brand.js` | /brand — four spreads with a sticky rail, the marks slab, the colour band (design *Brand Page*) | page Head + site Head |
 | `blog.css`, `blog.js` | /blog — the index (design J); blog.js builds each card's cover and its band span, and is loaded from the site head | page Head + site Head |
 | `post.css`, `post.js` | /blog/&lt;post&gt; — every post page (design *Blog Post Page*, variant J). A post has no page head of its own, so both are in the site head and scoped by path | site Head |
+| `chain.css`, `chain.js` | /networks/mainnet/&lt;chain&gt; — the 27 chain pages (design *Chain Page Combined*), built from each Networks set row page. Site head, scoped by `[data-enc-chain]` | site Head |
+| `notion/chain-pages.json`, `scripts/chain_pages.py` | each chain page's words and facts, researched per chain (sources, notes, how "since" was found), and the writer that puts them into the row pages | — |
 | `guide.css`, `guide.js` | /guides/&lt;stage&gt;/&lt;chain&gt; — every guide page (design *Staking Guide Variation 1d*). A guide has no page head of its own, so both are in the site head and scoped by path | site Head |
 | `network.css`, `network.js` | /networks (network.js pages the Network Count panels, same gesture rules as home.js decks) | its page Head |
 | `services.css`, `services.js` | /services — four services and the ask under the cover (design *Services Categories Chosen*), built from the page's callouts, four inline tables and a copy toggle | page Head + site Head |
@@ -745,6 +747,55 @@ properties on. Without them the band still runs and names each position.
 Removed from the page on 2026-09-21: the Tally form column ("Looking for Investments?", its
 paragraph and the quote) and the "Our Investments" heading — the design has neither, and the ask's
 second button goes to the contact page's form instead.
+
+## The chain pages (2026-09-24, design *Chain Page Combined*)
+
+Every **mainnet** row of the Networks set is a Notion page, and since 2026-09-24 each has a path
+of its own in Super: **Pages → /networks → /mainnet → /&lt;chain&gt;** (avalanche, lido-dvt, monad,
+near, sui, axelar, eigencloud, iota, mina, starknet, terra, zilliqa, avail, espresso, ika, supra,
+vara, agoric, althea, gitopia, gravity-bridge, humans, ixo, lumera, passage, sommelier,
+chain4energy), each pointing at the row's share URL. `/<row id>` 307-redirects there. Added from
+the automation tab (the user asked); the Super editor loads slowly (15–45 s) and coordinate clicks
+stop landing after the window changes — what worked was JavaScript: expand the rows by clicking
+their `.lucide-chevron-right`, `.click()` the last "Add sub-page", focus each input and type with
+real keys, `.click()` "Create page". **Giving the rows paths changed Super's markup:** a set card
+is now `id="block-networks-mainnet-<chain>"` with a `.notion-collection-card__anchor` link, not
+`block-<row id>` with `.no-click` — anything that reads a card's row id must accept either.
+
+**Where everything comes from** (nothing is typed in chain.js):
+
+| What | Where |
+|---|---|
+| The figures (rate, commission, unbonding, slashing events), the address, explorer, glyph, token, since, compounding, validators run | the row's **properties** — Super renders none of them on the row's page but embeds all of them in its data (`self.__next_f.push` scripts: `propertySort` names them, `propertyValues` holds them, beside `"blockId"`). chain.js decodes that; after a client-side navigation it fetches the page once |
+| The line under the name, the buttons, "What we run" (a two-column table), the five questions (Heading 3 + paragraph) | the **row page's own blocks**, written by `scripts/chain_pages.py` from `notion/chain-pages.json` |
+| The words every chain page shares (band names, figure labels, captions, the estimate's lines) | the **"Chain page copy" toggle on /networks** (`3e5e800a…81d484b8…`), hidden there by chain.css |
+| A chain's own words where the shared ones are untrue (Lido's fee, Avalanche's staking period, Mina's and Zilliqa's reward lines) and the Lido validators band | the row page's own **"Chain page copy" toggle**, which overrides the shared one key by key |
+| The other chains (the drifting pills) and each page's tint | the set's view on **/services** (it shows Tier, Stage and Order): god, high and medium tiers, Order-sorted; the tint is the chain's position in that order, the same pastel as its /networks card |
+
+**Page id.** Super names the page after its path (`main#page-networks-mainnet-monad`, class
+`parent-page__networks-mainnet`), so chain.js finds the row id in the page's data by `"uri"`.
+Only a page under /networks/mainnet or a bare row id is looked at, so other pages cost nothing.
+
+**Decisions made against the file** (all reported to the user, 2026-09-24):
+- The rate is **after our commission** (the row's Reward rate, as researched), so the caption says
+  "After our commission" where the design says "Before", and the estimate does not take the
+  commission off again. The estimate is `stake × rate` per year for every chain — the rates are
+  measured yields, so compounding them again would overstate.
+- The slashing caption is "No slash since we joined. A slash would break this line" (the design's
+  "Signed every day since launch" is not true everywhere — Avalanche's node missed three months),
+  and a chain that cannot slash says so ("{chain} does not slash stake. The line cannot break").
+- The Lido band sits **after the hero** (the file shows it first, above its own note).
+- A chain whose other ways to stake are listed nowhere gets **one button** (Monad, Avalanche,
+  Agoric, Espresso, ixo, Supra, EigenCloud).
+- The address ring repeats a short address more than twice so it is not stretched thin; a value
+  that is not an address (Lido's "Simple DVT node operator #43") is not a copy button.
+- "Since" is the **current** validator's start (Axelar, Agoric, ixo and Sui ran older validators).
+- Avalanche's calendar draws the shortest period (2 weeks); a year would be 53 rows.
+
+**The research** (six agents, 2026-09-24) is in `notion/chain-pages.json` per chain: cadence,
+minimums, downtime rules read from each chain's own params, unbonding, wallet deep links (loaded
+where possible), sources and notes. Explorer links for Passage and Sommelier (Mintscan dropped
+them) now point at REStake; Chain4Energy at explorer.stavr.tech.
 
 ## The guide page (2026-09-22, design *Staking Guide Variation 1d*)
 
