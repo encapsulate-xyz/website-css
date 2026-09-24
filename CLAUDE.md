@@ -101,6 +101,7 @@ User rules that stand on every task:
 | `notion/guide-screenshots.md` | how guide screenshots are captured and composed (agreed 2026-09-18, not yet applied) | — |
 | `build.py` | strips comments into `dist/`, copies the JS | — |
 | `scripts/paste_table.py` | prints the paste table from head/*.html vs what the live pages serve | — |
+| `scripts/livecheck.mjs` | loads a live page in headless Chrome with a pinned tag's files served from this repo (or a pushed commit), runs a check in the page, optional real mouse steps and a screenshot. The scratchpad copies it replaced were lost on 2026-09-24 | — |
 | `scripts/shots.py`, `img/shots/` | panel captures of the live tools (Sui RGP, the Solana graph), 1100×750 at DPR 2 from headless Chrome — the extension's screenshots time out on those pages, and a WebGL graph needs swiftshader or it comes back blank. Not wired into any page yet (2026-09-23): the tools table that names their tiles arrived cut off | — |
 
 **Edit sources, run `python3 build.py`, commit source and `dist/` together. Never edit `dist/`.**
@@ -311,7 +312,7 @@ rest, and moves to the hovered or open group while anything in the bar is under 
 pill's rule carries `:not([data-enc-nav-open]):not(:has(… :hover))`. Lit is the same on ink as on
 paper, the current pill on ink included. The caret is ink on the hovered group, `#6B6F68` on a lit
 pill at rest, and `#9FA39B` on ink only where a pill is not lit. Measured on /networks (paper) and
-the Axelar guide (ink) with real mouse moves in headless Chrome (`scratchpad/svc/navstate.mjs`).
+the Axelar guide (ink) with real mouse moves in headless Chrome (now `scripts/livecheck.mjs --steps`).
 
 **The ink bar at rest** (handoff, read 2026-09-23): labels `#C9C9C4` with the caret at `#9FA39B`
 (the hover wash and the paper-only ring described here were replaced by the one-ring rule above); an **opaque `#373834` track** on a `rgba(250,250,248,.18)` border, so the cover's discs
@@ -379,7 +380,7 @@ trigger's element id, which radix regenerates after hydration.
   opening each one behind a hidden viewport; each was held 90ms, under radix's open delay, so
   nothing mounted, the harvest retried for half a minute, and its enters and leaves fought the
   reader's pointer — pointing at Services opened Company, and no page was ever marked current.
-  Reproduced in headless Chrome with real mouse events (`scratchpad/svc/navshot.mjs`, which
+  Reproduced in headless Chrome with real mouse events (`scripts/livecheck.mjs`, which
   reroutes a tag's files to a commit or to the local repo); with the harvest off, Services opened
   Services. `mouse(type)` (a `PointerEvent` with `pointerType: "mouse"`, the only kind radix
   answers) is still used by `band()` to hold an open panel open. A section link is its own destination, so `CONTENT` is keyed by the whole
@@ -1002,9 +1003,14 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
   of ours on the chain) and Explorer — every value read from the chains, with method and sources in
   `notion/networks-set-values.md`. They are **not shown on the Mainnet view** yet; a chain page will
   read them off /networks (the Mainnet tab ships all 28 rows), so they must be switched on there and
-  hidden on the cards by network.css when that page is built. Testnet rows stay empty.
-- **"No slashing" is not true everywhere**: Gravity Bridge (3 × 0.1%), and old jailed validators on
-  Gitopia and ixo (0.01% each). /security and the homepage say "No slashing".
+  hidden on the cards by network.css (v262: every card property but the title, the rate and the
+  role is `display: none`, and a card counts as testnet only when it shows nothing but its name).
+  Testnet rows stay empty.
+- **Slashing events count only our own incidents on a live validator** (the user's rule,
+  2026-09-24): network-wide incidents and old validators we shut down deliberately do not count.
+  So Gravity Bridge's three 0.1% slashes (the bridge module's missed-confirmation penalty, carried by
+  every one of its 26 active validators) and the old jailed Gitopia and ixo validators' 0.01% are 0.
+  Agoric lists the "Encapsulate" validator, not the "fka KingSuper" one.
 - **Both views must be sorted by Order ascending** — without a sort Notion returns rows in reverse
   creation order, which puts the smallest chains first and gives 5m the wrong twelve marks.
 - The old gallery's CSS (pill, pastel tiles, side image; 456 lines) was removed on 2026-09-16: every

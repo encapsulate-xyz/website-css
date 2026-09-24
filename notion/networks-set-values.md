@@ -16,7 +16,7 @@ rows are left empty — there are no testnet chain pages.
 | Compounding | Auto = rewards join the stake with no action (Sui-style pools, NEAR pools, stETH, liquid pools); Manual = claimed or paid out |
 | Unbonding | how long until unstaked tokens are liquid, in words, because the chains do not share a unit |
 | Chain slashes | ticked when the chain can take **principal**. Chains that only withhold rewards are unticked |
-| Slashing events | slashes **applied** to any validator of ours on that chain, old or current. Blank where the chain cannot slash |
+| Slashing events | slashes **applied** to our current validator for its own fault. Network-wide incidents and validators we shut down on purpose do not count (the user's rule, 2026-09-24). Blank where the chain cannot slash |
 | Explorer | our validator's own page on a public explorer; blank where none exists or none could be confirmed |
 
 ## How the values were read
@@ -69,12 +69,12 @@ are summarised below.
 | SSV.network | Operator 924 "Lido - Encapsulate" | Private to Lido's cluster — nobody stakes to it directly, so rate, compounding and unbonding are blank |
 | Supra | pool `0x15ac9afc…cd3a` | **Commission 38.72%** on-chain, unchanged since at least 2025-05 |
 | Vara | `kGjJgbAj…Q6q6` | 24 eras of payouts unclaimed on 2026-09-24 (they expire after 84 eras) |
-| Agoric | `agoricvaloper1fy8r6z…mv32` | **Two** active validators of ours; the other is `agoricvaloper1p8uxq4…5ldj` (~4.1M BLD). The larger is listed |
+| Agoric | `agoricvaloper1p8uxq4…5ldj` | **Two** active validators of ours; the "Encapsulate" one is listed, as asked. The other, "fka KingSuper", is `agoricvaloper1fy8r6z…mv32` (~8.9M BLD) |
 | Althea | `altheavaloper1d2x0t4…2axt` | |
-| Gitopia | `gitopiavaloper1s0lank…grfh` | **1 slash** (0.01%) on the old jailed validator `…udxwwa` |
-| Gravity Bridge | `gravityvaloper1s0lank…qzfn` | **3 slashes** (0.1% each) on the active validator |
+| Gitopia | `gitopiavaloper1s0lank…grfh` | 0 — the one 0.01% slash is on the old validator `…udxwwa`, shut down on purpose |
+| Gravity Bridge | `gravityvaloper1s0lank…qzfn` | 0 — its three 0.1% slashes are the bridge module's missed-confirmation penalty (`slash_fraction_valset`/`_batch` = 0.001), which all 26 active validators carry, Polkachu with the same three: network-wide |
 | humans.ai | `humanvaloper1d2x0t4…guy3` | |
-| ixo | `ixovaloper1p8uxq4…t2an` | **1 slash** (0.01%) on the old jailed validator `…t8986e` |
+| ixo | `ixovaloper1p8uxq4…t2an` | 0 — the one 0.01% slash is on the old validator `…t8986e`, shut down on purpose |
 | Lumera | `lumeravaloper18qpd0y…mcux` | Explorer blank — no validator page confirmed |
 | Passage | `pasgvaloper1s0lank…ck2v` | |
 | Sommelier | `sommvaloper1s0lank…24s2` | **0%**: both incentive programmes ended (cutoff heights passed); the chain's own APY query returns 0. Slash fractions are both 0, so it cannot slash |
