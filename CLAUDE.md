@@ -185,6 +185,12 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
   Investment `d6347738…`, Brand `53c5a135…`, Security `29c24b09…`, Contact Us `a8ec9a05…`.
   Old copies of Contact Us / Brand / Security live under "Encapsulate Test Home" — not the live
   pages.
+- **Write text through the API as plain `text.content`, never with the annotations read back.**
+  The API returns `annotations` on every run, all defaults included; sending them back stores an
+  explicit colour, and Super then wraps the run in `span.highlighted-color.color-default`, whose
+  ink overrides whatever colour the page CSS gives the block. That turned /networks' testnet
+  figure from pastel blue to `#111` on 2026-09-24 (14 → 20 written with the annotations copied);
+  the 27 beside it, written plain, stayed pastel. Send only what differs from the default.
 - **Make button callouts through the API** (`callout.rich_text` carrying the link). A callout made in
   the Notion app can render its label as a child `p.notion-text`, which the Button System does not
   match (seen on /networks: 79px/101px plain boxes).
