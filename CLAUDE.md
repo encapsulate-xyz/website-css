@@ -1254,46 +1254,29 @@ above 900px changes in this work. What was learned:
 Status, Tier, Order, Cover (glyph, uploaded via the file-upload API), Link. Two gallery views,
 Mainnet and Testnet, sorted by Order — so the first twelve cards are the god and high tiers.
 
-- **5g, "the mark bleeding"** (network.css "NETWORKS SET", redrawn 2026-09-21): a 168px card on
-  the second paper `#F2F2ED`, the Cover's span turned into a **176px** pastel disc pushed past the
-  **top-right** corner (right −44, top −52) with the glyph at 50% and nudged `translate(-12%, 14%)`,
-  and **the chain's name again at 96px running off the bottom-right** — one copy stroked 2.2px
-  `#9B9B94`, a second filled in the card's ground over it, so only the outline shows. Hover darkens
-  the ring to `#B9B9B1`, deepens the disc to the pastel's deeper tone (`--set-deep`:
-  `#B4D98F #E8CB72 #A3C3EC #EDB98A #E9A9C2`) and fills the hollow word `#9B9B94`. CSS cannot repeat
-  a text node, so `network.js` `hollow()` copies the rendered title into the two spans **on the
-  observer** — Super rebuilds every card when the picker swaps Mainnet for Testnet. The disc rules
-  select `> span`, and the hollow is a direct span child too, so every one of them is written
-  `> span:not(.enc-set__hollow)` — without that the name takes the disc's box (all `!important`)
-  and lands in the top-right corner. The grid is `repeat(auto-fill, minmax(262px, 1fr))`,
-  not the handoff's four fixed columns: the card is built for the 276px the handoff gives it, and
-  four columns across this 1728px page made it 420 wide. That was tried on the live page at the
-  user's request (v218) and reverted the same day (v219) — settled, do not offer it again. Mainnet cards
-  carry the rate (`.property-597e3d69`) as a 22px figure; testnet cards carry the role
-  (`.property-585f6e6c`) and drop the disc to 62%. The hover arrow badge only appears on cards that
-  are links. **Not possible:** the handoff's per-tab counts and its live-on-both / not-launched
-  sub-groups — Super ships only the active view's rows, so the other stage cannot be known.
-- **The sort and search row under 860px** is its own recessed track, like the tab bar (v287); it
-  kept only a top hairline and looked like it faded out.
-- **The stage tabs on a phone** (v286): under ~576px Super's own `view-picker.css` (linked in the
-  page head) folds the picker into a "Mainnet ▾" button and moves the options into a closed pop-up
-  that sinks under its wrapper (z −1). Our tabs are those options, so the bar showed the button with
-  the tabs spilling out beneath it. Under 700px the button is hidden and the menu kept in the bar
-  (`position: relative`, opacity 1, `z-index: 1`, no animation) — as Super itself does above 576.
-  The same day ~200 lines of pre-redesign rules left network.css (an old 576px pill styling for the
-  picker, rules for eight blocks no longer on the page, a 22px Georgia override on the cover lede,
-  a pointer-events list for the old database's pages); at 1440 the only change is that lede at the
-  covers' 21px.
-- **The control bar** is the **second paper `#F2F2ED`** on a `#D9D9D2` ring with the full-white
-  inset highlight, 50px overall (the tabs are 48 inside its hairlines) — a recessed track, not a
-  panel the colour of the page; it was `#FAFAF8` until the handoff moved it on 2026-09-21. The
-  active tab is ink with a 2px ink underline, the rest `#575B55`. Super's view picker supplies
-  the stage tabs (styled in network.css; the old
-  pill-and-Verdana picker rules were deleted). The **sort menu and the search field are built by
-  network.js** — Notion has no block that is an input or a menu, so this is the allowed exception.
-  Both work on the cards Super rendered: search hides non-matching cards, sort sets the grid's
-  `order`, Default restores the view's sequence. The design's per-tab counts are not there: Super
-  only sends the active view's rows, so the other tab's count cannot be known client-side.
+- **The set is the design's index** (design *Networks Index*, the ledger variant it renders;
+  2026-09-25, v295; it replaced 5g, "the mark bleeding", and the old control bar). A Notion
+  **Heading 2, "Every network we validate."**, leads the set (it took the place of an empty spacer
+  paragraph) and shares its row with the controls, all built by network.js and hung off the
+  collection (the recipe below): the **Mainnet/Testnet switch** — it clicks Super's own view picker,
+  which stays in the page hidden (a click on a hidden option switches the view); its labels are the
+  views' names, its counts `encCounts()` — the **sort** as the design's listbox (Default, Name A–Z,
+  Highest rate, the last on mainnet only) and the **field**. Super's gallery cards are the
+  **ledger's rows**, two columns under an ink rule: the Cover glyph at 1.28em, the title at
+  clamp(30px, 3.4vw, 56px), and at the far end the rate in mono with a "Reward rate" tip, or on the
+  Testnet view "Testnet"/"Also mainnet" (the chain runs both, from `encCounts().list`), "—" for a
+  blank rate. Beside them a **sticky stage** filled from the card under the pointer: the glyph (the
+  card's `data-full-size` original) in its disc, tinted by the chain's place in the whole set, the
+  rate (on testnet the name and the Role), and "Open <chain>" to the row's page (a testnet row
+  opens the chain's mainnet page). The fixed labels are CSS `content`, as 5g's "Reward rate" was.
+  Traps met: the card's content box is `display: contents` but still the title's parent, carrying
+  Super's 12px — `font-size: inherit` on it; the Card System clears the gallery's border, so the ink
+  rule needs `!important`; the tips are pinned to the label's right edge, since a centred pill at
+  the row's end widened a phone's page by 21px, unseen. The section runs the page's width at the
+  design's sides (in the page's 96px margins the columns were too narrow for the names); the ledger
+  is one column under 1300px (the design's 1100 broke "Avalanche" at 1280), the stage drops under it
+  at 760. Only "Chain4Energy" still breaks mid-word, between 1300 and 1700 — as in the design.
+- **The staking properties** stay on the Mainnet view for the chain pages and off the rows.
 - **5m, the chain-teams band** (callout `3dde800a…9995f7…`): ink, full-bleed — the kicker "For chain
   teams", "Thirty-five teams chose us." (the number rewritten from the set), the line, Book a call
   and What we run at 48px — and **under them the set as a marquee** (design 2026-09-25, v285; it was
