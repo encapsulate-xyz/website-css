@@ -1012,6 +1012,14 @@ lines of the copy toggle (`help`, `help url`). The **capture frame is 4px on pap
 border** — the selected-state hairline, because on this page the capture is the one thing to look
 at; it was 12px on ink with a `#D9D9D2` ring until that pass.
 
+**A step is the design's own boxes** (re-read 2026-09-25, v293): a header (count and surface |
+title, body, and on a wide step the note), then the capture 24px under it — or, tall, a row of
+the capture and the note beside it. It had been one grid whose note row was `1fr`; in a
+one-screen band that row took the spare height and the capture sank to the bottom (334px down at
+1440×900 against 196). Tall or wide is guessed from the surface ("extension") at build and settled
+by the capture on load. The headings carry `!important` (minima had the head at Outfit 800 48px and
+the step and close titles at 500 35.2px), the numeral is the file's own formula (488px at
+1440×900), and the dots are `background-attachment: fixed` — the file's single sticky ground.
 **The frame follows the capture**: a wallet shot is tall (360:788) and stands beside the note; a
 dashboard shot is wide (16:9) and runs under the header. `guide.js` reads the file's own
 proportions on load and sets `[data-enc-shot]`. The band is one grid, so opening a note never
