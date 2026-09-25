@@ -295,7 +295,8 @@ clamp(200px, 38vw, 560px) — the ground-coloured glyph ringed by eight paper te
 beside it, bottom-aligned, "Mainnets secured", the line "A validator of ours in the active set on
 every one of them." with **the tally** (network.js: one #99CC66 stroke per mainnet, five to a gate,
 the fifth struck; the count's own), and the testnet callout kept as a row under a hairline: Heading
-1 "20" solid and small with "testnets we help". Removed from Notion: the panels' "01 / 02" and
+1 "20" solid and small with "testnets we help"; and a foot, 26px up, "Every network we validate |
+Scroll ↓" (a callout of the two texts, `3e6e800a…8105922f…`, the rule drawn in CSS). Removed from Notion: the panels' "01 / 02" and
 "02 / 02" and the note "Testnets we joined before there was anything to earn.". Super's heading
 anchor span is a flex and grid item — it is taken out of the layout. Under 760 the figure stands
 over the rest and the tally goes under its line.
