@@ -36,22 +36,112 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   font-size: 21px !important;
 }
 
-/* the hero runs the full width of the page, the way the stats band under it does — the content
-   keeps the page's measure through the padding */
-.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 {
-  width: 100vw !important;
-  margin-inline: calc(50% - 50vw) !important;
-  padding: 0 max(48px, calc(50vw - 864px)) !important;
-}
+/* THE HERO (rebuilt 2026-09-25). One Notion column list: the words in the left column (the
+   headline, the lede, the buttons) and the loop in the right. Nothing in it makes space any more —
+   its six dividers and eight empty paragraphs were deleted from Notion the same day, and the
+   loop moved in from the top of the page, where it had been hung behind the hero at fixed
+   offsets (top -40px, or 90px under 1728).
 
-/* THE HERO CLEARS THE BAR. Its space above the headline is six empty Notion dividers, which
-   main.css §11 keeps as hidden height in a column — 186px at full width — and removes altogether
-   once the columns stack under 1024px. Since the 4f bar lies over the page (2026-09-21) that left
-   the headline 12px from the top, under the bar (reported 2026-09-25). Where the dividers go, the
-   hero takes the inner covers' own clearance instead: the bar's 64 and 32. */
-@media (max-width: 1024px) {
+   The hero is one screen tall and runs the full width of the page, the way the stats band under
+   it does; the content keeps the page's measure through the side padding. The words are centred
+   in the screen below the bar (the bar's 64px added to the top padding, so the two paddings
+   centre on the space the bar leaves), 28px apart, as design 11a stacks them. The loop is the
+   hero's backdrop: anchored to its bottom right at the width it was cut for (1728px, or the
+   window's when wider), under the words. Dividers and empty paragraphs are hidden here as well,
+   so a stray one typed into the hero cannot move it again. */
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 {
+  position: relative !important;
+  isolation: isolate !important;
+  box-sizing: border-box !important;
+  width: 100vw !important;
+  min-height: 100vh !important;
+  min-height: 100svh !important;
+  margin-inline: calc(50% - 50vw) !important;
+  padding: calc(64px + 48px) max(48px, calc(50vw - 864px)) 48px !important;
+  align-items: stretch !important;
+}
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-divider,
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column > .notion-text:empty {
+  display: none !important;
+}
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column:first-child {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 28px !important;
+}
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column:first-child > * {
+  margin-block: 0 !important;
+}
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 #block-325ddb2d831643b89b6b291b1480b051 .notion-callout {
+  margin-block: 0 !important; /* §07's 6px would make the lede-to-buttons gap 34 */
+}
+/* Two equal springs centre the words. The lower one never shrinks below the loop's small orbs —
+   they stand in its bottom-left corner, under the words, their tops 14% of the loop's width above
+   its foot — so on a short screen (1440×900, 1536×864) the words rise clear of them instead of
+   the buttons landing on one; on a tall one they are simply centred. Under 1300px the loop is
+   cropped past those orbs (the nearest reaches the buttons' 48px edge at 1296) and the words
+   centre freely. */
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column:first-child::before,
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column:first-child::after {
+  content: "" !important;
+  flex: 1 1 0 !important;
+}
+@media (min-width: 1300px) {
+  .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column:first-child::after {
+    min-height: calc(max(100vw, 1728px) * 0.14 - 52px) !important; /* 24px clear, less the 48 and 28 below */
+  }
+}
+/* 901–1024: side by side still (the old ≤1024 rule at the top of this file sets every column to
+   the full width, which wrapped the words over the sphere) */
+@media (min-width: 901px) and (max-width: 1024px) {
   .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 {
-    padding-top: 96px !important;
+    flex-wrap: nowrap !important;
+  }
+  .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column {
+    width: calc((100% - var(--column-spacing)) * 0.5) !important;
+  }
+}
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column:last-child {
+  position: static !important; /* the loop is placed against the hero, not its column */
+}
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-video {
+  position: absolute !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: -1 !important;
+  /* 1728px, the width it was cut for, or the window's when wider; under 1235px it shrinks with
+     the window (140vw), or the sphere slides left under the words (the clip crossed the lede at
+     1000) */
+  width: max(100%, min(1728px, 140vw)) !important;
+  max-width: none !important;
+  margin: 0 !important;
+  pointer-events: none !important;
+  /* its top edge falls inside the hero on a tall screen; the floor's grid fades in from the paper
+     instead of starting on a line */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 160px) !important;
+  mask-image: linear-gradient(to bottom, transparent, #000 160px) !important;
+}
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-video__content {
+  width: 100% !important;
+}
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-video video {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+}
+/* UNTIL THE HOMEPAGE IS REPUBLISHED (2026-09-25): the loop's old block, first on the page, hung
+   behind the hero as it was. It matches nothing once Super serves the loop inside the hero's
+   column; delete this then. */
+.notion-root > #block-1ee04e9fd50a4439990b8229161f34cc {
+  position: absolute !important;
+  z-index: -1 !important;
+  top: 90px !important;
+  right: 0 !important;
+  width: max(100%, 1728px) !important;
+}
+@media (max-width: 900px) {
+  .notion-root > #block-1ee04e9fd50a4439990b8229161f34cc {
+    display: none !important;
   }
 }
 /*********************************************/
@@ -205,25 +295,6 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   margin-top: 0px!important;
    padding-top: 0px!important;
 }
-/*********************************************/
-/* WISTIA VIDEO CODE TO MAKE IT AT BOTTOM RIGHT
-/*********************************************/
-#block-1ee04e9fd50a4439990b8229161f34cc {
-   z-index: -1 !important;
-   position: absolute !important;
-   object-fit: cover !important;
-   object-position: bottom right !important;
-   top: -40px !important;
-   right: 0 !important;
-}
-
-  @media (max-width: 1728px) {
-    #block-1ee04e9fd50a4439990b8229161f34cc {
-  top: 90px !important;
-   width: 1728px;
-  }
-}
-/*********************************************/
 
 /*********************************************/
 /*********************************************/
@@ -4455,46 +4526,38 @@ The last block identifies the heading callout which says: Others Trust, We Valid
    901px or wider changes (verified: a 1440 computed-style diff over 23,389 elements is empty). */
 
 @media (max-width: 900px) {
-  /* THE HERO, THEN THE LOOP. On a wide screen the loop is a backdrop hung behind the hero's right
-     half (absolute, 1728px wide, 90px down). Once the hero's columns stack, that put the sphere
-     behind the lede and the buttons (a phone) or pushed it up under "View Networks" and let the
-     stats band cut it off (a tablet). Here the hero comes first (the root is a flex column, so
-     `order` does it without touching the markup), the loop follows in the flow as a band the
-     width of the screen, cropped to its sphere, and the hero's desktop spacers — eight empty
-     paragraphs and an empty second column, 260px of nothing under the buttons — are dropped. */
+  /* THE HERO, THEN THE LOOP. Stacked, the hero is as tall as its words and the loop follows them
+     in the flow — its column comes second — as a band the width of the screen, cropped to its
+     sphere. Behind the lede and the buttons it would sit under the words (a phone) or be cut off
+     by the stats band (a tablet). */
   .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 {
-    order: -1;
+    min-height: 0 !important;
+    padding-top: 96px !important; /* the bar's 64 and the covers' 32 */
     padding-bottom: 8px !important;
   }
-  .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-text:empty {
+  .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column:first-child::before,
+  .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column:first-child::after {
     display: none !important;
   }
-  /* the empty paragraph between the headline and the lede is one of those spacers; without it the
-     lede sat flush under the headline (the circle round "online" touched it once the old lines went,
-     2026-09-25), so it takes the design's own 28px here */
-  #block-0dea66c8640e43628360c627219fdb79 {
+  .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column:last-child {
     margin-top: 28px !important;
   }
-  .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column:not(:has(> :not(.notion-divider):not(.notion-text:empty))) {
-    display: none !important;
-  }
-  #block-1ee04e9fd50a4439990b8229161f34cc {
+  .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-video {
     position: relative !important;
-    top: auto !important;
     right: auto !important;
+    bottom: auto !important;
     z-index: 0 !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
     width: 100vw !important;
-    max-width: none !important;
     height: min(88vw, 560px) !important;
     margin: 0 calc(50% - 50vw) !important;
     overflow: hidden !important;
   }
-  #block-1ee04e9fd50a4439990b8229161f34cc > .notion-video__content {
-    width: 100% !important;
+  .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-video__content {
     height: 100% !important;
   }
-  .notion-root #block-1ee04e9fd50a4439990b8229161f34cc video[data-enc-loop] {
-    width: 100% !important;
+  .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-video video {
     height: 100% !important;
     object-fit: cover !important;
     object-position: 72% 100% !important;
