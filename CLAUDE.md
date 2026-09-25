@@ -87,6 +87,7 @@ User rules that stand on every task:
 | `booking.js` | the booking drawer — every "Book a call" on the site, except /contact-us | site Head |
 | `footer.js` | footer 44b, built inside Super's footer | site Head |
 | `covers.js` | inner-page cover graphics ("fields") | site Head |
+| `filterbar.js` | the filter bar (design *Filter Bar Patterns*, G · the command field) — one component for /networks, /governance-record and /blog; styles main.css §13c | site Head, before the page scripts |
 | `blocks.js` | Notion's generic blocks (design *Blog Article Blocks*): the code block's line numbers, prompts, colours, kicker and copy tick — the rest of the four blocks is main.css §12–13 | site Head |
 | `home.css`, `home-dial.css`, `home.js` | homepage sections, JS-enhanced styles, homepage scripts | homepage Head |
 | `brand.css`, `brand.js` | /brand — four spreads with a sticky rail, the marks slab, the colour band (design *Brand Page*) | page Head + site Head |
@@ -1130,6 +1131,31 @@ with `document.elementFromPoint` at the option's centre and a real click.
 **7. Testing.** The automation browser delivers no real mouse clicks and freezes transitions, so
 click-to-focus cannot be verified there — drive it with `input.focus()` plus a native value setter
 and an `input` event, and ask the user to confirm the click itself.
+
+## The filter bar — one component on three pages (2026-09-26, v300, design *Filter Bar Patterns*, G)
+
+`filterbar.js` builds the design's command field: one 44px field — the page's tabs in its left
+cell, the search in the middle (a facet option or a sort typed and **Enter** becomes an ink token;
+**Backspace** on an empty field takes the last off; the × on a token clears it), and the page's
+facets and its sort as icon-led cells at the right, each a panel of options with counts and a
+check (a 0-count option is disabled; a panel scrolls past 332px). `window.encFilterBar({ ink,
+placeholder, tabs, onTab, facets, sorts, state, onChange })` → `{ el, state, sync }`; it holds the
+state and calls `onChange`, **the page keeps its own filtering** (network.js `applyControls`,
+governance.js `apply`, blog.js `apply`). Styles main.css §13c, palettes by `[data-ink]`. Under
+1024px the cells wrap inside the field and a panel opens the bar's width. It follows the recipe in
+"Search and sort on a Notion gallery": choices on pointerdown, a panel closed after the press,
+focus in a timeout. `paint()` writes only what changed — the pages' observers would loop on it.
+
+| Page | Left cell | Facets | Sort |
+|---|---|---|---|
+| /networks | Mainnet / Testnet (Super's picker, hidden, clicked; counts from `encCounts`) | — | Default, Name A–Z, Highest rate (mainnet only) |
+| /governance-record | — | Chain (the rows' chains, glyph discs), Vote (dots) | Recent votes, Oldest first, By chain |
+| /blog (on ink) | — | Tag (the index's tags, a square mark) | Newest first, Oldest first, Shortest read |
+
+**Shortest read** reads the Blogs database's **Read** property (number, minutes — added and filled
+2026-09-26 from each post's words at 230 a minute, the rule post.js uses for its "N min"). It has
+to be **shown on the /blog gallery view** before the option appears; until then the sort offers
+the other two. A new post needs its Read filled (or the script re-run).
 
 ## Page scripts belong in the SITE head (measured 2026-09-16)
 
