@@ -273,3 +273,9 @@ to{background-position: 14px 0;}
 .notion-root[data-enc-security] .enc-sec__verbs{grid-auto-flow: row;grid-template-columns: repeat(auto-fill,minmax(90px,1fr));}
 .notion-root[data-enc-security] .enc-sec__stage{grid-template-columns: minmax(0,1fr);}
 }
+@media (max-width: 900px){.notion-root[data-enc-security] [data-enc-sec="01"] > .enc-sec__rail,.notion-root[data-enc-security] .enc-sec__mleft{position: static;}
+.notion-root[data-enc-security] [data-enc-sec="04"] .enc-sec__pair{grid-template-columns: minmax(0,1fr);}
+}
+@media (max-width: 600px){.notion-root[data-enc-security] .enc-sec__seg{display: grid;grid-template-columns: repeat(2,minmax(0,1fr));}
+.notion-root[data-enc-security] [data-enc-sec="05"]{grid-template-columns: minmax(0,1fr);}
+}

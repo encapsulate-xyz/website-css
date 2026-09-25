@@ -779,3 +779,16 @@
 @media (prefers-reduced-motion: reduce) {
   .enc-svc__band * { transition-duration: 0.01ms !important; }
 }
+
+/* ── 761–900px (2026-09-25) ───────────────────────────────────────────────────────────────────
+   Checked at 390, 672, 720, 800 and 880: every band reads as designed except the bots band in
+   the two-column layout between the design's 760px rules and 900px. There the message card —
+   placed across the seam between Chain and Discord, 460px wide — sat on the chain's event log
+   and covered its lines, and the first pill set "Validator alerts" on two lines inside the pill.
+   The card keeps the seam but rides higher, in the empty band between the lede and the log, and
+   the pills wrap as a row with each label on one line, as the design's own 760px rules do. */
+@media (min-width: 761px) and (max-width: 900px) {
+  .enc-svc__seam { top: 36%; }
+  .enc-svc__botpills { flex-wrap: wrap; justify-content: flex-end; }
+  .enc-svc__botpill { white-space: nowrap; }
+}

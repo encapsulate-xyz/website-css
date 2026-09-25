@@ -96,3 +96,8 @@
 .notion-root .enc-face{grid-template-columns: minmax(0,1fr);}
 }
 .super-content.page__brand,.super-content.page__brand .notion-root{padding-bottom: 0 !important;}
+@media (max-width: 700px){@media (max-width: 520px){.notion-root .enc-marks__row{height: 132px;}
+.notion-root .enc-marks__cell[data-kind="mark"]{padding-top: 30px;}
+.notion-root .enc-marks__cell[data-kind="mark"] .enc-marks__hint{display: none;}
+}
+}

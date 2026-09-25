@@ -27,13 +27,23 @@ if (!url || !tag) { console.error("usage: livecheck.mjs <url> <tag> [check.js] [
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const W = +(process.env.W || 1728), H = +(process.env.H || 996);
 
-const port = 9300 + Math.floor(Math.random() * 500);
+/* Chrome picks a free debugging port itself (0) and writes it to DevToolsActivePort in this run's
+   own profile, so a run can only ever find its own browser. A random port in a fixed range let one
+   of several parallel runs attach to another's Chrome (2026-09-25). */
+const profile = mkdtempSync(join(tmpdir(), "cdp-"));
 const chrome = spawn("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", [
-  "--headless=new", "--hide-scrollbars", `--remote-debugging-port=${port}`,
-  `--user-data-dir=${mkdtempSync(join(tmpdir(), "cdp-"))}`, `--window-size=${W},${H}`, "about:blank"], { stdio: "ignore" });
+  "--headless=new", "--hide-scrollbars", "--remote-debugging-port=0",
+  `--user-data-dir=${profile}`, `--window-size=${W},${H}`, "about:blank"], { stdio: "ignore" });
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 let target;
-for (let i = 0; i < 50 && !target; i++) { await sleep(200); try { target = (await (await fetch(`http://127.0.0.1:${port}/json`)).json()).find(t => t.type === "page"); } catch {} }
+let port = 0;
+for (let i = 0; i < 50 && !target; i++) {
+  await sleep(200);
+  try {
+    if (!port) port = +readFileSync(join(profile, "DevToolsActivePort"), "utf8").split("\n")[0];
+    if (port) target = (await (await fetch(`http://127.0.0.1:${port}/json`)).json()).find(t => t.type === "page");
+  } catch {}
+}
 const ws = new WebSocket(target.webSocketDebuggerUrl);
 await new Promise(r => ws.addEventListener("open", r));
 let id = 0; const pending = {};

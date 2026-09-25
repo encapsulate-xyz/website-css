@@ -466,3 +466,19 @@
 .notion-root video[data-enc-loop]{width: 100%;height: auto;display: block;background: transparent;pointer-events: none;}
 .notion-root video::-webkit-media-controls,.notion-root video::-webkit-media-controls-enclosure,.notion-root video::-webkit-media-controls-panel,.notion-root video[data-enc-loop]::-webkit-media-controls,.notion-root video[data-enc-loop]::-webkit-media-controls-enclosure{display: none !important;-webkit-appearance: none !important;}
 .notion-root video{pointer-events: none;}
+@media (max-width: 900px){.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749{order: -1;padding-bottom: 8px !important;}
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-text:empty{display: none !important;}
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column:not(:has(> :not(.notion-divider):not(.notion-text:empty))){display: none !important;}
+#block-1ee04e9fd50a4439990b8229161f34cc{position: relative !important;top: auto !important;right: auto !important;z-index: 0 !important;width: 100vw !important;max-width: none !important;height: min(88vw,560px) !important;margin: 0 calc(50% - 50vw) !important;overflow: hidden !important;}
+#block-1ee04e9fd50a4439990b8229161f34cc > .notion-video__content{width: 100% !important;height: 100% !important;}
+.notion-root #block-1ee04e9fd50a4439990b8229161f34cc video[data-enc-loop]{width: 100% !important;height: 100% !important;object-fit: cover !important;object-position: 72% 100% !important;}
+#block-6a8e93a3b7ed4648ba82d58ee6546962 .notion-collection-card:nth-child(n),#block-6a8e93a3b7ed4648ba82d58ee6546962 .notion-collection-card:nth-child(n):hover,#block-6a8e93a3b7ed4648ba82d58ee6546962 .notion-collection-card:nth-child(n):active{padding: 0 !important;border: 0 !important;border-radius: 0 !important;background: transparent !important;box-shadow: none !important;}
+#block-4529386b39be4a9aa44d2dbac56537bd td[data-enc-cell="proposal"] .notion-property__title{display: -webkit-box !important;-webkit-line-clamp: 2;-webkit-box-orient: vertical;white-space: normal !important;}
+#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:nth-child(3){padding-left: 14px !important;}
+}
+@media (max-width: 700px){.notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout{position: relative !important;}
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card{position: relative !important;}
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749{padding-left: 20px !important;padding-right: 20px !important;}
+#block-3dce800a513880349091dbe0cd0650a7{--why-gutter: 20px;}
+#block-3dbe800a5138800d8a72c99cdde9bc3f{--svc-gutter: 20px;}
+}

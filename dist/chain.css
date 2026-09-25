@@ -196,3 +196,20 @@ to{transform: translateX(-50%);}
 @media (max-width: 760px){.enc-ch-dock{grid-template-columns: auto minmax(0,1fr);}
 .enc-ch-dock__facts{display: none;}
 }
+@media (max-width: 700px){@media (max-width: 640px){.enc-ch-dock{width: calc(100% - 40px);grid-template-columns: minmax(0,1fr);gap: 10px;padding: 10px 12px;}
+.enc-ch-dock__act{min-width: 0;}
+.enc-ch-dock .enc-ch-dock__act > .enc-ch-dock__copy ~ .notion-callout.notion-callout{flex: none;width: max-content !important;}
+.enc-ch-dock__copy{flex: 1 1 auto;min-width: 0;padding: 0 12px;overflow: hidden;}
+.enc-ch-dock__copy > span{min-width: 0;max-width: 100%;overflow: hidden;text-overflow: ellipsis;}
+}
+}
+@media (max-width: 760px){.enc-ch__vals{height: auto;}
+.enc-ch__vframe{position: static;height: auto;overflow: visible;}
+.enc-ch__vals [data-enc-step]{opacity: 1;}
+.enc-ch__eq > .enc-ch__vcell:nth-child(3) svg{width: 40%;}
+}
+@media (max-width: 900px){.enc-ch__hero{grid-template-columns: minmax(0,1fr);}
+.enc-ch__field{grid-column: 1;grid-row: 2;min-height: 60vw;}
+.enc-ch__discwrap{grid-column: 1;grid-row: 2;}
+.enc-ch__type{padding-right: var(--padx);}
+}

@@ -75,3 +75,5 @@ html:has(.notion-root[data-enc-guide]),html:has(.notion-root[data-enc-guide]) bo
 .enc-gd__shot,.enc-gd__step[data-enc-shot="tall"] .enc-gd__shot{width: 100%;height: auto;}
 .enc-gd__numeral{font-size: 120px;opacity: 0.5;}
 }
+@media (max-width: 900px){.super-content[class*="parent-page__guides-"] .notion-root:not([data-enc-guide]){padding-top: 76px !important;}
+}

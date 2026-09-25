@@ -145,3 +145,7 @@
 }
 @media (prefers-reduced-motion: reduce){.enc-svc__band *{transition-duration: 0.01ms !important;}
 }
+@media (min-width: 761px) and (max-width: 900px){.enc-svc__seam{top: 36%;}
+.enc-svc__botpills{flex-wrap: wrap;justify-content: flex-end;}
+.enc-svc__botpill{white-space: nowrap;}
+}

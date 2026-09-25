@@ -1073,6 +1073,36 @@ rail (3 cards), the network columns and the figures. Page CSS stays in the page 
 A new page script must follow the same rule: site head, and driven by an observer rather than by
 load order.
 
+## Below 900px (2026-09-25, v282)
+
+Every page was checked at 360–880 and fixed where broken, each file in a "BELOW 700px" section at
+its end; **every added rule sits in a media query capped at 900px**, and 1440 was proved unchanged
+by computed-style snapshots (base = the last release from the CDN, local = the new files; only the
+footer's rotating discs differ, and they differ between any two loads). The user's rule: nothing
+above 900px changes in this work. What was learned:
+
+- **An absolute `::before` ground escapes a card that goes `position: static`.** The homepage's
+  stats and testimonial decks fall back to static cards on phones; each card's ink `::before` then
+  sized itself to the page (390×14,607px) and ten of them painted ink over every section below —
+  black headings, empty rows. `position: relative` on the cards.
+- **Covers (§19 + covers.js):** on phones and to 800px the field box is 93.5vw tall and some
+  fields' marks rise above it, so the words reserve `93.5vw × (1 + --enc-field-rise) + 28px`
+  (`rise()` measures it). A crumb or foot pair that does not fit on one line stacks
+  (`fit()` → `data-enc-stack-top|foot`).
+- **The homepage hero's space is six empty dividers** that §11 removes under 1024px (see
+  Homepage); home.css gives it 96px there.
+- Per page: /governance-record's controls and rows reflow (the rationale is always open on touch),
+  /security's sticky blocks are static, /investments' six questions wrap into a grid under 800,
+  /networks' sort and search sit under the tabs up to 860, the chain dock wraps under 640 and the
+  hero stacks to 900, /blog's grid is two columns at 701–900, the raw guides clear the bar to 900.
+- **Left alone on purpose:** the guide's hollow numeral lies behind the capture on a phone (the
+  user: by design), the footer wordmark's crop, the cover field's left crop.
+- **Still open above 900px** (the user said leave it): the unconverted guides start under the bar
+  at every desktop width; /blog's grid squashes at 901–1024; the chain hero is tight at 901–960;
+  the booking drawer wraps at 901–919.
+- **livecheck** now lets Chrome pick its own port (`--remote-debugging-port=0` + the profile's
+  DevToolsActivePort): with a random port, parallel runs attached to each other's browsers.
+
 ## Things that bite in Super / Notion markup
 
 - **A link gets ONE rule under it.** Notion draws its own `text-decoration: underline`, so any rule

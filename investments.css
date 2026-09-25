@@ -411,3 +411,23 @@
 @media (prefers-reduced-motion: reduce) {
   .notion-root[data-enc-invest] .enc-inv__track { animation: none !important; }
 }
+
+/* ── BELOW 800px (2026-09-25) ──────────────────────────────────────────────────────────────────
+   Checked at 390, 672, 720, 800 and 880: the cover, the ink band with the running positions and
+   its line, the answer stage and the ask read as designed and are left alone. One thing broke:
+   the six questions are one row of tabs in a track that scrolls sideways, and the row needs
+   692px — below 800 the last tabs were hidden (only three showed on a phone), with nothing to say
+   there were more. Under 800px the same tabs wrap into the track as a grid — three to a row, two
+   under 500px — so all six are always in view. */
+@media (max-width: 799px) {
+  .notion-root[data-enc-invest] .enc-inv__seg {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-self: stretch;
+    overflow-x: visible;
+  }
+  .notion-root[data-enc-invest] .enc-inv__tab { min-width: 0; }
+  @media (max-width: 500px) {
+    .notion-root[data-enc-invest] .enc-inv__seg { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+}

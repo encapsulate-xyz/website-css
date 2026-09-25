@@ -59,3 +59,8 @@ to{transform: translateX(-50%);}
 }
 @media (prefers-reduced-motion: reduce){.notion-root[data-enc-invest] .enc-inv__track{animation: none !important;}
 }
+@media (max-width: 799px){.notion-root[data-enc-invest] .enc-inv__seg{display: grid;grid-template-columns: repeat(3,minmax(0,1fr));align-self: stretch;overflow-x: visible;}
+.notion-root[data-enc-invest] .enc-inv__tab{min-width: 0;}
+@media (max-width: 500px){.notion-root[data-enc-invest] .enc-inv__seg{grid-template-columns: repeat(2,minmax(0,1fr));}
+}
+}

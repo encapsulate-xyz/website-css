@@ -674,3 +674,73 @@ button.enc-ch__disc:focus-visible { outline: 3px solid rgba(0, 0, 0, 0.32); outl
   .enc-ch-dock { grid-template-columns: auto minmax(0, 1fr); }
   .enc-ch-dock__facts { display: none; }
 }
+
+
+/* ── BELOW 700px ─────────────────────────────────────────────────────────────────────────────
+   Only what was broken on a phone (checked 2026-09-25 at 390 and 672); nothing above 700px moves.
+
+   THE DOCK. Below 760 it keeps two columns, the chain and the action, and the action — the
+   address to copy and the green button — ran past the right edge: the address was cut off and
+   the button sat entirely off screen. On a phone the dock is two rows, the chain over the action,
+   the address taking what the button leaves and ending in an ellipsis. It keeps the page's 20px
+   gutter. One row still fits down to ~611px (the chain, a 21-character address and the button),
+   so the two rows start at 640. */
+@media (max-width: 700px) {
+  @media (max-width: 640px) {
+  .enc-ch-dock {
+    width: calc(100% - 40px);
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    padding: 10px 12px;
+  }
+  .enc-ch-dock__act { min-width: 0; }
+  /* its own width beside an address (main.css §07 makes a button the full row under 520, which is
+     one class less specific than this); alone, it keeps that row */
+  .enc-ch-dock .enc-ch-dock__act > .enc-ch-dock__copy ~ .notion-callout.notion-callout {
+    flex: none;
+    width: max-content !important;
+  }
+  .enc-ch-dock__copy {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0 12px;
+    overflow: hidden;
+  }
+  .enc-ch-dock__copy > span {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  }
+
+}
+
+/* LIDO'S VALIDATORS BAND. A pinned screen with its three figures revealed as the band scrolls
+   past; below 760 the three stack, run taller than the screen, and the pinned frame clips the
+   third figure and its lines, which were never seen. Where they stack the band is simply read:
+   not pinned, every step shown, and the 32 at the size the wide band gives it (two fifths of the
+   width), so it is not 700px of discs. */
+@media (max-width: 760px) {
+  .enc-ch__vals { height: auto; }
+  .enc-ch__vframe {
+    position: static;
+    height: auto;
+    overflow: visible;
+  }
+  .enc-ch__vals [data-enc-step] { opacity: 1; }
+  .enc-ch__eq > .enc-ch__vcell:nth-child(3) svg { width: 40%; }
+}
+
+/* ── 701–900px ──────────────────────────────────────────────────────────────────────────────
+   THE HERO stays two halves down to 761, and there its words had 183–216px beside the disc: the
+   line under the name ran six words to a line and the crumb broke in two. The stacked hero the
+   page already uses under 760 — the words across the top, the field and the disc beneath — now
+   starts at 900. */
+@media (max-width: 900px) {
+  .enc-ch__hero { grid-template-columns: minmax(0, 1fr); }
+  .enc-ch__field { grid-column: 1; grid-row: 2; min-height: 60vw; }
+  .enc-ch__discwrap { grid-column: 1; grid-row: 2; }
+  .enc-ch__type { padding-right: var(--padx); }
+}

@@ -1354,3 +1354,37 @@ STYLING DROPDOWN MENU
 .super-content.page__networks .notion-root {
   padding-bottom: 0 !important;
 }
+
+
+/* ── BELOW 700px ─────────────────────────────────────────────────────────────────────────────
+   Only what was broken on a phone (checked 2026-09-25 at 390 and 672); nothing above 700px moves.
+   The sort menu and the search field are appended after the gallery — over the header on a wide
+   screen, but below 860px they become static and so stood after all twenty-seven cards. The
+   collection (the block itself) is laid out as a column so they come right under the stage picker,
+   and the menu opens from the button's left edge, since the button is at the left here. The same
+   holds wherever the controls are static, so the rule runs to 860 (checked at 720 and 800). */
+@media (max-width: 860px) {
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .notion-collection__header-wrapper { order: 0; }
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .enc-set-controls {
+    order: 1;
+    margin-bottom: 16px !important;
+    position: relative !important;   /* the menu's stacking context, above the cards' link overlays */
+    right: auto !important;          /* the wide bar's offset from the header's right end */
+  }
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .notion-collection-gallery { order: 2; }
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .enc-set-empty { order: 3; }
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__menu {
+    left: 0;
+    right: auto;
+  }
+}
+/* at 360 the search field could not shrink below its input's own width and pushed the page 7px
+   wide: a flex item's min-width is its content's until told otherwise */
+@media (max-width: 700px) {
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-search { min-width: 0; }
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-search__input { min-width: 0; width: 100%; }
+}

@@ -4346,3 +4346,108 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 .notion-root video {
   pointer-events: none;
 }
+
+
+/*********************************************/
+/* BELOW 900px AND BELOW 700px — THE HOMEPAGE ON A TABLET AND A PHONE (2026-09-25)
+/*********************************************/
+/* Written after the user's report that under 700px "everything gets merged into everything", and
+   extended to the 701–900 range the same day. Two blocks, capped at 900px and 700px; nothing at
+   901px or wider changes (verified: a 1440 computed-style diff over 23,389 elements is empty). */
+
+@media (max-width: 900px) {
+  /* THE HERO, THEN THE LOOP. On a wide screen the loop is a backdrop hung behind the hero's right
+     half (absolute, 1728px wide, 90px down). Once the hero's columns stack, that put the sphere
+     behind the lede and the buttons (a phone) or pushed it up under "View Networks" and let the
+     stats band cut it off (a tablet). Here the hero comes first (the root is a flex column, so
+     `order` does it without touching the markup), the loop follows in the flow as a band the
+     width of the screen, cropped to its sphere, and the hero's desktop spacers — eight empty
+     paragraphs and an empty second column, 260px of nothing under the buttons — are dropped. */
+  .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 {
+    order: -1;
+    padding-bottom: 8px !important;
+  }
+  .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-text:empty {
+    display: none !important;
+  }
+  .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column:not(:has(> :not(.notion-divider):not(.notion-text:empty))) {
+    display: none !important;
+  }
+  #block-1ee04e9fd50a4439990b8229161f34cc {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    z-index: 0 !important;
+    width: 100vw !important;
+    max-width: none !important;
+    height: min(88vw, 560px) !important;
+    margin: 0 calc(50% - 50vw) !important;
+    overflow: hidden !important;
+  }
+  #block-1ee04e9fd50a4439990b8229161f34cc > .notion-video__content {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .notion-root #block-1ee04e9fd50a4439990b8229161f34cc video[data-enc-loop] {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: 72% 100% !important;
+  }
+
+  /* WHO WE ARE: THE ROWS STAY ON INK. At full width each team card is `display: contents`, so it
+     has no box and nothing of the Card System is drawn; the 09b fallback (≤900) makes it a grid,
+     and the Card System's paper fill, ring and highlight appeared under a paper-coloured name and
+     quote — the quotes read as blank cards. The card is a row on the section's ink here. */
+  #block-6a8e93a3b7ed4648ba82d58ee6546962 .notion-collection-card:nth-child(n),
+  #block-6a8e93a3b7ed4648ba82d58ee6546962 .notion-collection-card:nth-child(n):hover,
+  #block-6a8e93a3b7ed4648ba82d58ee6546962 .notion-collection-card:nth-child(n):active {
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* THE RECORD'S PROPOSALS WRAP. A title is one line with an ellipsis at full width; in a narrow
+     column the cell clipped it mid-word ("Protocol upgrade to versi"). Two lines, then the clamp. */
+  #block-4529386b39be4a9aa44d2dbac56537bd td[data-enc-cell="proposal"] .notion-property__title {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal !important;
+  }
+
+  /* the pillars' third cell sat 14px outside the column its neighbours use (the gallery bleeds
+     14px and the ≤900 rule took the cell's own padding to 0); it gets the first cell's 14px back */
+  #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:nth-child(3) {
+    padding-left: 14px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  /* THE STAT CARDS CONTAIN THEIR OWN GROUND. The 00c fallback turns the sticky panels back into
+     cards with `position: static`, and each card's ::before — the ink ground and its field,
+     `position: absolute; inset: 0` — then sized itself to the page (.page-index, 14,600px at
+     390 wide). Five of them, each a stacking context, painted ink over every plain section after
+     the band: the hero, the audience split, the networks and governance headings, the blog
+     heading all read black on ink, and only the last card's "100 %" showed through. Relative
+     keeps them in the flow and gives the pseudo its card back. */
+  .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout {
+    position: relative !important;
+  }
+  /* the same for the testimonial cards: the 09 fallback sets them static and their ink ::before
+     took the page (the five quote cards, 14,600px each) */
+  #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card {
+    position: relative !important;
+  }
+
+  /* THE PHONE'S GUTTER, 20px. The hero and the ink bands carry the desktop's 48px sides (the bands
+     through their own variables); at 390 wide that left a 294px measure. */
+  .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  #block-3dce800a513880349091dbe0cd0650a7 { --why-gutter: 20px; }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f { --svc-gutter: 20px; }
+}

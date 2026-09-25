@@ -535,6 +535,11 @@
     var box = document.getElementById(BAND);
     if (!box || window.innerWidth < 701) return null;
     if (box.offsetHeight < window.innerHeight - 4) return null;
+    /* under 900px the band grows past a screen when its field needs more rows (governance.css).
+       Snapping onto it would pull the reader back to its top before the field was seen, so it
+       snaps only while no more than its own bottom padding falls below the screen */
+    if (window.matchMedia("(max-width: 900px)").matches &&
+        box.offsetHeight > window.innerHeight + (parseFloat(getComputedStyle(box).paddingBottom) || 0)) return null;
     return Math.round(docTop(box));
   }
 

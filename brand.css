@@ -646,3 +646,20 @@
 .super-content.page__brand .notion-root {
   padding-bottom: 0 !important;
 }
+
+/* ── BELOW 700px (2026-09-25) ──────────────────────────────────────────────────────────────────
+   Checked at 390 and 672: the cover, the spreads (the rail already stacks above its body under
+   900), the colour band, the type specimens and the rules read as designed and are left alone.
+   One thing broke: in the marks rows the mark's cell is about 100px wide on a phone, the file
+   name ("MARK-REVERSED.SVG") wraps to two lines and ran into the mark. Under 520px — where it
+   wraps — the rows take back the design's 132px and the mark sits below the name. */
+@media (max-width: 700px) {
+  @media (max-width: 520px) {
+    .notion-root .enc-marks__row { height: 132px; }
+    .notion-root .enc-marks__cell[data-kind="mark"] { padding-top: 30px; }
+    /* the hover hint wraps to two lines in the 100px cell and would sit on the mark's foot; a tap
+       leaves hover stuck on a phone. The cell is still the download, and the wordmark cell beside
+       it keeps its hint */
+    .notion-root .enc-marks__cell[data-kind="mark"] .enc-marks__hint { display: none; }
+  }
+}

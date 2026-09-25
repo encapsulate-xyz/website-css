@@ -1756,3 +1756,33 @@
   }
   .notion-root[data-enc-security] .enc-sec__stage { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* ── BELOW 900px, AND BELOW 600px (2026-09-25) ────────────────────────────────────────────────
+   Tablets and phones. Nothing above 900px is touched. Measured at 390, 672, 720, 800 and 880
+   before these rules: 01's rail (heading, lede, figures, Book a call) and 04's stage stay sticky
+   once their bands are one column, so the commitments scrolled under the rail's text and the
+   stage sat hidden behind the first failover card; at 390 04's four tabs cut their labels to "Nor…", and 05 kept its two
+   columns, breaking words mid-letter ("Emergen / cy", "CHA / NNE / L"). */
+@media (max-width: 900px) {
+  .notion-root[data-enc-security] [data-enc-sec="01"] > .enc-sec__rail,
+  .notion-root[data-enc-security] .enc-sec__mleft {
+    position: static;
+  }
+  /* 04 goes one column at 805px by itself; from there to 900 its two columns left the stage's four
+     tabs cut to "Norm…", so under 900 it is one column throughout, the stage above the steps */
+  .notion-root[data-enc-security] [data-enc-sec="04"] .enc-sec__pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  /* 04: the four steps two and two, so each label reads whole */
+  .notion-root[data-enc-security] .enc-sec__seg {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  /* 05: one column — the table and the spine under the heading */
+  .notion-root[data-enc-security] [data-enc-sec="05"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

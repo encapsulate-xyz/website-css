@@ -3986,3 +3986,105 @@ html[data-enc-locked] {
     transition: none !important;
   }
 }
+
+
+/*********************************************/
+/* 19. BELOW 700px — PHONES */
+/*********************************************/
+
+/* Fixes for what broke on a phone or a narrow tablet, and nothing else: every rule here sits
+   under max-width 700px, or 800/900px where the break reached that far, so no wider screen changes (2026-09-25, the user's report "below 700px everything
+   gets merged into everything"). Checked at 390 and 672 against the live pages. */
+
+/* §14 · THE COVER'S FIELD NO LONGER RUNS UNDER THE WORDS (up to 800px, where the field drops
+   below the ask). It is pinned to the cover's foot at 160% of its width — a 924:540 box 93.5vw
+   tall — but the words only kept 70vw clear for it, so the top of the field lay over the foot
+   labels (and on /networks over both buttons), at 390, 672, 720 and 800 alike. The words now keep
+   the field's whole height, plus the gap. Above 800 the field sits beside the words, unchanged. */
+@media (max-width: 800px) {
+  .notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading) > .notion-callout__content {
+    /* --enc-field-rise: how far a field's marks reach above its own box, as a share of the box's
+       height (covers.js) — /networks's largest discs sit on the box's top edge */
+    padding-bottom: calc(93.5vw * (1 + var(--enc-field-rise, 0)) + 28px) !important;
+  }
+}
+
+/* §18 · THE DRAWER'S TWO HALVES STACK UNTIL THEY FIT SIDE BY SIDE. The ink half's basis is 300px
+   and the calendar's 620, so they wrap below 920 — but the full-width stack only started at 760:
+   between the two the ink took the whole first row and the calendar a second row at its own 620,
+   pushed right, with the dimmed page showing beside it (seen at 800 and 880). Up to 900 both take
+   the full width, as they already do under 760. */
+@media (max-width: 900px) {
+  .enc-bk__panel {
+    flex: 1 1 100%;
+    border-left: 0;
+    border-top: 1px solid rgba(250, 250, 248, 0.18);
+  }
+  .enc-bk__ink {
+    flex: 1 1 100%;
+  }
+  /* the calendar keeps the 620px it has beside the ink half: wider, cal.com switches to its week
+     grid, which ran off the panel's right edge at 800 */
+  .enc-bk__cal {
+    width: 100%;
+    max-width: 620px;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 700px) {
+
+  /* §14 · A LABEL PAIR THAT DOES NOT FIT ON ONE LINE STANDS AS TWO. The selectors repeat §14's
+     own, [data-enc-pairs] included, so they outrank the pair's margin rule. covers.js measures each pair
+     on a phone and marks the cover; the second label then starts under the first, without the
+     rule between them, and the hairline under the top row moves down under both. A pair that
+     fits keeps its one line. */
+  .notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading)[data-enc-pairs][data-enc-stack-top] > .notion-callout__content > p.notion-text:nth-of-type(1) {
+    align-self: start !important;
+    padding-bottom: 44px !important;   /* the second line (26) and the row's own 18 */
+  }
+  .notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading)[data-enc-pairs][data-enc-stack-top] > .notion-callout__content > p.notion-text:nth-of-type(2) {
+    align-self: start !important;
+    margin-left: 0 !important;
+    margin-top: 26px !important;
+    padding-left: 0 !important;
+  }
+  .notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading)[data-enc-pairs][data-enc-stack-foot] > .notion-callout__content > p.notion-text:nth-of-type(4) {
+    align-self: start !important;
+  }
+  .notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading)[data-enc-pairs][data-enc-stack-foot] > .notion-callout__content > p.notion-text:nth-of-type(5) {
+    align-self: start !important;
+    margin-left: 0 !important;
+    margin-top: 24px !important;
+    padding-left: 0 !important;
+  }
+  .notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading)[data-enc-pairs][data-enc-stack-top] > .notion-callout__content > p.notion-text:nth-of-type(2)::before,
+  .notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading)[data-enc-pairs][data-enc-stack-foot] > .notion-callout__content > p.notion-text:nth-of-type(5)::before {
+    display: none !important;
+  }
+  /* a first label longer than the line itself wraps rather than running off the cover */
+  .notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading)[data-enc-pairs][data-enc-wrap-top] > .notion-callout__content > p.notion-text:nth-of-type(1),
+  .notion-root > .notion-callout:first-child:has(> .notion-callout__content > h1.notion-heading)[data-enc-pairs][data-enc-wrap-foot] > .notion-callout__content > p.notion-text:nth-of-type(4) {
+    white-space: normal !important;
+    max-width: 100% !important;
+  }
+
+  /* §12 · A TABLE OF TWO OR THREE COLUMNS FITS THE PHONE. The file's max(480px, columns × 112)
+     floor made even Aleo's two-column hardware table scroll sideways and cut "Ubuntu 22.04 LTS";
+     a table that narrow reads at the column's own width. Four columns and more keep the file's
+     sideways scroll with the row labels pinned. */
+  table.notion-table:not(:is([data-enc-chain], [data-enc-source]) *):not(:has(tr:first-child > td:nth-child(4))) {
+    min-width: 0 !important;
+  }
+
+  /* §13 · THE LINK PREVIEW CARD KEEPS ROOM FOR ITS WORDS. The 160px field left a bookmark in a
+     list ~120px for its title, which ran to four lines with the domain cut to a few letters; on a
+     phone the field is 96px, the site's icon unchanged in it. */
+  .notion-bookmark:not([data-enc-source]):not([data-enc-source] *) > a,
+  .notion-external-object:not([data-enc-source]):not([data-enc-source] *) .notion-external-object__attributes {
+    grid-template-columns: 96px minmax(0, 1fr) !important;
+  }
+  .notion-bookmark:not([data-enc-source]):not([data-enc-source] *):not(:has(.notion-bookmark__cover img)) .notion-bookmark__link > div:first-child {
+    left: 48px !important;
+  }
+}

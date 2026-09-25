@@ -249,12 +249,45 @@
     if (!cover.hasAttribute("data-enc-pairs")) cover.setAttribute("data-enc-pairs", "");
     setVar(cover, "--cover-pair-top", Math.ceil(texts[0].getBoundingClientRect().width) + "px");
     setVar(cover, "--cover-pair-foot", Math.ceil(texts[3].getBoundingClientRect().width) + "px");
+    fit(cover, texts);
+  }
+
+  /* ON A PHONE a pair that does not fit on one line stands as two (main.css §19): the second label
+     under the first. Measured from each label's own one-line width, so the answer does not change
+     with the layout it causes. Nothing is marked above 700px. */
+  var PHONE = window.matchMedia ? window.matchMedia("(max-width: 700px)") : null;
+  function natural(p) {
+    var had = p.style.getPropertyValue("white-space");
+    p.style.setProperty("white-space", "nowrap", "important");
+    var r = document.createRange();
+    r.selectNodeContents(p);
+    var w = r.getBoundingClientRect().width;
+    if (had) p.style.setProperty("white-space", had); else p.style.removeProperty("white-space");
+    return Math.ceil(w);
+  }
+  function mark(el, name, on) {
+    if (on && !el.hasAttribute(name)) el.setAttribute(name, "");
+    else if (!on && el.hasAttribute(name)) el.removeAttribute(name);
+  }
+  function fit(cover, texts) {
+    var phone = !!(PHONE && PHONE.matches);
+    var content = cover.querySelector(":scope > .notion-callout__content");
+    var cs = content && getComputedStyle(content);
+    var room = content ? content.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) : 0;
+    // the label paddings of §14: 18 + 19 between the top pair, 16 + 17 between the foot pair
+    var top = phone && natural(texts[0]) + 37 + natural(texts[1]) > room;
+    var foot = phone && natural(texts[3]) + 33 + natural(texts[4]) > room;
+    mark(cover, "data-enc-stack-top", top);
+    mark(cover, "data-enc-stack-foot", foot);
+    mark(cover, "data-enc-wrap-top", phone && natural(texts[0]) + 18 > room);
+    mark(cover, "data-enc-wrap-foot", phone && natural(texts[3]) + 16 > room);
   }
 
   function apply() {
     var cover = document.querySelector(".notion-root > .notion-callout:first-child");
     if (!cover || !cover.querySelector(":scope > .notion-callout__content > h1.notion-heading")) return;
     measure(cover);
+    rise(cover);
     var path = location.pathname.replace(/\/+$/, "") || "/";
     var build = FIELDS[path];
     if (!build) return;
@@ -269,6 +302,23 @@
     build().forEach(function (n) { box.appendChild(n); });
     field.appendChild(box);
     cover.insertBefore(field, cover.firstChild);
+    rise(cover);
+  }
+
+  /* how far the field's marks reach above the box that places them, as a share of its height: on a
+     phone the words keep that much more clear above the field (main.css §19). Every mark is placed
+     in % of the box, so the share holds at any width. */
+  function rise(cover) {
+    var box = cover.querySelector(":scope > .enc-cover > .enc-cover__box");
+    if (!box) return;
+    var b = box.getBoundingClientRect();
+    if (!b.height) return;
+    var top = b.top;
+    Array.prototype.forEach.call(box.children, function (n) {
+      var r = n.getBoundingClientRect();
+      if (r.height && r.top < top) top = r.top;
+    });
+    setVar(cover, "--enc-field-rise", String(Math.round((b.top - top) / b.height * 1000) / 1000));
   }
 
   var t = 0;
