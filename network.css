@@ -108,223 +108,246 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 /*********************************************/
-/* NETWORK COUNT — "Network Count" (Metrics Scroll, two panels) */
+/* NETWORK COUNT — design "Network Count Patterns", I · THE HOLLOW (2026-09-25)
 /*********************************************/
 
-/* Replaces the old MAINNET / TESTNET band (5e). Two full-screen ink panels,
-   one figure each, paged one per gesture by network.js; the rail, the counter
-   and the kicker stay put while the panels change.
+/* One ink band, a screen tall, replacing the two sticky panels (their rail, their fields, the
+   fixed kicker and its collision rule, the paging in network.js). The mainnet figure stands at
+   nearly the band's height as a hollow — eight paper text-shadow copies around a glyph filled in
+   the ground (never text-stroke: Outfit's digits have internal seams) — and beside it, bottom-
+   aligned: the label, the line with the tally (27 green strokes, five to a gate, drawn by
+   network.js from the count), and the testnet figure solid and small with its words.
 
    NOTION (band callout 3dce800a…8154931a…, right after the cover):
-     Text      "Encapsulate · where we run"         the kicker
-     Columns   one callout per panel:
-       callout text "01 / 02"                      the index
-         Heading 1  "28"                           the figure
-         Text       "Networks secured"             the label
-         Text       the note
-
-   GEOMETRY. As on the homepage stat deck: every panel is sticky, one viewport
-   tall, inside a band two viewports tall, so panel 2 slides over panel 1. The
-   panels are opaque, so each draws the whole rail and counter with its own
-   entry active and the stacking shows the current one — no observer needed.
-   The kicker is sticky over both. Nothing between the band and the viewport
-   may clip (no overflow on the band), or sticky stops working. */
+     Text      "Encapsulate · where we run"         the eyebrow, left
+     Text      "27 mainnets · 20 testnets"          the eyebrow, right (numbers from the set)
+     Columns   callout: Heading 1 "27", "Mainnets secured", the line
+               callout: Heading 1 "20", "testnets we help"
+   The columns and the first callout dissolve into one grid; the second callout stays a box — the
+   testnet row, with its hairline above. */
 
 #block-3dce800a51388154931ac3c9478a65b5 {
-  --count-x: max(clamp(28px, 7vw, 110px), calc(50vw - 864px));
+  --pad-x: clamp(28px, 6vw, 96px);
   position: relative !important;
-  display: block !important;
-  width: 100vw !important;
-  max-width: none !important;
-  margin: 0 calc(50% - 50vw) !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: #3A3D38 !important;
-  overflow: visible !important;
-}
-
-#block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__icon,
-#block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__content > span.notion-semantic-string {
-  display: none !important;
-}
-
-/* dissolve the wrappers: kicker and panels become the band's own children */
-#block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__content,
-#block-3dce800a51388154931ac3c9478a65b5 .notion-column-list,
-#block-3dce800a51388154931ac3c9478a65b5 .notion-column {
-  display: contents !important;
-}
-
-/* THE KICKER is the design's fixed bar — 26px down, 40px in, over both panels, taking no height.
-   Two things it must not be, both tried on 2026-09-21: at the panels' own --count-x it lands in
-   the figure's column and overprints it, and as a full-viewport sticky layer (the way the
-   homepage's testimonial label is built) it is clamped by the band and leaves a whole screen
-   before the last figure does. The design's bar is `position: fixed` over a snap scroller, which
-   is a thing sticky cannot be inside a 2-screen band; what stands in for it is this strip plus
-   the collision rule below. */
-#block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__content > p.notion-text {
-  position: sticky !important;
-  top: 26px !important;
-  z-index: 3 !important;
-  box-sizing: border-box !important;
-  height: 16px !important;
-  margin: 0 0 -16px !important;
-  padding: 0 0 0 40px !important;
-  min-height: 0 !important;
-  max-width: none !important;
-  pointer-events: none !important;
-  font-family: var(--type-mono), ui-monospace, monospace !important;
-  font-size: 11px !important;
-  line-height: 16px !important;
-  letter-spacing: 0.14em !important;
-  text-transform: uppercase !important;
-  color: #B4B4B4 !important;
-}
-
-/* THE COLLISION RULE. At the end of the band the last panel rises out, and its centred stack
-   passes under a strip that is pinned to the viewport — that overprint is what the band showed
-   before (reported 2026-09-21). network.js measures the showing panel's content against the
-   label's own 42px and marks the band; the label fades for exactly that window. */
-#block-3dce800a51388154931ac3c9478a65b5[data-enc-leaving] > .notion-callout__content > p.notion-text {
-  opacity: 0 !important;
-  transition: opacity 0.18s ease !important;
-}
-
-/* the panels */
-#block-3dce800a51388154931ac3c9478a65b5 .notion-callout {
-  --count-i: 0;
-  --count-fill: #DCEEC7;
-  --count-field: url("../svg/count-rings.svg");
-  position: sticky !important;
-  top: 0 !important;
-  box-sizing: border-box !important;
-  height: 100vh !important;
-  height: 100dvh !important;
-  margin: 0 !important;
-  padding: 0 var(--count-x) 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  overflow: hidden !important;
-  display: flex !important;
-  align-items: stretch !important;
-  padding-top: 72px !important;   /* the kicker's strip: 26 + 16 + air, so the figure clears it */
-  /* rail dots, the panel's field, the ink */
-  background-color: #3A3D38 !important;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%229%22 height=%2228%22 viewBox=%220 0 9 28%22%3E%3Cg fill=%22%23FAFAF8%22 fill-opacity=%220.4%22%3E%3Ccircle cx=%224.5%22 cy=%224.5%22 r=%224.5%22/%3E%3Ccircle cx=%224.5%22 cy=%2223.5%22 r=%224.5%22/%3E%3C/g%3E%3C/svg%3E"),
-    var(--count-field) !important;
-  background-repeat: no-repeat, no-repeat !important;
-  background-position: right 40px center, center !important;
-  background-size: 9px 28px, cover !important;
-}
-
-#block-3dce800a51388154931ac3c9478a65b5 .notion-column + .notion-column .notion-callout {
-  --count-i: 1;
-  --count-fill: #D2E3F6;
-  --count-field: url("../svg/count-dots.svg");
-}
-
-/* the rail's active pill, centred on the 9px dot column at right: 40px */
-#block-3dce800a51388154931ac3c9478a65b5 .notion-callout::after {
-  content: "" !important;
-  position: absolute !important;
-  right: 31.5px !important;
-  top: calc(50% - 14px + var(--count-i) * 19px) !important;
-  width: 26px !important;
-  height: 9px !important;
-  border-radius: 999px !important;
-  background: #FAFAF8 !important;
-  pointer-events: none !important;
-}
-
-#block-3dce800a51388154931ac3c9478a65b5 .notion-callout > .notion-callout__icon {
-  display: none !important;
-}
-
-/* index, figure, label, note — centred in the screen, 22px apart */
-#block-3dce800a51388154931ac3c9478a65b5 .notion-callout > .notion-callout__content {
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
-  align-items: flex-start !important;
-  gap: 22px !important;
-  width: 100% !important;
+  box-sizing: border-box !important;
+  width: 100vw !important;
   max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
+  min-height: 100vh !important;
+  margin: 0 calc(50% - 50vw) !important;
+  padding: clamp(64px, 8vw, 112px) var(--pad-x) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #2A2C28 !important;
+  overflow: hidden !important;
 }
-
-#block-3dce800a51388154931ac3c9478a65b5 .notion-callout > .notion-callout__content > * {
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-#block-3dce800a51388154931ac3c9478a65b5 .notion-callout > .notion-callout__content > .notion-heading__anchor {
+#block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__icon,
+#block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__content > span.notion-semantic-string,
+#block-3dce800a51388154931ac3c9478a65b5 .notion-callout .notion-callout__icon,
+#block-3dce800a51388154931ac3c9478a65b5 .notion-callout > .notion-callout__content > span.notion-semantic-string {
   display: none !important;
 }
+#block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__content {
+  display: block !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
 
-/* the index ("01 / 02") */
-#block-3dce800a51388154931ac3c9478a65b5 .notion-callout > .notion-callout__content > span.notion-semantic-string {
+/* the eyebrow: 26px down, the band's own sides, its two halves apart */
+#block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__content > p.notion-text {
+  position: absolute !important;
+  top: 26px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+  max-width: none !important;
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 11px !important;
-  line-height: 16px !important;
+  line-height: 1.4 !important;
   letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
   color: #B4B4B4 !important;
 }
+#block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__content > p.notion-text:first-of-type { left: var(--pad-x) !important; }
+#block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__content > p.notion-text:nth-of-type(2) { right: var(--pad-x) !important; }
 
-#block-3dce800a51388154931ac3c9478a65b5 .notion-callout > .notion-callout__content > h1.notion-heading {
-  max-width: none !important;
-  font-family: var(--type-display) !important;
-  font-weight: 600 !important;
-  font-size: clamp(58px, 13vw, 168px) !important;
-  line-height: 0.88 !important;
-  --h1-line-height: 0.88 !important;
-  letter-spacing: -0.05em !important;
-  font-variant-numeric: tabular-nums !important;
-  text-wrap: nowrap !important;
-  color: var(--count-fill) !important;
+/* the stage: the hollow figure | the label, the line and its tally, the testnet row */
+#block-3dce800a51388154931ac3c9478a65b5 .notion-column-list {
+  display: grid !important;
+  grid-template-columns: auto minmax(0, 1fr) auto !important;
+  grid-template-rows: 1fr auto auto auto auto !important;
+  grid-template-areas:
+    "fig .     .    "
+    "fig label label"
+    "fig line  tally"
+    "fig test  test "
+    "fig foot  foot " !important;
+  column-gap: clamp(16px, 2.5vw, 36px) !important;
+  row-gap: 20px !important;
+  align-items: center !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+#block-3dce800a51388154931ac3c9478a65b5 .notion-column,
+#block-3dce800a51388154931ac3c9478a65b5 .notion-column:first-child .notion-callout,
+#block-3dce800a51388154931ac3c9478a65b5 .notion-column:first-child .notion-callout > .notion-callout__content,
+#block-3dce800a51388154931ac3c9478a65b5 .notion-column:last-child {
+  display: contents !important;
+}
+/* the design's right column ends clamp(12px, 2vw, 40px) above the figure's foot */
+#block-3dce800a51388154931ac3c9478a65b5 .notion-column-list::after {
+  content: "";
+  grid-area: foot;
+  height: clamp(12px, 2vw, 40px);
+  margin-top: -20px;
 }
 
-#block-3dce800a51388154931ac3c9478a65b5 .notion-callout > .notion-callout__content > p.notion-text:nth-of-type(1) {
-  font-family: var(--type-display) !important;
+/* Super's anchor before each heading is a flex and a grid item here: out of the layout, still a
+   target (it sat as a 14px step before the testnet figure) */
+#block-3dce800a51388154931ac3c9478a65b5 .notion-heading__anchor {
+  position: absolute !important;
+}
+
+/* the hollow */
+#block-3dce800a51388154931ac3c9478a65b5 .notion-column:first-child h1 {
+  grid-area: fig;
+  align-self: end !important;
+  margin: 0 clamp(8px, 1.5vw, 36px) 0 0 !important;   /* the design's 24–72px, less the grid's gap */
+  padding: 0 !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: clamp(200px, 38vw, 560px) !important;
+  line-height: 0.82 !important;
+  letter-spacing: -0.06em !important;
+  font-variant-numeric: tabular-nums !important;
+  color: #2A2C28 !important;
+  text-shadow:
+    2px 0 0 #FAFAF8, 1.41px 1.41px 0 #FAFAF8, 0 2px 0 #FAFAF8, -1.41px 1.41px 0 #FAFAF8,
+    -2px 0 0 #FAFAF8, -1.41px -1.41px 0 #FAFAF8, 0 -2px 0 #FAFAF8, 1.41px -1.41px 0 #FAFAF8 !important;
+  max-width: none !important;
+  white-space: nowrap !important;
+}
+
+#block-3dce800a51388154931ac3c9478a65b5 .notion-column:first-child p.notion-text:first-of-type {
+  grid-area: label;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 11px !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #B4B4B4 !important;
+}
+#block-3dce800a51388154931ac3c9478a65b5 .notion-column:first-child p.notion-text:nth-of-type(2) {
+  grid-area: line;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+  max-width: 26ch !important;
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: clamp(16px, 1.6vw, 20px) !important;
+  line-height: 1.5 !important;
+  color: #C9C9C4 !important;
+  text-wrap: pretty;
+}
+
+/* the tally: one stroke per mainnet, five to a gate, the fifth struck across */
+.enc-tally {
+  grid-area: tally;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.enc-tally__gate {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  gap: 5px;
+  height: clamp(40px, 5vw, 72px);
+}
+.enc-tally__gate > i {
+  width: 3px;
+  border-radius: 1px;
+  background: #99CC66;
+}
+.enc-tally__gate > b {
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  top: 50%;
+  height: 3px;
+  border-radius: 1px;
+  background: #99CC66;
+  transform: rotate(-24deg);
+}
+
+/* the testnet row: solid and small, under a hairline */
+#block-3dce800a51388154931ac3c9478a65b5 .notion-column:last-child .notion-callout {
+  grid-area: test;
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 14px !important;
+  margin: 0 !important;
+  padding: 20px 0 0 !important;
+  border: 0 !important;
+  border-top: 1px solid rgba(250, 250, 248, 0.18) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#block-3dce800a51388154931ac3c9478a65b5 .notion-column:last-child .notion-callout > .notion-callout__content {
+  display: flex !important;
+  flex-direction: row !important;   /* Super stacks a callout's content */
+  flex-wrap: wrap !important;
+  align-items: baseline !important;
+  gap: 14px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#block-3dce800a51388154931ac3c9478a65b5 .notion-column:last-child h1 {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: clamp(44px, 6vw, 88px) !important;
+  line-height: 0.86 !important;
+  letter-spacing: -0.055em !important;
+  font-variant-numeric: tabular-nums !important;
+  color: #FAFAF8 !important;
+}
+#block-3dce800a51388154931ac3c9478a65b5 .notion-column:last-child p.notion-text {
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+  max-width: 24ch !important;
+  font-family: "Outfit", sans-serif !important;
   font-weight: 500 !important;
-  font-size: clamp(19px, 2.2vw, 30px) !important;
-  line-height: 1.2 !important;
-  letter-spacing: -0.022em !important;
+  font-size: clamp(16px, 1.6vw, 22px) !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.024em !important;
   color: #FAFAF8 !important;
 }
 
-#block-3dce800a51388154931ac3c9478a65b5 .notion-callout > .notion-callout__content > p.notion-text:nth-of-type(2) {
-  font-family: var(--type-body), system-ui, sans-serif !important;
-  font-size: clamp(14px, 1.3vw, 16.5px) !important;
-  line-height: 1.55 !important;
-  letter-spacing: normal !important;
-  color: #C9C9C4 !important;
-}
-
-/* Narrow screens: the panels stand as two ink blocks in sequence — no rail,
-   no sticking, no paging. */
-@media (max-width: 700px) {
-  #block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__content > p.notion-text {
-    position: static !important;
-    height: auto !important;
-    margin: 0 !important;
-    padding: 40px var(--count-x) 0 !important;
+/* narrow: the figure over the rest, as the design's one column */
+@media (max-width: 760px) {
+  #block-3dce800a51388154931ac3c9478a65b5 .notion-column-list {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: auto auto auto auto auto !important;
+    /* the tally under the line: beside it, the line ran to four words a row */
+    grid-template-areas: "fig" "label" "line" "tally" "test" !important;
+    row-gap: 20px !important;
   }
-
-  #block-3dce800a51388154931ac3c9478a65b5 .notion-callout {
-    position: relative !important;
-    height: auto !important;
-    padding: 56px var(--count-x) !important;
-    background-image: var(--count-field) !important;
-    background-position: center !important;
-    background-size: cover !important;
-  }
-
-  #block-3dce800a51388154931ac3c9478a65b5 .notion-callout::after {
-    display: none !important;
+  #block-3dce800a51388154931ac3c9478a65b5 .notion-column:first-child h1 { margin: 0 0 12px !important; }
+  #block-3dce800a51388154931ac3c9478a65b5 .notion-column-list::after { display: none; }
+  #block-3dce800a51388154931ac3c9478a65b5 > .notion-callout__content > p.notion-text:nth-of-type(2) {
+    top: 46px !important;
+    left: var(--pad-x) !important;
+    right: auto !important;
   }
 }
 

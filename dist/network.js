@@ -1,156 +1,36 @@
-/* /networks — the Network Count panels paged one per gesture. Linked from the /networks Head.
-
-   The two count panels (network.css "NETWORK COUNT") are sticky, one viewport each, so the page
-   already scrolls through them; this only decides where scrolling stops inside the band. Same
-   rules as the homepage decks (home.js), which were tuned on a trackpad:
-     - wheel / trackpad: one gesture = one panel. A new gesture is a 250ms pause, or — at least
-       450ms after the page turned and once deltas fell below half their peak — a delta 4× the
-       smallest since (≥ 20). Momentum tails last seconds and a swipe's own deltas wobble.
-     - keys, scrollbar, touch: when the page comes to rest inside the band, settle on the panel in
-       the direction of travel.
-     - the browser's own smooth scroll; stops cached, dropped on resize and on DOM changes.
-   Under 701px the panels are not sticky and nothing is paged. */
+/* /networks — the page's scripts: the Network Count band's tally, the 5m strip, the counts
+   from the Networks set, and the set drawn as the design's index. Loaded from the site head;
+   everything runs off one observer, so a client-side arrival at /networks builds it too. */
 (function () {
-  /* NAME THEM APART. Both bands live in this one IIFE, and a second `var BAND` further down
-     (the 5m marks band) overwrote this one at run time — so the count deck and the kicker were
-     both measuring the wrong element, which is why the label would not get out of the figure's
-     way (2026-09-21). */
-  var COUNT_BAND = "block-3dce800a51388154931ac3c9478a65b5";
-  window.encNetwork = { version: 2 };   // a marker, so a live page can be asked whether this ran
-  var EPS = 2, QUIET = 180, NEW_GAP = 250, MIN_LOCK = 450;
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-  var docTop = function (el) { return el.getBoundingClientRect().top + window.scrollY; };
+  window.encNetwork = { version: 3 };   // a marker, so a live page can be asked whether this ran
 
-  var cache = null;
-  function deck() {
-    if (cache !== null) return cache;
-    // A negative answer is NOT cached: the first call can land before network.css has applied (the
-    // panels are not sticky yet), and caching that would leave the deck dead until the next resize.
-    var box = document.getElementById(COUNT_BAND);
-    if (!box) return false;
-    var panels = box.querySelectorAll(".notion-callout");
-    if (panels.length < 2 || getComputedStyle(panels[0]).position !== "sticky") return false;
-    // sticky panels report their stuck position; measure from the band's bottom, which never moves
-    var h = panels[0].offsetHeight;
-    var bottom = docTop(box) + box.offsetHeight - (parseFloat(getComputedStyle(box).paddingBottom) || 0);
-    var stops = [];
-    for (var i = 0; i < panels.length; i++) stops.push(Math.round(bottom - (panels.length - i) * h));
-    return (cache = { stops: stops, h: h });
-  }
-  function invalidate() { cache = null; }
-
-  var anim = null, lastRest = window.scrollY, gestureUntil = 0;
-  function scrollToY(target) {
-    target = Math.max(0, Math.min(target, document.documentElement.scrollHeight - window.innerHeight));
-    if (Math.abs(target - window.scrollY) < 1) { lastRest = target; return; }
-    var smooth = !reduced.matches;
-    if (anim) clearTimeout(anim.timer);
-    anim = { target: target, timer: setTimeout(finish, smooth ? 900 : 50) };
-    window.scrollTo({ top: target, behavior: smooth ? "smooth" : "instant" });
-  }
-  function finish() { if (!anim) return; clearTimeout(anim.timer); lastRest = window.scrollY; anim = null; }
-  function arrived() { if (anim && Math.abs(window.scrollY - anim.target) <= 1) finish(); }
-
-  function inside(d, y) { return d && y > d.stops[0] - EPS && y < d.stops[d.stops.length - 1] + EPS; }
-  function onStop(d, y) { return d.stops.some(function (s) { return Math.abs(s - y) <= EPS; }); }
-  function landStop(d, y, dir) {
-    var s = d.stops, half = d.h / 2;
-    if (dir > 0) { for (var i = 0; i < s.length; i++) if (s[i] >= y - half) return s[i]; return s[s.length - 1]; }
-    for (var j = s.length - 1; j >= 0; j--) if (s[j] <= y + half) return s[j];
-    return s[0];
-  }
-  function nextStop(d, y, dir) {
-    var s = d.stops;
-    if (dir > 0) { for (var i = 0; i < s.length; i++) if (s[i] > y + EPS) return s[i]; }
-    else { for (var j = s.length - 1; j >= 0; j--) if (s[j] < y - EPS) return s[j]; }
-    return null;
-  }
-
-  var lastWheel = 0, lockedAt = 0, peak = 0, tailMin = Infinity, decayed = false, locked = false;
-  window.addEventListener("wheel", function (e) {
-    if (e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
-    var now = performance.now(), abs = Math.abs(e.deltaY), gap = now - lastWheel;
-    lastWheel = now;
-    gestureUntil = now + QUIET;
-    if (locked && gap <= NEW_GAP) {
-      peak = Math.max(peak, abs);
-      if (abs < peak * 0.5) decayed = true;
-      var rise = decayed && now - lockedAt > MIN_LOCK && abs > Math.max(tailMin * 4, 20);
-      if (decayed) tailMin = Math.min(tailMin, abs);
-      if (!rise) { e.preventDefault(); return; }
+  /* ── the Network Count band (design "Network Count Patterns", I · the hollow, 2026-09-25) ──
+     The figures, the label, the line and the testnet row are Notion's (network.css lays them
+     out). This adds only the tally beside the line — one green stroke per mainnet, five to a gate,
+     the fifth struck across — decoration drawn from the count, and it follows the count. The
+     two sticky panels it replaced were paged here one gesture at a time; that went with them. */
+  var COUNT_LINE = "block-3dce800a513881918fcaebc5e6b88130";   // "A validator of ours in the active set…"
+  function tally(n) {
+    var line = document.getElementById(COUNT_LINE);
+    if (!line || !(n > 0)) return;
+    var t = line.parentNode.querySelector(":scope > .enc-tally");
+    if (t && t.getAttribute("data-n") === String(n)) return;
+    if (!t) {
+      t = document.createElement("span");
+      t.className = "enc-tally";
+      t.setAttribute("aria-hidden", "true");
+      line.parentNode.insertBefore(t, line.nextSibling);
     }
-    locked = false;
-    var d = deck(), dir = e.deltaY > 0 ? 1 : -1;
-    var y = anim ? anim.target : window.scrollY;
-    if (!inside(d, y)) { if (anim) e.preventDefault(); return; }
-    var target = onStop(d, y) ? nextStop(d, y, dir) : landStop(d, y, dir);
-    if (target === null) { if (anim) e.preventDefault(); return; } // past the last panel: scroll on
-    e.preventDefault();
-    locked = true; lockedAt = now; peak = abs; tailMin = Infinity; decayed = false;
-    scrollToY(target);
-  }, { passive: false });
-
-  var touching = false, restTimer = 0, retry = 0;
-  function settle() {
-    if (anim || touching) return;
-    if (performance.now() < gestureUntil) { clearTimeout(retry); retry = setTimeout(settle, QUIET + 20); return; }
-    var d = deck(), y = window.scrollY;
-    if (!inside(d, y)) { lastRest = y; return; }
-    if (onStop(d, y)) { lastRest = y; return; }
-    var dir = y >= lastRest ? 1 : -1;
-    var t = onStop(d, lastRest) && Math.abs(y - lastRest) < d.h ? nextStop(d, lastRest, dir) : landStop(d, y, dir);
-    scrollToY(t === null ? landStop(d, y, dir) : t);
-  }
-  /* The kicker is a strip pinned to the viewport, so at the end of the band — where the last
-     panel rises out — the panel's own stack passes under it. Rather than guess at a scroll
-     position, measure: the label occupies 26px to 42px, so the moment a panel's content crosses
-     that line the label is in the way and fades. It comes back on the way up, and a band that is
-     not on screen is left alone. */
-  var LABEL_TOP = 26, LABEL_BOTTOM = 42;   /* the strip the design's bar occupies */
-
-  function paintKicker() {
-    var box = document.getElementById(COUNT_BAND);
-    if (!box) return;
-    var rect = box.getBoundingClientRect();
-    var leaving = false;
-    if (rect.bottom > 0 && rect.top < window.innerHeight) {
-      /* the panel's stack fills the screen (its children are centred in it), so the box says
-         nothing about where the ink is — measure the first thing in it, the index line. */
-      /* the panels only: the band is a callout too, and its own first child is the kicker —
-         measured against itself the rule was true everywhere. Every line of a panel is checked,
-         not just the first: once the index has passed the label, the figure is the thing in it. */
-      var panels = box.querySelectorAll(".notion-callout"), showing = false;
-      for (var i = 0; i < panels.length; i++) {
-        var stack = panels[i].querySelector(":scope > .notion-callout__content");
-        if (!stack) continue;
-        var line = stack.firstElementChild;
-        while (line) {
-          var s = line.getBoundingClientRect();
-          if (s.height) {
-            if (s.top < LABEL_BOTTOM + 6 && s.bottom > LABEL_TOP - 6) leaving = true;
-            if (s.bottom > 0 && s.top < window.innerHeight) showing = true;
-          }
-          line = line.nextElementSibling;
-        }
-      }
-      /* and the label does not stand alone: once every panel's lines have gone past, the band is
-         its ground and nothing else, and a lone kicker over it reads as a mistake. */
-      if (!showing) leaving = true;
+    t.setAttribute("data-n", String(n));
+    t.textContent = "";
+    for (var g = 0; g * 5 < n; g++) {
+      var m = Math.min(5, n - g * 5), gate = document.createElement("span");
+      gate.className = "enc-tally__gate";
+      for (var i = 0; i < Math.min(4, m); i++) gate.appendChild(document.createElement("i"));
+      if (m === 5) gate.appendChild(document.createElement("b"));
+      t.appendChild(gate);
     }
-    if (leaving === box.hasAttribute("data-enc-leaving")) return;
-    if (leaving) box.setAttribute("data-enc-leaving", "");
-    else box.removeAttribute("data-enc-leaving");
   }
-
-  var hasScrollEnd = "onscrollend" in window;
-  if (hasScrollEnd) window.addEventListener("scrollend", function () { arrived(); setTimeout(settle, 30); });
-  window.addEventListener("scroll", function () {
-    if (!hasScrollEnd) { clearTimeout(restTimer); restTimer = setTimeout(function () { arrived(); settle(); }, 140); }
-    arrived();
-    paintKicker();
-  }, { passive: true });
-  window.addEventListener("touchstart", function () { touching = true; if (anim) finish(); }, { passive: true });
-  window.addEventListener("touchend", function () { touching = false; if (!hasScrollEnd) setTimeout(settle, 140); }, { passive: true });
 
   /* ── 5m, the set as a marquee ── (design "Networks Set" 5m, 2026-09-25)
      Under the band's heading, every chain — all of them, not a tier — runs as one strip of names at
@@ -260,6 +140,7 @@
      the words around them stay Notion's; if the counts cannot be read, Notion's numbers stand. */
   var FIG_MAIN = "block-3dce800a5138818e8123ed8b8471935d";
   var FIG_TEST = "block-3dce800a5138812a995cd075afdf49a2";
+  var EYEBROW = "block-3e6e800a5138814d87b0d0358084ef7b";   /* "27 mainnets · 20 testnets" */
   var TEAMS = "block-3dde800a513881b7ae8dc2e00b42d7f9";   /* "Thirty-five teams chose us." */
   var ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split(" ");
   var TENS = "  twenty thirty forty fifty sixty seventy eighty ninety".split(" ");
@@ -292,13 +173,27 @@
       return;
     }
   }
+  // "27 mainnets · 20 testnets": the first number and the second, the words Notion's
+  function setPair(el, a, b) {
+    if (!el || !(a >= 0) || !(b >= 0)) return;
+    var walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), node, k = 0;
+    while ((node = walk.nextNode())) {
+      var v = node.nodeValue.replace(/\d+/g, function (d) { k++; return String(k === 1 ? a : k === 2 ? b : d); });
+      if (v !== node.nodeValue) node.nodeValue = v;
+    }
+  }
   function figures() {
+    // the tally draws at once from the figure Notion holds, and follows the set's count below
+    var fig = document.getElementById(FIG_MAIN);
+    if (fig) tally(parseInt(fig.textContent.replace(/\D+/g, ""), 10));
     if (typeof window.encCounts !== "function") return;
-    if (!document.getElementById(FIG_MAIN) && !document.getElementById(BAND)) return;
+    if (!fig && !document.getElementById(BAND)) return;
     window.encCounts().then(function (c) {
       if (!c) return;
       setNumber(document.getElementById(FIG_MAIN), c.mainnet);
       setNumber(document.getElementById(FIG_TEST), c.testnet);
+      setPair(document.getElementById(EYEBROW), c.mainnet, c.testnet);
+      tally(c.mainnet);
       setLead(document.getElementById(TEAMS), c.chains);
     });
   }
@@ -578,13 +473,12 @@
 
   var ct = 0;
   new MutationObserver(function () {
-    invalidate(); marks(); figures();
+    marks(); figures();
     clearTimeout(ct); ct = setTimeout(controls, 0);   // Super re-renders every row on a view switch
   }).observe(document.body, { childList: true, subtree: true });
   marks();
   controls();
   window.addEventListener("load", function () { marks(); controls(); });
-  window.addEventListener("resize", invalidate);
-  window.addEventListener("load", function () { invalidate(); paintKicker(); });
-  paintKicker();
+  window.addEventListener("load", figures);
+  figures();
 })();

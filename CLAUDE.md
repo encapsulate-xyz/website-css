@@ -95,7 +95,7 @@ User rules that stand on every task:
 | `chain.css`, `chain.js` | /networks/mainnet/&lt;chain&gt; — the 27 chain pages (design *Chain Page Combined*), built from each Networks set row page. Site head, scoped by `[data-enc-chain]` | site Head |
 | `notion/chain-pages.json`, `scripts/chain_pages.py` | each chain page's words and facts, researched per chain (sources, notes, how "since" was found), and the writer that puts them into the row pages | — |
 | `guide.css`, `guide.js` | /guides/&lt;stage&gt;/&lt;chain&gt; — every guide page (design *Staking Guide Variation 1d*). A guide has no page head of its own, so both are in the site head and scoped by path | site Head |
-| `network.css`, `network.js` | /networks (network.js pages the Network Count panels, same gesture rules as home.js decks) | its page Head |
+| `network.css`, `network.js` | /networks — the Network Count band (the hollow; network.js draws its tally), the set as the Networks Index, 5m. network.js is in the site head | its page Head + site Head |
 | `services.css`, `services.js` | /services — four services and the ask under the cover (design *Services Categories Chosen*), built from the page's callouts, four inline tables and a copy toggle | page Head + site Head |
 | `investments.css`, `investments.js` | /investments — two bands (design *Investments Page*): the thesis and the running band of positions on ink, the six questions on paper | page Head + site Head |
 | `governance.css` + `governance.js` (the record page: count band, pillars, controls, rows), `blog.css`, `brand.css`, `contact-us.css`, `guides.css`, `investments.css`, `security.css`, `services.css` | each page's CSS, moved out of Super's page Code panels on 2026-09-15 (old cover rules removed, the rest kept as it was) | each page's Head |
@@ -285,30 +285,20 @@ rest within a third of a screen settles onto it, nothing snaps under 701px or wi
 The catch rule is testable in Node (`scratchpad/snaptest.js`); the automation tab fires no scroll
 events.
 
-**Network Count (/networks, network.css + network.js).** The kicker is the design's fixed bar —
-**26px down, 40px in**, over both panels, taking no height. Two other constructions were tried on
-2026-09-21 and both were worse: at the panels' own `--count-x` the label lands in the figure's
-column and overprints it, and as a full-viewport sticky layer (the way the homepage's testimonial
-label is built, home.css §09) the band clamps it and it leaves a whole screen before the last
-figure. The design's bar is `position: fixed` over a snap scroller, which sticky cannot be inside a
-two-screen band, so what stands in for it is the strip **plus a collision rule**: `paintKicker()`
-measures every line of every panel against the 26–42 strip and marks the band `[data-enc-leaving]`
-while one crosses it, or once no line is on screen at all; network.css fades the label for exactly
-that window. Two traps in writing that rule — the band is a `.notion-callout` too (its own first
-child is the kicker, so it was measuring the label against itself), and a panel's stack fills the
-screen because its children are centred in it, so the stack's box says nothing about where the ink
-is. The logic is testable in Node: `scratchpad/kickertest.js`.
-  **And the bug under all of it:** `network.js` declared `var BAND` twice in the one IIFE — the
-  count band at the top, the 5m marks band 140 lines down — so the second overwrote the first
-  before either was used, and both the count deck and the kicker were measuring the marks band.
-  The count band is `COUNT_BAND` now. A second `var` of the same name in the same scope is silent;
-  when a rule that measures correctly in the console does nothing on the page, check the id. Band callout `3dce800a…8154931a…` right
-after the cover: Text kicker, then a column list with one callout per panel (callout text "01 / 02",
-Heading 1 figure, Text label, Text note). Two sticky full-screen ink panels in a 2-screen band, each
-drawing the rail with its own pill active; fields are `svg/count-rings.svg` / `svg/count-dots.svg`
-(referenced as `../svg/…` from dist, so they come from the same tag). The figures are Notion text
-whose digits `network.js` `figures()` replaces with the set's own counts (see "Every network count
-is the Networks set's own", under The Networks set).
+**Network Count (/networks, network.css + network.js; design *Network Count Patterns*, "I · The
+hollow", 2026-09-25, v298).** One ink band a screen tall right after the cover (callout
+`3dce800a…8154931a…`), replacing the two sticky panels, their rail and fields, the fixed kicker
+with its collision rule, and network.js's paging (all removed). The eyebrow is two Notion texts, 26px
+down at the band's sides: "Encapsulate · where we run" and "27 mainnets · 20 testnets" (its numbers
+from the set). The column list dissolves into one grid: the mainnet Heading 1 as a hollow at
+clamp(200px, 38vw, 560px) — the ground-coloured glyph ringed by eight paper text-shadow copies — and
+beside it, bottom-aligned, "Mainnets secured", the line "A validator of ours in the active set on
+every one of them." with **the tally** (network.js: one #99CC66 stroke per mainnet, five to a gate,
+the fifth struck; the count's own), and the testnet callout kept as a row under a hairline: Heading
+1 "20" solid and small with "testnets we help". Removed from Notion: the panels' "01 / 02" and
+"02 / 02" and the note "Testnets we joined before there was anything to earn.". Super's heading
+anchor span is a flex and grid item — it is taken out of the layout. Under 760 the figure stands
+over the rest and the tally goes under its line.
 
 **The navigation bar (§04 + navbar.js, 2026-09-21, design *Navbar 4f Page*).** The bar is
 **Super's own navigation** — its items, its groups and its radix dropdown, keyboard included —
@@ -804,7 +794,6 @@ can never drift from the CSS that positions it.
 | Asset | Files |
 |---|---|
 | Section fields and drawings | `svg/stat-field-*.svg`, `svg/circle-online.svg`, `svg/fork-arcs-*.svg`, `svg/5k-fan-and-rings.svg`, `svg/5o-twin-fans.svg`, `svg/9c-inverted-horizons.svg`, `svg/rail-dots.svg`, `svg/team-crew.svg` |
-| Cover fields (/networks count) | `svg/count-rings.svg`, `svg/count-dots.svg` |
 | Brand | `svg/wordmark-reversed.svg` (footer, the ink navbar), `svg/wordmark.svg` (the /brand cover, paper since 2026-09-24 — the reversed file with its letters and band in `#000000`), `svg/mark-a.svg` (covers.js's /brand field) |
 | Navbar captures | `img/nav-covers/` (the nine page covers) and `img/nav-panels/` (the four tools and the institutional dial), the design's own files |
 
