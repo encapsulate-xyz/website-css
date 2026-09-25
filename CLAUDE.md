@@ -370,6 +370,12 @@ the file is what the values come from.
 — the old one leaves 200px sideways, the new one enters from the other side over 200ms
 (`[data-motion]` enterFromLeft/Right, exitTo…). 4f just shows the next panel; §04 sets
 `animation: none` on `.super-navbar__list-content[data-motion]`. The first open keeps Super's fade.
+**So a panel is built before it paints** (v290): navbar.js built a newly mounted panel in a task
+after the mutation, and the browser painted one frame of Super's raw list (540px against the
+built 475) in between — the slide had hidden it; without it every swap flashed and jumped (the
+user: "choppy"). The observer's own callback, which runs before paint, now builds any
+`.super-navbar__list-content:not([data-enc-nav])`; over 12 swaps, 0 raw frames and one height.
+Anything else that must never show unbuilt goes there too, not in `tick()`.
 
 **The bar is one hover band.** Radix closes a panel the moment the pointer is on neither the
 trigger nor the panel, so the gaps beside the logo and before the CTA shut it. `navbar.js`
@@ -609,6 +615,17 @@ The headline's font comes from main.css §06 alone; home.css adds only its #000 
 column divider as hidden height (186px at full width) and removes it once columns stack under
 1024px. With the 4f bar lying over the page, that put the headline 12px from the top, under the
 bar, on any window under 1024 (2026-09-25). home.css gives the hero the covers' 96px there (v281).
+
+**Who we are carries each person's LinkedIn** (handoff 2026-09-25, v289): a **LinkedIn** text
+property on the `Team` database (`c67c95ac…`) holding the word "LinkedIn" linked to the profile —
+rich text, not a URL property, so the word is Notion's and the card does not become a link. It
+renders as `.property-5a534040` (Super's property class is the hex of the property id, `ZS@@`),
+is placed 18px after the role by anchor positioning (a `--who-role-N` anchor per card), and sits
+under the role below 900px. **It has to be shown on the Team gallery view by hand.** home.js
+marks the last name hovered or tapped `[data-enc-pick]` — with hover alone the section fell back
+to the first person on the way to a link — and a name's box is only as wide as its words. The
+three links share a cell, so each takes its property's `pointer-events` (an old "enable clicks"
+rule makes every gallery link `auto`, and a hidden link lay over the shown one).
 
 home.css starts with older page CSS, then "HOMEPAGE SECTIONS": stats band/figures/deck (00–00c),
 hero, Audience split 51l (07b), testimonials deck (09), Why Stake 49a, governance 37h, Services 42m
