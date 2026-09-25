@@ -224,7 +224,7 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
 | 07 | Button System |
 | 08 | databases and properties |
 | 09 | Card System |
-| 10–13 | pills, column dividers, **article blocks** (§12: code block, comparison table, toggle — design *Blog Article Blocks*, 2026-09-25 — and the pastel pull quote), link previews (§13, the same design's card) |
+| 10–13 | pills, (§11 column dividers, removed 2026-09-25), **article blocks** (§12: code block, comparison table, toggle — design *Blog Article Blocks*, 2026-09-25 — and the pastel pull quote), link previews (§13, the same design's card) |
 | 13b | Notion forms (22a-light) |
 | 14 | Page covers |
 | 15b | temporary banner `.enc-banner` (markup in `head/site-body.html`) |
@@ -611,21 +611,31 @@ them on desktop is hidden there), and the headline's `margin-bottom: 0` stays so
 The headline's font comes from main.css §06 alone; home.css adds only its #000 (Super's heading is
 #111).
 
-**The hero's top space is six empty Notion dividers** in its text column — main.css §11 keeps a
-column divider as hidden height (186px at full width) and removes it once columns stack under
-1024px. With the 4f bar lying over the page, that put the headline 12px from the top, under the
-bar, on any window under 1024 (2026-09-25). home.css gives the hero the covers' 96px there (v281).
+**The hero is centred by code** (2026-09-25, v291; the user: "use code to center align it"). It
+is one Notion column list, the page's first block: the headline, the lede and the two buttons in
+the left column, the loop (a video block, external, the jsDelivr `home-loop-paper.mp4`) in the
+right. **Nothing in it makes space**: its six dividers, eight empty paragraphs and the button row's
+empty third column were deleted, and the loop moved in from the top of the page, where it had
+hung at fixed offsets (`top: -40px`, `90px` under 1728). home.css: the hero is one screen tall
+(`100svh`), the words sit between two flex springs 28px apart (design 11a), centred under the
+bar; the lower spring is never shorter than the loop's small orbs (their tops 14% of the loop's
+width above its foot), so on a short screen (1440×900, 1536×864) the words rise clear of them
+rather than the buttons landing on one — from 1300px, below which the loop is cropped past them.
+The loop is the hero's backdrop, bottom-right, `max(100%, min(1728px, 140vw))` wide (under 1235
+it shrinks so the sphere stays right of the words), its top edge masked into the paper. 901–1024
+stays side by side (the old ≤1024 rule at the top of home.css sets every column to 100%); stacked
+(≤900) the loop follows the words as a band. A divider or empty paragraph typed into the hero is
+hidden. **Remove** the marked transitional rule for `#block-1ee04e9f…` (the old loop block) once
+Super serves the new structure.
 
-**Who we are carries each person's LinkedIn** (handoff 2026-09-25, v289): a **LinkedIn** text
-property on the `Team` database (`c67c95ac…`) holding the word "LinkedIn" linked to the profile —
-rich text, not a URL property, so the word is Notion's and the card does not become a link. It
-renders as `.property-5a534040` (Super's property class is the hex of the property id, `ZS@@`),
-is placed 18px after the role by anchor positioning (a `--who-role-N` anchor per card), and sits
-under the role below 900px. **It has to be shown on the Team gallery view by hand.** home.js
-marks the last name hovered or tapped `[data-enc-pick]` — with hover alone the section fell back
-to the first person on the way to a link — and a name's box is only as wide as its words. The
-three links share a cell, so each takes its property's `pointer-events` (an old "enable clicks"
-rule makes every gallery link `auto`, and a hidden link lay over the shown one).
+**No divider makes space anywhere** (2026-09-25, v292). main.css §11 used to keep a divider in a
+column as hidden height, and four page files hid it under 1024px — that was how the hero was
+aligned. §11 and every copy are gone, and all dividers were deleted from Notion: the hero's, the
+section rules in the posts (design J separates sections with the heading's 18px and the article's
+24px gap, no line — 42px above a heading now, 76 with the rule), and the hidden ones at the foot of
+every guide and post (226 blocks on 94 pages; ids in `backups/removed-dividers-2026-09-25.json`,
+restorable from Notion's trash). **Make space with CSS, and pair things with Notion columns — never
+with a divider or an empty paragraph.**
 
 home.css starts with older page CSS, then "HOMEPAGE SECTIONS": stats band/figures/deck (00–00c),
 hero, Audience split 51l (07b), testimonials deck (09), Why Stake 49a, governance 37h, Services 42m
@@ -1152,8 +1162,7 @@ above 900px changes in this work. What was learned:
   fields' marks rise above it, so the words reserve `93.5vw × (1 + --enc-field-rise) + 28px`
   (`rise()` measures it). A crumb or foot pair that does not fit on one line stacks
   (`fit()` → `data-enc-stack-top|foot`).
-- **The homepage hero's space is six empty dividers** that §11 removes under 1024px (see
-  Homepage); home.css gives it 96px there.
+- **The homepage hero** is centred by code since v291 (see Homepage).
 - Per page: /governance-record's controls and rows reflow (the rationale is always open on touch),
   /security's sticky blocks are static, /investments' six questions wrap into a grid under 800,
   /networks' sort and search sit under the tabs up to 860, the chain dock wraps under 640 and the
