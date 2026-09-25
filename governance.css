@@ -564,6 +564,28 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   display: none !important;
 }
 
+/* ── THE RECORD'S KICKER — "The record · newest first", a Notion text: the handoff's mono label,
+   12px over "Every vote, on chain." It showed as body text from 2026-09-19 until this rule. The
+   second id is the old block, until Super republishes the page (the text was re-made 2026-09-26). */
+.notion-root :is(#block-3e6e800a51388175a097ede87b81c9f8, #block-94c5e6279af64b3e9e9c582a50c4bc5a) {
+  margin: 0 0 12px !important;
+  padding: 0 !important;
+  min-height: 0 !important;       /* Notion's text is 32px at least, which held the heading 40px off */
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 10.5px !important;
+  font-weight: 400 !important;
+  line-height: normal !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #575B55 !important;
+}
+
+.notion-root :is(#block-3e6e800a51388175a097ede87b81c9f8, #block-94c5e6279af64b3e9e9c582a50c4bc5a) * {
+  font: inherit !important;
+  letter-spacing: inherit !important;
+  color: inherit !important;
+}
+
 /* ── 4 · THE ROWS — "Governance Record Wow", the record (handoff 2026-09-26) ──
    One line per ballot on five tracks — the chain's mark, the proposal, our vote, the day it was
    recorded, the arrow: 30px minmax(0, 1fr) auto minmax(0, auto) 20px, 18px apart. The table is the
