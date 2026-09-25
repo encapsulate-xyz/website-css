@@ -633,8 +633,11 @@ column as hidden height, and four page files hid it under 1024px — that was ho
 aligned. §11 and every copy are gone, and all dividers were deleted from Notion: the hero's, the
 section rules in the posts (design J separates sections with the heading's 18px and the article's
 24px gap, no line — 42px above a heading now, 76 with the rule), and the hidden ones at the foot of
-every guide and post (226 blocks on 94 pages; ids in `backups/removed-dividers-2026-09-25.json`,
-restorable from Notion's trash). **Make space with CSS, and pair things with Notion columns — never
+every guide and post, and the old pages outside the designs — /snapshots and its nine snapshot
+pages, the three Lido DVT cluster pages, /services/celestia — whose FAQ sections were split by
+visible lines (the hero's 7, then 321 on 117 pages; ids in
+`backups/removed-dividers-2026-09-25.json`, restorable from Notion's trash). Found by sweeping
+every URL in the sitemap for `notion-divider`, which is quicker than walking Notion. **Make space with CSS, and pair things with Notion columns — never
 with a divider or an empty paragraph.**
 
 home.css starts with older page CSS, then "HOMEPAGE SECTIONS": stats band/figures/deck (00–00c),
