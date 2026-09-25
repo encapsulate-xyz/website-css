@@ -227,17 +227,14 @@ html:has(.notion-root[data-enc-guide]) body,
 .enc-gd__header { flex: none; }
 .enc-gd__row { margin-top: 24px; }
 .enc-gd__step[data-enc-shot="wide"] .enc-gd__row { display: block; }
-.enc-gd__step[data-enc-shot="wide"] .enc-gd__aside { display: none; }
-/* tall: the note sits under the header, level with the capture's top (the design's -24px) */
-.enc-gd__aside {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  justify-self: end;
-  width: 100%;
-  max-width: 64ch;
-  margin-top: -24px;
+/* tall: the note hangs 10px under the body and takes no height, so the capture keeps its place
+   24px under the header and the open note unfolds beside it */
+.enc-gd__hang {
+  height: 0;
+  margin-top: -10px; /* takes back the column's 10px gap, so the header is exactly the design's */
+  overflow: visible;
 }
+.enc-gd__hang > .enc-gd__watch { margin-top: 12px; } /* the 10px gap and the 2px it carries everywhere */
 
 .enc-gd__left {
   display: flex;
@@ -537,8 +534,9 @@ html:has(.notion-root[data-enc-guide]) body,
     row-gap: 16px;
   }
   .enc-gd__row { margin-top: 16px; }
-  .enc-gd__right, .enc-gd__aside { justify-self: start; }
-  .enc-gd__aside { margin-top: 0; }
+  .enc-gd__right { justify-self: start; }
+  .enc-gd__hang { height: auto; margin-top: 0; }
+  .enc-gd__hang > .enc-gd__watch { margin-top: 2px; }
   .enc-gd__step {
     height: auto;
     max-height: none;

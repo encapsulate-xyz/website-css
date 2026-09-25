@@ -331,15 +331,20 @@
     shot.appendChild(img);
     if (!step.shot) shot.setAttribute("data-enc-empty", "1");
     row.appendChild(shot);
-    var aside = el("div", "enc-gd__aside");
-    row.appendChild(aside);
     content.appendChild(row);
     s.appendChild(content);
 
+    /* the note sits 10px under the body on every step. On a wide step it is part of the header,
+       and the capture follows it; on a tall one it hangs from the body without adding to the
+       header's height — so it no longer drops to the foot of the taller count column (36px under
+       a one-line body, 2026-09-25) — and opens beside the capture, moving nothing */
     var note = step.watch ? watch(step, i) : null;
+    var hang = el("div", "enc-gd__hang");
     function place(tall) {
       s.setAttribute("data-enc-shot", tall ? "tall" : "wide");
-      if (note) (tall ? aside : right).appendChild(note);
+      if (!note) return;
+      if (tall) { hang.appendChild(note); right.appendChild(hang); }
+      else { right.appendChild(note); if (hang.parentNode) hang.parentNode.removeChild(hang); }
     }
     place(/extension/i.test(step.surface || ""));
     function settle() { if (img.naturalWidth) place(img.naturalWidth < img.naturalHeight); }

@@ -30,8 +30,8 @@ html:has(.notion-root[data-enc-guide]),html:has(.notion-root[data-enc-guide]) bo
 .enc-gd__header{flex: none;}
 .enc-gd__row{margin-top: 24px;}
 .enc-gd__step[data-enc-shot="wide"] .enc-gd__row{display: block;}
-.enc-gd__step[data-enc-shot="wide"] .enc-gd__aside{display: none;}
-.enc-gd__aside{display: flex;flex-direction: column;gap: 10px;justify-self: end;width: 100%;max-width: 64ch;margin-top: -24px;}
+.enc-gd__hang{height: 0;margin-top: -10px;overflow: visible;}
+.enc-gd__hang > .enc-gd__watch{margin-top: 12px;}
 .enc-gd__left{display: flex;flex-direction: column;gap: 13px;align-items: flex-start;}
 .enc-gd__count{display: flex;align-items: baseline;gap: 14px;margin-bottom: 6px;}
 .enc-gd__fig{font-family: "Outfit",sans-serif;font-weight: 600;font-size: clamp(40px,5vw,76px);line-height: 0.84;letter-spacing: -0.05em;color: #000;font-variant-numeric: tabular-nums;}
@@ -71,8 +71,9 @@ html:has(.notion-root[data-enc-guide]),html:has(.notion-root[data-enc-guide]) bo
 }
 @media (max-width: 900px){.enc-gd__header,.enc-gd__row{grid-template-columns: minmax(0,1fr);row-gap: 16px;}
 .enc-gd__row{margin-top: 16px;}
-.enc-gd__right,.enc-gd__aside{justify-self: start;}
-.enc-gd__aside{margin-top: 0;}
+.enc-gd__right{justify-self: start;}
+.enc-gd__hang{height: auto;margin-top: 0;}
+.enc-gd__hang > .enc-gd__watch{margin-top: 2px;}
 .enc-gd__step{height: auto;max-height: none;min-height: 100vh;padding-bottom: 40px;}
 .enc-gd__shot,.enc-gd__step[data-enc-shot="tall"] .enc-gd__shot{width: 100%;height: auto;}
 .enc-gd__step[data-enc-shot="tall"] .enc-gd__shot{width: min(100%,360px);}
