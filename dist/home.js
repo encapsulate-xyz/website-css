@@ -1362,3 +1362,30 @@
   loop();
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", loop);
 })();
+
+/* Who we are keeps the last name picked (design "Who We Are", 2026-09-25: its state.active stays
+   where the reader left it). The section is CSS alone, and with CSS alone the active person is
+   whoever is under the pointer, else the first — so on the way from a name to that person's
+   LinkedIn link the section fell back to the first person, and the link went with it. A name under
+   the pointer, a tap on it, or focus reaching a card's link marks that card [data-enc-pick], and
+   home.css makes the picked card the active one. Delegated on the document, so Super's re-renders
+   need nothing; a card it rebuilds loses the mark, and hover rules again until the next pick. */
+(function () {
+  var TEAM = "#block-6a8e93a3b7ed4648ba82d58ee6546962";
+  function pick(e) {
+    var t = e.target;
+    if (!t || !t.closest) return;
+    var team = t.closest(TEAM);
+    if (!team) return;
+    if (e.type !== "focusin" && !t.closest(".property-78553e7a")) return;
+    var card = t.closest(".notion-collection-card");
+    if (!card || card.hasAttribute("data-enc-pick")) return;
+    Array.prototype.forEach.call(team.querySelectorAll("[data-enc-pick]"), function (c) {
+      c.removeAttribute("data-enc-pick");
+    });
+    card.setAttribute("data-enc-pick", "");
+  }
+  document.addEventListener("pointerover", pick);
+  document.addEventListener("click", pick);
+  document.addEventListener("focusin", pick);
+})();
