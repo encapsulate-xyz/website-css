@@ -67,11 +67,35 @@
     ps[4].after(field);
   }
 
-  /* ── 2 · the rows ── */
-  /* Which select column is the chain? It is learnt, not assumed: Super gives every property a
-     stable class of its own (property-<hash>), so the column whose values match the chains we hold
-     marks for is the chain column — and from then on every row uses that class, including chains
-     with no mark. Guessing by "has a mark" put a chain with none into the outcome menu. */
+  /* ── 2 · the rows ──
+     Two tables are views of the Governance Record database — the record here, and the homepage's
+     37h table with its six latest votes — and since 2026-09-26 both are built here and drawn by
+     main.css §13d, so the two cannot drift. `limit` is how many rows the page shows (home.css hides
+     the rest); only those are built, or the homepage would fetch a glyph for every hidden vote. */
+  var HOME_TABLE = "block-4529386b39be4a9aa44d2dbac56537bd";
+  var ROW_TABLES = [[TABLE, 0], [HOME_TABLE, 6]];
+
+  /* Which column is which, read off the header. Notion's type classes cannot answer it any more:
+     Proposal Id became rich text on 2026-09-17 (it holds "ACP-176" now), so the id, the rationale
+     and the proof are all td.text. The header carries the property's name, which is ours to know. */
+  var COLUMN_KIND = {
+    "proposal title": "proposal", "proposal": "proposal", "name": "proposal",
+    "proposal id": "id", "id": "id", "reference": "id",
+    "chain": "chain", "network": "chain",
+    "vote option": "vote", "our vote": "vote", "vote": "vote",
+    "voted on": "date", "recorded": "date", "date": "date",
+    "voting proof": "proof", "proof": "proof",
+    "rationale": "rationale", "why": "rationale"
+  };
+  function columns(box) {
+    return Array.prototype.map.call(box.querySelectorAll("thead th"), function (th) {
+      return COLUMN_KIND[th.textContent.trim().toLowerCase()] || "";
+    });
+  }
+
+  /* A header the map does not know (a property renamed in Notion) still leaves the chain findable:
+     Super gives every property a stable class of its own (property-<hash>), so the select column
+     whose values match the chains we hold marks for is the chain column. */
   var chainProp = null;
   function learnChainProp(box) {
     if (chainProp) return chainProp;
@@ -87,32 +111,11 @@
     chainProp = best;
     return best;
   }
-  /* Which column is which, read off the header. Notion's type classes cannot answer it any more:
-     Proposal Id became rich text on 2026-09-17 (it holds "ACP-176" now), so the id, the rationale
-     and the proof are all td.text. The header carries the property's name, which is ours to know. */
-  var COLUMN_KIND = {
-    "proposal title": "proposal", "proposal": "proposal", "name": "proposal",
-    "proposal id": "id", "id": "id", "reference": "id",
-    "chain": "chain", "network": "chain",
-    "vote option": "vote", "our vote": "vote", "vote": "vote",
-    "voted on": "date", "recorded": "date", "date": "date",
-    "voting proof": "proof", "proof": "proof",
-    "rationale": "rationale", "why": "rationale"
-  };
-  var colKinds = null;
-  function columns(box) {
-    if (colKinds) return colKinds;
-    var ths = box.querySelectorAll("thead th");
-    if (!ths.length) return [];
-    colKinds = Array.prototype.map.call(ths, function (th) {
-      return COLUMN_KIND[th.textContent.trim().toLowerCase()] || "";
-    });
-    return colKinds;
-  }
-
-  function chainCell(tr) {
-    if (!chainProp) return null;
-    var p = tr.querySelector("td.select ." + chainProp);
+  function chainCell(tr, box) {
+    var c = tr.querySelector('td[data-enc-cell="chain"]');
+    if (c) return c;
+    var prop = learnChainProp(box);
+    var p = prop && tr.querySelector("td.select ." + prop);
     return p ? p.closest("td") : null;
   }
 
@@ -124,32 +127,59 @@
     b.setAttribute("aria-expanded", on ? "true" : "false");
     b.setAttribute("aria-label", (on ? "Hide" : "Read") + " the rationale for " + b.getAttribute("data-title"));
   }
+  // one row open at a time, in its own table
   function toggle(tr) {
     var was = tr.hasAttribute("data-enc-open");
-    var box = document.getElementById(TABLE);
+    var box = tr.closest("[data-enc-rows]");
     if (box) Array.prototype.forEach.call(box.querySelectorAll("tr[data-enc-open]"), function (o) { setOpen(o, false); });
     if (!was) setOpen(tr, true);
   }
 
+  // the chain's disc; the glyph goes in as soon as the page has one (a gallery can render late)
+  function fillDisc(disc, name) {
+    if (disc.querySelector("img")) return true;
+    var url = glyphs()[key(name)];
+    if (!url) return false;
+    var img = el("img");
+    img.src = url; img.alt = ""; img.loading = "lazy";
+    disc.appendChild(img);
+    return true;
+  }
+
+  var bare = false;       // a disc still waiting for its glyph after this pass
   function rows() {
-    var box = document.getElementById(TABLE);
-    if (!box) return;
-    var marks = glyphs();
-    if (!learnChainProp(box)) return;
-    Array.prototype.forEach.call(box.querySelectorAll("tbody tr"), function (tr) {
+    bare = false;
+    ROW_TABLES.forEach(function (t) {
+      var box = document.getElementById(t[0]);
+      if (box && box.querySelector("tbody tr")) buildRows(box, t[1]);
+    });
+  }
+
+  function buildRows(box, limit) {
+    var kinds = columns(box);
+    var trs = Array.prototype.slice.call(box.querySelectorAll("tbody tr"));
+    if (limit) trs = trs.slice(0, limit);
+    trs.forEach(function (tr) {
       var cell = tr.querySelector("td.title");
-      if (!cell || cell.querySelector(".enc-rec__mark-disc")) return;
-      var chain = chainCell(tr);
-      if (!chain) return;
-      chain.setAttribute("data-enc-chain", "");
-      // every cell says what it is, so the row's layout never depends on the column order:
-      // the proof is the text cell that carries a link, the rationale is the other one
-      chain.setAttribute("data-enc-cell", "chain");
-      var kinds = columns(box);
+      if (!cell) return;
+      var built = cell.querySelector(".enc-rec__mark-disc");
+      if (built) {
+        if (!fillDisc(built, built.getAttribute("data-chain") || "")) bare = true;
+        return;
+      }
+      // every cell says what it is, so the row's layout never depends on the column order
       Array.prototype.forEach.call(tr.children, function (td, i) {
         if (td.hasAttribute("data-enc-cell")) return;
         if (kinds[i]) td.setAttribute("data-enc-cell", kinds[i]);
-        else if (td.classList.contains("title")) td.setAttribute("data-enc-cell", "proposal");
+      });
+      var chain = chainCell(tr, box);
+      if (!chain) return;
+      chain.setAttribute("data-enc-chain", "");
+      chain.setAttribute("data-enc-cell", "chain");
+      // the proof is the text cell that carries a link, the rationale is the other one
+      Array.prototype.forEach.call(tr.children, function (td) {
+        if (td.hasAttribute("data-enc-cell")) return;
+        if (td.classList.contains("title")) td.setAttribute("data-enc-cell", "proposal");
         else if (td.classList.contains("date")) td.setAttribute("data-enc-cell", "date");
         else if (td.classList.contains("select")) td.setAttribute("data-enc-cell", "vote");
         else if (td.querySelector("a[href]")) td.setAttribute("data-enc-cell", "proof");
@@ -159,12 +189,8 @@
       if (!name) return;
       var disc = el("span", "enc-rec__mark-disc");
       disc.style.background = tintFor(name.toLowerCase());
-      var url = marks[key(name)];
-      if (url) {
-        var img = el("img");
-        img.src = url; img.alt = ""; img.loading = "lazy";
-        disc.appendChild(img);
-      }
+      disc.setAttribute("data-chain", name);
+      if (!fillDisc(disc, name)) bare = true;
       cell.insertBefore(disc, cell.firstChild);
       // the file's line under the title: CHAIN · reference, as one line (the reference cell itself
       // is hidden by the CSS)
@@ -173,7 +199,7 @@
       var ref = tr.querySelector('[data-enc-cell="id"]');
       var refText = ref ? ref.textContent.trim() : "";
       if (refText) {
-        meta.appendChild(el("span", "enc-rec__sep", " \u00B7 "));
+        meta.appendChild(el("span", "enc-rec__sep", " · "));
         meta.appendChild(el("span", "enc-rec__ref", refText));
       }
       cell.appendChild(meta);
@@ -195,15 +221,16 @@
 
       /* The line is two targets (the file's record): the left opens the rationale beneath it, the
          right is the Proof link. Notion has no block that opens and closes, so the left is a
-         button laid over the mark, the title and CHAIN · reference; its label is the row's title. */
+         button laid over the mark, the title and CHAIN · reference; its label is the row's title.
+         A view that does not show Rationale gets neither the button nor the ±. */
       var title = (cell.querySelector(".notion-property__title") || {}).textContent || "";
       title = title.trim() || "this proposal";
       var why = tr.querySelector('td[data-enc-cell="rationale"]');
-      var plus = el("span", "enc-rec__plus");
-      plus.setAttribute("aria-hidden", "true");
-      plus.innerHTML = '<svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 10h10"/><path class="v" d="M10 5v10"/></svg>';
-      cell.appendChild(plus);
       if (why) {
+        var plus = el("span", "enc-rec__plus");
+        plus.setAttribute("aria-hidden", "true");
+        plus.innerHTML = '<svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 10h10"/><path class="v" d="M10 5v10"/></svg>';
+        cell.appendChild(plus);
         why.id = why.id || "enc-why-" + (++whyId);
         var open = el("button", "enc-rec__open");
         open.type = "button";
@@ -218,22 +245,24 @@
       if (proof) {
         var word = said ? said.charAt(0).toUpperCase() + said.slice(1).toLowerCase() : "";
         proof.setAttribute("aria-label", title.replace(/^this proposal$/, "Proposal") +
-          (word ? " \u2014 voted " + word : "") + ", opens on the block explorer");
+          (word ? " — voted " + word : "") + ", opens on the block explorer");
       }
       tr.setAttribute("data-enc-row", "");
     });
-    // the header cell has no property class of its own, so it is found by position: the same
-    // index as the chain cell in a row
-    var first = box.querySelector("tbody tr");
+    // the header cells take the same marks, by position
+    var ths = box.querySelectorAll("thead th");
+    Array.prototype.forEach.call(ths, function (th, at) {
+      if (kinds[at]) th.setAttribute("data-enc-cell", kinds[at]);
+    });
+    var first = box.querySelector("tbody tr[data-enc-row]");
     if (first) {
-      var ths = box.querySelectorAll("thead th");
       Array.prototype.forEach.call(first.children, function (td, at) {
         var what = td.getAttribute("data-enc-cell");
         if (what && ths[at]) ths[at].setAttribute("data-enc-cell", what);
         if (what === "chain" && ths[at]) ths[at].setAttribute("data-enc-chain", "");
       });
     }
-    box.setAttribute("data-enc-record", "");
+    if (!box.hasAttribute("data-enc-rows")) box.setAttribute("data-enc-rows", "");
   }
 
   /* ── the pillars band's head: the heading and its lede on the left, the button on the right ── */
@@ -349,10 +378,17 @@
   /* Glyphs come from whichever gallery of chains is on the page: the Networks set for the chains
      we still run, and "Chain marks" for the ones we have shut down — the record spans both, and a
      retired chain has no row in the Networks set. Both are read the same way and hidden by CSS. */
-  var glyphCache = null;
+  var glyphCache = null, glyphCards = -1;
   function glyphs() {
-    if (glyphCache) return glyphCache;
+    // read again whenever the page holds more cards than last time: a gallery can render after
+    // the table, and an early empty read would otherwise stand for the whole visit
+    var cards = document.querySelectorAll(".notion-collection-card").length;
+    if (glyphCache && cards === glyphCards) return glyphCache;
+    glyphCards = cards;
     var out = {};
+    if (typeof window.encGlyphs === "function") {
+      try { var fb = window.encGlyphs(); for (var k in fb) out[k] = fb[k]; } catch (e) {}
+    }
     Array.prototype.forEach.call(document.querySelectorAll(".notion-collection-card"), function (card) {
       var t = card.querySelector(".notion-property__title");
       var img = card.querySelector("img");
@@ -412,11 +448,21 @@
       resorted = true;
       var body = rows[0] && rows[0].parentNode;
       if (body) {
-        rows.slice().sort(function (a, b) {
+        var sorted = rows.slice().sort(function (a, b) {
+          // a row with no Recorded date is not the oldest vote: it goes last in either order
+          if (state.sort !== "chain" && !dateOf(a) !== !dateOf(b)) return dateOf(a) ? -1 : 1;
           if (state.sort === "oldest") return dateOf(a) - dateOf(b);
           if (state.sort === "chain") return chainOf(a).localeCompare(chainOf(b)) || dateOf(b) - dateOf(a);
           return dateOf(b) - dateOf(a);
-        }).forEach(function (tr) { if (tr.parentNode === body) body.appendChild(tr); });
+        });
+        /* rows are moved only when the order is not already right: every move is a mutation, and
+           this file's own observer rebuilt on it — 8 passes a second, for as long as the page was
+           open. The pager then counts in the new order (it counted in the old one, which only the
+           next pass of that loop put right). */
+        if (sorted.some(function (tr, i) { return tr !== rows[i]; })) {
+          sorted.forEach(function (tr) { if (tr.parentNode === body) body.appendChild(tr); });
+        }
+        rows = sorted;
       }
     }
     // then the pager: only the first `shown` of what matched stays on the page
@@ -431,10 +477,12 @@
       var left = matched.length - onShow;
       var more = foot.querySelector(".enc-rec__more");
       more.hidden = left <= 0;
-      more.textContent = "Show " + Math.min(PAGE, left) + " more";
       var filtered = state.chain || state.vote || needle;
-      foot.querySelector(".enc-rec__shown").textContent =
-        onShow + " of " + (filtered ? matched.length + " matching" : fmt(total())) + " shown";
+      // written only when it changes: a text write is a mutation, and the observer rebuilt on it
+      // for as long as the page was open (48 writes in 3s, measured on the live page)
+      setText(more, "Show " + Math.min(PAGE, left) + " more");
+      setText(foot.querySelector(".enc-rec__shown"),
+        onShow + " of " + (filtered ? matched.length + " matching" : fmt(total())) + " shown");
     }
 
     // a group with nothing left in it goes with its rows
@@ -456,6 +504,8 @@
       if (box.querySelector(".notion-collection-card")) box.setAttribute("data-enc-source", "");
     });
   }
+
+  function setText(node, text) { if (node && node.textContent !== text) node.textContent = text; }
 
   function fmt(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
 
@@ -480,12 +530,18 @@
     });
   }
 
-  function build() { count(); rows(); head(); controls(); pager(); apply(); hideSources(); pillars(); }
+  var tries = 0;
+  function build() {
+    count(); rows(); head(); controls(); pager(); apply(); hideSources(); pillars();
+    // the glyphs come from galleries that can render after the table, and after Super has stopped
+    // mutating, so nothing would wake the observer again (home.js did the same for 37h)
+    if (bare && tries++ < 12) { clearTimeout(t); t = setTimeout(build, 300); }
+  }
 
   var t = 0;
   new MutationObserver(function (muts) {
     if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-rec__bar, .enc-rec__field"); })) return;
-    clearTimeout(t); t = setTimeout(build, 120);
+    clearTimeout(t); tries = 0; t = setTimeout(build, 120);
   }).observe(document.body, { childList: true, subtree: true });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
   else build();

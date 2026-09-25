@@ -639,30 +639,6 @@
 }
 
 
-/*********************************************/
-/* GOVERNANCE CHAIN MARKS — ADDED BY home.js */
-/*********************************************/
-/* Design 37h: each chain's glyph in a 30px well, tinted by row. */
-.enc-chain {
-  display: grid;
-  place-items: center;
-  flex: none;
-  width: 30px;
-  height: 30px;
-  border-radius: 999px;
-}
-
-.enc-chain {
-  overflow: hidden;
-}
-
-/* 37h revised: the glyph artwork fills the well (its own margin is the inset) */
-.enc-chain img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
 
 
 /*********************************************/

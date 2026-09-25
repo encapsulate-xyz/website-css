@@ -16,6 +16,7 @@
      13. LINK PREVIEWS (BOOKMARKS / EXTERNAL OBJECTS)
      13b. NOTION FORMS
      13c. THE FILTER BAR (filterbar.js)
+     13d. THE RECORD'S ROWS (governance.js)
      16. FOOTER
      17. REDUCED MOTION
 
@@ -3172,6 +3173,452 @@ html:not([data-enc-mouse]) .enc-fb[data-ink]:has(:focus-visible) { outline-color
 @media (prefers-reduced-motion: reduce) {
   .enc-fb, .enc-fb * { transition: none !important; }
 }
+
+/*********************************************/
+/* 13d. THE RECORD'S ROWS (governance.js) — /governance-record and the homepage's 37h table */
+/*********************************************/
+/* Both tables are views of the Governance Record database, and since 2026-09-26 both are drawn by
+   these rules: governance.js marks each block [data-enc-rows] and builds its rows (the chain's disc,
+   CHAIN · reference, the ± and the disclosure, the vote's word, the short date). Only the record
+   page adds the filter bar, the pager and the empty state (governance.css); the homepage keeps its
+   six rows (home.css). */
+
+/* Design "Governance Record Wow", the record (handoff 2026-09-26). One line per ballot on five tracks — the chain's mark, the proposal, our vote, the day it was
+   recorded, the arrow: 30px minmax(0, 1fr) auto minmax(0, auto) 20px, 18px apart. The table is the
+   grid and every row a subgrid of it, so the capsules and the dates line up down the page and
+   under their header labels (the file draws each line as a grid of its own, which set each
+   capsule by its own date's width).
+
+   The line is two targets, as the file builds it. The left — mark, title, CHAIN · reference — is
+   the disclosure: a button governance.js lays over it (Notion has no block that opens and closes)
+   opens the rationale beneath the line, one row at a time. The right — capsule, date, arrow — is
+   the Proof link, its hit area stretched over those three tracks. Either one hovered or focused,
+   or the row open, darkens the row's rule, turns the reference line ink and inverts the capsule;
+   the ± after the title answers the left, the arrow's nudge the right. */
+.notion-root [data-enc-rows] .notion-collection-table__wrapper {
+  overflow: visible !important;
+  border: 0 !important;
+}
+
+.notion-root [data-enc-rows] table {
+  display: grid !important;
+  grid-template-columns: 30px minmax(0, 1fr) auto minmax(0, auto) 20px !important;
+  column-gap: 18px !important;
+  width: auto !important;
+  border: 0 !important;
+}
+
+.notion-root [data-enc-rows] thead,
+.notion-root [data-enc-rows] tbody {
+  display: contents !important;
+}
+
+.notion-root [data-enc-rows] tr {
+  grid-column: 1 / -1 !important;
+  display: grid !important;
+  grid-template-columns: subgrid !important;
+  align-items: center !important;
+  height: auto !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.notion-root [data-enc-rows] thead tr {
+  padding: 0 0 12px !important;
+  border-bottom: 1px solid #000000 !important;
+}
+
+.notion-root [data-enc-rows] tbody tr {
+  padding: 14px 0 !important;
+  border-bottom: 1px solid #E2E2DB !important;
+  border-radius: 0 !important;
+  transition: border-color 0.16s ease !important;
+}
+
+.notion-root [data-enc-rows] th,
+.notion-root [data-enc-rows] td {
+  display: block !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: auto !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  text-align: left !important;
+  overflow: visible !important;
+}
+
+/* Each cell goes to its track by what it is — governance.js marks them from the header labels —
+   never by position, which changes whenever a column is shown or hidden in Notion. */
+.notion-root [data-enc-rows] th[data-enc-cell="proposal"] { grid-column: 2 !important; }
+.notion-root [data-enc-rows] td[data-enc-cell="proposal"] { grid-column: 1 / 3 !important; grid-row: 1 !important; }
+
+.notion-root [data-enc-rows] :is(th, td)[data-enc-cell="vote"] {
+  grid-column: 3 !important;
+  grid-row: 1 !important;
+  justify-self: start !important;
+}
+
+.notion-root [data-enc-rows] :is(th, td)[data-enc-cell="date"] {
+  grid-column: 4 !important;
+  grid-row: 1 !important;
+  justify-self: end !important;
+  text-align: right !important;
+}
+
+/* the file labels four of the five tracks: Proposal, Our vote, Recorded, and nothing over the mark
+   or the arrow. The chain and the reference are printed under the title, so their cells go too. */
+.notion-root [data-enc-rows] :is(th, td)[data-enc-cell="id"],
+.notion-root [data-enc-rows] :is(th, td)[data-enc-chain],
+.notion-root [data-enc-rows] thead th[data-enc-cell="proof"],
+.notion-root [data-enc-rows] thead th[data-enc-cell="rationale"] {
+  display: none !important;
+}
+
+.notion-root [data-enc-rows] th {
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 10px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #6B6F68 !important;
+}
+
+.notion-root [data-enc-rows] th * {
+  font: inherit !important;
+  color: inherit !important;
+  letter-spacing: inherit !important;
+  padding: 0 !important;
+}
+
+/* the left: the chain's mark, 18px, the title with its ± 8px after it, and CHAIN · reference
+   under the title. The button lies over all of it. */
+.notion-root [data-enc-rows] td.title {
+  position: relative !important;
+  display: grid !important;
+  width: 100% !important;
+  justify-self: stretch !important;
+  grid-template-columns: 48px minmax(0, max-content) auto minmax(0, 1fr) !important;
+  align-items: center !important;
+  column-gap: 0 !important;
+  row-gap: 3px !important;
+}
+
+.notion-root .enc-rec__mark-disc {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.notion-root .enc-rec__mark-disc img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.notion-root [data-enc-rows] td.title > div {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.notion-root [data-enc-rows] td.title .notion-property__title {
+  font-family: var(--type-display), system-ui, sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 17px !important;
+  letter-spacing: -0.022em !important;
+  color: #000000 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.notion-root [data-enc-rows] .enc-rec__plus {
+  grid-column: 3;
+  grid-row: 1;
+  margin-left: 8px;
+  display: inline-flex;
+  color: #6B6F68;
+  transition: color 0.16s ease;
+}
+
+.notion-root [data-enc-rows] .enc-rec__plus svg {
+  display: block;
+}
+
+.notion-root [data-enc-rows] tr[data-enc-open] .enc-rec__plus .v {
+  display: none;
+}
+
+.notion-root [data-enc-rows] .enc-rec__meta {
+  grid-column: 2 / -1;
+  grid-row: 2;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: #6B6F68;
+  transition: color 0.16s ease;
+}
+
+.notion-root [data-enc-rows] .enc-rec__meta > span {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+.notion-root [data-enc-rows] .enc-rec__open {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.notion-root [data-enc-rows] .enc-rec__open:focus {
+  outline: none;
+}
+
+.notion-root [data-enc-rows] .enc-rec__open:focus-visible {
+  outline: 3px solid rgba(0, 0, 0, 0.32);
+  outline-offset: 2px;
+}
+
+/* the right: Our vote as a capsule — the dot and the word on the second paper */
+.notion-root [data-enc-rows] td[data-enc-cell="vote"] .notion-property {
+  overflow: visible !important;
+}
+
+.notion-root [data-enc-rows] td[data-enc-cell="vote"] .notion-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  width: fit-content !important;
+  margin: 0 !important;
+  padding: 5px 10px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: #F2F2ED !important;
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-weight: 400 !important;
+  font-size: 10.5px !important;
+  line-height: normal !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #000000 !important;
+  white-space: nowrap !important;
+  transition: background-color 0.16s ease, color 0.16s ease !important;
+}
+
+/* the dot is the outcome's own, by the word — Notion's option colours are not the file's (No is
+   pink there, and would have drawn as a veto) */
+.notion-root [data-enc-rows] td[data-enc-cell="vote"] .notion-pill::before {
+  content: "";
+  flex: none;
+  box-sizing: content-box;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #99CC66;
+}
+
+.notion-root [data-enc-rows] td[data-vote="no"] .notion-pill::before { background: #000000; }
+.notion-root [data-enc-rows] td[data-vote="no-with-veto"] .notion-pill::before { background: #E9A9C2; }
+.notion-root [data-enc-rows] td[data-vote="abstain"] .notion-pill::before {
+  background: transparent;
+  border: 1.5px solid #9B9B94;
+}
+
+/* the date */
+.notion-root [data-enc-rows] td.date {
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 11px !important;
+  letter-spacing: 0.06em !important;
+  font-variant-numeric: tabular-nums !important;
+  color: #6B6F68 !important;
+  white-space: nowrap !important;
+}
+
+.notion-root [data-enc-rows] td.date .date {
+  position: static !important;
+  width: auto !important;
+  margin: 0 !important;
+  font-size: inherit !important;
+}
+
+/* the Proof link: the arrow disc in the last track, its hit area the capsule, the date and the
+   arrow — the cell spans the three tracks over the other two and the link's ::after fills it */
+.notion-root [data-enc-rows] td[data-enc-cell="proof"] {
+  grid-column: 3 / 6 !important;
+  grid-row: 1 !important;
+  align-self: stretch !important;
+  position: relative !important;
+  z-index: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+
+.notion-root [data-enc-rows] td[data-enc-cell="proof"] .notion-property,
+.notion-root [data-enc-rows] td[data-enc-cell="proof"] .highlighted-color {
+  position: static !important;
+  overflow: visible !important;   /* the arrow's hover nudge ran past the property's 20px box */
+}
+
+.notion-root [data-enc-rows] td[data-enc-cell="proof"] a.notion-link {
+  display: block !important;
+  width: 20px !important;
+  height: 20px !important;
+  font-size: 0 !important;
+  color: transparent !important;
+  background: transparent !important;
+  text-decoration: none !important;
+  border-bottom: 0 !important;
+  opacity: 1 !important;
+  outline: none !important;
+}
+
+.notion-root [data-enc-rows] td[data-enc-cell="proof"] a.notion-link::before {
+  content: "" !important;
+  display: block !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 999px !important;
+  background: #99CC66 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6.5 13.5 13.5 6.5'/%3E%3Cpath d='M7.75 6.5h5.75v5.75'/%3E%3C/svg%3E") center / 60% no-repeat !important;
+  transition: transform 0.16s ease !important;
+}
+
+.notion-root [data-enc-rows] td[data-enc-cell="proof"] a.notion-link::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: 2px !important;
+}
+
+.notion-root [data-enc-rows] td[data-enc-cell="proof"] a.notion-link:focus-visible::after {
+  outline: 3px solid rgba(0, 0, 0, 0.32) !important;
+  outline-offset: 2px !important;
+}
+
+/* the rationale: the line's second row, under the title's track, closed until the left is pressed.
+   The padding sits on the paragraph inside, so a closed row clips it to nothing. */
+.notion-root [data-enc-rows] tbody td[data-enc-cell="rationale"] {
+  grid-column: 2 / 6 !important;
+  grid-row: 2 !important;
+  justify-self: start !important;
+  max-width: 72ch !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  font-family: var(--type-body), system-ui, sans-serif !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  color: #3A3D38 !important;
+  text-wrap: pretty !important;
+  transition: max-height 0.2s ease !important;
+}
+
+.notion-root [data-enc-rows] tbody td[data-enc-cell="rationale"] > * {
+  margin: 0 !important;
+  padding: 14px 0 4px !important;
+  font: inherit !important;
+  color: inherit !important;
+}
+
+.notion-root [data-enc-rows] tbody tr[data-enc-open] td[data-enc-cell="rationale"] {
+  max-height: 400px !important;
+}
+
+/* on: the left or the right under the pointer or the keyboard, or the row open */
+.notion-root [data-enc-rows] tbody tr:is([data-enc-open], :has(.enc-rec__open:hover), :has(.enc-rec__open:focus-visible), :has(td[data-enc-cell="proof"] a:hover), :has(td[data-enc-cell="proof"] a:focus-visible)) {
+  border-bottom-color: #000000 !important;
+}
+
+.notion-root [data-enc-rows] tbody tr:is([data-enc-open], :has(.enc-rec__open:hover), :has(.enc-rec__open:focus-visible), :has(td[data-enc-cell="proof"] a:hover), :has(td[data-enc-cell="proof"] a:focus-visible)) .enc-rec__meta {
+  color: #000000;
+}
+
+.notion-root [data-enc-rows] tbody tr:is([data-enc-open], :has(.enc-rec__open:hover), :has(.enc-rec__open:focus-visible), :has(td[data-enc-cell="proof"] a:hover), :has(td[data-enc-cell="proof"] a:focus-visible)) td[data-enc-cell="vote"] .notion-pill {
+  background: #000000 !important;
+  color: #FAFAF8 !important;
+}
+
+.notion-root [data-enc-rows] tbody tr:is([data-enc-open], :has(.enc-rec__open:hover), :has(.enc-rec__open:focus-visible)) .enc-rec__plus {
+  color: #000000;
+}
+
+.notion-root [data-enc-rows] tbody tr:is(:has(td[data-enc-cell="proof"] a:hover), :has(td[data-enc-cell="proof"] a:focus-visible)) td[data-enc-cell="proof"] a.notion-link::before {
+  transform: translate(2px, -2px) !important;
+}
+
+/* a row the filters, the pager or the homepage's six left out leaves no gap */
+.notion-root [data-enc-rows] tbody tr[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .notion-root [data-enc-rows] thead {
+    display: none !important;
+  }
+}
+
+@media (max-width: 900px) {
+  /* the rows: the proposal on its own line, then the capsule, the date and the arrow under the
+     title — four tracks, still shared by every row — and the rationale under those, opened by
+     the same press as on a wide screen (a tap is a press; it was always open while the rationale
+     opened on hover) */
+  .notion-root [data-enc-rows] table {
+    grid-template-columns: 30px auto minmax(0, 1fr) 20px !important;
+  }
+  .notion-root [data-enc-rows] td[data-enc-cell="proposal"] {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+  }
+  .notion-root [data-enc-rows] td[data-enc-cell="vote"] {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    margin-top: 10px !important;
+  }
+  .notion-root [data-enc-rows] td[data-enc-cell="date"] {
+    grid-column: 3 !important;
+    grid-row: 2 !important;
+    margin-top: 10px !important;
+    justify-self: start !important;
+    text-align: left !important;
+  }
+  .notion-root [data-enc-rows] td[data-enc-cell="proof"] {
+    grid-column: 2 / 5 !important;
+    grid-row: 2 !important;
+    margin-top: 10px !important;
+  }
+  .notion-root [data-enc-rows] tbody td[data-enc-cell="rationale"] {
+    grid-column: 2 / -1 !important;
+    grid-row: 3 !important;
+  }
+  /* the whole title, over as many lines as it takes */
+  .notion-root [data-enc-rows] td.title .notion-property__title {
+    white-space: normal !important;
+    overflow: visible !important;
+  }
+}
+
 
 /*********************************************/
 /* 14. PAGE COVERS — "PAGE COVERS CHOSEN" */

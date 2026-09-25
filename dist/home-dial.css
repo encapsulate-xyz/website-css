@@ -89,9 +89,6 @@ to{transform: translateY(0);}
 [data-enc-net] > .notion-column:first-child{flex: none !important;padding: 40px 0 0 !important;}
 .enc-net{gap: 10px;}
 }
-.enc-chain{display: grid;place-items: center;flex: none;width: 30px;height: 30px;border-radius: 999px;}
-.enc-chain{overflow: hidden;}
-.enc-chain img{display: block;width: 100%;height: 100%;object-fit: contain;}
 [data-enc-hidden]{display: none !important;}
 [data-enc-blog-intro]{align-items: stretch !important;}
 [data-enc-blog-intro] > .notion-column:last-child{display: flex !important;flex-direction: row !important;flex-wrap: wrap !important;justify-content: flex-end !important;align-items: center !important;align-content: flex-end !important;gap: 18px !important;padding-bottom: 4px !important;}

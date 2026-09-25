@@ -99,7 +99,7 @@ User rules that stand on every task:
 | `network.css`, `network.js` | /networks — the Network Count band (the hollow; network.js draws its tally), the set as the Networks Index, 5m. network.js is in the site head | its page Head + site Head |
 | `services.css`, `services.js` | /services — four services and the ask under the cover (design *Services Categories Chosen*), built from the page's callouts, four inline tables and a copy toggle | page Head + site Head |
 | `investments.css`, `investments.js` | /investments — two bands (design *Investments Page*): the thesis and the running band of positions on ink, the six questions on paper | page Head + site Head |
-| `governance.css` + `governance.js` (the record page: count band, pillars, controls, rows), `blog.css`, `brand.css`, `contact-us.css`, `guides.css`, `investments.css`, `security.css`, `services.css` | each page's CSS, moved out of Super's page Code panels on 2026-09-15 (old cover rules removed, the rest kept as it was) | each page's Head |
+| `governance.css` + `governance.js` (the record page: count band, pillars, controls, rows — and the rows of the homepage's governance table, drawn by main.css §13d), `blog.css`, `brand.css`, `contact-us.css`, `guides.css`, `investments.css`, `security.css`, `services.css` | each page's CSS, moved out of Super's page Code panels on 2026-09-15 (old cover rules removed, the rest kept as it was) | each page's Head |
 | `svg/`, `img/` | every drawing and icon the CSS references, served from jsDelivr beside the CSS | referenced as `../svg/…` / `../img/…` from `dist/` |
 | `notion/page-covers.md` | cover copy for the nine inner pages | — |
 | `notion/guide-screenshots.md` | how guide screenshots are captured and composed (agreed 2026-09-18, not yet applied) | — |
@@ -227,6 +227,8 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
 | 09 | Card System |
 | 10–13 | pills, (§11 column dividers, removed 2026-09-25), **article blocks** (§12: code block, comparison table, toggle — design *Blog Article Blocks*, 2026-09-25 — and the pastel pull quote), link previews (§13, the same design's card) |
 | 13b | Notion forms (22a-light) |
+| 13c | the filter bar (filterbar.js) |
+| 13d | the record's rows — /governance-record and the homepage's governance table (governance.js) |
 | 14 | Page covers |
 | 15b | temporary banner `.enc-banner` (markup in `head/site-body.html`) |
 | 16 | Footer 44b |
@@ -637,7 +639,7 @@ hero, Audience split 51l (07b), testimonials deck (09), Why Stake 49a, governanc
 (09a), Who we are (09b), blog, networks 21b, Contact 48c (16).
 
 home.js is a set of IIFEs: the dial (institutional form), homepage decks (snapping), networks
-glyph columns, governance chain marks, blog rail (Cover glyphs via CSS mask, dots), services
+glyph columns, blog rail (Cover glyphs via CSS mask, dots), services
 selection (swaps covers to the original PNG), Why Stake graphics (derived figures), contact copy.
 
 **Snapping — lessons.** Use native `scrollTo({behavior:"smooth"})` (scripted animation was choppy);
@@ -706,13 +708,23 @@ and turns the capsule and the reference line ink. **The dot is by the vote's wor
 (`td[data-vote]`), not Notion's option colour: No is pink in Notion and drew as a veto until v301.
 Ten rows a page. **The empty state is Notion's** paragraph after the table
 (`3e6e800a…81acaa16…`, added 2026-09-26), hidden until `[data-enc-empty]`. On a phone the rationale
-is collapsed too — a tap is a press. The homepage's table keeps the 2026-09-19 line treatment (its
-design is 37h, not this file).
+is collapsed too — a tap is a press.
 
-**The date column's header is "Recorded"** in the file. It is the property's name, so the property
-has to be renamed in Notion — but only **after** the site head carrying home.js v301 is live on the
-homepage: home.js v289 does not know "recorded", and the homepage's date cell would lose its place.
-`governance.js`, `home.js` and `scripts/notion.py` `date_prop()` accept both names.
+**The homepage's table is the same component** (the user, 2026-09-26, "in line fully"; v304). Both
+tables are views of the one database, so `governance.js` builds both (`ROW_TABLES`: the record, and
+the homepage's `4529386b…` with its first six rows only) and **main.css §13d** draws both, keyed by
+`[data-enc-rows]`, which governance.js sets. What each page keeps: governance.css the record's
+filter bar, pager, empty state and group headings; home.css the six-row limit and the section's
+grid area. home.js's own 37h builder (`.enc-chain`, `.enc-gov__*`, tint by row) and home.css's 330
+lines of row rules were removed. The disc's tint is per chain on both (`tintFor`). **The homepage
+view must show Rationale** for its rows to open — a row with no rationale cell gets neither the
+button nor the ±. Moving the rules was proved by snapshotting 87 elements' computed styles on the
+record at 1440 and 390 before and after: no difference. The disc's glyph now comes from the page's
+galleries or covers.js's `encGlyphs()`, re-read when more cards arrive, and a disc still waiting is
+filled on later passes (up to 12 at 300ms).
+
+**The date column's header is "Recorded"** (the property was renamed on 2026-09-26).
+`governance.js` and `scripts/notion.py` `date_prop()` accept "Voted on" too.
 
 ## The contact band's fold holds the dial (2026-09-18)
 
@@ -1222,6 +1234,12 @@ above 900px changes in this work. What was learned:
 
 ## Things that bite in Super / Notion markup
 
+- **A script that watches the page must not wake itself.** governance.js's observer rebuilt on
+  every childList change, and its own pass rewrote the pager's two labels (a text write replaces
+  the text node) and re-appended every row after a sort — so the record page rebuilt 8 times a
+  second for as long as it was open (48 mutations in 3s, measured on the live page, 2026-09-26).
+  Write text only when it differs, move nodes only when the order is wrong, and check an idle page
+  with a MutationObserver count (0 in 3s) after any change to a builder.
 - **A link gets ONE rule under it.** Notion draws its own `text-decoration: underline`, so any rule
   that gives a link a `border-bottom` must also set `text-decoration: none !important` in the same
   block, or the link shows two lines. This has been reported three times (the contact band's
