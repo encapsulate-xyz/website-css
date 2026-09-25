@@ -1203,6 +1203,15 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
   (`.property-585f6e6c`) and drop the disc to 62%. The hover arrow badge only appears on cards that
   are links. **Not possible:** the handoff's per-tab counts and its live-on-both / not-launched
   sub-groups — Super ships only the active view's rows, so the other stage cannot be known.
+- **The stage tabs on a phone** (v286): under ~576px Super's own `view-picker.css` (linked in the
+  page head) folds the picker into a "Mainnet ▾" button and moves the options into a closed pop-up
+  that sinks under its wrapper (z −1). Our tabs are those options, so the bar showed the button with
+  the tabs spilling out beneath it. Under 700px the button is hidden and the menu kept in the bar
+  (`position: relative`, opacity 1, `z-index: 1`, no animation) — as Super itself does above 576.
+  The same day ~200 lines of pre-redesign rules left network.css (an old 576px pill styling for the
+  picker, rules for eight blocks no longer on the page, a 22px Georgia override on the cover lede,
+  a pointer-events list for the old database's pages); at 1440 the only change is that lede at the
+  covers' 21px.
 - **The control bar** is the **second paper `#F2F2ED`** on a `#D9D9D2` ring with the full-white
   inset highlight, 50px overall (the tabs are 48 inside its hairlines) — a recessed track, not a
   panel the colour of the page; it was `#FAFAF8` until the handoff moved it on 2026-09-21. The

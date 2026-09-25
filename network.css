@@ -194,84 +194,6 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 /*********************************************/
-/********************************************/
-/* FOR PAGE SUB HEADING
-/********************************************/
-#block-ae41de7b0b114923b1fad98a9d96af76, #block-880ddf85b0914bab978e9f055059f86e {
-  font-size: 22px!important;
-  font-family: Georgia;
-  @media (max-width: 800px) {
-    font-size: 18px!important;
-  }
-}
-/********************************************/
-/*********************************************
-STYLING DROPDOWN MENU
-*********************************************/
-@media (max-width: 576px) {
-  /* Hiding menu header and first svg within dropdown button */
-  .notion-dropdown__menu-header {
-    display: none;
-  }
-  .notion-dropdown__button svg:first-of-type {
-    display: none;
-  }
-
-  /* Styling the dropdown button, including hover state */
-  .notion-dropdown__button {
-    padding: 10px 40px;
-    margin-bottom: 10px;
-    border: 1px solid var(--color-border-default);
-    border-radius: 50px;
-    background-color: #f8f9fa;
-    color: #495057;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  .notion-dropdown__button:hover {
-    background-color: #e9ecef;
-  }
-
-  /* Styling the dropdown menu and its list */
-  .notion-dropdown__menu {
-    border-radius: 20px !important;
-  }
-  .notion-dropdown__option-list {
-    max-height: 750px;
-    overflow-y: auto;
-  }
-
-  /* Adds a divider to separate type select and chain select in dropdown */
-  .notion-dropdown__option:nth-child(6) {
-    border-bottom: 5px solid #ddd !important;
-  }
-
-  /* Styling each dropdown option, including hover and active states */
-  .notion-dropdown__option {
-    padding: 10px 15px;
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
-    color: #333;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  .notion-dropdown__option:last-child {
-    border-bottom: none;
-  }
-  .notion-dropdown__option:hover {
-    background-color: #f8f9fa;
-    border: 1px solid black !important;
-    border-radius: 20px !important;
-  }
-  .notion-dropdown__option:active {
-    background-color: #e9ecef;
-  }
-
-  /* Hiding svg within dropdown option */
-  .notion-dropdown__option svg {
-    display: none;
-  }
-}
 /*********************************************/
 /*********************************************/
 /* HIDES OTHER PAGES
@@ -279,35 +201,6 @@ STYLING DROPDOWN MENU
 .notion-page {
     display: none !important;
 }
-/*********************************************/
-/*********************************************/
-/* DISPLAY MAINNET AND TETSNET COUNTS */
-/*********************************************/
-/* number of mainnet and tetsnet */
-#block-833ca930370a47b1b25ae3ab3452d188,
-#block-07e139d4db514840b6ce951a6bd8b092
-{
-  /*.notion-semantic-string strong {*/
-    line-height: 1;
-    margin-top: 0px !important;
-    padding-top: 0px !important;
-    font-size: calc(108px + 9.5vw) !important;
-    font-weight: 200 !important;
-    font-family: Arial Black, sans-serif;
-    color: var(--color-bg-green);
-    -webkit-text-stroke: 2px black;
-    text-stroke: 2px black !important;
-    text-shadow: 4px 4px 0px rgba(0, 0, 0, 1) !important;
-  /*}*/
-}
-
-#block-07e139d4db514840b6ce951a6bd8b092 {
-  /*.notion-semantic-string strong {*/
-    color: var(--color-bg-pink);
-  /*}*/
-}
-
-
 /* column stylings */
 .notion-column {
   position: relative;
@@ -332,99 +225,6 @@ STYLING DROPDOWN MENU
       display: none!important;
     }
   }
-}
-
-/* the texts like "Networks Secured…" and "….And Helping Test" and "More" */
-#block-947958362276433ca15bab673be88d93,
-#block-d919416a3ad241848b3e0a202f808279,
-#block-4b388a7c9f1e415f87b9ac319a5bb965  {
-    /*.notion-semantic-string span {*/
-    line-height: 1;
-    /*font-weight: bold;*/
-    /*font-family: 'Allerta Stencil', sans-serif;*/
-
-             /*font-weight: bold !important;*/
-    font-size: calc(28px + 2.5vw) !important;
-    vertical-align: middle !important;
-  /*}*/
-}
-
-
-#block-947958362276433ca15bab673be88d93:before,
-#block-d919416a3ad241848b3e0a202f808279:before,
-#block-4b388a7c9f1e415f87b9ac319a5bb965:before {
-    content: "";
-    display: block;
-    height: 1px;
-    margin: 4px 0;
-    background: linear-gradient(to right, black, rgba(204, 204, 204, 0));
-}
-
-#block-947958362276433ca15bab673be88d93:after,
-#block-d919416a3ad241848b3e0a202f808279:after,
-#block-4b388a7c9f1e415f87b9ac319a5bb965:after
-{
-    content: "";
-    display: block;
-    height: 1px;
-    margin: 4px 0;
-    background: linear-gradient(to right, black, rgba(204, 204, 204, 0));
-}
-
-
-
-/* the image */
-#block-3c762e6c38b94858aa36ca17c50f69e2 {
-  position: relative;
-  z-index: -2!important;
-  position: absolute;
-  width: 700px;
-  transform: translate(700px, 920px);
-    @media (max-width: 1024px) {
-     display: none!important;
-    }
-}
-/*********************************************/
-/*********************************************/
-/* ENABLE HOVER AS YOU COMPLETE THE INTERNAL PAGES
-/*********************************************/
-#block-networks-mainnet-sui a,
-#block-networks-mainnet-axelar a,
-#block-networks-mainnet-agoric a,
-#block-networks-mainnet-gravity-bridge a,
-#block-networks-mainnet-quicksilver a,
-#block-networks-mainnet-terra a,
-#block-networks-mainnet-osmosis a,
-#block-networks-mainnet-umee a,
-#block-networks-mainnet-juno a,
-#block-networks-mainnet-stargaze a,
-#block-networks-mainnet-evmos a,
-#block-networks-mainnet-sommelier-finance a,
-#block-networks-mainnet-omniflix a,
-#block-networks-mainnet-regen-network a,
-#block-networks-mainnet-ixo a,
-#block-networks-mainnet-paloma a,
-#block-networks-mainnet-asset-mantle a,
-#block-networks-mainnet-planq a,
-#block-networks-mainnet-archway a,
-#block-networks-mainnet-passage a,
-#block-networks-mainnet-gitopia a,
-#block-networks-mainnet-stride a,
-#block-networks-mainnet-humans a,
-#block-networks-mainnet-qwoyn a,
-#block-networks-mainnet-crescent a,
-#block-networks-mainnet-injective a,
-#block-networks-mainnet-avalanche a,
-#block-networks-mainnet-solana a,
-#block-networks-mainnet-mina a,
-#block-networks-mainnet-vara a,
-#block-networks-mainnet-celestia a,
-#block-networks-mainnet-dydx a,
-#block-networks-mainnet-althea a,
-/* quicksilver */
-#block-72fc5c0fdf424f91a50692396397ab0c a
-{
-    pointer-events: auto!important;
 }
 
 /*********************************************/
@@ -1075,7 +875,7 @@ STYLING DROPDOWN MENU
   opacity: 1 !important;
   transition: color 0.16s ease;
 }
-.notion-root #block-3dde800a5138819995f7de108ee8e815 a.enc-set-name:hover,
+.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-name:hover,
 .notion-root #block-3dde800a5138819995f7de108ee8e815 a.enc-set-name:focus-visible {
   color: #000000 !important;
 }
@@ -1094,7 +894,7 @@ STYLING DROPDOWN MENU
   background: #F2F2ED;
   transition: background-color 0.16s ease;
 }
-.notion-root #block-3dde800a5138819995f7de108ee8e815 a.enc-set-name:hover .enc-set-disc,
+.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-name:hover .enc-set-disc,
 .notion-root #block-3dde800a5138819995f7de108ee8e815 a.enc-set-name:focus-visible .enc-set-disc {
   background: var(--tint, #DCEEC7);
 }
@@ -1106,7 +906,7 @@ STYLING DROPDOWN MENU
   opacity: 0.45;
   transition: opacity 0.16s ease;
 }
-.notion-root #block-3dde800a5138819995f7de108ee8e815 a.enc-set-name:hover .enc-set-disc img,
+.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-name:hover .enc-set-disc img,
 .notion-root #block-3dde800a5138819995f7de108ee8e815 a.enc-set-name:focus-visible .enc-set-disc img {
   opacity: 1;
 }
@@ -1423,4 +1223,27 @@ STYLING DROPDOWN MENU
 @media (max-width: 700px) {
   .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-search { min-width: 0; }
   .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-search__input { min-width: 0; width: 100%; }
+}
+
+/* THE STAGE TABS ON A PHONE. Under ~576px Super folds its view picker into a dropdown: a
+   "Mainnet ▾" button, and the options in a closed pop-up (absolute, opacity 0). Our tabs are
+   those options, so the bar showed the button and the tabs spilled out beneath it, over the sort
+   and search row (reported 2026-09-25; an old 576px rule styling the button as a pill was removed
+   the same day). The tabs are the picker here too: the button is hidden and the options stay in
+   the bar, as at every other width. */
+@media (max-width: 700px) {
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection__header-wrapper .notion-dropdown__button {
+    display: none !important;
+  }
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection__header-wrapper .notion-dropdown__menu {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    pointer-events: auto !important;
+    z-index: 1 !important;          /* folded, Super sinks the closed pop-up under its wrapper (z −1) */
+    animation: none !important;     /* and animates it out after a choice; the tabs stay put */
+  }
 }
