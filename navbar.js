@@ -1274,14 +1274,22 @@
 
   /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
      against its page from the console without opening the menu */
-  window.encNav = { version: 12, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
+  window.encNav = { version: 13, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
     groups: function () { return groups; }, harvest: function () { return { done: harvested, tries: harvestTries }; },
     ground: ground, isInk: isInk, groundUnder: groundUnder, wordmark: wearWordmark,
     band: band };
 
+  /* A panel radix has just mounted is built here, in the observer's own callback, which runs
+     before the browser paints; the rest of the tick waits for a task. Built in that task too, the
+     panel painted one frame as Super's raw list (540px against the built 475) — the enter slide
+     hid it until v287 turned the slide off, and then every move between groups flashed and
+     jumped (the user: "choppy", 2026-09-25). */
   var t = 0;
-  new MutationObserver(function () { clearTimeout(t); t = setTimeout(tick, 0); })
-    .observe(document.body, { childList: true, subtree: true, attributes: true,
+  new MutationObserver(function () {
+    Array.prototype.forEach.call(
+      document.querySelectorAll(".super-navbar__list-content:not([data-enc-nav])"), build);
+    clearTimeout(t); t = setTimeout(tick, 0);
+  }).observe(document.body, { childList: true, subtree: true, attributes: true,
       attributeFilter: ["data-state", "aria-expanded"] });
   tick();
   window.addEventListener("load", tick);
