@@ -1213,10 +1213,21 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
   Both work on the cards Super rendered: search hides non-matching cards, sort sets the grid's
   `order`, Default restores the view's sequence. The design's per-tab counts are not there: Super
   only sends the active view's rows, so the other tab's count cannot be known client-side.
-- **5m, the chain-teams band** (callout `3dde800a…9995f7…`): ink, full-bleed, with the marks row
-  built by `network.js` from the set's own gallery — first twelve cards. The "+23 more" is a Notion
-  text block in the band that the script moves onto the row; its number is rewritten from the set
-  (chains − marks shown), as is the heading's "Thirty-five teams said yes.".
+- **5m, the chain-teams band** (callout `3dde800a…9995f7…`): ink, full-bleed — the kicker "For chain
+  teams", "Thirty-five teams chose us." (the number rewritten from the set), the line, Book a call
+  and What we run at 48px — and **under them the set as a marquee** (design 2026-09-25, v285; it was
+  a row of twelve marks and a "+23 more" paragraph, which was deleted from Notion): every chain, not
+  a tier, as one strip of names at `clamp(40px, 5vw, 72px)` with its disc, resting `#C9C9C4` with the
+  glyph at .45 on paper-2, drifting left on a 90s −50% loop across a paper band flush with the
+  band's sides and foot. Hovering or focusing a name pauses it and turns it ink with its disc in its
+  pastel; reduced motion stills it; the loop's copy is `aria-hidden` and out of the tab order.
+  **The chains come from the whole set, in its Order**: /networks renders only the active tab, so
+  navbar.js's `readCounts()` now also keeps `list` — every chain once, with its glyph and the page a
+  mainnet row links to (`/networks/mainnet/<chain>`) — from the all-stages view on /services, and
+  `window.encCounts()` hands it to network.js. A testnet-only chain is a name with no link. If the
+  read fails, the strip is drawn from the cards on the page. **The callout's content box clips**
+  (Super's `overflow: hidden`): the strip's reach past the band's padding only shows with
+  `overflow: visible` on it.
 - **Every network count is the Networks set's own** (the user, 2026-09-24: one source). Super ships
   only the rendered view's rows, so no page can count the whole set from itself — except /services,
   whose linked view of the set shows every stage with **Stage switched on** (the user did that on

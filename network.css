@@ -926,16 +926,19 @@ STYLING DROPDOWN MENU
 }
 
 /*********************************************/
-/* FOR CHAIN TEAMS — "Networks Set" 5m, MARKS IN A ROW */
+/* FOR CHAIN TEAMS — "Networks Set" 5m, THE SET AS A MARQUEE */
 /*********************************************/
 
 /* The closing band under the set (Notion callout 3dde800a…9995f7…): kicker, the count as a
-   sentence, one line, the pair of buttons, and a row of the marks themselves above a hairline.
-   The marks are drawn by network.js from the set's own gallery — the first twelve cards, which
-   are the god and high tiers because the view is sorted by Order — so the row follows Notion. */
+   sentence, one line, the pair of buttons — and under them every chain as one strip of names at
+   display size, drifting on a paper band full-bleed across the foot of the ink (design 2026-09-25;
+   it was a row of twelve marks and "+23 more" until then). network.js draws the strip from the set
+   itself, in its Order. */
 
 .notion-root #block-3dde800a5138819995f7de108ee8e815 {
-  --btn-h: 44px;
+  --btn-h: 48px;   /* the band's buttons are the file's 48px, 16px, 0 20px */
+  --btn-px: 20px;
+  --btn-fs: 16px;
   /* the Button System's ink tokens: a primary keeps its green, a secondary becomes a paper wash */
   --btn-2-fill: rgba(250, 250, 248, 0.06);
   --btn-2-fill-hover: rgba(250, 250, 248, 0.12);
@@ -975,6 +978,7 @@ STYLING DROPDOWN MENU
   max-width: none !important;
   margin: 0 !important;
   padding: 0 !important;
+  overflow: visible !important;   /* the strip reaches past it to the band's edges and foot */
 }
 
 .notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__content > * {
@@ -993,7 +997,7 @@ STYLING DROPDOWN MENU
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 11px !important;
   line-height: 1.3 !important;
-  letter-spacing: 0.14em !important;
+  letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
   color: #B4B4B4 !important;
 }
@@ -1009,7 +1013,7 @@ STYLING DROPDOWN MENU
   color: #FAFAF8 !important;
 }
 
-/* the sentence; the "+N more" line is nth-of-type(3) and is moved onto the marks row by the script */
+/* the sentence */
 .notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__content > p.notion-text:nth-of-type(2) {
   grid-row: 3 !important;
   max-width: none !important;
@@ -1029,53 +1033,85 @@ STYLING DROPDOWN MENU
   width: auto !important;
 }
 
-/* THE MARKS (network.js). One disc per chain, the pastels cycling, a paper ring on hover. */
-.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-marks {
+/* THE STRIP (network.js). A paper band from edge to edge of the ink, flush with its foot: the
+   band's side padding and its 48px bottom are taken back. The tape holds the set twice and moves
+   by half its width, so the loop has no seam; hovering or focusing a name pauses it. */
+.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-strip {
   grid-column: 1 / -1 !important;
   grid-row: 4 !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 10px !important;
-  flex-wrap: wrap !important;
-  margin-top: 15px !important;
-  padding-top: 22px !important;
-  border-top: 1px solid rgba(250, 250, 248, 0.18) !important;
+  margin: 15px calc(-1 * max(44px, calc(50vw - 864px))) -48px !important;   /* 15 + the row gap = the file's 30 */
+  padding: 22px 0 !important;
+  overflow: hidden;
+  background: #FAFAF8;
 }
-
-.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-mark {
-  width: 46px;
-  height: 46px;
+.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-tape {
+  display: flex;
+  gap: clamp(20px, 3vw, 44px);
+  width: max-content;
+  padding-right: clamp(20px, 3vw, 44px);
+  animation: enc-set-tape 90s linear infinite;
+}
+.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-strip:has(.enc-set-name:hover, .enc-set-name:focus-visible) .enc-set-tape {
+  animation-play-state: paused;
+}
+@keyframes enc-set-tape {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-name {
   flex: none;
-  border-radius: 999px;
-  background: var(--mark-tint, #DCEEC7);
+  display: flex;
+  align-items: center;
+  gap: 0.22em;
+  font-family: var(--type-display), system-ui, sans-serif;
+  font-size: clamp(40px, 5vw, 72px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  white-space: nowrap;
+  color: #C9C9C4 !important;
+  text-decoration: none !important;
+  border: 0 !important;
+  opacity: 1 !important;
+  transition: color 0.16s ease;
+}
+.notion-root #block-3dde800a5138819995f7de108ee8e815 a.enc-set-name:hover,
+.notion-root #block-3dde800a5138819995f7de108ee8e815 a.enc-set-name:focus-visible {
+  color: #000000 !important;
+}
+.notion-root #block-3dde800a5138819995f7de108ee8e815 a.enc-set-name:focus-visible {
+  outline: 3px solid rgba(0, 0, 0, 0.32);
+  outline-offset: 2px;
+}
+.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-disc {
+  flex: none;
   display: grid;
   place-items: center;
+  width: 0.72em;
+  height: 0.72em;
   overflow: hidden;
-  box-shadow: 0 0 0 0 rgba(250, 250, 248, 0.4);
-  transition: box-shadow 0.16s ease;
+  border-radius: 999px;
+  background: #F2F2ED;
+  transition: background-color 0.16s ease;
 }
-
-.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-mark:hover {
-  box-shadow: 0 0 0 3px rgba(250, 250, 248, 0.4);
+.notion-root #block-3dde800a5138819995f7de108ee8e815 a.enc-set-name:hover .enc-set-disc,
+.notion-root #block-3dde800a5138819995f7de108ee8e815 a.enc-set-name:focus-visible .enc-set-disc {
+  background: var(--tint, #DCEEC7);
 }
-
-.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-mark img {
-  width: 88%;
-  height: 88%;
-  object-fit: contain;
+.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-disc img {
   display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.45;
+  transition: opacity 0.16s ease;
 }
-
-.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-more {
-  grid-column: auto !important;   /* network.js lifts this Notion text onto the marks row */
-  grid-row: auto !important;
-  margin: 0 !important;
-  padding-left: 6px;
-  font-family: var(--type-mono), ui-monospace, monospace;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #B4B4B4;
+.notion-root #block-3dde800a5138819995f7de108ee8e815 a.enc-set-name:hover .enc-set-disc img,
+.notion-root #block-3dde800a5138819995f7de108ee8e815 a.enc-set-name:focus-visible .enc-set-disc img {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-tape { animation: none; }
 }
 
 @media (max-width: 900px) {
@@ -1089,7 +1125,7 @@ STYLING DROPDOWN MENU
     justify-self: start !important;
   }
 
-  .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-marks {
+  .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-strip {
     grid-row: 5 !important;
   }
 }

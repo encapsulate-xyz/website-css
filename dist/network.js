@@ -152,81 +152,115 @@
   window.addEventListener("touchstart", function () { touching = true; if (anim) finish(); }, { passive: true });
   window.addEventListener("touchend", function () { touching = false; if (!hasScrollEnd) setTimeout(settle, 140); }, { passive: true });
 
-  /* ── 5m, the marks row ──
-     The band under the set restates the set itself: one disc per chain, read from the gallery that
-     is already on the page (its cards are sorted by Order, so the first twelve are the god and
-     high tiers, as the design's row is). Nothing is listed here — add a network in Notion and the
-     row follows. The glyph is the card's cover, taken at its original size rather than through
-     Super's optimizer. */
+  /* ── 5m, the set as a marquee ── (design "Networks Set" 5m, 2026-09-25)
+     Under the band's heading, every chain — all of them, not a tier — runs as one strip of names at
+     display size, each with its disc, drifting left on the −50% loop (the Networks 20e
+     construction) across a paper band full-bleed under the ink. Names rest grey; the hovered one is
+     ink with its disc in tint, and hovering pauses the strip (network.css). The second half is the
+     loop's copy: hidden from assistive tech and out of the tab order.
+     Nothing is listed here. The chains are the Networks set's own, in its Order: /networks renders
+     only the active tab, so the list comes from the all-stages view on /services that the navbar
+     already reads for the counts (window.encCounts → list). A name links to its chain page where
+     the set has one (mainnet rows); a testnet-only chain is a name. If that read fails, the strip
+     falls back to the cards on this page. */
   var BAND = "block-3dde800a5138819995f7de108ee8e815";
   var SET_DB = "block-3dde800a51388133b7f1d1ccdda08038";
   var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
-  var SHOWN = 12;
-  var shown = 0;   /* how many marks the row carries, for "+N more" */
+  var chainsOnce = null;
 
   function original(src) {
     var m = /[?&]url=([^&]+)/.exec(src || "");
     return m ? decodeURIComponent(m[1]) : src;
   }
 
-  function marks() {
-    var band = document.getElementById(BAND), db = document.getElementById(SET_DB);
-    if (!band || !db) return;
-    var content = band.querySelector(":scope > .notion-callout__content");
-    if (!content) return;
-    var cards = db.querySelectorAll(".notion-collection-card");
-    if (!cards.length) return;
-    var rows = [];
-    for (var i = 0; i < cards.length && rows.length < SHOWN; i++) {
-      var img = cards[i].querySelector("img");
-      var name = cards[i].querySelector(".notion-property__title");
-      if (img && name) rows.push({ src: original(img.currentSrc || img.src), name: name.textContent.trim() });
-    }
-    if (!rows.length) return;
-    shown = rows.length;
-    var sig = rows.map(function (r) { return r.name; }).join("|") + "/" + cards.length;
-    var old = content.querySelector(":scope > .enc-set-marks");
-    if (old && old.getAttribute("data-sig") === sig) return;
-    if (old) old.remove();
+  function fromPage() {
+    var db = document.getElementById(SET_DB);
+    if (!db) return [];
+    var out = [], seen = {};
+    Array.prototype.forEach.call(db.querySelectorAll(".notion-collection-card"), function (c) {
+      var img = c.querySelector("img"), name = c.querySelector(".notion-property__title");
+      if (!name) return;
+      var nm = name.textContent.trim(), a = c.querySelector("a[href]");
+      if (seen[nm]) return;
+      seen[nm] = 1;
+      out.push({ name: nm, glyph: img ? original(img.currentSrc || img.src) : "", href: a ? a.getAttribute("href") : "" });
+    });
+    return out;
+  }
 
-    var wrap = document.createElement("div");
-    wrap.className = "enc-set-marks";
-    wrap.setAttribute("data-sig", sig);
-    rows.forEach(function (r, i) {
-      var span = document.createElement("span");
-      span.className = "enc-set-mark";
-      span.title = r.name;
-      span.style.setProperty("--mark-tint", TINTS[i % TINTS.length]);
+  function chains() {
+    if (chainsOnce) return chainsOnce;
+    chainsOnce = (typeof window.encCounts === "function" ? window.encCounts() : Promise.resolve(null))
+      .then(function (c) { return c && c.list && c.list.length ? c.list : null; }, function () { return null; });
+    return chainsOnce;
+  }
+
+  function item(r, i, copy) {
+    var a = document.createElement(r.href ? "a" : "span");
+    a.className = "enc-set-name";
+    if (r.href) a.href = r.href;
+    a.style.setProperty("--tint", TINTS[i % TINTS.length]);
+    if (copy) {
+      a.setAttribute("aria-hidden", "true");
+      if (r.href) a.tabIndex = -1;
+    } else if (r.href) {
+      a.setAttribute("aria-label", r.name);
+    }
+    var disc = document.createElement("span");
+    disc.className = "enc-set-disc";
+    if (r.glyph) {
       var im = document.createElement("img");
-      im.src = r.src;
+      im.src = r.glyph;
       im.alt = "";
       im.loading = "lazy";
-      span.appendChild(im);
-      wrap.appendChild(span);
-    });
-    content.appendChild(wrap);
-    /* "+N more" is a Notion text block in the band, moved onto the row. Its number is the set's
-       own: Super sends only the rendered tab's rows, so it is counted from the all-stages view on
-       /services (navbar.js, window.encCounts) in figures() below — Notion's number is the fallback. */
-    var more = null;
-    Array.prototype.forEach.call(content.querySelectorAll(":scope > p.notion-text"), function (p) {
-      if (/^\s*\+\s*\d+\s*more\b/i.test(p.textContent)) more = p;
-    });
-    if (more) {
-      more.classList.add("enc-set-more");
-      wrap.appendChild(more);
+      im.decoding = "async";
+      disc.appendChild(im);
     }
+    a.appendChild(disc);
+    a.appendChild(document.createTextNode(r.name));
+    return a;
+  }
+
+  function draw(content, rows) {
+    var sig = rows.map(function (r) { return r.name + ">" + (r.href || ""); }).join("|");
+    var old = content.querySelector(":scope > .enc-set-strip");
+    if (old && old.getAttribute("data-sig") === sig) return;
+    if (old) old.remove();
+    var strip = document.createElement("div");
+    strip.className = "enc-set-strip";
+    strip.setAttribute("data-sig", sig);
+    var tape = document.createElement("div");
+    tape.className = "enc-set-tape";
+    rows.forEach(function (r, i) { tape.appendChild(item(r, i, false)); });
+    rows.forEach(function (r, i) { tape.appendChild(item(r, i, true)); });
+    strip.appendChild(tape);
+    content.appendChild(strip);
+  }
+
+  function marks() {
+    var band = document.getElementById(BAND);
+    if (!band) return;
+    var content = band.querySelector(":scope > .notion-callout__content");
+    if (!content) return;
+    // draw what the page has at once (the mainnet cards), then the whole set when it arrives
+    if (!content.querySelector(":scope > .enc-set-strip")) {
+      var here = fromPage();
+      if (here.length) draw(content, here);
+    }
+    chains().then(function (list) {
+      if (list) draw(content, list);
+    });
   }
 
   /* ── the counts, from the Networks set ──
-     The count band's two figures (mainnets, testnets), the 5m heading's "Thirty-five teams said
-     yes." (the chains, spelled) and the marks row's "+N more" are Notion text, rewritten here
+     The count band's two figures (mainnets, testnets) and the 5m heading's "Thirty-five teams chose
+     us." (the chains, spelled) are Notion text, rewritten here
      from the set's own rows — the same counts the navbar carries, read once
      per visit from the all-stages view on /services (navbar.js). Only the digits are replaced, so
      the words around them stay Notion's; if the counts cannot be read, Notion's numbers stand. */
   var FIG_MAIN = "block-3dce800a5138818e8123ed8b8471935d";
   var FIG_TEST = "block-3dce800a5138812a995cd075afdf49a2";
-  var TEAMS = "block-3dde800a513881b7ae8dc2e00b42d7f9";   /* "Thirty-five teams said yes." */
+  var TEAMS = "block-3dde800a513881b7ae8dc2e00b42d7f9";   /* "Thirty-five teams chose us." */
   var ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split(" ");
   var TENS = "  twenty thirty forty fifty sixty seventy eighty ninety".split(" ");
   var NUMWORD = /^(\d+|(?:zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)(?:-[a-z]+)?)\b/i;
@@ -266,7 +300,6 @@
       setNumber(document.getElementById(FIG_MAIN), c.mainnet);
       setNumber(document.getElementById(FIG_TEST), c.testnet);
       setLead(document.getElementById(TEAMS), c.chains);
-      if (shown) setNumber(document.querySelector("#" + BAND + " .enc-set-more"), c.chains - shown);
     });
   }
 
