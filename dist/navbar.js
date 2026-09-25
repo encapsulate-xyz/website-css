@@ -154,12 +154,53 @@
     if (!href || !BASE) return null;
     var w = whole(href);
     if (PANELS[w]) {
-      return { src: BASE + "img/nav-panels/" + PANELS[w] + ".png",
+      return { src: BASE + "img/nav-panels/" + PANELS[w] + ".webp",
         mode: PANELS[w] === "institutional" ? "cover" : "panel" };
     }
     if (w.indexOf("#") >= 0) return null;
     var key = COVERS[path(href)];
-    return key ? { src: BASE + "img/nav-covers/" + key + ".png", mode: "cover" } : null;
+    return key ? { src: BASE + "img/nav-covers/" + key + ".webp", mode: "cover" } : null;
+  }
+
+  /* THE CAPTURES ARE FETCHED BEFORE THEY ARE NEEDED. They were PNGs of 80–650KB (2.1MB in all),
+     requested only when a panel first opened, so the first preview drew in late (the user,
+     2026-09-25). They are WebP now — the same pixels, 451KB in all — and they are warmed: each
+     group's first capture once the page is idle (what a panel shows the moment it opens), every
+     capture the first time the pointer comes over the bar, and on a phone the sheet's covers when
+     the Menu button is pressed. Nothing is warmed ahead of intent where the reader has asked to
+     save data. */
+  var warmed = {};
+  function warm(src) {
+    if (!src || warmed[src]) return;
+    warmed[src] = 1;
+    var im = new Image();
+    im.decoding = "async";
+    im.src = src;
+  }
+  function shotsOf(firstOnly) {
+    var out = [];
+    menu.forEach(function (g) {
+      (firstOnly ? g.items.slice(0, 1) : g.items).forEach(function (p) {
+        var sh = shotOf(p.href);
+        if (sh) out.push(sh.src);
+      });
+    });
+    return out;
+  }
+  function warmAll() {
+    // under 960 the bar is the compact one, and its sheet shows only each group's first cover
+    if (!window.matchMedia("(min-width: 960px)").matches) return warmFirst();
+    shotsOf(false).forEach(warm);
+  }
+  function warmFirst() { shotsOf(true).forEach(warm); }
+  var idleWarm = false;
+  function warmWhenIdle() {
+    if (idleWarm || !menu.length || document.readyState !== "complete") return;
+    idleWarm = true;
+    var c = navigator.connection;
+    if (c && c.saveData) return;
+    if (!window.matchMedia("(min-width: 960px)").matches) return;   // a phone warms on the Menu button
+    (window.requestIdleCallback || function (f) { return setTimeout(f, 1500); })(warmFirst);
   }
 
   /* the tertiary's arrow badge, the only icon the Button System allows beside a label */
@@ -967,6 +1008,9 @@
     var bar = document.querySelector("nav.super-navbar");
     if (!bar || bar.hasAttribute("data-enc-band")) return;
     bar.setAttribute("data-enc-band", "");
+    // intent: the pointer or the keyboard has reached the bar — fetch every capture now
+    bar.addEventListener("pointerenter", warmAll);
+    bar.addEventListener("focusin", warmAll);
 
     function openTrigger() {
       return bar.querySelector('.super-navbar__list[data-state="open"], ' +
@@ -1189,6 +1233,7 @@
       menuBtn.type = "button";
       menuBtn.setAttribute("aria-controls", "enc-sheet");
       setButton(false);
+      menuBtn.addEventListener("pointerdown", warmFirst);
       menuBtn.addEventListener("click", function () {
         if (sheetOpen()) closeSheet(false); else openSheet();
       });
@@ -1214,11 +1259,12 @@
     markCurrent();
     band();
     compact();
+    warmWhenIdle();
   }
 
   /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
      against its page from the console without opening the menu */
-  window.encNav = { version: 10, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
+  window.encNav = { version: 11, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
     groups: function () { return groups; }, harvest: function () { return { done: harvested, tries: harvestTries }; },
     ground: ground, isInk: isInk, groundUnder: groundUnder, wordmark: wearWordmark,
     band: band };

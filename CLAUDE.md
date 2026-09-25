@@ -446,6 +446,13 @@ guides, 4 posts, 6 votes; lists are 51px rows. **The foot lines go somewhere**: 
 **Captures**: the file's covers were recaptured at 1496px with the page chrome painted out. DesignSync's
 `get_file` stops at 256 KB — a larger image comes back cut off (no IEND chunk; check for it) — so
 the Networks cover and the Dashboards panel came as the user's export (v269).
+**The captures are WebP and fetched ahead of use** (v284): the PNGs were 80–650KB each (2.1MB),
+requested only when a panel first opened, so the first preview drew in late (the user,
+2026-09-25). Each has a WebP beside it at the same 1496px (q88, `cwebp -m 6 -sharp_yuv`; 451KB in
+all, indistinguishable at 100%) and navbar.js uses those; the PNGs stay as the design's files.
+`warm()` fetches each group's first capture once the page is idle (desktop only, never when the
+reader asked to save data), every capture when the pointer or focus first reaches the bar, and on a
+phone the five sheet covers when Menu is pressed.
 
 **The Services column** is two by two, filling the panel's height, each capture drawn whole from its
 top-left (handoff, 2026-09-24; it was a corner at 170%). **The wide bar holds down to 960px**, the
