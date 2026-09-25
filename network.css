@@ -72,123 +72,6 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 
 
 
-/*********************************************/
-/* DATABASE VIEW PICKER — the design's control bar */
-/*********************************************/
-
-/* REPLACED 2026-09-16. The old rules made the picker a right-aligned 40%-wide
-   strip of 25px pill buttons in Verdana, tinted green and pink when active —
-   and they applied to every picker on the page, including the new set's.
-
-   "Networks Set" puts the stage tabs in one bar across the top of the grid:
-   a 50px row on the card ring, the tabs left-aligned, the active one marked by
-   a 2px ink underline rather than a fill. The design also carries a count on
-   each tab and a search field; both need markup Notion cannot provide, so
-   they are not here. */
-
-.notion-root .notion-collection__header-wrapper {
-  display: flex !important;
-  align-items: stretch !important;
-  width: 100% !important;
-  min-height: 50px !important;
-  margin: 0 0 26px !important;
-  padding: 0 10px !important;
-  border: 1px solid #D9D9D2 !important;
-  border-radius: 10px !important;
-  /* the second paper: the bar is a recessed track, not a panel the colour of the page
-     (the handoff moved it from PAPER to PAPER2, 2026-09-21) */
-  background: #F2F2ED !important;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
-}
-
-.notion-root .notion-collection__header-wrapper .notion-dropdown,
-.notion-root .notion-collection__header-wrapper .notion-dropdown__menu-wrapper,
-.notion-root .notion-collection__header-wrapper .notion-dropdown__menu {
-  width: auto !important;
-  flex: 0 0 auto !important;
-  margin: 0 !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  background: transparent !important;
-}
-
-/* Super's view-picker snippet targets these at three classes deep, so these
-   rules carry four — one more — or the tabs keep its padding and fills. */
-/* the picker is now just the tabs; the bar around it is the header row above */
-.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option-list {
-  display: flex !important;
-  width: auto !important;
-  max-height: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  justify-content: flex-start !important;
-  align-items: stretch !important;
-  flex-wrap: nowrap !important;
-  gap: 0 !important;
-  min-height: 48px !important;   /* the bar's interior: 48 + its two hairlines = 50 */
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  overflow: visible !important;
-}
-
-.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option {
-  flex: 0 0 auto !important;
-  width: auto !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  height: 48px !important;       /* 48 + the bar's two hairlines = the design's 50 */
-  min-height: 44px !important;   /* the touch floor the design sets on a tab */
-  margin: 0 !important;
-  padding: 0 14px !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  transition: color 0.16s ease, box-shadow 0.16s ease !important;
-}
-
-.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option p,
-.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option span {
-  font-family: var(--type-body), system-ui, sans-serif !important;
-  font-size: 15px !important;
-  font-weight: 500 !important;
-  letter-spacing: -0.006em !important;
-  color: #575B55 !important;   /* the design's ON_GROUND, not the #6B6F68 body grey */
-  transition: color 0.16s ease !important;
-}
-
-.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:hover {
-  background: transparent !important;
-  border: 0 !important;
-}
-
-.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:hover p,
-.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option.active p,
-.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option:hover span,
-.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option.active span {
-  color: #000000 !important;
-}
-
-/* the active tab is marked by an ink underline, not a fill */
-.notion-root .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option.active {
-  background: transparent !important;
-  box-shadow: inset 0 -2px 0 #000000 !important;
-  pointer-events: none !important;
-}
-
-/* Super's own picker snippet reads these */
-.notion-root {
-  --picker-active-bg-color: transparent !important;
-  --picker-active-text-color: #000000 !important;
-  --picker-text-color: #575B55 !important;   /* ON_GROUND, the design's rest label */
-  --picker-border-color: transparent !important;
-  --picker-border-radius: 0 !important;
-  --picker-hover-bg-color: transparent !important;
-  --picker-hover-border-color: transparent !important;
-}
 
 /*********************************************/
 /*********************************************/
@@ -446,143 +329,311 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 /*********************************************/
-/* NETWORKS SET — "Networks Set" 5g, THE MARK BLEEDING */
+/* NETWORKS INDEX — design "Networks Index" (2026-09-25)
 /*********************************************/
 
-/* The new deployments database (Notion "Networks set", 3dde800a…), one card per deployment:
-   28 mainnet + 19 testnet, each row's Cover a glyph uploaded into Notion. The card is the page's
-   own graphic in miniature — an oversized disc cropped by the card's corner — so the grid ties
-   back to the covers.
+/* The Networks set as the design's index: the heading and the controls on one row, then a ledger
+   of names in two columns beside a sticky stage for the chain under the pointer. Everything comes
+   from Notion: the heading is a Notion Heading 2 placed right before the set, every row is one of
+   Super's gallery cards (the Cover glyph, the title, the Reward rate — or, on the Testnet view,
+   the Role), and the stage is filled from the card in hand by network.js. What is not in Notion
+   and cannot be — the switch, the sort, the field — is built by network.js (the recipe in
+   CLAUDE.md), and the few fixed labels ("Reward rate", "Testnet", "Also mainnet", "Mainnet ·
+   reward rate", "Open") are drawn here, as the 5g cards drew "Reward rate".
 
-   VIEWS. Super renders one view at a time and the picker swaps them; both carry the same wrapper
-   class, so the two are told apart by which property the card shows: the mainnet view shows
-   Reward rate (.property-597e3d69), the testnet view shows Role (.property-585f6e6c).
+   The block id alone outranks main.css §09, the Card System; page CSS loads before main.css. */
 
-   These rules outrank main.css §09 (the Card System) by the block id alone — page CSS loads before
-   main.css, so a class-only selector would lose. */
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-gallery {
-  display: grid !important;
-  /* The handoff draws four 276px cards on its own 1240px width. Four columns across this page's
-     1728px made each card 420 wide and the composition came apart — tried on the live page and
-     reverted, 2026-09-21 — so the track holds the card's width and the column count follows the
-     page: six here, four at the handoff's own width. */
-  grid-template-columns: repeat(auto-fill, minmax(262px, 1fr)) !important;
-  gap: 16px !important;
-  align-items: start !important;
+/* ── the heading: the Notion block right before the set ── */
+/* the section runs the page's full width at the design's own sides (clamp(20px, 4vw, 44px)), as
+   the ink bands above and below it do — inside the page's 96px margins the ledger's columns were
+   too narrow for the names */
+.notion-root > h2:has(+ #block-3dde800a51388133b7f1d1ccdda08038) {
+  margin: clamp(40px, 5vw, 72px) 0 40px calc(50% - 50vw + clamp(20px, 4vw, 44px)) !important;
   padding: 0 !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: clamp(36px, 4.4vw, 56px) !important;
+  line-height: 1 !important;
+  letter-spacing: -0.04em !important;
+  color: #000000 !important;
+  max-width: 15ch !important;
 }
 
-/* A card Super renders is display:flex, which beats the `hidden` attribute — so a card the search
-   filters out stayed on screen and only moved. `hidden` has to win. */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card[hidden] {
+/* ── the set: ledger | stage ── */
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 30%) !important;
+  grid-template-areas: "ledger stage" "empty stage" !important;
+  column-gap: clamp(40px, 8vw, 160px) !important;
+  row-gap: 0 !important;
+  align-items: start !important;
+  box-sizing: border-box !important;
+  width: 100vw !important;
+  max-width: none !important;
+  margin: 0 calc(50% - 50vw) 88px !important;
+  padding: 0 clamp(20px, 4vw, 44px) !important;
+  font-family: var(--type-body), system-ui, sans-serif;
+}
+/* Super's view picker does the switching, unseen: the design's switch is ours and clicks it */
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .notion-collection__header-wrapper {
   display: none !important;
 }
 
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card {
-  position: relative !important;
-  height: 168px !important;
-  min-height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 1px solid #D9D9D2 !important;
-  border-radius: 12px !important;
-  background: #F2F2ED !important;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 1px 2px rgba(0, 0, 0, 0.06) !important;
-  overflow: hidden !important;
-  transition: border-color 0.16s ease !important;
+/* ── the controls: switch, sort, field — on the heading's row, at its foot ── */
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .enc-set-controls {
+  position: absolute;
+  right: clamp(20px, 4vw, 44px);
+  bottom: calc(100% + 40px);
+  /* never over the heading: the room it leaves is the row less its 15ch and the design's 32px */
+  max-width: calc(100% - 2 * clamp(20px, 4vw, 44px) - clamp(36px, 4.4vw, 56px) * 9.4 - 32px);
+  z-index: 30;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 12px;
 }
 
-/* hover is the ring darkening, the disc deepening and the hollow name filling — no extra lift */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:hover {
-  border-color: #B9B9B1 !important;
-  background: #F2F2ED !important;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+.enc-set-tabs {
+  display: inline-flex;
+  flex: none;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid #D9D9D2;
+  border-radius: 10px;
+  background: #FAFAF8;
+}
+.enc-set-tab {
+  appearance: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 14.5px;
+  font-weight: 500;
+  letter-spacing: -0.006em;
+  color: #000000;
+  white-space: nowrap;
+  transition: background-color 0.16s ease, color 0.16s ease;
+}
+.enc-set-tab[aria-selected="true"] {
+  background: #000000;
+  color: #FAFAF8;
+}
+.enc-set-tab__n {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.8;
+}
+.enc-set-tab__n:empty { display: none; }
+
+.enc-set-sort { position: relative; flex: none; }
+.enc-set-sort__button {
+  appearance: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: 44px;
+  padding: 0 14px 0 16px;
+  border: 1px solid #D9D9D2;
+  border-radius: 10px;
+  background: #FAFAF8;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 14.5px;
+  font-weight: 500;
+  letter-spacing: -0.006em;
+  color: #000000;
+  white-space: nowrap;
+  transition: border-color 0.16s ease;
+}
+.enc-set-sort__button[aria-expanded="true"] { border-color: #B9B9B1; }
+.enc-set-sort__button::before {
+  content: "Sort";
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6B6F68;
+}
+.enc-set-sort__button::after {
+  content: "";
+  width: 10px;
+  height: 6px;
+  flex: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none' stroke='%23000' stroke-width='1.5'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E") center / 10px 6px no-repeat;
+  transition: transform 0.16s ease;
+}
+.enc-set-sort__button[aria-expanded="true"]::after { transform: rotate(180deg); }
+
+.enc-set-sort__menu[hidden],
+.enc-set-sort__option[hidden],
+.enc-set-empty[hidden] { display: none !important; }
+.enc-set-sort__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 20;
+  min-width: 200px;
+  padding: 4px;
+  border: 1px solid #D9D9D2;
+  border-radius: 10px;
+  background: #FAFAF8;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.enc-set-sort__option {
+  appearance: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 38px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 14.5px;
+  font-weight: 400;
+  color: #000000;
+  text-align: left;
+  white-space: nowrap;
+  transition: background-color 0.14s ease;
+}
+.enc-set-sort__option:hover { background: #F2F2ED; }
+.enc-set-sort__option[aria-selected="true"] { font-weight: 500; }
+.enc-set-sort__option::before {
+  content: "";
+  width: 14px;
+  height: 14px;
+  flex: none;
+  background: #000000;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+.enc-set-sort__option[data-icon="set"] { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 3.5h9M3 8h6M3 12.5h3'/%3E%3C/svg%3E"); }
+.enc-set-sort__option[data-icon="name"] { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.5 4.5 2l2 4.5M3.1 5.2h2.8M9.5 3h3.5L9.5 7.5H13M4.5 9.5v4.5M2.9 12.4 4.5 14l1.6-1.6'/%3E%3C/svg%3E"); }
+.enc-set-sort__option[data-icon="rate"] { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 13.5V9M8 13.5V6M13 13.5V2.5'/%3E%3C/svg%3E"); }
+/* the check on the one in force */
+.enc-set-sort__option[aria-selected="true"]::after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  flex: none;
+  margin-left: auto;
+  padding-left: 16px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%23000' stroke-width='1.6'%3E%3Cpath d='M2 6.5l2.6 2.6L10 3.5'/%3E%3C/svg%3E") right center / 12px 12px no-repeat;
 }
 
-/* THE DISC. Super wraps the cover in a bare span; that span becomes the pastel well at 176px,
-   pushed past the TOP-right corner (right -44, top -52) so the card is the page's own graphic in
-   miniature, and the glyph sits inside it at 50% with the design's nudge back into view. */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card > span:not(.enc-set__hollow) {
-  position: absolute !important;
-  right: -44px !important;
-  top: -52px !important;
-  width: 176px !important;
-  height: 176px !important;
-  min-height: 0 !important;
+.enc-set-search {
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  box-sizing: border-box;
+  height: 44px;
+  width: clamp(220px, 26vw, 360px);
+  flex: 0 1 360px;
+  min-width: 180px;
+  padding: 0 14px;
+  border: 1px solid #D9D9D2;
+  border-radius: 10px;
+  background: #FAFAF8;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1);
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 15px;
+  color: #000000;
+}
+.enc-set-search::placeholder { color: #6B6F68; opacity: 1; }
+.enc-set-search::-webkit-search-decoration,
+.enc-set-search::-webkit-search-cancel-button { -webkit-appearance: none; }
+.enc-set-search:focus-visible { box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 0 0 3px rgba(0, 0, 0, 0.32); }
+
+/* ── the ledger: Super's gallery, two columns of rows under an ink rule ── */
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .notion-collection-gallery {
+  grid-area: ledger;
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  column-gap: clamp(24px, 4vw, 64px) !important;
+  row-gap: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
   border: 0 !important;
-  border-radius: 999px !important;
-  background: var(--set-tint, #DCEEC7) !important;
+  border-top: 1px solid #000000 !important;   /* the Card System clears the gallery's border */
+}
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card[hidden] { display: none !important; }
+
+/* a row: the glyph and the name, and the rate at the far end on the name's baseline */
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card {
+  position: relative !important;
   display: grid !important;
-  place-items: center !important;
-  overflow: hidden !important;
-  z-index: 0 !important;
-  transition: background-color 0.16s ease !important;
+  grid-template-columns: 1.28em minmax(0, 1fr) auto !important;
+  align-items: baseline !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 14px 0 16px !important;
+  border: 0 !important;
+  border-bottom: 1px solid #E2E2DB !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  font-family: "Outfit", sans-serif !important;
+  font-size: clamp(30px, 3.4vw, 56px) !important;   /* the name's size; the glyph is 1.28 of it */
+  transition: border-color 0.16s ease !important;
+}
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:hover,
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:active {
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card[data-enc-on] {
+  border-bottom-color: #000000 !important;
+}
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card__anchor:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.32);
+  border-radius: 4px;
 }
 
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:hover > span:not(.enc-set__hollow) {
-  background: var(--set-deep, #B4D98F) !important;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card__cover {
+/* the glyph, 1.28 of the name's size */
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .notion-collection-card__cover {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center !important;
   position: static !important;
-  width: 50% !important;
-  height: 50% !important;
+  width: 1.28em !important;
+  height: 1.28em !important;
   min-height: 0 !important;
   max-height: none !important;
   margin: 0 !important;
   border-radius: 0 !important;
-  object-fit: contain !important;      /* beats Super's inline `cover` */
-  object-position: center center !important;
   background: transparent !important;
-  transform: translate(-12%, 14%) !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  opacity: 0.78;
+  transition: opacity 0.16s ease;
 }
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card[data-enc-on] .notion-collection-card__cover { opacity: 1; }
 
-/* the five pastels, cycling down the grid as they do on the covers, each with the deeper tone
-   the disc takes on hover */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:nth-child(5n + 1) { --set-tint: #DCEEC7; --set-deep: #B4D98F; }
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:nth-child(5n + 2) { --set-tint: #F8E8B3; --set-deep: #E8CB72; }
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:nth-child(5n + 3) { --set-tint: #D2E3F6; --set-deep: #A3C3EC; }
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:nth-child(5n + 4) { --set-tint: #F8DDC6; --set-deep: #EDB98A; }
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:nth-child(5n + 5) { --set-tint: #F7DCE7; --set-deep: #E9A9C2; }
-
-/* A testnet card is one showing the Role property, or one showing nothing but its name: its disc
-   sits at 62% so the stage is legible from the card alone. "No rate" alone is not enough since
-   2026-09-24 — Mina, EigenCloud and SSV.network are mainnet rows with the rate left blank on
-   purpose, and they carry the staking properties below. */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:has(.property-585f6e6c) > span:not(.enc-set__hollow),
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:not(:has(.property-597e3d69)):not(:has(.notion-collection-card__property:not(.notion-property__title):not(.property-585f6e6c))) > span:not(.enc-set__hollow) {
-  opacity: 0.62 !important;
-}
-
-/* THE STAKING PROPERTIES (Address, Commission, Unbonding… added 2026-09-24) are shown on the
-   Mainnet view so a chain page can read them off /networks — Super only puts a property into the
-   page when the view shows it. The card itself still draws only the name and the rate (and the
-   role on testnet), so everything else is kept off it. */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card__property:not(.notion-property__title):not(.property-597e3d69):not(.property-585f6e6c) {
-  display: none !important;
-}
-
-/* THE TYPE. Content sits above the disc and the hollow name, at the card's top-left corner,
-   kept to 62% so a long name never runs into the disc. */
+/* out of the layout, but still the title's parent: it sets Super's 12px, so it takes the row's */
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card__content {
-  position: absolute !important;
-  left: 16px !important;
-  top: 14px !important;
-  z-index: 2 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 6px !important;
-  width: auto !important;
-  max-width: 62% !important;
-  height: auto !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: visible !important;
+  display: contents !important;
+  font-size: inherit !important;
 }
-
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .notion-property {
   height: auto !important;
   min-height: 0 !important;
@@ -591,135 +642,248 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   gap: 0 !important;
   overflow: visible !important;
 }
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-property__title {
-  display: block !important;
-  font-family: var(--type-display) !important;
-  font-weight: 600 !important;
-  font-size: 15px !important;
-  line-height: 1.1 !important;
-  letter-spacing: -0.018em !important;
-  color: #000000 !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
+/* only the name and the rate (or the stage) are drawn; the staking properties the Mainnet view
+   carries for the chain pages, and the Role (it goes to the stage), stay off the row */
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card__property:not(.notion-property__title):not(.property-597e3d69):not(.property-585f6e6c) {
+  display: none !important;
 }
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-property__title__icon-wrapper { display: none !important; }
 
-/* the rate — the one figure on a mainnet card. It is one number, never two lines. */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .property-597e3d69 {
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .notion-property__title {
+  grid-column: 2;
+  grid-row: 1;
   display: block !important;
-  white-space: nowrap !important;
-  font-family: var(--type-display) !important;
+  margin-left: 0.3em !important;
+  font-family: "Outfit", sans-serif !important;
   font-weight: 600 !important;
-  font-size: 22px !important;
+  font-size: 1em !important;
   line-height: 1 !important;
-  letter-spacing: -0.028em !important;
-  font-variant-numeric: tabular-nums !important;
-  color: #3F6B27 !important;
+  letter-spacing: -0.04em !important;
+  color: #3A3D38 !important;
+  overflow-wrap: anywhere;
+  white-space: normal !important;
+  transition: color 0.16s ease;
 }
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card[data-enc-on] .notion-property__title { color: #000000 !important; }
 
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .property-597e3d69::after {
-  content: "Reward rate";
-  display: block;
-  margin-top: 1px;
+/* the right end: the rate on a mainnet row; on a testnet row the Role's place carries the stage,
+   "Also mainnet" when the chain runs both. Raised over the card's link so the tip can show;
+   network.js passes a click on it to the link. */
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .property-597e3d69,
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .property-585f6e6c {
+  grid-column: 3;
+  grid-row: 1;
+  position: relative !important;
+  z-index: 11;
+  display: inline-flex !important;
+  margin-left: 24px !important;
+  font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap !important;
+  color: #6B6F68 !important;
+  cursor: pointer;
+  transition: color 0.16s ease;
+}
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card[data-enc-on] .property-597e3d69,
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card[data-enc-on] .property-585f6e6c { color: #000000 !important; }
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .property-585f6e6c { font-size: 0 !important; }
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .property-585f6e6c::before {
+  content: "Testnet";
+  font-size: 11px;
+}
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card[data-enc-also] .property-585f6e6c::before { content: "Also mainnet"; }
+
+/* a row with nothing to put there: "—" for a mainnet chain whose rate is left blank on purpose
+   (Mina), the stage for a testnet row with no Role. Super drops an empty property altogether. */
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038[data-enc-view] .notion-collection-card:not(:has(.property-597e3d69)):not(:has(.property-585f6e6c))::before {
+  grid-column: 3;
+  grid-row: 1;
+  margin-left: 24px;
   font-family: var(--type-mono), ui-monospace, monospace;
-  font-size: 8px;
-  font-weight: 400;
-  letter-spacing: 0.14em;
+  font-size: 11px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #6B6F68;
 }
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038[data-enc-view="mainnet"] .notion-collection-card:not(:has(.property-597e3d69))::before { content: "\2014"; }
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038[data-enc-view="testnet"] .notion-collection-card:not(:has(.property-585f6e6c))::before { content: "Testnet"; }
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038[data-enc-view="testnet"] .notion-collection-card[data-enc-also]:not(:has(.property-585f6e6c))::before { content: "Also mainnet"; }
 
-/* the role — what a testnet card carries where a mainnet card carries its rate */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .property-585f6e6c {
-  display: block !important;
-  font-family: var(--type-mono), ui-monospace, monospace !important;
-  font-size: 9px !important;
-  line-height: 1.5 !important;
-  letter-spacing: 0.1em !important;
-  text-transform: uppercase !important;
-  color: #6B6F68 !important;
-}
-
-/* THE HOLLOW NAME. The card's own title again at 96px, running off the bottom-right corner:
-   one copy stroked, one filled over it in the card's ground so only the outline shows — Who We
-   Are's two-copy construction. On hover the fill goes grey and the word reads solid. The text is
-   the Notion title, copied by network.js; nothing here is written. */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set__hollow {
+/* the house tooltip: a mono label on an ink pill above, on the label's own hover */
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .property-597e3d69::after,
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .property-585f6e6c::after {
+  content: "Reward rate";
   position: absolute;
-  left: 12px;
-  bottom: -18px;
-  right: -80px;
-  z-index: 1;
-  display: block;
-  pointer-events: none;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set__hollow span {
-  display: block;
-  font-family: var(--type-display), sans-serif;
-  font-weight: 600;
-  font-size: 96px;
-  line-height: 1;
-  letter-spacing: -0.06em;
+  /* from the label's right edge, not centred on it: the label ends the row, and a centred pill
+     hung past the page's edge — unseen, but it widened a phone's page by 21px */
+  right: 0;
+  bottom: calc(100% + 8px);
+  padding: 6px 9px;
+  border-radius: 4px;
+  background: #000000;
+  color: #FAFAF8;
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease;
+  z-index: 30;
+}
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .property-585f6e6c::after { content: "Testnet"; }
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .property-597e3d69:hover::after,
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .property-585f6e6c:hover::after { opacity: 1; }
+
+/* what a search with no match says */
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .enc-set-empty {
+  grid-area: empty;
+  margin: 0 !important;
+  padding: 24px 0 !important;
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.56;
+  color: #6B6F68;
+  max-width: 40ch;
 }
 
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set__hollow span:first-child {
-  color: transparent;
-  -webkit-text-stroke: 2.2px #9B9B94;
+/* ── the stage: the chain in hand, pinned beside the ledger ── */
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .enc-set-stage {
+  grid-area: stage;
+  position: sticky;
+  top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  align-items: flex-start;
 }
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set__hollow span:last-child {
+.enc-set-stage__disc {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: var(--tint, #DCEEC7);
+  display: grid;
+  place-items: center;
+  transition: background-color 0.2s ease;
+}
+.enc-set-stage__disc::after {
+  content: "";
   position: absolute;
-  left: 0;
-  top: 0;
-  color: #F2F2ED;
-  transition: color 0.16s ease;
+  inset: 0;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--deep, #B4D98F);
 }
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:hover .enc-set__hollow span:last-child {
-  color: #9B9B94;
+.enc-set-stage__disc img {
+  width: 52%;
+  height: 52%;
+  object-fit: contain;
+  display: block;
 }
-
-/* THE ARROW BADGE. Only on a card that is genuinely a link — Super marks the others .no-click,
-   and an arrow on something unclickable is a lie. */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:not(.no-click)::after {
-  content: "" !important;
-  position: absolute !important;
-  right: 14px !important;
-  top: 14px !important;
-  z-index: 3 !important;
-  width: 22px !important;
-  height: 22px !important;
-  border-radius: 999px !important;
-  background: #99CC66 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 20 20' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.25 10h11.5'/%3E%3Cpath d='M11.25 5.5 15.75 10l-4.5 4.5'/%3E%3C/svg%3E") center / 12px 12px no-repeat !important;
-  opacity: 0 !important;
-  transform: translateX(-3px) !important;
-  transition: opacity 0.16s ease, transform 0.16s ease !important;
+.enc-set-stage__facts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card:not(.no-click):hover::after {
+.enc-set-stage__k {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6B6F68;
+}
+.enc-set-stage__k::before { content: "Mainnet \00B7  reward rate"; }
+.enc-set-stage[data-stage="testnet"] .enc-set-stage__k::before { content: "Testnet"; }
+.enc-set-stage__v {
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #000000;
+  font-variant-numeric: tabular-nums;
+}
+.enc-set-stage__role {
+  margin: 0;
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 14.5px;
+  line-height: 1.56;
+  color: #3A3D38;
+  max-width: 34ch;
+  text-wrap: pretty;
+}
+.enc-set-stage__role:empty { display: none; }
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 a.enc-set-stage__go {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 0 !important;
+  text-decoration: none !important;
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #000000;
   opacity: 1 !important;
-  transform: translateX(0) !important;
 }
+.enc-set-stage__go[hidden] { display: none !important; }
+.enc-set-stage__go::before { content: "Open\00A0"; margin-right: -10px; }
+.enc-set-stage__go::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  flex: none;
+  border-radius: 999px;
+  background: #99CC66 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10' fill='none' stroke='%23000' stroke-width='1.5'%3E%3Cpath d='M2 5h6M5 2l3 3-3 3'/%3E%3C/svg%3E") center / 10px 10px no-repeat;
+  transition: transform 0.16s ease;
+}
+.enc-set-stage__go:hover::after { transform: translateX(3px); }
 
-@media (max-width: 1200px) {
-  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-gallery {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+/* ── narrower ── */
+/* the heading and the controls stop fitting one row: the controls go under it, and the ledger to
+   one column (the design's switch is at 1100; between 1100 and 1300 "Avalanche" broke mid-word) */
+@media (max-width: 1299px) {
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .notion-collection-gallery {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .notion-root > h2:has(+ #block-3dde800a51388133b7f1d1ccdda08038) { margin-bottom: 20px !important; }
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 {
+    grid-template-areas: "controls controls" "ledger stage" "empty stage" !important;
+  }
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .enc-set-controls {
+    grid-area: controls;
+    position: relative;
+    right: auto;
+    bottom: auto;
+    max-width: none;
+    justify-self: start;
+    margin-bottom: 40px;
   }
 }
-
-@media (max-width: 860px) {
-  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-gallery {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+@media (max-width: 760px) {
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas: "controls" "ledger" "empty" "stage" !important;
   }
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .enc-set-stage {
+    position: static;
+    margin-top: 40px;
+  }
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .enc-set-controls {
+    flex-wrap: wrap;
+    justify-self: stretch;
+  }
+  .enc-set-search { flex: 1 1 100%; width: auto; min-width: 0; }
 }
-
-@media (max-width: 520px) {
-  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-gallery {
-    grid-template-columns: 1fr !important;
-  }
+@media (prefers-reduced-motion: reduce) {
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 *,
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 *::before,
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 *::after { transition: none !important; }
 }
 
 /*********************************************/
@@ -927,259 +1091,6 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   }
 }
 
-/*********************************************/
-/* THE CONTROL BAR — sort and search (network.js) */
-/*********************************************/
-
-/* The design's bar holds three things: the stage tabs (Super's view picker, styled above), a sort
-   menu, and a field for finding a chain. The last two are built by network.js because Notion has
-   no block that is an input or a menu. Both work on the cards Super rendered. */
-
-/* The controls are not inside Super's picker markup (network.js explains why); they are laid over
-   the right-hand end of the header row so bar, tabs, sort and field still read as one control. */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-controls {
-  position: absolute !important;
-  top: 0 !important;
-  right: 10px !important;
-  /* above the cards: since the set's rows became pages (2026-09-24) every card carries Super's
-     link overlay at z-index 10, and at 5 this wrapper — the menu's stacking context — sat under
-     them, so a click on a sort option opened the chain page behind it (reported 2026-09-25) */
-  z-index: 30 !important;
-  height: 50px !important;
-  display: flex !important;
-  align-items: stretch !important;
-}
-
-/* room for them, so a long tab list never runs under the field */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection__header-wrapper {
-  padding-right: 400px !important;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort,
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-search {
-  position: relative;
-  display: flex;
-  align-items: center;
-  border-left: 1px solid #E2E2DB;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__button {
-  appearance: none;
-  cursor: pointer;
-  background: transparent;
-  border: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  height: 50px;
-  padding: 0 16px;
-  font-family: var(--type-body), system-ui, sans-serif;
-  font-size: 14.5px;
-  letter-spacing: -0.006em;
-  color: #575B55;   /* ON_GROUND, as the design's sort control */
-  white-space: nowrap;
-  transition: color 0.16s ease;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__button::before {
-  content: "";
-  width: 14px;
-  height: 14px;
-  flex: none;
-  background: currentColor;
-  opacity: 0.7;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M2.5 4.5h11M4.5 8h7M6.5 11.5h3'/%3E%3C/svg%3E") center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M2.5 4.5h11M4.5 8h7M6.5 11.5h3'/%3E%3C/svg%3E") center / contain no-repeat;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__button::after {
-  content: "";
-  width: 11px;
-  height: 11px;
-  flex: none;
-  background: currentColor;
-  opacity: 0.7;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 5.25 7 8.75l3.5-3.5'/%3E%3C/svg%3E") center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 5.25 7 8.75l3.5-3.5'/%3E%3C/svg%3E") center / contain no-repeat;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__button:hover,
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__button[aria-expanded="true"] {
-  color: #000000;
-}
-
-/* `hidden` has to win over the display below, or the menu stands open on load */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__menu[hidden],
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-empty[hidden] {
-  display: none !important;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__menu {
-  position: absolute;
-  top: calc(100% + 6px);
-  right: 8px;
-  z-index: 20;
-  min-width: 208px;
-  padding: 3px;
-  border: 1px solid #D9D9D2;
-  border-radius: 12px;
-  background: var(--color-bg-default);
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1), 0 4px 14px rgba(0, 0, 0, 0.10);
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__option {
-  appearance: none;
-  cursor: pointer;
-  border: 0;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0 12px;
-  border-radius: 10px;
-  background: transparent;
-  font-family: var(--type-body), system-ui, sans-serif;
-  font-size: 14.5px;
-  letter-spacing: -0.006em;
-  color: #3A3D38;
-}
-
-/* the design gives each option its own mark: the set's own order, A to Z, and a bar chart for the
-   rate — with a tick on the one in force */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__option::before {
-  content: "";
-  width: 14px;
-  height: 14px;
-  flex: none;
-  margin-right: 10px;
-  background: #6B6F68;
-  transition: background-color 0.16s ease;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__option[data-icon="set"]::before {
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'%3E%3Cpath d='M3 4h10M3 8h10M3 12h10'/%3E%3C/svg%3E") center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'%3E%3Cpath d='M3 4h10M3 8h10M3 12h10'/%3E%3C/svg%3E") center / contain no-repeat;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__option[data-icon="name"]::before {
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.5 4.5 2l2 4.5M3.1 5.2h2.8M9.5 3h3.5L9.5 7.5H13M4.5 9.5v4.5M2.9 12.4 4.5 14l1.6-1.6'/%3E%3C/svg%3E") center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6.5 4.5 2l2 4.5M3.1 5.2h2.8M9.5 3h3.5L9.5 7.5H13M4.5 9.5v4.5M2.9 12.4 4.5 14l1.6-1.6'/%3E%3C/svg%3E") center / contain no-repeat;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__option[data-icon="rate"]::before {
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'%3E%3Cpath d='M3.5 13V9.5M8 13V6M12.5 13V3'/%3E%3C/svg%3E") center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'%3E%3Cpath d='M3.5 13V9.5M8 13V6M12.5 13V3'/%3E%3C/svg%3E") center / contain no-repeat;
-}
-
-/* the tick, on the option in force */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__option::after {
-  content: "";
-  width: 13px;
-  height: 13px;
-  flex: none;
-  margin-left: auto;
-  background: transparent;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 7.5 5.5 10.5 11.5 4'/%3E%3C/svg%3E") center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 7.5 5.5 10.5 11.5 4'/%3E%3C/svg%3E") center / contain no-repeat;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__option[aria-selected="true"]::after {
-  background: #000000;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__option:hover::before,
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__option[aria-selected="true"]::before {
-  background: #000000;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__option:hover {
-  background: #F2F2ED;
-  color: #000000;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__option[aria-selected="true"] {
-  background: #E9E9E2;
-  color: #000000;
-}
-
-/* the field */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-search {
-  width: 260px;
-  gap: 10px;
-  padding: 0 14px;
-  cursor: text;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-search::before {
-  content: "";
-  width: 15px;
-  height: 15px;
-  flex: none;
-  background: #6B6F68;
-  transition: background-color 0.16s ease;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'%3E%3Ccircle cx='7.75' cy='7.75' r='5.25'/%3E%3Cpath d='m11.75 11.75 3.75 3.75'/%3E%3C/svg%3E") center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round'%3E%3Ccircle cx='7.75' cy='7.75' r='5.25'/%3E%3Cpath d='m11.75 11.75 3.75 3.75'/%3E%3C/svg%3E") center / contain no-repeat;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-search[data-filled]::before {
-  background: #000000;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-search__input {
-  flex: 1;
-  min-width: 0;
-  height: 50px;
-  border: 0;
-  outline: none;
-  background: transparent;
-  font-family: var(--type-body), system-ui, sans-serif;
-  font-size: 15px;
-  color: #000000;
-  padding: 0;
-}
-
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-search__input::placeholder {
-  color: #6B6F68;
-  opacity: 1;
-}
-
-/* what a search with no match says */
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-empty {
-  margin: 0 !important;
-  padding: 34px 0 0 !important;
-  border-top: 1px solid #E2E2DB;
-  font-family: var(--type-body), system-ui, sans-serif;
-  font-size: 15px;
-  line-height: 1.55;
-  color: #3A3D38;
-}
-
-@media (max-width: 860px) {
-  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-controls {
-    position: static !important;
-    width: 100% !important;
-    border-top: 1px solid #E2E2DB;
-  }
-
-  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection__header-wrapper {
-    flex-wrap: wrap !important;
-    padding-right: 10px !important;
-    height: auto !important;
-  }
-
-  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection__header-wrapper .notion-dropdown__menu .notion-dropdown__option-list {
-    flex-wrap: wrap !important;
-  }
-
-  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-search {
-    flex: 1;
-    width: auto;
-  }
-}
-
 /* the page ends on a full-bleed band, so it runs into the footer: Super pads the article and the
    main below the content, which on a band reads as a strip of ground above the ink (2026-09-21,
    the same rule as /guides, /security and /investments) */
@@ -1189,73 +1100,3 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 
-/* ── BELOW 700px ─────────────────────────────────────────────────────────────────────────────
-   Only what was broken on a phone (checked 2026-09-25 at 390 and 672); nothing above 700px moves.
-   The sort menu and the search field are appended after the gallery — over the header on a wide
-   screen, but below 860px they become static and so stood after all twenty-seven cards. The
-   collection (the block itself) is laid out as a column so they come right under the stage picker,
-   and the menu opens from the button's left edge, since the button is at the left here. The same
-   holds wherever the controls are static, so the rule runs to 860 (checked at 720 and 800). */
-@media (max-width: 860px) {
-  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 {
-    display: flex !important;
-    flex-direction: column !important;
-  }
-  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .notion-collection__header-wrapper { order: 0; }
-  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .enc-set-controls {
-    order: 1;
-    margin-bottom: 16px !important;
-    position: relative !important;   /* the menu's stacking context, above the cards' link overlays */
-    right: auto !important;          /* the wide bar's offset from the header's right end */
-  }
-  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .notion-collection-gallery { order: 2; }
-  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .enc-set-empty { order: 3; }
-  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-sort__menu {
-    left: 0;
-    right: auto;
-  }
-}
-/* at 360 the search field could not shrink below its input's own width and pushed the page 7px
-   wide: a flex item's min-width is its content's until told otherwise */
-@media (max-width: 700px) {
-  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-search { min-width: 0; }
-  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-search__input { min-width: 0; width: 100%; }
-}
-
-/* THE STAGE TABS ON A PHONE. Under ~576px Super folds its view picker into a dropdown: a
-   "Mainnet ▾" button, and the options in a closed pop-up (absolute, opacity 0). Our tabs are
-   those options, so the bar showed the button and the tabs spilled out beneath it, over the sort
-   and search row (reported 2026-09-25; an old 576px rule styling the button as a pill was removed
-   the same day). The tabs are the picker here too: the button is hidden and the options stay in
-   the bar, as at every other width. */
-@media (max-width: 700px) {
-  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection__header-wrapper .notion-dropdown__button {
-    display: none !important;
-  }
-  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection__header-wrapper .notion-dropdown__menu {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: none !important;
-    pointer-events: auto !important;
-    z-index: 1 !important;          /* folded, Super sinks the closed pop-up under its wrapper (z −1) */
-    animation: none !important;     /* and animates it out after a choice; the tabs stay put */
-  }
-}
-
-/* THE SORT AND SEARCH ROW, ON ITS OWN. Under 860px it drops under the stage tabs, and all it kept
-   of the bar was a hairline on top — the row read as fading out at its sides and foot (reported
-   2026-09-25). It takes the tab bar's own track: the #D9D9D2 ring, 10px, the second paper, the
-   white top highlight. */
-@media (max-width: 860px) {
-  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .enc-set-controls {
-    box-sizing: border-box !important;
-    min-height: 50px !important;
-    border: 1px solid #D9D9D2 !important;
-    border-radius: 10px !important;
-    background: #F2F2ED !important;
-    box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
-  }
-}

@@ -303,14 +303,19 @@
     });
   }
 
-  /* ── the control bar's sort and search ──
-     Design "Networks Set" puts three things in one bar: the stage tabs, a sort menu and a field
-     for finding a chain. Super gives the tabs (its view picker); Notion has no block that is a
-     text input or a menu, so these two are built here — the one case the rule allows. They work on
-     the cards Super rendered: search hides the ones that do not match, sort reorders them with the
-     grid's `order`, and "Default" restores the view's own sequence. Nothing is fetched. */
-  var SORTS = [["set", "Default"], ["name", "By name"], ["rate", "By reward rate"]];
-  var RATE_PROP = "property-597e3d69";
+  /* ── the Networks index (design "Networks Index", 2026-09-25) ──
+     The set is drawn as the design's index: Super's gallery cards are the ledger's rows
+     (network.css), and this builds what Notion cannot hold — the Mainnet/Testnet switch, the sort,
+     the field (the one case the rule allows) — and fills the stage from the card under the pointer.
+     The switch clicks Super's own view picker, which stays in the page unseen; its labels are the
+     views' own names and its counts the set's own (encCounts). Nothing about a chain is written
+     here: the stage copies the card's title, rate, role, glyph and link. */
+  var SORTS = [["set", "Default"], ["name", "Name A–Z"], ["rate", "Highest rate"]];
+  var RATE_PROP = "property-597e3d69", ROLE_PROP = "property-585f6e6c";
+  var TINT = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
+  var DEEP = ["#B4D98F", "#E8CB72", "#A3C3EC", "#EDB98A", "#E9A9C2"];
+  var setList = null;   // every chain once, in Order: the tint and whether a testnet chain is also on mainnet
+  var state = { q: "", sort: "set", active: null };
 
   function el(tag, cls, text) {
     var e = document.createElement(tag);
@@ -318,52 +323,47 @@
     if (text != null) e.textContent = text;
     return e;
   }
-
+  function put(node, text) { if (node && node.textContent !== text) node.textContent = text; }
+  function attr(node, name, value) {
+    if (value === null) { if (node.hasAttribute(name)) node.removeAttribute(name); }
+    else if (node.getAttribute(name) !== value) node.setAttribute(name, value);
+  }
   function cardsOf(db) {
     return Array.prototype.slice.call(db.querySelectorAll(".notion-collection-card"));
   }
-
-  /* 5g's hollow name: the card's own title at 96px running off the bottom-right, as two copies —
-     one stroked, one filled in the card's ground over it. CSS cannot repeat a text node, so the
-     span is built here from the title Notion already renders; the words stay Notion's. */
-  function hollow(db) {
-    cardsOf(db).forEach(function (card) {
-      var title = card.querySelector(".notion-property__title");
-      var name = title ? title.textContent.trim() : "";
-      if (!name) return;
-      var box = card.querySelector(":scope > .enc-set__hollow");
-      if (box && box.getAttribute("data-enc-name") === name) return;
-      if (!box) {
-        box = el("span", "enc-set__hollow");
-        box.setAttribute("aria-hidden", "true");
-        box.appendChild(el("span"));
-        box.appendChild(el("span"));
-        card.appendChild(box);
-      }
-      box.setAttribute("data-enc-name", name);
-      box.children[0].textContent = name;
-      box.children[1].textContent = name;
-    });
+  function nameOf(card) {
+    var t = card.querySelector(".notion-property__title");
+    return t ? t.textContent.trim() : "";
+  }
+  function options(db) { return Array.prototype.slice.call(db.querySelectorAll(".notion-dropdown__option")); }
+  function testnetView(db) {
+    var on = db.querySelector(".notion-dropdown__option.active");
+    return !!on && /testnet/i.test(on.textContent);
+  }
+  function listIndex(name) {
+    if (!setList) return -1;
+    var k = name.toLowerCase();
+    for (var i = 0; i < setList.length; i++) if ((setList[i].name || "").toLowerCase() === k) return i;
+    return -1;
   }
 
-  function applyControls(db, state) {
-    var cards = cardsOf(db);
-    var q = (state.q || "").trim().toLowerCase();
-    var shown = 0;
+  function applyControls(db) {
+    var cards = cardsOf(db), testnet = testnetView(db);
+    attr(db, "data-enc-view", testnet ? "testnet" : "mainnet");
+    if (testnet && state.sort === "rate") state.sort = "set";   // the design drops the rate sort on testnet
+    var q = state.q.trim().toLowerCase(), shown = 0;
     cards.forEach(function (card, i) {
       if (card.__setIndex === undefined) card.__setIndex = i;
-      var name = (card.querySelector(".notion-property__title") || {}).textContent || "";
-      var hit = !q || name.toLowerCase().indexOf(q) >= 0;
-      card.hidden = !hit;
+      var hit = !q || nameOf(card).toLowerCase().indexOf(q) >= 0;
+      if (card.hidden !== !hit) card.hidden = !hit;
       if (hit) shown++;
+      // a testnet row says "Also mainnet" when the chain runs both
+      var j = listIndex(nameOf(card));
+      attr(card, "data-enc-also", testnet && j >= 0 && /\/networks\/mainnet\//.test(setList[j].href || "") ? "" : null);
     });
-    var order = cards.slice().filter(function (c) { return !c.hidden; });
+    var order = cards.filter(function (c) { return !c.hidden; });
     if (state.sort === "name") {
-      order.sort(function (a, b) {
-        var an = (a.querySelector(".notion-property__title") || {}).textContent || "";
-        var bn = (b.querySelector(".notion-property__title") || {}).textContent || "";
-        return an.localeCompare(bn);
-      });
+      order.sort(function (a, b) { return nameOf(a).localeCompare(nameOf(b)); });
     } else if (state.sort === "rate") {
       var num = function (c) {
         var r = c.querySelector("." + RATE_PROP);
@@ -375,75 +375,127 @@
         if (x === null && y === null) return a.__setIndex - b.__setIndex;
         if (x === null) return 1;
         if (y === null) return -1;
-        return y - x;   // highest first, as the design sorts it
+        return y - x;
       });
     } else {
       order.sort(function (a, b) { return a.__setIndex - b.__setIndex; });
     }
-    order.forEach(function (c, i) { c.style.order = i; });
-    // a filtered-out card keeps no stale position in the grid
-    cards.forEach(function (c) { if (c.hidden) c.style.order = 9999; });
-    db.setAttribute("data-enc-shown", String(shown));
-    var empty = db.querySelector(".enc-set-empty");
-    if (empty) empty.hidden = shown !== 0;
+    order.forEach(function (c, i) { if (c.style.order !== String(i)) c.style.order = i; });
+    cards.forEach(function (c) { if (c.hidden && c.style.order !== "9999") c.style.order = 9999; });
+    var empty = db.querySelector(":scope > .enc-set-empty");
+    if (empty) {
+      empty.hidden = shown !== 0;
+      put(empty, "No network matches “" + state.q.trim() + "”.");
+    }
+    // the stage follows the pointer; with none, the first row as ordered
+    var active = state.active && order.indexOf(state.active) >= 0 ? state.active : order[0];
+    stage(db, active || null, testnet);
+    sync(db, testnet);
   }
 
-  /* Super re-renders every card when the view picker swaps Mainnet for Testnet, which takes the
-     hollow names with it — so this runs on the observer, not once inside controls(). */
-  function bleed() {
-    var db = document.getElementById(SET_DB);
-    if (db) hollow(db);
+  function stage(db, card, testnet) {
+    var st = db.querySelector(":scope > .enc-set-stage");
+    if (!st) return;
+    cardsOf(db).forEach(function (c) { attr(c, "data-enc-on", c === card ? "" : null); });
+    st.hidden = !card;
+    if (!card) return;
+    var name = nameOf(card);
+    var j = listIndex(name), i = j >= 0 ? j : (card.__setIndex || 0);
+    st.style.setProperty("--tint", TINT[i % 5]);
+    st.style.setProperty("--deep", DEEP[i % 5]);
+    attr(st, "data-stage", testnet ? "testnet" : "mainnet");
+    // the glyph at full size: Super keeps the original beside its resized copy
+    var full = card.querySelector("[data-full-size]"), img = card.querySelector("img");
+    var glyph = st.querySelector(".enc-set-stage__disc img");
+    var src = full ? full.getAttribute("data-full-size") : img ? original(img.currentSrc || img.src) : "";
+    if (glyph.getAttribute("src") !== src) glyph.setAttribute("src", src);
+    glyph.alt = name;
+    var rate = card.querySelector("." + RATE_PROP), role = card.querySelector("." + ROLE_PROP);
+    put(st.querySelector(".enc-set-stage__v"), testnet ? name : (rate ? rate.textContent.trim() : "") || "—");
+    put(st.querySelector(".enc-set-stage__role"), testnet && role ? role.textContent.trim() : "");
+    // the row's own page; a testnet row has none, so a chain that also runs mainnet opens that page
+    var link = card.querySelector("a.notion-collection-card__anchor[href]"), go = st.querySelector(".enc-set-stage__go");
+    var href = link ? link.getAttribute("href") : (j >= 0 && setList[j].href) || "";
+    go.hidden = !href;
+    if (href && go.getAttribute("href") !== href) go.setAttribute("href", href);
+    put(go.querySelector(".enc-set-stage__name"), name);
   }
+
+  // the switch mirrors Super's picker; the sort offers the rate only on mainnet
+  function sync(db, testnet) {
+    var tabs = db.querySelector(".enc-set-tabs");
+    if (!tabs) return;
+    var opts = options(db);
+    if (tabs.children.length !== opts.length) {
+      tabs.textContent = "";
+      opts.forEach(function (o, i) {
+        var b = el("button", "enc-set-tab");
+        b.type = "button";
+        b.setAttribute("role", "tab");
+        b.appendChild(el("span", "enc-set-tab__t"));
+        b.appendChild(el("span", "enc-set-tab__n"));
+        b.addEventListener("click", function () {
+          var o2 = options(db)[i];
+          if (o2 && !o2.classList.contains("active")) { state.active = null; o2.click(); }
+        });
+        tabs.appendChild(b);
+      });
+    }
+    opts.forEach(function (o, i) {
+      var b = tabs.children[i], label = o.textContent.trim();
+      put(b.querySelector(".enc-set-tab__t"), label);
+      attr(b, "aria-selected", o.classList.contains("active") ? "true" : "false");
+      var n = counts ? (/testnet/i.test(label) ? counts.testnet : /mainnet/i.test(label) ? counts.mainnet : null) : null;
+      put(b.querySelector(".enc-set-tab__n"), n == null ? "" : String(n));
+    });
+    var menu = db.querySelector(".enc-set-sort__menu"), label = db.querySelector(".enc-set-sort__label");
+    if (menu) Array.prototype.forEach.call(menu.children, function (item) {
+      var key = item.getAttribute("data-icon");
+      item.hidden = key === "rate" && testnet;
+      attr(item, "aria-selected", key === state.sort ? "true" : "false");
+      if (key === state.sort) put(label, item.textContent);
+    });
+  }
+  var counts = null;
 
   function controls() {
     var db = document.getElementById(SET_DB);
     if (!db) return;
-    /* The controls are kept OUT of Super's markup altogether. Inside the picker's menu, and then
-       inside the collection header, its own handlers ran first and swallowed the click — the field
-       never took focus and the sort button did nothing (measured on the live page). They now hang
-       off the collection itself, and network.css lays them over the right of the header row, so the
-       bar still reads as one control while no Super handler sits between the click and the input. */
-    var bar = db.querySelector(".notion-collection") || db;
-    if (!bar || bar.querySelector(".enc-set-controls")) return;
-    if (getComputedStyle(bar).position === "static") bar.style.position = "relative";
+    if (!db.querySelector(":scope > .enc-set-controls")) build(db);
+    applyControls(db);
+  }
 
-    var state = { q: "", sort: "set" };
+  function build(db) {
+    /* The controls are kept OUT of Super's markup: inside its picker or its header, its own handlers
+       ran first and swallowed the click (the recipe in CLAUDE.md). They hang off the collection. */
     var wrap = el("div", "enc-set-controls");
-    /* NO capture-phase stopPropagation here. An earlier version added one while the controls still
-       lived inside Super's picker; once they moved out it did nothing useful and one real harm —
-       stopping an event during CAPTURE on the wrapper keeps it from ever reaching the button and
-       the field inside it, so the sort menu never opened. */
+    var tabs = el("div", "enc-set-tabs");
+    tabs.setAttribute("role", "tablist");
+    wrap.appendChild(tabs);
 
-    // sort
     var sort = el("div", "enc-set-sort");
     var button = el("button", "enc-set-sort__button");
     button.type = "button";
     button.setAttribute("aria-haspopup", "listbox");
     button.setAttribute("aria-expanded", "false");
-    var label = el("span", "enc-set-sort__label", SORTS[0][1]);
-    button.appendChild(label);
-    var pressed = 0;
+    button.appendChild(el("span", "enc-set-sort__label", SORTS[0][1]));
     var menu = el("div", "enc-set-sort__menu");
     menu.setAttribute("role", "listbox");
-    menu.setAttribute("aria-label", "Sort the networks");
+    menu.setAttribute("aria-label", "Sort networks");
     menu.hidden = true;
+    var pressed = 0;
+    function toggleMenu(open) {
+      menu.hidden = open === undefined ? !menu.hidden : !open;
+      button.setAttribute("aria-expanded", menu.hidden ? "false" : "true");
+    }
     SORTS.forEach(function (o) {
       var item = el("button", "enc-set-sort__option", o[1]);
       item.type = "button";
       item.setAttribute("role", "option");
-      item.setAttribute("data-icon", o[0]);   // network.css draws the design's icon per option
-      item.setAttribute("aria-selected", o[0] === state.sort ? "true" : "false");
-      function choose() {
-        state.sort = o[0];
-        label.textContent = o[1];
-        Array.prototype.forEach.call(menu.children, function (c) {
-          c.setAttribute("aria-selected", c === item ? "true" : "false");
-        });
-        applyControls(db, state);
-      }
-      /* chosen on pointerdown (a cancelled click cannot swallow it), but the menu closes only once
-         the press is over: hidden under the pointer mid-press, the click that follows would land
-         on the card beneath it — a link to that chain's page */
+      item.setAttribute("data-icon", o[0]);
+      function choose() { state.sort = o[0]; applyControls(db); }
+      /* chosen on pointerdown (a cancelled click cannot swallow it), closed only once the press is
+         over — hidden mid-press, the click that follows would land on the row beneath */
       item.addEventListener("pointerdown", function (e) {
         e.preventDefault();
         pressed = Date.now();
@@ -453,68 +505,85 @@
           setTimeout(function () { toggleMenu(false); }, 0);
         }, true);
       });
-      // the keyboard: Enter or Space on an option clicks it without a pointer
       item.addEventListener("click", function () {
         if (Date.now() - pressed > 700) choose();
         toggleMenu(false);
       });
       menu.appendChild(item);
     });
-    // the same for the menu: open it on pointerdown, so a cancelled click cannot swallow it
-    function toggleMenu(open) {
-      menu.hidden = open === undefined ? !menu.hidden : !open;
-      button.setAttribute("aria-expanded", menu.hidden ? "false" : "true");
-    }
     button.addEventListener("pointerdown", function (e) { e.preventDefault(); toggleMenu(); });
     button.addEventListener("click", function (e) { e.preventDefault(); });
-    document.addEventListener("click", function (e) {
+    document.addEventListener("pointerdown", function (e) {
       if (!menu.hidden && !sort.contains(e.target)) toggleMenu(false);
     });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !menu.hidden) toggleMenu(false); });
     sort.appendChild(button);
     sort.appendChild(menu);
+    wrap.appendChild(sort);
 
-    // search
-    var field = el("label", "enc-set-search");
-    var input = el("input", "enc-set-search__input");
+    var input = el("input", "enc-set-search");
     input.type = "search";
     input.placeholder = "Find a network";
     input.setAttribute("aria-label", "Find a network");
-    input.addEventListener("input", function () {
-      state.q = input.value;
-      field.setAttribute("data-filled", input.value ? "" : null);
-      if (!input.value) field.removeAttribute("data-filled");
-      applyControls(db, state);
+    input.addEventListener("input", function () { state.q = input.value; applyControls(db); });
+    // Super cancels pointer events on the document, and a cancelled pointerdown focuses nothing
+    input.addEventListener("pointerdown", function () {
+      if (document.activeElement !== input) setTimeout(function () { input.focus(); }, 0);
     });
-    field.appendChild(input);
-    /* Focus explicitly. A click normally focuses the field by itself, but Super listens for pointer
-       events on the document to close its dropdown and cancels them, and a cancelled pointerdown
-       never focuses anything — which is why typing did nothing. Focusing here does not depend on
-       the default action surviving. */
-    ["pointerdown", "mousedown", "click", "touchstart"].forEach(function (type) {
-      field.addEventListener(type, function () {
-        if (document.activeElement !== input) setTimeout(function () { input.focus(); }, 0);
-      });
-    });
+    wrap.appendChild(input);
+    db.appendChild(wrap);
 
-    wrap.appendChild(sort);
-    wrap.appendChild(field);
-    bar.appendChild(wrap);
+    var empty = el("p", "enc-set-empty");
+    empty.hidden = true;
+    db.appendChild(empty);
 
-    // the line shown when a search matches nothing
-    if (!db.querySelector(".enc-set-empty")) {
-      var empty = el("p", "enc-set-empty", "No network here matches that. We may not run it yet — tell us and we will look at it.");
-      empty.hidden = true;
-      var gal = db.querySelector(".notion-collection-gallery");
-      if (gal && gal.parentElement) gal.parentElement.insertBefore(empty, gal.nextSibling);
+    var st = el("aside", "enc-set-stage");
+    var disc = el("div", "enc-set-stage__disc");
+    disc.appendChild(el("img"));
+    st.appendChild(disc);
+    var facts = el("div", "enc-set-stage__facts");
+    facts.appendChild(el("span", "enc-set-stage__k"));
+    facts.appendChild(el("span", "enc-set-stage__v"));
+    facts.appendChild(el("p", "enc-set-stage__role"));
+    st.appendChild(facts);
+    var go = el("a", "enc-set-stage__go");
+    go.appendChild(el("span", "enc-set-stage__name"));
+    st.appendChild(go);
+    db.appendChild(st);
+
+    // the row under the pointer, or in focus, is the one on the stage
+    function pick(e) {
+      var card = e.target.closest && e.target.closest(".notion-collection-card");
+      if (!card || !db.contains(card) || state.active === card) return;
+      state.active = card;
+      stage(db, card, testnetView(db));
     }
-    applyControls(db, state);
+    db.addEventListener("pointerover", pick);
+    db.addEventListener("focusin", pick);
+    // the rate sits over the row's link so its tip can show; a click on it is still the row's
+    db.addEventListener("click", function (e) {
+      var lab = e.target.closest && e.target.closest("." + RATE_PROP + ", ." + ROLE_PROP);
+      if (!lab) return;
+      var a = lab.closest(".notion-collection-card").querySelector("a.notion-collection-card__anchor[href]");
+      if (a) a.click();
+    });
+
+    if (window.encCounts) window.encCounts().then(function (c) {
+      if (!c) return;
+      counts = c;
+      if (c.list && c.list.length) setList = c.list;
+      applyControls(db);
+    });
   }
 
-  new MutationObserver(function () { invalidate(); marks(); figures(); controls(); bleed(); }).observe(document.body, { childList: true, subtree: true });
+  var ct = 0;
+  new MutationObserver(function () {
+    invalidate(); marks(); figures();
+    clearTimeout(ct); ct = setTimeout(controls, 0);   // Super re-renders every row on a view switch
+  }).observe(document.body, { childList: true, subtree: true });
   marks();
   controls();
-  bleed();
-  window.addEventListener("load", function () { marks(); controls(); bleed(); });
+  window.addEventListener("load", function () { marks(); controls(); });
   window.addEventListener("resize", invalidate);
   window.addEventListener("load", function () { invalidate(); paintKicker(); });
   paintKicker();
