@@ -681,7 +681,9 @@
 /* The intro row (Notion columns: heading + paragraph | Read every post). The
    right column holds the dot pager (added by home.js) and the Notion button,
    side by side, pushed right and aligned to the bottom of the intro — the
-   same alignment the Networks designs give their top-row buttons. */
+   same alignment the Networks designs give their top-row buttons. The pair is
+   the design's group: one row, centred on each other (align-items: center),
+   4px off the foot, wrapping only when the column cannot hold both. */
 [data-enc-blog-intro] {
   align-items: stretch !important;
 }
@@ -691,16 +693,25 @@
   flex-direction: row !important;
   flex-wrap: wrap !important;
   justify-content: flex-end !important;
-  align-items: flex-end !important;
+  align-items: center !important;
+  align-content: flex-end !important;
   gap: 18px !important;
+  padding-bottom: 4px !important;
 }
 
-/* align-self on the items as well: main.css §07 gives every button callout
-   align-self: flex-start, which beat the column's bottom alignment. */
-[data-enc-blog-intro] > .notion-column:last-child > .notion-callout,
+/* The callout is doubled up to outweigh main.css §07, whose button rule
+   (align-self: flex-start, margin 6px 0, and full width under 520px) carries
+   one more element in its :has() and so beat a single class here — the button
+   sat at the top of the column and the dots at its foot. */
+[data-enc-blog-intro] > .notion-column:last-child > .notion-callout.notion-callout,
 [data-enc-blog-intro] > .notion-column:last-child > .enc-blog__controls {
-  align-self: flex-end !important;
+  align-self: center !important;
+  width: fit-content !important;
   margin: 0 !important;
+}
+
+[data-enc-blog-intro] > .notion-column:last-child > .notion-callout.notion-callout > .notion-callout__content > span.notion-semantic-string > .notion-link {
+  width: auto !important;
 }
 
 [data-enc-blog-intro] > .notion-column:last-child > .notion-text:empty {
