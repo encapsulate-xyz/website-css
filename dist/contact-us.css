@@ -1,7 +1,6 @@
 @media (max-width: 1024px){.notion-column-list:first-of-type{flex-direction: initial !important;}
 .notion-column{width: 100% !important;-webkit-margin-start: 0 !important;margin-inline-start: 0 !important;}
 .notion-column .notion-image{max-width: 100%;height: auto;display: block;margin: 0 auto;text-align: center !important;}
-.notion-column .notion-divider{display: none!important;}
 }
 .notion-root[data-enc-contact]{--ct-pad: clamp(44px,5vw,68px);}
 .notion-root[data-enc-contact] .enc-ct__call,.notion-root[data-enc-contact] .enc-ct__where,.notion-root[data-enc-contact] .enc-ct__write{box-sizing: border-box;width: 100vw;max-width: none;margin-left: calc(50% - 50vw);margin-right: calc(50% - 50vw);}

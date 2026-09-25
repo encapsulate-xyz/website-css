@@ -498,9 +498,6 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
     text-align: center !important;
   }
 
-.notion-column .notion-divider {
-    display: none!important;
-}
 }
 @media (max-width: 1240px) {
 .notion-embed__container__wrapper {

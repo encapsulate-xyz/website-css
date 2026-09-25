@@ -49,7 +49,6 @@ body:has(.notion-root[data-enc-post]) .notion-header{display: none !important;}
 .notion-root[data-enc-post] .enc-po__article .notion-code{width: 100%;max-width: 680px;margin: 0 !important;}
 .notion-root[data-enc-post] .enc-po__article .notion-toggle{max-width: 680px;}
 .notion-root[data-enc-post] .enc-po__article .notion-toggle + .notion-toggle{margin-top: -24px !important;}
-.notion-root[data-enc-post] .enc-po__article .notion-divider{width: 100%;max-width: 680px;margin: 4px 0 !important;border-top: 1px solid #E2E2DB;}
 .notion-root[data-enc-post] .enc-po__byline--built{width: 100%;margin-top: 24px;padding-top: 20px;border-top: 1px solid #E2E2DB;display: flex;align-items: center;gap: 14px;}
 .notion-root[data-enc-post] .enc-po__bydisc{width: 44px;height: 44px;flex: none;border-radius: 999px;background: #F8DDC6;display: grid;place-items: center;font-family: var(--type-display),system-ui,sans-serif;font-weight: 600;font-size: 15px;letter-spacing: -0.02em;color: #000000;}
 .notion-root[data-enc-post] .enc-po__bydisc:has(img){padding: 0;}

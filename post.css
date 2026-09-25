@@ -418,13 +418,6 @@ body:has(.notion-root[data-enc-post]) .notion-header { display: none !important;
   margin-top: -24px !important;
 }
 
-.notion-root[data-enc-post] .enc-po__article .notion-divider {
-  width: 100%;
-  max-width: 680px;
-  margin: 4px 0 !important;
-  border-top: 1px solid #E2E2DB;
-}
-
 /* ── the byline ── */
 .notion-root[data-enc-post] .enc-po__byline--built {
   width: 100%;

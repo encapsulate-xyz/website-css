@@ -11,7 +11,7 @@
      08. DATABASES AND PROPERTIES
      09. CARDS — THE CARD SYSTEM
      10. PILLS
-     11. COLUMN DIVIDERS
+     11. (column dividers — removed 2026-09-25: no page uses a divider to make space)
      12. ARTICLE BLOCKS — CODE, TABLE, TOGGLE, QUOTE
      13. LINK PREVIEWS (BOOKMARKS / EXTERNAL OBJECTS)
      13b. NOTION FORMS
@@ -1961,23 +1961,6 @@ h4.notion-heading {
   display: flex;
   flex-wrap: wrap;
   gap: 4px; /* keeps spacing on the wrapped rows — remove if too loose */
-}
-
-
-/*********************************************/
-/* 11. COLUMN DIVIDERS */
-/*********************************************/
-
-/* `visibility: hidden` keeps the divider's height, preserving column rhythm. */
-.notion-column .notion-divider {
-  visibility: hidden;
-}
-
-/* Once the columns stack, that reserved space is just a gap — remove it. */
-@media (max-width: 1024px) {
-  .notion-column .notion-divider {
-    display: none !important;
-  }
 }
 
 

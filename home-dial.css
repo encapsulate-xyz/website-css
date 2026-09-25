@@ -493,9 +493,8 @@
   padding: 48px 0 !important;
 }
 
-/* dividers and empty lines would pull the centred copy off centre */
-[data-enc-net] > .notion-column:first-child > .notion-text:empty,
-[data-enc-net] > .notion-column:first-child > .notion-divider {
+/* empty lines would pull the centred copy off centre */
+[data-enc-net] > .notion-column:first-child > .notion-text:empty {
   display: none !important;
 }
 

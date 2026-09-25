@@ -457,8 +457,8 @@
     if (cols[0]) cols[0].setAttribute("data-enc-source", "");
     cl.setAttribute("data-enc-source", "");
     tail.forEach(function (n) {
-      if (n.classList.contains("notion-collection") || /more blog posts/i.test(textOf(n)) ||
-          n.classList.contains("notion-divider")) n.setAttribute("data-enc-source", "");
+      if (n.classList.contains("notion-collection") || /more blog posts/i.test(textOf(n)))
+        n.setAttribute("data-enc-source", "");
     });
 
     // the read time is the post's own length, at 230 words a minute
