@@ -766,7 +766,7 @@
     "proposal id": "id", "id": "id", "reference": "id",
     "chain": "chain", "network": "chain",
     "vote option": "vote", "our vote": "vote", "vote": "vote",
-    "voted on": "date", "date": "date",
+    "voted on": "date", "recorded": "date", "date": "date",
     "voting proof": "proof", "proof": "proof",
     "rationale": "rationale"
   };

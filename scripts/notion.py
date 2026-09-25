@@ -37,6 +37,16 @@ def api(method, path, body=None, retries=4):
             return {"error": e.code, "body": e.read().decode()[:500]}
 
 
+_date_prop = {}
+def date_prop(db=GOVERNANCE_DB):
+    """The record's date property: "Voted on", renamed "Recorded" for the record handoff of
+    2026-09-26 (its header label). Read from the schema, so a script works on either side of it."""
+    if db not in _date_prop:
+        names = (api("GET", "databases/%s" % db).get("properties") or {}).keys()
+        _date_prop[db] = "Recorded" if "Recorded" in names else "Voted on"
+    return _date_prop[db]
+
+
 def rows(db=GOVERNANCE_DB, size=100):
     """Every row of a database, following the cursor."""
     out, cur = [], None

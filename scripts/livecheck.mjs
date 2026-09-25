@@ -83,7 +83,8 @@ const click = async (x, y) => {
 const press = async (key) => {
   const codes = { Tab: 9, Enter: 13, Escape: 27, " ": 32, ArrowDown: 40, ArrowUp: 38 };
   const k = { key, code: key === " " ? "Space" : key, windowsVirtualKeyCode: codes[key] || 0 };
-  await send("Input.dispatchKeyEvent", { type: "keyDown", ...k });
+  // a button answers Enter on the key's character, so without `text` Enter activated nothing
+  await send("Input.dispatchKeyEvent", { type: "keyDown", ...k, ...(key === "Enter" ? { text: "\r" } : {}) });
   await send("Input.dispatchKeyEvent", { type: "keyUp", ...k });
 };
 const shot = async (out) => { const s = await send("Page.captureScreenshot", { format: "png" }); writeFileSync(out, Buffer.from(s.result.data, "base64")); };

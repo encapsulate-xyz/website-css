@@ -6,8 +6,10 @@
 
      1. the count band's field — one 7px mark per vote, in blocks of a hundred, drawn from the
         figure in the band's own Notion text (the number stays Notion's; only the marks are ours);
-     2. each row's chain — the view is grouped by chain, so the group's own heading names it; the
-        chain is copied onto the row as a label and a tinted disc, one stable tint per chain;
+     2. each row's chain — copied from its Network cell onto the line as a tinted disc and the
+        CHAIN · reference line under the title, one stable tint per chain — and the line's two
+        targets (the record, handoff 2026-09-26): the left opens the rationale, the right is the
+        Proof link;
      3. the search field in the control bar. Super's view picker supplies the chain and outcome
         filters (the record has a view per chain and per outcome), so those are Notion's; an input
         is the one control Notion has no block for. Same recipe as /networks — see CLAUDE.md,
@@ -93,7 +95,7 @@
     "proposal id": "id", "id": "id", "reference": "id",
     "chain": "chain", "network": "chain",
     "vote option": "vote", "our vote": "vote", "vote": "vote",
-    "voted on": "date", "date": "date",
+    "voted on": "date", "recorded": "date", "date": "date",
     "voting proof": "proof", "proof": "proof",
     "rationale": "rationale", "why": "rationale"
   };
@@ -112,6 +114,21 @@
     if (!chainProp) return null;
     var p = tr.querySelector("td.select ." + chainProp);
     return p ? p.closest("td") : null;
+  }
+
+  var whyId = 0;
+  function setOpen(tr, on) {
+    if (on) tr.setAttribute("data-enc-open", ""); else tr.removeAttribute("data-enc-open");
+    var b = tr.querySelector(".enc-rec__open");
+    if (!b) return;
+    b.setAttribute("aria-expanded", on ? "true" : "false");
+    b.setAttribute("aria-label", (on ? "Hide" : "Read") + " the rationale for " + b.getAttribute("data-title"));
+  }
+  function toggle(tr) {
+    var was = tr.hasAttribute("data-enc-open");
+    var box = document.getElementById(TABLE);
+    if (box) Array.prototype.forEach.call(box.querySelectorAll("tr[data-enc-open]"), function (o) { setOpen(o, false); });
+    if (!was) setOpen(tr, true);
   }
 
   function rows() {
@@ -149,17 +166,60 @@
         disc.appendChild(img);
       }
       cell.insertBefore(disc, cell.firstChild);
-      // the design's meta line under the title: CHAIN · reference, in one span so it reads as one
-      // line rather than as two columns (the reference cell itself is hidden by the CSS)
+      // the file's line under the title: CHAIN · reference, as one line (the reference cell itself
+      // is hidden by the CSS)
       var meta = el("span", "enc-rec__meta");
       meta.appendChild(el("span", "enc-rec__chain", name));
       var ref = tr.querySelector('[data-enc-cell="id"]');
       var refText = ref ? ref.textContent.trim() : "";
       if (refText) {
-        meta.appendChild(el("span", "enc-rec__sep", "\u00B7"));
+        meta.appendChild(el("span", "enc-rec__sep", " \u00B7 "));
         meta.appendChild(el("span", "enc-rec__ref", refText));
       }
       cell.appendChild(meta);
+
+      // the vote, by its word: Notion's option colours are not the file's dots (No is pink there)
+      var vote = tr.querySelector('td[data-enc-cell="vote"]');
+      var said = vote ? vote.textContent.trim() : "";
+      if (vote && said) vote.setAttribute("data-vote", said.toLowerCase().replace(/\s+/g, "-"));
+
+      // the date as the file prints it, "Sep 11, 2026"; the day itself is kept for the sort
+      var day = tr.querySelector("td.date .date") || tr.querySelector("td.date");
+      if (day) {
+        var full = day.textContent.trim();
+        var t = Date.parse(full);
+        if (!isNaN(t)) tr.setAttribute("data-enc-t", String(t));
+        var short = full.replace(/^([A-Z][a-z]{2})[a-z]+(?=\s)/, "$1");
+        if (short !== full) day.textContent = short;
+      }
+
+      /* The line is two targets (the file's record): the left opens the rationale beneath it, the
+         right is the Proof link. Notion has no block that opens and closes, so the left is a
+         button laid over the mark, the title and CHAIN · reference; its label is the row's title. */
+      var title = (cell.querySelector(".notion-property__title") || {}).textContent || "";
+      title = title.trim() || "this proposal";
+      var why = tr.querySelector('td[data-enc-cell="rationale"]');
+      var plus = el("span", "enc-rec__plus");
+      plus.setAttribute("aria-hidden", "true");
+      plus.innerHTML = '<svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 10h10"/><path class="v" d="M10 5v10"/></svg>';
+      cell.appendChild(plus);
+      if (why) {
+        why.id = why.id || "enc-why-" + (++whyId);
+        var open = el("button", "enc-rec__open");
+        open.type = "button";
+        open.setAttribute("aria-expanded", "false");
+        open.setAttribute("aria-controls", why.id);
+        open.setAttribute("data-title", title);
+        open.setAttribute("aria-label", "Read the rationale for " + title);
+        open.addEventListener("click", function () { toggle(tr); });
+        cell.appendChild(open);
+      }
+      var proof = tr.querySelector('td[data-enc-cell="proof"] a[href]');
+      if (proof) {
+        var word = said ? said.charAt(0).toUpperCase() + said.slice(1).toLowerCase() : "";
+        proof.setAttribute("aria-label", title.replace(/^this proposal$/, "Proposal") +
+          (word ? " \u2014 voted " + word : "") + ", opens on the block explorer");
+      }
       tr.setAttribute("data-enc-row", "");
     });
     // the header cell has no property class of its own, so it is found by position: the same
@@ -214,6 +274,8 @@
     return "";
   }
   function dateOf(tr) {
+    var kept = tr.getAttribute("data-enc-t");
+    if (kept) return +kept;
     var d = tr.querySelector("td.date");
     var t = d ? Date.parse(d.textContent.trim()) : NaN;
     return isNaN(t) ? 0 : t;
@@ -303,8 +365,9 @@
     return out;
   }
 
-  /* ── the pager ── the design shows 25 and grows by 25, with the count line beside it ── */
-  var PAGE = 25;
+  /* ── the pager ── the file shows ten and grows by ten, with the count line beside it (it was 25
+     until the record handoff of 2026-09-26) ── */
+  var PAGE = 10;
   var shown = PAGE;
 
   function total() {
@@ -360,6 +423,9 @@
     var matched = rows.filter(function (tr) { return !tr.hidden; });
     matched.forEach(function (tr, i) { if (i >= shown) tr.hidden = true; });
     var onShow = Math.min(shown, matched.length);
+    // nothing matches: Notion's own line after the table says so, in place of the header and foot
+    if (rows.length && !matched.length) box.setAttribute("data-enc-empty", "");
+    else box.removeAttribute("data-enc-empty");
     var foot = box.querySelector(".enc-rec__foot");
     if (foot) {
       var left = matched.length - onShow;

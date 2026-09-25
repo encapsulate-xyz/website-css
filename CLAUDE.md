@@ -691,10 +691,28 @@ properties by view order (`data-enc-pillar="title|line|word"`) so no CSS depends
 hashes. The handoff's `auto-fit` track expression resolves its percentage against the wrong box
 inside a Notion collection and gave four tracks in a row — the 2×2 is stated outright instead.
 
-**The record is one line per ballot**: proposal, the vote as a mono capsule that inverts to ink on
-hover, the date, the arrow. A hairline under each line darkens instead of the row filling green, and
-the **rationale is collapsed and opens beneath the line on hover or focus** rather than always being
-printed. The homepage's table got the same line treatment (2026-09-19) — its pillars band did not.
+**The record is one line per ballot** (revised by the record handoff of 2026-09-26, v301): five
+tracks — the chain's 30px mark, the proposal, Our vote as a mono capsule, the date as the file
+prints it ("Sep 11, 2026", shortened by governance.js; the sort reads the day kept in
+`tr[data-enc-t]`), the arrow — `30px minmax(0,1fr) auto minmax(0,auto) 20px`, 18px apart. **The
+table is the grid and every row a subgrid** (`thead`/`tbody` are `display: contents`), so capsules
+and dates line up down the page and under the header; the file draws each line as its own grid.
+**The line is two targets:** the left (mark, title with a ± after it, CHAIN · reference) is a
+`button.enc-rec__open` governance.js lays over the title cell — it opens the rationale beneath the
+line, one row at a time (`tr[data-enc-open]`, `aria-expanded`, `aria-controls` on the rationale
+cell); the right (capsule, date, arrow) is the Proof link, whose cell spans those three tracks and
+whose `::after` fills it. Either one hovered or keyboard-focused, or the row open, darkens the rule
+and turns the capsule and the reference line ink. **The dot is by the vote's word**
+(`td[data-vote]`), not Notion's option colour: No is pink in Notion and drew as a veto until v301.
+Ten rows a page. **The empty state is Notion's** paragraph after the table
+(`3e6e800a…81acaa16…`, added 2026-09-26), hidden until `[data-enc-empty]`. On a phone the rationale
+is collapsed too — a tap is a press. The homepage's table keeps the 2026-09-19 line treatment (its
+design is 37h, not this file).
+
+**The date column's header is "Recorded"** in the file. It is the property's name, so the property
+has to be renamed in Notion — but only **after** the site head carrying home.js v301 is live on the
+homepage: home.js v289 does not know "recorded", and the homepage's date cell would lose its place.
+`governance.js`, `home.js` and `scripts/notion.py` `date_prop()` accept both names.
 
 ## The contact band's fold holds the dial (2026-09-18)
 

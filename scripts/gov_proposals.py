@@ -24,7 +24,7 @@ Where each reference comes from, all public and checked by hand against the rele
 """
 import os, sys, time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from notion import api, rows, val, GOVERNANCE_DB
+from notion import api, rows, val, date_prop, GOVERNANCE_DB
 
 ACP = "https://github.com/avalanche-foundation/ACPs/blob/main/ACPs/%s/README.md"
 NEP = "https://github.com/near/NEPs/blob/master/neps/nep-%s.md"
@@ -161,7 +161,7 @@ def props(chain, ref, title, date, proof, why):
         "Proposal": {"title": [{"type": "text", "text": {"content": title}}]},
         "Network": {"select": {"name": chain}},
         "Our vote": {"select": {"name": "YES"}},
-        "Voted on": {"date": {"start": date}},
+        date_prop(): {"date": {"start": date}},
         "Proof": {"rich_text": [{"type": "text",
                                         "text": {"content": "View Proposal", "link": {"url": proof}}}]},
         "Rationale": {"rich_text": [{"type": "text", "text": {"content": why}}]},

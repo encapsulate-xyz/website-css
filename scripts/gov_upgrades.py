@@ -29,7 +29,7 @@ support is expressed, and the rationale says so.
 """
 import json, os, re, sys, time, urllib.request
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from notion import api, rows, val, GOVERNANCE_DB
+from notion import api, rows, val, date_prop, GOVERNANCE_DB
 
 GH = "https://github.com/%s/releases/tag/%s"
 REPOS = {
@@ -128,7 +128,7 @@ def add(chain, title, pid, date, proof, why):
         "Proposal": {"title": [{"type": "text", "text": {"content": title}}]},
         "Network": {"select": {"name": chain}},
         "Our vote": {"select": {"name": "YES"}},
-        "Voted on": {"date": {"start": date}},
+        date_prop(): {"date": {"start": date}},
         "Proof": {"rich_text": [{"type": "text",
                                         "text": {"content": "View Release", "link": {"url": proof}}}]},
         "Rationale": {"rich_text": [{"type": "text", "text": {"content": why}}]},
