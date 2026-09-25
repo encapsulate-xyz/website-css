@@ -492,6 +492,14 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   --nav-caret: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22 viewBox=%220 0 20 20%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.8%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M5.5 8.25 10 12.75l4.5-4.5%22/%3E%3C/svg%3E");
 }
 
+/* MOVING FROM ONE GROUP TO THE NEXT IS A SWAP, NOT A SLIDE. Super's navigation (radix) animates
+   the change: the old panel leaves 200px sideways and the new one enters from the other side over
+   200ms (enterFromLeft / enterFromRight / exitTo…, on [data-motion]). 4f simply shows the next
+   group's panel; the only motion in the bar is colour. The first open keeps Super's short fade. */
+.super-root nav.super-navbar .super-navbar__list-content[data-motion] {
+  animation: none !important;
+}
+
 /* THE PANEL. Super positions a 320px card under the trigger; 4f is the full width of the bar. */.super-root .super-navbar__viewport-wrapper {
   /* from the bar's bottom edge, not a pixel above it: Super hangs the wrapper at 63px, which
      painted the panel over the bar's own hairline — the design keeps that rule visible between

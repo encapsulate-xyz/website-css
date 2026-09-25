@@ -359,6 +359,11 @@ and panel read as one sheet; the panel itself is paper everywhere. The change li
 said "paper type on the nav items", which read as `#FAFAF8` at rest — the file says otherwise, and
 the file is what the values come from.
 
+**Moving between groups is a swap, not a slide** (v287): Super's radix animates the panel change
+— the old one leaves 200px sideways, the new one enters from the other side over 200ms
+(`[data-motion]` enterFromLeft/Right, exitTo…). 4f just shows the next panel; §04 sets
+`animation: none` on `.super-navbar__list-content[data-motion]`. The first open keeps Super's fade.
+
 **The bar is one hover band.** Radix closes a panel the moment the pointer is on neither the
 trigger nor the panel, so the gaps beside the logo and before the CTA shut it. `navbar.js`
 `band()` holds it open while the pointer is anywhere over the bar or its panel — the gaps never
@@ -571,6 +576,27 @@ Every property on a Notion card carries `.notion-collection-card__property`, **t
 a "the property that is not X" reader must skip `.notion-property__title` or it picks up the title.
 
 ## Homepage (home.css, home-dial.css, home.js)
+
+**The hero's lede has no lines around it** (v287, the user's decision 2026-09-25, "remember the
+lines if I don't like it I may ask you to add them back"). Design 11a draws none; the page carried
+two gradient hairlines from its old "Earn Rewards" copy. To restore them exactly, put this back in
+home.css:
+
+```css
+#block-0dea66c8640e43628360c627219fdb79:before,
+#block-0dea66c8640e43628360c627219fdb79:after {
+    content: "";
+    display: block;
+    height: 1px;
+    margin: 4px 0;
+    background: linear-gradient(to right, black, rgba(204, 204, 204, 0));
+}
+```
+
+Under 900px the lede keeps the design's 28px under the headline (the empty paragraph that spaces
+them on desktop is hidden there), and the headline's `margin-bottom: 0` stays so that gap is exact.
+The headline's font comes from main.css §06 alone; home.css adds only its #000 (Super's heading is
+#111).
 
 **The hero's top space is six empty Notion dividers** in its text column — main.css §11 keeps a
 column divider as hidden height (186px at full width) and removes it once columns stack under
@@ -1203,6 +1229,8 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
   (`.property-585f6e6c`) and drop the disc to 62%. The hover arrow badge only appears on cards that
   are links. **Not possible:** the handoff's per-tab counts and its live-on-both / not-launched
   sub-groups — Super ships only the active view's rows, so the other stage cannot be known.
+- **The sort and search row under 860px** is its own recessed track, like the tab bar (v287); it
+  kept only a top hairline and looked like it faded out.
 - **The stage tabs on a phone** (v286): under ~576px Super's own `view-picker.css` (linked in the
   page head) folds the picker into a "Mainnet ▾" button and moves the options into a closed pop-up
   that sinks under its wrapper (z −1). Our tabs are those options, so the bar showed the button with

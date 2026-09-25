@@ -146,3 +146,5 @@ to{transform: translateX(-50%);}
 @media (max-width: 700px){.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection__header-wrapper .notion-dropdown__button{display: none !important;}
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection__header-wrapper .notion-dropdown__menu{position: relative !important;top: auto !important;left: auto !important;opacity: 1 !important;visibility: visible !important;transform: none !important;pointer-events: auto !important;z-index: 1 !important;animation: none !important;}
 }
+@media (max-width: 860px){.notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .enc-set-controls{box-sizing: border-box !important;min-height: 50px !important;border: 1px solid #D9D9D2 !important;border-radius: 10px !important;background: #F2F2ED !important;box-shadow: inset 0 1.5px 0 rgba(255,255,255,1) !important;}
+}

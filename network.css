@@ -1247,3 +1247,18 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
     animation: none !important;     /* and animates it out after a choice; the tabs stay put */
   }
 }
+
+/* THE SORT AND SEARCH ROW, ON ITS OWN. Under 860px it drops under the stage tabs, and all it kept
+   of the bar was a hairline on top — the row read as fading out at its sides and foot (reported
+   2026-09-25). It takes the tab bar's own track: the #D9D9D2 ring, 10px, the second paper, the
+   white top highlight. */
+@media (max-width: 860px) {
+  .notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .enc-set-controls {
+    box-sizing: border-box !important;
+    min-height: 50px !important;
+    border: 1px solid #D9D9D2 !important;
+    border-radius: 10px !important;
+    background: #F2F2ED !important;
+    box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1) !important;
+  }
+}
