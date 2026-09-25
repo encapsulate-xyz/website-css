@@ -120,13 +120,13 @@ html:has(.notion-root[data-enc-guide]) body,
   gap: 10px;
 }
 .enc-gd h1.enc-gd__title {
-  margin: 0;
-  font-family: "Outfit", sans-serif;
-  font-weight: 600;
-  font-size: clamp(34px, 4.4vw, 62px);
-  line-height: 0.98;
-  letter-spacing: -0.048em;
-  color: var(--gd-paper);
+  margin: 0 !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: clamp(34px, 4.4vw, 62px) !important;
+  line-height: 0.98 !important;
+  letter-spacing: -0.048em !important;
+  color: var(--gd-paper) !important;
   max-width: 16ch;
 }
 .enc-gd p.enc-gd__lede {
@@ -190,30 +190,54 @@ html:has(.notion-root[data-enc-guide]) body,
 }
 
 /* ── 02…N · a step ───────────────────────────────────────────────────────────────────────
-   Paper, dotted, with the header across the top and the capture under it: beside the note when
-   the capture is tall (a wallet), under the header when it is wide (a dashboard). */
+   The design's band: one screen, the header across the top, the capture 24px under it — beside
+   the note when the capture is tall (a wallet), under the header when it is wide (a dashboard).
+   It was one grid until 2026-09-25, and its note row was `1fr`: a one-screen band gave that row
+   all the spare height and the capture sank to the bottom of the screen (the user's report).
+   Now each part is the design's own box, and nothing between the header and the capture grows.
+   The dots are the design's single ground, which stays put while the bands move over it
+   (a sticky layer there; a fixed background here). */
 .enc-gd__step {
   background-color: var(--gd-paper);
   background-image: radial-gradient(circle, rgba(0, 0, 0, 0.22) 1.1px, transparent 1.4px);
   background-size: 22px 22px;
   background-position: 11px 11px;
+  background-attachment: fixed;
   height: 100vh;
   max-height: 100vh;
   padding: 24px clamp(28px, 5vw, 80px) 6px;
-  /* the band is one grid: the count and the surface on the left, the title and the body on the
-     right, the note under the body, and the capture beneath — or beside the note when tall */
+  justify-content: flex-start;
+  gap: 20px;
+}
+.enc-gd__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.enc-gd__header,
+.enc-gd__row {
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr);
-  grid-template-rows: max-content 1fr;
   column-gap: clamp(32px, 4vw, 64px);
-  align-content: start;
   align-items: start;
 }
-.enc-gd__left { grid-column: 1; grid-row: 1; }
-.enc-gd__right { grid-column: 2; grid-row: 1; }
-.enc-gd__watch { grid-column: 2; grid-row: 2; }
-.enc-gd__shot { grid-column: 1 / -1; grid-row: 3; }
-.enc-gd__step[data-enc-shot="tall"] .enc-gd__shot { grid-column: 1; grid-row: 2; }
+.enc-gd__header { flex: none; }
+.enc-gd__row { margin-top: 24px; }
+.enc-gd__step[data-enc-shot="wide"] .enc-gd__row { display: block; }
+.enc-gd__step[data-enc-shot="wide"] .enc-gd__aside { display: none; }
+/* tall: the note sits under the header, level with the capture's top (the design's -24px) */
+.enc-gd__aside {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-self: end;
+  width: 100%;
+  max-width: 64ch;
+  margin-top: -24px;
+}
 
 .enc-gd__left {
   display: flex;
@@ -225,6 +249,7 @@ html:has(.notion-root[data-enc-guide]) body,
   display: flex;
   align-items: baseline;
   gap: 14px;
+  margin-bottom: 6px;
 }
 .enc-gd__fig {
   font-family: "Outfit", sans-serif;
@@ -272,14 +297,17 @@ html:has(.notion-root[data-enc-guide]) body,
   max-width: 64ch;
   padding-top: 6px;
 }
+/* every heading here states its type with !important: minima sets each heading's size, weight
+   and tracking that way, and the titles had read Outfit 800 at 48px (the head), 500 at 35.2px
+   (a step, the close) until 2026-09-25 */
 .enc-gd h2.enc-gd__steptitle {
-  margin: 0;
-  font-family: "Outfit", sans-serif;
-  font-weight: 600;
-  font-size: clamp(24px, 2.6vw, 34px);
-  line-height: 1.04;
-  letter-spacing: -0.036em;
-  color: #000;
+  margin: 0 !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: clamp(24px, 2.6vw, 34px) !important;
+  line-height: 1.04 !important;
+  letter-spacing: -0.036em !important;
+  color: #000 !important;
   max-width: 28ch;
 }
 /* solid paper behind the body only — the smallest type is the only thing the dots muddy */
@@ -296,17 +324,14 @@ html:has(.notion-root[data-enc-guide]) body,
   max-width: 64ch;
 }
 
-/* the note: a row that opens under the body */
+/* the note: under the body on a wide step, beside the capture on a tall one */
 .enc-gd__watch {
-  justify-self: end;
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-top: 2px;
-  max-width: 64ch;
+  max-width: 52ch;
 }
-.enc-gd__note { max-width: 52ch; }
 .enc-gd__watchbtn {
   appearance: none;
   cursor: pointer;
@@ -341,7 +366,7 @@ html:has(.notion-root[data-enc-guide]) body,
 .enc-gd__shot {
   position: relative;
   z-index: 1;
-  margin: 24px 0 0;
+  margin: 0;
   border-radius: 4px;
   overflow: hidden;
   background: var(--gd-paper);
@@ -376,7 +401,8 @@ html:has(.notion-root[data-enc-guide]) body,
   line-height: 1;
   font-family: "Outfit", sans-serif;
   font-weight: 600;
-  font-size: clamp(160px, 22vw, 520px);
+  /* the design's own: as large as the space beside a tall capture allows */
+  font-size: clamp(160px, calc((100vw - (100vh - 240px) * 0.457 - 400px - 2 * clamp(28px, 5vw, 80px) - clamp(28px, 4vw, 64px) - 24px) / 1.05), 520px);
   letter-spacing: -0.06em;
   font-variant-numeric: proportional-nums;
   user-select: none;
@@ -425,13 +451,13 @@ html:has(.notion-root[data-enc-guide]) body,
 }
 .enc-gd__close .enc-gd__mono { color: #B4B4B4; }
 .enc-gd h2.enc-gd__closetitle {
-  margin: 0;
-  font-family: "Outfit", sans-serif;
-  font-weight: 600;
-  font-size: clamp(34px, 4.4vw, 62px);
-  line-height: 0.98;
-  letter-spacing: -0.048em;
-  color: var(--gd-paper);
+  margin: 0 !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: clamp(34px, 4.4vw, 62px) !important;
+  line-height: 0.98 !important;
+  letter-spacing: -0.048em !important;
+  color: var(--gd-paper) !important;
   max-width: 16ch;
 }
 .enc-gd p.enc-gd__closeline {
@@ -505,16 +531,14 @@ html:has(.notion-root[data-enc-guide]) body,
 }
 
 @media (max-width: 900px) {
-  .enc-gd__step {
+  .enc-gd__header,
+  .enc-gd__row {
     grid-template-columns: minmax(0, 1fr);
     row-gap: 16px;
   }
-  .enc-gd__left, .enc-gd__right, .enc-gd__watch, .enc-gd__shot,
-  .enc-gd__step[data-enc-shot="tall"] .enc-gd__shot {
-    grid-column: 1;
-    grid-row: auto;
-  }
-  .enc-gd__right { justify-self: start; }
+  .enc-gd__row { margin-top: 16px; }
+  .enc-gd__right, .enc-gd__aside { justify-self: start; }
+  .enc-gd__aside { margin-top: 0; }
   .enc-gd__step {
     height: auto;
     max-height: none;
@@ -525,6 +549,10 @@ html:has(.notion-root[data-enc-guide]) body,
   .enc-gd__step[data-enc-shot="tall"] .enc-gd__shot {
     width: 100%;
     height: auto;
+  }
+  /* a wallet capture at the popup's own width, not the screen's: at 800 wide it stood 1576px tall */
+  .enc-gd__step[data-enc-shot="tall"] .enc-gd__shot {
+    width: min(100%, 360px);
   }
   .enc-gd__numeral { font-size: 120px; opacity: 0.5; }
 }

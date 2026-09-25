@@ -287,10 +287,18 @@
     return wrap;
   }
 
+  /* A step is the design's own shape: a header (the count and the surface on the left; the title,
+     the body and — on a wide step — the note on the right), then the capture 24px under it. A
+     wallet capture is tall and stands at the left with the note beside it; a dashboard capture is
+     wide and runs under the header. Which it is comes from the surface at build (the design keys it
+     the same way), then from the capture's own proportions once it loads, so the band is laid out
+     right before a lazy capture arrives. */
   function stepBand(step, i, total) {
     var s = el("section", "enc-gd__band enc-gd__step");
     s.appendChild(numeral(step.n || i + 1));
+    var content = el("div", "enc-gd__content");
 
+    var header = el("div", "enc-gd__header");
     var left = el("div", "enc-gd__left");
     var count = el("div", "enc-gd__count");
     count.appendChild(el("span", "enc-gd__fig", ("0" + (step.n || i + 1)).slice(-2)));
@@ -304,30 +312,39 @@
       a.appendChild(badge("arrow"));
       left.appendChild(a);
     }
-    s.appendChild(left);
+    header.appendChild(left);
 
     var right = el("div", "enc-gd__right");
     right.appendChild(el("h2", "enc-gd__steptitle", step.title));
     var well = el("div", "enc-gd__well");
     well.appendChild(el("p", "enc-gd__body", step.body));
     right.appendChild(well);
-    s.appendChild(right);
-    /* the note is its own cell: under the body on a wide step, beside the capture on a tall one
-       — one grid, so the capture never squeezes when it opens */
-    if (step.watch) s.appendChild(watch(step, i));
+    header.appendChild(right);
+    content.appendChild(header);
 
+    var row = el("div", "enc-gd__row");
     var shot = el("figure", "enc-gd__shot");
     var img = el("img");
     img.alt = step.title;
     img.loading = i > 1 ? "lazy" : "eager";
     img.src = step.shot || "";
-    // the frame follows the surface: a wallet capture is tall, a dashboard capture is wide
-    img.addEventListener("load", function () {
-      s.setAttribute("data-enc-shot", img.naturalWidth < img.naturalHeight ? "tall" : "wide");
-    });
     shot.appendChild(img);
     if (!step.shot) shot.setAttribute("data-enc-empty", "1");
-    s.appendChild(shot);
+    row.appendChild(shot);
+    var aside = el("div", "enc-gd__aside");
+    row.appendChild(aside);
+    content.appendChild(row);
+    s.appendChild(content);
+
+    var note = step.watch ? watch(step, i) : null;
+    function place(tall) {
+      s.setAttribute("data-enc-shot", tall ? "tall" : "wide");
+      if (note) (tall ? aside : right).appendChild(note);
+    }
+    place(/extension/i.test(step.surface || ""));
+    function settle() { if (img.naturalWidth) place(img.naturalWidth < img.naturalHeight); }
+    img.addEventListener("load", settle);
+    if (img.complete) settle();
     return s;
   }
 
