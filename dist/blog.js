@@ -45,9 +45,14 @@
     // the category is the post's first tag other than "Informative" — the same rule the homepage
     // rail uses, so a post is filed the same way in both places
     var tag = pills.filter(function (n) { return !/^informative$/i.test(n); })[0] || pills[0] || "";
+    // the Read property (minutes, 2026-09-26), once the view shows it: the sort's "Shortest read"
+    var mins = card.querySelector(".notion-property__number");
+    var read = mins ? parseInt(mins.textContent.replace(/[^\d]/g, ""), 10) : NaN;
     return {
       title: title ? title.textContent.trim() : "",
       date: date ? date.textContent.trim() : "",
+      time: date ? (Date.parse(date.textContent.trim()) || 0) : 0,
+      read: isNaN(read) ? null : read,
       tag: tag,
       glyph: cover ? cover.getAttribute("src") : null
     };
@@ -116,85 +121,49 @@
 
   /* ── the filter bar and the pager ── */
   var PAGE = 14, STEP = 9;                 // the design's production figures
-  var state = { tag: "", q: "", shown: PAGE };
+  var state = { tag: "", q: "", sort: "", shown: PAGE };
+  var bar = null;
 
-  function icon(paths, w) {
-    var ns = "http://www.w3.org/2000/svg";
-    var svg = document.createElementNS(ns, "svg");
-    svg.setAttribute("viewBox", "0 0 16 16");
-    svg.setAttribute("width", w); svg.setAttribute("height", w);
-    svg.setAttribute("fill", "none"); svg.setAttribute("stroke", "currentColor");
-    svg.setAttribute("stroke-width", "1.7"); svg.setAttribute("stroke-linecap", "round");
-    svg.setAttribute("aria-hidden", "true");
-    paths.forEach(function (d) {
-      var n = document.createElementNS(ns, d[0]);
-      Object.keys(d[1]).forEach(function (k) { n.setAttribute(k, d[1][k]); });
-      svg.appendChild(n);
-    });
-    return svg;
-  }
-
-  function tab(label, count, value, dot) {
-    var b = el("button", "enc-index__tab");
-    b.type = "button";
-    b.setAttribute("data-enc-tag", value);
-    if (dot) b.appendChild(el("span", "enc-index__dot"));
-    b.appendChild(el("span", "enc-index__tab-label", label));
-    b.appendChild(el("span", "enc-index__tab-count", String(count)));
-    b.addEventListener("pointerdown", function (e) {
-      e.preventDefault();
-      state.tag = state.tag === value ? "" : value;
-      state.shown = PAGE;
-      apply();
-    });
-    return b;
-  }
-
+  /* the design's command field (Filter Bar Patterns, G), on ink: the search — a tag typed and Enter
+     becomes a token — then the Tag cell (the tags the index carries, with their counts, as the tabs
+     had them) and the sort. The filtering is this file's, as before. */
   function controls(collection, posts) {
-    var bar = collection.querySelector(":scope > .enc-index__bar");
-    if (bar) return bar;
-    bar = el("div", "enc-index__bar");
-
+    var have = collection.querySelector(":scope > .enc-index__bar");
+    if (have) return have;
+    if (typeof window.encFilterBar !== "function") return null;
     var tags = [];
     posts.forEach(function (p) { if (p.tag && tags.indexOf(p.tag) < 0) tags.push(p.tag); });
     tags.sort();
-    bar.appendChild(tab("All posts", posts.length, "", false));
-    tags.forEach(function (t) {
-      bar.appendChild(tab(t, posts.filter(function (p) { return p.tag === t; }).length, t, true));
+    var square = function () { return el("span", "enc-index__mark"); };
+    bar = window.encFilterBar({
+      ink: true,
+      placeholder: "Find a post, or type a tag",
+      facets: [{
+        id: "tag", label: "Tag",
+        options: function () {
+          return [["", "All posts", posts.length]].concat(tags.map(function (t) {
+            return [t, t, posts.filter(function (p) { return p.tag === t; }).length];
+          }));
+        },
+        mark: square,
+        rest: function () { return el("span", "enc-fb__rest"); }
+      }],
+      // "Shortest read" once the cards carry the Read property (it has to be shown on the view)
+      sorts: function () {
+        var list = [["", "Newest first", "desc"], ["oldest", "Oldest first", "asc"]];
+        if (posts.some(function (p) { return p.read != null; })) list.push(["read", "Shortest read", "desc"]);
+        return list;
+      },
+      state: { q: "", sort: "", f: { tag: "" } },
+      onChange: function (st) {
+        state.tag = st.f.tag || ""; state.q = st.q || ""; state.sort = st.sort || "";
+        state.shown = PAGE;
+        apply();
+      }
     });
-    bar.appendChild(el("span", "enc-index__gap"));
-    bar.appendChild(el("span", "enc-index__rule"));
-
-    var field = el("label", "enc-index__field");
-    field.htmlFor = "enc-blog-q";
-    var mag = el("span", "enc-index__mag");
-    mag.appendChild(icon([["circle", { cx: 7, cy: 7, r: 4.6 }],
-                          ["path", { d: "M10.4 10.4 14 14" }]], 15));
-    field.appendChild(mag);
-    var input = el("input", "enc-index__input");
-    input.type = "text"; input.id = "enc-blog-q";
-    input.placeholder = "Find a post";
-    input.setAttribute("aria-label", "Find a post");
-    input.addEventListener("input", function () {
-      state.q = input.value; state.shown = PAGE; apply();
-    });
-    field.appendChild(input);
-    // Super cancels pointer events on the document to close its own dropdown, so focus on
-    // pointerdown in a timeout — the same rule as /networks (CLAUDE.md)
-    field.addEventListener("pointerdown", function () { setTimeout(function () { input.focus(); }, 0); });
-    var clear = el("button", "enc-index__clear");
-    clear.type = "button";
-    clear.setAttribute("aria-label", "Clear the search");
-    clear.appendChild(icon([["path", { d: "M4 4l8 8" }], ["path", { d: "M12 4l-8 8" }]], 11));
-    clear.addEventListener("pointerdown", function (e) {
-      e.preventDefault();
-      input.value = ""; state.q = ""; state.shown = PAGE; apply();
-    });
-    field.appendChild(clear);
-    bar.appendChild(field);
-
-    collection.insertBefore(bar, collection.firstChild);
-    return bar;
+    bar.el.classList.add("enc-index__bar");
+    collection.insertBefore(bar.el, collection.firstChild);
+    return bar.el;
   }
 
   function pager(collection) {
@@ -226,10 +195,25 @@
       if (q && p.title.toLowerCase().indexOf(q) < 0) return false;
       return true;
     });
+    if (state.sort) {
+      var pos = function (card) { return cards.indexOf(card); };
+      matching.sort(function (a, b) {
+        var x = a.enc || read(a), y = b.enc || read(b);
+        if (state.sort === "oldest") return (x.time - y.time) || (pos(b) - pos(a));
+        if (state.sort === "read") {
+          if (x.read == null && y.read == null) return pos(a) - pos(b);
+          if (x.read == null) return 1;
+          if (y.read == null) return -1;
+          return (x.read - y.read) || (pos(a) - pos(b));
+        }
+        return pos(a) - pos(b);
+      });
+    }
     var shown = matching.slice(0, state.shown);
     var layout = spans(shown.length);
     cards.forEach(function (card) { card.hidden = shown.indexOf(card) < 0; });
     shown.forEach(function (card, i) {
+      card.style.order = state.sort ? String(i) : "";   // the grid follows the sort
       var s = layout[i] || [2, 1];
       card.style.gridColumn = "span " + s[0];
       card.style.gridRow = s[1] > 1 ? "span " + s[1] : "";
@@ -237,16 +221,7 @@
     });
 
     var collection = gallery.closest(".notion-collection") || gallery.parentElement;
-    var bar = collection.querySelector(":scope > .enc-index__bar");
-    if (bar) {
-      Array.prototype.forEach.call(bar.querySelectorAll(".enc-index__tab"), function (b) {
-        var on = b.getAttribute("data-enc-tag") === state.tag;
-        b.setAttribute("aria-pressed", on ? "true" : "false");
-        b.toggleAttribute("data-enc-on", on);
-      });
-      var field = bar.querySelector(".enc-index__field");
-      if (field) field.toggleAttribute("data-enc-typed", !!state.q);
-    }
+    if (bar) bar.sync();
     var foot = collection.querySelector(":scope > .enc-index__foot");
     if (foot) {
       var left = matching.length - shown.length;
@@ -262,6 +237,7 @@
   function build() {
     var gallery = document.getElementById(GALLERY);
     if (!gallery) return;
+    if (typeof window.encFilterBar !== "function") return;   // filterbar.js, before this in the head
     var cards = Array.prototype.slice.call(gallery.querySelectorAll(".notion-collection-card"));
     if (!cards.length) return;
     var sig = cards.length + "/" + (cards[0].textContent || "").slice(0, 40);

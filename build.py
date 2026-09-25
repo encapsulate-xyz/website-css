@@ -139,6 +139,10 @@ if not sys.argv[1:]:
         js = open('chain.js', encoding='utf-8').read()
         open(os.path.join('dist', 'chain.js'), 'w', encoding='utf-8').write(js)
         print(f"{'chain.js':14} {len(js):>7,} -> dist/chain.js (copied)")
+    if os.path.exists('filterbar.js'):
+        js = open('filterbar.js', encoding='utf-8').read()
+        open(os.path.join('dist', 'filterbar.js'), 'w', encoding='utf-8').write(js)
+        print(f"{'filterbar.js':14} {len(js):>7,} -> dist/filterbar.js (copied)")
     if os.path.exists('blocks.js'):
         js = open('blocks.js', encoding='utf-8').read()
         open(os.path.join('dist', 'blocks.js'), 'w', encoding='utf-8').write(js)

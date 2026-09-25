@@ -15,6 +15,7 @@
      12. ARTICLE BLOCKS — CODE, TABLE, TOGGLE, QUOTE
      13. LINK PREVIEWS (BOOKMARKS / EXTERNAL OBJECTS)
      13b. NOTION FORMS
+     13c. THE FILTER BAR (filterbar.js)
      16. FOOTER
      17. REDUCED MOTION
 
@@ -2902,6 +2903,269 @@ table.notion-table:not(:is([data-enc-chain], [data-enc-source]) *).row-header.co
   .notion-form__wrapper > form.notion-form {
     padding: 24px 20px !important;
   }
+}
+
+/*********************************************/
+/* 13c. THE FILTER BAR — "FILTER BAR PATTERNS", G · THE COMMAND FIELD (2026-09-26) */
+/*********************************************/
+/* One 44px field is the whole bar (filterbar.js): the tabs in the left cell, the search with its
+   tokens in the middle, the facets and the sort as icon-led cells at the right, hairlines between.
+   On /networks, /governance-record and /blog; each page places it, this draws it. The ring goes
+   ink while a panel is open or the field has focus. `[data-ink]` is the on-ink palette. */
+.enc-fb {
+  --fb-fill: #FAFAF8;
+  --fb-ring: #D9D9D2;
+  --fb-ring-on: #000000;
+  --fb-ink: #000000;
+  --fb-ink-on: #FAFAF8;
+  --fb-seg-on: #000000;
+  --fb-muted: #6B6F68;
+  --fb-ph: #6B6F68;
+  --fb-hi: rgba(255, 255, 255, 1);
+  --fb-lift: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --fb-panel: #FAFAF8;
+  --fb-panel-ring: #D9D9D2;
+  --fb-row: #F2F2ED;
+  --fb-hair: #E2E2DB;
+  --fb-rest: #B9B9B1;
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  height: 44px;
+  min-width: 0;
+  border: 1px solid var(--fb-ring);
+  border-radius: 10px;
+  background: var(--fb-fill);
+  box-shadow: inset 0 1.5px 0 var(--fb-hi), var(--fb-lift);
+  font-family: var(--type-body), system-ui, sans-serif;
+  color: var(--fb-ink);
+  transition: border-color 0.16s ease;
+}
+.enc-fb[data-ink] {
+  --fb-fill: rgba(250, 250, 248, 0.06);
+  --fb-ring: rgba(250, 250, 248, 0.3);
+  --fb-ring-on: #FAFAF8;
+  --fb-ink: #FAFAF8;
+  --fb-ink-on: #2A2C28;
+  --fb-seg-on: #FAFAF8;
+  --fb-muted: #B4B4B4;
+  --fb-ph: #93978F;
+  --fb-hi: rgba(250, 250, 248, 0.26);
+  --fb-lift: 0 0 transparent;
+  --fb-panel: #2A2C28;
+  --fb-panel-ring: rgba(250, 250, 248, 0.18);
+  --fb-row: rgba(250, 250, 248, 0.08);
+  --fb-hair: rgba(250, 250, 248, 0.18);
+  --fb-rest: rgba(250, 250, 248, 0.4);
+}
+.enc-fb[data-open],
+.enc-fb[data-focus] { border-color: var(--fb-ring-on); }
+
+.enc-fb button {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+
+/* the hairlines between the cells */
+.enc-fb__div {
+  width: 1px;
+  flex: none;
+  align-self: stretch;
+  background: var(--fb-hair);
+}
+
+/* the tabs: the chosen one an ink fill with paper type (paper with ink on ink) */
+.enc-fb__tabs {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  gap: 2px;
+  padding: 0 6px;
+}
+.enc-fb__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14.5px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.006em;
+  white-space: nowrap;
+  color: var(--fb-ink) !important;
+  transition: background-color 0.16s ease, color 0.16s ease;
+}
+.enc-fb__tab[aria-selected="true"] {
+  background: var(--fb-seg-on);
+  color: var(--fb-ink-on) !important;
+}
+.enc-fb__count {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fb-muted);
+}
+.enc-fb__tab[aria-selected="true"] .enc-fb__count { color: var(--fb-ink-on); opacity: 0.8; }
+
+/* the field: the search, the tokens, the words */
+.enc-fb__field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0 12px 0 14px;
+  cursor: text;
+}
+.enc-fb__mag { flex: none; color: var(--fb-muted); }
+.enc-fb__tokens { display: contents; }
+.enc-fb__token {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  height: 26px;
+  padding: 0 6px 0 10px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--fb-ring-on);
+  color: var(--fb-ink-on) !important;
+  cursor: pointer;
+  font-size: 13.5px !important;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.enc-fb input.enc-fb__input {
+  flex: 1 1 120px;
+  min-width: 120px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0 !important;
+  outline: none;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 15px;
+  color: var(--fb-ink);
+}
+.enc-fb input.enc-fb__input::placeholder { color: var(--fb-ph); opacity: 1; }
+.enc-fb input.enc-fb__input::-webkit-search-decoration,
+.enc-fb input.enc-fb__input::-webkit-search-cancel-button { -webkit-appearance: none; }
+
+/* a cell: its mark, its value, the chevron; its panel opens to the cell's right edge */
+.enc-fb__cell {
+  position: relative;
+  display: flex;
+  flex: none;
+}
+.enc-fb__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: 100%;
+  padding: 0 16px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14.5px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.006em;
+  white-space: nowrap;
+  color: var(--fb-ink) !important;
+}
+.enc-fb__cell:last-child .enc-fb__trigger { border-radius: 0 9px 9px 0; }
+.enc-fb__lead { display: grid; place-items: center; }
+.enc-fb__lead:empty { display: none; }
+.enc-fb__chev { flex: none; transition: transform 0.16s ease; }
+.enc-fb__trigger[aria-expanded="true"] .enc-fb__chev { transform: rotate(180deg); }
+
+.enc-fb__panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: max(240px, 100%);
+  max-height: 332px;      /* the record lists every chain it has voted on: the panel scrolls, as the */
+  overflow-y: auto;       /* menu before it did, rather than running off the screen */
+  padding: 6px;
+  border: 1px solid var(--fb-panel-ring);
+  border-radius: 10px;
+  background: var(--fb-panel);
+}
+.enc-fb__panel[hidden] { display: none !important; }
+.enc-fb__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 44px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14.5px !important;
+  font-weight: 400;
+  text-align: left;
+  white-space: nowrap;
+  color: var(--fb-ink) !important;
+  transition: background-color 0.14s ease;
+}
+.enc-fb__option:hover:not(:disabled) { background: var(--fb-row); }
+.enc-fb__option[aria-selected="true"] { font-weight: 500; }
+.enc-fb__option:disabled { color: var(--fb-muted) !important; cursor: default; }
+.enc-fb__opt-l,
+.enc-fb__opt-r { display: inline-flex; align-items: center; gap: 10px; }
+.enc-fb__panel[aria-label="Sort"] .enc-fb__icon { color: var(--fb-muted); }
+
+/* the resting mark of a facet with nothing chosen: a dashed ring, as the design draws it */
+.enc-fb__rest {
+  display: block;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  box-sizing: border-box;
+  border: 1px dashed var(--fb-rest);
+  border-radius: 999px;
+}
+
+.enc-fb button:focus-visible { outline: none; }
+.enc-fb:has(:focus-visible) { outline: 3px solid rgba(0, 0, 0, 0.32); outline-offset: 2px; }
+.enc-fb[data-ink]:has(:focus-visible) { outline-color: rgba(250, 250, 248, 0.5); }
+
+/* under 1024 the cells wrap inside the field, the hairlines go */
+@media (max-width: 1024px) {
+  .enc-fb {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 4px;
+    gap: 2px;
+  }
+  .enc-fb > * { height: 40px; }
+  .enc-fb > .enc-fb__div { display: none; }
+  .enc-fb__field { flex: 1 1 220px; }
+  .enc-fb__cell:last-child .enc-fb__trigger { border-radius: 8px; }
+  /* wrapped, a cell can sit at the bar's left edge, and a panel hung from its right would run off
+     the screen: the panel opens the width of the bar, under it, as the menus before it did */
+  .enc-fb__cell { position: static; }
+  .enc-fb__panel { left: 4px; right: 4px; min-width: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .enc-fb, .enc-fb * { transition: none !important; }
 }
 
 /*********************************************/

@@ -21,23 +21,8 @@
 @container (min-width: 340px){.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__wordmark{display: block;}
 .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__mark{display: none;}
 }
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__bar{display: flex;align-items: stretch;flex-wrap: wrap;width: 100%;min-height: 50px;margin: 0 0 26px;padding: 0 10px;border-radius: 10px;background: #2A2C28;border: 1px solid #2A2C28;box-shadow: inset 0 1.5px 0 rgba(255,255,255,0.14);}
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__tab{appearance: none;cursor: pointer;display: inline-flex;align-items: center;align-self: stretch;gap: 8px;min-height: 44px;padding: 0 14px;border: 0;border-radius: 0;background: transparent;font-family: var(--type-body),system-ui,sans-serif;font-size: 15px;font-weight: 500;letter-spacing: -0.006em;white-space: nowrap;color: #B4B4B4;transition: color 0.16s ease,box-shadow 0.16s ease;}
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__tab:hover,.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__tab[data-enc-on]{color: #FAFAF8;}
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__tab[data-enc-on]{box-shadow: inset 0 -2px 0 #FAFAF8;}
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__dot{width: 8px;height: 8px;flex: none;border-radius: 999px;background: #8E948A;transition: background-color 0.16s ease;}
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__tab[data-enc-on] .enc-index__dot{background: #FAFAF8;}
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__tab-count{font-family: var(--type-mono),ui-monospace,monospace;font-size: 10.5px;letter-spacing: 0.06em;font-variant-numeric: tabular-nums;color: #9FA39B;}
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__tab[data-enc-on] .enc-index__tab-count{color: #C9C9C4;}
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__gap{flex: 1;min-width: 8px;}
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__rule{width: 1px;flex: none;align-self: stretch;background: rgba(250,250,248,0.18);}
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__field{display: flex;align-items: center;flex: none;gap: 10px;padding: 0 4px 0 14px;cursor: text;}
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__mag{display: grid;place-items: center;color: #B4B4B4;transition: color 0.16s ease;}
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__field[data-enc-typed] .enc-index__mag{color: #FAFAF8;}
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__input{width: 172px;padding: 0;border: 0;outline: none;background: transparent;font-family: var(--type-body),system-ui,sans-serif;font-size: 15px;color: #FAFAF8;}
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__input::placeholder{color: #B4B4B4;}
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__clear{appearance: none;cursor: pointer;display: none;place-items: center;width: 24px;height: 24px;flex: none;padding: 0;border: 0;border-radius: 999px;background: transparent;color: #B4B4B4;}
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__field[data-enc-typed] .enc-index__clear{display: grid;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__bar{width: 100%;margin: 0 0 26px;z-index: 5;background: linear-gradient(rgba(250,250,248,0.06),rgba(250,250,248,0.06)),#2A2C28;}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__mark{display: block;flex: none;width: 10px;height: 10px;border-radius: 2px;background: currentColor;}
 .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post][hidden]{display: none !important;}
 .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__foot{display: flex;align-items: center;gap: 16px;flex-wrap: wrap;margin-top: 26px;padding-top: 20px;border-top: 1px solid #E2E2DB;}
 .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__more{appearance: none;cursor: pointer;display: inline-flex;align-items: center;justify-content: center;min-height: 44px;padding: 0 18px;border-radius: 10px;background: #FAFAF8;border: 1px solid #D9D9D2;box-shadow: inset 0 1.5px 0 rgba(255,255,255,1),0 1px 2px rgba(0,0,0,0.06);font-family: var(--type-body),system-ui,sans-serif;font-size: 15.5px;font-weight: 500;letter-spacing: -0.006em;color: #000000;transition: border-color 0.16s ease;}

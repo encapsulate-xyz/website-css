@@ -175,143 +175,23 @@
   .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__mark { display: none; }
 }
 
-/* ── THE FILTER BAR (design J, revised) ────────────────────────────────────────────────────────
-   An ink bar above the index: "All posts" and one tab per category, each with its count, then the
-   search field. Built by blog.js — Notion has no block that is a menu or an input, which is the
-   exception CLAUDE.md allows. */
+/* ── THE FILTER BAR ── the design's command field, on ink (main.css §13c, filterbar.js); here only
+   its place and its ground. The index stands on paper, so the bar carries the ink the design draws
+   it on (Filter Bar Patterns, G, 2026-09-26). */
 .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__bar {
-  display: flex;
-  align-items: stretch;
-  flex-wrap: wrap;
   width: 100%;
-  min-height: 50px;
   margin: 0 0 26px;
-  padding: 0 10px;
-  border-radius: 10px;
-  background: #2A2C28;
-  border: 1px solid #2A2C28;
-  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.14);
+  z-index: 5;   /* its panels open over the cards */
+  background: linear-gradient(rgba(250, 250, 248, 0.06), rgba(250, 250, 248, 0.06)), #2A2C28;
 }
-
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__tab {
-  appearance: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  align-self: stretch;
-  gap: 8px;
-  min-height: 44px;
-  padding: 0 14px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  font-family: var(--type-body), system-ui, sans-serif;
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: -0.006em;
-  white-space: nowrap;
-  color: #B4B4B4;
-  transition: color 0.16s ease, box-shadow 0.16s ease;
-}
-
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__tab:hover,
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__tab[data-enc-on] {
-  color: #FAFAF8;
-}
-
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__tab[data-enc-on] {
-  box-shadow: inset 0 -2px 0 #FAFAF8;
-}
-
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__dot {
-  width: 8px;
-  height: 8px;
+/* the Tag cell's mark: a small square in the type's colour */
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__mark {
+  display: block;
   flex: none;
-  border-radius: 999px;
-  background: #8E948A;
-  transition: background-color 0.16s ease;
-}
-
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__tab[data-enc-on] .enc-index__dot {
-  background: #FAFAF8;
-}
-
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__tab-count {
-  font-family: var(--type-mono), ui-monospace, monospace;
-  font-size: 10.5px;
-  letter-spacing: 0.06em;
-  font-variant-numeric: tabular-nums;
-  color: #9FA39B;
-}
-
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__tab[data-enc-on] .enc-index__tab-count {
-  color: #C9C9C4;
-}
-
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__gap {
-  flex: 1;
-  min-width: 8px;
-}
-
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__rule {
-  width: 1px;
-  flex: none;
-  align-self: stretch;
-  background: rgba(250, 250, 248, 0.18);
-}
-
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__field {
-  display: flex;
-  align-items: center;
-  flex: none;
-  gap: 10px;
-  padding: 0 4px 0 14px;
-  cursor: text;
-}
-
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__mag {
-  display: grid;
-  place-items: center;
-  color: #B4B4B4;
-  transition: color 0.16s ease;
-}
-
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__field[data-enc-typed] .enc-index__mag {
-  color: #FAFAF8;
-}
-
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__input {
-  width: 172px;
-  padding: 0;
-  border: 0;
-  outline: none;
-  background: transparent;
-  font-family: var(--type-body), system-ui, sans-serif;
-  font-size: 15px;
-  color: #FAFAF8;
-}
-
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__input::placeholder {
-  color: #B4B4B4;
-}
-
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__clear {
-  appearance: none;
-  cursor: pointer;
-  display: none;
-  place-items: center;
-  width: 24px;
-  height: 24px;
-  flex: none;
-  padding: 0;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  color: #B4B4B4;
-}
-
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__field[data-enc-typed] .enc-index__clear {
-  display: grid;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: currentColor;
 }
 
 /* a filtered-out card must leave no gap — `hidden` loses to the card's own display */

@@ -219,63 +219,6 @@
     return isNaN(t) ? 0 : t;
   }
 
-  function menu(key, label, options, glyphFor) {
-    var box = el("div", "enc-rec__menu");
-    box.setAttribute("data-menu", key);
-    var trigger = el("button", "enc-rec__trigger");
-    trigger.type = "button";
-    trigger.setAttribute("aria-haspopup", "listbox");
-    // the design's trigger is the picked option's own glyph and its name — the mono label was in
-    // an earlier pass of the handoff and is gone
-    var value = el("span", "enc-rec__value", options[0][0] || "All");
-    var lead = el("span", "enc-rec__lead");
-    if (glyphFor) lead.appendChild(glyphFor(options[0][2]));
-    trigger.setAttribute("aria-label", label);
-    trigger.appendChild(lead);
-    trigger.appendChild(value);
-    trigger.appendChild(el("span", "enc-rec__chevron"));
-    box.appendChild(trigger);
-
-    var panel = el("div", "enc-rec__panel");
-    panel.setAttribute("role", "listbox");
-    panel.hidden = true;
-    options.forEach(function (o) {
-      var item = el("button", "enc-rec__option");
-      item.type = "button";
-      item.setAttribute("role", "option");
-      if (glyphFor) {
-        var g = glyphFor(o[2]);
-        if (g) item.appendChild(g);
-      }
-      item.appendChild(el("span", "enc-rec__option-label", o[0]));
-      if (o[1] != null) item.appendChild(el("span", "enc-rec__count", String(o[1])));
-      item.appendChild(el("span", "enc-rec__tick"));
-      if (o[1] === 0) { item.disabled = true; item.title = "No votes in the record yet"; }
-      // Super closes its own dropdown on a document pointerdown, which cancels the event — so the
-      // choice is taken on pointerdown here too
-      item.addEventListener("pointerdown", function (e) {
-        e.preventDefault();
-        state[key] = o[2];
-        shown = PAGE;
-        value.textContent = o[0];
-        if (glyphFor) { lead.textContent = ""; lead.appendChild(glyphFor(o[2])); }
-        Array.prototype.forEach.call(panel.children, function (x) { x.removeAttribute("data-on"); });
-        item.setAttribute("data-on", "");
-        panel.hidden = true;
-        apply();
-      });
-      panel.appendChild(item);
-    });
-    trigger.addEventListener("pointerdown", function (e) {
-      e.preventDefault();
-      var open = panel.hidden;
-      document.querySelectorAll(".enc-rec__panel").forEach(function (p) { p.hidden = true; });
-      panel.hidden = !open;
-    });
-    box.appendChild(panel);
-    return box;
-  }
-
   function controls() {
     var box = document.getElementById(TABLE);
     if (!box || box.querySelector(".enc-rec__bar")) return;
@@ -293,50 +236,32 @@
     var voteOpts = [["Any vote", rows.length, ""]].concat(Object.keys(votes).map(function (v) {
       return [v, votes[v], v];
     }));
-    var sortOpts = [["Recent votes", null, ""], ["Oldest first", null, "oldest"], ["By chain", null, "chain"]];
-
-    var bar = el("div", "enc-rec__bar");
-    bar.appendChild(menu("chain", "Chain", chainOpts, glyphFor));
-    bar.appendChild(el("span", "enc-rec__rule"));
-    bar.appendChild(menu("vote", "Vote", voteOpts, dotFor));
-    bar.appendChild(el("span", "enc-rec__spacer"));
-    bar.appendChild(el("span", "enc-rec__rule"));
-    bar.appendChild(menu("sort", "Sort", sortOpts, sortIcon));
-    bar.appendChild(el("span", "enc-rec__rule"));
-
-    var field = el("label", "enc-rec__find");
-    var input = el("input");
-    input.type = "text";
-    input.placeholder = "Find a proposal";
-    input.setAttribute("aria-label", "Find a proposal by number or title");
-    field.appendChild(input);
-    field.addEventListener("pointerdown", function () { setTimeout(function () { input.focus(); }, 0); });
-    input.addEventListener("input", function () {
-      state.q = input.value;
-      shown = PAGE;
-      field.toggleAttribute("data-enc-typed", !!input.value);
-      apply();
+    /* the design's command field (Filter Bar Patterns, G): the search first — a chain or a vote typed
+       and Enter becomes a token — then Chain, Vote and the sort as cells at the right. The options
+       and their counts are the rows' own, as before; so is the filtering (apply). */
+    if (typeof window.encFilterBar !== "function") return;
+    var toOpts = function (list) { return list.map(function (o) { return [o[2], o[0], o[1]]; }); };
+    var rest = function () { var r = el("span", "enc-fb__rest"); return r; };
+    var bar = window.encFilterBar({
+      placeholder: "Find a proposal, or type a chain",
+      facets: [
+        { id: "chain", label: "Chain", options: function () { return toOpts(chainOpts); }, mark: glyphFor, rest: rest },
+        { id: "vote", label: "Vote", options: function () { return toOpts(voteOpts); }, mark: dotFor, rest: rest }
+      ],
+      sorts: function () { return [["", "Recent votes", "desc"], ["oldest", "Oldest first", "asc"], ["chain", "By chain", "az"]]; },
+      state: { q: "", sort: "", f: { chain: "", vote: "" } },
+      onChange: function (st) {
+        state.chain = st.f.chain || ""; state.vote = st.f.vote || "";
+        state.sort = st.sort || ""; state.q = st.q || "";
+        shown = PAGE;
+        apply();
+      }
     });
-    var clear = el("button", "enc-rec__clear");
-    clear.type = "button";
-    clear.setAttribute("aria-label", "Clear the search");
-    clear.addEventListener("pointerdown", function (e) {
-      e.preventDefault();
-      input.value = ""; state.q = "";
-      field.removeAttribute("data-enc-typed");
-      apply();
-    });
-    field.appendChild(clear);
-    bar.appendChild(field);
+    bar.el.classList.add("enc-rec__bar");
 
     var header = box.querySelector(".notion-collection__header-wrapper");
     if (header) header.setAttribute("data-enc-source", "");
-    box.insertBefore(bar, box.firstChild);
-    document.addEventListener("pointerdown", function (e) {
-      if (!e.target.closest(".enc-rec__menu")) {
-        document.querySelectorAll(".enc-rec__panel").forEach(function (p) { p.hidden = true; });
-      }
-    });
+    box.insertBefore(bar.el, box.firstChild);
   }
 
   // a chain's glyph, when a view of the Networks set is on the page; otherwise its tinted disc
@@ -351,13 +276,6 @@
       disc.appendChild(img);
     }
     return disc;
-  }
-  // the handoff draws one icon per sort: lines long-to-short for the newest first, short-to-long
-  // for the oldest, and an A-Z with an arrow for by chain
-  function sortIcon(value) {
-    var i = el("span", "enc-rec__sort-icon");
-    i.setAttribute("data-sort", value || "recent");
-    return i;
   }
   function dotFor(vote) {
     var dot = el("span", "enc-rec__dot");
@@ -412,6 +330,7 @@
 
   /* filtering and sorting run on the rows Super rendered — the record's own view decides which
      those are (CLAUDE.md: Super only ships the active view's rows) */
+  var resorted = false;
   function apply() {
     var box = document.getElementById(TABLE);
     if (!box) return;
@@ -424,7 +343,10 @@
       if (needle && tr.textContent.toLowerCase().indexOf(needle) < 0) hide = true;
       tr.hidden = hide;
     });
-    if (state.sort) {
+    // once reordered, "Recent votes" (the default, "") has to reorder too, or the rows stay as they
+    // were left
+    if (state.sort || resorted) {
+      resorted = true;
       var body = rows[0] && rows[0].parentNode;
       if (body) {
         rows.slice().sort(function (a, b) {

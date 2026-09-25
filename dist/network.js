@@ -285,7 +285,8 @@
     // the stage follows the pointer; with none, the first row as ordered
     var active = state.active && order.indexOf(state.active) >= 0 ? state.active : order[0];
     stage(db, active || null, testnet);
-    sync(db, testnet);
+    if (bar) { bar.state.sort = state.sort; bar.state.q = state.q; }
+    sync();
   }
 
   function stage(db, card, testnet) {
@@ -316,117 +317,51 @@
     put(go.querySelector(".enc-set-stage__name"), name);
   }
 
-  // the switch mirrors Super's picker; the sort offers the rate only on mainnet
-  function sync(db, testnet) {
-    var tabs = db.querySelector(".enc-set-tabs");
-    if (!tabs) return;
-    var opts = options(db);
-    if (tabs.children.length !== opts.length) {
-      tabs.textContent = "";
-      opts.forEach(function (o, i) {
-        var b = el("button", "enc-set-tab");
-        b.type = "button";
-        b.setAttribute("role", "tab");
-        b.appendChild(el("span", "enc-set-tab__t"));
-        b.appendChild(el("span", "enc-set-tab__n"));
-        b.addEventListener("click", function () {
-          var o2 = options(db)[i];
-          if (o2 && !o2.classList.contains("active")) { state.active = null; o2.click(); }
-        });
-        tabs.appendChild(b);
-      });
-    }
-    opts.forEach(function (o, i) {
-      var b = tabs.children[i], label = o.textContent.trim();
-      put(b.querySelector(".enc-set-tab__t"), label);
-      attr(b, "aria-selected", o.classList.contains("active") ? "true" : "false");
-      var n = counts ? (/testnet/i.test(label) ? counts.testnet : /mainnet/i.test(label) ? counts.mainnet : null) : null;
-      put(b.querySelector(".enc-set-tab__n"), n == null ? "" : String(n));
-    });
-    var menu = db.querySelector(".enc-set-sort__menu"), label = db.querySelector(".enc-set-sort__label");
-    if (menu) Array.prototype.forEach.call(menu.children, function (item) {
-      var key = item.getAttribute("data-icon");
-      item.hidden = key === "rate" && testnet;
-      attr(item, "aria-selected", key === state.sort ? "true" : "false");
-      if (key === state.sort) put(label, item.textContent);
-    });
-  }
+  // the bar (filterbar.js) redraws from the picker and the counts, writing only what changed
+  var bar = null;
+  function sync() { if (bar) bar.sync(); }
   var counts = null;
 
   function controls() {
     var db = document.getElementById(SET_DB);
     if (!db) return;
-    if (!db.querySelector(":scope > .enc-set-controls")) build(db);
+    if (!db.querySelector(":scope > .enc-set-controls") && build(db) === false) return;
     applyControls(db);
   }
 
   function build(db) {
     /* The controls are kept OUT of Super's markup: inside its picker or its header, its own handlers
        ran first and swallowed the click (the recipe in CLAUDE.md). They hang off the collection. */
-    var wrap = el("div", "enc-set-controls");
-    var tabs = el("div", "enc-set-tabs");
-    tabs.setAttribute("role", "tablist");
-    wrap.appendChild(tabs);
-
-    var sort = el("div", "enc-set-sort");
-    var button = el("button", "enc-set-sort__button");
-    button.type = "button";
-    button.setAttribute("aria-haspopup", "listbox");
-    button.setAttribute("aria-expanded", "false");
-    button.appendChild(el("span", "enc-set-sort__label", SORTS[0][1]));
-    var menu = el("div", "enc-set-sort__menu");
-    menu.setAttribute("role", "listbox");
-    menu.setAttribute("aria-label", "Sort networks");
-    menu.hidden = true;
-    var pressed = 0;
-    function toggleMenu(open) {
-      menu.hidden = open === undefined ? !menu.hidden : !open;
-      button.setAttribute("aria-expanded", menu.hidden ? "false" : "true");
-    }
-    SORTS.forEach(function (o) {
-      var item = el("button", "enc-set-sort__option", o[1]);
-      item.type = "button";
-      item.setAttribute("role", "option");
-      item.setAttribute("data-icon", o[0]);
-      function choose() { state.sort = o[0]; applyControls(db); }
-      /* chosen on pointerdown (a cancelled click cannot swallow it), closed only once the press is
-         over — hidden mid-press, the click that follows would land on the row beneath */
-      item.addEventListener("pointerdown", function (e) {
-        e.preventDefault();
-        pressed = Date.now();
-        choose();
-        window.addEventListener("pointerup", function up() {
-          window.removeEventListener("pointerup", up, true);
-          setTimeout(function () { toggleMenu(false); }, 0);
-        }, true);
-      });
-      item.addEventListener("click", function () {
-        if (Date.now() - pressed > 700) choose();
-        toggleMenu(false);
-      });
-      menu.appendChild(item);
+    /* the design's command field (Filter Bar Patterns, G): the stage tabs in its left cell — they
+       click Super's own view picker, hidden — the search in the middle, the sort at the right. No
+       facet on this page. The filtering and the sorting are this file's, as before. */
+    if (typeof window.encFilterBar !== "function") return false;
+    var ICONS = { set: "desc", name: "az", rate: "bars" };
+    bar = window.encFilterBar({
+      placeholder: "Find a network",
+      tabs: function () {
+        return options(db).map(function (o) {
+          var label = o.textContent.trim();
+          var n = counts ? (/testnet/i.test(label) ? counts.testnet : /mainnet/i.test(label) ? counts.mainnet : null) : null;
+          return { label: label, count: n, on: o.classList.contains("active") };
+        });
+      },
+      onTab: function (i) {
+        var o = options(db)[i];
+        if (o && !o.classList.contains("active")) { state.active = null; o.click(); }
+      },
+      facets: [],
+      // the rate only on mainnet, as the index has it
+      sorts: function () {
+        var t = testnetView(db);
+        return SORTS.filter(function (o) { return !(t && o[0] === "rate"); })
+          .map(function (o) { return [o[0], o[1], ICONS[o[0]]]; });
+      },
+      state: { q: state.q, sort: state.sort, f: {} },
+      onChange: function (st) { state.q = st.q; state.sort = st.sort; applyControls(db); }
     });
-    button.addEventListener("pointerdown", function (e) { e.preventDefault(); toggleMenu(); });
-    button.addEventListener("click", function (e) { e.preventDefault(); });
-    document.addEventListener("pointerdown", function (e) {
-      if (!menu.hidden && !sort.contains(e.target)) toggleMenu(false);
-    });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !menu.hidden) toggleMenu(false); });
-    sort.appendChild(button);
-    sort.appendChild(menu);
-    wrap.appendChild(sort);
-
-    var input = el("input", "enc-set-search");
-    input.type = "search";
-    input.placeholder = "Find a network";
-    input.setAttribute("aria-label", "Find a network");
-    input.addEventListener("input", function () { state.q = input.value; applyControls(db); });
-    // Super cancels pointer events on the document, and a cancelled pointerdown focuses nothing
-    input.addEventListener("pointerdown", function () {
-      if (document.activeElement !== input) setTimeout(function () { input.focus(); }, 0);
-    });
-    wrap.appendChild(input);
-    db.appendChild(wrap);
+    bar.el.classList.add("enc-set-controls");
+    db.appendChild(bar.el);
 
     var empty = el("p", "enc-set-empty");
     empty.hidden = true;
