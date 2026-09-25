@@ -1218,7 +1218,7 @@
 
   /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
      against its page from the console without opening the menu */
-  window.encNav = { version: 9, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
+  window.encNav = { version: 10, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
     groups: function () { return groups; }, harvest: function () { return { done: harvested, tries: harvestTries }; },
     ground: ground, isInk: isInk, groundUnder: groundUnder, wordmark: wearWordmark,
     band: band };
@@ -1230,6 +1230,19 @@
   tick();
   window.addEventListener("load", tick);
   window.addEventListener("resize", ground);
+  /* the ground is only read at the top, and a page can arrive there without a mutation: a guide
+     builds its ink head while the browser has scrolled away (anchoring holds the reader's place
+     as ten bands go in above it), then guide.js puts the page back at the top — nothing changes
+     in the document, no tick runs, and the bar kept the paper it measured before the head
+     existed (4 of 6 loads of the Axelar guide, 2026-09-25). So it is read again on the way back
+     to the top, and once more after the page has settled. */
+  var atTop = true;
+  window.addEventListener("scroll", function () {
+    var top = window.scrollY <= 8;
+    if (top && !atTop) setTimeout(ground, 0);
+    atTop = top;
+  }, { passive: true });
+  window.addEventListener("load", function () { setTimeout(ground, 1200); setTimeout(ground, 3000); });
   // the drawer locks the page while it is open; measure again once it has gone
   new MutationObserver(function () { setTimeout(ground, 0); })
     .observe(document.documentElement, { attributes: true, attributeFilter: ["data-enc-locked"] });

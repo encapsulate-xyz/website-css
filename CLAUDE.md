@@ -389,6 +389,12 @@ walking up from it never reaches what it lies over — and marks the bar `[data-
 its luminance is under half. It was keyed off Super's `parent-page__blog` until then, which is
 why a guide page kept the paper bar over its ink head; that class stays as the no-JS fallback
 for a post. The bar scrolls away with the page, so the measurement is only taken at the top.
+**It is read again on the way back to the top** (v283): a guide builds its ink head while the
+browser has scrolled away (anchoring holds the reader's place as the bands go in above), then
+guide.js returns to the top with no mutation, so no tick measured again and the bar kept the paper
+it read before the head existed — 4 of 6 loads of the Axelar guide. A passive scroll listener
+re-reads the ground whenever the page arrives at the top, and it is read once more 1.2s and 3s
+after load. 6 of 6 loads correct after; paper pages unaffected.
 **Anything fixed over the page is not its ground** (2026-09-25, v280): the booking drawer's ink
 half lies under the bar's line while it is open, so the bar was marked ink, took the ink track and
 the reversed wordmark, and kept them after the drawer closed — white letters on the /brand cover.
