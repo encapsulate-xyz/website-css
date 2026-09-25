@@ -865,6 +865,15 @@
      (2026-09-23). It is measured now: the ground under the bar's own line, walked up until an
      element paints something, and its luminance decides. The bar scrolls away with the page, so
      the top of the page is the only place this is asked. */
+  /* anything fixed over the page — the booking drawer, the compact sheet — is not its ground. The
+     drawer's ink half lay under the bar's line while it was open, the bar was marked ink, and it
+     stayed ink after the drawer closed: the reversed wordmark on a paper cover (2026-09-25) */
+  function overlay(n) {
+    for (; n && n !== document.body && n !== document.documentElement; n = n.parentElement) {
+      if (getComputedStyle(n).position === "fixed") return true;
+    }
+    return false;
+  }
   function groundUnder() {
     var bar = document.querySelector("nav.super-navbar");
     if (!bar) return "";
@@ -876,7 +885,7 @@
       : [document.elementFromPoint(Math.max(8, r.left + 24), r.bottom + 8)];
     var n = null, i;
     for (i = 0; i < stack.length; i++) {
-      if (stack[i] && !bar.contains(stack[i])) { n = stack[i]; break; }
+      if (stack[i] && !bar.contains(stack[i]) && !overlay(stack[i])) { n = stack[i]; break; }
     }
     while (n && n !== document.documentElement) {
       if (bar.contains(n)) { n = n.parentElement; continue; }
@@ -1219,5 +1228,8 @@
   tick();
   window.addEventListener("load", tick);
   window.addEventListener("resize", ground);
+  // the drawer locks the page while it is open; measure again once it has gone
+  new MutationObserver(function () { setTimeout(ground, 0); })
+    .observe(document.documentElement, { attributes: true, attributeFilter: ["data-enc-locked"] });
   window.addEventListener("popstate", markCurrent);
 })();

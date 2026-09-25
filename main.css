@@ -405,6 +405,31 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   padding: 0 !important;
 }
 
+/* focus: the file's ring (`a:focus-visible, button:focus-visible` — 3px at .32 ink, 2px out; paper
+   at .5 on ink) in place of the browser's blue. The drawer hands focus back to Book a call when it
+   closes, which drew Chrome's default ring around it (2026-09-25). A focus that did not come from
+   the keyboard shows none. */
+.super-root nav.super-navbar .super-navbar__actions > a,
+.super-root nav.super-navbar .super-navbar__logo {
+  border-radius: 10px !important;
+}
+.super-root nav.super-navbar a:focus,
+.super-root nav.super-navbar .super-navbar__list:focus,
+.super-root nav.super-navbar .super-navbar__item:focus {
+  outline: none !important;
+}
+.super-root nav.super-navbar a:focus-visible,
+.super-root nav.super-navbar .super-navbar__list:focus-visible,
+.super-root nav.super-navbar .super-navbar__item:focus-visible {
+  outline: 3px solid rgba(0, 0, 0, 0.32) !important;
+  outline-offset: 2px !important;
+}
+.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) a:focus-visible,
+.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__list:focus-visible,
+.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__item:focus-visible {
+  outline-color: rgba(250, 250, 248, 0.5) !important;
+}
+
 /* Super's navbar CTA, drawn as the Button System's primary at 44px (§07). Set the button in
    Super → Navigation; the design's bar carries one, "Book a call". */
 .super-root .super-navbar__cta {

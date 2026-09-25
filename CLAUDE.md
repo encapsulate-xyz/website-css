@@ -104,7 +104,7 @@ User rules that stand on every task:
 | `notion/guide-screenshots.md` | how guide screenshots are captured and composed (agreed 2026-09-18, not yet applied) | — |
 | `build.py` | strips comments into `dist/`, copies the JS | — |
 | `scripts/paste_table.py` | prints the paste table from head/*.html vs what the live pages serve | — |
-| `scripts/livecheck.mjs` | loads a live page in headless Chrome with pinned tags' files served from this repo (or a pushed commit) — pass every tag the page pins, comma-separated (`v263,v227,v220`), runs a check in the page, optional real mouse steps (`move`, and `click` — a real press and release) and a screenshot. The scratchpad copies it replaced were lost on 2026-09-24 | — |
+| `scripts/livecheck.mjs` | loads a live page in headless Chrome with pinned tags' files served from this repo (or a pushed commit) — pass every tag the page pins, comma-separated (`v263,v227,v220`), runs a check in the page, optional real mouse and key steps (`move`, `click` — a real press and release — and `press(key)`) and a screenshot. The scratchpad copies it replaced were lost on 2026-09-24 | — |
 | `scripts/shots.py`, `img/shots/` | panel captures of the live tools (Sui RGP, the Solana graph), 1100×750 at DPR 2 from headless Chrome — the extension's screenshots time out on those pages, and a WebGL graph needs swiftshader or it comes back blank. Not wired into any page yet (2026-09-23): the tools table that names their tiles arrived cut off | — |
 
 **Edit sources, run `python3 build.py`, commit source and `dist/` together. Never edit `dist/`.**
@@ -389,6 +389,13 @@ walking up from it never reaches what it lies over — and marks the bar `[data-
 its luminance is under half. It was keyed off Super's `parent-page__blog` until then, which is
 why a guide page kept the paper bar over its ink head; that class stays as the no-JS fallback
 for a post. The bar scrolls away with the page, so the measurement is only taken at the top.
+**Anything fixed over the page is not its ground** (2026-09-25, v280): the booking drawer's ink
+half lies under the bar's line while it is open, so the bar was marked ink, took the ink track and
+the reversed wordmark, and kept them after the drawer closed — white letters on the /brand cover.
+`overlay()` skips every element that is, or sits in, a `position: fixed` box, and the bar measures
+again when `html[data-enc-locked]` changes. The bar's links and groups carry the file's focus ring
+(3px at .32 ink, 2px out; paper .5 on ink) — the drawer hands focus back to Book a call on close,
+and Chrome drew its own blue ring there.
 
 Three traps: **Super's `.super-navbar__list-content` is a flex row with `align-items: flex-start`**,
 which it keeps when the direction is turned to column — the 4f grid inside then shrinks to its
