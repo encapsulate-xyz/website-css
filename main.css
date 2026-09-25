@@ -3109,6 +3109,7 @@ table.notion-table:not(:is([data-enc-chain], [data-enc-source]) *).row-header.co
 .enc-fb__panel[hidden] { display: none !important; }
 .enc-fb__option {
   display: flex;
+  flex: none;             /* 44px each: in the capped panel the rows shrank to their glyphs (26px) */
   align-items: center;
   justify-content: space-between;
   gap: 16px;
@@ -3143,9 +3144,13 @@ table.notion-table:not(:is([data-enc-chain], [data-enc-source]) *).row-header.co
   border-radius: 999px;
 }
 
+/* the focus ring is for the keyboard, as the file draws it: a press marks the page
+   (html[data-enc-mouse], filterbar.js) and Tab clears it. An input matches :focus-visible however
+   it was focused, so without the mark a click into the field drew the 3px ring round the bar's own
+   ink one — the "thick border" (reported 2026-09-26) */
 .enc-fb button:focus-visible { outline: none; }
-.enc-fb:has(:focus-visible) { outline: 3px solid rgba(0, 0, 0, 0.32); outline-offset: 2px; }
-.enc-fb[data-ink]:has(:focus-visible) { outline-color: rgba(250, 250, 248, 0.5); }
+html:not([data-enc-mouse]) .enc-fb:has(:focus-visible) { outline: 3px solid rgba(0, 0, 0, 0.32); outline-offset: 2px; }
+html:not([data-enc-mouse]) .enc-fb[data-ink]:has(:focus-visible) { outline-color: rgba(250, 250, 248, 0.5); }
 
 /* under 1024 the cells wrap inside the field, the hairlines go */
 @media (max-width: 1024px) {

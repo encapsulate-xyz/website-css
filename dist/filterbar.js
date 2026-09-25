@@ -26,6 +26,19 @@
 (function () {
   var NS = "http://www.w3.org/2000/svg";
 
+  /* the bar's focus ring is a keyboard affordance (the file: "a mouse press marks the body, Tab
+     clears it"): any press marks the page, Tab takes the mark off. Capture phase, so Super's own
+     handlers cannot stop it first. */
+  if (!window.__encFbPress) {
+    window.__encFbPress = true;
+    window.addEventListener("pointerdown", function () {
+      document.documentElement.setAttribute("data-enc-mouse", "");
+    }, true);
+    window.addEventListener("keydown", function (e) {
+      if (e.key === "Tab") document.documentElement.removeAttribute("data-enc-mouse");
+    }, true);
+  }
+
   function el(tag, cls, text) {
     var e = document.createElement(tag);
     if (cls) e.className = cls;
