@@ -357,6 +357,9 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   letter-spacing: -0.04em !important;
   color: #000000 !important;
   max-width: 15ch !important;
+  /* the design's break, "Every network we / validate.": main.css §06 balances headings, which
+     broke it after "network" */
+  text-wrap: wrap !important;
 }
 
 /* ── the set: ledger | stage ── */
@@ -385,8 +388,9 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   position: absolute;
   right: clamp(20px, 4vw, 44px);
   bottom: calc(100% + 40px);
-  /* never over the heading: the room it leaves is the row less its 15ch and the design's 32px */
-  max-width: calc(100% - 2 * clamp(20px, 4vw, 44px) - clamp(36px, 4.4vw, 56px) * 9.4 - 32px);
+  /* never over the heading: the room it leaves is the row less its 15ch (9.9em of Outfit) and the
+     design's 32px */
+  max-width: calc(100% - 2 * clamp(20px, 4vw, 44px) - clamp(36px, 4.4vw, 56px) * 9.9 - 32px);
   z-index: 30;
   display: flex;
   flex-wrap: nowrap;
@@ -845,12 +849,16 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 .enc-set-stage__go:hover::after { transform: translateX(3px); }
 
 /* ── narrower ── */
-/* the heading and the controls stop fitting one row: the controls go under it, and the ledger to
-   one column (the design's switch is at 1100; between 1100 and 1300 "Avalanche" broke mid-word) */
+/* the ledger to one column under 1300 (the design's switch is at 1100; between 1100 and 1300
+   "Avalanche" broke mid-word) */
 @media (max-width: 1299px) {
   .notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .notion-collection-gallery {
     grid-template-columns: minmax(0, 1fr) !important;
   }
+}
+/* the heading and the controls stay on one row as long as both fit (the field shrinks to its
+   180px); under 1280 the controls go under the heading, still at the right, as on the row */
+@media (max-width: 1279px) {
   .notion-root > h2:has(+ #block-3dde800a51388133b7f1d1ccdda08038) { margin-bottom: 20px !important; }
   .notion-root #block-3dde800a51388133b7f1d1ccdda08038 {
     grid-template-areas: "controls controls" "ledger stage" "empty stage" !important;
@@ -861,7 +869,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
     right: auto;
     bottom: auto;
     max-width: none;
-    justify-self: start;
+    justify-self: end;
     margin-bottom: 40px;
   }
 }
