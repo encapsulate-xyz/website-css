@@ -60,7 +60,7 @@ are summarised below.
 | Monad | `0x79129e1306dc1e81F3a2cC5e3B5171fb92FFd99d` | The address only, as asked (delegators stake to validator ID 91). No slashing implemented |
 | Near | `encapsulate.pool.near` | 4 epochs to unlock (~21–31 h at today's epoch length) |
 | Sui | `0x01d03daf…26ff7` | Old validator "fka KingSuper" `0x970f9006…` ran epochs 0–849, never penalised. Tallying rule removes rewards, never principal |
-| Axelar | `axelarvaloper1p8uxq4…9yct` | Old "Redelegate to Encapsulate" validator is jailed, no slashes |
+| Axelar | `axelarvaloper1p8uxq4…9yct` | Old "Redelegate to Encapsulate" validator is jailed, no slashes. Rate refreshed 2026-09-25: staking-explorer 15.54% × (1 − 9%) = 14.1% (was 14.4%). Keplr shows 14.26% / 12.98% after commission — its own estimate from the chain params, so the guide's captures will not match the set exactly; cosmos.directory returns 0 for Axelar |
 | EigenCloud | `0xA6c3F159…22062` | Rate 5.7%: the EigenLayer app's 7-day APR for EIGEN restaked with us (the user's screenshot, 2026-09-24; EigenExplorer was paused and the app refuses scripts). Registered to EigenDA and eOracle, in no operator set, 0% slashable |
 | IOTA | `0xedd654b2…27c9ab` | |
 | Mina | `B62qjWmF…FaRYY` | **Rate left blank**: ~5,100 MINA delegated, ~one block expected every 8 months, so any APR would mislead. Fee 5% is advertised, paid off-chain |
