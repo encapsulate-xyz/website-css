@@ -64,6 +64,17 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   margin-inline: calc(50% - 50vw) !important;
   padding: 0 max(48px, calc(50vw - 864px)) !important;
 }
+
+/* THE HERO CLEARS THE BAR. Its space above the headline is six empty Notion dividers, which
+   main.css §11 keeps as hidden height in a column — 186px at full width — and removes altogether
+   once the columns stack under 1024px. Since the 4f bar lies over the page (2026-09-21) that left
+   the headline 12px from the top, under the bar (reported 2026-09-25). Where the dividers go, the
+   hero takes the inner covers' own clearance instead: the bar's 64 and 32. */
+@media (max-width: 1024px) {
+  .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 {
+    padding-top: 96px !important;
+  }
+}
 /*********************************************/
 /*********************************************/
 

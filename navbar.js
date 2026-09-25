@@ -747,7 +747,7 @@
     var paths = [];
     Array.prototype.forEach.call(links, function (a) {
       var href = a.getAttribute("href") || "";
-      if (href.charAt(0) === "/") paths.push(path(href));
+      if (href.charAt(0) === "/" && href.indexOf("#") < 0) paths.push(path(href));
     });
     groups[keyOf(trigger)] = paths;
     return true;
@@ -844,8 +844,10 @@
       var key = (t.getAttribute("aria-controls") || "").replace(/^.*-content-/, "");
       var links = key ? linksOf(text, key) : null;
       if (!links || !links.length) return;
+      /* a section link is not its page: "Institutional staking" is /#block-… on the homepage,
+         which marked Networks as the page you are on when you were on the homepage */
       groups[keyOf(t)] = links.filter(function (h) {
-        return h.charAt(0) === "/";
+        return h.charAt(0) === "/" && h.indexOf("#") < 0;
       }).map(path);
       var g = pagesOf(text, key);
       if (g && g.items.length) sheetGroups.push({ label: g.label || t.textContent.trim(), items: g.items });

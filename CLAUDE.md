@@ -426,7 +426,8 @@ trigger's element id, which radix regenerates after hydration.
   Reproduced in headless Chrome with real mouse events (`scripts/livecheck.mjs`, which
   reroutes a tag's files to a commit or to the local repo); with the harvest off, Services opened
   Services. `mouse(type)` (a `PointerEvent` with `pointerType: "mouse"`, the only kind radix
-  answers) is still used by `band()` to hold an open panel open. A section link is its own destination, so `CONTENT` is keyed by the whole
+  answers) is still used by `band()` to hold an open panel open. A group's section links (`/#block-…`) never make it current — "Institutional staking" is a
+section of the homepage and lit Networks there until v281. A section link is its own destination, so `CONTENT` is keyed by the whole
 href — `/services#block-…` is not `/services`.
 
 **One row height for every group** (handoff, 2026-09-24): the preview — the 16:10 capture and its
@@ -557,6 +558,11 @@ Every property on a Notion card carries `.notion-collection-card__property`, **t
 a "the property that is not X" reader must skip `.notion-property__title` or it picks up the title.
 
 ## Homepage (home.css, home-dial.css, home.js)
+
+**The hero's top space is six empty Notion dividers** in its text column — main.css §11 keeps a
+column divider as hidden height (186px at full width) and removes it once columns stack under
+1024px. With the 4f bar lying over the page, that put the headline 12px from the top, under the
+bar, on any window under 1024 (2026-09-25). home.css gives the hero the covers' 96px there (v281).
 
 home.css starts with older page CSS, then "HOMEPAGE SECTIONS": stats band/figures/deck (00–00c),
 hero, Audience split 51l (07b), testimonials deck (09), Why Stake 49a, governance 37h, Services 42m
