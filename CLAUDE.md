@@ -200,6 +200,13 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
 - **Make button callouts through the API** (`callout.rich_text` carrying the link). A callout made in
   the Notion app can render its label as a child `p.notion-text`, which the Button System does not
   match (seen on /networks: 79px/101px plain boxes).
+- **A files property shows its first file** (the Team card's portrait is `Photo`'s first). To
+  replace one, upload with `file_uploads`, then PATCH the property with the new
+  `{type: "file_upload"}` first and every existing file passed back as `{name, type: "file",
+  file: {url}}` — that keeps them; leaving one out deletes it. Done for Kowshik on 2026-09-25.
+- **A select option cannot be renamed through the API**, and option names are unique
+  case-insensitively, so "DevOps engineer" beside "DevOps Engineer" is refused. A new wording is a
+  new option (colour set when it is created), assigned to the row; the old one stays in the schema.
 - **A link inside the site is a Notion block link.** `https://www.notion.so/<page-id>#<block-id>`
   (both without dashes), which Super rewrites to `/<slug>#block-…`. Never invent an anchor name —
   `#rules` and the like point at nothing. Take the block's id from the API and link to that.
