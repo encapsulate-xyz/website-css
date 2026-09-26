@@ -506,7 +506,11 @@ STYLING DROPDOWN MENU
   /* design "Guides Picker": the picker is its own screen, not a band inside the page */
   position: relative !important;
   min-height: 100svh !important;
-  padding: clamp(112px, 20vh, 200px) clamp(28px, 7vw, 110px) 96px !important;
+  /* the handoff of 2026-09-26: 64px above and below (it was clamp(112px, 20vh, 200px) over 96). Once
+     a chain is picked the wallet row and the card join the sentence, and the band grew past the
+     screen at laptop heights (1,021px at 1440×900); the band still grows, and guides.js brings the
+     card's foot into view */
+  padding: 64px clamp(28px, 7vw, 110px) 64px !important;
   border: 0 !important;
   border-radius: 0 !important;
   background: #F2F2ED !important;
@@ -909,6 +913,10 @@ STYLING DROPDOWN MENU
 
 /* the bar's crumb and counter each wrapped to two lines on a phone: one over the other, each whole */
 @media (max-width: 500px) {
+  /* the bar is two lines here (below): each line at its own height (a Notion text is 32px at least,
+     which made the pair 96px deep and set it on the sentence), and the sentence 24px under it */
+  .notion-root #block-3dde800a5138811e906fc383bd7a0789 { padding-top: 88px !important; }
+  .notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__bar > p.notion-text { min-height: 0 !important; }
   .notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__bar {
     flex-direction: column;
     align-items: flex-start;

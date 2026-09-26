@@ -257,6 +257,20 @@
       }
     }
 
+    /* the handoff (2026-09-26): once the card is on the page, if its foot is below the fold the
+       page scrolls by just that difference — never scrollIntoView, never when it already fits,
+       and never further than would take the card's top above 24px */
+    function keepInView(cardEl) {
+      if (!cardEl) return;
+      requestAnimationFrame(function () {
+        var r = cardEl.getBoundingClientRect();
+        var over = r.bottom - window.innerHeight + 24;
+        if (over <= 0) return;
+        var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.scrollBy({ top: Math.min(over, Math.max(0, r.top - 24)), behavior: still ? "auto" : "smooth" });
+      });
+    }
+
     function card(guide, chain) {
       var a = el("a", "enc-guide__card");
       if (guide.href) a.href = guide.href;
@@ -306,6 +320,7 @@
           Array.prototype.forEach.call(chainRow.children, function (x) { x.removeAttribute("data-active"); });
           if (state.chain) b.setAttribute("data-active", "");
           paint();
+          keepInView(answer.querySelector(".enc-guide__card"));
         });
       }
       chainRow.appendChild(b);

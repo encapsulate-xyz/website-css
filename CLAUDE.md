@@ -1087,14 +1087,23 @@ marks what it used with `data-enc-source`, which is how the CSS hides them (ids 
 wallet, the step count and the minutes off the rendered card. They are hidden on the card by CSS.
 Notion's API cannot switch view properties on; that is a manual step.
 
-**The picker is its own screen** (design *Guides Picker*, 2026-09-16): the band is one viewport tall
-on the #F2F2ED ground, padded `clamp(112px,20vh,200px) clamp(28px,7vw,110px) 96px`, with a bar across
+**The picker is its own screen** (design *Guides Picker*, 2026-09-16; *Guides Set* re-read
+2026-09-26): the band is at least one viewport tall on the #F2F2ED ground, padded `64px
+clamp(28px,7vw,110px) 64px` (88px on top under 500, where the bar is two lines), with a bar across
 its top carrying the crumb and a counter — both Notion texts (the last two paragraphs in the callout);
 only the counter's two numbers are rewritten by the script, from the chains that have a guide and the
 guides it matched. A second IIFE in `guides.js` snaps to it with the Network Count gesture rules but a
 single stop: a gesture heading at the panel from within half a screen lands on it, a rest within a
 third of a screen settles onto it, nothing under 701px or with reduced motion. The catch rule is
 testable in Node (`scratchpad/snaptest.js`) — the automation tab fires no scroll events.
+
+**Once a chain is picked the band grows past the screen** (the wallet row and the 357px card join
+the sentence: 1,021px at 1440×900 with the old padding). The handoff of 2026-09-26: 64px top padding
+instead of up to 200, and on a pick, if the card's foot is below the fold, guides.js `keepInView()`
+scrolls by just that difference (24px of air; never scrollIntoView, never when it fits). The snap
+does not undo it — it only catches a scroll heading at the band. Measured with real clicks: 1440×900
+and 1920×1080 fit without a scroll, 1366×768 and 1024×768 scroll 65 and 110px, 390×844 280px; the
+card's foot at 24px above the screen's edge each time.
 
 **Centre marks the design's way.** Every glyph is `left/top: 50%` + `translate(-50%, -50%)` at 116%
 of its disc, so the overflow is clipped evenly. Centred as a grid item instead, the overflow fell to
@@ -1312,9 +1321,7 @@ lines on a phone). Split at their blank lines, verbatim: 21 paragraphs, and the 
 a formula as 10 plain-text code blocks (consecutive formula lines kept together); the three code
 blocks were deleted (originals in backups/zk-snarks-code-blocks-2026-09-26.json).
 
-Still open: the guides picker's answer card below the fold at laptop heights once a chain is picked
-(the band grows to 995–1021px at 768–900 tall; the user is asking Claude Design), /investments' `ch`
-caps, the stage block under the index on touch phones, the code copy button over a phone's first
+Still open: /investments' `ch` caps, the stage block under the index on touch phones, the code copy button over a phone's first
 line.
 
 ## Things that bite in Super / Notion markup
