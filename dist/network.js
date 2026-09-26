@@ -32,18 +32,20 @@
     }
   }
 
-  /* ── 5m, the set as a marquee ── (design "Networks Set v2" 5m, 2026-09-26)
-     Under the band's heading, every chain — all of them, not a tier — runs in two rows of names at
-     display size, each with its glyph: the god, high and medium tiers on the first row, drifting
-     left, slower; low and filth on the second, drifting right, faster (the tier is never shown).
-     The −50% loop of the Networks 20e construction, twice. Names and glyphs rest grey; the hovered
-     one fills with its tint, name and glyph in ink, and both rows pause (network.css). The second
-     half of each row is the loop's copy: hidden from assistive tech and out of the tab order.
+  /* ── 5m, the ask and the set ── (design "Networks Ask Full", 2026-09-26)
+     The page's close is one screen: the eyebrow, the ask at cover scale and its buttons, and under
+     them every chain — all of them, not a tier — in two rows of names at display size: the god,
+     high and medium tiers on the first row, drifting left, slower; low and filth on the second,
+     drifting right, faster (the tier is never shown). The −50% loop of the Networks 20e
+     construction, twice. Each name is led by its glyph in a disc of its tint; names rest grey, and
+     the hovered one fills with its tint, the disc turns paper, the name ink, and both rows pause
+     (network.css). The second half of each row is the loop's copy: hidden from assistive tech and
+     out of the tab order.
      Nothing is listed here. The chains are the Networks set's own, in its Order, with their Tier:
      /networks renders only the active tab, so the list comes from the all-stages view on /services
      that the navbar already reads for the counts (window.encCounts → list). A name links to its
      chain page where the set has one (mainnet rows); a testnet-only chain is a name. If that read
-     fails, the strip falls back to the cards on this page, split at the middle of the Order. */
+     fails, the rows are drawn from the cards on this page, split at the middle of the Order. */
   var BAND = "block-3dde800a5138819995f7de108ee8e815";
   var SET_DB = "block-3dde800a51388133b7f1d1ccdda08038";
   var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
@@ -87,15 +89,18 @@
     } else if (r.href) {
       a.setAttribute("aria-label", r.name);
     }
-    // the glyph is a mask filled with the name's own colour, so it rests grey and turns ink with it
+    // the glyph well: the chain's glyph in a disc of its tint (paper while the name is lit)
+    var disc = document.createElement("span");
+    disc.className = "enc-set-disc";
+    disc.setAttribute("aria-hidden", "true");
     if (r.glyph) {
-      var g = document.createElement("span"), url = 'url("' + r.glyph.replace(/"/g, "%22") + '")';
-      g.className = "enc-set-glyph";
-      g.setAttribute("aria-hidden", "true");
-      g.style.webkitMaskImage = url;
-      g.style.maskImage = url;
-      a.appendChild(g);
+      var im = document.createElement("img");
+      im.src = r.glyph;
+      im.alt = "";
+      im.decoding = "async";
+      disc.appendChild(im);
     }
+    a.appendChild(disc);
     a.appendChild(document.createTextNode(r.name));
     return a;
   }
@@ -157,7 +162,12 @@
   var FIG_MAIN = "block-3dce800a5138818e8123ed8b8471935d";
   var FIG_TEST = "block-3dce800a5138812a995cd075afdf49a2";
   var EYEBROW = "block-3e6e800a5138814d87b0d0358084ef7b";   /* "27 mainnets · 20 testnets" */
-  var TEAMS = "block-3dde800a513881b7ae8dc2e00b42d7f9";   /* "Thirty-five teams chose us." */
+  /* "Thirty-five teams chose us.": the band's own heading, found in the band — it was a Heading 3
+     until 2026-09-26 and is a Heading 2 now, so an id would go stale */
+  function teams() {
+    var band = document.getElementById(BAND);
+    return band && band.querySelector(":scope > .notion-callout__content > :is(h2, h3).notion-heading");
+  }
   var ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split(" ");
   var TENS = "  twenty thirty forty fifty sixty seventy eighty ninety".split(" ");
   var NUMWORD = /^(\d+|(?:zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)(?:-[a-z]+)?)\b/i;
@@ -210,7 +220,7 @@
       setNumber(document.getElementById(FIG_TEST), c.testnet);
       setPair(document.getElementById(EYEBROW), c.mainnet, c.testnet);
       tally(c.mainnet);
-      setLead(document.getElementById(TEAMS), c.chains);
+      setLead(teams(), c.chains);
     });
   }
 

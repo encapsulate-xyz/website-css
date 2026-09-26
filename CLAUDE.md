@@ -1499,24 +1499,31 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
   is one column under 1300px (the design's 1100 broke "Avalanche" at 1280), the stage drops under it
   at 760. Only "Chain4Energy" still breaks mid-word, between 1300 and 1700 — as in the design.
 - **The staking properties** stay on the Mainnet view for the chain pages and off the rows.
-- **5m, the chain-teams band** (callout `3dde800a…9995f7…`; design *Networks Set v2*, 5m, 2026-09-26,
-  v314 — it was ink with one strip until then): **paper-2 `#F2F2ED`**, full-bleed, padded `46px 44px
-  48px` — the kicker "For chain teams" (mono 11, `#575B55`), "Thirty-five teams chose us." (Outfit 600
-  42px, ink, 18ch; the number rewritten from the set), the line (16/1.56, `#3A3D38`, 46ch) and Book a
-  call and What we run as the light pair at 48px — and **under them the set as two rows** flush with
-  the band's sides and foot: every chain as a name at `clamp(40px, 5vw, 72px)` with its glyph at
-  1.35em, **the god, high and medium tiers on the first row drifting left over 120s, low and filth on
-  the second drifting right over 55s** (the tier is never shown). Names and glyphs rest `#6B6F68`; the
-  glyph is a **CSS mask** filled with the name's colour (assets.super.so answers CORS with `*`);
-  hovering or focusing a name fills it with its tint (the chain's place in the whole set), turns name
-  and glyph ink and pauses both rows; reduced motion stills them; each row's loop copy is
-  `aria-hidden` and out of the tab order. **The chains and their tiers come from the whole set, in its
-  Order**: navbar.js's `readCounts()` keeps `list` — every chain once with its glyph, its **tier**
-  (the Tier pill, since v314; a kept count without tiers is read again) and the page a mainnet row
-  links to — from the all-stages view on /services, and `window.encCounts()` hands it to network.js.
-  A testnet-only chain is a name with no link. If the read fails, the rows are drawn from the cards
-  on the page, split at the middle of the Order. **The callout's content box clips** (Super's
-  `overflow: hidden`): the rows' reach past the band's padding only shows with `overflow: visible`.
+- **5m, the page's close** (callout `3dde800a…9995f7…`; design *Networks Ask Full*, 2026-09-26, v315 —
+  it was *Networks Set v2*'s band for one release, ink with one strip before that): **one screen on
+  paper-2 `#F2F2ED`**, full-bleed, padded `clamp(40px, 6vh, 72px) clamp(28px, 6vw, 96px) clamp(36px,
+  5vh, 56px)`. At the top the eyebrow, two Notion texts with a 1px `#A5A5A5` rule between them
+  ("Encapsulate · Networks" | "For chain teams", mono 11 at .14em, `#3A3D38`); in the middle the ask —
+  **a Heading 2** (it was a Heading 3 until 2026-09-26, recreated through the API; network.js finds it
+  in the band, not by id) "Thirty-five teams chose us." at `clamp(40px, 6.6vw, 100px)`, .94, 13ch,
+  the number rewritten from the set — the line at `clamp(16px, 1.7vw, 21px)`, 34ch, and Book a call
+  and What we run at 48px and 15.5px, 28px under it; and filling the foot, window-wide, **the set in
+  two rows**: every chain as a name at `clamp(56px, 8.4vw, 124px)` led by its glyph in a .86em disc of
+  its tint, **the god, high and medium tiers on the first row drifting left over 130s, low and filth
+  on the second drifting right over 60s** (the tier is never shown). Names rest `#6B6F68`; hovering or
+  focusing one fills it with its tint, turns the disc paper and the name ink, and pauses both rows;
+  reduced motion stills them; each row's loop copy is `aria-hidden` and out of the tab order.
+  The callout's content box is `display: contents`, so its blocks are the band's own grid items (the
+  eyebrow row, a spring, heading, line, buttons, a spring, the rows); the springs are the file's
+  space-between, never less than its `clamp(28px, 5vh, 56px)` gap. Blocks are placed by what they are
+  (the texts before the heading are the eyebrow, the one after it the line), not by count.
+  **The chains and their tiers come from the whole set, in its Order**: navbar.js's `readCounts()`
+  keeps `list` — every chain once with its glyph, its **tier** (the Tier pill, since v314; a kept
+  count without tiers is read again) and the page a mainnet row links to — from the all-stages view
+  on /services, and `window.encCounts()` hands it to network.js. A testnet-only chain is a name with
+  no link. If the read fails, the rows are drawn from the cards on the page, split at the middle of
+  the Order. Measured at 1440×900 (the band exactly one screen, the springs at their gap), 1920×1080
+  and 390×844.
 - **Every network count is the Networks set's own** (the user, 2026-09-24: one source). Super ships
   only the rendered view's rows, so no page can count the whole set from itself — except /services,
   whose linked view of the set shows every stage with **Stage switched on** (the user did that on

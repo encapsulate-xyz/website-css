@@ -786,23 +786,35 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 /*********************************************/
-/* FOR CHAIN TEAMS — "Networks Set v2" 5m, THE SET AS A MARQUEE */
+/* FOR CHAIN TEAMS — "Networks Ask Full", THE PAGE'S CLOSE */
 /*********************************************/
 
-/* The closing band under the set (Notion callout 3dde800a…9995f7…), design "Networks Set v2", 5m
-   (2026-09-26): on paper-2 now, not ink — the kicker, the count as a sentence, one line and the pair
-   of buttons, and under them every chain in two rows of names at display size drifting opposite
-   ways, flush with the band's sides and foot. network.js draws the rows from the set itself. */
+/* The closing band (Notion callout 3dde800a…9995f7…), design "Networks Ask Full" (2026-09-26): one
+   screen on paper-2 — the eyebrow ("Encapsulate · Networks" | "For chain teams") at the top, the ask
+   at cover scale with its line and buttons in the middle, and the set in two rows filling the foot,
+   window-wide. The callout's content box is dissolved (display: contents), so its blocks are the
+   band's own grid items: the eyebrow row, a spring, the heading, the line, the buttons, a spring,
+   the rows. The springs are the file's space-between, never less than its gap. network.js draws
+   the rows from the set itself.
+   Blocks are placed by what they are, not by count: the texts before the heading are the eyebrow,
+   the one after it the line. */
 
 .notion-root #block-3dde800a5138819995f7de108ee8e815 {
-  --btn-h: 48px;   /* the band's buttons are the file's 48px, 16px, 0 20px */
+  --ask-pad: clamp(28px, 6vw, 96px);
+  --ask-gap: clamp(28px, 5vh, 56px);
+  --btn-h: 48px;   /* the file's 25b control at the 48px hero size: 0 20px, 15.5px */
   --btn-px: 20px;
-  --btn-fs: 16px;
+  --btn-fs: 15.5px;
+  display: grid !important;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  grid-template-rows: auto minmax(var(--ask-gap), 1fr) auto auto auto minmax(var(--ask-gap), 1fr) auto;
+  column-gap: 25px;   /* 12, the 1px rule, 12 */
   box-sizing: border-box !important;
   width: 100vw !important;
   max-width: none !important;
+  min-height: 100vh !important;
   margin: 40px calc(50% - 50vw) 0 !important;
-  padding: 46px max(44px, calc(50vw - 864px)) 48px !important;
+  padding: clamp(40px, 6vh, 72px) var(--ask-pad) clamp(36px, 5vh, 56px) !important;
   border: 0 !important;
   border-radius: 0 !important;
   background: #F2F2ED !important;
@@ -811,108 +823,114 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 .notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__icon,
-.notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__content > span.notion-semantic-string {
+.notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__content > span.notion-semantic-string,
+.notion-root #block-3dde800a5138819995f7de108ee8e815 .notion-heading__anchor {
   display: none !important;
 }
 
-/* heading and buttons on one line, the sentence under the heading */
 .notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__content {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) max-content !important;
-  align-items: end !important;
-  column-gap: 44px !important;
-  row-gap: 15px !important;
-  width: 100% !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: visible !important;   /* the rows reach past it to the band's edges and foot */
+  display: contents !important;
 }
 
 .notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__content > * {
   margin: 0 !important;
   padding: 0 !important;
-  grid-column: 1 !important;
+  min-height: 0 !important;
+  grid-column: 1 / -1;
 }
 
-.notion-root #block-3dde800a5138819995f7de108ee8e815 .notion-heading__anchor {
-  display: none !important;
-}
-
-/* kicker */
-.notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__content > p.notion-text:nth-of-type(1) {
-  grid-row: 1 !important;
+/* the eyebrow: the texts before the heading, on one row, a 1px rule between them */
+.notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__content > p.notion-text:has(~ :is(h2, h3).notion-heading) {
+  grid-row: 1;
+  grid-column: 1;
+  align-self: center;
+  max-width: none !important;
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 11px !important;
-  line-height: 1.3 !important;
-  letter-spacing: 0.12em !important;
+  line-height: normal !important;
+  letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
-  color: #575B55 !important;
+  color: #3A3D38 !important;
+}
+.notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__content > p.notion-text + p.notion-text:has(~ :is(h2, h3).notion-heading) {
+  grid-column: 2;
+  position: relative;
+}
+.notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__content > p.notion-text + p.notion-text:has(~ :is(h2, h3).notion-heading)::before {
+  content: "";
+  position: absolute;
+  left: -13px;
+  top: 50%;
+  width: 1px;
+  height: 12px;
+  margin-top: -6px;
+  background: #A5A5A5;
 }
 
-.notion-root #block-3dde800a5138819995f7de108ee8e815 h3.notion-heading {
-  grid-row: 2 !important;
-  max-width: 18ch !important;
+/* the ask, at cover scale */
+.notion-root #block-3dde800a5138819995f7de108ee8e815 :is(h2, h3).notion-heading {
+  grid-row: 3;
+  max-width: 13ch !important;
   font-family: var(--type-display) !important;
   font-weight: 600 !important;
-  font-size: 42px !important;
-  line-height: 1 !important;
-  letter-spacing: -0.04em !important;
+  font-size: clamp(40px, 6.6vw, 100px) !important;
+  line-height: 0.94 !important;
+  --h2-line-height: 0.94 !important;
+  --h3-line-height: 0.94 !important;
+  letter-spacing: -0.048em !important;
   color: #000000 !important;
+  text-wrap: balance !important;
 }
 
-/* the sentence */
-.notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__content > p.notion-text:nth-of-type(2) {
-  grid-row: 3 !important;
-  max-width: 46ch !important;
+/* the line */
+.notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__content > :is(h2, h3).notion-heading ~ p.notion-text {
+  grid-row: 4;
+  margin-top: 22px !important;
+  max-width: 34ch !important;
   font-family: var(--type-body), system-ui, sans-serif !important;
-  font-size: 16px !important;
-  line-height: 1.56 !important;
+  font-size: clamp(16px, 1.7vw, 21px) !important;
+  line-height: 1.52 !important;
   letter-spacing: normal !important;
   color: #3A3D38 !important;
   text-wrap: pretty;
 }
 
-/* the pair sits at the right, on the heading's baseline row */
-.notion-root #block-3dde800a5138819995f7de108ee8e815 .notion-column-list {
-  grid-column: 2 !important;
-  grid-row: 1 / 4 !important;
-  align-self: end !important;
-  justify-self: end !important;
+/* the buttons, under the line: the file's 22px gap and its 6px over the row */
+.notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__content > .notion-column-list {
+  grid-row: 5;
+  justify-self: start !important;
   width: auto !important;
+  margin-top: 28px !important;
 }
 
-/* THE ROWS (network.js). Flush with the band's sides and foot: its side padding and its 48px bottom
-   are taken back. Each tape holds its row twice and moves by half its width, so the loop has no
-   seam — the first row left over 120s, the second right over 55s; hovering or focusing any name
-   pauses both. */
+/* THE ROWS (network.js), window-wide: the band's side padding is taken back. Each tape holds its row
+   twice and moves by half its width, so the loop has no seam — the first row left over 130s, the
+   second right over 60s; hovering or focusing any name pauses both. */
 .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-strip {
-  grid-column: 1 / -1 !important;
-  grid-row: 4 !important;
+  grid-row: 7;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin: 15px calc(-1 * max(44px, calc(50vw - 864px))) -48px !important;   /* 15 + the row gap = the file's 30 */
-  padding: 24px 0 30px !important;
+  gap: 4px;
+  margin: 0 calc(-1 * var(--ask-pad)) !important;
 }
 .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-row {
   overflow: hidden;
-  padding: 4px 0;
+  padding: 6px 0;
 }
 .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-tape {
   display: flex;
-  gap: 0.4em;
+  gap: 0.42em;
   width: max-content;
-  padding-right: 0.4em;
+  padding-right: 0.42em;
   font-family: var(--type-display), system-ui, sans-serif;
-  font-size: clamp(40px, 5vw, 72px);
+  font-size: clamp(56px, 8.4vw, 124px);
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.05em;
-  animation: enc-set-tape 120s linear infinite;
+  animation: enc-set-tape 130s linear infinite;
 }
 .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-tape--rev {
-  animation-duration: 55s;
+  animation-duration: 60s;
   animation-direction: reverse;
 }
 .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-strip:has(.enc-set-name:hover, .enc-set-name:focus-visible) .enc-set-tape {
@@ -926,8 +944,8 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   flex: none;
   display: inline-flex;
   align-items: center;
-  gap: 0.09em;
-  padding: 0 0.12em;
+  gap: 0.14em;
+  padding: 0.02em 0.14em;
   border-radius: 4px;
   white-space: nowrap;
   color: #6B6F68 !important;
@@ -946,39 +964,30 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   outline: 3px solid rgba(0, 0, 0, 0.32);
   outline-offset: 2px;
 }
-/* the glyph is a mask filled with the name's colour: grey at rest, ink with it */
-.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-glyph {
-  display: block;
+/* the glyph well: a disc of the chain's tint, paper while the name is lit */
+.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-disc {
   flex: none;
-  width: 1.35em;
-  height: 1.35em;
-  background: currentColor;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
+  display: grid;
+  place-items: center;
+  width: 0.86em;
+  height: 0.86em;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--tint, #DCEEC7);
   transition: background-color 0.16s;
+}
+.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-name:hover .enc-set-disc,
+.notion-root #block-3dde800a5138819995f7de108ee8e815 a.enc-set-name:focus-visible .enc-set-disc {
+  background: #FAFAF8;
+}
+.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-disc img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 @media (prefers-reduced-motion: reduce) {
   .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-tape { animation: none; }
-}
-
-@media (max-width: 900px) {
-  .notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__content {
-    grid-template-columns: minmax(0, 1fr) !important;
-  }
-
-  .notion-root #block-3dde800a5138819995f7de108ee8e815 .notion-column-list {
-    grid-column: 1 !important;
-    grid-row: 4 !important;
-    justify-self: start !important;
-  }
-
-  .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-strip {
-    grid-row: 5 !important;
-  }
 }
 
 /* the page ends on a full-bleed band, so it runs into the footer: Super pads the article and the
