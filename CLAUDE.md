@@ -181,6 +181,11 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
 - Headings use `sans-serif` where "Archivo" was once asked for but never loaded — do not add an
   Archivo link.
 - `@import` is stripped from Super's Custom CSS box; use `<link>` in a Head.
+- **Analytics (checked 2026-09-26):** Super's own page views (`POST /api/view` on every page, the
+  site setting `analytics: true`, read in Super's dashboard) and Vercel Speed Insights (web vitals).
+  Neither sets a cookie. The only cookies on the site are cal.com's (`__cf_bm`, next-auth), from the
+  booking calendar. The old head carried a Google tag (`G-V43J33BP97`), **every line already
+  commented out**, so it had collected nothing; it was left out of `head/site.html` on 2026-09-14.
 
 ## Editing Notion
 
