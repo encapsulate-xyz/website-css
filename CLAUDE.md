@@ -106,6 +106,7 @@ User rules that stand on every task:
 | `governance.css` + `governance.js` (the record page: count band, pillars, controls, rows — and the rows of the homepage's governance table, drawn by main.css §13d), `blog.css`, `brand.css`, `contact-us.css`, `guides.css`, `investments.css`, `security.css`, `services.css` | each page's CSS, moved out of Super's page Code panels on 2026-09-15 (old cover rules removed, the rest kept as it was) | each page's Head |
 | `svg/`, `img/` | every drawing and icon the CSS references, served from jsDelivr beside the CSS | referenced as `../svg/…` / `../img/…` from `dist/` |
 | `notion/page-covers.md` | cover copy for the nine inner pages | — |
+| `notion/github-actions-plan.md` | the GitHub Actions plan (2026-09-26, not built): the 26 things that go stale, where each lives in Notion, the proposed `jobs/` structure, the build order and the open decisions | — |
 | `notion/guide-screenshots.md` | how guide screenshots are captured and composed (agreed 2026-09-18, not yet applied) | — |
 | `build.py` | strips comments into `dist/`, copies the JS | — |
 | `scripts/paste_table.py` | prints the paste table from head/*.html vs what the live pages serve | — |
@@ -1631,6 +1632,9 @@ classes and `nth-of-type` cannot tell those three columns apart.
 
 ## TODO — run both governance jobs from a GitHub Action (agreed 2026-09-17, not built)
 
+Part of the GitHub Actions plan (2026-09-26): see "TODO — the GitHub Actions" and
+`notion/github-actions-plan.md`.
+
 Both scripts above are written to be run unattended; nothing about them needs a browser. The shape:
 
 - a scheduled workflow in this repo (weekly is enough for upgrades; rationales only need running
@@ -1650,6 +1654,9 @@ are blank on purpose — see `notion/networks-set-values.md`. They drift: refres
 with the Action below, always with the date.
 
 ## TODO — a GitHub Action to fill the APY property (agreed 2026-09-16, not built)
+
+Part of the GitHub Actions plan (2026-09-26): see "TODO — the GitHub Actions" and
+`notion/github-actions-plan.md`.
 
 APY values in the Networks database are **updated by hand for now**. When it is worth automating,
 the shape is a scheduled Action in this repo — not client-side fetching, which would mean CORS, a
@@ -1711,6 +1718,39 @@ pointing at the mainnet row, so it gets /guides/mainnet/&lt;chain&gt;), switch t
 3. after Super republishes, check the chain page's green button reads /guides/mainnet/&lt;chain&gt;.
 
 Raise this whenever guides are being worked on.
+
+## TODO — the GitHub Actions (planned 2026-09-26, not built)
+
+**The plan is `notion/github-actions-plan.md`**: an inventory of the 26 things on the site that go
+stale (the record's votes and upgrades, the Networks set's rates, commission, status and unbonding, the
+blog's Read, the guides' Step and Time, the dashboards' status, dead links, glyph drift, pages on old
+tags…), where each lives in Notion and what a job would do; four workflows (`governance.yml`,
+`networks.yml`, `content.yml`, `audit.yml`) over a `jobs/` package with one adapter per chain family
+and `config/chains.yml`; every job with `--dry`; values it owns written to Notion, everything that is
+the user's call collected in one rolling issue ("Site data: needs you"). The two older TODOs below
+(the governance jobs, the APY job) are parts of it.
+
+- **Decided:** "1882 · Votes cast since 2020" stays — it counts votes from before the record was kept.
+- **Open, before any code:** keep it in this public repo (public logs; scheduled runs switch off after
+  60 days without a commit) or a small private one; **rotate the Notion token first** (it becomes a repo
+  secret); and which fields are written versus reported (proposed: write rates, Status and Read; report
+  Commission, Slashing and Unbonding).
+- **Remind the user of this when they ask what is left to do.**
+
+## TODO — SEO for every page (asked 2026-09-26, not started)
+
+Update the SEO of every page the navbar and footer reach, and of the post, guide, chain and legal
+templates. Remind the user of this when they ask what is left to do. Start with an audit, then a table
+of what to set where:
+
+- per page: the `<title>`, the meta description, Open Graph and Twitter title, description and image,
+  the canonical URL — what Super serves today against what the page is now (most were written before
+  the redesigns); these are set in Super (page settings → SEO), so the table is for the user to paste,
+  with anything the Notion API can set (a page's title) done from here;
+- the site: the sitemap and robots (the old pages and "Encapsulate Test Home" copies should not be
+  indexed), one `h1` per page (the cover's Heading 1), headings in order, alt text on images and
+  glyphs, structured data (Organization), and redirects for paths that moved (/terms-and-conditions →
+  /terms-of-use).
 
 ## TODO — check every line break against its handoff (asked 2026-09-26, not started)
 
