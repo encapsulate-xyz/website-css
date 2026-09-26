@@ -1,0 +1,351 @@
+/* =============================================================================
+   LEGAL — /privacy-policy and /terms-of-use
+   Design "Privacy Policy" and "Terms of Use" (2026-09-26): one template for both.
+
+   Every word is a Notion block, in this order at the top of each page:
+     column list   the crumb ("Encapsulate · Privacy") | the date ("Updated 26 Sep 2026")
+     Heading 1     the title
+     Text          the lede
+     column list   [ Text "Contents", Table of contents ]
+                   [ per section: Heading 2, Text…, bulleted items…;
+                     then Text "Questions about this document" and the Text carrying the
+                     mailto link ]
+
+   Nothing is built by a script. The contents rail is Notion's own table of contents; it
+   lists the page's Heading 1 as well, so its first item is hidden. The 01, 02… beside
+   the rail's links and the section headings are CSS counters, as the design derives
+   them from the order.
+   ============================================================================= */
+
+/* Super pads its main 80px over and 90px under the page; the design's head measures its own
+   top from the page's edge, the bar lying over it, and ends 112px above the footer */
+.super-content:is(.page__privacy-policy, .page__terms-of-use) {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-root {
+  --legal-pad: clamp(28px, 6vw, 96px);
+  --legal-ink-700: #3A3D38;
+  --legal-grey: #6B6F68;
+  --legal-rule: #E2E2DB;
+  padding: clamp(96px, 12vh, 128px) var(--legal-pad) 112px !important;
+  font-family: "Hanken Grotesk", system-ui, sans-serif;
+  color: #000;
+}
+
+/* ---- the head: crumb | date, title, lede ------------------------------------ */
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-root .notion-text {
+  min-height: 0 !important; /* Notion's 32px floor would open every one-line text */
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-root > .notion-column-list:first-child {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  gap: 25px; /* 12, the 1px rule, 12 */
+  width: auto !important;
+  margin: 0 0 40px !important;
+  line-height: normal;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-root > .notion-column-list:first-child > .notion-column {
+  flex: 0 1 auto;
+  width: auto !important;
+  min-width: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-root > .notion-column-list:first-child > .notion-column + .notion-column {
+  position: relative;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-root > .notion-column-list:first-child > .notion-column + .notion-column::before {
+  content: "";
+  position: absolute;
+  left: -13px;
+  top: 50%;
+  width: 1px;
+  height: 12px;
+  margin-top: -6px;
+  background: #A5A5A5;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-root > .notion-column-list:first-child .notion-text {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  line-height: normal;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--legal-ink-700);
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-root > h1.notion-heading {
+  margin: 0 0 20px !important;
+  padding: 0 !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: clamp(40px, 6vw, 80px) !important;
+  line-height: .96 !important;
+  --h1-line-height: .96 !important;
+  letter-spacing: -0.045em !important;
+  max-width: 15ch !important;
+  text-wrap: wrap !important;
+  color: #000;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-root > h1.notion-heading + .notion-text {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: clamp(16px, 1.6vw, 20px);
+  line-height: 1.52;
+  color: var(--legal-ink-700);
+  max-width: 46ch;
+  text-wrap: pretty;
+}
+
+/* ---- the body: the contents rail beside the document ------------------------- */
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-root > .notion-column-list:has(.notion-table-of-contents) {
+  position: relative;
+  display: grid !important;
+  grid-template-columns: 236px minmax(0, 720px);
+  gap: 0 clamp(40px, 6vw, 96px);
+  justify-content: start;
+  width: auto !important;
+  margin: 56px 0 0 !important;
+  padding-top: 56px;
+  line-height: normal;
+  counter-reset: legal-toc legal-sec;
+}
+
+/* the head's rule, the page's full width */
+:is(.page__privacy-policy, .page__terms-of-use) .notion-root > .notion-column-list:has(.notion-table-of-contents)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc(-1 * var(--legal-pad));
+  right: calc(-1 * var(--legal-pad));
+  height: 1px;
+  background: var(--legal-rule);
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-root > .notion-column-list:has(.notion-table-of-contents) > .notion-column {
+  width: auto !important;
+  min-width: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* the rail */
+:is(.page__privacy-policy, .page__terms-of-use) .notion-column:has(> .notion-table-of-contents) {
+  position: sticky;
+  top: 88px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-column:has(> .notion-table-of-contents) > .notion-text {
+  margin: 0 !important;
+  padding: 0 0 12px !important;
+  border-bottom: 1px solid var(--legal-rule);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  line-height: normal;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--legal-grey);
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-table-of-contents {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0;
+  background: none !important;
+  font-size: 14.5px;
+}
+
+/* the page's own title */
+:is(.page__privacy-policy, .page__terms-of-use) .notion-table-of-contents__item:first-child {
+  display: none;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-table-of-contents__item {
+  margin: 0;
+  padding: 0;
+  counter-increment: legal-toc;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-table-of-contents__item:hover {
+  background: none;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-table-of-contents__item > a {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 8px;
+  align-items: baseline;
+  border: 0 !important;
+  text-decoration: none !important;
+  font-size: 14.5px;
+  line-height: 1.4;
+  color: var(--legal-ink-700) !important;
+  opacity: 1 !important;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-table-of-contents__item > a:hover {
+  color: #000 !important;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-table-of-contents__item > a::before {
+  content: counter(legal-toc, decimal-leading-zero);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  letter-spacing: .1em;
+  color: var(--legal-grey);
+  font-variant-numeric: tabular-nums;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-table-of-contents__item > a > .notion-semantic-string {
+  margin-inline-start: 0 !important;
+  padding: 0 !important;
+  text-decoration: none !important;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-table-of-contents__item > a:focus-visible {
+  outline: 3px solid rgba(0, 0, 0, .32);
+  outline-offset: 2px;
+}
+
+/* the document: each section a Heading 2 with its texts and bullets. The design wraps a
+   section in a box (40px over, 44px under, a rule beneath); here the blocks are flat, so
+   the rule and the 44px ride on the next heading, and the foot, instead. */
+:is(.page__privacy-policy, .page__terms-of-use) .notion-column-list:has(.notion-table-of-contents) > .notion-column:not(:has(> .notion-table-of-contents)) > h2.notion-heading {
+  display: grid !important;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 0 18px !important;
+  padding: 40px 0 0 !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 26px !important;
+  line-height: 1.15 !important;
+  --h2-line-height: 1.15 !important;
+  letter-spacing: -0.028em !important;
+  text-wrap: wrap !important;
+  color: #000;
+  scroll-margin-top: 34px; /* Super's contents click scrolls 62px past the margin: the section lands 96px down, as drawn */
+  counter-increment: legal-sec;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-column-list:has(.notion-table-of-contents) > .notion-column:not(:has(> .notion-table-of-contents)) > h2.notion-heading::before {
+  content: counter(legal-sec, decimal-leading-zero);
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: normal;
+  letter-spacing: .12em;
+  color: var(--legal-grey);
+  font-variant-numeric: tabular-nums;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-column-list:has(.notion-table-of-contents) > .notion-column:not(:has(> .notion-table-of-contents)) > h2.notion-heading ~ h2.notion-heading,
+:is(.page__privacy-policy, .page__terms-of-use) .notion-column-list:has(.notion-table-of-contents) > .notion-column:not(:has(> .notion-table-of-contents)) > .notion-text:nth-last-child(2) {
+  margin-top: 44px !important;
+  border-top: 1px solid var(--legal-rule);
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-column-list:has(.notion-table-of-contents) > .notion-column:not(:has(> .notion-table-of-contents)) > .notion-text {
+  width: auto !important;
+  margin: 14px 0 0 40px !important;
+  padding: 0 !important;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--legal-ink-700);
+  max-width: 68ch;
+  text-wrap: pretty;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-column-list:has(.notion-table-of-contents) > .notion-column:not(:has(> .notion-table-of-contents)) > h2.notion-heading + .notion-text {
+  margin-top: 0 !important;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-column-list:has(.notion-table-of-contents) > .notion-column:not(:has(> .notion-table-of-contents)) > .notion-bulleted-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: auto !important;
+  margin: 18px 0 0 40px !important; /* the column's 14 and the list's own 4 */
+  padding: 0 0 0 18px !important;
+  line-height: normal;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-column-list:has(.notion-table-of-contents) > .notion-column:not(:has(> .notion-table-of-contents)) > .notion-bulleted-list > .notion-list-item {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--legal-ink-700);
+  max-width: 66ch;
+}
+
+/* the foot: "Questions about this document", then the line with the address */
+:is(.page__privacy-policy, .page__terms-of-use) .notion-column-list:has(.notion-table-of-contents) > .notion-column:not(:has(> .notion-table-of-contents)) > .notion-text:nth-last-child(2) {
+  max-width: none; /* the rule above it runs the document's width */
+  margin-left: 0 !important;
+  padding: 40px 0 0 !important;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  line-height: normal;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--legal-grey);
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-column-list:has(.notion-table-of-contents) > .notion-column:not(:has(> .notion-table-of-contents)) > .notion-text:last-child {
+  margin: 10px 0 0 !important;
+  max-width: 60ch;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-column-list:has(.notion-table-of-contents) > .notion-column:not(:has(> .notion-table-of-contents)) > .notion-text a {
+  border: 0 !important;
+  color: #000 !important;
+  opacity: 1 !important;
+  text-decoration: underline !important;
+  text-decoration-color: currentColor !important;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-column-list:has(.notion-table-of-contents) > .notion-column:not(:has(> .notion-table-of-contents)) > .notion-text a:hover {
+  color: #3F6B27 !important;
+}
+
+:is(.page__privacy-policy, .page__terms-of-use) .notion-column-list:has(.notion-table-of-contents) > .notion-column:not(:has(> .notion-table-of-contents)) > .notion-text a:focus-visible {
+  outline: 3px solid rgba(0, 0, 0, .32);
+  outline-offset: 2px;
+}
+
+/* ---- under 900px the rail stands over the document --------------------------- */
+
+@media (max-width: 900px) {
+  :is(.page__privacy-policy, .page__terms-of-use) .notion-root > .notion-column-list:has(.notion-table-of-contents) {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  :is(.page__privacy-policy, .page__terms-of-use) .notion-column:has(> .notion-table-of-contents) {
+    position: static !important;
+  }
+}

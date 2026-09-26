@@ -34,6 +34,8 @@ HEADS = {
     "head/investments.html": ("/investments", "/investments"),
     "head/security.html": ("/security", "/security"),
     "head/services.html": ("/services", "/services"),
+    "head/privacy-policy.html": ("/privacy-policy", "/privacy-policy"),
+    "head/terms-of-use.html": ("/terms-of-use", "/terms-of-use"),
 }
 
 PIN = re.compile(r"website-css@(v\d+)/dist/([\w.-]+\.(?:css|js))")
