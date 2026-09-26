@@ -1697,6 +1697,32 @@ pointing at the mainnet row, so it gets /guides/mainnet/&lt;chain&gt;), switch t
 
 Raise this whenever guides are being worked on.
 
+## TODO — check every line break against its handoff (asked 2026-09-26, not started)
+
+Go through every page and template the designs cover — the pages the navbar and footer reach, and
+the post, guide, chain and legal templates — and compare each text's line breaks with its handoff.
+Wherever the page breaks differently, find the cause and put the handoff's measure back, by the rule
+of 2026-09-26: **keep the handoff's `ch` cap; drop one only when it is very small and the text
+already sits in a narrow column.** The caps below were dropped under the older, blanket rule.
+
+- **How:** render the handoff (`get_file`) and the live page at the handoff's own width in headless
+  Chrome; for every text read its lines (`Range.getClientRects()` on its text, the word ending each
+  line) with its computed `max-width` and `text-wrap`, and list every text whose lines differ. Then
+  again at 1440 and 390.
+- **Dropped caps to review first:**
+  - homepage Why Stake 49a — the lead, and the cards' body and captions (home.css: "texts run the
+    full width (user rule)", "no forced line breaks (user, 2026-09-15)"). The 2026-09-15 complaint
+    was about these, so they may be the narrow-column exception — decide against the file;
+  - homepage governance 37h lead (the file's 50ch) and Services 42m lead (home.css, "user rule");
+  - /services — every body and lead text (services.css head: "no `ch` caps on body or lead text";
+    the ask's lead takes half the row instead);
+  - the homepage Audience split 51l, also named in the 2026-09-15 complaint.
+- **Also check:** main.css §06 sets `text-wrap: balance !important` on every Notion heading, which
+  the files mostly do not draw — it moves a heading's breaks on every page; and each heading whose
+  break was set with an em max-width (the /services display sentence and ask heading, 10.56em)
+  against the break the file shows.
+- **Report** per page: the text, the file's break, ours, the cause and the fix, before changing it.
+
 ## TODO — the newsletter (removed 2026-09-21, to be rebuilt)
 
 "Subscribe to newsletter" and its form were removed from the blog index and from all forty posts
