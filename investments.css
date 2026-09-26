@@ -439,3 +439,7 @@
 @media (max-width: 700px) {
   .notion-root[data-enc-invest] p.enc-inv__status { min-height: 93px; }
 }
+
+/* the cover's "See the portfolio" lands on band 01's first line (2026-09-26): it sits one band padding
+   below the band's top, so the band arrives flush with the screen's */
+.notion-root[data-enc-invest] #block-3e1e800a513881f997b4f4bf97f0bbda { scroll-margin-top: clamp(64px, 7vw, 96px); }

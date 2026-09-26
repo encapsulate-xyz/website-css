@@ -1810,3 +1810,7 @@
     overflow: visible;
   }
 }
+
+/* the cover's "How we secure it" lands on band 01's first line (2026-09-26): it sits one band padding
+   below the band's top, so the band arrives flush with the screen's */
+.notion-root[data-enc-security] #block-3e0e800a5138816a82dbd9653ac6e94c { scroll-margin-top: clamp(64px, 7vw, 88px); }

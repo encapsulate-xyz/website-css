@@ -285,3 +285,4 @@ to{background-position: 14px 0;}
 }
 @media (max-width: 600px){.notion-root[data-enc-security] .enc-sec__tabs{display: grid;grid-template-columns: repeat(2,minmax(0,1fr));overflow: visible;}
 }
+.notion-root[data-enc-security] #block-3e0e800a5138816a82dbd9653ac6e94c{scroll-margin-top: clamp(64px,7vw,88px);}

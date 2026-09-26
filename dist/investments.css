@@ -67,3 +67,4 @@ to{transform: translateX(-50%);}
 .notion-root[data-enc-invest] p.enc-inv__status{min-height: 51px;}
 @media (max-width: 700px){.notion-root[data-enc-invest] p.enc-inv__status{min-height: 93px;}
 }
+.notion-root[data-enc-invest] #block-3e1e800a513881f997b4f4bf97f0bbda{scroll-margin-top: clamp(64px,7vw,96px);}

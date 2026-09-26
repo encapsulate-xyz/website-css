@@ -209,9 +209,14 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
 - **A select option cannot be renamed through the API**, and option names are unique
   case-insensitively, so "DevOps engineer" beside "DevOps Engineer" is refused. A new wording is a
   new option (colour set when it is created), assigned to the row; the old one stays in the schema.
-- **A link inside the site is a Notion block link.** `https://www.notion.so/<page-id>#<block-id>`
-  (both without dashes), which Super rewrites to `/<slug>#block-…`. Never invent an anchor name —
-  `#rules` and the like point at nothing. Take the block's id from the API and link to that.
+- **A link to a section of a page is the site's own URL:** `https://encapsulate.xyz/<path>#block-<32
+  hex>`, which Super serves as `/<path>#block-…`. **Not** `https://www.notion.so/<page>#<block>`: Super
+  rewrites that to the page and drops the fragment — the /services cover's "See services" and
+  /investments' "Send the spec" both came out as bare page links (found 2026-09-26; every working
+  cover button used the site URL). Never invent an anchor name, and link to a block that is
+  **visible** on the page: a link to a gallery a script hides (`[data-enc-source]`, display none)
+  does not scroll — /guides' "Browse guides" pointed at the hidden Guides database and did nothing.
+  Take the block's id from the API or the live page, and check the click lands.
 - Links: a page link renders as `/<page-id>` or its slug; a database link as its page path
   (e.g. `/governance-record/governance-record`); a block link `https://www.notion.so/<page>#<block>`
   should become `/#block-…` — confirm after republish.
