@@ -73,8 +73,11 @@ User rules that stand on every task:
   Copy button's "Copied" feedback. JS for behaviour and decoration is fine (snapping, glyph
   columns, cover fields, dot pagers).
 - **No extra CSS on existing Notion text blocks** unless the section is new or redesigned.
-- **No `ch` max-width caps on body/lead text.** Headings may break; when the user shows the break
-  they want, set it with an em max-width and `text-wrap: wrap`.
+- **Keep the handoff's `ch` caps** (the user, 2026-09-26, refining the 2026-09-15 rule). Drop a cap
+  only when it is very small **and** the text already sits in a narrow column, where the cap would
+  cramp it further — that was the 2026-09-15 complaint (Why Stake, Services, the Audience split:
+  text broken early on purpose). Otherwise the handoff's measure is the design. Headings: when the
+  user shows the break they want, set it with an em max-width and `text-wrap: wrap`.
 - **Say what was removed** when a Notion edit deletes blocks.
 - Commit, push and tag are allowed. Backups before editing any `.css` (below).
 
@@ -1214,8 +1217,7 @@ words for a page Super has not republished.
 The list goes while it shows: the record's table and pager (`[data-enc-empty]`), the networks ledger
 (the set sits in the ledger's own grid cell — in the row under it the two-row stage pushed it 250px
 down), the blog's grid and pager. The record's old one-line empty state (a Notion paragraph) was
-deleted; governance.css keeps its id hidden until Super republishes. The line runs the width —
-the file's 52ch cap is the kind of body measure the site does not set.
+deleted; governance.css keeps its id hidden until Super republishes. The line keeps the file's 52ch.
 
 **Shortest read** reads the Blogs database's **Read** property (number, minutes — added and filled
 2026-09-26 from each post's words at 230 a minute, the rule post.js uses for its "N min"). It has
@@ -1350,7 +1352,7 @@ lines on a phone). Split at their blank lines, verbatim: 21 paragraphs, and the 
 a formula as 10 plain-text code blocks (consecutive formula lines kept together); the three code
 blocks were deleted (originals in backups/zk-snarks-code-blocks-2026-09-26.json).
 
-Still open: /investments' `ch` caps, the stage block under the index on touch phones, the code copy button over a phone's first
+Still open: the stage block under the index on touch phones, the code copy button over a phone's first
 line.
 
 ## Things that bite in Super / Notion markup

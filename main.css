@@ -3167,8 +3167,7 @@ html:not([data-enc-mouse]) .enc-fb[data-ink]:has(:focus-visible) { outline-color
    quietly", on /networks, /governance-record and /blog, 2026-09-26). Where the list would be: the
    headline, the page's set as marks at 45% (an ink ring and full strength under the pointer), the
    line, and two tertiaries with the green disc. The words are each page's "Empty state copy"
-   toggle in Notion, hidden here. The line runs the width: the file's 52ch cap is the kind of
-   body-text measure the site does not set. */
+   toggle in Notion, hidden here. */
 .notion-toggle[data-enc-copy] { display: none !important; }
 .enc-es {
   --es-ink: #000000;
@@ -3230,6 +3229,7 @@ html:not([data-enc-mouse]) .enc-fb[data-ink]:has(:focus-visible) { outline-color
   color: var(--es-muted);
 }
 .enc-es__line {
+  max-width: 52ch;
   margin: 0;
   font-family: var(--type-body), system-ui, sans-serif;
   font-size: 15.5px;
