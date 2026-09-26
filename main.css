@@ -3948,61 +3948,6 @@ body:has(.notion-root > .notion-callout:first-child > .notion-callout__content >
 
 
 /*********************************************/
-/* 15b. TEMPORARY SITE BANNER */
-/*********************************************/
-
-/* A notice while the site is being rebuilt. The markup — and so its wording — lives in
-   Super → Settings → Code → Body (repo copy: head/site-body.html), Super's own "Top banner"
-   pattern; this only styles it. Delete the Body snippet to remove the banner; this rule can stay.
-
-   IT IS ON NO PAGE NOW. It was on /services alone from 2026-09-21 until that page was rebuilt
-   on 2026-09-23. Super's Body code is site-wide and there is no per-page Body box, so the banner
-   is hidden everywhere and shown again per page, by the class Super puts on its own content
-   wrapper for that page: a page going under reconstruction gets it with a rule like
-   `body:has(.super-content.page__<slug>) .enc-banner { display: flex; }`; nothing in the Body
-   snippet changes.
-
-   Built from the system: the yellow pastel as a thin full-width band, black
-   type (pastels take ink only), the bold phrase as the mono label step, the
-   rest Hanken at 14px, a hairline below. */
-.enc-banner {
-  display: none;             /* shown again per page, below */
-  position: relative;
-  z-index: 50;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 6px 12px;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 10px max(20px, calc(50vw - 864px));
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  background: #F8E8B3;
-  font-family: var(--type-body), system-ui, sans-serif;
-  font-size: 14px;
-  line-height: 1.45;
-  color: #000000;
-  text-align: center;
-}
-
-.enc-banner strong,
-.enc-banner b {
-  font-family: var(--type-mono), ui-monospace, monospace;
-  font-size: 10.5px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #000000;
-}
-
-.enc-banner a {
-  color: #000000;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-
-/*********************************************/
 /* 16. FOOTER — 44b "THE LAST ASK" */
 /*********************************************/
 

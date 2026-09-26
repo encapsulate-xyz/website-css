@@ -231,7 +231,6 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
 | 13c | the filter bar (filterbar.js) |
 | 13d | the record's rows — /governance-record and the homepage's governance table (governance.js) |
 | 14 | Page covers |
-| 15b | temporary banner `.enc-banner` (markup in `head/site-body.html`) |
 | 16 | Footer 44b |
 | 17 | reduced motion |
 
@@ -550,13 +549,9 @@ checked, because the hidden tab then stopped rendering the app at all (throttled
 edits are the user's to make. **minima frosts the navbar** (`backdrop-filter: blur(12px)` plus a white wash) — 4f's bar is
 plain glass, so both are cancelled, or whatever the bar lies over is smeared.
 
-**The reconstruction banner is gone** (2026-09-26: head/site-body.html is empty; the user removes the
-snippet from Super's Body code). §15b keeps its styles, hidden. It was on /services alone from
-2026-09-21 until that page was rebuilt on 2026-09-23. Super's Body code is site-wide and there is
-no per-page Body box, so the banner is hidden by default and shown again by the class Super puts
-on its own wrapper: `body:has(.super-content.page__<slug>) .enc-banner { display: flex; }` for a
-page going under reconstruction. Watch the rule's own `display` — the
-original `flex` sat after the `none` and kept it visible.
+**The reconstruction banner is gone** (2026-09-26): the user deleted its snippet from Super's Body code,
+head/site-body.html is empty, and main.css §15b (its styles, hidden by default) was removed in v307.
+If a notice is ever wanted again, it is markup in the Body code plus styles; §15b's history is in git.
 
 **Footer 44b (§16 + footer.js).** Its own top edge carries the `rgba(250,250,248,.2)` paper
 hairline and **nothing sits under the disc field** — the field runs straight into the body
@@ -1259,7 +1254,8 @@ What was broken, now fixed:
 - **/investments "Send the spec"** pointed at a block no longer on /contact-us (Notion link fixed).
 - **Chain pages' names broke inside the word** at 901–1919 ("Avalan|che") — chain.js `fitName()`
   measures the longest word on a canvas in em and chain.css takes `min(design size, 100cqi / em)`.
-- **React #418 (hydration mismatch) on every page — measured, and left as it is by the user's rule.**
+- **React #418 (hydration mismatch) on every page — SETTLED: leave it, and do not raise it again (the
+  user, 2026-09-26).** Measured, and left as it is by the user's rule:
   Our scripts build at DOMContentLoaded, before React adopts Super's HTML (the fiber key on
   `.notion-root`); React then throws the built DOM away and renders again, and the observers
   rebuild: a raw-Notion flash at the moment of adoption, 0.1–0.6s on a desktop, 0.3–2s at a 4x
@@ -1311,10 +1307,15 @@ carried the first's Title. Its Title is now "Restake stETH with MetaMask", and n
 reader labels twins by what their Title says they do. The picker still offers one guide per chain
 and wallet, so the LST guide is not reachable from it.
 
+**The zk-snarks post's prose** was three JSON code blocks (13, 23 and 31 lines of sentences, 2,096px
+lines on a phone). Split at their blank lines, verbatim: 21 paragraphs, and the lines that are only
+a formula as 10 plain-text code blocks (consecutive formula lines kept together); the three code
+blocks were deleted (originals in backups/zk-snarks-code-blocks-2026-09-26.json).
+
 Still open: the guides picker's answer card below the fold at laptop heights once a chain is picked
-(the band grows to 995–1021px at 768–900 tall), /investments' `ch` caps, the stage block under the
-index on touch phones, the zk-snarks prose in JSON code blocks, the code copy button over a phone's
-first line.
+(the band grows to 995–1021px at 768–900 tall; the user is asking Claude Design), /investments' `ch`
+caps, the stage block under the index on touch phones, the code copy button over a phone's first
+line.
 
 ## Things that bite in Super / Notion markup
 
