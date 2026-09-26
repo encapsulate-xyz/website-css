@@ -32,17 +32,18 @@
     }
   }
 
-  /* ── 5m, the set as a marquee ── (design "Networks Set" 5m, 2026-09-25)
-     Under the band's heading, every chain — all of them, not a tier — runs as one strip of names at
-     display size, each with its disc, drifting left on the −50% loop (the Networks 20e
-     construction) across a paper band full-bleed under the ink. Names rest grey; the hovered one is
-     ink with its disc in tint, and hovering pauses the strip (network.css). The second half is the
-     loop's copy: hidden from assistive tech and out of the tab order.
-     Nothing is listed here. The chains are the Networks set's own, in its Order: /networks renders
-     only the active tab, so the list comes from the all-stages view on /services that the navbar
-     already reads for the counts (window.encCounts → list). A name links to its chain page where
-     the set has one (mainnet rows); a testnet-only chain is a name. If that read fails, the strip
-     falls back to the cards on this page. */
+  /* ── 5m, the set as a marquee ── (design "Networks Set v2" 5m, 2026-09-26)
+     Under the band's heading, every chain — all of them, not a tier — runs in two rows of names at
+     display size, each with its glyph: the god, high and medium tiers on the first row, drifting
+     left, slower; low and filth on the second, drifting right, faster (the tier is never shown).
+     The −50% loop of the Networks 20e construction, twice. Names and glyphs rest grey; the hovered
+     one fills with its tint, name and glyph in ink, and both rows pause (network.css). The second
+     half of each row is the loop's copy: hidden from assistive tech and out of the tab order.
+     Nothing is listed here. The chains are the Networks set's own, in its Order, with their Tier:
+     /networks renders only the active tab, so the list comes from the all-stages view on /services
+     that the navbar already reads for the counts (window.encCounts → list). A name links to its
+     chain page where the set has one (mainnet rows); a testnet-only chain is a name. If that read
+     fails, the strip falls back to the cards on this page, split at the middle of the Order. */
   var BAND = "block-3dde800a5138819995f7de108ee8e815";
   var SET_DB = "block-3dde800a51388133b7f1d1ccdda08038";
   var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
@@ -86,34 +87,49 @@
     } else if (r.href) {
       a.setAttribute("aria-label", r.name);
     }
-    var disc = document.createElement("span");
-    disc.className = "enc-set-disc";
+    // the glyph is a mask filled with the name's own colour, so it rests grey and turns ink with it
     if (r.glyph) {
-      var im = document.createElement("img");
-      im.src = r.glyph;
-      im.alt = "";
-      im.loading = "lazy";
-      im.decoding = "async";
-      disc.appendChild(im);
+      var g = document.createElement("span"), url = 'url("' + r.glyph.replace(/"/g, "%22") + '")';
+      g.className = "enc-set-glyph";
+      g.setAttribute("aria-hidden", "true");
+      g.style.webkitMaskImage = url;
+      g.style.maskImage = url;
+      a.appendChild(g);
     }
-    a.appendChild(disc);
     a.appendChild(document.createTextNode(r.name));
     return a;
   }
 
-  function draw(content, rows) {
-    var sig = rows.map(function (r) { return r.name + ">" + (r.href || ""); }).join("|");
+  var TOP = { god: 1, high: 1, medium: 1 };
+  // the two rows: the top tiers and the rest, each in the set's Order; the tint stays the chain's
+  // place in the whole set
+  function rowsOf(list) {
+    var all = list.map(function (r, i) { return { r: r, i: i }; });
+    if (!list.some(function (r) { return r.tier; })) {
+      var h = Math.ceil(all.length / 2);
+      return [all.slice(0, h), all.slice(h)];
+    }
+    return [all.filter(function (x) { return TOP[x.r.tier]; }), all.filter(function (x) { return !TOP[x.r.tier]; })];
+  }
+
+  function draw(content, list) {
+    var sig = list.map(function (r) { return r.name + ">" + (r.href || "") + ">" + (r.tier || ""); }).join("|");
     var old = content.querySelector(":scope > .enc-set-strip");
     if (old && old.getAttribute("data-sig") === sig) return;
     if (old) old.remove();
     var strip = document.createElement("div");
     strip.className = "enc-set-strip";
     strip.setAttribute("data-sig", sig);
-    var tape = document.createElement("div");
-    tape.className = "enc-set-tape";
-    rows.forEach(function (r, i) { tape.appendChild(item(r, i, false)); });
-    rows.forEach(function (r, i) { tape.appendChild(item(r, i, true)); });
-    strip.appendChild(tape);
+    rowsOf(list).forEach(function (part, n) {
+      if (!part.length) return;
+      var row = document.createElement("div"), tape = document.createElement("div");
+      row.className = "enc-set-row";
+      tape.className = "enc-set-tape" + (n ? " enc-set-tape--rev" : "");
+      part.forEach(function (x) { tape.appendChild(item(x.r, x.i, false)); });
+      part.forEach(function (x) { tape.appendChild(item(x.r, x.i, true)); });
+      row.appendChild(tape);
+      strip.appendChild(row);
+    });
     content.appendChild(strip);
   }
 
@@ -461,4 +477,117 @@
   window.addEventListener("load", function () { marks(); controls(); });
   window.addEventListener("load", figures);
   figures();
+})();
+
+/* ── the Network Count band is one screen, and scrolling settles on it ── (the user, 2026-09-26)
+   The hollow band right after the cover is a snap stop, with the rules of the governance record's
+   count band (governance.js) — ported rather than re-invented, as those were from the homepage's
+   one-screen sections (home.js: Who we are, Services):
+
+     - a wheel or trackpad gesture towards the band that starts within half a screen of its top
+       lands on it, as a deck's first panel would. Waiting for the scroll to rest does not work on
+       a trackpad: momentum wheel events run to the end of the scroll, so the rest check always
+       sees a gesture in progress;
+     - a new gesture is a 250ms gap, or — at least 450ms after the page turned and once deltas have
+       fallen below half their peak — a delta 4x the smallest since (>= 20). Momentum tails last
+       seconds and a swipe's own deltas wobble;
+     - coming to rest within a third of a screen of the band's top settles onto it, in whichever
+       direction it is nearer, and the settle retries while a gesture still looks live;
+     - the browser's own smooth scroll; the stop measured fresh, because the page above the band
+       settles late (images, the banner, Super's own renders).
+
+   Under 701px, and with reduced motion, nothing snaps. */
+(function () {
+  var BAND = "block-3dce800a51388154931ac3c9478a65b5";   // the Network Count band
+  var NEAR = 0.33;       // of a screen: how close a resting page must be to settle on the stop
+  var EPS = 2;           // px: "on" the stop
+  var QUIET = 180;       // ms without wheel events before a resting page is settled
+  var NEW_GAP = 250, MIN_LOCK = 450;
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var docTop = function (el) { return el.getBoundingClientRect().top + window.scrollY; };
+
+  // measured fresh each time, as the homepage decks are
+  function stop() {
+    var box = document.getElementById(BAND);
+    if (!box || window.innerWidth < 701) return null;
+    if (box.offsetHeight < window.innerHeight - 4) return null;
+    /* under 900px the band can grow past a screen, the figure standing over the rest (network.css).
+       Snapping onto it would pull the reader back to its top before the rest was seen, so it
+       snaps only while no more than its own bottom padding falls below the screen */
+    if (window.matchMedia("(max-width: 900px)").matches &&
+        box.offsetHeight > window.innerHeight + (parseFloat(getComputedStyle(box).paddingBottom) || 0)) return null;
+    return Math.round(docTop(box));
+  }
+
+  var anim = null, gestureUntil = 0, lastRest = window.scrollY;
+  function scrollToY(target) {
+    target = Math.max(0, Math.min(target, document.documentElement.scrollHeight - window.innerHeight));
+    if (Math.abs(target - window.scrollY) < 1) { lastRest = target; return; }
+    var smooth = !reduced.matches;
+    if (anim) clearTimeout(anim.timer);
+    anim = { target: target, timer: setTimeout(finish, smooth ? 900 : 50) };
+    window.scrollTo({ top: target, behavior: smooth ? "smooth" : "instant" });
+  }
+  function finish() {
+    if (!anim) return;
+    clearTimeout(anim.timer);
+    var target = anim.target;
+    anim = null;
+    lastRest = window.scrollY;
+    // the band is exactly one screen, so a landing a pixel or two out shows as a strip of the
+    // next section beneath it
+    var exact = stop();
+    if (exact !== null && Math.abs(target - exact) < 6 && Math.abs(window.scrollY - exact) > 1) {
+      window.scrollTo({ top: exact, behavior: "instant" });
+      lastRest = exact;
+    }
+  }
+  function arrived() { if (anim && Math.abs(window.scrollY - anim.target) <= 1) finish(); }
+
+  var lastWheel = 0, lockedAt = 0, peak = 0, tailMin = Infinity, decayed = false, locked = false;
+  window.addEventListener("wheel", function (e) {
+    if (e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
+    var now = performance.now(), abs = Math.abs(e.deltaY), gap = now - lastWheel;
+    lastWheel = now;
+    gestureUntil = now + QUIET;
+    if (locked && gap <= NEW_GAP) {
+      peak = Math.max(peak, abs);
+      if (abs < peak * 0.5) decayed = true;
+      var rise = decayed && now - lockedAt > MIN_LOCK && abs > Math.max(tailMin * 4, 20);
+      if (decayed) tailMin = Math.min(tailMin, abs);
+      if (!rise) { e.preventDefault(); return; }
+    }
+    locked = false;
+
+    var s = stop();
+    if (s === null) { if (anim) e.preventDefault(); return; }
+    var dir = e.deltaY > 0 ? 1 : -1;
+    var y = anim ? anim.target : window.scrollY;   // mid-snap: page on from where it is heading
+    var half = window.innerHeight / 2, towards = (s - y) * dir;
+    if (towards <= EPS || towards >= half) { if (anim) e.preventDefault(); return; }
+    e.preventDefault();
+    locked = true; lockedAt = now; peak = abs; tailMin = Infinity; decayed = false;
+    scrollToY(s);
+  }, { passive: false });
+
+  var touching = false, restTimer = 0, retry = 0;
+  function settle() {
+    if (anim || touching) return;
+    // a trackpad's momentum ends with the scroll: if a gesture still looks live, look again once
+    // it has been quiet rather than giving up
+    if (performance.now() < gestureUntil) { clearTimeout(retry); retry = setTimeout(settle, QUIET + 20); return; }
+    var s = stop(), y = window.scrollY;
+    if (s === null) { lastRest = y; return; }
+    if (Math.abs(s - y) <= window.innerHeight * NEAR && Math.abs(s - y) > EPS) scrollToY(s);
+    else lastRest = y;
+  }
+
+  var hasScrollEnd = "onscrollend" in window;
+  if (hasScrollEnd) window.addEventListener("scrollend", function () { arrived(); setTimeout(settle, 30); });
+  window.addEventListener("scroll", function () {
+    if (!hasScrollEnd) { clearTimeout(restTimer); restTimer = setTimeout(function () { arrived(); settle(); }, 140); }
+    arrived();
+  }, { passive: true });
+  window.addEventListener("touchstart", function () { touching = true; if (anim) finish(); }, { passive: true });
+  window.addEventListener("touchend", function () { touching = false; if (!hasScrollEnd) setTimeout(settle, 140); }, { passive: true });
 })();

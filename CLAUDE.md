@@ -109,7 +109,7 @@ User rules that stand on every task:
 | `notion/guide-screenshots.md` | how guide screenshots are captured and composed (agreed 2026-09-18, not yet applied) | — |
 | `build.py` | strips comments into `dist/`, copies the JS | — |
 | `scripts/paste_table.py` | prints the paste table from head/*.html vs what the live pages serve | — |
-| `scripts/livecheck.mjs` | loads a live page in headless Chrome with pinned tags' files served from this repo (or a pushed commit) — pass every tag the page pins, comma-separated (`v263,v227,v220`), runs a check in the page, optional real mouse and key steps (`move`, `click` — a real press and release — and `press(key)`) and a screenshot. The scratchpad copies it replaced were lost on 2026-09-24 | — |
+| `scripts/livecheck.mjs` | loads a live page in headless Chrome with pinned tags' files served from this repo (or a pushed commit) — pass every tag the page pins, comma-separated (`v263,v227,v220`), runs a check in the page, optional real mouse, wheel and key steps (`move`, `click` — a real press and release — `wheel(x, y, dy)` and `press(key)`) and a screenshot. The scratchpad copies it replaced were lost on 2026-09-24 | — |
 | `scripts/audit.mjs` | audits a live page at many widths (default 16, 320–2560; touch under 835) with every tag it pins served from this repo: sideways scroll and what causes it, text cut by its box, broken images, script errors, failed requests, screenshots per screen (`--shots`), a page check of your own (`--check`). `BLOCK=1` loads the page with none of our files, `ALLOW=a.js,b.js` with only those scripts — how a fault is traced to us or to Super. Built for the audit of 2026-09-26 |
 | `scripts/shots.py`, `img/shots/` | panel captures of the live tools (Sui RGP, the Solana graph), 1100×750 at DPR 2 from headless Chrome — the extension's screenshots time out on those pages, and a WebGL graph needs swiftshader or it comes back blank. Not wired into any page yet (2026-09-23): the tools table that names their tiles arrived cut off | — |
 
@@ -298,7 +298,8 @@ design's 924×540 %-based geometry into divs, and:
   the Brand mark is `svg/mark-a.svg` via jsDelivr.
 Cover copy per page: `notion/page-covers.md`.
 
-**One-screen bands snap the same way** (guides picker, the governance record's count band): one
+**One-screen bands snap the same way** (guides picker, the governance record's count band,
+/networks' Network Count band since 2026-09-26): one
 stop rather than a deck — a gesture heading at the panel from within half a screen lands on it, a
 rest within a third of a screen settles onto it, nothing snaps under 701px or with reduced motion.
 The catch rule is testable in Node (`scratchpad/snaptest.js`); the automation tab fires no scroll
@@ -319,6 +320,10 @@ Scroll ↓" (a callout of the two texts, `3e6e800a…8105922f…`, the rule draw
 "02 / 02" and the note "Testnets we joined before there was anything to earn.". Super's heading
 anchor span is a flex and grid item — it is taken out of the layout. Under 760 the figure stands
 over the rest and the tally goes under its line.
+**It is a snap stop** (the user, 2026-09-26, v314): one screen tall, and network.js ports the
+record's count-band rules (a gesture towards it from within half a screen lands on it, a rest within
+a third settles onto it; nothing under 701px or with reduced motion). Driven with real wheel events
+in headless Chrome (`livecheck.mjs` `wheel()`) at 1440×900, 1920×1080 and 800×1000.
 
 **The navigation bar (§04 + navbar.js, 2026-09-21, design *Navbar 4f Page*).** The bar is
 **Super's own navigation** — its items, its groups and its radix dropdown, keyboard included —
@@ -1494,21 +1499,24 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
   is one column under 1300px (the design's 1100 broke "Avalanche" at 1280), the stage drops under it
   at 760. Only "Chain4Energy" still breaks mid-word, between 1300 and 1700 — as in the design.
 - **The staking properties** stay on the Mainnet view for the chain pages and off the rows.
-- **5m, the chain-teams band** (callout `3dde800a…9995f7…`): ink, full-bleed — the kicker "For chain
-  teams", "Thirty-five teams chose us." (the number rewritten from the set), the line, Book a call
-  and What we run at 48px — and **under them the set as a marquee** (design 2026-09-25, v285; it was
-  a row of twelve marks and a "+23 more" paragraph, which was deleted from Notion): every chain, not
-  a tier, as one strip of names at `clamp(40px, 5vw, 72px)` with its disc, resting `#C9C9C4` with the
-  glyph at .45 on paper-2, drifting left on a 90s −50% loop across a paper band flush with the
-  band's sides and foot. Hovering or focusing a name pauses it and turns it ink with its disc in its
-  pastel; reduced motion stills it; the loop's copy is `aria-hidden` and out of the tab order.
-  **The chains come from the whole set, in its Order**: /networks renders only the active tab, so
-  navbar.js's `readCounts()` now also keeps `list` — every chain once, with its glyph and the page a
-  mainnet row links to (`/networks/mainnet/<chain>`) — from the all-stages view on /services, and
-  `window.encCounts()` hands it to network.js. A testnet-only chain is a name with no link. If the
-  read fails, the strip is drawn from the cards on the page. **The callout's content box clips**
-  (Super's `overflow: hidden`): the strip's reach past the band's padding only shows with
-  `overflow: visible` on it.
+- **5m, the chain-teams band** (callout `3dde800a…9995f7…`; design *Networks Set v2*, 5m, 2026-09-26,
+  v314 — it was ink with one strip until then): **paper-2 `#F2F2ED`**, full-bleed, padded `46px 44px
+  48px` — the kicker "For chain teams" (mono 11, `#575B55`), "Thirty-five teams chose us." (Outfit 600
+  42px, ink, 18ch; the number rewritten from the set), the line (16/1.56, `#3A3D38`, 46ch) and Book a
+  call and What we run as the light pair at 48px — and **under them the set as two rows** flush with
+  the band's sides and foot: every chain as a name at `clamp(40px, 5vw, 72px)` with its glyph at
+  1.35em, **the god, high and medium tiers on the first row drifting left over 120s, low and filth on
+  the second drifting right over 55s** (the tier is never shown). Names and glyphs rest `#6B6F68`; the
+  glyph is a **CSS mask** filled with the name's colour (assets.super.so answers CORS with `*`);
+  hovering or focusing a name fills it with its tint (the chain's place in the whole set), turns name
+  and glyph ink and pauses both rows; reduced motion stills them; each row's loop copy is
+  `aria-hidden` and out of the tab order. **The chains and their tiers come from the whole set, in its
+  Order**: navbar.js's `readCounts()` keeps `list` — every chain once with its glyph, its **tier**
+  (the Tier pill, since v314; a kept count without tiers is read again) and the page a mainnet row
+  links to — from the all-stages view on /services, and `window.encCounts()` hands it to network.js.
+  A testnet-only chain is a name with no link. If the read fails, the rows are drawn from the cards
+  on the page, split at the middle of the Order. **The callout's content box clips** (Super's
+  `overflow: hidden`): the rows' reach past the band's padding only shows with `overflow: visible`.
 - **Every network count is the Networks set's own** (the user, 2026-09-24: one source). Super ships
   only the rendered view's rows, so no page can count the whole set from itself — except /services,
   whose linked view of the set shows every stage with **Stage switched on** (the user did that on

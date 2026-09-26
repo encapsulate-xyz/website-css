@@ -10,8 +10,9 @@
 // `sleep(ms)`. Pass `--from-cdn <sha>` instead of a local repo to reroute to a pushed commit.
 //
 // Real pointer events (radix answers only those) come from `move(x, y)` in a step file passed with
-// `--steps steps.mjs`, which exports `async (ctx) => {}` and gets { at, move, click, press, sleep, shot } —
-// `click(x, y)` is a real press and release at that point, `press(key)` a real key (Tab, Escape…).
+// `--steps steps.mjs`, which exports `async (ctx) => {}` and gets { at, move, click, press, wheel, sleep, shot } —
+// `click(x, y)` is a real press and release at that point, `press(key)` a real key (Tab, Escape…),
+// `wheel(x, y, dy)` a real wheel event.
 import { spawn } from "node:child_process";
 import { mkdtempSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -87,6 +88,9 @@ const press = async (key) => {
   await send("Input.dispatchKeyEvent", { type: "keyDown", ...k, ...(key === "Enter" ? { text: "\r" } : {}) });
   await send("Input.dispatchKeyEvent", { type: "keyUp", ...k });
 };
+/* a real wheel event at a point, as a mouse wheel or a trackpad sends one (the snap rules answer
+   only real wheel events; a scripted scrollTo fires none of them) */
+const wheel = async (x, y, dy) => send("Input.dispatchMouseEvent", { type: "mouseWheel", x, y, deltaX: 0, deltaY: dy });
 const shot = async (out) => { const s = await send("Page.captureScreenshot", { format: "png" }); writeFileSync(out, Buffer.from(s.result.data, "base64")); };
 
 /* NETLOG=1 prints every website-css request that fails or answers with an error */
@@ -105,7 +109,7 @@ await send("Fetch.enable", { patterns: TAGS.map(t => ({ urlPattern: "*website-cs
 await send("Page.enable");
 await send("Page.navigate", { url: url + (url.includes("?") ? "&" : "?") + "lc=" + Date.now() });
 await sleep(+(process.env.WAIT || 9000));
-if (stepsFile) await (await import(resolve(stepsFile))).default({ at, move, click, press, sleep, shot });
+if (stepsFile) await (await import(resolve(stepsFile))).default({ at, move, click, press, wheel, sleep, shot });
 if (checkFile) console.log(JSON.stringify(await at(readFileSync(checkFile, "utf8")), null, 1));
 if (shotOut) await shot(shotOut);
 ws.close(); chrome.kill();

@@ -260,15 +260,17 @@
      network.js (the count band, "+N more") and home.js ask through window.encCounts(). The
      numbers typed in Notion and in CONTENT/FOOT are only what shows if this cannot run. */
   var COUNTS_PAGE = "/services", countsOnce = null;
+  var TIERS = { god: 1, high: 1, medium: 1, low: 1, filth: 1 };   // the set's Tier options
   function readCounts(doc) {
     var best = null;
     Array.prototype.forEach.call(doc.querySelectorAll(".notion-collection"), function (coll) {
       var m = 0, t = 0, names = {}, glyphs = {}, list = [], at = {};
       Array.prototype.forEach.call(coll.querySelectorAll(".notion-collection-card, tbody tr"), function (it) {
-        var stage = "";
+        var stage = "", tier = "";
         Array.prototype.forEach.call(it.querySelectorAll(".notion-pill, td"), function (x) {
           var v = (x.textContent || "").trim();
           if (!stage && (v === "Mainnet" || v === "Testnet")) stage = v;
+          if (!tier && TIERS[v.toLowerCase()]) tier = v.toLowerCase();
         });
         if (!stage) return;
         if (stage === "Mainnet") m++; else t++;
@@ -276,15 +278,18 @@
         if (n) names[n.textContent.trim()] = 1;
         var f = it.querySelector("[data-full-size]");
         if (n && f && !glyphs[keyOfName(n.textContent)]) glyphs[keyOfName(n.textContent)] = f.getAttribute("data-full-size");
-        /* every chain once, in the view's Order, with its glyph and the page a mainnet row links to —
-           /networks' 5m strip is drawn from this (network.js) */
+        /* every chain once, in the view's Order, with its glyph, its tier and the page a mainnet row
+           links to — /networks' 5m strip is drawn from this (network.js), its two rows split by tier */
         if (n) {
           var nm = n.textContent.trim(), a = it.querySelector("a.notion-collection-card__anchor[href], a[href^='/networks/']");
           var href = a ? a.getAttribute("href") : "";
           if (at[nm] == null) {
             at[nm] = list.length;
-            list.push({ name: nm, glyph: f ? f.getAttribute("data-full-size") : "", href: href });
-          } else if (href && !list[at[nm]].href) list[at[nm]].href = href;
+            list.push({ name: nm, glyph: f ? f.getAttribute("data-full-size") : "", href: href, tier: tier });
+          } else {
+            if (href && !list[at[nm]].href) list[at[nm]].href = href;
+            if (tier && !list[at[nm]].tier) list[at[nm]].tier = tier;
+          }
         }
       });
       if (m + t && (!best || m + t > best.mainnet + best.testnet)) {
@@ -297,8 +302,10 @@
     if (countsOnce) return countsOnce;
     try {
       var kept = JSON.parse(sessionStorage.getItem("enc-counts") || "null");
-      /* a count kept before the glyphs (v7) or the list of chains (v12) were collected is read again */
-      if (kept && kept.glyphs && kept.list && Date.now() - kept.at < 1800000) return (countsOnce = Promise.resolve(kept));
+      /* a count kept before the glyphs (v7), the list of chains (v12) or their tiers were collected
+         is read again */
+      if (kept && kept.glyphs && kept.list && kept.list.length && "tier" in kept.list[0] &&
+          Date.now() - kept.at < 1800000) return (countsOnce = Promise.resolve(kept));
     } catch (e) { /* storage blocked: read the page */ }
     countsOnce = pageOf(COUNTS_PAGE).then(function (doc) {
       var c = doc ? readCounts(doc) : null;
@@ -1319,7 +1326,7 @@
 
   /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
      against its page from the console without opening the menu */
-  window.encNav = { version: 13, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
+  window.encNav = { version: 14, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
     groups: function () { return groups; }, harvest: function () { return { done: harvested, tries: harvestTries }; },
     ground: ground, isInk: isInk, groundUnder: groundUnder, wordmark: wearWordmark,
     band: band };

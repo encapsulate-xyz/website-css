@@ -786,30 +786,18 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 /*********************************************/
-/* FOR CHAIN TEAMS — "Networks Set" 5m, THE SET AS A MARQUEE */
+/* FOR CHAIN TEAMS — "Networks Set v2" 5m, THE SET AS A MARQUEE */
 /*********************************************/
 
-/* The closing band under the set (Notion callout 3dde800a…9995f7…): kicker, the count as a
-   sentence, one line, the pair of buttons — and under them every chain as one strip of names at
-   display size, drifting on a paper band full-bleed across the foot of the ink (design 2026-09-25;
-   it was a row of twelve marks and "+23 more" until then). network.js draws the strip from the set
-   itself, in its Order. */
+/* The closing band under the set (Notion callout 3dde800a…9995f7…), design "Networks Set v2", 5m
+   (2026-09-26): on paper-2 now, not ink — the kicker, the count as a sentence, one line and the pair
+   of buttons, and under them every chain in two rows of names at display size drifting opposite
+   ways, flush with the band's sides and foot. network.js draws the rows from the set itself. */
 
 .notion-root #block-3dde800a5138819995f7de108ee8e815 {
   --btn-h: 48px;   /* the band's buttons are the file's 48px, 16px, 0 20px */
   --btn-px: 20px;
   --btn-fs: 16px;
-  /* the Button System's ink tokens: a primary keeps its green, a secondary becomes a paper wash */
-  --btn-2-fill: rgba(250, 250, 248, 0.06);
-  --btn-2-fill-hover: rgba(250, 250, 248, 0.12);
-  --btn-2-fill-press: rgba(250, 250, 248, 0.16);
-  --btn-2-ring: rgba(250, 250, 248, 0.3);
-  --btn-2-ring-hover: rgba(250, 250, 248, 0.4);
-  --btn-2-text: #FAFAF8;
-  --btn-2-highlight: inset 0 1.5px 0 rgba(255, 255, 255, 0.26);
-  --btn-lift: 0 0 #0000;
-  --btn-lift-soft: 0 0 #0000;
-  --btn-focus: rgba(250, 250, 248, 0.5);
   box-sizing: border-box !important;
   width: 100vw !important;
   max-width: none !important;
@@ -817,8 +805,8 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   padding: 46px max(44px, calc(50vw - 864px)) 48px !important;
   border: 0 !important;
   border-radius: 0 !important;
-  background: #2A2C28 !important;
-  color: #FAFAF8 !important;
+  background: #F2F2ED !important;
+  color: #000000 !important;
   overflow: hidden !important;
 }
 
@@ -838,7 +826,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   max-width: none !important;
   margin: 0 !important;
   padding: 0 !important;
-  overflow: visible !important;   /* the strip reaches past it to the band's edges and foot */
+  overflow: visible !important;   /* the rows reach past it to the band's edges and foot */
 }
 
 .notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__content > * {
@@ -859,7 +847,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   line-height: 1.3 !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
-  color: #B4B4B4 !important;
+  color: #575B55 !important;
 }
 
 .notion-root #block-3dde800a5138819995f7de108ee8e815 h3.notion-heading {
@@ -867,21 +855,22 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   max-width: 18ch !important;
   font-family: var(--type-display) !important;
   font-weight: 600 !important;
-  font-size: clamp(30px, 3.2vw, 42px) !important;
+  font-size: 42px !important;
   line-height: 1 !important;
   letter-spacing: -0.04em !important;
-  color: #FAFAF8 !important;
+  color: #000000 !important;
 }
 
 /* the sentence */
 .notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__content > p.notion-text:nth-of-type(2) {
   grid-row: 3 !important;
-  max-width: none !important;
+  max-width: 46ch !important;
   font-family: var(--type-body), system-ui, sans-serif !important;
   font-size: 16px !important;
-  line-height: 1.55 !important;
+  line-height: 1.56 !important;
   letter-spacing: normal !important;
-  color: #C9C9C4 !important;
+  color: #3A3D38 !important;
+  text-wrap: pretty;
 }
 
 /* the pair sits at the right, on the heading's baseline row */
@@ -893,23 +882,38 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   width: auto !important;
 }
 
-/* THE STRIP (network.js). A paper band from edge to edge of the ink, flush with its foot: the
-   band's side padding and its 48px bottom are taken back. The tape holds the set twice and moves
-   by half its width, so the loop has no seam; hovering or focusing a name pauses it. */
+/* THE ROWS (network.js). Flush with the band's sides and foot: its side padding and its 48px bottom
+   are taken back. Each tape holds its row twice and moves by half its width, so the loop has no
+   seam — the first row left over 120s, the second right over 55s; hovering or focusing any name
+   pauses both. */
 .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-strip {
   grid-column: 1 / -1 !important;
   grid-row: 4 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   margin: 15px calc(-1 * max(44px, calc(50vw - 864px))) -48px !important;   /* 15 + the row gap = the file's 30 */
-  padding: 22px 0 !important;
+  padding: 24px 0 30px !important;
+}
+.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-row {
   overflow: hidden;
-  background: #FAFAF8;
+  padding: 4px 0;
 }
 .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-tape {
   display: flex;
-  gap: clamp(20px, 3vw, 44px);
+  gap: 0.4em;
   width: max-content;
-  padding-right: clamp(20px, 3vw, 44px);
-  animation: enc-set-tape 90s linear infinite;
+  padding-right: 0.4em;
+  font-family: var(--type-display), system-ui, sans-serif;
+  font-size: clamp(40px, 5vw, 72px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  animation: enc-set-tape 120s linear infinite;
+}
+.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-tape--rev {
+  animation-duration: 55s;
+  animation-direction: reverse;
 }
 .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-strip:has(.enc-set-name:hover, .enc-set-name:focus-visible) .enc-set-tape {
   animation-play-state: paused;
@@ -920,55 +924,42 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-name {
   flex: none;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.22em;
-  font-family: var(--type-display), system-ui, sans-serif;
-  font-size: clamp(40px, 5vw, 72px);
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: -0.05em;
+  gap: 0.09em;
+  padding: 0 0.12em;
+  border-radius: 4px;
   white-space: nowrap;
-  color: #C9C9C4 !important;
+  color: #6B6F68 !important;
+  background: transparent;
   text-decoration: none !important;
   border: 0 !important;
   opacity: 1 !important;
-  transition: color 0.16s ease;
+  transition: color 0.16s, background-color 0.16s;
 }
 .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-name:hover,
 .notion-root #block-3dde800a5138819995f7de108ee8e815 a.enc-set-name:focus-visible {
   color: #000000 !important;
+  background: var(--tint, #DCEEC7);
 }
 .notion-root #block-3dde800a5138819995f7de108ee8e815 a.enc-set-name:focus-visible {
   outline: 3px solid rgba(0, 0, 0, 0.32);
   outline-offset: 2px;
 }
-.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-disc {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 0.72em;
-  height: 0.72em;
-  overflow: hidden;
-  border-radius: 999px;
-  background: #F2F2ED;
-  transition: background-color 0.16s ease;
-}
-.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-name:hover .enc-set-disc,
-.notion-root #block-3dde800a5138819995f7de108ee8e815 a.enc-set-name:focus-visible .enc-set-disc {
-  background: var(--tint, #DCEEC7);
-}
-.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-disc img {
+/* the glyph is a mask filled with the name's colour: grey at rest, ink with it */
+.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-glyph {
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  opacity: 0.45;
-  transition: opacity 0.16s ease;
-}
-.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-name:hover .enc-set-disc img,
-.notion-root #block-3dde800a5138819995f7de108ee8e815 a.enc-set-name:focus-visible .enc-set-disc img {
-  opacity: 1;
+  flex: none;
+  width: 1.35em;
+  height: 1.35em;
+  background: currentColor;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  transition: background-color 0.16s;
 }
 @media (prefers-reduced-motion: reduce) {
   .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-tape { animation: none; }
