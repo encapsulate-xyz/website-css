@@ -72,7 +72,11 @@
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .property-597e3d69::after,.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .property-585f6e6c::after{content: "Reward rate";position: absolute;right: 0;bottom: calc(100% + 8px);padding: 6px 9px;border-radius: 4px;background: #000000;color: #FAFAF8;font-family: var(--type-mono),ui-monospace,monospace;font-size: 10px;letter-spacing: 0.12em;text-transform: uppercase;white-space: nowrap;opacity: 0;pointer-events: none;transition: opacity 0.16s ease;z-index: 30;}
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .property-585f6e6c::after{content: "Testnet";}
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .property-597e3d69:hover::after,.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .property-585f6e6c:hover::after{opacity: 1;}
-.notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .enc-set-empty{grid-area: empty;margin: 0 !important;padding: 24px 0 !important;font-family: var(--type-body),system-ui,sans-serif;font-size: 15px;line-height: 1.56;color: #6B6F68;max-width: 40ch;}
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .enc-set-empty{grid-area: empty;margin: 0 !important;}
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038[data-enc-empty] .notion-collection-gallery{display: none !important;}
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038[data-enc-empty] > .enc-set-empty{grid-area: ledger;align-self: start;}
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-es-disc{display: grid;place-items: center;width: 28px;height: 28px;border-radius: 999px;overflow: hidden;}
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-es-disc img{display: block;width: 100%;height: 100%;object-fit: contain;}
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .enc-set-stage{grid-area: stage;position: sticky;top: 32px;display: flex;flex-direction: column;gap: 22px;align-items: flex-start;}
 .enc-set-stage__disc{position: relative;width: 100%;aspect-ratio: 1;border-radius: 999px;background: var(--tint,#DCEEC7);display: grid;place-items: center;transition: background-color 0.2s ease;}
 .enc-set-stage__disc::after{content: "";position: absolute;inset: 0;border-radius: 999px;box-shadow: inset 0 0 0 1px var(--deep,#B4D98F);}

@@ -277,13 +277,15 @@
     }
     order.forEach(function (c, i) { if (c.style.order !== String(i)) c.style.order = i; });
     cards.forEach(function (c) { if (c.hidden && c.style.order !== "9999") c.style.order = 9999; });
-    var empty = db.querySelector(":scope > .enc-set-empty");
-    if (empty) {
-      empty.hidden = shown !== 0;
-      put(empty, "No network matches “" + state.q.trim() + "”.");
+    if (emptySet) {
+      if (emptySet.el.hidden !== (shown !== 0)) emptySet.el.hidden = shown !== 0;
+      if (!shown) showEmpty(cards, testnet);
     }
-    // the stage follows the pointer; with none, the first row as ordered
-    var active = state.active && order.indexOf(state.active) >= 0 ? state.active : order[0];
+    attr(db, "data-enc-empty", shown ? null : "");
+    // the stage follows the pointer; with none, the first row as ordered — and with nothing
+    // matching, the tab's first row, as the design keeps the stage beside the empty set
+    var first = cards.slice().sort(function (a, b) { return a.__setIndex - b.__setIndex; })[0];
+    var active = state.active && order.indexOf(state.active) >= 0 ? state.active : (order[0] || first);
     stage(db, active || null, testnet);
     if (bar) { bar.state.sort = state.sort; bar.state.q = state.q; }
     sync();
@@ -315,6 +317,45 @@
     go.hidden = !href;
     if (href && go.getAttribute("href") !== href) go.setAttribute("href", href);
     put(go.querySelector(".enc-set-stage__name"), name);
+  }
+
+  /* ── nothing matches (design Networks Index, 2026-09-26) ── every network on the tab as a 28px
+     disc (pressing one searches for it), the line with the tab's count, Book a call beside Clear
+     filters. The words are the "Empty state copy" toggle after the set; FALLBACK only stands in
+     if it goes missing. */
+  var emptySet = null;
+  var FALLBACK = {
+    "headline": { text: "Nothing called \u201c{q}\u201d on our list." },
+    "line mainnet": { text: "These are the {n} mainnets we validate. If yours is launching and you want a validator on it, that is a conversation." },
+    "line testnet": { text: "These are the {n} testnets we help. If yours is launching and you want a validator on it, that is a conversation." },
+    "action": { text: "Book a call", href: "https://cal.com/aditya-encapsulate/30min" },
+    "clear": { text: "Clear filters" }
+  };
+  function showEmpty(cards, testnet) {
+    var copy = typeof window.encEmptyCopy === "function" ? window.encEmptyCopy() : null;
+    var word = function (k) { return (copy && copy[k]) || FALLBACK[k]; };
+    var all = cards.slice().sort(function (a, b) { return a.__setIndex - b.__setIndex; });
+    var action = word("action");
+    emptySet.set({
+      headline: word("headline").text.replace("{q}", state.q.trim()),
+      // the node is made only if the set changed (a new image per pass otherwise, on every tick)
+      items: all.map(function (card) {
+        var name = nameOf(card);
+        return { id: name, label: name, get node() {
+          var j = listIndex(name), i = j >= 0 ? j : (card.__setIndex || 0);
+          var disc = el("span", "enc-set-es-disc");
+          disc.style.background = TINT[i % 5];
+          var img = card.querySelector("img"), g = el("img");
+          g.src = img ? (img.currentSrc || img.src) : ""; g.alt = ""; g.loading = "lazy";
+          disc.appendChild(g);
+          return disc;
+        } };
+      }),
+      onPick: function (name) { if (bar && bar.update) bar.update({ q: name }); },
+      line: word(testnet ? "line testnet" : "line mainnet").text.replace("{n}", String(all.length)),
+      action: { label: action.text, href: action.href },
+      clear: { label: word("clear").text, onClick: function () { if (bar && bar.update) bar.update({ q: "", f: {}, sort: "set" }); } }
+    });
   }
 
   // the bar (filterbar.js) redraws from the picker and the counts, writing only what changed
@@ -363,9 +404,13 @@
     bar.el.classList.add("enc-set-controls");
     db.appendChild(bar.el);
 
-    var empty = el("p", "enc-set-empty");
-    empty.hidden = true;
-    db.appendChild(empty);
+    // nothing matches: the design's empty set (filterbar.js encEmptySet), in the ledger's place
+    if (typeof window.encEmptySet === "function") {
+      emptySet = window.encEmptySet();
+      emptySet.el.classList.add("enc-set-empty");
+      emptySet.el.hidden = true;
+      db.appendChild(emptySet.el);
+    }
 
     var st = el("aside", "enc-set-stage");
     var disc = el("div", "enc-set-stage__disc");

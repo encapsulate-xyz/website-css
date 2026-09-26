@@ -163,7 +163,40 @@
     });
     bar.el.classList.add("enc-index__bar");
     collection.insertBefore(bar.el, collection.firstChild);
+    // nothing matches: the design's empty set (filterbar.js encEmptySet), in the grid's place
+    if (typeof window.encEmptySet === "function") {
+      emptySet = window.encEmptySet();
+      emptySet.el.classList.add("enc-index__empty");
+      emptySet.el.hidden = true;
+      bar.el.after(emptySet.el);
+      emptyTags = tags;
+    }
     return bar.el;
+  }
+
+  /* ── nothing matches (design Blog Index Layouts, J, 2026-09-26) ── the tags every post carries as
+     pills (pressing one filters to it), the line, "Staking guides" beside "Clear filters". The
+     words are the "Empty state copy" toggle after the index; FALLBACK only stands in if it goes
+     missing. */
+  var emptySet = null, emptyTags = [];
+  var FALLBACK = {
+    "headline": { text: "No post matches \u201c{q}\u201d." },
+    "line": { text: "These are the tags every post carries. Pick one, or search a chain\u2019s name. If you were after a how-to, the staking guides are the place." },
+    "action": { text: "Staking guides", href: "/guides" },
+    "clear": { text: "Clear filters" }
+  };
+  function showEmpty() {
+    var copy = typeof window.encEmptyCopy === "function" ? window.encEmptyCopy() : null;
+    var word = function (k) { return (copy && copy[k]) || FALLBACK[k]; };
+    var action = word("action");
+    emptySet.set({
+      headline: word("headline").text.replace("{q}", (state.q || "").trim()),
+      items: emptyTags.map(function (t) { return { id: t, label: t, get node() { return el("span", "enc-index__es-tag", t); } }; }),
+      onPick: function (t) { if (bar && bar.update) bar.update({ q: "", f: { tag: t } }); },
+      line: word("line").text,
+      action: { label: action.text, href: action.href },
+      clear: { label: word("clear").text, onClick: function () { if (bar && bar.update) bar.update({ q: "", f: {}, sort: "" }); } }
+    });
   }
 
   function pager(collection) {
@@ -228,6 +261,12 @@
 
     var collection = gallery.closest(".notion-collection") || gallery.parentElement;
     if (bar) bar.sync();
+    var none = !matching.length;
+    if (emptySet) {
+      if (emptySet.el.hidden !== !none) emptySet.el.hidden = !none;
+      if (none) showEmpty();
+    }
+    collection.toggleAttribute("data-enc-empty", none);
     var foot = collection.querySelector(":scope > .enc-index__foot");
     if (foot) {
       var left = matching.length - shown.length;

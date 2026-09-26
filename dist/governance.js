@@ -355,10 +355,53 @@
       }
     });
     bar.el.classList.add("enc-rec__bar");
+    barApi = bar;
 
     var header = box.querySelector(".notion-collection__header-wrapper");
     if (header) header.setAttribute("data-enc-source", "");
     box.insertBefore(bar.el, box.firstChild);
+    if (typeof window.encEmptySet === "function") {
+      empty = window.encEmptySet();
+      empty.el.hidden = true;
+      bar.el.after(empty.el);
+    }
+  }
+
+  /* ── nothing matches (design Governance Record Wow, 2026-09-26) ── the record's chains as marks,
+     the count, the line and "How we vote" beside "Clear filters". The words are the "Empty state
+     copy" toggle after the table; FALLBACK only stands in if it goes missing. */
+  var barApi = null, empty = null;
+  var FALLBACK = {
+    "headline": { text: "No vote matches \u201c{q}\u201d." },
+    "headline without a search": { text: "No vote matches these filters." },
+    "tail": { text: "{votes} votes \u00b7 {chains} chains" },
+    "line": { text: "Every ballot we have cast is here, by chain and outcome. Pick a chain to see its record, or read how we decide." },
+    "action": { text: "How we vote", href: "/governance-record#block-a9ed1443a36c4f6da5ac9cbae489c031" },
+    "clear": { text: "Clear filters" }
+  };
+  function word(copy, k) { return (copy && copy[k]) || FALLBACK[k] || { text: "" }; }
+  function showEmpty(rows, needle) {
+    if (!empty) return;
+    var copy = typeof window.encEmptyCopy === "function" ? window.encEmptyCopy() : null;
+    var chains = [], seen = {}, built = 0;
+    rows.forEach(function (tr) {
+      if (!tr.hasAttribute("data-enc-row")) return;
+      built++;
+      var c = chainOf(tr);
+      if (c && !seen[c]) { seen[c] = 1; chains.push(c); }
+    });
+    var q = (state.q || "").trim();
+    var action = word(copy, "action");
+    empty.set({
+      headline: q ? word(copy, "headline").text.replace("{q}", q) : word(copy, "headline without a search").text,
+      // the node is made only if the set changed: the mark set is rebuilt when its ids do
+      items: chains.map(function (c) { return { id: c, label: c, get node() { return glyphFor(c); } }; }),
+      tail: word(copy, "tail").text.replace("{votes}", fmt(built)).replace("{chains}", String(chains.length)),
+      onPick: function (c) { if (barApi) barApi.update({ q: "", f: { chain: c, vote: "" } }); },
+      line: word(copy, "line").text,
+      action: { label: action.text, href: action.href },
+      clear: { label: word(copy, "clear").text, onClick: function () { if (barApi) barApi.update({ q: "", f: {}, sort: "" }); } }
+    });
   }
 
   // a chain's glyph, when a view of the Networks set is on the page; otherwise its tinted disc
@@ -478,8 +521,14 @@
     matched.forEach(function (tr, i) { if (i >= shown) tr.hidden = true; });
     var onShow = Math.min(shown, matched.length);
     // nothing matches: Notion's own line after the table says so, in place of the header and foot
-    if (rows.length && !matched.length) box.setAttribute("data-enc-empty", "");
-    else box.removeAttribute("data-enc-empty");
+    if (rows.length && !matched.length) {
+      box.setAttribute("data-enc-empty", "");
+      showEmpty(rows, needle);
+      if (empty) empty.el.hidden = false;
+    } else {
+      box.removeAttribute("data-enc-empty");
+      if (empty) empty.el.hidden = true;
+    }
     var foot = box.querySelector(".enc-rec__foot");
     if (foot) {
       var left = matched.length - onShow;

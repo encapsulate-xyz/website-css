@@ -708,8 +708,7 @@ cell); the right (capsule, date, arrow) is the Proof link, whose cell spans thos
 whose `::after` fills it. Either one hovered or keyboard-focused, or the row open, darkens the rule
 and turns the capsule and the reference line ink. **The dot is by the vote's word**
 (`td[data-vote]`), not Notion's option colour: No is pink in Notion and drew as a veto until v301.
-Ten rows a page. **The empty state is Notion's** paragraph after the table
-(`3e6e800a…81acaa16…`, added 2026-09-26), hidden until `[data-enc-empty]`. On a phone the rationale
+Ten rows a page. The empty state is the shared empty set (see the filter bar). On a phone the rationale
 is collapsed too — a tap is a press.
 
 **The homepage's table is the same component** (the user, 2026-09-26, "in line fully"; v304). Both
@@ -1192,6 +1191,31 @@ focus in a timeout. `paint()` writes only what changed — the pages' observers 
 | /networks | Mainnet / Testnet (Super's picker, hidden, clicked; counts from `encCounts`) | — | Default, Name A–Z, Highest rate (mainnet only) |
 | /governance-record | — | Chain (the rows' chains, glyph discs), Vote (dots) | Recent votes, Oldest first, By chain |
 | /blog (on ink) | — | Tag (the index's tags, a square mark) | Newest first, Oldest first, Shortest read |
+
+**Nothing matches — the empty set** (handoffs Governance Record Wow, Networks Index, Blog Index
+Layouts, 2026-09-26; the design's `FilterBar.emptySet`, "B · the whole set, quietly"). Where the list
+would be: a headline quoting the search, the page's whole set as marks at 45% (full and an ink ring
+under the pointer; a press filters to it), a count on the record, one line, and two tertiaries — the
+page's destination and "Clear filters" — each with the 20px green disc. `window.encEmptySet()` →
+`{ el, set(o) }` builds it (main.css `.enc-es`; set() rewrites only what changed, and a mark's node is
+a getter, made only when the set's ids change — an image per mark per tick otherwise). The bar's
+`update({ q, f, sort })` lets a mark or Clear set the bar's own state. **The words are Notion's**: an
+"Empty state copy" toggle after each list (`key · value` lines; `{q}`, `{n}`, `{votes}`, `{chains}`
+filled in; the action's link on its value, in the site-URL form), read by `window.encEmptyCopy()` and
+hidden site-wide (`.notion-toggle[data-enc-copy]`); each page script keeps a FALLBACK of the same
+words for a page Super has not republished.
+
+| Page | Marks (press →) | Line and action |
+|---|---|---|
+| /governance-record | the record's chains as 22px wells (→ that chain), "1,153 votes · 29 chains" | "Every ballot we have cast…" · How we vote → the pillars heading |
+| /networks | the tab's networks as 28px discs (→ search for it); the stage stays beside it | "These are the {n} mainnets we validate…" (testnets: "…we help…") · Book a call |
+| /blog | the tags as outlined mono pills (→ that tag) | "These are the tags every post carries…" · Staking guides |
+
+The list goes while it shows: the record's table and pager (`[data-enc-empty]`), the networks ledger
+(the set sits in the ledger's own grid cell — in the row under it the two-row stage pushed it 250px
+down), the blog's grid and pager. The record's old one-line empty state (a Notion paragraph) was
+deleted; governance.css keeps its id hidden until Super republishes. The line runs the width —
+the file's 52ch cap is the kind of body measure the site does not set.
 
 **Shortest read** reads the Blogs database's **Read** property (number, minutes — added and filled
 2026-09-26 from each post's words at 230 a minute, the rule post.js uses for its "N min"). It has

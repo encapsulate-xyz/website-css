@@ -590,25 +590,14 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
    rules, so the two cannot drift. What stays here is the record's own: the empty state, the group
    headings and the pager above. */
 
-/* nothing matches: Notion's line after the table stands in for the header, the rows and the foot */
-.notion-root #block-3e6e800a513881acaa16e3a7527f967a {
-  display: none !important;
-}
-
+/* nothing matches (design, 2026-09-26): the empty set (main.css, encEmptySet) stands in for the
+   header, the rows and the foot. Its words are the "Empty state copy" toggle after the table. */
+/* the line that stood here before (a Notion paragraph, deleted 2026-09-26) stays hidden on a page
+   Super has not republished since */
+.notion-root #block-3e6e800a513881acaa16e3a7527f967a { display: none !important; }
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42[data-enc-empty] .notion-collection-table__wrapper,
 .notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42[data-enc-empty] .enc-rec__foot {
   display: none !important;
-}
-
-.notion-root #block-c458e5dd671d4ecb8fc07a15915e4f42[data-enc-empty] ~ #block-3e6e800a513881acaa16e3a7527f967a {
-  display: block !important;
-  margin: 0 !important;
-  padding: 26px 0 0 !important;
-  border-top: 1px solid #000000 !important;
-  font-family: var(--type-body), system-ui, sans-serif !important;
-  font-size: 15.5px !important;
-  line-height: 1.56 !important;
-  color: #3A3D38 !important;
 }
 
 /* the group headings the view is grouped by — the chain is printed on the row instead */

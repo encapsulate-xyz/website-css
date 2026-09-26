@@ -640,16 +640,34 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .property-597e3d69:hover::after,
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 .notion-collection-card .property-585f6e6c:hover::after { opacity: 1; }
 
-/* what a search with no match says */
+/* what a search with no match says: the design's empty set (main.css, encEmptySet), in the ledger's
+   place beside the stage (2026-09-26); its marks are the tab's networks at 28px */
 .notion-root #block-3dde800a51388133b7f1d1ccdda08038 > .enc-set-empty {
   grid-area: empty;
   margin: 0 !important;
-  padding: 24px 0 !important;
-  font-family: var(--type-body), system-ui, sans-serif;
-  font-size: 15px;
-  line-height: 1.56;
-  color: #6B6F68;
-  max-width: 40ch;
+}
+/* the empty set takes the ledger's place: the empty ledger (its ink rule and its gap) goes, and the
+   set sits in the ledger's own cell — in the row under it, the stage (spanning both) pushed it down */
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038[data-enc-empty] .notion-collection-gallery {
+  display: none !important;
+}
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038[data-enc-empty] > .enc-set-empty {
+  grid-area: ledger;
+  align-self: start;
+}
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-es-disc {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.notion-root #block-3dde800a51388133b7f1d1ccdda08038 .enc-set-es-disc img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 /* ── the stage: the chain in hand, pinned beside the ledger ── */

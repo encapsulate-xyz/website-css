@@ -304,6 +304,102 @@
       });
     }
     paint();
-    return { el: bar, state: state, sync: paint };
+    /* update(): a change made from outside the bar — the empty state's marks and its "Clear
+       filters" — set the same state the bar's own controls set, and the page applies it */
+    function update(patch) {
+      if ("q" in patch) state.q = patch.q;
+      if ("sort" in patch) state.sort = patch.sort;
+      if (patch.f) state.f = Object.assign({}, patch.f);
+      changed();
+    }
+    return { el: bar, state: state, sync: paint, update: update };
+  };
+
+  /* ── THE EMPTY RESULT (design Filter Bar Patterns, "B · the whole set, quietly", 2026-09-26) ──
+     Where the list would be: a headline, the page's whole set as pressable marks at 45% (hover →
+     full and an ink ring; press → filter to it), one line, and two tertiaries — the page's own
+     destination and "Clear filters". The page gives the words (from its "Empty state copy"
+     toggle in Notion) and the marks; this draws them. Returns { el, set(o) }; set() rewrites only
+     what changed. o = { ink, headline, items: [{ id, label, node }], tail, onPick(id), line,
+     action: { label, href, up }, clear: { label, onClick } } */
+  function tert(label, href, glyph) {
+    var t = el(href ? "a" : "button", "enc-es__act");
+    if (href) {
+      t.href = href;
+      if (/^https?:/.test(href) && href.indexOf(location.host) < 0) { t.target = "_blank"; t.rel = "noopener"; }
+    } else t.type = "button";
+    t.appendChild(el("span", "enc-es__act-label", label));
+    var disc = el("span", "enc-es__disc");
+    disc.setAttribute("aria-hidden", "true");
+    if (glyph === "up") disc.setAttribute("data-up", "");
+    var paths = glyph === "x" ? [["path", { d: "M2.5 2.5l5 5" }], ["path", { d: "M7.5 2.5l-5 5" }]]
+      : glyph === "up" ? [["path", { d: "M3 7l4-4" }], ["path", { d: "M3.5 3h3.5v3.5" }]]
+      : [["path", { d: "M2 5h6M5 2l3 3-3 3" }]];
+    disc.appendChild(svg(10, 10, "0 0 10 10", paths, 1.6));
+    t.appendChild(disc);
+    return t;
+  }
+  window.encEmptySet = function () {
+    var box = el("div", "enc-es");
+    box.setAttribute("role", "status");
+    var head = el("span", "enc-es__head");
+    var set = el("div", "enc-es__set");
+    var line = el("p", "enc-es__line");
+    var acts = el("div", "enc-es__acts");
+    box.appendChild(head); box.appendChild(set); box.appendChild(line); box.appendChild(acts);
+    var itemsSig = null, actSig = null;
+    function update(o) {
+      box.toggleAttribute("data-ink", !!o.ink);
+      put(head, o.headline || "");
+      var sig = (o.items || []).map(function (it) { return it.id; }).join("|") + "#" + (o.tail || "");
+      if (sig !== itemsSig) {
+        itemsSig = sig;
+        set.textContent = "";
+        (o.items || []).forEach(function (it) {
+          var b = el("button", "enc-es__item");
+          b.type = "button";
+          b.setAttribute("aria-label", "Filter by " + it.label);
+          b.title = it.label;
+          if (it.node) b.appendChild(it.node);
+          b.addEventListener("click", function () { if (o.onPick) o.onPick(it.id); });
+          set.appendChild(b);
+        });
+        if (o.tail) set.appendChild(el("span", "enc-es__tail", o.tail));
+      }
+      put(line, o.line || "");
+      line.hidden = !o.line;
+      var asig = [o.action && o.action.label, o.action && o.action.href, o.clear && o.clear.label].join("|");
+      if (asig !== actSig) {
+        actSig = asig;
+        acts.textContent = "";
+        if (o.action && o.action.label) acts.appendChild(tert(o.action.label, o.action.href, o.action.up ? "up" : null));
+        if (o.clear && o.clear.label) {
+          var c = tert(o.clear.label, null, "x");
+          c.addEventListener("click", function () { if (o.clear.onClick) o.clear.onClick(); });
+          acts.appendChild(c);
+        }
+      }
+    }
+    return { el: box, set: update };
+  };
+
+  /* The empty state's words: a toggle called "Empty state copy" on the page, "key · value" lines.
+     A value that is a link carries its href. Marked so every page hides it. */
+  window.encEmptyCopy = function (root) {
+    var out = null;
+    Array.prototype.forEach.call((root || document).querySelectorAll(".notion-toggle"), function (t) {
+      var sum = t.querySelector(".notion-toggle__summary");
+      if (!sum || !/^\s*empty state copy\s*$/i.test(sum.textContent)) return;
+      t.setAttribute("data-enc-copy", "");
+      out = out || {};
+      Array.prototype.forEach.call(t.querySelectorAll(".notion-toggle__content p, .notion-toggle__content .notion-text"), function (p) {
+        var line = (p.textContent || "").replace(/\s+/g, " ").trim(), i = line.indexOf("\u00b7");
+        if (i < 0) return;
+        var k = line.slice(0, i).trim().toLowerCase(), v = line.slice(i + 1).trim();
+        var a = p.querySelector("a[href]");
+        if (k && v) out[k] = { text: v, href: a ? a.getAttribute("href") : null };
+      });
+    });
+    return out;
   };
 })();
