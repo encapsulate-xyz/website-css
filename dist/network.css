@@ -131,3 +131,4 @@ to{transform: translateX(-50%);}
 .super-content.page__networks,.super-content.page__networks .notion-root{padding-bottom: 0 !important;}
 @media (min-width: 761px) and (max-width: 1179px){#block-3dce800a51388154931ac3c9478a65b5 .notion-column-list{grid-template-columns: auto minmax(0,1fr) !important;grid-template-rows: 1fr auto auto auto auto auto !important;grid-template-areas: "fig ." "fig label" "fig line" "fig tally" "fig test" "fig foot" !important;}
 }
+#block-3e7e800a513881eeb441c6d855406961,#block-3e5e800a513881d484b8c473d82d3fb9{display: none !important;}

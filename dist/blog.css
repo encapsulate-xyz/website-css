@@ -63,3 +63,4 @@
 }
 .notion-root :is(#block-a148eb7f8ea94b95b7725809fef9e0dc[data-enc-empty],#block-a148eb7f8ea94b95b7725809fef9e0dc .notion-collection[data-enc-empty]) .notion-collection-gallery,.notion-root :is(#block-a148eb7f8ea94b95b7725809fef9e0dc[data-enc-empty],#block-a148eb7f8ea94b95b7725809fef9e0dc .notion-collection[data-enc-empty]) .enc-index__foot{display: none !important;}
 .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__es-tag{display: inline-flex;align-items: center;height: 30px;padding: 0 12px;border: 1px solid #D9D9D2;border-radius: 999px;font-family: var(--type-mono),ui-monospace,monospace;font-size: 10.5px;letter-spacing: 0.1em;text-transform: uppercase;color: #000000;}
+#block-3e7e800a513881d6b309d5a4e31a5af9,#block-3e2e800a5138814fafb6c406f7cfbed1{display: none !important;}

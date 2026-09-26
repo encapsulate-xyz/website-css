@@ -1391,6 +1391,14 @@ line.
 
 ## Things that bite in Super / Notion markup
 
+- **A copy toggle is hidden by its id in its page's CSS, never only by a script's mark** (the user,
+  2026-09-26). "Empty state copy" was hidden by `[data-enc-copy]`, which filterbar.js set only when a
+  search came up empty — so on /networks, /governance-record and /blog the toggle showed, drawn as a
+  §12 article toggle, until then; the other copy toggles showed until their script ran. Each is now
+  `#block-… { display: none }` in network.css (Empty state, Chain page copy), governance.css (Empty
+  state), blog.css (Empty state, Post page copy), guides.css (Guide page copy) and services.css
+  (Services page copy). A new copy toggle — or one recreated in Notion — gets its id added there.
+
 - **A script that watches the page must not wake itself.** governance.js's observer rebuilt on
   every childList change, and its own pass rewrote the pager's two labels (a text write replaces
   the text node) and re-appended every row after a sort — so the record page rebuilt 8 times a

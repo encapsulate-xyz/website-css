@@ -932,3 +932,9 @@ STYLING DROPDOWN MENU
 @media (max-width: 900px) {
   .notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__slot { white-space: nowrap; }
 }
+
+/* THE COPY TOGGLES (2026-09-26): "Guide page copy" — the words the page's scripts read, never a section.
+   Hidden by id from the first paint: the scripts' [data-enc-copy] mark comes after load, and the
+   empty state's only when a search comes up empty, so until then the toggle showed, drawn as an
+   article toggle. A toggle recreated in Notion gets a new id — put it here. */
+#block-3e3e800a51388119af9ed62105a576f9 { display: none !important; }

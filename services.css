@@ -792,3 +792,9 @@
   .enc-svc__botpills { flex-wrap: wrap; justify-content: flex-end; }
   .enc-svc__botpill { white-space: nowrap; }
 }
+
+/* THE COPY TOGGLES (2026-09-26): "Services page copy" — the words the page's scripts read, never a section.
+   Hidden by id from the first paint: the scripts' [data-enc-copy] mark comes after load, and the
+   empty state's only when a search comes up empty, so until then the toggle showed, drawn as an
+   article toggle. A toggle recreated in Notion gets a new id — put it here. */
+#block-3e4e800a513881939e04c0c85e3cf298 { display: none !important; }

@@ -692,3 +692,9 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
     grid-template-rows: auto 40px auto auto !important;
   }
 }
+
+/* THE COPY TOGGLES (2026-09-26): "Empty state copy" — the words the page's scripts read, never a section.
+   Hidden by id from the first paint: the scripts' [data-enc-copy] mark comes after load, and the
+   empty state's only when a search comes up empty, so until then the toggle showed, drawn as an
+   article toggle. A toggle recreated in Notion gets a new id — put it here. */
+#block-3e7e800a51388138beb3e938de50c9dd { display: none !important; }

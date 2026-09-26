@@ -1017,3 +1017,10 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
       "fig foot" !important;
   }
 }
+
+/* THE COPY TOGGLES (2026-09-26): "Empty state copy" and "Chain page copy" — the words the page's scripts read, never a section.
+   Hidden by id from the first paint: the scripts' [data-enc-copy] mark comes after load, and the
+   empty state's only when a search comes up empty, so until then the toggle showed, drawn as an
+   article toggle. A toggle recreated in Notion gets a new id — put it here. */
+#block-3e7e800a513881eeb441c6d855406961,
+#block-3e5e800a513881d484b8c473d82d3fb9 { display: none !important; }
