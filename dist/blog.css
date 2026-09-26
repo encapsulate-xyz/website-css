@@ -55,3 +55,9 @@
 }
 .notion-collection-card.gallery a{pointer-events: auto!important;}
 .notion-root .notion-toggle[data-enc-copy]{display: none !important;}
+@media (max-width: 900px){.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__title{-webkit-line-clamp: 3;}
+}
+@media (min-width: 701px) and (max-width: 900px){.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post][data-enc-fill]{grid-column: span 2 !important;}
+}
+@media (max-width: 700px){.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-tall] .enc-post__title{font-size: max(15px,5.2cqw);}
+}

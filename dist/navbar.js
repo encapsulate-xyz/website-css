@@ -382,7 +382,7 @@
         return -1;
       };
       var cNet = at(["network", "chain"]), cRef = at(["reference", "proposal id"]),
-        cVote = at(["our vote", "vote option"]), cDate = at(["voted on"]);
+        cVote = at(["our vote", "vote option"]), cDate = at(["recorded", "voted on"]);   // "Recorded" since 2026-09-26
       var glyphs = (extra && extra.glyphs) || {};
       var more = typeof window.encGlyphs === "function" ? window.encGlyphs() : {};
       var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -1218,6 +1218,9 @@
     else sheet.removeAttribute("data-enc-ink");
     choose(0);
     sheet.hidden = false;
+    // the sheet takes focus (audit 2026-09-26: Tab walked the covered, locked page behind it)
+    var first = sheet.querySelector('.enc-sheet__tab[aria-selected="true"]');
+    if (first) first.focus({ preventScroll: true });
     sheetAt = location.pathname;
     bar.setAttribute("data-enc-sheet", "");
     document.documentElement.setAttribute("data-enc-sheet", "");
@@ -1235,9 +1238,24 @@
 
   /* the Menu button sits in Super's actions, after its Book a call; the observer puts it back if
      a re-render drops it */
+  /* React adopts the server's HTML when it hydrates, and a node it has adopted carries its fiber
+     key. An element added inside Super's markup before then is one React did not render: it
+     reports a hydration mismatch (#418) and renders the page again on the client, over everything
+     the scripts had built. The Menu button went into the bar's actions at load, at every width —
+     the cause of #418 on /brand and /networks (measured 2026-09-26: with navbar.js alone, #418;
+     without it, none). It waits for the actions to be adopted, and goes in anyway after 5s. */
+  function adopted(node) {
+    return Object.keys(node).some(function (k) { return k.indexOf("__reactFiber$") === 0; });
+  }
+  var hydrateWait = 0, hydrateFrom = Date.now();
   function compact() {
     var actions = document.querySelector("nav.super-navbar .super-navbar__actions");
     if (!actions || !menu.length) return;
+    if ((!menuBtn || menuBtn.parentNode !== actions) && !adopted(actions) && Date.now() - hydrateFrom < 5000) {
+      clearTimeout(hydrateWait);
+      hydrateWait = setTimeout(compact, 100);
+      return;
+    }
     if (!menuBtn) {
       menuBtn = el("button", "enc-nav__menu");
       menuBtn.type = "button";
@@ -1254,12 +1272,41 @@
   }
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && sheetOpen()) closeSheet(true);
+    // while the sheet is open Tab goes round the bar and the sheet only
+    if (e.key !== "Tab" || !sheetOpen()) return;
+    var bar = document.querySelector("nav.super-navbar");
+    var list = all(bar || document, "a[href], button").concat(all(sheet, "a[href], button"))
+      .filter(function (x) { return x.offsetParent !== null && x.tabIndex >= 0; });
+    if (!list.length) return;
+    var at = list.indexOf(document.activeElement);
+    // every step is taken here: the sheet is last in the page, so the browser's own next stop
+    // after the bar was the covered page behind it
+    var to = at < 0 ? 0 : (at + (e.shiftKey ? -1 : 1) + list.length) % list.length;
+    e.preventDefault();
+    list[to].focus();
   });
   window.addEventListener("resize", function () {
     if (sheetOpen() && !window.matchMedia(COMPACT).matches) closeSheet(false);
   });
 
+  /* Super renders each group's trigger as a span with no tabindex, so a keyboard never reached a
+     menu (audit 2026-09-26). Once React has adopted it, a trigger takes focus and opens on Enter or
+     Space — a click, the same thing radix answers from a pointer; nothing is opened unasked. */
+  function keys() {
+    all(document, "nav.super-navbar .super-navbar__list[aria-controls]:not([tabindex])").forEach(function (t) {
+      if (!adopted(t)) return;
+      t.tabIndex = 0;
+      t.setAttribute("role", "button");
+      t.addEventListener("keydown", function (e) {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault();
+        t.click();
+      });
+    });
+  }
+
   function tick() {
+    keys();
     Array.prototype.forEach.call(
       document.querySelectorAll(".super-navbar__list-content"), build);
     paint();

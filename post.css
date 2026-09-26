@@ -690,3 +690,17 @@ body:has(.notion-root[data-enc-post]) .notion-header { display: none !important;
 @media (prefers-reduced-motion: reduce) {
   .notion-root[data-enc-post] .enc-po__barfill { transition: none !important; }
 }
+
+/* ── THE RESPONSIVE AUDIT (2026-09-26) ────────────────────────────────────────────────────────── */
+
+/* every post carries 7–24 empty Notion paragraphs, each a 32px row plus the article's gap: blank
+   bands inside the article (851px on Story Protocol) and ~200px before the footer. Space is the
+   CSS's to make; a paragraph with any text or image is untouched (:empty is exact). */
+.notion-root[data-enc-post] .notion-text:empty { display: none !important; }
+
+/* under 900 the rail stands above the article, so its progress read "0%" for good and its ask came
+   before the post; the post's foot carries the ask and the next post. The contents stay. */
+@media (max-width: 900px) {
+  .notion-root[data-enc-post] .enc-po__prog,
+  .notion-root[data-enc-post] .enc-po__ask { display: none !important; }
+}

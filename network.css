@@ -981,3 +981,21 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 
+
+/* ── THE RESPONSIVE AUDIT (2026-09-26) ────────────────────────────────────────────────────────
+   The count band's line sat between the hollow figure and the tally at 761–1179 and was left 98–237px:
+   thirteen words set two and three to a line. There the tally goes under the line, beside the
+   figure — the ≤760 arrangement's order, with the figure still on the left. */
+@media (min-width: 761px) and (max-width: 1179px) {
+  #block-3dce800a51388154931ac3c9478a65b5 .notion-column-list {
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    grid-template-rows: 1fr auto auto auto auto auto !important;
+    grid-template-areas:
+      "fig ."
+      "fig label"
+      "fig line"
+      "fig tally"
+      "fig test"
+      "fig foot" !important;
+  }
+}

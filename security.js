@@ -146,8 +146,27 @@
     var inner = el("div", "enc-sec__canvin");
     inner.appendChild(d);
     canvas.appendChild(inner);
+    canvas.addEventListener("scroll", function () {
+      canvas.toggleAttribute("data-enc-scrolled", canvas.scrollLeft > 4);
+    }, { passive: true });
     return canvas;
   }
+
+  /* The drawing is 788px. Up to 900 it scrolled inside its frame with no sign that it did — at
+     834 the right column sat under the edge by 54px. It is scaled to the frame down to 0.7, and
+     below that it scrolls with its right edge faded until it is moved (audit 2026-09-26). */
+  function fitCanvas() {
+    Array.prototype.forEach.call(document.querySelectorAll(".enc-sec__canvas"), function (c) {
+      var inner = c.firstElementChild;
+      if (!inner) return;
+      inner.style.removeProperty("--enc-sec-fit");
+      var need = inner.scrollWidth, room = c.clientWidth;
+      var fit = need > room ? Math.max(0.7, room / need) : 1;
+      if (fit < 1) inner.style.setProperty("--enc-sec-fit", fit.toFixed(3));
+      c.toggleAttribute("data-enc-more", c.scrollWidth > c.clientWidth + 1);
+    });
+  }
+  window.addEventListener("resize", fitCanvas);
 
   /* ── the keyhole in 03 ────────────────────────────────────────────────────────────────────
      A circle over a shaft, cut out of the ink in paper. Picking a commitment colours the core
@@ -579,6 +598,10 @@
           bt.appendChild(el("span", "enc-sec__segt", label(n)));
           bt.addEventListener("click", function () {
             step(four, i);
+            /* the chosen step holds while the page scrolls to it: at 390 the pile's heights move
+               under the smooth scroll and it stopped ~10px short, so the scroll sync put 02 back
+               after a tap on 03 (audit 2026-09-26) */
+            held = { i: i, until: Date.now() + 1400 };
             var top = n.getBoundingClientRect().top + window.pageYOffset - (STACK_TOP + i * STACK_STEP) + 2;
             window.scrollTo({ top: top, behavior: "smooth" });
           });
@@ -602,7 +625,13 @@
            design does; the observer is there as well because a rebuild can move the steps
            without the reader scrolling. The sync reads the steps that are on the page now, so
            it survives a rebuild. */
+        var held = null;
         var sync = function () {
+          if (held && Date.now() < held.until) {
+            if (four.getAttribute("data-enc-step") !== String(held.i)) step(four, held.i);
+            return;
+          }
+          held = null;
           var pick = 0;
           msteps.forEach(function (n, i) {
             if (n.getBoundingClientRect().top <= STACK_TOP + i * STACK_STEP + 4) pick = i;
@@ -617,6 +646,9 @@
           msteps.forEach(function (n) { n.style.height = ""; n.style.minHeight = ""; });
           var lastH = msteps[msteps.length - 1].offsetHeight;
           var stageH = mleft.offsetHeight;
+          /* under 900 the stage stands above the pile and scrolls away: sized to it, each step was
+             a screen of dotted field around ~169px of words (3,579px at 390; audit 2026-09-26) */
+          if (mleft.getBoundingClientRect().bottom <= msteps[0].getBoundingClientRect().top + 1) stageH = 0;
           var H = Math.ceil(Math.max(stageH, (msteps.length - 1) * STACK_STEP + lastH));
           msteps.forEach(function (n, i) {
             n.style.minHeight = "0";
@@ -715,9 +747,10 @@
   }
 
   var t = 0;
-  new MutationObserver(function () { clearTimeout(t); t = setTimeout(build, 120); })
+  new MutationObserver(function () { clearTimeout(t); t = setTimeout(function () { build(); fitCanvas(); }, 120); })
     .observe(document.body, { childList: true, subtree: true });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
   else build();
-  window.addEventListener("load", build);
+  window.addEventListener("load", function () { build(); fitCanvas(); });
+  fitCanvas();
 })();

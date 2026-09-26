@@ -123,3 +123,5 @@ to{transform: translateY(0);}
 .enc-why__year[data-open]{border: 1.5px solid rgba(250,250,248,0.4);}
 .enc-why__bars{display: flex;align-items: flex-end;gap: 5px;width: 100%;height: 96px;}
 .enc-why__bar{flex: 1;border-radius: 3px 3px 0 0;opacity: 0.9;}
+@media (min-width: 547px){.enc-blog{padding-left: max(var(--padding-left,96px),calc(50vw - 864px));}
+}

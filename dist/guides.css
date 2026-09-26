@@ -103,3 +103,8 @@ img.notion-collection-card__cover{display: block !important;width: 100% !importa
 .super-content.page__guides{padding-bottom: 0 !important;}
 .super-content.page__guides .notion-root{padding-bottom: 0 !important;}
 .notion-root > [hidden]{display: none !important;}
+@media (max-width: 500px){.notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__bar{flex-direction: column;align-items: flex-start;gap: 6px;}
+.notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__bar > p.notion-text + p.notion-text{text-align: left !important;}
+}
+@media (max-width: 900px){.notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__slot{white-space: nowrap;}
+}

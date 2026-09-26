@@ -397,3 +397,24 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 /* the post pages read their words from a "Post page copy" toggle on this page; blog.js marks it
    and it is data, not a section to read (post.css + post.js, 2026-09-21) */
 .notion-root .notion-toggle[data-enc-copy] { display: none !important; }
+
+/* ── THE RESPONSIVE AUDIT (2026-09-26) ────────────────────────────────────────────────────────── */
+
+/* under 900 a title keeps three lines: at 834 all 14 titles were cut at two in a card with room */
+@media (max-width: 900px) {
+  .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__title { -webkit-line-clamp: 3; }
+}
+/* 701–900: the lead spans both columns, so an odd number of the rest left the last one alone in
+   its row; blog.js marks it, and it takes the row */
+@media (min-width: 701px) and (max-width: 900px) {
+  .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post][data-enc-fill] {
+    grid-column: span 2 !important;
+  }
+}
+/* on a phone the lead card is as wide as the rest, and its 3.3cqw title came out 13px against the
+   others' 15: it keeps a step above them */
+@media (max-width: 700px) {
+  .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-tall] .enc-post__title {
+    font-size: max(15px, 5.2cqw);
+  }
+}

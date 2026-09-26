@@ -86,3 +86,6 @@ body:has(.notion-root[data-enc-post]) .notion-header{display: none !important;}
 }
 @media (prefers-reduced-motion: reduce){.notion-root[data-enc-post] .enc-po__barfill{transition: none !important;}
 }
+.notion-root[data-enc-post] .notion-text:empty{display: none !important;}
+@media (max-width: 900px){.notion-root[data-enc-post] .enc-po__prog,.notion-root[data-enc-post] .enc-po__ask{display: none !important;}
+}

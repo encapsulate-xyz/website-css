@@ -564,3 +564,21 @@ html:has(.notion-root[data-enc-guide]) body,
     padding-top: 76px !important;
   }
 }
+
+/* ── THE RESPONSIVE AUDIT (2026-09-26) ────────────────────────────────────────────────────────
+   Scoped to the widths where the audit measured the fault; nothing outside them moves. */
+
+/* above 1728 the capture stops growing at 1180px while the step's words stayed pinned to the right
+   edge — 648px apart at 2560. The step keeps the 1728 composition, centred. */
+@media (min-width: 1729px) {
+  .enc-gd__step .enc-gd__content { width: 100%; max-width: 1568px; margin-inline: auto; }
+}
+
+/* on a tablet held upright a wallet capture (788px at its own width) ran 42px past the screen once
+   the snap landed on its step: it is held to what the screen leaves under the step's words */
+@media (min-width: 701px) and (max-width: 900px) {
+  .enc-gd__step[data-enc-shot="tall"] .enc-gd__shot {
+    width: auto;
+    height: min(788px, calc(100svh - 300px));
+  }
+}

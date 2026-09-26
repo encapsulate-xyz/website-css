@@ -1311,6 +1311,16 @@ html[data-enc-sheet] {
   .enc-nav__row--mark .enc-nav__row-fig { display: none; }
   .enc-nav__row--mark { justify-content: center; }
 }
+/* 1101–1365: disc, name and rate did not fit a 95–123px row and the names ellipsized to nothing
+   (21 of 21 at 1101, 13 at 1280; audit 2026-09-26). The name stays, the rate goes. */
+@media (min-width: 1101px) and (max-width: 1365px) {
+  .enc-nav__row--mark .enc-nav__row-fig { display: none; }
+}
+/* 320–359: wordmark, Book a call and Menu took 300 of the 280px inside the gutters, and Menu met
+   the screen's edge */
+@media (max-width: 359px) {
+  .super-root .super-navbar__logo img { width: 104px !important; }
+}
 
 
 /*********************************************/
@@ -3100,7 +3110,7 @@ table.notion-table:not(:is([data-enc-chain], [data-enc-source]) *).row-header.co
   flex-direction: column;
   gap: 2px;
   min-width: max(240px, 100%);
-  max-height: 332px;      /* the record lists every chain it has voted on: the panel scrolls, as the */
+  max-height: min(392px, 60vh);   /* the record lists every chain it has voted on: the panel scrolls, as the */
   overflow-y: auto;       /* menu before it did, rather than running off the screen */
   padding: 6px;
   border: 1px solid var(--fb-panel-ring);
@@ -3619,6 +3629,56 @@ html:not([data-enc-mouse]) .enc-fb[data-ink]:has(:focus-visible) { outline-color
   }
 }
 
+
+/* §13d under 900px: a title that wraps left its ± at the far end of the track, up to 247px from
+   its last word (audit, 2026-09-26). Below 900 the ± is drawn after the last word instead. */
+@media (max-width: 900px) {
+  .notion-root [data-enc-rows] .enc-rec__plus { display: none; }
+  /* Super's title is a flex box, which would set the ± beside the whole wrapped block again */
+  .notion-root [data-enc-rows] td.title .notion-property__title { display: block !important; }
+  .notion-root [data-enc-rows] tr[data-enc-row]:has(.enc-rec__open) td.title .notion-property__title::after {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-left: 8px;
+    vertical-align: -1px;
+    background: #6B6F68;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M5 10h10'/%3E%3Cpath d='M10 5v10'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M5 10h10'/%3E%3Cpath d='M10 5v10'/%3E%3C/svg%3E") center / contain no-repeat;
+    transition: background-color 0.16s ease;
+  }
+  .notion-root [data-enc-rows] tbody tr:is([data-enc-open], :has(.enc-rec__open:hover), :has(.enc-rec__open:focus-visible)) td.title .notion-property__title::after {
+    background: #000000;
+  }
+  .notion-root [data-enc-rows] tbody tr[data-enc-open] td.title .notion-property__title::after {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M5 10h10'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M5 10h10'/%3E%3C/svg%3E");
+  }
+}
+
+/* THE PAGE'S SIDE MARGIN GROWS WITH THE WINDOW (audit, 2026-09-26). Super's notion.css sets
+   .notion-root's padding from --padding-left/right: 24px up to 546px, then 96px — so at 560 the
+   content was 368px wide against 498 at 546, and at 600 a third of the screen was margin. From 547
+   to 1024 it now rises from 24 to 96 along one line (28 at 600, 56 at 768, 78 at 900), meeting
+   both ends exactly. Full-bleed bands measure from the viewport and are not moved. */
+@media (min-width: 547px) and (max-width: 1024px) {
+  .notion-root {
+    --padding-left: clamp(24px, calc(16.667vw - 72px), 96px);
+    --padding-right: clamp(24px, calc(16.667vw - 72px), 96px);
+  }
+}
+
+/* THE FOCUS RING ON THE BUTTONS THE SCRIPTS BUILD (audit, 2026-09-26). Super's static.css sets
+   `button { outline: unset }`, so a keyboard user tabbing through the guides picker, a guide's
+   "Watch out" or any other button a page script builds saw nothing. The house ring (3px, 2px out)
+   in the button's own colour at 40%, so it reads on paper and on ink alike. Keyboard only
+   (:focus-visible), and at the lowest specificity that beats Super's, so any component that draws
+   its own ring (the filter bar, the navbar, the record's rows) keeps it. */
+:where(button, [role="button"], summary)[class*="enc-"]:focus-visible {
+  outline: 3px solid color-mix(in srgb, currentColor 40%, transparent);
+  outline-offset: 2px;
+}
 
 /*********************************************/
 /* 14. PAGE COVERS — "PAGE COVERS CHOSEN" */
@@ -4726,6 +4786,10 @@ html[data-enc-locked] {
     flex: 1 1 100%;
     border-left: 0;
     border-top: 1px solid rgba(250, 250, 248, 0.18);
+    /* a full screen under the ink half: on a short window the calendar had what the ink left,
+       ~300px with a scrollbar of its own (600×900, 900×900; audit 2026-09-26) */
+    min-height: 100%;
+    max-height: none;
   }
   .enc-bk__ink {
     flex: 1 1 100%;
@@ -4740,6 +4804,21 @@ html[data-enc-locked] {
 }
 
 @media (max-width: 700px) {
+
+  /* §12 · A THREE-COLUMN TABLE BREAKS NO WORD (audit 2026-09-26). Fixed layout gave three equal
+     111px columns at 390 and Super's break-word split "interoperabilit / y". Up to three columns
+     the table sizes its columns to their words and fills the width; four and more keep their
+     sideways scroll. All three lines are needed: auto layout alone shrank a column to one letter
+     (break-word makes the min-content a single character), and the wrapper, a flex item, shrank
+     a two-column table to 196px. */
+  .notion-table__wrapper:not(:is([data-enc-chain], [data-enc-source]) *) { width: 100% !important; }
+  table.notion-table:not(:is([data-enc-chain], [data-enc-source]) *):not(:has(tr:first-child > td:nth-child(4))) {
+    table-layout: auto !important;
+  }
+  table.notion-table:not(:is([data-enc-chain], [data-enc-source]) *):not(:has(tr:first-child > td:nth-child(4))) .notion-semantic-string {
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+  }
 
   /* §14 · A LABEL PAIR THAT DOES NOT FIT ON ONE LINE STANDS AS TWO. The selectors repeat §14's
      own, [data-enc-pairs] included, so they outrank the pair's margin rule. covers.js measures each pair

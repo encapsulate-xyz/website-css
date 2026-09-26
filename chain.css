@@ -744,3 +744,43 @@ button.enc-ch__disc:focus-visible { outline: 3px solid rgba(0, 0, 0, 0.32); outl
   .enc-ch__discwrap { grid-column: 1; grid-row: 2; }
   .enc-ch__type { padding-right: var(--padx); }
 }
+
+
+/* ── THE RESPONSIVE AUDIT (2026-09-26) ────────────────────────────────────────────────────────
+   Each rule is scoped to the widths where the audit measured the fault; nothing outside them moves. */
+
+/* the name keeps the design's size wherever its longest word fits, and shrinks only where it would
+   break inside the word (chain.js fitName measures the word in em). overflow-wrap stays as the last
+   resort. */
+.enc-ch__type { container-type: inline-size; }
+.enc-ch h1.enc-ch__name {
+  font-size: min(clamp(56px, 8vw, 120px), calc(100cqi / var(--name-em, 0.01))) !important;
+}
+
+/* the dock's facts wrapped at 761–899 ("REWARD / RATE", "5.1– / 5.7%"): the ≤760 arrangement,
+   the chain and the action, holds there too */
+@media (min-width: 761px) and (max-width: 899px) {
+  .enc-ch-dock { grid-template-columns: auto minmax(0, 1fr); }
+  .enc-ch-dock__facts { display: none; }
+}
+
+/* a band's crumb and its label shared one line and both wrapped on a phone ("COMMON / QUESTIONS",
+   the chain name dropped under the crumb): each takes its own line */
+@media (max-width: 480px) {
+  .enc-ch__top { flex-direction: column; justify-content: flex-start; gap: 6px; }
+  .enc-ch__top > .enc-ch__label, .enc-ch__top .enc-ch__crumb { white-space: nowrap; }
+}
+
+/* the hidden dock held three focusable controls under aria-hidden: it leaves the tab order while
+   it is off screen (visibility follows the slide, so the motion is unchanged) */
+.enc-ch-dock { visibility: hidden; transition: transform 0.2s ease, visibility 0s linear 0.2s; }
+.enc-ch-dock[data-enc-on] { visibility: visible; transition: transform 0.2s ease, visibility 0s; }
+@media (prefers-reduced-motion: reduce) { .enc-ch-dock, .enc-ch-dock[data-enc-on] { transition: none; } }
+
+/* a tertiary link is 20px tall; on a touch screen its target grows to 44 without moving it */
+@media (hover: none) {
+  .enc-ch a.enc-ch__tert, .enc-ch-dock a.enc-ch__tert { padding-block: 12px; margin-block: -12px; }
+}
+
+/* a mono caption left one word on its last line */
+.enc-ch__cap9 { text-wrap: pretty; }

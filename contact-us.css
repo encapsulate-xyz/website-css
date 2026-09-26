@@ -1292,3 +1292,10 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 .super-content.page__contact-us .notion-root {
   padding-bottom: 0 !important;
 }
+
+/* ── THE RESPONSIVE AUDIT (2026-09-26) ──
+   On a tablet and a phone cal.com's booker is 560px, and the 680px floor left 60px of empty ink
+   above and below it inside the frame. Up to 900px the floor is the booker's own height. */
+@media (max-width: 900px) {
+  .notion-root[data-enc-contact] .enc-ct__cal:not([data-enc-booked]) { min-height: 560px; }
+}

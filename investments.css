@@ -431,3 +431,11 @@
     .notion-root[data-enc-invest] .enc-inv__seg { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 }
+
+/* ── THE RESPONSIVE AUDIT (2026-09-26) ──
+   The line under the band grew when a position was shown (44 → 51px on a desktop, 44 → 93 on a
+   phone), and everything under it jumped on every hover and tap: it keeps the shown height. */
+.notion-root[data-enc-invest] p.enc-inv__status { min-height: 51px; }
+@media (max-width: 700px) {
+  .notion-root[data-enc-invest] p.enc-inv__status { min-height: 93px; }
+}

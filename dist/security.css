@@ -279,3 +279,9 @@ to{background-position: 14px 0;}
 @media (max-width: 600px){.notion-root[data-enc-security] .enc-sec__seg{display: grid;grid-template-columns: repeat(2,minmax(0,1fr));}
 .notion-root[data-enc-security] [data-enc-sec="05"]{grid-template-columns: minmax(0,1fr);}
 }
+.notion-root[data-enc-security] .enc-sec__canvin{zoom: var(--enc-sec-fit,1);}
+.notion-root[data-enc-security] .enc-sec__canvas[data-enc-more]:not([data-enc-scrolled]){-webkit-mask-image: linear-gradient(90deg,#000 82%,transparent);mask-image: linear-gradient(90deg,#000 82%,transparent);}
+@media (max-width: 900px){.notion-root[data-enc-security] .enc-sec__step{min-height: 0 !important;}
+}
+@media (max-width: 600px){.notion-root[data-enc-security] .enc-sec__tabs{display: grid;grid-template-columns: repeat(2,minmax(0,1fr));overflow: visible;}
+}

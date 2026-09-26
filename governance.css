@@ -677,3 +677,29 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
     margin: 0 !important;
   }
 }
+
+/* ── THE RESPONSIVE AUDIT (2026-09-26) ────────────────────────────────────────────────────────
+   Scoped to the widths where the audit measured the fault; nothing outside them moves unless said. */
+
+/* "Ask about a proposal" kept its old float margin (0 0 20px 40px) inside the head row, which beat
+   the row's own reset: 40px in when the head wrapped (701–1060). The row sets it beside the heading,
+   at the foot of the lede, as the file does. */
+.notion-root .enc-rec__head > #block-3dde800a513881d6815ed26488091143 {
+  float: none !important;
+  margin: 0 !important;
+  align-self: flex-end !important;
+}
+
+@media (max-width: 700px) {
+  /* the vote field on a phone: two design blocks a row made it 1,373px tall; at 6px marks three
+     blocks sit in a row (ten 6px marks and nine 3px gaps = 87px) */
+  .notion-root .enc-rec__hundred { width: 87px; gap: 3px; }
+  .notion-root .enc-rec__mark { width: 6px; height: 6px; }
+
+  /* the pillar fields in one column: the 260px floor is the 2x2's; alone each field held ~150px of
+     empty paper. The word and the question keep 40px between them. */
+  .notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-card { min-height: 0 !important; }
+  .notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-card__content {
+    grid-template-rows: auto 40px auto auto !important;
+  }
+}

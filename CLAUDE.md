@@ -106,6 +106,7 @@ User rules that stand on every task:
 | `build.py` | strips comments into `dist/`, copies the JS | — |
 | `scripts/paste_table.py` | prints the paste table from head/*.html vs what the live pages serve | — |
 | `scripts/livecheck.mjs` | loads a live page in headless Chrome with pinned tags' files served from this repo (or a pushed commit) — pass every tag the page pins, comma-separated (`v263,v227,v220`), runs a check in the page, optional real mouse and key steps (`move`, `click` — a real press and release — and `press(key)`) and a screenshot. The scratchpad copies it replaced were lost on 2026-09-24 | — |
+| `scripts/audit.mjs` | audits a live page at many widths (default 16, 320–2560; touch under 835) with every tag it pins served from this repo: sideways scroll and what causes it, text cut by its box, broken images, script errors, failed requests, screenshots per screen (`--shots`), a page check of your own (`--check`). `BLOCK=1` loads the page with none of our files, `ALLOW=a.js,b.js` with only those scripts — how a fault is traced to us or to Super. Built for the audit of 2026-09-26 |
 | `scripts/shots.py`, `img/shots/` | panel captures of the live tools (Sui RGP, the Solana graph), 1100×750 at DPR 2 from headless Chrome — the extension's screenshots time out on those pages, and a WebGL graph needs swiftshader or it comes back blank. Not wired into any page yet (2026-09-23): the tools table that names their tiles arrived cut off | — |
 
 **Edit sources, run `python3 build.py`, commit source and `dist/` together. Never edit `dist/`.**
@@ -913,7 +914,7 @@ Two full-bleed bands after the cover, built by `investments.js` from Notion:
   and the Validator pill's own words beside a dot that is green when we run one.
 - **02, on paper**: the six questions as a segmented control, one answer at a time with the verdict
   as a disc (green Yes / ink No), and the ask at the foot with Book a call and **Send the spec**,
-  which links to the contact page's form block (`/contact-us#block-3dee800a5138808c8e81d333a9bb7195`).
+  which links to the contact page's form block (`/contact-us#block-3dee800a51388006bd4aeba0fb2a72c7`, "Get in touch"; it pointed at `…808c8e81…` until 2026-09-26, a block no longer on the page, and landed at the top).
 
 **The positions are the `Portfolio` database** (`807c8bde…`), one row per position: Name,
 Description, **Category** (select), **Since** (text), **Validator** (select, whose two options are
@@ -1231,6 +1232,70 @@ above 900px changes in this work. What was learned:
   the booking drawer wraps at 901–919.
 - **livecheck** now lets Chrome pick its own port (`--remote-debugging-port=0` + the profile's
   DevToolsActivePort): with a random port, parallel runs attached to each other's browsers.
+
+## The audit of 2026-09-26 — every page the navbar and footer reach, 320–2560
+
+Six read-only auditors (one per group of pages) measured every width with `scripts/audit.mjs`,
+reviewed screenshots and used every control with real mouse and keys; the fixes were then made
+one at a time, each scoped to the widths where the fault was measured, and proved: the automated
+checks clean on 15 pages at 10 widths, and a computed-style comparison at 1440 against the release
+before (v304) showing only the intended changes. The old pages (snapshots, Lido DVT clusters, legal,
+the rewards calculator) and every guide but Axelar were left alone (the user). v305.
+
+What was broken, now fixed:
+- **The navbar's Practices panel** read the record's date by the header "voted on", renamed
+  "Recorded" the same day — the latest votes fell back to the note. `READ["/governance-record"]`
+  accepts both.
+- **Keyboard:** the navbar's group triggers are Super's spans with no tabindex, so Tab never reached a
+  menu — navbar.js `keys()` gives each a tabindex, `role="button"` and Enter/Space (a click, once React
+  has adopted the node). The compact sheet takes focus when it opens and Tab goes round the bar and
+  the sheet only. Super's static.css sets `button { outline: unset }`: every button a script builds
+  (`[class*="enc-"]`) takes the house ring on `:focus-visible` (main.css, in the button's own colour
+  at 40%, so it reads on paper and ink); a component with its own ring keeps it.
+- **/security 04 at 390:** a tap on "03" left "02" selected (the pile's heights moved under the
+  smooth scroll) — the chosen step holds for 1.4s.
+- **The record's "By chain"** put the database's three empty rows first — unbuilt rows are hidden.
+- **/investments "Send the spec"** pointed at a block no longer on /contact-us (Notion link fixed).
+- **Chain pages' names broke inside the word** at 901–1919 ("Avalan|che") — chain.js `fitName()`
+  measures the longest word on a canvas in em and chain.css takes `min(design size, 100cqi / em)`.
+- **React #418 on /brand and /networks** came from the Menu button going into Super's bar before
+  hydration (navbar.js waits for the fiber key, 5s at most). #418 remains on most pages from other
+  scripts' early writes — see the open items.
+
+Responsive, by width:
+- **Super's side margin jumped from 24 to 96px at 547** (content narrower at 560 than at 546): from
+  547 to 1024 main.css sets `--padding-left/right` on `.notion-root` to `clamp(24px, 16.667vw − 72px,
+  96px)`; the homepage above 1920 uses the bands' `max(96px, 50vw − 864px)`.
+- **Homepage:** the testimonial quote cleared the names rail (1180–1440); Who we are stacked is one
+  left edge and hides "Pick a name"; the contact card's padding on phones and its routes as a list
+  under 960; the Why Stake drawings capped at 440px (601–1099); the blog rail starts under its heading
+  (≥547); the invisible link list and two empty paragraphs above the footer are hidden (not deleted);
+  44px tap rows for LinkedIn and the routes; the table's discs load Super's 96px image, not the
+  original (governance.js `small()`).
+- **Record:** the vote field three blocks a row on phones (6px marks), the pillar fields without the
+  2x2's floor, the ± after a wrapped title's last word (main.css §13d ≤900), the head's button at
+  the lede's foot. **Investments:** the status line keeps its shown height; the tabs take arrow keys.
+  **Services:** on touch a monitoring chip's first tap fills the sentence, the second follows.
+- **/networks:** the count band's tally under the line at 761–1179. **Chain pages:** the dock's facts
+  hidden at 761–899, the band tops stacked under 481, the hidden dock out of the tab order, 44px touch
+  targets, captions `text-wrap: pretty`.
+- **Guides:** the bar and "a wallet" slot on phones; the Axelar step keeps the 1728 composition above
+  it; a tall capture held to the screen at 701–900. **Contact:** the calendar frame's floor is the
+  booker's 560 under 900.
+- **Posts:** empty paragraphs hidden (`:empty`), the rail's progress and ask hidden under 900, a table
+  of up to three columns sizes to its words on phones. **Blog:** three-line titles under 900, the last
+  card fills its row at 701–900, the lead title a step above the rest on phones; the filter bar's
+  panel `min(392px, 60vh)`.
+- **Security:** the diagram scales to its frame down to 0.7 (security.js `fitCanvas`) and fades its
+  edge while it scrolls, the failover pile steps over its own words under 900, the 02 tabs two by two
+  under 600. **Navbar:** the chains' rate hidden at 1101–1365, a 104px wordmark under 360, the stacked
+  drawer's calendar a full screen.
+
+Left for the user (reported, not changed): the guides picker's answer card below the fold at laptop
+heights (a design call), /investments' `ch` caps, the record and the bar at ≥1920, the stage block
+under the index on touch phones, the blog's no-results words, the EigenCloud duplicate in the Learn
+panel, the zk-snarks prose in JSON code blocks, "Hover a highlighted word" on touch, the code copy
+button over a phone's first line.
 
 ## Things that bite in Super / Notion markup
 

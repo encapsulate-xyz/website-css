@@ -1786,3 +1786,27 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* ── THE RESPONSIVE AUDIT (2026-09-26) ────────────────────────────────────────────────────────── */
+
+/* 02: the drawing scales to its frame down to 0.7 (security.js fitCanvas sets the factor); below
+   that it scrolls, its right edge faded until it has been moved */
+.notion-root[data-enc-security] .enc-sec__canvin { zoom: var(--enc-sec-fit, 1); }
+.notion-root[data-enc-security] .enc-sec__canvas[data-enc-more]:not([data-enc-scrolled]) {
+  -webkit-mask-image: linear-gradient(90deg, #000 82%, transparent);
+  mask-image: linear-gradient(90deg, #000 82%, transparent);
+}
+
+@media (max-width: 900px) {
+  /* 04: the pile steps over its own words once the stage stands above it (security.js sizeSteps) */
+  .notion-root[data-enc-security] .enc-sec__step { min-height: 0 !important; }
+}
+
+@media (max-width: 600px) {
+  /* 02: the four tabs two by two, as 04's already are, so none runs off the screen */
+  .notion-root[data-enc-security] .enc-sec__tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: visible;
+  }
+}

@@ -125,3 +125,5 @@ to{transform: translateX(-50%);}
 .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-strip{grid-row: 5 !important;}
 }
 .super-content.page__networks,.super-content.page__networks .notion-root{padding-bottom: 0 !important;}
+@media (min-width: 761px) and (max-width: 1179px){#block-3dce800a51388154931ac3c9478a65b5 .notion-column-list{grid-template-columns: auto minmax(0,1fr) !important;grid-template-rows: 1fr auto auto auto auto auto !important;grid-template-areas: "fig ." "fig label" "fig line" "fig tally" "fig test" "fig foot" !important;}
+}

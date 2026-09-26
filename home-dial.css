@@ -913,3 +913,11 @@
   border-radius: 3px 3px 0 0;
   opacity: 0.9;
 }
+
+/* ── THE RESPONSIVE AUDIT (2026-09-26) ──
+   The rail sat on the bands' 48px gutter while its heading sits on the page's own, so the first
+   card began 50px left of the words above it (547–1919). Its left edge is the page's now; the right
+   keeps the bleed. Phones keep the centre snap. */
+@media (min-width: 547px) {
+  .enc-blog { padding-left: max(var(--padding-left, 96px), calc(50vw - 864px)); }
+}

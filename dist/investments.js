@@ -249,6 +249,18 @@
       b.appendChild(el("span", "enc-inv__tn", ("0" + (i + 1)).slice(-2)));
       b.appendChild(el("span", "enc-inv__tt", short));
       b.addEventListener("click", function () { pick(two, i); });
+      // a tab list answers the arrow keys, Home and End (audit, 2026-09-26)
+      b.addEventListener("keydown", function (e) {
+        var all = Array.prototype.slice.call(tabs.children), at = all.indexOf(b), to = -1;
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") to = (at + 1) % all.length;
+        else if (e.key === "ArrowLeft" || e.key === "ArrowUp") to = (at - 1 + all.length) % all.length;
+        else if (e.key === "Home") to = 0;
+        else if (e.key === "End") to = all.length - 1;
+        if (to < 0) return;
+        e.preventDefault();
+        all[to].focus();
+        pick(two, to);
+      });
       tabs.appendChild(b);
 
       var panel = el("div", "enc-inv__panel");

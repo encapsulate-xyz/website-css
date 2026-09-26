@@ -136,12 +136,18 @@
   }
 
   // the chain's disc; the glyph goes in as soon as the page has one (a gallery can render late)
+  /* a glyph for a 30px disc or a 22px mark: Super's optimizer at 96px (646 bytes for Terra against
+     the 21.8KB original the homepage's discs loaded since v304; sharp at 3x) */
+  function small(url) {
+    if (!/^https:\/\/assets\.super\.so\//.test(url)) return url;
+    return "/_next/image?url=" + encodeURIComponent(url) + "&w=96&q=75";
+  }
   function fillDisc(disc, name) {
     if (disc.querySelector("img")) return true;
     var url = glyphs()[key(name)];
     if (!url) return false;
     var img = el("img");
-    img.src = url; img.alt = ""; img.loading = "lazy";
+    img.src = small(url); img.alt = ""; img.loading = "lazy";
     disc.appendChild(img);
     return true;
   }
@@ -363,7 +369,7 @@
     var url = glyphs()[key(chain)];
     if (url) {
       var img = el("img");
-      img.src = url; img.alt = "";
+      img.src = small(url); img.alt = "";
       disc.appendChild(img);
     }
     return disc;
@@ -436,7 +442,9 @@
     var needle = (state.q || "").trim().toLowerCase();
     var rows = rowsOf();
     rows.forEach(function (tr) {
-      var hide = false;
+      // a row with no chain is never built (three blank rows in the database): it is not a vote to
+      // show — "By chain" put the three at the top of the record (audit, 2026-09-26)
+      var hide = !tr.hasAttribute("data-enc-row");
       if (state.chain && chainOf(tr) !== state.chain) hide = true;
       if (state.vote && voteOf(tr) !== state.vote) hide = true;
       if (needle && tr.textContent.toLowerCase().indexOf(needle) < 0) hide = true;

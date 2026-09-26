@@ -903,3 +903,24 @@ STYLING DROPDOWN MENU
 .notion-root > [hidden] {
   display: none !important;
 }
+
+/* ── THE RESPONSIVE AUDIT (2026-09-26) ────────────────────────────────────────────────────────
+   Scoped to the widths where the audit measured the fault; nothing outside them moves. */
+
+/* the bar's crumb and counter each wrapped to two lines on a phone: one over the other, each whole */
+@media (max-width: 500px) {
+  .notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__bar > p.notion-text + p.notion-text {
+    text-align: left !important;
+  }
+}
+
+/* "a wallet" split across two lines at 360–390, the article at the end of one and the word on the
+   next: a slot is one phrase */
+@media (max-width: 900px) {
+  .notion-root #block-3dde800a5138811e906fc383bd7a0789 .enc-guide__slot { white-space: nowrap; }
+}

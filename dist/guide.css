@@ -81,3 +81,7 @@ html:has(.notion-root[data-enc-guide]),html:has(.notion-root[data-enc-guide]) bo
 }
 @media (max-width: 900px){.super-content[class*="parent-page__guides-"] .notion-root:not([data-enc-guide]){padding-top: 76px !important;}
 }
+@media (min-width: 1729px){.enc-gd__step .enc-gd__content{width: 100%;max-width: 1568px;margin-inline: auto;}
+}
+@media (min-width: 701px) and (max-width: 900px){.enc-gd__step[data-enc-shot="tall"] .enc-gd__shot{width: auto;height: min(788px,calc(100svh - 300px));}
+}

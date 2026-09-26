@@ -166,3 +166,5 @@
 @media (max-width: 900px){.notion-root[data-enc-contact][data-enc-booked] .enc-ct__done > .notion-callout__content{grid-template-columns: minmax(0,1fr);}
 }
 .super-content.page__contact-us,.super-content.page__contact-us .notion-root{padding-bottom: 0 !important;}
+@media (max-width: 900px){.notion-root[data-enc-contact] .enc-ct__cal:not([data-enc-booked]){min-height: 560px;}
+}

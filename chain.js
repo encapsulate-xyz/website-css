@@ -401,6 +401,29 @@
     }
   };
 
+  /* The name is set at the design's size, and smaller only where its longest word would not fit
+     the column: at 901–1919 "Avalanche", "EigenCloud", "Passage", "Chain4Energy" and six more broke
+     inside the word ("Avalan|che", audit 2026-09-26). The longest word is measured once, in em —
+     the letter-spacing scales with the size, so the ratio holds at every width — and chain.css
+     takes the smaller of the design size and what the column holds (100cqi / --name-em). */
+  function fitName(h) {
+    // measured on a canvas, so it needs no layout and cannot miss a hero that is rebuilt: the
+    // word's width at 100px in Outfit 600, less the name's own tracking (-0.058em a letter)
+    var FONT = '600 100px "Outfit"';
+    function set() {
+      var c = fitName.ctx || (fitName.ctx = document.createElement("canvas").getContext("2d"));
+      if (!c) return;
+      c.font = FONT;
+      var em = 0;
+      h.textContent.split(/\s+/).forEach(function (w) {
+        if (w) em = Math.max(em, c.measureText(w).width / 100 - 0.058 * w.length);
+      });
+      if (em > 0) h.style.setProperty("--name-em", (em * 1.02).toFixed(3));
+    }
+    if (!document.fonts || document.fonts.check(FONT)) set();
+    else document.fonts.load(FONT).then(set, set);
+  }
+
   /* 01 · the chain: type on paper, the chain's tint as the field, the mark on the seam with the
      address running round it — the ring is the copy button */
   Page.prototype.hero = function () {
@@ -412,7 +435,9 @@
     s.appendChild(field);
     var type = el("div", "enc-ch__type");
     type.appendChild(P.crumb());
-    type.appendChild(el("h1", "enc-ch__name", P.name));
+    var name = el("h1", "enc-ch__name", P.name);
+    type.appendChild(name);
+    fitName(name);
     if (P.src.lede) type.appendChild(el("p", "enc-ch__lede", textOf(P.src.lede)));
     if (P.src.buttons) {
       var ctas = el("div", "enc-ch__ctas");

@@ -476,3 +476,21 @@
 #block-3dce800a513880349091dbe0cd0650a7{--why-gutter: 20px;}
 #block-3dbe800a5138800d8a72c99cdde9bc3f{--svc-gutter: 20px;}
 }
+@media (min-width: 1100px){#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__text.property-3f46544e{max-width: min(40ch,calc(100vw - var(--rail-w) - var(--rail-right) - 48px - max(clamp(28px,6vw,88px),calc(50vw - 430px)))) !important;}
+}
+@media (min-width: 1921px){.super-content.page__index .notion-root{--padding-left: max(96px,calc(50vw - 864px));--padding-right: max(96px,calc(50vw - 864px));}
+}
+@media (min-width: 601px) and (max-width: 1099px){#block-3dce800a513880349091dbe0cd0650a7 :is(.enc-why__tally,.enc-why__meter,.enc-why__bars){max-width: 440px;}
+}
+@media (max-width: 900px){#block-3dbe800a513880c5862ae676c8d06994 > .notion-callout__content{align-items: stretch !important;}
+#block-3dbe800a51388029828bfeb1c753eff4,#block-3dbe800a513880829ef5f2c48bce6a5a,#block-3dbe800a51388031806cd1d73d190191{text-align: left !important;align-self: flex-start !important;}
+#block-6a8e93a3b7ed4648ba82d58ee6546962{width: 100% !important;}
+#block-3dbe800a513880829d7bd3f3fa175588{display: none !important;}
+}
+@media (max-width: 700px){#block-3dce800a5138803a82f7d45863d6049c{padding: 28px 20px 24px !important;}
+}
+@media (max-width: 959px){#block-3dce800a5138803a82f7d45863d6049c > .notion-callout__content > #block-3dce800a513880f58903ec250b9caeae ~ .notion-text{flex: 0 0 100% !important;margin: 10px 0 0 !important;padding-right: 0 !important;border-right: 0 !important;}
+}
+#block-eb6dbbaea44641a881394a30b8fe5a48,#block-e45e2889e9024e14b23e58bc92473290,#block-b5bc289498144fe3870ab68813ae386a{display: none !important;}
+@media (max-width: 900px){#block-ad335d6d2f8940bea6589e070f09e6c5 a,#block-4adb2b9f0bb24f04b32e9446e80b8c24 a,#block-fc0ee4604d2b4c03a8d4b73e49a727f7 a,#block-3dce800a5138803a82f7d45863d6049c > .notion-callout__content > #block-3dce800a513880f58903ec250b9caeae ~ .notion-text a{display: inline-flex !important;align-items: center !important;min-height: 44px !important;}
+}

@@ -620,13 +620,22 @@
         status.appendChild(el("span", "enc-svc__statust", rest));
       }
     }
+    /* A touch screen has no hover, so a tap went straight to GitHub and the sentence was never
+       filled (audit, 2026-09-26): there the first tap fills the hole and a second follows the link. */
+    var shown = null, noHover = window.matchMedia("(hover: none)");
     rows.forEach(function (r) {
       var a = el("a", "enc-svc__chip", r.name);
       external(a, r["link href"] || r.link || "#");
       a.addEventListener("mouseenter", function () { show(r); });
       a.addEventListener("mouseleave", function () { show(null); });
       a.addEventListener("focus", function () { show(r); });
-      a.addEventListener("blur", function () { show(null); });
+      a.addEventListener("blur", function () { show(null); if (shown === r) shown = null; });
+      a.addEventListener("click", function (e) {
+        if (!noHover.matches || shown === r) return;
+        e.preventDefault();
+        shown = r;
+        show(r);
+      });
       chips.appendChild(a);
     });
     s.appendChild(chips);

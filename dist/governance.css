@@ -82,3 +82,9 @@
 .notion-root #block-3dde800a513881b1b88dd0b73f874bfe p.notion-text:nth-of-type(3){margin-top: 12px !important;}
 .notion-root #block-3dde800a513881d6815ed26488091143{float: none !important;margin: 0 !important;}
 }
+.notion-root .enc-rec__head > #block-3dde800a513881d6815ed26488091143{float: none !important;margin: 0 !important;align-self: flex-end !important;}
+@media (max-width: 700px){.notion-root .enc-rec__hundred{width: 87px;gap: 3px;}
+.notion-root .enc-rec__mark{width: 6px;height: 6px;}
+.notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-card{min-height: 0 !important;}
+.notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-card__content{grid-template-rows: auto 40px auto auto !important;}
+}

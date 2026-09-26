@@ -219,6 +219,12 @@
       card.style.gridRow = s[1] > 1 ? "span " + s[1] : "";
       card.toggleAttribute("data-enc-tall", s[1] > 1);
     });
+    // 701–900 is two columns with the lead across both: an odd number of the rest leaves the last
+    // one alone in its row, so it is marked to take the row (blog.css; audit 2026-09-26)
+    var singles = shown.filter(function (c) { return !c.hasAttribute("data-enc-tall"); });
+    shown.forEach(function (c) {
+      c.toggleAttribute("data-enc-fill", singles.length % 2 === 1 && c === singles[singles.length - 1]);
+    });
 
     var collection = gallery.closest(".notion-collection") || gallery.parentElement;
     if (bar) bar.sync();
