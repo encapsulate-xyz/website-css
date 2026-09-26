@@ -550,7 +550,8 @@ checked, because the hidden tab then stopped rendering the app at all (throttled
 edits are the user's to make. **minima frosts the navbar** (`backdrop-filter: blur(12px)` plus a white wash) — 4f's bar is
 plain glass, so both are cancelled, or whatever the bar lies over is smeared.
 
-**The reconstruction banner is on no page now** (§15b). It was on /services alone from
+**The reconstruction banner is gone** (2026-09-26: head/site-body.html is empty; the user removes the
+snippet from Super's Body code). §15b keeps its styles, hidden. It was on /services alone from
 2026-09-21 until that page was rebuilt on 2026-09-23. Super's Body code is site-wide and there is
 no per-page Body box, so the banner is hidden by default and shown again by the class Super puts
 on its own wrapper: `body:has(.super-content.page__<slug>) .enc-banner { display: flex; }` for a
@@ -1258,9 +1259,17 @@ What was broken, now fixed:
 - **/investments "Send the spec"** pointed at a block no longer on /contact-us (Notion link fixed).
 - **Chain pages' names broke inside the word** at 901–1919 ("Avalan|che") — chain.js `fitName()`
   measures the longest word on a canvas in em and chain.css takes `min(design size, 100cqi / em)`.
-- **React #418 on /brand and /networks** came from the Menu button going into Super's bar before
-  hydration (navbar.js waits for the fiber key, 5s at most). #418 remains on most pages from other
-  scripts' early writes — see the open items.
+- **React #418 (hydration mismatch) on every page — measured, and left as it is by the user's rule.**
+  Our scripts build at DOMContentLoaded, before React adopts Super's HTML (the fiber key on
+  `.notion-root`); React then throws the built DOM away and renders again, and the observers
+  rebuild: a raw-Notion flash at the moment of adoption, 0.1–0.6s on a desktop, 0.3–2s at a 4x
+  CPU throttle (`scratchpad/hyd.mjs`-style timelines, ten pages, three loads each). Holding every
+  first build until adoption removes the flash but shows raw Notion from first paint until adoption
+  — 0.7–7s on a phone-speed CPU (homepage ~3.9s against ~0.5s today). The user: if it makes the page
+  slower with Notion visible, don't. So nothing waits for hydration; v305's Menu-button wait was
+  reverted in v306 for the same reason (the phone's Menu came in seconds late). A fix that keeps the
+  early build would have to rebuild before paint on adoption (observer callbacks, not timers) — not
+  attempted.
 
 Responsive, by width:
 - **Super's side margin jumped from 24 to 96px at 547** (content narrower at 560 than at 546): from
@@ -1291,11 +1300,21 @@ Responsive, by width:
   under 600. **Navbar:** the chains' rate hidden at 1101–1365, a 104px wordmark under 360, the stacked
   drawer's calendar a full screen.
 
-Left for the user (reported, not changed): the guides picker's answer card below the fold at laptop
-heights (a design call), /investments' `ch` caps, the record and the bar at ≥1920, the stage block
-under the index on touch phones, the blog's no-results words, the EigenCloud duplicate in the Learn
-panel, the zk-snarks prose in JSON code blocks, "Hover a highlighted word" on touch, the code copy
-button over a phone's first line.
+Decided with the user after (2026-09-26): the record and the navbar run the full width at ≥1920
+(as they are); "1882 votes" stays — it counts votes from before the record was kept; "Hover a
+highlighted word" stays; the three blank record rows were deleted (Notion trash); the "Under
+reconstruction" banner's Body snippet is to be removed in Super (head/site-body.html is empty); the
+blog's no-results state waits for a design. **The EigenCloud pair in the Learn panel:** two guides for
+one chain and one wallet — /guides/mainnet/eigen-layer (11 steps, delegate on EigenLayer) and
+/guides/mainnet/eigen-layer-lst (18 steps, stake ETH on Lido and restake the stETH) — and the second
+carried the first's Title. Its Title is now "Restake stETH with MetaMask", and navbar.js's /guides
+reader labels twins by what their Title says they do. The picker still offers one guide per chain
+and wallet, so the LST guide is not reachable from it.
+
+Still open: the guides picker's answer card below the fold at laptop heights once a chain is picked
+(the band grows to 995–1021px at 768–900 tall), /investments' `ch` caps, the stage block under the
+index on touch phones, the zk-snarks prose in JSON code blocks, the code copy button over a phone's
+first line.
 
 ## Things that bite in Super / Notion markup
 

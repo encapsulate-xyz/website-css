@@ -432,15 +432,24 @@
         var n = titleOf(c), g = glyphOf(c);
         if (n && g && !marks[n.toLowerCase()]) marks[n.toLowerCase()] = g;
       });
-      return (db ? all(db, ".notion-collection-card") : []).slice(0, 7).map(function (c) {
+      var list = (db ? all(db, ".notion-collection-card") : []).slice(0, 7).map(function (c) {
         var title = titleOf(c);
         var texts = propsOf(c).filter(function (t) { return !/^\d+$/.test(t); });
         var chain = texts.filter(function (t) { return marks[t.toLowerCase()]; })[0] ||
           (marks[title.toLowerCase()] ? title : "");
         var wallet = texts.filter(function (t) { return t !== chain; })[0] || "";
-        return { name: chain || title, wallet: wallet,
+        // the guide's own Title ("Stake EIGEN with MetaMask"), for telling two guides apart
+        var what = texts.filter(function (t) { return / with /i.test(t) && t !== wallet; })[0] || "";
+        return { name: chain || title, wallet: wallet, what: what.replace(/ with .*$/i, ""),
           glyph: marks[(chain || title).toLowerCase()] || "", href: linkOf(c) || "/guides" };
       }).filter(function (r) { return r.name; });
+      /* two guides for one chain and one wallet (EigenCloud: delegating on EigenLayer, and restaking
+         stETH) read "EigenCloud · MetaMask" twice; there each says what it does instead */
+      var twins = list.map(function (r) {
+        return list.some(function (o) { return o !== r && o.name === r.name && o.wallet === r.wallet; });
+      });
+      list.forEach(function (r, i) { if (twins[i] && r.what) r.wallet = r.what; });
+      return list;
     },
     "/blog": function (doc) {
       return all(doc, ".notion-collection-card").slice(0, 4).map(function (c) {
@@ -1238,24 +1247,13 @@
 
   /* the Menu button sits in Super's actions, after its Book a call; the observer puts it back if
      a re-render drops it */
-  /* React adopts the server's HTML when it hydrates, and a node it has adopted carries its fiber
-     key. An element added inside Super's markup before then is one React did not render: it
-     reports a hydration mismatch (#418) and renders the page again on the client, over everything
-     the scripts had built. The Menu button went into the bar's actions at load, at every width —
-     the cause of #418 on /brand and /networks (measured 2026-09-26: with navbar.js alone, #418;
-     without it, none). It waits for the actions to be adopted, and goes in anyway after 5s. */
-  function adopted(node) {
-    return Object.keys(node).some(function (k) { return k.indexOf("__reactFiber$") === 0; });
-  }
-  var hydrateWait = 0, hydrateFrom = Date.now();
+  /* The Menu button goes in at once. Holding it until React had adopted the bar (v305) cleared one
+     cause of React's hydration error #418, but other scripts' early writes cause it as well, and on
+     a phone-speed CPU React adopts the page 0.7–7s in: the button was missing for that long. Not
+     worth it while #418 stays (measured 2026-09-26; see CLAUDE.md, "The audit of 2026-09-26"). */
   function compact() {
     var actions = document.querySelector("nav.super-navbar .super-navbar__actions");
     if (!actions || !menu.length) return;
-    if ((!menuBtn || menuBtn.parentNode !== actions) && !adopted(actions) && Date.now() - hydrateFrom < 5000) {
-      clearTimeout(hydrateWait);
-      hydrateWait = setTimeout(compact, 100);
-      return;
-    }
     if (!menuBtn) {
       menuBtn = el("button", "enc-nav__menu");
       menuBtn.type = "button";
@@ -1290,11 +1288,11 @@
   });
 
   /* Super renders each group's trigger as a span with no tabindex, so a keyboard never reached a
-     menu (audit 2026-09-26). Once React has adopted it, a trigger takes focus and opens on Enter or
-     Space — a click, the same thing radix answers from a pointer; nothing is opened unasked. */
+     menu (audit 2026-09-26). A trigger takes focus and opens on Enter or Space — a click, the same
+     thing radix answers from a pointer; nothing is opened unasked. Attributes only, so hydration
+     is not disturbed; a re-render that drops them is caught on the next tick. */
   function keys() {
     all(document, "nav.super-navbar .super-navbar__list[aria-controls]:not([tabindex])").forEach(function (t) {
-      if (!adopted(t)) return;
       t.tabIndex = 0;
       t.setAttribute("role", "button");
       t.addEventListener("keydown", function (e) {
