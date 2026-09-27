@@ -43,8 +43,11 @@
       card.querySelectorAll(".notion-property__select .notion-pill"),
       function (p) { return p.textContent.trim(); });
     // the category is the post's first tag other than "Informative" — the same rule the homepage
-    // rail uses, so a post is filed the same way in both places
-    var tag = pills.filter(function (n) { return !/^informative$/i.test(n); })[0] || pills[0] || "";
+    // rail uses, so a post is filed the same way in both places. This view also shows the pills
+    // post.js reads off the card (Mainnet: Live / Not yet launched, and Status), which are not
+    // tags: a post tagged only "Informative" was filed under "Live" (found 2026-09-27)
+    var tags = pills.filter(function (n) { return !/^(live|not yet launched|we run it|not ours)$/i.test(n); });
+    var tag = tags.filter(function (n) { return !/^informative$/i.test(n); })[0] || tags[0] || "";
     // the Read property (minutes, 2026-09-26), once the view shows it: the sort's "Shortest read"
     var mins = card.querySelector(".notion-property__number");
     var read = mins ? parseInt(mins.textContent.replace(/[^\d]/g, ""), 10) : NaN;
