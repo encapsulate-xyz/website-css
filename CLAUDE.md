@@ -1754,22 +1754,19 @@ pointing at the mainnet row, so it gets /guides/mainnet/&lt;chain&gt;), switch t
 
 Raise this whenever guides are being worked on.
 
-## TODO — the GitHub Actions (planned 2026-09-26, not built)
+## TODO — the GitHub Actions (planned 2026-09-25/26, not built)
 
-**The plan is `notion/github-actions-plan.md`**: an inventory of the 26 things on the site that go
-stale (the record's votes and upgrades, the Networks set's rates, commission, status and unbonding, the
-blog's Read, the guides' Step and Time, the dashboards' status, dead links, glyph drift, pages on old
-tags…), where each lives in Notion and what a job would do; four workflows (`governance.yml`,
-`networks.yml`, `content.yml`, `audit.yml`) over a `jobs/` package with one adapter per chain family
-and `config/chains.yml`; every job with `--dry`; values it owns written to Notion, everything that is
-the user's call collected in one rolling issue ("Site data: needs you"). The two older TODOs below
-(the governance jobs, the APY job) are parts of it.
+**The whole plan is `notion/github-actions-plan.md`** (rewritten 2026-09-27 as one document): what the
+user asked and what was answered, the 26 things on the site that go stale, how the jobs work (Python
+in the repo, the Action only a scheduler; Notion the only thing written; write / check / watch tiers;
+a Rate source Auto/Manual switch, a sanity band and a history file), the `jobs/` structure under four
+workflows, the build order, and the decisions. Until it is built, values are updated by hand.
 
-- **Decided:** "1882 · Votes cast since 2020" stays — it counts votes from before the record was kept.
-- **Open, before any code:** keep it in this public repo (public logs; scheduled runs switch off after
-  60 days without a commit) or a small private one; **rotate the Notion token first** (it becomes a repo
-  secret); and which fields are written versus reported (proposed: write rates, Status and Read; report
-  Commission, Slashing and Unbonding).
+- **Decided:** logic in Python, the Action a thin scheduler; Notion the only target; "1882" stays.
+- **Open, before any code:** where the rolling report goes (GitHub issue or Discord/Telegram); this
+  public repo or a private one; **rotate the Notion token first**; which fields are written and which
+  only reported (Status is the one the two plans differed on); public endpoints or our own nodes; and
+  whether new vote rows go live on their own, with whose rationale.
 - **Remind the user of this when they ask what is left to do.**
 
 ## TODO — SEO for every page (asked 2026-09-26, not started)
