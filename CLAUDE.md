@@ -1778,20 +1778,34 @@ the site need updating, answer from section 2 — and check it against the live 
   first**; new vote rows live or held, with whose rationale; public endpoints or our own nodes.
 - **Remind the user of this when they ask what is left to do.**
 
-## TODO — SEO for every page (asked 2026-09-26, not started)
+## TODO — SEO for every page (asked 2026-09-26; audited and planned 2026-09-27, not started)
 
-Update the SEO of every page the navbar and footer reach, and of the post, guide, chain and legal
-templates. Remind the user of this when they ask what is left to do. Start with an audit, then a table
-of what to set where:
+**Where SEO is set here** (Super's docs, 2026-09-27): a page's title, description and social image default
+to the Notion page title, its first h3/text/quote block and its cover; **per page they are overridden in
+Super → Pages → Edit SEO** (the user pastes — Super's editor cannot be driven from here); **database
+items take them from Notion properties `meta:title`, `meta:description`, `meta:image`, `meta:author`,
+`meta:canonical`** (and `super:slug`), which the API can add and fill for every post, chain page and
+guide at once. Super does 301/302 redirects and a site-wide indexing switch; a single page's noindex
+would be a robots meta tag in its own Code → Head (Google keeps the more restrictive of two). Structured
+data (JSON-LD) is ours: the site head, or built by the page scripts.
 
-- per page: the `<title>`, the meta description, Open Graph and Twitter title, description and image,
-  the canonical URL — what Super serves today against what the page is now (most were written before
-  the redesigns); these are set in Super (page settings → SEO), so the table is for the user to paste,
-  with anything the Notion API can set (a page's title) done from here;
-- the site: the sitemap and robots (the old pages and "Encapsulate Test Home" copies should not be
-  indexed), one `h1` per page (the cover's Heading 1), headings in order, alt text on images and
-  glyphs, structured data (Organization), and redirects for paths that moved (/terms-and-conditions →
-  /terms-of-use).
+**The audit (live pages, 2026-09-27):** titles are bare page names ("Investment", "Blog", "Sui"; the
+homepage "Encapsulate" alone); descriptions are stale or accidental — /networks 330 characters of old
+copy, /services 260, /governance-record 282, /contact-us 172, and first-label leftovers ("Security and
+operations · 01", "Encapsulate · Privacy", "Encapsulate · Investments", a guide's "Using Keplr"); 8 of 15
+pages checked have no social image, the rest old Notion covers; no structured data anywhere; two to five
+h1s per page (Super's hidden page title, the cover's Heading 1, other Heading 1 blocks — /brand 5,
+/networks 4); the sitemap lists 454 URLs, 318 of them single vote rows of the record, plus the old
+pages (/snapshots ×10, /lido-dvt-staking ×4, /rewards-calculator, /services/celestia, /eigen-layer);
+**/terms-and-conditions returns 404** since the path moved (needs a 301 to /terms-of-use).
+
+**The approach agreed to propose:** decide what each page should rank for → a reviewable table of
+titles (≤60) and descriptions (≤155) written from each page's own copy → the database items filled
+through `meta:*` from here, the ~13 main pages pasted by the user in Super → social images 1200×630
+from the design's own cover captures → the 301 and a decision on the old pages and the vote-row pages
+(`meta:canonical` to the record, or leave) → JSON-LD (Organization in the site head; FAQPage on the
+chain pages from their five questions; BlogPosting on posts) → Google Search Console (verify, submit
+the sitemap). Remind the user when they ask what is left to do.
 
 ## TODO — check every line break against its handoff (asked 2026-09-26, not started)
 
