@@ -80,9 +80,18 @@ def main():
         live = pins(served[page])
         behind = {f: (live.get(f), t) for f, t in mine.items()
                   if live.get(f) != t}
-        if not behind:
+        # a head file can change without a tag: its structured data (JSON-LD) is written in the
+        # file itself, so each block it carries must be on the live page, word for word
+        text = open(head).read()
+        blocks = [re.sub(r"\s+", "", b) for b in re.findall(
+            r'<script type="application/ld\+json">(.*?)</script>', text, re.S)]
+        page_flat = re.sub(r"\s+", "", served[page])
+        missing_ld = [b for b in blocks if b not in page_flat]
+        if not behind and not missing_ld:
             continue
         rows.append((head, target))
+        if missing_ld:
+            notes.append(f"    structured data (JSON-LD): not on the live page yet")
         for f, (was, now) in sorted(behind.items()):
             notes.append(f"    {f}: live {was or '—'} -> {now}")
             if why and was:
