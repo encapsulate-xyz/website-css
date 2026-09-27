@@ -923,7 +923,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   width: max-content;
   padding-right: 0.42em;
   font-family: var(--type-display), system-ui, sans-serif;
-  font-size: clamp(56px, 8.4vw, 124px);
+  font-size: clamp(40px, 5.8vw, 88px);
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.05em;

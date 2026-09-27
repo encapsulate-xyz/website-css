@@ -112,7 +112,7 @@
 .notion-root #block-3dde800a5138819995f7de108ee8e815 > .notion-callout__content > .notion-column-list{grid-row: 5;justify-self: start !important;width: auto !important;margin-top: 28px !important;}
 .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-strip{grid-row: 7;display: flex;flex-direction: column;gap: 4px;margin: 0 calc(-1 * var(--ask-pad)) !important;}
 .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-row{overflow: hidden;padding: 6px 0;}
-.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-tape{display: flex;gap: 0.42em;width: max-content;padding-right: 0.42em;font-family: var(--type-display),system-ui,sans-serif;font-size: clamp(56px,8.4vw,124px);font-weight: 600;line-height: 1;letter-spacing: -0.05em;animation: enc-set-tape 130s linear infinite;}
+.notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-tape{display: flex;gap: 0.42em;width: max-content;padding-right: 0.42em;font-family: var(--type-display),system-ui,sans-serif;font-size: clamp(40px,5.8vw,88px);font-weight: 600;line-height: 1;letter-spacing: -0.05em;animation: enc-set-tape 130s linear infinite;}
 .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-tape--rev{animation-duration: 60s;animation-direction: reverse;}
 .notion-root #block-3dde800a5138819995f7de108ee8e815 .enc-set-strip:has(.enc-set-name:hover,.enc-set-name:focus-visible) .enc-set-tape{animation-play-state: paused;}
 @keyframes enc-set-tape{from{transform: translateX(0);}

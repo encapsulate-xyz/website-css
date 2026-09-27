@@ -1509,7 +1509,7 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
   in the band, not by id) "Thirty-five teams chose us." at `clamp(40px, 6.6vw, 100px)`, .94, 13ch,
   the number rewritten from the set — the line at `clamp(16px, 1.7vw, 21px)`, 34ch, and Book a call
   and What we run at 48px and 15.5px, 28px under it; and filling the foot, window-wide, **the set in
-  two rows**: every chain as a name at `clamp(56px, 8.4vw, 124px)` led by its glyph in a .86em disc of
+  two rows**: every chain as a name at `clamp(40px, 5.8vw, 88px)` (the file's own step down from 56–124px, 2026-09-27) led by its glyph in a .86em disc of
   its tint, **the god, high and medium tiers on the first row drifting left over 130s, low and filth
   on the second drifting right over 60s** (the tier is never shown). Names rest `#6B6F68`; hovering or
   focusing one fills it with its tint, turns the disc paper and the name ink, and pauses both rows;
