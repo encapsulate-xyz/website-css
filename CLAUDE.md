@@ -1799,6 +1799,20 @@ h1s per page (Super's hidden page title, the cover's Heading 1, other Heading 1 
 pages (/snapshots ×10, /lido-dvt-staking ×4, /rewards-calculator, /services/celestia, /eigen-layer);
 **/terms-and-conditions returns 404** since the path moved (needs a 301 to /terms-of-use).
 
+**Structured data — done, v319 (2026-09-27).** The homepage head (`head/home.html`) carries Organization
+(name, legal name, logo = the favicon PNG, 4097px square, founding year, email, the footer's four social
+profiles) and WebSite (the site name Google shows) as static JSON-LD. The page scripts add the rest from
+what the page shows, as `script#enc-ld-post|chain|guide` in the head, replaced on each build and removed
+on any other page (checked through client-side navigations): **post.js** BlogPosting (headline, the
+lede, the date in local time, the Author, the tag as articleSection) + breadcrumb Home → Blog → post;
+**chain.js** the five questions as FAQPage (Google stopped showing FAQ results in May 2026 but still
+reads them) + Home → Networks → chain; **guide.js** Home → Guides → guide (HowTo results are gone since
+2023). The homepage head also holds the Google Search Console verification tag — the site is verified.
+**Answers given 2026-09-27:** database pages need nothing in Super — `meta:*` properties in Notion are
+enough; the default social image is Super dashboard → SEO → Default Social Image; the 301 for
+/terms-and-conditions is optional (nothing on the site or in the sitemap links it); old pages are to be
+hidden (a robots `noindex` line in each one's Code → Head, 21 pages).
+
 **The approach agreed to propose:** decide what each page should rank for → a reviewable table of
 titles (≤60) and descriptions (≤155) written from each page's own copy → the database items filled
 through `meta:*` from here, the ~13 main pages pasted by the user in Super → social images 1200×630

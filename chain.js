@@ -18,6 +18,31 @@
    client-side navigation, so this builds off a MutationObserver like every other page script. */
 (function () {
   var VERSION = "1";
+  var LD = "enc-ld-chain";
+
+  /* ── structured data (2026-09-27) ── for search engines: built from what the page shows, as a
+     JSON-LD script in the head, replaced on every build and removed on any other page (Super is a
+     single-page app, so a script left behind would describe the wrong page). */
+  var ORG = { "@type": "Organization", "@id": "https://encapsulate.xyz/#organization", "name": "Encapsulate",
+    "url": "https://encapsulate.xyz/",
+    "logo": "https://assets.super.so/d7300a44-6aa9-4b9e-a149-0076eb69ca9d/uploads/favicon/5e58bb1b-9402-467d-94ed-606ab66894a0.png" };
+  function ld(data) {
+    var node = document.getElementById(LD);
+    if (!data) { if (node) node.remove(); return; }
+    var json = JSON.stringify(data);
+    if (!node) {
+      node = document.createElement("script");
+      node.type = "application/ld+json";
+      node.id = LD;
+      document.head.appendChild(node);
+    }
+    if (node.textContent !== json) node.textContent = json;
+  }
+  function crumbs(trail) {
+    return { "@type": "BreadcrumbList", "itemListElement": [["Home", "/"]].concat(trail).map(function (c, i) {
+      return { "@type": "ListItem", "position": i + 1, "name": c[0], "item": "https://encapsulate.xyz" + c[1] };
+    }) };
+  }
   var SET_ID = "3dde800a51388133b7f1d1ccdda08038";         /* the Networks set */
   var COPY_PAGE = "/networks", LIST_PAGE = "/services";
   var KEEP = 1800000;                                       /* session cache, half an hour */
@@ -1012,6 +1037,17 @@
       live = { id: id, key: key, wrap: wrap, dock: dock, docked: false };
       root.setAttribute("data-enc-chain", VERSION);
       building = null;
+      // the chain's page for search engines: its five questions as they stand on the page (Google
+      // shows no FAQ results since 2026-05, but still reads them) and its place under /networks
+      var here = location.pathname.replace(/\/$/, ""), qa = [];
+      src.sections.forEach(function (sec) {
+        sec.faq.forEach(function (f) {
+          if (f[0] && f[1]) qa.push({ "@type": "Question", "name": f[0], "acceptedAnswer": { "@type": "Answer", "text": f[1] } });
+        });
+      });
+      var graph = [ORG, crumbs([["Networks", "/networks"], [P.name, here]])];
+      if (qa.length) graph.push({ "@type": "FAQPage", "@id": "https://encapsulate.xyz" + here + "#questions", "mainEntity": qa });
+      ld({ "@context": "https://schema.org", "@graph": graph });
       if (first && (window.scrollY || 0) < 40 && !location.hash) window.scrollTo(0, 0);
       onScroll();
   }
@@ -1024,8 +1060,10 @@
     var key = pageKey(), root = document.querySelector(".notion-root");
     if (!key || !root) {
       if (live) { document.querySelectorAll(".enc-ch-dock").forEach(function (n) { n.remove(); }); live = null; }
+      ld(null);
       return;
     }
+    if (live && live.key !== key) ld(null);
     if (live && live.key !== key) { document.querySelectorAll(".enc-ch-dock").forEach(function (n) { n.remove(); }); live = null; }
     if (building === key) return;
     /* Super may keep the root element across a client-side navigation: a mark belongs to its page */
@@ -1035,7 +1073,7 @@
     }
     var state = root.getAttribute("data-enc-chain");
     if (state === VERSION && live && live.key === key && root.contains(live.wrap)) return;
-    if (state === "no") return;
+    if (state === "no") { ld(null); return; }
     /* only a row of the Networks set is a chain page; anything else is marked and left alone */
     building = key;
     resolveId().then(function (id) {

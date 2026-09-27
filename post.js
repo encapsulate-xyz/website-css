@@ -20,6 +20,31 @@
 (function () {
   var PATH = /^\/blog\/.+/;
   var VERSION = "9";
+  var LD = "enc-ld-post";
+
+  /* ── structured data (2026-09-27) ── for search engines: built from what the page shows, as a
+     JSON-LD script in the head, replaced on every build and removed on any other page (Super is a
+     single-page app, so a script left behind would describe the wrong page). */
+  var ORG = { "@type": "Organization", "@id": "https://encapsulate.xyz/#organization", "name": "Encapsulate",
+    "url": "https://encapsulate.xyz/",
+    "logo": "https://assets.super.so/d7300a44-6aa9-4b9e-a149-0076eb69ca9d/uploads/favicon/5e58bb1b-9402-467d-94ed-606ab66894a0.png" };
+  function ld(data) {
+    var node = document.getElementById(LD);
+    if (!data) { if (node) node.remove(); return; }
+    var json = JSON.stringify(data);
+    if (!node) {
+      node = document.createElement("script");
+      node.type = "application/ld+json";
+      node.id = LD;
+      document.head.appendChild(node);
+    }
+    if (node.textContent !== json) node.textContent = json;
+  }
+  function crumbs(trail) {
+    return { "@type": "BreadcrumbList", "itemListElement": [["Home", "/"]].concat(trail).map(function (c, i) {
+      return { "@type": "ListItem", "position": i + 1, "name": c[0], "item": "https://encapsulate.xyz" + c[1] };
+    }) };
+  }
 
   /* The words live on the /blog page, in a toggle called "Post page copy" — one place for all
      forty posts, since Super ships only the current page's blocks and a post has no block of its
@@ -350,7 +375,7 @@
   }
 
   function build() {
-    if (!PATH.test(location.pathname)) return;
+    if (!PATH.test(location.pathname)) { ld(null); return; }
     var root = document.querySelector(".notion-root");
     if (!root) return;
     if (root.getAttribute("data-enc-post") === VERSION) return;
@@ -517,6 +542,23 @@
       }
       if (info.me && info.me.glyph) mark.src = info.me.glyph;
       else mark.remove();
+      // the post as an article, and its place under the blog: the title, the lede, the date and the
+      // author the page shows; the date is read in local time so it stays the day it says
+      var me = info.me || {}, here = location.pathname.replace(/\/$/, "");
+      var headline = textOf(document.querySelector(".notion-header__title")) || me.title || "";
+      var article = { "@type": "BlogPosting", "@id": "https://encapsulate.xyz" + here + "#post",
+        "headline": headline.slice(0, 110), "url": "https://encapsulate.xyz" + here,
+        "mainEntityOfPage": "https://encapsulate.xyz" + here, "publisher": { "@id": ORG["@id"] },
+        "author": me.author ? { "@type": "Person", "name": me.author } : { "@id": ORG["@id"] } };
+      var said = led && led.isConnected && led.textContent ? led.textContent : me.lede;
+      if (said) article.description = said;
+      var day = new Date(me.date || "");
+      if (me.date && !isNaN(day)) article.datePublished = day.getFullYear() + "-" +
+        ("0" + (day.getMonth() + 1)).slice(-2) + "-" + ("0" + day.getDate()).slice(-2);
+      if (me.tag) article.articleSection = me.tag;
+      if (PATH.test(location.pathname) && location.pathname.replace(/\/$/, "") === here) {
+        ld({ "@context": "https://schema.org", "@graph": [ORG, article, crumbs([["Blog", "/blog"], [headline, here]])] });
+      }
       fillAsk(wrap);
       var f = wrap.querySelector(".enc-po__foot");
       if (f) f.replaceWith(foot(info.next, info.me));

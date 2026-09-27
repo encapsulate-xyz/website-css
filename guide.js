@@ -15,6 +15,31 @@
    navigation, so this builds off a MutationObserver like every other page script. */
 (function () {
   var PATH = /^\/guides\/[^/]+\/[^/]+/;
+  var LD = "enc-ld-guide";
+
+  /* ── structured data (2026-09-27) ── for search engines: built from what the page shows, as a
+     JSON-LD script in the head, replaced on every build and removed on any other page (Super is a
+     single-page app, so a script left behind would describe the wrong page). */
+  var ORG = { "@type": "Organization", "@id": "https://encapsulate.xyz/#organization", "name": "Encapsulate",
+    "url": "https://encapsulate.xyz/",
+    "logo": "https://assets.super.so/d7300a44-6aa9-4b9e-a149-0076eb69ca9d/uploads/favicon/5e58bb1b-9402-467d-94ed-606ab66894a0.png" };
+  function ld(data) {
+    var node = document.getElementById(LD);
+    if (!data) { if (node) node.remove(); return; }
+    var json = JSON.stringify(data);
+    if (!node) {
+      node = document.createElement("script");
+      node.type = "application/ld+json";
+      node.id = LD;
+      document.head.appendChild(node);
+    }
+    if (node.textContent !== json) node.textContent = json;
+  }
+  function crumbs(trail) {
+    return { "@type": "BreadcrumbList", "itemListElement": [["Home", "/"]].concat(trail).map(function (c, i) {
+      return { "@type": "ListItem", "position": i + 1, "name": c[0], "item": "https://encapsulate.xyz" + c[1] };
+    }) };
+  }
   var VERSION = "1";
   var INDEX = "/guides";
 
@@ -429,6 +454,10 @@
       list.forEach(function (st, i) { wrap.appendChild(stepBand(st, i, list.length)); });
       wrap.appendChild(close(me, info.next, list.length));
 
+      // the guide's place under /guides, for search engines (HowTo results are gone since 2023)
+      var here = location.pathname.replace(/\/$/, "");
+      if (guidePage()) ld({ "@context": "https://schema.org", "@graph": [ORG, crumbs([["Guides", "/guides"], [me.title || me.name || textOf(document.querySelector(".notion-header__title")), here]])] });
+
       var old = root.querySelector(".enc-gd");
       if (old) old.remove();
       /* the reader is at the top of a page that is about to grow by ten screens above them:
@@ -468,7 +497,7 @@
   }
 
   function tick() {
-    if (!guidePage()) return;
+    if (!guidePage()) { ld(null); return; }
     var root = document.querySelector(".notion-root");
     if (!root || root.getAttribute("data-enc-guide") === VERSION) return;
     var old = root.querySelector(".enc-gd");
