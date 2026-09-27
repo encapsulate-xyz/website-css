@@ -112,6 +112,8 @@ User rules that stand on every task:
 | `scripts/paste_table.py` | prints the paste table from head/*.html vs what the live pages serve | — |
 | `scripts/livecheck.mjs` | loads a live page in headless Chrome with pinned tags' files served from this repo (or a pushed commit) — pass every tag the page pins, comma-separated (`v263,v227,v220`), runs a check in the page, optional real mouse, wheel and key steps (`move`, `click` — a real press and release — `wheel(x, y, dy)` and `press(key)`) and a screenshot. The scratchpad copies it replaced were lost on 2026-09-24 | — |
 | `scripts/audit.mjs` | audits a live page at many widths (default 16, 320–2560; touch under 835) with every tag it pins served from this repo: sideways scroll and what causes it, text cut by its box, broken images, script errors, failed requests, screenshots per screen (`--shots`), a page check of your own (`--check`). `BLOCK=1` loads the page with none of our files, `ALLOW=a.js,b.js` with only those scripts — how a fault is traced to us or to Super. Built for the audit of 2026-09-26 |
+| `scripts/og_cards.py`, `scripts/og/` | the social cards (og:image) of the database pages — `posts`, `chains` or `guides`: renders each page's card from its own design (`og/post.html` = Blog Cover System 17d, the chain hero captured live, `og/guide.html` = the guide head drawn by guide.css; `og/render.mjs` is the one-tab headless renderer) and attaches it to the row's `meta:image` with its text properties (see "SEO") | — |
+| `img/og/` | the one card that cannot live in Notion: the Mina hard-fork post, which is not a Blogs row (set as its image override in Super) | Super's page settings |
 | `scripts/shots.py`, `img/shots/` | panel captures of the live tools (Sui RGP, the Solana graph), 1100×750 at DPR 2 from headless Chrome — the extension's screenshots time out on those pages, and a WebGL graph needs swiftshader or it comes back blank. Not wired into any page yet (2026-09-23): the tools table that names their tiles arrived cut off | — |
 
 **Edit sources, run `python3 build.py`, commit source and `dist/` together. Never edit `dist/`.**
@@ -1778,26 +1780,53 @@ the site need updating, answer from section 2 — and check it against the live 
   first**; new vote rows live or held, with whose rationale; public endpoints or our own nodes.
 - **Remind the user of this when they ask what is left to do.**
 
-## TODO — SEO for every page (asked 2026-09-26; audited and planned 2026-09-27, not started)
+## SEO (asked 2026-09-26; done 2026-09-27/28 except the items at the end)
 
-**Where SEO is set here** (Super's docs, 2026-09-27): a page's title, description and social image default
-to the Notion page title, its first h3/text/quote block and its cover; **per page they are overridden in
-Super → Pages → Edit SEO** (the user pastes — Super's editor cannot be driven from here); **database
-items take them from Notion properties `meta:title`, `meta:description`, `meta:image`, `meta:author`,
-`meta:canonical`** (and `super:slug`), which the API can add and fill for every post, chain page and
-guide at once. Super does 301/302 redirects and a site-wide indexing switch; a single page's noindex
-would be a robots meta tag in its own Code → Head (Google keeps the more restrictive of two). Structured
-data (JSON-LD) is ours: the site head, or built by the page scripts.
+**How Super sets SEO — as found, not as documented.** A page's title, description and social image
+default to its Notion title, first text block and cover. **Super's Page SEO Settings override** them
+(Pages → a row's globe icon; stored per page as `seo {title, description, imageUrl, keywords}`), and
+**an override beats the Notion properties**: database items read `meta:title`, `meta:description`,
+`meta:image` from Notion only where Super holds no override for that field. No view has to show the
+`meta:*` properties (the documented requirement did not hold here). **Super only sees a Notion edit
+after it refetches the page**: its own sync did not come within 15 minutes; the dashboard's ↻ over the
+preview refetches one page at once. A cleared override is stored as `""`.
 
-**The audit (live pages, 2026-09-27):** titles are bare page names ("Investment", "Blog", "Sui"; the
-homepage "Encapsulate" alone); descriptions are stale or accidental — /networks 330 characters of old
-copy, /services 260, /governance-record 282, /contact-us 172, and first-label leftovers ("Security and
-operations · 01", "Encapsulate · Privacy", "Encapsulate · Investments", a guide's "Using Keplr"); 8 of 15
-pages checked have no social image, the rest old Notion covers; no structured data anywhere; two to five
-h1s per page (Super's hidden page title, the cover's Heading 1, other Heading 1 blocks — /brand 5,
-/networks 4); the sitemap lists 454 URLs, 318 of them single vote rows of the record, plus the old
-pages (/snapshots ×10, /lido-dvt-staking ×4, /rewards-calculator, /services/celestia, /eigen-layer);
-**/terms-and-conditions returns 404** since the path moved (needs a 301 to /terms-of-use).
+**Driving Super without its UI.** The dashboard's API is GraphQL at `https://api.super.so/graphql`,
+authorised with `Bearer <localStorage.token>` from the dashboard tab (never print it). What was used:
+`sitePages(id: <site id>) { id path seo {…} }` lists every page with its overrides;
+`updateSitePage(input: {id, seo: {title, description, imageUrl, keywords}})` writes them (send back the
+fields you keep — it replaces the object); `siteDataForDashboard(input: {domainName, page, noCache: true,
+revalidateImmediately: true})` is the ↻ refetch. A page id is `<site id>:::<uuid>`. The UI is slow and,
+in a hidden automation tab, stops rendering; opening a row's settings is a full page load, so in-page
+scripts do not survive it. **A refetch of a page trashed in Notion makes it 404** — Super had been
+serving /blog/mina-hard-fork from cache (see the open items).
+
+**What is set now:**
+
+| Where | What |
+|---|---|
+| Super → SEO | Default Social Image = the kit's `og-default.png`; Default Domain Indexing (the super.site copy) off |
+| the 12 main pages | title, description and image from the brand kit's `seo.csv` and `og-*.png` (Super overrides) |
+| 20 old pages | `<meta name="robots" content="noindex">` in each page's Code → Head: /eigen-layer, /rewards-calculator, /team, /services/celestia, /snapshots and its nine, /lido-dvt-staking and its three, /investments/portfolio, /investments/axelar (/investments/gravity-bridge is a 404). **Never in the site-wide Code head** |
+| every post (40) | `meta:image` = its 17d card, `meta:description` = its Lede |
+| every chain page (27) | `meta:image` = its hero, `meta:title` = "<Name> staking — Encapsulate" |
+| every guide (33) | `meta:image` = its head, `meta:description` = its Lede; the title stays Super's override ("Axelar Staking Guide") |
+| structured data | v319 — see below |
+
+The 16 posts and 32 guides whose Super overrides held an old image or description had those two
+cleared (titles kept) so the Notion values apply; /blog/double-zero keeps its title override "Double
+Zero" for "What is IBRL and Why Does It Matter?". **A new post, guide or chain page gets its card with
+`python3 scripts/og_cards.py posts|guides|chains --only <slug>`**, then ↻ in Super (or its sync).
+
+**The cards** (1200×630, rendered at 2–3× and scaled down, one tab at a time — six tabs in one Chrome
+painted one card with another's strip): a post is *Blog Cover System* 17d, "Pastel glyph" — the only
+per-item card the design project has (`blog-covers/gnoland-og-1200x630.png` is its sample; the render
+matches it but for antialiasing); the pastel is the post's place on the index (Live, newest first,
+TINTS[i % 5]); a title that would run into the glyph wraps short of its ink, and Berachain's 89
+characters take one step down (22); a hyphenated word is kept whole. A chain page is its own hero at
+1440×756. A guide is its own head (design 1d) built from the row at 800×420 — at 1440 it left the card
+two-thirds empty; the seven guides with no chain in the set (Stargaze, UX, Quicksilver, OmniFlix,
+Mellow, Namada, Juno) have a tint-only disc, as their head would.
 
 **Structured data — done, v319 (2026-09-27).** The homepage head (`head/home.html`) carries Organization
 (name, legal name, logo = the favicon PNG, 4097px square, founding year, email, the footer's four social
@@ -1808,18 +1837,12 @@ lede, the date in local time, the Author, the tag as articleSection) + breadcrum
 **chain.js** the five questions as FAQPage (Google stopped showing FAQ results in May 2026 but still
 reads them) + Home → Networks → chain; **guide.js** Home → Guides → guide (HowTo results are gone since
 2023). The homepage head also holds the Google Search Console verification tag — the site is verified.
-**Answers given 2026-09-27:** database pages need nothing in Super — `meta:*` properties in Notion are
-enough; the default social image is Super dashboard → SEO → Default Social Image; the 301 for
-/terms-and-conditions is optional (nothing on the site or in the sitemap links it); old pages are to be
-hidden (a robots `noindex` line in each one's Code → Head, 21 pages).
 
-**The approach agreed to propose:** decide what each page should rank for → a reviewable table of
-titles (≤60) and descriptions (≤155) written from each page's own copy → the database items filled
-through `meta:*` from here, the ~13 main pages pasted by the user in Super → social images 1200×630
-from the design's own cover captures → the 301 and a decision on the old pages and the vote-row pages
-(`meta:canonical` to the record, or leave) → JSON-LD (Organization in the site head; FAQPage on the
-chain pages from their five questions; BlogPosting on posts) → Google Search Console (verify, submit
-the sitemap). Remind the user when they ask what is left to do.
+**Still open:** the Mina hard-fork post (a Home child page, in Notion's trash since 2026-09-25; 404 since
+its refetch on 2026-09-28 — restore it into the Blogs database or let it go); the folder pages
+/networks/mainnet (the raw set as "Networks set"), /guides/mainnet and /guides/testnet are in the
+sitemap (noindex or redirect); the 318 vote-row pages of the record (`meta:canonical` to the record, or
+leave); the 301 for /terms-and-conditions (optional — nothing links it); the main pages' h1 counts.
 
 ## TODO — check every line break against its handoff (asked 2026-09-26, not started)
 
