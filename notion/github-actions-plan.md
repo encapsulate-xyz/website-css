@@ -21,55 +21,86 @@ research the user asked for) and **a separate private repo, `site-data`**. The u
 | 2026-09-25 (morning) | "what will be the drawbacks of not creating a new site-data repo? is it sensitive data?" | Almost nothing is secret — on-chain values, addresses and database ids are public; only the Notion token (and any future key or private node endpoint) is, and Actions secrets are masked either way. Drawbacks of staying public: public logs, commit noise, ops visible. Revised then: stay public with three rules |
 | 2026-09-25 (morning) | "but then Gravity's 3 slashes would appear, where we show 0" | A **decisions list**: the check knows each chain's accepted history (Gravity Bridge's 3 bridge-module penalties counted as 0; Avail's cancelled offline slash; Gitopia's and ixo's old, shut-down validators) and flags only what is new. Public logs say almost nothing; the details go to a private summary. And because the job compares what the site claims with what the chain says, with the decisions behind it, **it belongs in a private repo** |
 | 2026-09-25 (morning) | "so we create a separate repo for the website's updates and keep this one for js and css only?" | **Yes.** `website-css` stays public: everything a browser downloads, and the site tooling. A new private **`site-data`**: the chain readers, the workflows and their secrets, the decisions list, the rate history, and the Notion scripts moved over. One question left: whether the research notes move too |
-| 2026-09-25 (evening) | "list them in a table, across all the pages, and then give me the structure… do not start coding" | The inventory of 26 things that go stale (section 2), four workflows over a package with `config/chains.yml`, one rolling report for everything that is the user's call, and a build order. **That answer drew the structure in Python, inside this repo, and asked again about a private repo — a drift from the morning's decisions, corrected in this file** |
+| 2026-09-25 (evening) | "list them in a table, across all the pages, and then give me the structure… do not start coding" | The inventory of 26 things that go stale (now section 2, extended on 2026-09-27), four workflows over a package with `config/chains.yml`, one rolling report for everything that is the user's call, and a build order. **That answer drew the structure in Python, inside this repo, and asked again about a private repo — a drift from the morning's decisions, corrected in this file** |
 | 2026-09-26 | (the audit's list) "that figure 1882 is fine" | Decided: "1882 · Votes cast since 2020" stays — it counts votes from before the record was kept, which are not rows in the table |
 | 2026-09-26 | "add github action in todos too" | A TODO in CLAUDE.md, this file, and a reminder to raise it when the user asks what is left |
 | 2026-09-27 | "summarise everything again" · "didn't you say we will use JavaScript?" · "I asked you to check py vs JavaScript" | This file, corrected: JavaScript and the private `site-data` repo, as decided on 2026-09-25 |
+| 2026-09-27 | "tell me what all numbers and stuff need updating on the website" · "document it all, we will revisit it" | A scan of every page the navbar and footer reach: section 2, what needs updating by hand (with the live value, what keeps it today and how it drifts) and what already keeps itself current, plus four things fixable without the jobs. New since the 26-item table: the homepage's uptime (typed, undefined), the Why Stake heading and its fallback, "1882" not moving with new votes, /security's two "0 slashing events" lines, the /services demo events, the typed fallbacks |
 
-## 2. What goes out of date
+## 2. Everything on the site that changes — the inventory
 
-Checked against the live data; figures as of 2026-09-27.
+Every number and fact on the live site that can change, found by scanning the pages the navbar and
+footer reach and checked against the scripts (2026-09-27). **Now** is the live value that day. **Kept by**
+says what keeps it current today: *hand* (typed in Notion by a person), *your script* (the user's own
+tool, outside this repo), *calculated* (a site script derives it from Notion data, so a visitor always
+sees the live figure; the typed value is only a fallback), or *fixed* (a fact or a promise that changes
+only if we change it). The ids (H1, G1…) are what the workflows in section 4 refer to.
 
-| # | What | Where it shows | Lives in (Notion) | Today | Source to read | The job would |
+### Needs updating — by hand today
+
+| id | Where | What | Now | Kept by | How it drifts | The job would |
 |---|---|---|---|---|---|---|
-| **Governance** |||||||
-| 1 | New votes on the 12 Cosmos chains (Terra, Axelar, Agoric, Passage, Althea, Gravity Bridge, Humans, ixo, Lumera, Sommelier, Gitopia, Chain4Energy) | /governance-record, the homepage table, the Practices menu panel | Governance Record rows (1,153 rows, 29 networks) | Added by hand. Last recorded: Terra 2026-09-11, Axelar 08-28, Agoric 08-24, Passage 07-14; Gravity Bridge 2024-11-28, Sommelier 2024-11-13; Gitopia 2023-06-04, Chain4Energy 2023-04-04; none under Althea, Humans, ixo, Lumera — either no proposals since, or votes missed | Each chain's public API: its proposals, our vote on each, the voting transaction for Proof | Add the missing rows |
-| 2 | Protocol upgrades on 9 non-Cosmos chains (Avalanche, Near, Sui, IOTA, Zilliqa, Mina, Starknet, EigenCloud, Monad) | same | same | `gov_upgrades.py` and `gov_proposals.py`, run by hand | GitHub releases, the ACP/NEP/MIP/ELIP repos | Run the existing scripts on a schedule |
-| 3 | Votes on Avail, Espresso, Ika, Supra, Vara, Lido DVT | same | same | Not covered at all | Each its own governance (Vara: Polkadot-style referenda) | Later, one chain at a time |
-| 4 | The rationale on each new row | same | Rationale | `gov_rationales.py`, run by hand | The row itself | Run after 1–2 (or leave for review — decision 5) |
-| 5 | "1882 · Votes cast since 2020" | the record's count band | a typed paragraph | **Decided: stays** (counts pre-record votes) | — | Nothing |
-| **Networks set** (47 rows: 27 mainnet, 20 testnet) |||||||
-| 6 | Reward rate + Rate updated | /networks, chain pages, the Networks menu panel | Networks set | Set by hand 2026-09-24; rates drift. Mina, EigenCloud, Sommelier deliberately manual | Cosmos: cosmos.directory (free). The other 15 chains each need their own API | **Write** — Cosmos first, the rest one family at a time |
-| 7 | Commission | chain pages | Commission | By hand | Our validator's on-chain record | Check and report (decision 3) |
-| 8 | Slashing events | chain pages | Slashing events | By hand, by the user's rule: only our own incidents on a live validator (Gravity Bridge 0 by decision) | Slashing events on chain | **Report only** — the user decides what counts |
-| 9 | Status (active / jailed) | /networks | Status | By hand | Validator status on chain | Check and report, or write (decision 3) |
-| 10 | Unbonding | chain pages | Unbonding | Researched once | Chain staking parameters | Report when a chain changes them |
-| 11 | Validators run (Lido DVT 500) | the Lido chain page | Validators run | By hand | Lido's Simple DVT operator #43 | Check and report |
-| 12 | Counts typed as fallbacks (27 / 20 / "Thirty-five", `CONTENT`/`FOOT` in navbar.js) | /networks, navbar, /services, homepage | Paragraphs + navbar.js | Go stale when a chain is added | Networks set | Report the drift (navbar.js is code: a PR) |
-| **Chain pages** |||||||
-| 13 | Chain rules in `chain-pages.json` (minimums, downtime rules, cadence) | chain pages | Row page blocks | Researched once | Chain parameters | Report when they change |
-| 14 | Lido / Vara / Chain4Energy buttons point outside the site | those 3 chain pages | Button block | Waiting for their guides | Guides Database | Flag when a guide for one appears |
-| **Blog** |||||||
-| 15 | Read (minutes) on new posts | /blog "Shortest read" | Blogs → Read | Filled 2026-09-26 for every post | The post's words ÷ 230 | Fill missing or changed ones |
-| 16 | Lede, Chain, Ticker, Author on new posts | the post head | Blogs properties | By hand | — | Report missing fields |
-| 17 | Mainnet (Live / Not yet launched) | the ask at a post's foot | Blogs → Mainnet | By hand | Networks set Stage | Report when a chain goes live |
-| **Guides** |||||||
-| 18 | Step / Time on a new guide | /guides picker | Guides Database | Counted by hand | The guide's own slide rows | Fill |
-| 19 | Wallet screenshots going stale | guide pages | Slide Cover | By hand | — | Not automatable; could flag old guides |
-| **Services** |||||||
-| 20 | Dashboards Status (LIVE) | /services | Dashboards → Status | By hand | Whether each Link loads | Write |
-| 21 | Playbooks / Monitoring repos (still there? public?) | /services | Repository, Visibility | By hand | GitHub API | Report |
-| **Investments** |||||||
-| 22 | "we run a validator here" / "not yet in the set" | /investments | Portfolio → Validator | By hand | Networks set | Report mismatches |
-| **Homepage** |||||||
-| 23 | Why Stake fallbacks ("Six years", "2026 in progress", "25 secured") | homepage | Why Stake database | The script shows the live figure; the typed text goes stale yearly | Date / Networks set | Yearly rewrite (low value) |
-| **Site-wide (repo)** |||||||
-| 24 | footer.js's 10 glyph URLs, covers.js fallback glyph ids | footer, covers | Code | Drift when a Cover changes | Networks set Covers | Open a PR |
-| 25 | Pages running old CSS/JS | every page | — | `paste_table.py`, run by hand | Live HTML vs `head/*.html` | Report |
-| 26 | Dead links: Proof, Explorer, guide Links | record, chain pages, guides | Link properties | Not checked (Mintscan already dropped two chains) | HTTP check | Report |
+| H4 | Homepage stats band | Uptime | 99.96 % | hand | Nothing computes it, and it has no definition yet (which chains, what window, which source) | Nothing until it is defined; then compute it, or report its age |
+| H6 | Homepage, Why Stake | the card heading "Six years" | typed | hand | Wrong from 2027 (the "6" and "2026 in progress" under it are calculated; the heading is not) | — (fix once: "Since 2020", already an open item in CLAUDE.md) |
+| H7 | Homepage, Why Stake | "25 secured" | typed | hand (fallback) | Already stale: the script shows 27, the typed fallback says 25 | Report fallback drift |
+| G1 | /governance-record, the homepage table, the navbar's latest votes | New votes on the 12 Cosmos chains (Terra, Axelar, Agoric, Passage, Althea, Gravity Bridge, Humans, ixo, Lumera, Sommelier, Gitopia, Chain4Energy) | 1,153 rows over 29 networks | hand | Last recorded: Terra 2026-09-11, Axelar 08-28, Agoric 08-24, Passage 07-14; Gravity Bridge 2024-11-28, Sommelier 2024-11-13; Gitopia 2023-06-04, Chain4Energy 2023-04-04; none under Althea, Humans, ixo, Lumera — no proposals since, or votes missed | Add the missing rows |
+| G2 | same | Protocol upgrades on 9 chains (Avalanche, Near, Sui, IOTA, Zilliqa, Mina, Starknet, EigenCloud, Monad) | | `gov_upgrades.py`, `gov_proposals.py`, run by hand | Every release | Run on a schedule |
+| G3 | same | Votes on Avail, Espresso, Ika, Supra, Vara, Lido DVT | | not covered | Every vote | Later, one chain at a time |
+| G4 | same | The rationale on each new row | | `gov_rationales.py`, run by hand | Every new row | Run after G1–G2, or leave for review (decision 5) |
+| G5 | /governance-record count band | "1882 · Votes cast since 2020" | 1882 | hand | Right today — 729 votes from before the record + the 1,153 rows (decided 2026-09-26) — but it does not move when a vote is added | Could be calculated as 729 + the rows (governance.js), or updated by the job |
+| N1 | /networks, the 27 chain pages, the Networks menu panel | Reward rate + Rate updated | 5.1–5.7 %, 14.1 %, 34.3 %… dated 2026-09-24/25 | hand | Daily | **Write** (behind Rate source and the sanity band) |
+| N2 | chain pages | Commission | 2 %–15 % | hand | Only if we change it | Check and report (decision 3) |
+| N3 | chain pages | Unbonding | 7 days, 21 days, 2 weeks–1 year… | hand (researched) | When a chain changes its rules | Check and report |
+| N4 | chain pages | Slashing events | 0 on every chain | hand, by the user's rule (Gravity Bridge 0 by decision) | Only on an incident | Check against the decisions list |
+| N5 | /networks | Status (active / jailed) | | hand | Only on an incident | Check and report (decision 3) |
+| N6 | the Lido DVT chain page | Validators run | 500 | hand | If keys are added or exit | Check and report |
+| C1 | chain pages | Chain rules: minimum stake, reward cadence, withdrawal times, fees ("1 SUI", "every epoch, about 24 hours", "Lido's 10% fee", "1–5 days") | researched once, `notion/chain-pages.json` | hand | When a chain changes its parameters | Report |
+| C2 | the Lido, Vara, Chain4Energy chain pages | the green button points off-site | | hand | When their guides exist | Flag |
+| S1 | /security | "0 · slashing events since 2020" (twice) | 0 | hand | Only on an incident; must agree with N4 | Check against N4 |
+| S2 | /security | "Routine releases inside 24 h", "emergency releases inside one hour", "24/7 rotation" | | fixed (policy) | Only if the policy changes | — |
+| B1 | /blog "Shortest read" | Read (minutes) per post | filled 2026-09-26 | hand | Every new post | Fill |
+| B2 | the post head | Lede, Chain, Ticker, Author per post | | hand | Every new post | Report missing |
+| B3 | the ask at a post's foot | Mainnet (Live / Not yet launched) per post | | hand | When a chain launches | Report |
+| U1 | /guides picker | Step and Time per guide | | hand | Every new guide | Fill (from the guide's own slides) |
+| U2 | guide pages | the wallet screenshots | | hand | Wallets change their screens | Flag old guides |
+| V1 | /services | Dashboards Status ("LIVE") | | hand | If a dashboard goes down | Write (check each Link loads) |
+| V2 | /services | Repository, Visibility of the playbooks and monitoring builds | | hand | If a repo moves or goes private | Report |
+| V3 | /services, the bots band | the demo events (go-ethereum v1.17.6, "Proposal 496", current_round…) | typed examples | hand | Look dated as time passes | — (refresh by hand now and then) |
+| I1 | /investments | "we run a validator here" / "not yet in the set" | | hand | When we join or leave a chain | Report mismatches with the Networks set |
+| W1 | footer, covers | footer.js's 10 glyph URLs, covers.js's fallback glyph ids | | hard-coded | When a chain's Cover is replaced in Notion | Open a pull request on `website-css` |
+| W2 | every page | pages running an old CSS/JS tag | | `paste_table.py`, run by hand | After every release until pasted and republished | Report |
+| W3 | record, chain pages, guides | dead links: Proof, Explorer, guide Links | | not checked (Mintscan already dropped two chains) | Explorers move | Report |
+| F1 | /networks, navbar, /services, homepage, /guides | the typed fallbacks: 27 / 20 / "Thirty-five" / "24 chains · 25 guides" / navbar.js `CONTENT` and `FOOT` | | hand (fallbacks) | Visitors see the calculated figure; these show only if that fails, and go stale as chains and guides are added | Report the drift (navbar.js is code: a pull request) |
 
 **Watches** (not site data; alerts only): Avalanche's remaining delegation room; unclaimed rewards on
 Vara (they expire after 84 eras) and Avail; a validator of ours gone inactive or jailed.
+
+### Already kept current — nothing to do
+
+| Where | What | Now | Kept by |
+|---|---|---|---|
+| Homepage stats band | Staked Assets Under Management | $84,235,402 | your script (outside this repo; it changes through the day) |
+| Homepage stats band | Total Customers | 14,725 | your script |
+| Homepage stats band | Number of Networks Supported | 27 | calculated (home.js, from the Networks set) |
+| Homepage stats band | Soft Slashing Protection | 100 % | fixed — a promise, not a measurement |
+| Homepage, Why Stake | the years ("6", "2026 in progress") and the dots | | calculated |
+| /networks | the count band (27, 20), "27 mainnets · 20 testnets", "Thirty-five teams chose us.", the marquee | | calculated from the set, read on /services (navbar.js `encCounts`) |
+| Navbar | "27 mainnets, 20 testnets", "See all 27"; the latest votes; the chains with their rates | | calculated / read from Notion |
+| /services | the repositories count, "Thirty-five chain teams" | | calculated |
+| /guides | the counter "24 chains · 25 guides" | | calculated (guides.js) |
+| Governance tables | the rows, the chain marks, the dates | | read from the record |
+| Blog, posts | the list, each post's "N min", its next post | | calculated / read from Notion |
+| Chain pages | the estimate | | calculated from N1 |
+| /investments | the positions, "since YEAR" | | read from Notion; the years are fixed facts |
+| Legal pages | "Updated 26 Sep 2026" | | fixed — changes only when the page is edited |
+
+### Fixable now, without the jobs
+
+- **H6** — the Why Stake heading: "Six years" → "Since 2020" (or a heading the script keeps current).
+- **G5** — "1882" calculated as 729 + the record's rows, so it grows with every vote recorded.
+- **H7, F1** — bring the typed fallbacks in line (25 → 27, and the rest checked once).
+- **H4** — decide what uptime means (and its source), or replace the figure — CLAUDE.md's 2026-09-23
+  advice for the chain pages was "Validating since" rather than a figure that can go months stale.
 
 ## 3. How it works
 
@@ -136,10 +167,10 @@ Vara (they expire after 84 eras) and Avail; a validator of ours gone inactive or
 ```
 encapsulate-xyz/site-data  (private)
   .github/workflows/               thin: when to run, the secrets, one command each
-    governance.yml   daily         votes (1) → upgrades (2) → rationales (4)
-    networks.yml     weekly        rates (6, write) · commission, status, unbonding, slashing, Lido (7–11, check)
-    content.yml      daily         blog Read · guide Step/Time · dashboards status (15, 18, 20)
-    audit.yml        daily         links · glyph drift · served tags · fallback counts · watches (12, 24–26)
+    governance.yml   daily         votes (G1) → upgrades (G2) → rationales (G4) · the 1882 figure (G5)
+    networks.yml     weekly        rates (N1, write) · commission, unbonding, slashing, status, Lido (N2–N6, check) · S1
+    content.yml      daily         blog Read (B1–B3) · guide Step/Time (U1) · dashboards status (V1, V2) · I1
+    audit.yml        daily         glyphs (W1) · served tags (W2) · dead links (W3) · fallbacks (F1, H7) · C1, C2 · watches
   package.json                     the official libraries above; the only dependency file
   lib/
     notion.mjs       the client (@notionhq/client): rate-limited, plain text writes, --dry aware

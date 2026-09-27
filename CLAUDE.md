@@ -1757,9 +1757,12 @@ Raise this whenever guides are being worked on.
 ## TODO — the GitHub Actions (planned 2026-09-25/26, not built)
 
 **The whole plan is `notion/github-actions-plan.md`** (rewritten 2026-09-27 as one document, and
-corrected the same day): what the user asked and what was answered, the 26 things on the site that go
-stale, how the jobs work, the structure, the build order and the decisions. Until it is built, values
-are updated by hand.
+corrected the same day): what the user asked and what was answered, **the inventory of everything on
+the site that changes** (section 2 — verified by a scan of the live pages on 2026-09-27: what needs
+updating by hand, with its value, what keeps it today and how it drifts; what already keeps itself
+current; and four things fixable without the jobs), how the jobs work, the structure, the build order
+and the decisions. Until it is built, values are updated by hand. When the user asks what numbers on
+the site need updating, answer from section 2 — and check it against the live site first.
 
 - **Decided (2026-09-25):** **JavaScript on Node**, plain ES modules, no TypeScript — chosen after the
   library research the user asked for (first-party JS libraries for every chain family; none current in
