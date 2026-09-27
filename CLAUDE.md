@@ -1756,17 +1756,22 @@ Raise this whenever guides are being worked on.
 
 ## TODO — the GitHub Actions (planned 2026-09-25/26, not built)
 
-**The whole plan is `notion/github-actions-plan.md`** (rewritten 2026-09-27 as one document): what the
-user asked and what was answered, the 26 things on the site that go stale, how the jobs work (Python
-in the repo, the Action only a scheduler; Notion the only thing written; write / check / watch tiers;
-a Rate source Auto/Manual switch, a sanity band and a history file), the `jobs/` structure under four
-workflows, the build order, and the decisions. Until it is built, values are updated by hand.
+**The whole plan is `notion/github-actions-plan.md`** (rewritten 2026-09-27 as one document, and
+corrected the same day): what the user asked and what was answered, the 26 things on the site that go
+stale, how the jobs work, the structure, the build order and the decisions. Until it is built, values
+are updated by hand.
 
-- **Decided:** logic in Python, the Action a thin scheduler; Notion the only target; "1882" stays.
-- **Open, before any code:** where the rolling report goes (GitHub issue or Discord/Telegram); this
-  public repo or a private one; **rotate the Notion token first**; which fields are written and which
-  only reported (Status is the one the two plans differed on); public endpoints or our own nodes; and
-  whether new vote rows go live on their own, with whose rationale.
+- **Decided (2026-09-25):** **JavaScript on Node**, plain ES modules, no TypeScript — chosen after the
+  library research the user asked for (first-party JS libraries for every chain family; none current in
+  Python for Avalanche, Mina, IOTA, Ika); **a new private repo, `site-data`**, for the jobs, while this
+  repo stays public for jsDelivr; the logic in scripts, each Action only a scheduler; Notion the only
+  thing written; logs that say almost nothing, details in a private summary; a decisions list so a
+  check never re-argues a settled case (Gravity Bridge's 0). "1882" stays (2026-09-26).
+- **The 2026-09-25 evening answer drifted back to Python in this repo**; the plan file records that and
+  follows the morning's decisions. Do not repeat it: the language and the repo are settled.
+- **Open, before any code:** where the private summary goes; whether the research notes move to
+  `site-data`; which fields are written and which only reported (Status); **rotate the Notion token
+  first**; new vote rows live or held, with whose rationale; public endpoints or our own nodes.
 - **Remind the user of this when they ask what is left to do.**
 
 ## TODO — SEO for every page (asked 2026-09-26, not started)
