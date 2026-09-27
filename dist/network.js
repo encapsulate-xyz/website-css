@@ -211,7 +211,10 @@
   function figures() {
     // the tally draws at once from the figure Notion holds, and follows the set's count below
     var fig = document.getElementById(FIG_MAIN);
-    if (fig) tally(parseInt(fig.textContent.replace(/\D+/g, ""), 10));
+    // the figure's own digits — the lens lays a copy of them inside it
+    if (fig) tally(parseInt(Array.prototype.filter.call(fig.childNodes, function (c) {
+      return !(c.classList && c.classList.contains("enc-lens-fill"));
+    }).map(function (c) { return c.textContent; }).join("").replace(/\D+/g, ""), 10));
     if (typeof window.encCounts !== "function") return;
     if (!fig && !document.getElementById(BAND)) return;
     window.encCounts().then(function (c) {
@@ -600,4 +603,130 @@
   }, { passive: true });
   window.addEventListener("touchstart", function () { touching = true; if (anim) finish(); }, { passive: true });
   window.addEventListener("touchend", function () { touching = false; if (!hasScrollEnd) setTimeout(settle, 140); }, { passive: true });
+})();
+
+/* ── the lens on the hollow ── (design "Network Count Hollow", L2b's lens on I, 2026-09-28)
+   Nothing in the band changes. A copy of the figure in the same type lies exactly over the hollow,
+   filled with the set's mainnets as pastel wells (a canvas, background-clip: text), and shows only
+   inside the lens — a 120px circle under the pointer. A track 48px inside the band carries the
+   240px ring; leaving it closes the lens into the figure's centre. The wells are the design's
+   drawWells(): one well per cell, the mainnets in the set's Order row by row, each in the pastel of
+   its place in the whole set, its glyph at 58% of the disc; redrawn when the figure resizes. The
+   copy's digits follow the figure (network.js rewrites them from the set). Built only where a
+   pointer hovers — a touch screen sees the band as it was. */
+(function () {
+  var BAND = "block-3dce800a51388154931ac3c9478a65b5";
+  var FIG = "block-3dce800a5138818e8123ed8b8471935d";   // the mainnet figure, Heading 1
+  var P = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
+  var R = 120;                                          // the lens, px
+  var hover = window.matchMedia("(hover: hover) and (pointer: fine)");
+  var imgs = {}, chains = null, drawn = "", frame = 0, sized = null;
+
+  function digits(fig) { return (fig.textContent || "").replace(/\D+/g, ""); }
+
+  function load(url) {
+    if (!imgs[url]) imgs[url] = new Promise(function (res) {
+      var im = new Image();
+      im.crossOrigin = "anonymous";          // assets.super.so answers with Access-Control-Allow-Origin: *
+      im.onload = function () { res(im); };
+      im.onerror = function () { res(null); };
+      im.src = url;
+    });
+    return imgs[url];
+  }
+
+  function wells(fig, fill) {
+    if (!chains || !chains.length) return;
+    var r = fig.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    var key = Math.round(r.width) + "x" + Math.round(r.height) + "@" + window.innerWidth + "#" + chains.length;
+    if (key === drawn) return;
+    drawn = key;
+    var S = 2, W = Math.round(r.width * S), H = Math.round(r.height * S);
+    var cell = Math.min(780, Math.max(280, window.innerWidth * 0.56)) / 14 * S;
+    var cols = Math.ceil(W / cell), rows = Math.ceil(H / cell);
+    var main = chains.filter(function (c) { return c.href; });
+    Promise.all(main.map(function (c) { return c.glyph ? load(c.glyph) : Promise.resolve(null); })).then(function (ims) {
+      if (drawn !== key) return;
+      var cv = document.createElement("canvas");
+      cv.width = W; cv.height = H;
+      var x = cv.getContext("2d"), k = 0;
+      for (var ry = 0; ry < rows; ry++) for (var cx = 0; cx < cols; cx++) {
+        var i = k++ % main.length, m = main[i];
+        var X = cx * cell + cell / 2, Y = ry * cell + cell / 2, rad = cell * 0.43;
+        x.fillStyle = P[chains.indexOf(m) % 5];
+        x.beginPath(); x.arc(X, Y, rad, 0, Math.PI * 2); x.fill();
+        if (ims[i]) { var g = rad * 2 * 0.58; x.drawImage(ims[i], X - g / 2, Y - g / 2, g, g); }
+      }
+      try { fill.style.backgroundImage = "url(" + cv.toDataURL("image/png") + ")"; } catch (e) { /* a tainted canvas: no wells, no lens */ }
+    });
+  }
+
+  function build() {
+    var band = document.getElementById(BAND), fig = document.getElementById(FIG);
+    if (!band || !fig || !hover.matches) return;
+    var fill = fig.querySelector(":scope > .enc-lens-fill");
+    if (!fill) {
+      fill = document.createElement("span");
+      fill.className = "enc-lens-fill";
+      fill.setAttribute("aria-hidden", "true");
+      fig.appendChild(fill);
+    }
+    var n = digits(stripped(fig));
+    if (fill.textContent !== n) fill.textContent = n;
+
+    var track = band.querySelector(":scope > .enc-lens-track");
+    if (!track) {
+      track = document.createElement("div");
+      track.className = "enc-lens-track";
+      track.setAttribute("aria-hidden", "true");
+      var ring = document.createElement("span");
+      ring.className = "enc-lens-ring";
+      track.appendChild(ring);
+      band.appendChild(track);
+      var at = null;
+      var paint = function () {
+        frame = 0;
+        var fr = fig.getBoundingClientRect(), tr = track.getBoundingClientRect();
+        if (at) {
+          fill.style.clipPath = "circle(" + R + "px at " + Math.round(at[0] - fr.left) + "px " + Math.round(at[1] - fr.top) + "px)";
+          ring.style.transform = "translate(" + Math.round(at[0] - tr.left - R) + "px, " + Math.round(at[1] - tr.top - R) + "px) scale(1)";
+          ring.style.opacity = "1";
+          track.setAttribute("data-on", "");
+        } else {
+          // closes into the figure's centre
+          fill.style.clipPath = "circle(0px at 50% 50%)";
+          ring.style.transform = "translate(" + Math.round(fr.left + fr.width / 2 - tr.left - R) + "px, " + Math.round(fr.top + fr.height / 2 - tr.top - R) + "px) scale(0)";
+          ring.style.opacity = "0";
+          track.removeAttribute("data-on");
+        }
+      };
+      track.addEventListener("mousemove", function (e) { at = [e.clientX, e.clientY]; if (!frame) frame = requestAnimationFrame(paint); });
+      track.addEventListener("mouseleave", function () { at = null; if (!frame) frame = requestAnimationFrame(paint); });
+    }
+
+    if (!sized && typeof ResizeObserver === "function") {
+      sized = new ResizeObserver(function () { wells(fig, fill); });
+      sized.observe(fig);
+    }
+    if (!chains && typeof window.encCounts === "function") {
+      window.encCounts().then(function (c) {
+        if (c && c.list && c.list.length) { chains = c.list; wells(fig, fill); }
+      });
+    }
+    wells(fig, fill);
+  }
+  // the figure's own text, without the copy inside it
+  function stripped(fig) {
+    var c = fig.cloneNode(true), f = c.querySelector(".enc-lens-fill");
+    if (f) f.remove();
+    return c;
+  }
+
+  var t = 0;
+  new MutationObserver(function () { clearTimeout(t); t = setTimeout(build, 120); })
+    .observe(document.documentElement, { childList: true, subtree: true });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
+  window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(build, 200); });
+  build();
 })();

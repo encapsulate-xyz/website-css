@@ -333,6 +333,58 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   transform: rotate(-24deg);
 }
 
+/* the lens (design "Network Count Hollow", L2b's lens on I, 2026-09-28): nothing in the band
+   changes. A copy of the figure in the same type, filled with the set's mainnets as pastel wells
+   (network.js draws them, background-clip: text), lies exactly over the hollow and shows only
+   inside a 120px circle under the pointer; a track 48px inside the band carries the 240px ring and,
+   on leave, closes the lens into the figure's centre. Built only where there is a pointer that
+   hovers — a phone sees the band as it was. */
+#block-3dce800a51388154931ac3c9478a65b5 .notion-column:first-child h1 {
+  position: relative !important;
+}
+.enc-lens-fill {
+  position: absolute;
+  inset: 0;
+  display: block;
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  font-variant-numeric: inherit;
+  white-space: nowrap;
+  color: transparent !important;
+  text-shadow: none !important;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  clip-path: circle(0px at 50% 50%);
+  transition: clip-path 0.12s ease-out;
+  pointer-events: none;
+}
+.enc-lens-track {
+  position: absolute;
+  inset: 48px;
+  z-index: 3;
+}
+.enc-lens-track[data-on] {
+  cursor: none;
+}
+.enc-lens-ring {
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  width: 240px;
+  height: 240px;
+  border-radius: 999px;
+  border: 1px solid rgba(250, 250, 248, 0.4);
+  background: rgba(250, 250, 248, 0.06);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-999px, -999px) scale(0);
+  transition: transform 0.12s ease-out, opacity 0.12s ease-out;
+}
+
 /* the testnet row: solid and small, under a hairline */
 #block-3dce800a51388154931ac3c9478a65b5 .notion-column:last-child .notion-callout {
   grid-area: test;

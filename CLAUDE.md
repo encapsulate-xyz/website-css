@@ -323,6 +323,16 @@ Scroll ↓" (a callout of the two texts, `3e6e800a…8105922f…`, the rule draw
 "02 / 02" and the note "Testnets we joined before there was anything to earn.". Super's heading
 anchor span is a flex and grid item — it is taken out of the layout. Under 760 the figure stands
 over the rest and the tally goes under its line.
+**The lens** (design *Network Count Hollow*, "L2b's lens on I", 2026-09-28, v322): nothing in the band
+changes; network.js lays a copy of the figure's digits inside the h1 (`.enc-lens-fill`, same type,
+`background-clip: text`) filled with a canvas of the mainnets as pastel wells — the design's
+`drawWells()`, cell `min(780, max(280, 56vw)) / 14`, disc .43 of it, glyph 58% of the disc, the set's
+Order row by row, each in the pastel of its place in the whole set (`encCounts().list`; the glyphs
+from assets.super.so, which allows cross-origin reads, so the canvas can be exported). It shows only
+in `circle(120px)` under the pointer; a track 48px inside the band (`.enc-lens-track`, z 3, no
+cursor while on) carries the 240px ring (`.enc-lens-ring`), and leaving closes both into the figure's
+centre. Built only under `(hover: hover) and (pointer: fine)`. The tally reads the figure's own
+digits, not the copy's (it read "2727" once).
 **It is a snap stop** (the user, 2026-09-26, v314): one screen tall, and network.js ports the
 record's count-band rules (a gesture towards it from within half a screen lands on it, a rest within
 a third settles onto it; nothing under 701px or with reduced motion). Driven with real wheel events
