@@ -626,8 +626,9 @@ The headline's font comes from main.css §06 alone; home.css adds only its #000 
 
 **The hero is centred by code** (2026-09-25, v291; the user: "use code to center align it"). It
 is one Notion column list, the page's first block: the headline, the lede and the two buttons in
-the left column, the loop (a video block, external, the jsDelivr `home-loop-paper.mp4`) in the
-right. **Nothing in it makes space**: its six dividers, eight empty paragraphs and the button row's
+the left column, the loop (a video block: `home-loop-paper.mp4`, served from Super's asset host,
+`assets.super.so/…/videos/2e7138f5-…/home-loop-paper.mp4`, identical to the repo's `video/` copy, checked
+2026-09-27) in the right. **Nothing in it makes space**: its six dividers, eight empty paragraphs and the button row's
 empty third column were deleted, and the loop moved in from the top of the page, where it had
 hung at fixed offsets (`top: -40px`, `90px` under 1728). home.css: the hero is one screen tall
 (`100svh`), the words sit between two flex springs 28px apart (design 11a), centred under the
