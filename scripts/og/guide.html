@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- The guide page's own head (design "Staking Guide Variation 1d"), built the way guide.js head()
+     builds it and drawn by the repo's guide.css, so a card is the head the reader lands on. Rendered at
+     1440×756 (the OG ratio) and scaled to 1200×630. -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Hanken+Grotesk:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../guide.css">
+<style>
+  html, body { margin: 0; padding: 0; background: #2A2C28; }
+  body { font-family: "Hanken Grotesk", system-ui, sans-serif; }
+</style>
+</head>
+<body>
+<div class="enc-gd" id="gd"></div>
+<script>
+  var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
+  var SPELL = ["no", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+    "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen"];
+  var g = JSON.parse(decodeURIComponent(location.hash.slice(1)));
+  function tint(name) {                       // guide.js tint(), unchanged
+    var s = 0, i;
+    for (i = 0; i < (name || "").length; i++) s = (s * 31 + name.charCodeAt(i)) % 9973;
+    return TINTS[s % TINTS.length];
+  }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function mono(text) { return el("span", "enc-gd__mono", text); }
+  function rule() { return el("span", "enc-gd__rule"); }
+  function say(t, n) { return t.replace("{N}", SPELL[n] || String(n)).replace("{n}", String(n)); }
+
+  var s = el("section", "enc-gd__band enc-gd__head");
+  var crumb = el("div", "enc-gd__crumb");
+  crumb.appendChild(mono(g.crumb)); crumb.appendChild(rule()); crumb.appendChild(mono(g.chain || g.name));
+  s.appendChild(crumb);
+
+  var mid = el("div", "enc-gd__headmid");
+  var pair = el("span", "enc-gd__pair");
+  var disc = el("span", "enc-gd__disc");
+  disc.style.background = tint(g.chain || g.name);
+  if (g.chainMark) { var i1 = el("img"); i1.src = g.chainMark; i1.alt = ""; disc.appendChild(i1); }
+  pair.appendChild(disc);
+  if (g.walletMark) {
+    var bw = el("span", "enc-gd__wallet"); var i2 = el("img"); i2.src = g.walletMark; i2.alt = "";
+    bw.appendChild(i2); pair.appendChild(bw);
+  }
+  mid.appendChild(pair);
+  var col = el("div", "enc-gd__headtext");
+  col.appendChild(el("h1", "enc-gd__title", g.title || g.name));
+  if (g.lede) col.appendChild(el("p", "enc-gd__lede", g.lede));
+  mid.appendChild(col);
+  s.appendChild(mid);
+
+  var foot = el("div", "enc-gd__headfoot");
+  foot.appendChild(mono(say(g.screens, g.steps))); foot.appendChild(rule()); foot.appendChild(mono(g.scroll));
+  s.appendChild(foot);
+  document.getElementById("gd").appendChild(s);
+
+  Promise.all([document.fonts.ready].concat(Array.prototype.map.call(document.images, function (im) {
+    return im.complete ? 1 : new Promise(function (r) { im.onload = im.onerror = r; });
+  }))).then(function () { window.done = true; });
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- Blog Cover System, 17d "Pastel glyph", at the OG size: every value is the design's 420×220 value
+     times k = 1200/420, so the card is the design, not a redrawing of it. -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Hanken+Grotesk:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #3A3D38; }
+  * { box-sizing: border-box; }
+  :root { --k: 2.857142857; }
+  .frame { position: relative; width: 1200px; height: 630px; background: #3A3D38; overflow: hidden; }
+  .glyph { position: absolute; right: calc(-26px * var(--k)); bottom: calc(-40px * var(--k));
+           width: calc(240px * var(--k)); height: calc(240px * var(--k)); object-fit: contain; }
+  .shape { position: absolute; right: calc(-34px * var(--k)); bottom: calc(-44px * var(--k));
+           width: calc(190px * var(--k)); height: calc(190px * var(--k)); }
+  .stack { position: absolute; inset: 0; padding: calc(22px * var(--k)); display: flex;
+           flex-direction: column; justify-content: space-between; }
+  .eb { display: flex; align-items: center; justify-content: space-between; gap: calc(14px * var(--k)); }
+  .kicker { font-family: 'JetBrains Mono', monospace; font-size: calc(9.5px * var(--k));
+            letter-spacing: 0.14em; text-transform: uppercase; }
+  .tcol { max-width: calc(232px * var(--k)); }
+  h3 { margin: 0; font-family: 'Outfit', sans-serif; font-weight: 600; line-height: 1.04;
+       letter-spacing: -0.035em; color: #FAFAF8; max-width: 15ch; }
+  .wm { width: calc(88px * var(--k)); display: block; }
+</style>
+</head>
+<body>
+<div class="frame" id="frame"></div>
+<script>
+  var P = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
+  var SHAPES = ["999px 999px 0 0", "50%", "0 999px 0 0"];
+  var TINT = [
+    "brightness(0) saturate(100%) invert(91%) sepia(18%) saturate(492%) hue-rotate(45deg) brightness(99%) contrast(92%)",
+    "brightness(0) saturate(100%) invert(93%) sepia(31%) saturate(668%) hue-rotate(333deg) brightness(103%) contrast(96%)",
+    "brightness(0) saturate(100%) invert(89%) sepia(14%) saturate(541%) hue-rotate(183deg) brightness(101%) contrast(95%)",
+    "brightness(0) saturate(100%) invert(92%) sepia(24%) saturate(551%) hue-rotate(315deg) brightness(102%) contrast(97%)",
+    "brightness(0) saturate(100%) invert(89%) sepia(16%) saturate(639%) hue-rotate(285deg) brightness(101%) contrast(96%)"
+  ];
+  var p = JSON.parse(decodeURIComponent(location.hash.slice(1)));
+  var i = p.i, f = document.getElementById("frame");
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  if (p.glyph) {
+    var g = el("img", "glyph"); g.src = p.glyph; g.alt = ""; g.style.filter = TINT[i % 5]; f.appendChild(g);
+  } else {
+    var s = el("div", "shape"); s.style.background = P[i % 5]; s.style.borderRadius = SHAPES[i % 3]; f.appendChild(s);
+  }
+  var st = el("div", "stack");
+  var eb = el("div", "eb");
+  var k = el("span", "kicker", p.k); k.style.color = P[i % 5]; eb.appendChild(k);
+  var d = el("span", "kicker", p.d); d.style.color = "#B4B4B4"; eb.appendChild(d);
+  st.appendChild(eb);
+  var tc = el("div", "tcol");
+  var h = el("h3");
+  /* a hyphenated word stays whole ("zk-SNARKs" broke after "zk-") */
+  p.t.split(/(\s+)/).forEach(function (part) {
+    if (/\S-\S/.test(part)) { var s = el("span", null, part); s.style.whiteSpace = "nowrap"; h.appendChild(s); }
+    else h.appendChild(document.createTextNode(part));
+  });
+  var size = p.t.length > 40 ? 23 : 26;
+  h.style.fontSize = "calc(" + size + "px * var(--k))";
+  tc.appendChild(h); st.appendChild(tc);
+  var w = el("img", "wm"); w.src = "../../svg/wordmark-reversed.svg"; w.alt = ""; st.appendChild(w);
+  f.appendChild(st);
+  /* The design caps the text column short of the shape so white type stays on ink ("never on the
+     pastel"). A glyph's ink reaches further left than 17d's three samples did, so each card reads
+     its own glyph's ink and wraps the title short of it — the type size stays the design's. */
+  var M = 24;   // clearance between a line's end and the ink, at the OG size
+  function inkLeft(img) {
+    var r = img.getBoundingClientRect(), c = document.createElement("canvas");
+    c.width = Math.round(r.width); c.height = Math.round(r.height);
+    var x = c.getContext("2d"); x.drawImage(img, 0, 0, c.width, c.height);
+    var a = x.getImageData(0, 0, c.width, c.height).data;
+    return function (top, bottom) {   // leftmost inked x (page px) between two page ys
+      var y0 = Math.max(0, Math.floor(top - r.top)), y1 = Math.min(c.height - 1, Math.ceil(bottom - r.top)), best = Infinity;
+      for (var yy = y0; yy <= y1; yy++) for (var xx = 0; xx < c.width && xx < best; xx++)
+        if (a[(yy * c.width + xx) * 4 + 3] > 24) { best = xx; break; }
+      return best === Infinity ? Infinity : r.left + best;
+    };
+  }
+  function fit() {
+    var img = f.querySelector(".glyph"), shape = f.querySelector(".shape");
+    var left = img ? inkLeft(img) : function () { return shape.getBoundingClientRect().left; };
+    var col = f.querySelector(".tcol"), moved = 0;
+    for (var n = 0; n < 12; n++) {
+      var range = document.createRange(); range.selectNodeContents(h);
+      var worst = null;
+      Array.prototype.forEach.call(range.getClientRects(), function (l) {
+        var ink = left(l.top - M / 2, l.bottom + M / 2);
+        if (l.right + M > ink && (!worst || ink < worst)) worst = ink;
+      });
+      if (!worst) break;
+      col.style.maxWidth = Math.floor(worst - M - col.getBoundingClientRect().left) + "px";
+      moved++;
+    }
+    window.fitted = moved;
+    return moved;
+  }
+  /* wrapping short of the ink can make a long title crowd the kicker and the wordmark; then, and
+     only then, the title takes a smaller step than the design's two (Berachain's 89 characters) */
+  function gaps() {
+    var e = f.querySelector(".eb").getBoundingClientRect(), w = f.querySelector(".wm").getBoundingClientRect(), r = h.getBoundingClientRect();
+    return Math.min(r.top - e.bottom, w.top - r.bottom);
+  }
+  function settle() {
+    var moved = fit();
+    while (moved && gaps() < 40 && size > 19) {
+      size -= 1;
+      h.style.fontSize = "calc(" + size + "px * var(--k))";
+      f.querySelector(".tcol").style.maxWidth = "";
+      moved = fit();
+    }
+    window.size = size;
+  }
+  window.ready = Promise.all([document.fonts.ready].concat(Array.prototype.map.call(document.images, function (im) {
+    return im.complete ? 1 : new Promise(function (r) { im.onload = im.onerror = r; });
+  }))).then(function () { settle(); window.done = true; });
+</script>
+</body>
+</html>
