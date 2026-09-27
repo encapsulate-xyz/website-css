@@ -660,8 +660,14 @@ file's own markup at 1440×900, 1920×1080, 1536×864, 1280×800 and 1024×768: 
 portrait, quote and role within 1–3px. Under 900px nothing moved (the stacked layout is ours; the file
 has no small-screen variant). **Still off, and Notion's to fix:** S Maheswaran's first role is a gray
 pill, so his tint falls back to `#E2E2DB` where the file has `#F8DDC6` — the option's colour must be
-set to orange in Notion (the API cannot change an option's colour). The circles are behind the
-portraits, as in the file.
+set to orange in Notion (the API cannot change an option's colour).
+**The circles were in front of the portraits** until v318 — I said otherwise first, from a screenshot,
+and the user showed the seam across a shoulder. Super gives every card property `z-index: 10`, and a
+grid item's z-index counts even unpositioned, so each name and role was its own layer and the disc and
+rings hung on them (their `::after`/`::before`) painted over the photos and the eyebrow. The name and
+role are `z-index: auto` now; proved with the disc turned red — the portrait's pixels keep the photo's.
+**A 7% wash cannot be judged by eye: test paint order by making the layer loud and reading pixels**
+(`livecheck.mjs` `pixel(x, y)`).
 
 **No divider makes space anywhere** (2026-09-25, v292). main.css §11 used to keep a divider in a
 column as hidden height, and four page files hid it under 1024px — that was how the hero was
@@ -1418,6 +1424,13 @@ Still open: the stage block under the index on touch phones, the code copy butto
 line.
 
 ## Things that bite in Super / Notion markup
+
+- **Every card property carries `z-index: 10` (Super's notion.css), and a grid or flex item's
+  z-index works without `position`.** Where a gallery's cards are `display: contents`, their
+  properties are items of the section's grid, so each is a stacking context of its own — and
+  anything hung on one (a `::before`/`::after` meant to lie under the section at `z-index: -1`) is
+  painted inside it, over its neighbours. That put Who we are's disc and rings over the portraits
+  (2026-09-27). Set `z-index: auto` on a property that carries a background pseudo-element.
 
 - **A copy toggle is hidden by its id in its page's CSS, never only by a script's mark** (the user,
   2026-09-26). "Empty state copy" was hidden by `[data-enc-copy]`, which filterbar.js set only when a

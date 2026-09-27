@@ -3301,6 +3301,18 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   opacity: calc(0.12 * var(--on)) !important;
 }
 
+/* THE FIELD LIES UNDER EVERYTHING (reported 2026-09-27: a seam across a shoulder where the disc's
+   edge crossed the shirt). Super gives every card property z-index: 10 (notion.css), and a grid item's
+   z-index counts even unpositioned, so each name and role was a layer of its own: the disc (the
+   name's ::after) and the two rings (the role's) were painted inside those layers, over the portraits
+   and the eyebrow, at their 7%, 18% and 12%. Measured with the disc made red: the portrait's pixels
+   turned red. The file draws its field at z-index 0 under a z-index 1 content; here the properties go
+   back to auto, so the three sit at -1 in the section's own stacking context, under every block. */
+#block-6a8e93a3b7ed4648ba82d58ee6546962 .property-78553e7a,
+#block-6a8e93a3b7ed4648ba82d58ee6546962 .property-59696475 {
+  z-index: auto !important;
+}
+
 /* Portrait, quote, role: everyone's overlap in one cell each */
 
 #block-6a8e93a3b7ed4648ba82d58ee6546962 .notion-collection-card__cover,

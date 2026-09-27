@@ -10,9 +10,9 @@
 // `sleep(ms)`. Pass `--from-cdn <sha>` instead of a local repo to reroute to a pushed commit.
 //
 // Real pointer events (radix answers only those) come from `move(x, y)` in a step file passed with
-// `--steps steps.mjs`, which exports `async (ctx) => {}` and gets { at, move, click, press, wheel, sleep, shot } —
+// `--steps steps.mjs`, which exports `async (ctx) => {}` and gets { at, move, click, press, wheel, pixel, sleep, shot } —
 // `click(x, y)` is a real press and release at that point, `press(key)` a real key (Tab, Escape…),
-// `wheel(x, y, dy)` a real wheel event.
+// `wheel(x, y, dy)` a real wheel event, `pixel(x, y)` the colour painted at a point ([r, g, b]).
 import { spawn } from "node:child_process";
 import { mkdtempSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -91,6 +91,25 @@ const press = async (key) => {
 /* a real wheel event at a point, as a mouse wheel or a trackpad sends one (the snap rules answer
    only real wheel events; a scripted scrollTo fires none of them) */
 const wheel = async (x, y, dy) => send("Input.dispatchMouseEvent", { type: "mouseWheel", x, y, deltaX: 0, deltaY: dy });
+/* the colour the page paints at one point: a 1×1 screenshot, decoded here (one scanline, so the
+   PNG filter cannot change the bytes). Paint order is what it settles — elementFromPoint cannot see a
+   pseudo-element, and a 7% wash cannot be judged by eye */
+const pixel = async (x, y) => {
+  // x, y are the viewport's (getBoundingClientRect); a screenshot clip is measured from the document's top
+  const off = await send("Runtime.evaluate", { expression: "[scrollX, scrollY]", returnByValue: true });
+  const [sx, sy] = off.result.result.value;
+  const s = await send("Page.captureScreenshot", { format: "png", clip: { x: x + sx, y: y + sy, width: 1, height: 1, scale: 1 } });
+  const buf = Buffer.from(s.result.data, "base64"), chunks = [];
+  let type = 0;
+  for (let i = 8; i < buf.length;) {
+    const len = buf.readUInt32BE(i), name = buf.toString("ascii", i + 4, i + 8);
+    if (name === "IHDR") type = buf[i + 17];
+    if (name === "IDAT") chunks.push(buf.subarray(i + 8, i + 8 + len));
+    i += 12 + len;
+  }
+  const raw = (await import("node:zlib")).inflateSync(Buffer.concat(chunks));
+  return [raw[1], raw[2], raw[3]].concat(type === 6 ? [raw[4]] : []);
+};
 const shot = async (out) => { const s = await send("Page.captureScreenshot", { format: "png" }); writeFileSync(out, Buffer.from(s.result.data, "base64")); };
 
 /* NETLOG=1 prints every website-css request that fails or answers with an error */
@@ -109,7 +128,7 @@ await send("Fetch.enable", { patterns: TAGS.map(t => ({ urlPattern: "*website-cs
 await send("Page.enable");
 await send("Page.navigate", { url: url + (url.includes("?") ? "&" : "?") + "lc=" + Date.now() });
 await sleep(+(process.env.WAIT || 9000));
-if (stepsFile) await (await import(resolve(stepsFile))).default({ at, move, click, press, wheel, sleep, shot });
+if (stepsFile) await (await import(resolve(stepsFile))).default({ at, move, click, press, wheel, pixel, sleep, shot });
 if (checkFile) console.log(JSON.stringify(await at(readFileSync(checkFile, "utf8")), null, 1));
 if (shotOut) await shot(shotOut);
 ws.close(); chrome.kill();
