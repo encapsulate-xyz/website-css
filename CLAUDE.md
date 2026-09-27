@@ -641,6 +641,28 @@ stays side by side (the old ≤1024 rule at the top of home.css sets every colum
 hidden. **Remove** the marked transitional rule for `#block-1ee04e9f…` (the old loop block) once
 Super serves the new structure.
 
+**Who we are (09b) was checked against its file on 2026-09-27** (the user: is it verbatim?) and brought
+to it, v317. What was off: the eyebrow's rule ran 312px, only under the two labels (each drew its own
+border), where the file runs one rule `min(46%, 420px)` under the row, and Super's 24px line set the
+labels 5px under their divider — the rule is now the content's `::before`, a grid item, and the
+labels take their own line; the names and portrait were capped by the screen's height (64.8px and
+306px at 1440×900 against the file's 74.9 and 320) for a section held at exactly one screen — it now
+has the file's `min-height: 100vh` and its sizes; the intro was in Inter, not Hanken Grotesk, with
+Super's 3px padding; the photo sat centred, not on the disc's foot (`50% 100%`); Book a call was 15px
+(15.5); Super's 4px gap stood before the "·" in "FOUNDER · VALIDATOR". **The right stack**: the file
+centres two stacks on each other (names + intro; portrait, quote 23px under it, role 12px under that),
+and Notion gives the right-hand blocks no parent, so the quote had sat in the intro's row, 28–36px low.
+home.js now measures the stacks (heights only) and sets `--who-rt`/`--who-lt` and per card
+`--who-qh`/`--who-rpad`; home.css places the blocks by them once `[data-enc-who-fit]` is set, each with
+an equal negative bottom margin so it takes no height from the rows (a plain top margin let Chrome
+share the role's span into the two empty name rows, 47px each). Measured against a render of the
+file's own markup at 1440×900, 1920×1080, 1536×864, 1280×800 and 1024×768: names and intro exact,
+portrait, quote and role within 1–3px. Under 900px nothing moved (the stacked layout is ours; the file
+has no small-screen variant). **Still off, and Notion's to fix:** S Maheswaran's first role is a gray
+pill, so his tint falls back to `#E2E2DB` where the file has `#F8DDC6` — the option's colour must be
+set to orange in Notion (the API cannot change an option's colour). The circles are behind the
+portraits, as in the file.
+
 **No divider makes space anywhere** (2026-09-25, v292). main.css §11 used to keep a divider in a
 column as hidden height, and four page files hid it under 1024px — that was how the hero was
 aligned. §11 and every copy are gone, and all dividers were deleted from Notion: the hero's, the

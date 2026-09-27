@@ -1218,3 +1218,69 @@
   document.addEventListener("click", pick);
   document.addEventListener("focusin", pick);
 })();
+
+/* Who we are: the right column stacked as the file stacks it (checked against "Who We Are",
+   2026-09-27). The file sets two stacks side by side and centres them on each other: the names and
+   the intro on the left; the portrait, the quote 23px under it (clamp(18px, 2.6vh, 30px)) and the
+   role 12px under that on the right. Notion gives the right-hand blocks no common parent — every
+   person's portrait, quote and role are grid items of the section — so CSS alone set the quote in
+   the intro's row, 28px under where the file has it, and the extra row lifted the names 11px.
+   This measures the two stacks — nothing but heights — and hands them to home.css as offsets
+   (--who-rt, the right stack's inset when the left is taller; --who-lt, the left's when the right
+   is; per card --who-qh / --who-rpad, its quote's height and its role's centring in a row as tall
+   as the LinkedIn badge). home.css places the blocks by them only once [data-enc-who-fit] is set,
+   so without this the section keeps its grid rows. Above 900px only; under it every person is
+   stacked anyway. Heights, not positions, are read, so the offsets cannot feed back into them. */
+(function () {
+  var BAND = "block-3dbe800a513880c5862ae676c8d06994";
+  var TEAM = "block-6a8e93a3b7ed4648ba82d58ee6546962";
+  var INTRO = "block-3dbe800a513880d4a675d114ff684187";
+  var wide = window.matchMedia("(min-width: 901px)");
+  function px(el, prop) { return parseFloat(getComputedStyle(el)[prop]) || 0; }
+  function set(el, k, v) { if (el.style.getPropertyValue(k) !== v) el.style.setProperty(k, v); }
+  function fit() {
+    var band = document.getElementById(BAND), team = document.getElementById(TEAM), intro = document.getElementById(INTRO);
+    var content = band && band.querySelector(":scope > .notion-callout__content");
+    if (!content || !team || !intro) return;
+    if (!wide.matches) {
+      if (content.hasAttribute("data-enc-who-fit")) content.removeAttribute("data-enc-who-fit");
+      return;
+    }
+    var left = 0, names = 0, portrait = 0, quotes = 0;
+    Array.prototype.forEach.call(team.querySelectorAll(".notion-collection-card"), function (card) {
+      var name = card.querySelector(".property-78553e7a");
+      if (name) { left += name.offsetHeight + px(name, "marginBottom"); names++; }
+      var cover = card.querySelector(".notion-collection-card__cover");
+      if (cover) portrait = Math.max(portrait, cover.offsetHeight);
+      var quote = card.querySelector(".property-64664c63"), role = card.querySelector(".property-59696475");
+      var link = card.querySelector(".property-5a534040");
+      var qh = quote ? quote.offsetHeight : 0, rh = role ? role.offsetHeight : 0;
+      var row = Math.max(rh, link ? link.offsetHeight : 0);   // the file's role row: role and link, centred
+      set(card, "--who-qh", qh + "px");
+      set(card, "--who-rpad", ((row - rh) / 2).toFixed(1) + "px");
+      quotes = Math.max(quotes, qh + 12 + row);
+    });
+    if (!names || !portrait) return;
+    left += px(intro, "marginTop") + intro.offsetHeight;
+    var gap = Math.min(30, Math.max(18, window.innerHeight * 0.026));   // clamp(18px, 2.6vh, 30px)
+    var right = portrait + gap + quotes;
+    set(content, "--who-rt", Math.max(0, (left - right) / 2).toFixed(1) + "px");
+    set(content, "--who-lt", Math.max(0, (right - left) / 2).toFixed(1) + "px");
+    if (!content.hasAttribute("data-enc-who-fit")) content.setAttribute("data-enc-who-fit", "");
+  }
+  var queued = 0;
+  function soon() { if (!queued) queued = requestAnimationFrame(function () { queued = 0; fit(); }); }
+  window.addEventListener("resize", soon);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(soon);
+  window.addEventListener("load", soon);
+  // only a change in the section (or one that replaces it) is a reason to measure again
+  new MutationObserver(function (muts) {
+    var band = document.getElementById(BAND);
+    if (!band) return;
+    for (var i = 0; i < muts.length; i++) {
+      var t = muts[i].target;
+      if (t === band || band.contains(t) || (t.contains && t.contains(band))) { soon(); return; }
+    }
+  }).observe(document.body, { childList: true, subtree: true });
+  soon();
+})();

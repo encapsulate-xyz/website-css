@@ -3080,13 +3080,12 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   display: block !important;
   width: 100vw !important;
   margin-inline: calc(50% - 50vw) !important;
-  /* Exactly one screen, like the stats and testimonial panels, rather than a
-     minimum that grows. The type and portrait below scale with the viewport
-     height so four or more names still fit; 600px is the floor for very short
-     windows. */
-  height: 100vh !important;
-  height: 100dvh !important;
-  min-height: 600px !important;
+  /* The file's min-height: one screen, growing only when a short window cannot hold it (the type
+     and portrait are the file's own sizes; they were capped by the screen's height until
+     2026-09-27, which drew the names at 64.8px where the file has 74.9 at 1440×900). home.js
+     settles on the section's top, so a taller section still snaps. */
+  height: auto !important;
+  min-height: 100vh !important;
   padding: 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
@@ -3110,7 +3109,8 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   position: relative !important;
   z-index: 1 !important;
   box-sizing: border-box !important;
-  height: 100% !important;
+  height: auto !important;
+  min-height: 100vh !important;   /* the grid's springs share out the screen, as the file's space-between */
   margin: 0 !important;
   padding: clamp(28px, 4vh, 46px) clamp(24px, 5vw, 76px) !important;
   display: grid !important;
@@ -3224,7 +3224,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   overflow: visible !important;
   font-family: "Outfit", sans-serif !important;
   font-weight: 600 !important;
-  font-size: clamp(30px, min(5.2vw, 7.2vh), 76px) !important;
+  font-size: clamp(30px, 5.2vw, 76px) !important;
   line-height: 1.06 !important;
   letter-spacing: -0.018em !important;
   text-wrap: balance !important;
@@ -3319,7 +3319,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   align-self: center !important;
   justify-self: start !important;
   position: static !important;
-  width: min(100%, 320px, 34vh) !important;
+  width: min(100%, 320px) !important;
   height: auto !important;
   aspect-ratio: 1 !important;
   max-width: 320px !important;
@@ -3327,7 +3327,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   border: 0 !important;
   border-radius: 999px !important;
   object-fit: cover !important;
-  object-position: center !important;
+  object-position: 50% 100% !important;   /* the file's: the cutout stands on the disc's foot */
   background: var(--tint) !important; /* fills behind transparent portraits */
   box-shadow: 0 0 0 3px #2A2C28 !important;
   transform: scale(calc(0.94 + 0.06 * var(--on))) !important;
@@ -3384,7 +3384,11 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   color: var(--tint) !important;
 }
 
-/* Two pills read "FOUNDER · VALIDATOR". */
+/* Two pills read "FOUNDER · VALIDATOR", evenly spaced, as the file's one string: Super's 4px gap
+   between the pills sat before the dot. */
+#block-6a8e93a3b7ed4648ba82d58ee6546962 .property-59696475 {
+  column-gap: 0 !important;
+}
 #block-6a8e93a3b7ed4648ba82d58ee6546962 .property-59696475 .notion-pill + .notion-pill::before {
   content: " · " !important;
   white-space: pre !important;
@@ -3501,8 +3505,11 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   align-self: start !important;
   margin: clamp(8px, 1.4vh, 16px) 0 0 !important;
   max-width: 46ch !important;
+  padding: 0 !important;   /* Super's 3px over and under made the left stack 6px taller than the file's */
+  font-family: "Hanken Grotesk", system-ui, sans-serif !important;
   font-size: clamp(15px, 1.4vw, 17px) !important;
   line-height: 1.58 !important;
+  letter-spacing: normal !important;
   text-wrap: pretty !important;
   color: #C9C9C4 !important;
 }
@@ -3567,9 +3574,88 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   margin: 0 !important;
 }
 
+/* THE EYEBROW, AS THE FILE DRAWS IT (checked against "Who We Are" on 2026-09-27). The file's row is
+   one flex line: the labels at their own line height (normal, ~14px) with the 12px divider centred
+   between them, and a rule under the whole row, min(46%, 420px) long. Here the labels are two grid
+   cells, so each drew its own border — the rule stopped at "Since 2020" (312px at 1440 against the
+   file's 420) — and Super's 24px line set the text 5px under the divider. The rule is now the
+   content's ::before, a grid item spanning the row, sized as the file sizes it. */
+@media (min-width: 901px) {
+  #block-3dbe800a51388029828bfeb1c753eff4,
+  #block-3dbe800a513880829ef5f2c48bce6a5a {
+    line-height: normal !important;
+    border-bottom: 0 !important;
+    padding-bottom: 19px !important;   /* the file's 18 and its 1px rule, which ::before draws inside the row */
+  }
+  #block-3dbe800a513880c5862ae676c8d06994 > .notion-callout__content::before {
+    content: "";
+    display: block;
+    grid-row: 1;
+    grid-column: 1 / -1;
+    align-self: end;
+    justify-self: start;
+    width: min(46%, 420px);
+    height: 1px;
+    background: rgba(250, 250, 248, 0.18);
+  }
+}
+
+/* THE RIGHT STACK, AS THE FILE STACKS IT (2026-09-27). The file centres two stacks on each other: the
+   names and the intro; the portrait, the quote clamp(18px, 2.6vh, 30px) under it and the role 12px
+   under that (in a row as tall as the LinkedIn badge). home.js measures the stacks and sets the
+   offsets (see its note); once it has, every right-hand block spans the middle rows from their top
+   and is set down by them, and the taller stack's partner is inset by half the difference — so the
+   middle rows hold the left stack alone, as the file's row does. Until then the grid rows stand. */
+@media (min-width: 901px) {
+  #block-3dbe800a513880c5862ae676c8d06994 > .notion-callout__content[data-enc-who-fit] {
+    --who-g: clamp(18px, 2.6vh, 30px);
+  }
+  /* Each block is set down by a top margin and gives the same back underneath, so it takes no height
+     from the rows: the left stack alone sizes them, as the file's row. (With only the top margin, the
+     role's 454px outgrew nothing, yet Chrome still shared its span into the two empty name rows —
+     47px each at 1440×900 — and lifted the names 50px.) The portrait is min(100%, 320px) wide and
+     square; a percentage margin reads the same width. */
+  #block-3dbe800a513880c5862ae676c8d06994 > .notion-callout__content[data-enc-who-fit] {
+    --who-at-cover: var(--who-rt, 0px);
+    --who-at-quote: calc(var(--who-rt, 0px) + min(100%, 320px) + var(--who-g));
+  }
+  #block-3dbe800a513880c5862ae676c8d06994 > .notion-callout__content[data-enc-who-fit] #block-6a8e93a3b7ed4648ba82d58ee6546962 .notion-collection-card__cover {
+    grid-row: 3 / 11 !important;
+    align-self: start !important;
+    margin: var(--who-at-cover) 0 calc(-1 * var(--who-at-cover)) !important;
+  }
+  #block-3dbe800a513880c5862ae676c8d06994 > .notion-callout__content[data-enc-who-fit] #block-6a8e93a3b7ed4648ba82d58ee6546962 .property-64664c63 {
+    grid-row: 3 / 11 !important;
+    align-self: start !important;
+    margin: var(--who-at-quote) 0 calc(-1 * var(--who-at-quote)) !important;
+  }
+  #block-3dbe800a513880c5862ae676c8d06994 > .notion-callout__content[data-enc-who-fit] #block-6a8e93a3b7ed4648ba82d58ee6546962 .notion-collection-card {
+    --who-at-role: calc(var(--who-at-quote) + var(--who-qh, 0px) + 12px + var(--who-rpad, 0px));
+  }
+  #block-3dbe800a513880c5862ae676c8d06994 > .notion-callout__content[data-enc-who-fit] #block-6a8e93a3b7ed4648ba82d58ee6546962 .property-59696475 {
+    grid-row: 3 / 11 !important;
+    align-self: start !important;
+    margin: var(--who-at-role) 0 calc(-1 * var(--who-at-role)) !important;
+  }
+  #block-3dbe800a513880c5862ae676c8d06994 > .notion-callout__content[data-enc-who-fit] #block-6a8e93a3b7ed4648ba82d58ee6546962 .notion-collection-card:first-child .property-78553e7a {
+    margin-top: var(--who-lt, 0px) !important;
+  }
+  #block-3dbe800a513880c5862ae676c8d06994 > .notion-callout__content[data-enc-who-fit] #block-3dbe800a513880d4a675d114ff684187 {
+    margin-bottom: var(--who-lt, 0px) !important;
+  }
+  /* without anchor positioning the link sits under the role (the rule above); it follows the role */
+  @supports not (anchor-name: --a) {
+    #block-3dbe800a513880c5862ae676c8d06994 > .notion-callout__content[data-enc-who-fit] #block-6a8e93a3b7ed4648ba82d58ee6546962 .property-5a534040 {
+      grid-row: 3 / 11 !important;
+      margin: calc(var(--who-at-role) + 32px) 0 calc(-1 * (var(--who-at-role) + 32px)) !important;
+    }
+  }
+}
+
 /* Buttons in this section sit on ink: the button system's on-ink tokens
    (main.css section 07). */
 #block-3dbe800a513880c5862ae676c8d06994 {
+  --btn-fs: 15.5px;   /* the file's Book a call: 44px, 0 18px, 15.5px */
   --btn-lift: 0 0 transparent;
   --btn-lift-soft: 0 0 transparent;
   --btn-focus: rgba(250, 250, 248, 0.5);
@@ -3596,6 +3682,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 @media (max-width: 900px) {
   #block-3dbe800a513880c5862ae676c8d06994 > .notion-callout__content {
     height: auto !important;
+    min-height: 0 !important;
   }
 
   #block-3dbe800a513880c5862ae676c8d06994 > .notion-callout__content {
