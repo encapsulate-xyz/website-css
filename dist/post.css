@@ -79,6 +79,9 @@ body:has(.notion-root[data-enc-post]) .notion-header{display: none !important;}
 .notion-root[data-enc-post] .enc-po__nextarrow::after{right: 5.5px;top: 6.5px;width: 7px;height: 7px;border-left: 0;border-bottom: 0;border-top: 1.6px solid #000000;border-right: 1.6px solid #000000;background: transparent;transform: rotate(45deg);}
 .notion-root[data-enc-post] .enc-po__next:hover .enc-po__nextarrow{transform: translateX(3px);}
 .notion-root[data-enc-post] > .notion-column-list:not([data-enc-source]),.notion-root[data-enc-post] > .notion-text{max-width: 1008px;margin-inline: auto !important;padding-inline: clamp(28px,6vw,96px);}
+@media (max-width: 1024px){.notion-root[data-enc-post] .enc-po__article .notion-column{width: 100% !important;-webkit-margin-start: 0 !important;margin-inline-start: 0 !important;}
+.notion-root[data-enc-post] .enc-po__article .notion-column .notion-image{max-width: 100%;height: auto;margin: 0 auto;}
+}
 @media (max-width: 900px){.notion-root[data-enc-post] .enc-po__body{grid-template-columns: minmax(0,1fr);}
 .notion-root[data-enc-post] .enc-po__rail{position: static;}
 .notion-root[data-enc-post] .enc-po__mark{right: -6%;top: 8%;transform: none;width: 40%;opacity: 0.12;}

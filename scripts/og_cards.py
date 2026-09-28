@@ -13,7 +13,7 @@ Each card is 1200×630 and is the page's own design, not a new one:
   chains  the chain page's hero, captured from the live page at 1440×756 with the bar hidden.
           Also writes meta:title = "<Name> staking - Encapsulate".
   guides  the guide page's head (design 1d), built from the row the way guide.js builds it and
-          drawn by guide.css, at 800×420. Also writes meta:description = the row's Lede.
+          drawn by guide.css, at 800×420. Also writes meta:description = the row's Title, then its Lede.
 
 The card goes into the row's `meta:image` (Super serves it as og:image and copies it to its own
 asset host). Super picks a row up on its own sync (every four hours on this plan) or at once with
@@ -168,8 +168,15 @@ def jobs_guides(tmp, only):
              "walletMark": fetch(wmark[0], tmp, "w-" + (w["id"] if w else "") + ".png") if wmark else ""}
         out.append(({"url": "file://" + os.path.join(HERE, "og", "guide.html") + "#" + urllib.parse.quote(json.dumps(g)),
                      "w": 800, "h": 420, "dsf": 1.5, "waitFor": "window.done", "wait": 300},
-                    {"id": rid, "path": path, "description": val(r, "Lede")}))
+                    {"id": rid, "path": path, "description": guide_description(r)}))
     return out
+
+
+def guide_description(r):
+    """A guide's meta:description: its Title, then its Lede (2026-09-28). The Ledes follow one sentence
+    pattern, so on their own 17 guides shared 5 descriptions word for word."""
+    title, lede = (val(r, "Title") or "").rstrip("."), val(r, "Lede") or ""
+    return "%s. %s" % (title, lede) if title and lede else lede
 
 
 def keep(only, *fields):

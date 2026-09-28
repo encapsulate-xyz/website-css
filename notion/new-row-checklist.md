@@ -16,6 +16,53 @@ each box is something that has gone wrong, or would have, when it was skipped.
 - [ ] **Check it on the live site**: the page builds, it is in `sitemap.xml`, it has no `noindex`, and
       its `og:image`, title and description are the new ones.
 
+## SEO — every new page, whatever it is
+
+The user, 2026-09-28: every page added to the site goes through all of these before it is done — they are
+the steps of the SEO audit of 2026-09-26/28, for Google and for AI search. Keep this list current.
+
+- [ ] **Its head in Super carries its canonical**, `<link rel="canonical" href="https://encapsulate.xyz/<path>">`
+      (the homepage's ends in `/`). A page with a `head/*.html` file: add the line to the file, commit,
+      and paste the **whole file** over the page's head. A post, guide or chain page (no file): its head is
+      that one line. **Read the page's snippets first — a page holds one head, and writing a new one
+      replaces what is there** (on 2026-09-28 that took every main page's CSS; see CLAUDE.md "Head files").
+- [ ] **Title** under 60 characters, " - " as the separator where the page carries the site's name: a post's
+      own Name (or a shorter `meta:title`), a chain page "<Name> staking - Encapsulate" (`og_cards.py
+      chains`), a guide "<Chain> Staking Guide" in Super's SEO settings, a main page "<Page> - Encapsulate".
+- [ ] **A description of its own**, 120–160 characters, not shared with any other page: a post's Lede, a
+      guide's "Title. Lede" (`og_cards.py guides`), a chain page's facts sentence (`chain_pages.py --facts
+      "<Name>"`), a main page's Super SEO description. The pre-audit crawl found 17 guides sharing 5.
+- [ ] **Social card**: `scripts/og_cards.py posts|chains|guides --only <path>`, then **refresh the page in
+      Super twice** — the first build serves Notion's signed file link, which expires; the second serves
+      Super's `assets.super.so` copy. Check `og:image`'s host.
+- [ ] **The facts are in the HTML**, not only drawn by a script — AI crawlers (GPTBot, ClaudeBot,
+      PerplexityBot) do not run JavaScript. A chain page: `chain_pages.py --facts "<Name>"` after its
+      properties are set (and again whenever they change). A post or guide: its words are Notion blocks.
+- [ ] **Links in**: a plain `<a>` reaches it — a post from /blog, a chain page from /networks, a guide from
+      /guides and its chain page's green button, and a post about a chain that is live links that chain's
+      page in its foot.
+- [ ] **Structured data** builds: `script#enc-ld-post|chain|guide` in the head once the page has built
+      (post.js, chain.js, guide.js); the homepage's Organization and WebSite are in `head/home.html`.
+- [ ] **Not ready, not public**: a draft has no path in Super or is not Live; noindex only in that page's
+      own head, **never** in the site-wide head.
+- [ ] **A renamed or moved page** 308s from its old path (a `permRedirect` page in Super), and any typed
+      link to the old path in Notion is updated. A removed page with a clear successor redirects to it;
+      one without simply goes (404).
+- [ ] **Check the live HTML** after the refresh: status 200, one canonical and it is its own, the title, the
+      description, `og:image` on assets.super.so, no noindex, in `sitemap.xml`. For an important page, ask
+      Google to index it (Search Console → URL inspection → Request indexing — the user's account).
+
+## Removing a row
+
+- [ ] Back it up first (the row and its blocks, as `backups/<what>-<date>.json`).
+- [ ] Remove its page in Super (`removeSitePage`), then put it in Notion's trash — a refetch of a trashed
+      page makes it 404, but Super keeps serving its cached copy until then.
+- [ ] A successor exists (a guide for a guide post)? Add a 308 at the old path to it.
+- [ ] Refresh every page that listed it — /blog, the homepage, **and every post** (each still carries the
+      old "More Blog Posts" gallery in its HTML, hidden on screen but read by crawlers).
+- [ ] A post: the /blog cards and the social cards take their tint from the post's place on the index, so
+      the posts after it shift — re-run `og_cards.py posts --only …` for those whose `i % 5` changed.
+
 ## Blogs — a new post (`a148eb7f…`)
 
 - [ ] **Start from the template** — "New page", the database's default (rebuilt 2026-09-28): the
@@ -69,18 +116,20 @@ each box is something that has gone wrong, or would have, when it was skipped.
 
 ## Guides Database — a new guide (`1f6e800a…8181…`)
 
-- [ ] **Start from the template** "NETWORK_NAME" (rebuilt 2026-09-28 after the Axelar guide): the step
+- [ ] **Start from the template** "Stake TICKER with WALLET" (rebuilt 2026-09-28 after the Axelar guide; it was named
+      "NETWORK_NAME"): the step
       database with Axelar's properties and one sample step ("01 · Step title") — nothing else.
-      Network starts as Mainnet and Status as Soon — set Live when it is ready. Rename the page, and
+      Network starts as Mainnet and Status as Soon — set Live when it is ready. Name the page and its Title
+      the same way, "Stake SUI with Slush" (the ticker and the wallet), and
       replace the sample step with the real ones. ("View More Guides", its gallery and its button were
       taken out on 2026-09-28: a guide page hides them and takes the next guide from the /guides index,
-      and its close band carries "All guides". Only the guides not yet redone still show them.)
+      and its close band carries "All guides". It was taken out of every other guide the same day.)
 - [ ] **Properties:** Name, **Title** ("Stake AXL with Keplr" — the head's title), **Lede** (the head's
       line; also the description), **Networks set** relation (the mainnet row — the chain's mark; its
       path in Super is /guides/<chain>), **Wallet Set** relation (the wallet must be a
       Wallet Set row with its glyph in Files & media), Step, Time, Network (Mainnet / Testnet; Rough
-      keeps it off the picker), Status, Cover (its card in
-      the "View More Guides" gallery of the guides not yet redone, and the /guides listings), Ticker.
+      keeps it off the picker), Status. (Cover went on 2026-09-28 with the "View More Guides" sections it
+      pictured; Ticker is read by nothing.)
 - [ ] **The steps:** the guide's own slide database, one row per step — Name ("01 · Unlock Keplr"),
       Step, Body, Watch, Surface, Link, and the capture as the row's Cover. **Its gallery must show Body,
       Link, Step, Surface and Watch, in that order** (Axelar's); the template's gallery carries that
