@@ -23,6 +23,9 @@ where each fact came from.
     python3 scripts/chain_pages.py --replace Name   empty that page first, then write it
     python3 scripts/chain_pages.py --buttons [Name ...]   replace only the button block (after the line)
     python3 scripts/chain_pages.py --texts [Name ...]     rewrite the line and the answers in place
+    python3 scripts/chain_pages.py --facts [Name ...]     write the facts paragraph (after the buttons) and
+                                                         meta:description from the row's properties; re-run
+                                                         whenever those properties change
 
 A page that already has blocks is left alone unless --replace names it.
 """
@@ -148,8 +151,145 @@ def update_texts(pid, c):
     return n
 
 
+def prop(r, k):
+    p = r["properties"].get(k)
+    if not p:
+        return None
+    t = p["type"]
+    x = p.get(t)
+    if t in ("rich_text", "title"):
+        return "".join(y["plain_text"] for y in x).strip() or None
+    if t in ("select", "status"):
+        return (x or {}).get("name")
+    if t == "date":
+        return (x or {}).get("start")
+    return x
+
+
+def month(iso, day=True):
+    import datetime
+    d = datetime.date.fromisoformat(iso[:10])
+    return d.strftime("%B ") + (str(d.day) + ", " if day else "") + str(d.year)
+
+
+def pct(x):
+    return ("%.2f" % (x * 100)).rstrip("0").rstrip(".") + "%"
+
+
+def facts(r):
+    """The chain page's facts as text, from the row's own properties — so a crawler that does not run
+    chain.js (ChatGPT's, Claude's, Perplexity's) reads the numbers the page draws (2026-09-28). Every
+    value is a property; re-run --facts whenever the properties change."""
+    name, token = prop(r, "Name"), prop(r, "Token") or ""
+    fee, rate, when = prop(r, "Commission"), prop(r, "Reward rate"), prop(r, "Rate updated")
+    comp, unb, since = prop(r, "Compounding"), prop(r, "Unbonding"), prop(r, "Since")
+    if (unb or "").lower() in ("none", "no", "0"):
+        unb = None   # Sui, IOTA, Mina: the row says "None"
+    addr, slashes, events, run = prop(r, "Address"), prop(r, "Chain slashes"), prop(r, "Slashing events"), prop(r, "Validators run")
+    out = []
+    if run:   # Lido DVT: a cluster in Lido's Simple DVT module, and Lido's fee is the whole fee
+        out.append("Staking %s through %s with Encapsulate: %d validators in Lido's Simple DVT module." % (token, name, run))
+        if fee is not None:
+            out.append("Lido's fee is %s of rewards, and ours is part of it." % pct(fee))
+        if rate:
+            out.append("The reward rate was %s a year after fees%s." % (rate, " (measured %s)" % month(when) if when else ""))
+    else:
+        s = "Staking %s with Encapsulate on %s: %s commission" % (token, name, pct(fee)) if fee is not None else "Staking %s with Encapsulate on %s" % (token, name)
+        if rate:
+            s += ", and a reward rate of %s a year after commission%s" % (rate, " (measured %s)" % month(when) if when else "")
+        out.append(s + ".")
+    if comp == "Auto":
+        out.append("Rewards compound automatically.")
+    elif comp == "Manual":
+        out.append("Rewards are claimed and restaked from your wallet.")
+    elif comp == "End":
+        out.append("Rewards are paid when your staking period ends.")
+    if comp == "End" and unb:
+        out.append("Stake is locked for the period you choose: %s." % unb)
+    elif unb:
+        u = unb[0].lower() + unb[1:] if unb[0].isalpha() else unb
+        out.append("%s takes %s." % ("Unstaking" if run else "Unbonding", u))
+    else:
+        out.append("There is no unbonding period.")
+    if since:
+        out.append("Encapsulate has run %s since %s." % ("these validators" if run else "this validator", month(since, day=False)))
+    if slashes:
+        if events == 0:
+            out.append("Our %s had no slashing events." % ("validators have" if run else "validator has"))
+    elif slashes is False:
+        out.append("%s does not slash stake." % name)
+    if addr:
+        out.append(("Validator address: %s." if not any(c.isspace() for c in addr) else "Operator: %s.") % addr)
+    return " ".join(out)
+
+
+def description(r):
+    """meta:description for the chain page: unique, with its facts (the page's own line is the same
+    on 26 of 27 chains)."""
+    name, token = prop(r, "Name"), prop(r, "Token") or ""
+    fee, rate, unb, comp, run = prop(r, "Commission"), prop(r, "Reward rate"), prop(r, "Unbonding"), prop(r, "Compounding"), prop(r, "Validators run")
+    if (unb or "").lower() in ("none", "no", "0"):
+        unb = None
+    if run:
+        s = "Stake %s through %s with Encapsulate: %d validators, %s fee in all" % (token, name, run, pct(fee))
+        if rate:
+            s += ", %s a year after fees" % rate
+        return s + (", %s to unstake." % unb if unb else ".")
+    s = "Stake %s with Encapsulate on %s: %s commission" % (token, name, pct(fee))
+    if rate:
+        s += ", %s a year after commission" % rate
+    if comp == "End" and unb:
+        s += ", locked %s" % unb
+    elif unb:
+        s += ", %s unbonding" % (unb[0].lower() + unb[1:] if unb[0].isalpha() else unb)
+    else:
+        s += ", no unbonding"
+    return s + ". Non-custodial."
+
+
+def update_facts(pid, r):
+    """The facts paragraph sits right after the button block, before the first heading: chain.js
+    takes the first paragraph as the line and the first column list as the buttons and ignores
+    anything else up there, then hides every raw block — so the page looks the same, and the text is
+    in the HTML. An existing facts paragraph (it starts "Staking ") is rewritten in place."""
+    have = children(pid)
+    want = facts(r)
+    btn = None
+    for i, b in enumerate(have):
+        if b["type"] in ("heading_1", "heading_2", "heading_3"):
+            break
+        if b["type"] in ("column_list", "callout"):
+            btn = i
+            break
+    if btn is None:
+        return "no buttons"
+    nxt = have[btn + 1] if btn + 1 < len(have) else None
+    if nxt and nxt["type"] == "paragraph" and text_of(nxt).startswith("Staking "):
+        if text_of(nxt) == want:
+            return "same"
+        api("PATCH", "blocks/" + nxt["id"], {"paragraph": {"rich_text": rt(want)}})
+        return "updated"
+    res = api("PATCH", "blocks/%s/children" % pid, {"children": [para(want)], "after": have[btn]["id"]})
+    return "added" if "error" not in res else "error %s" % res.get("body", "")[:120]
+
+
 def main(argv):
     dry = "--dry" in argv
+    if "--facts" in argv:
+        names = [a for a in argv if not a.startswith("--")]
+        schema = api("GET", "databases/" + DB)["properties"]
+        if "meta:description" not in schema and not dry:
+            api("PATCH", "databases/" + DB, {"properties": {"meta:description": {"rich_text": {}}}})
+        for r in rows(DB):
+            if prop(r, "Stage") != "Mainnet" or (names and prop(r, "Name") not in names):
+                continue
+            if dry:
+                print("==", prop(r, "Name"), "\n  facts:", facts(r), "\n  description (%d): %s" % (len(description(r)), description(r)))
+                continue
+            state = update_facts(r["id"], r)
+            api("PATCH", "pages/" + r["id"], {"properties": {"meta:description": {"rich_text": rt(description(r))}}})
+            print("facts", prop(r, "Name"), state)
+        return
     if "--buttons" in argv or "--texts" in argv:
         names = [a for a in argv if not a.startswith("--")]
         chains = json.load(open(SRC))["chains"]
