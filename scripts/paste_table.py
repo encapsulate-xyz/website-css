@@ -81,11 +81,16 @@ def main():
         behind = {f: (live.get(f), t) for f, t in mine.items()
                   if live.get(f) != t}
         # a head file can change without a tag: its structured data (JSON-LD) is written in the
-        # file itself, so each block it carries must be on the live page, word for word
+        # file itself, so each block it carries must be on the live page, word for word. Super
+        # does not put a page's own code scripts in the HTML: it ships them in its page data (an
+        # escaped string) and inserts them in the browser as script#head-script-<snippet>-N
+        # (checked 2026-09-28: the homepage's JSON-LD is in the rendered <head>), so that copy counts
         text = open(head).read()
         blocks = [re.sub(r"\s+", "", b) for b in re.findall(
             r'<script type="application/ld\+json">(.*?)</script>', text, re.S)]
-        page_flat = re.sub(r"\s+", "", served[page])
+        data = served[page].replace("\\u003c", "<").replace("\\u003e", ">").replace("\\u0026", "&")
+        data = re.sub(r'\\+"', '"', re.sub(r"\\+n", "\n", data))
+        page_flat = re.sub(r"\s+", "", served[page]) + re.sub(r"\s+", "", data)
         missing_ld = [b for b in blocks if b not in page_flat]
         if not behind and not missing_ld:
             continue

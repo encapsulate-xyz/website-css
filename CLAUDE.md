@@ -12,7 +12,10 @@ The user shares a design handoff. I:
 2. **edit the Notion page myself** through the API (see "Editing Notion"), so the content is shaped
    for the design;
 3. write the CSS/JS in the repo, build, verify on the live page, commit, tag a release;
-4. reply with **one table of what to paste** — `File | Paste into` — listing only the `head/*.html`
+4. **paste the changed `head/*.html` files into Super myself and refresh every page** — the user,
+   2026-09-28: "why dont you do it using claude chrome extension"; the steps are kept in memory
+   (`reference-super-dashboard`), not in this public file. What follows is the fallback, for a head
+   I could not paste: reply with **one table of what to paste** — `File | Paste into` — listing only the `head/*.html`
    files **whose tag changed in that reply**. A file the user has already pasted never appears
    again: repeating a row makes them re-do work and hides the one file that is actually new
    (asked for 2026-09-21). If nothing was rebuilt, there is no paste table at all.
@@ -49,7 +52,6 @@ The user shares a design handoff. I:
    |---|---|---|
    | Show a property on a view | Notion → the view → view options → Properties | the API cannot switch a view's properties on (Guides Step/Time, the pillars' Word) |
    | Switch a database between table and gallery, or set a view's sort or filter | Notion → the view | same — the API cannot change a view at all |
-   | Republish a page | Super | the site head is baked per page; after a site-head paste, pages pick it up unevenly, and a stale page runs an old script for every page you navigate to from it |
    | Rotate the integration token | Notion → integration settings | it was shown in chat once |
 
 **The order of work on a handoff (set 2026-09-17):**
@@ -1848,11 +1850,11 @@ lede, the date in local time, the Author, the tag as articleSection) + breadcrum
 reads them) + Home → Networks → chain; **guide.js** Home → Guides → guide (HowTo results are gone since
 2023). The homepage head also holds the Google Search Console verification tag — the site is verified.
 
-**Still open:** the Mina hard-fork post (a Home child page, in Notion's trash since 2026-09-25; 404 since
-its refetch on 2026-09-28 — restore it into the Blogs database or let it go); the folder pages
-/networks/mainnet (the raw set as "Networks set"), /guides/mainnet and /guides/testnet are in the
-sitemap (noindex or redirect); the 318 vote-row pages of the record (`meta:canonical` to the record, or
-leave); the 301 for /terms-and-conditions (optional — nothing links it); the main pages' h1 counts.
+**Done 2026-09-28:** the Mina hard-fork post (a Home child page, in Notion's trash since 2026-09-25) is
+removed from Super (the user: "let it be"); the listing pages /networks/mainnet, /guides/mainnet and
+/guides/testnet carry the noindex line (page code is not inherited — their chain pages and guides do
+not). **Still open:** the 318 vote-row pages of the record (`meta:canonical` to the record, or leave);
+the 301 for /terms-and-conditions (optional — nothing links it); the main pages' h1 counts.
 
 ## TODO — check every line break against its handoff (asked 2026-09-26, not started)
 
