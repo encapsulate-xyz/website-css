@@ -703,6 +703,11 @@ stays side by side (the old ≤1024 rule at the top of home.css sets every colum
 (≤900) the loop follows the words as a band. A divider or empty paragraph typed into the hero is
 hidden. **Remove** the marked transitional rule for `#block-1ee04e9f…` (the old loop block) once
 Super serves the new structure.
+**The loop's still** (2026-09-29, v334): `img/home-loop-poster.webp`, the video's own first frame (37KB), is the
+video's CSS background — it paints before the video has a frame (the loop was the page's largest element, 12.4s on
+a phone), and the box takes the file's ratio (`aspect-ratio: 1920 / 916`) so it is the right size before the
+metadata arrives; under 900px it crops as the video does (cover, 72% 100%). head/home.html preloads it. Re-cut it
+(`ffmpeg -ss 0 -frames:v 1`, `cwebp -q 88 -m 6 -sharp_yuv`) whenever the loop changes.
 
 **Who we are (09b) was checked against its file on 2026-09-27** (the user: is it verbatim?) and brought
 to it, v317. What was off: the eyebrow's rule ran 312px, only under the two labels (each drew its own
