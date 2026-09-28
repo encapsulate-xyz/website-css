@@ -132,9 +132,19 @@
     return el("div", { left: cx + "%", bottom: bottom + "%", width: w + "%", height: h + "%",
       transform: "translateX(-50%)", borderRadius: r, background: fill });
   }
+  /* a network glyph at the size it is drawn (2026-09-29): the set's covers are 600px PNGs of 25-69KB, drawn at
+     26-286px. Super's image service (/_next/image, same origin, AVIF or WebP at its one quality, 75) makes a copy
+     at least twice the drawn size, so it stays sharp on a retina screen - checked side by side at 2x against the
+     originals: the same picture, 3-10KB. SVGs and anything not on Super's asset host pass through as they are. */
+  function sized(url, w) {
+    var m = /[?&]url=([^&]+)/.exec(url || "");
+    var orig = m ? decodeURIComponent(m[1]) : (url || "");
+    if (!/^https:\/\/assets\.super\.so\/[^?#]+\.(png|jpe?g|webp)(?:[?#]|$)/i.test(orig)) return url;
+    return "/_next/image?url=" + encodeURIComponent(orig) + "&w=" + w + "&q=75";
+  }
   function img(src, style) {
     var i = el("img", style);
-    i.src = src;
+    i.src = sized(src, 384);   // the cover's glyphs are drawn at up to 182px
     i.alt = "";
     i.decoding = "async";
     return i;

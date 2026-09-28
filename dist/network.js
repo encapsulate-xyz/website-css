@@ -61,6 +61,16 @@
     return m ? decodeURIComponent(m[1]) : src;
   }
 
+  /* a network glyph at the size it is drawn (2026-09-29): the set's covers are 600px PNGs of 25-69KB, drawn at
+     26-286px. Super's image service (/_next/image, same origin, AVIF or WebP at its one quality, 75) makes a copy
+     at least twice the drawn size, so it stays sharp on a retina screen - checked side by side at 2x against the
+     originals: the same picture, 3-10KB. SVGs and anything not on Super's asset host pass through as they are. */
+  function sized(url, w) {
+    var m = /[?&]url=([^&]+)/.exec(url || "");
+    var orig = m ? decodeURIComponent(m[1]) : (url || "");
+    if (!/^https:\/\/assets\.super\.so\/[^?#]+\.(png|jpe?g|webp)(?:[?#]|$)/i.test(orig)) return url;
+    return "/_next/image?url=" + encodeURIComponent(orig) + "&w=" + w + "&q=75";
+  }
   function fromPage() {
     var db = document.getElementById(SET_DB);
     if (!db) return [];
@@ -100,7 +110,7 @@
     disc.setAttribute("aria-hidden", "true");
     if (r.glyph) {
       var im = document.createElement("img");
-      im.src = r.glyph;
+      im.src = sized(r.glyph, 256);   // drawn at up to 76px
       im.alt = "";
       im.decoding = "async";
       disc.appendChild(im);
@@ -339,7 +349,7 @@
     // the glyph at full size: Super keeps the original beside its resized copy
     var full = card.querySelector("[data-full-size]"), img = card.querySelector("img");
     var glyph = st.querySelector(".enc-set-stage__disc img");
-    var src = full ? full.getAttribute("data-full-size") : img ? original(img.currentSrc || img.src) : "";
+    var src = sized(full ? full.getAttribute("data-full-size") : img ? original(img.currentSrc || img.src) : "", 640);   // drawn at up to 286px
     if (glyph.getAttribute("src") !== src) glyph.setAttribute("src", src);
     glyph.alt = name;
     var rate = card.querySelector("." + RATE_PROP), role = card.querySelector("." + ROLE_PROP);

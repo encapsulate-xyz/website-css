@@ -509,12 +509,22 @@
     }
     return a;
   }
+  /* a network glyph at the size it is drawn (2026-09-29): the set's covers are 600px PNGs of 25-69KB, drawn at
+     26-286px. Super's image service (/_next/image, same origin, AVIF or WebP at its one quality, 75) makes a copy
+     at least twice the drawn size, so it stays sharp on a retina screen - checked side by side at 2x against the
+     originals: the same picture, 3-10KB. SVGs and anything not on Super's asset host pass through as they are. */
+  function sized(url, w) {
+    var m = /[?&]url=([^&]+)/.exec(url || "");
+    var orig = m ? decodeURIComponent(m[1]) : (url || "");
+    if (!/^https:\/\/assets\.super\.so\/[^?#]+\.(png|jpe?g|webp)(?:[?#]|$)/i.test(orig)) return url;
+    return "/_next/image?url=" + encodeURIComponent(orig) + "&w=" + w + "&q=75";
+  }
   function well(glyph, i) {
     var w = el("span", "enc-nav__well");
     w.style.background = TINTS[i % TINTS.length];
     if (glyph) {
       var img = el("img");
-      img.src = glyph;
+      img.src = sized(glyph, 128);   // drawn at about 26px
       img.alt = "";
       img.loading = "lazy";
       w.appendChild(img);
@@ -567,7 +577,7 @@
         var thumb = el("span", "enc-nav__thumb");
         if (p.glyph) {
           var img = el("img");
-          img.src = p.glyph;
+          img.src = sized(p.glyph, 256);   // a 112x70 cover in miniature
           img.alt = "";
           img.loading = "lazy";
           thumb.appendChild(img);
@@ -1057,7 +1067,7 @@
       if (sc.item === "net") {
         var g = el("span", "enc-nav__hit-disc");
         g.style.background = r.tint || "#F2F2ED";
-        if (r.glyph) { var im = el("img"); im.src = r.glyph; im.alt = ""; im.loading = "lazy"; g.appendChild(im); }
+        if (r.glyph) { var im = el("img"); im.src = sized(r.glyph, 128); im.alt = ""; im.loading = "lazy"; g.appendChild(im); }
         a.appendChild(g);
         a.appendChild(el("span", "enc-nav__hit-name", r.label));
         var t = el("span", "enc-nav__hit-rate", r.tag);
@@ -1070,7 +1080,7 @@
       else if (sc.item === "vote" || r.kind === "Investment") {
         lead = el("span", "enc-nav__hit-disc");
         lead.style.background = r.tint || "#F2F2ED";
-        if (r.glyph) { var gi2 = el("img"); gi2.src = r.glyph; gi2.alt = ""; gi2.loading = "lazy"; lead.appendChild(gi2); }
+        if (r.glyph) { var gi2 = el("img"); gi2.src = sized(r.glyph, 128); gi2.alt = ""; gi2.loading = "lazy"; lead.appendChild(gi2); }
       } else {
         lead = el("span", "enc-nav__hit-lead");
         if (r.kind === "File") { lead.style.background = r.ground; if (r.src) { var fi = el("img"); fi.src = r.src; fi.alt = ""; lead.appendChild(fi); } }
@@ -1920,7 +1930,7 @@
 
   /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
      against its page from the console without opening the menu */
-  window.encNav = { version: 16, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
+  window.encNav = { version: 17, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
     groups: function () { return groups; }, harvest: function () { return { done: harvested, tries: harvestTries }; },
     ground: ground, isInk: isInk, groundUnder: groundUnder, wordmark: wearWordmark,
     band: band };

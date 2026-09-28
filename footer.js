@@ -25,6 +25,16 @@
     primary: { label: "Book a call", href: "https://cal.com/aditya-encapsulate/30min", external: true },
     secondary: { label: "View networks", href: "/networks" }
   };
+  /* a network glyph at the size it is drawn (2026-09-29): the set's covers are 600px PNGs of 25-69KB, drawn at
+     26-286px. Super's image service (/_next/image, same origin, AVIF or WebP at its one quality, 75) makes a copy
+     at least twice the drawn size, so it stays sharp on a retina screen - checked side by side at 2x against the
+     originals: the same picture, 3-10KB. SVGs and anything not on Super's asset host pass through as they are. */
+  function sized(url, w) {
+    var m = /[?&]url=([^&]+)/.exec(url || "");
+    var orig = m ? decodeURIComponent(m[1]) : (url || "");
+    if (!/^https:\/\/assets\.super\.so\/[^?#]+\.(png|jpe?g|webp)(?:[?#]|$)/i.test(orig)) return url;
+    return "/_next/image?url=" + encodeURIComponent(orig) + "&w=" + w + "&q=75";
+  }
   var ASSETS = "https://assets.super.so/d7300a44-6aa9-4b9e-a149-0076eb69ca9d/images/";
   // The ten chains the band cycles, from the "Networks set" database's own Cover uploads (the new
   // gallery, 2026-09-16). The footer runs on every page, most of which have no networks gallery to
@@ -103,7 +113,7 @@
       img.alt = "";
       img.decoding = "async";
       img.loading = "lazy";
-      img.src = ASSETS + ROTATE[i % ROTATE.length];
+      img.src = sized(ASSETS + ROTATE[i % ROTATE.length], 256);   // drawn at up to 101px
       slot.appendChild(img);
       slot.__pick = i;
       b.appendChild(slot);
@@ -131,7 +141,7 @@
           for (var k = 1; k <= ROTATE.length; k++) {
             if (!taken[(s.__pick + k) % ROTATE.length]) { s.__pick += k; break; }
           }
-          s.firstChild.src = ASSETS + ROTATE[s.__pick % ROTATE.length];
+          s.firstChild.src = sized(ASSETS + ROTATE[s.__pick % ROTATE.length], 256);
           s.removeAttribute("data-fading");
         }
       });
