@@ -128,6 +128,11 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   display: block !important;
   width: 100% !important;
   height: auto !important;
+  /* the loop's own first frame stands in until the video has a frame of its own (2026-09-29): it was
+     the page's largest element and painted last on a phone. The box takes the file's own ratio, so
+     the still fills it before the video's metadata arrives (a video of unknown size is 150px tall) */
+  aspect-ratio: 1920 / 916 !important;
+  background: url("../img/home-loop-poster.webp") center / 100% 100% no-repeat !important;
 }
 /* UNTIL THE HOMEPAGE IS REPUBLISHED (2026-09-25): the loop's old block, first on the page, hung
    behind the hero as it was. It matches nothing once Super serves the loop inside the hero's
@@ -4335,6 +4340,9 @@ The last block identifies the heading callout which says: Others Trust, We Valid
     height: 100% !important;
     object-fit: cover !important;
     object-position: 72% 100% !important;
+    aspect-ratio: auto !important;
+    background-size: cover !important;   /* the still crops as the video does */
+    background-position: 72% 100% !important;
   }
 
   /* WHO WE ARE: THE ROWS STAY ON INK. At full width each team card is `display: contents`, so it

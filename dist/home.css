@@ -17,7 +17,7 @@
 .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column:last-child{position: static !important;}
 .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-video{position: absolute !important;right: 0 !important;bottom: 0 !important;z-index: -1 !important;width: max(100%,min(1728px,140vw)) !important;max-width: none !important;margin: 0 !important;pointer-events: none !important;-webkit-mask-image: linear-gradient(to bottom,transparent,#000 160px) !important;mask-image: linear-gradient(to bottom,transparent,#000 160px) !important;}
 .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-video__content{width: 100% !important;}
-.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-video video{display: block !important;width: 100% !important;height: auto !important;}
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-video video{display: block !important;width: 100% !important;height: auto !important;aspect-ratio: 1920 / 916 !important;background: url("../img/home-loop-poster.webp") center / 100% 100% no-repeat !important;}
 .notion-root > #block-1ee04e9fd50a4439990b8229161f34cc{position: absolute !important;z-index: -1 !important;top: 90px !important;right: 0 !important;width: max(100%,1728px) !important;}
 @media (max-width: 900px){.notion-root > #block-1ee04e9fd50a4439990b8229161f34cc{display: none !important;}
 }
@@ -482,7 +482,7 @@
 .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 > .notion-column:last-child{margin-top: 28px !important;}
 .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-video{position: relative !important;right: auto !important;bottom: auto !important;z-index: 0 !important;-webkit-mask-image: none !important;mask-image: none !important;width: 100vw !important;height: min(88vw,560px) !important;margin: 0 calc(50% - 50vw) !important;overflow: hidden !important;}
 .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-video__content{height: 100% !important;}
-.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-video video{height: 100% !important;object-fit: cover !important;object-position: 72% 100% !important;}
+.notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 .notion-video video{height: 100% !important;object-fit: cover !important;object-position: 72% 100% !important;aspect-ratio: auto !important;background-size: cover !important;background-position: 72% 100% !important;}
 #block-6a8e93a3b7ed4648ba82d58ee6546962 .notion-collection-card:nth-child(n),#block-6a8e93a3b7ed4648ba82d58ee6546962 .notion-collection-card:nth-child(n):hover,#block-6a8e93a3b7ed4648ba82d58ee6546962 .notion-collection-card:nth-child(n):active{padding: 0 !important;border: 0 !important;border-radius: 0 !important;background: transparent !important;box-shadow: none !important;}
 #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:nth-child(3){padding-left: 14px !important;}
 }
