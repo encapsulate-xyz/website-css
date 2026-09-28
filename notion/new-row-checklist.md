@@ -50,7 +50,7 @@ each box is something that has gone wrong, or would have, when it was skipped.
       A mainnet row also: Address, Reward rate (after our commission, as text) with **Rate updated**,
       Commission, Compounding, Unbonding, Unbonding days, Chain slashes, Slashing events, Explorer,
       Token, Since — each read from the chain, with its source in `notion/networks-set-values.md`.
-- [ ] **A mainnet row is a chain page:** Super → Pages → /networks → /mainnet → add /<chain>, pointed at
+- [ ] **A mainnet row is a chain page:** Super → Pages → /networks → add /<chain>, pointed at
       the row's share URL. Research its words into `notion/chain-pages.json` (the line, what we run, the
       five questions, sources) and write them with `python3 scripts/chain_pages.py` for that chain. Its
       green button is our guide for that chain if there is one (see "three chain pages still point
@@ -76,8 +76,8 @@ each box is something that has gone wrong, or would have, when it was skipped.
       taken out on 2026-09-28: a guide page hides them and takes the next guide from the /guides index,
       and its close band carries "All guides". Only the guides not yet redone still show them.)
 - [ ] **Properties:** Name, **Title** ("Stake AXL with Keplr" — the head's title), **Lede** (the head's
-      line; also the description), **Networks set** relation (the mainnet row — gives the page its
-      /guides/mainnet/<chain> path and the chain's mark), **Wallet Set** relation (the wallet must be a
+      line; also the description), **Networks set** relation (the mainnet row — the chain's mark; its
+      path in Super is /guides/<chain>), **Wallet Set** relation (the wallet must be a
       Wallet Set row with its glyph in Files & media), Step, Time, Network (Mainnet / Testnet; Rough
       keeps it off the picker), Status, Cover (its card in
       the "View More Guides" gallery of the guides not yet redone, and the /guides listings), Ticker.

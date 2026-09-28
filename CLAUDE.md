@@ -93,14 +93,15 @@ User rules that stand on every task:
 | `footer.js` | footer 44b, built inside Super's footer | site Head |
 | `covers.js` | inner-page cover graphics ("fields") | site Head |
 | `filterbar.js` | the filter bar (design *Filter Bar Patterns*, G · the command field) — one component for /networks, /governance-record and /blog; styles main.css §13c | site Head, before the page scripts |
+| `notfound.css`, `notfound.js` | the 404 page (design *404 Page*, D · the finder) — see "The 404 page". notfound.js is linked **async**, the only one | site Head |
 | `blocks.js` | Notion's generic blocks (design *Blog Article Blocks*): the code block's line numbers, prompts, colours, kicker and copy tick — the rest of the four blocks is main.css §12–13 | site Head |
 | `home.css`, `home-dial.css`, `home.js` | homepage sections, JS-enhanced styles, homepage scripts | homepage Head |
 | `brand.css`, `brand.js` | /brand — four spreads with a sticky rail, the marks slab, the colour band (design *Brand Page*) | page Head + site Head |
 | `blog.css`, `blog.js` | /blog — the index (design J); blog.js builds each card's cover and its band span, and is loaded from the site head | page Head + site Head |
 | `post.css`, `post.js` | /blog/&lt;post&gt; — every post page (design *Blog Post Page*, variant J). A post has no page head of its own, so both are in the site head and scoped by path | site Head |
-| `chain.css`, `chain.js` | /networks/mainnet/&lt;chain&gt; — the 27 chain pages (design *Chain Page Combined*), built from each Networks set row page. Site head, scoped by `[data-enc-chain]` | site Head |
+| `chain.css`, `chain.js` | /networks/&lt;chain&gt; — the 27 chain pages (design *Chain Page Combined*), built from each Networks set row page. Site head, scoped by `[data-enc-chain]` | site Head |
 | `notion/chain-pages.json`, `scripts/chain_pages.py` | each chain page's words and facts, researched per chain (sources, notes, how "since" was found), and the writer that puts them into the row pages | — |
-| `guide.css`, `guide.js` | /guides/&lt;stage&gt;/&lt;chain&gt; — every guide page (design *Staking Guide Variation 1d*). A guide has no page head of its own, so both are in the site head and scoped by path | site Head |
+| `guide.css`, `guide.js` | /guides/&lt;chain&gt; — every guide page (design *Staking Guide Variation 1d*). A guide has no page head of its own, so both are in the site head and scoped by path | site Head |
 | `network.css`, `network.js` | /networks — the Network Count band (the hollow; network.js draws its tally), the set as the Networks Index, 5m. network.js is in the site head | its page Head + site Head |
 | `services.css`, `services.js` | /services — four services and the ask under the cover (design *Services Categories Chosen*), built from the page's callouts, four inline tables and a copy toggle | page Head + site Head |
 | `investments.css`, `investments.js` | /investments — two bands (design *Investments Page*): the thesis and the running band of positions on ink, the six questions on paper | page Head + site Head |
@@ -1020,7 +1021,8 @@ second button goes to the contact page's form instead.
 ## The chain pages (2026-09-24, design *Chain Page Combined*)
 
 Every **mainnet** row of the Networks set is a Notion page, and since 2026-09-24 each has a path
-of its own in Super: **Pages → /networks → /mainnet → /&lt;chain&gt;** (avalanche, lido-dvt, monad,
+of its own in Super: **/networks/&lt;chain&gt;** since 2026-09-28 (it was /networks/mainnet/&lt;chain&gt;; see
+"Paths") (avalanche, lido-dvt, monad,
 near, sui, axelar, eigencloud, iota, mina, starknet, terra, zilliqa, avail, espresso, ika, supra,
 vara, agoric, althea, gitopia, gravity-bridge, humans, ixo, lumera, passage, sommelier,
 chain4energy), each pointing at the row's share URL. `/<row id>` 307-redirects there. Added from
@@ -1028,7 +1030,7 @@ the automation tab (the user asked); the Super editor loads slowly (15–45 s) a
 stop landing after the window changes — what worked was JavaScript: expand the rows by clicking
 their `.lucide-chevron-right`, `.click()` the last "Add sub-page", focus each input and type with
 real keys, `.click()` "Create page". **Giving the rows paths changed Super's markup:** a set card
-is now `id="block-networks-mainnet-<chain>"` with a `.notion-collection-card__anchor` link, not
+is now `id="block-networks-<chain>"` with a `.notion-collection-card__anchor` link, not
 `block-<row id>` with `.no-click` — anything that reads a card's row id must accept either.
 
 **Where everything comes from** (nothing is typed in chain.js):
@@ -1044,7 +1046,7 @@ is now `id="block-networks-mainnet-<chain>"` with a `.notion-collection-card__an
 **No raw Notion before the build.** chain.js runs deferred, after the first paint, and Super's
 hydration strips its attribute once more before it settles — the raw blocks showed twice (437ms,
 and again at 664 before the build at 967). chain.css hides them from the first paint by the class
-Super server-renders on every chain page, `.super-content.parent-page__networks-mainnet`, with a
+Super server-renders on every chain page, `.super-content.parent-page__networks`, with a
 5s `visibility` reveal in case the build never comes. The shared words and the chain list live in
 localStorage (`enc-chain-copy`, `enc-chain-list`), used at once and re-read in the background
 past half an hour, so a repeat visit is built at ~140ms.
@@ -1053,9 +1055,9 @@ past half an hour, so a repeat visit is built at ~140ms.
 viewport's (`hero.bottom < 80 && last.bottom > innerHeight − 8`), so it never lies over the
 footer; the last band carries `[data-enc-last]` (handoff, 2026-09-24).
 
-**Page id.** Super names the page after its path (`main#page-networks-mainnet-monad`, class
-`parent-page__networks-mainnet`), so chain.js finds the row id in the page's data by `"uri"`.
-Only a page under /networks/mainnet or a bare row id is looked at, so other pages cost nothing.
+**Page id.** Super names the page after its path (`main#page-networks-monad`, class
+`parent-page__networks`), so chain.js finds the row id in the page's data by `"uri"`.
+Only a page under /networks or a bare row id is looked at, so other pages cost nothing.
 
 **Decisions made against the file** (all reported to the user, 2026-09-24):
 - The rate is **after our commission** (the row's Reward rate, as researched), so the caption says
@@ -1068,7 +1070,7 @@ Only a page under /networks/mainnet or a bare row id is looked at, so other page
 - The Lido band sits **after the hero** (the file shows it first, above its own note).
 - **The buttons (the user, 2026-09-24):** the green one is **our own guide** for that chain —
   "Delegate with <the guide's wallet>", linked as the guide's Notion page so Super writes
-  /guides/mainnet/<chain> — and the gray one is **"Our validator"**, the row's Explorer. Lido,
+  /guides/<chain> — and the gray one is **"Our validator"**, the row's Explorer. Lido,
   Vara and Chain4Energy have no guide and keep an external staking link (stake.lido.fi, the Vara
   dashboard, DTEAM's ping.pub-style explorer with Keplr). No REStake anywhere: Passage's and
   Sommelier's explorer is Keplr's validator card (Mintscan dropped both; ping.pub, stavr and
@@ -1425,8 +1427,8 @@ Decided with the user after (2026-09-26): the record and the navbar run the full
 highlighted word" stays; the three blank record rows were deleted (Notion trash); the "Under
 reconstruction" banner's Body snippet is to be removed in Super (head/site-body.html is empty); the
 blog's no-results state waits for a design. **The EigenCloud pair in the Learn panel:** two guides for
-one chain and one wallet — /guides/mainnet/eigen-layer (11 steps, delegate on EigenLayer) and
-/guides/mainnet/eigen-layer-lst (18 steps, stake ETH on Lido and restake the stETH) — and the second
+one chain and one wallet — /guides/eigen-layer (11 steps, delegate on EigenLayer) and
+/guides/eigen-layer-lst (18 steps, stake ETH on Lido and restake the stETH) — and the second
 carried the first's Title. Its Title is now "Restake stETH with MetaMask", and navbar.js's /guides
 reader labels twins by what their Title says they do. The picker still offers one guide per chain
 and wallet, so the LST guide is not reachable from it.
@@ -1438,6 +1440,50 @@ blocks were deleted (originals in backups/zk-snarks-code-blocks-2026-09-26.json)
 
 Still open: the stage block under the index on touch phones, the code copy button over a phone's first
 line.
+
+## Paths (2026-09-28) — no /mainnet, and the 404 page
+
+**The chain pages are /networks/&lt;chain&gt; and the guides /guides/&lt;chain&gt;** (the user, 2026-09-28: "remove
+the mainnet subpath"). They were /networks/mainnet/&lt;chain&gt; and /guides/mainnet/&lt;chain&gt; — pages Super
+nested under a folder page each (the Networks set database at /networks/mainnet, and two pages of
+linked views, "Mainnet" and "Testnet", under /guides) whose listings were raw Notion. The 59 pages were
+moved in place (`updateSitePage` path; each kept its SEO title and page code), the three folder pages
+and the one testnet guide (Zilliqa: Super page removed, Notion row in the trash, copy in
+`backups/zilliqa-testnet-guide-2026-09-28.json`) removed from Super. **No redirects, by the user's
+choice**: the old addresses 404 onto the 404 page, whose finder turns their words into the new pages.
+A database page in Super also serves its rows by slug under its own path, so the old URLs kept
+answering until /networks/mainnet was removed; each removed URL is served stale once more, then 404s.
+The code accepts both shapes (v324): chain.css/chain.js know a chain page by `parent-page__networks`
+(or `-mainnet`), guide.js takes `/guides/<chain>`, guide.css `[class*="parent-page__guides"]`,
+network.js reads `/networks/<chain>` links, og_cards.py lists chains under /networks/.
+
+**The 404 page** (design *404 Page*, "D · the finder", v325). Super has no custom 404: every unknown
+address renders its own `.super-error.super-error__not-found` ("This page doesn't seem to exist. Click
+anywhere to go back.") between the bar and the footer. `notfound.js` draws the design beside it and
+`notfound.css` hides it (and, from the first paint, its text — shown again after 5s if nothing builds):
+the eyebrow, "Nothing at this address.", the lede, Book a call and Go to the homepage, the hollow 404
+with its two notes (hover a part or its note and the pair lights), and the finder — the address's own
+words already in the search field, searched against every page and every network (typing anywhere
+focuses it; ↑↓, Enter, Escape).
+- **Every word is on the Notion page "Page not found"** (`3e9e800a…814e8cfc…`, a child of Home, served at
+  /page-not-found with a noindex head and the SEO title "Page not found - Encapsulate"): in order the
+  eyebrow's two texts, the Heading 1, the lede, the two button callouts, the notes (tag, line, tag,
+  line — `{path}` is the address), the finder's label, and a **"404 page copy" toggle** (hidden by id in
+  notfound.css): `key · value` lines for the finder's words and a table **Page | Path | Words | Line** —
+  the pages it finds, the words that find them and the line under each. A 404 carries none of those
+  blocks, so the page is fetched and kept in localStorage (`enc-nf-copy`, read again past half an
+  hour); FALLBACK in notfound.js is the design's words for a first visit before that arrives. The
+  networks are the set's own (`encCounts().list`): a mainnet opens its chain page, a testnet-only chain
+  /networks. On /page-not-found itself the design is built from the page's own blocks, with the
+  design's example address, /staking-with-us.
+- **On a 404 Super runs none of the site head's scripts.** It puts the head only into React's payload,
+  and React renders `<script defer>` without running it (measured: no script of ours requested, only
+  the stylesheets) — the bar was bare, the footer Super's own list. React 19 does load a `<script
+  async>`, so **notfound.js is the one async script in the site head**, and on a 404 where navbar.js
+  has not run (`!window.encNav`) it inserts every other website-css script again, in order (`async =
+  false`): the bar, the footer, the booking drawer and the counts come back. Keep it async.
+- Deviations: the design's "Book a call" went to /contact-us — ours opens the drawer, as every Book a
+  call does; its Governance page is /governance, ours /governance-record.
 
 ## Things that bite in Super / Notion markup
 
@@ -1597,8 +1643,7 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
   the set changes, since they are what shows if /services cannot be read or before it arrives. If
   the view on /services loses its Stage property, every count falls back.
 - **The old `Networks` database is not to be used for anything** (the user, 2026-09-24) — not for
-  values, not for chain pages. Its item pages (/networks/mainnet/<chain>) carry stale "Expected
-  Reward Rate" lists.
+  values, not for chain pages. Its item pages carry stale "Expected Reward Rate" lists.
 - **Every script now prefers this database:** `covers.js` reads it by id, `home.js` uses it when a
   view of it is on the homepage (old gallery is the fallback), `network.js` builds 5m from it.
 - **Staking values (2026-09-24):** the 28 mainnet rows carry Address, Reward rate (real, **after
@@ -1729,8 +1774,8 @@ flash of empty values and a key in the page.
 ## TODO — the Networks set's open values (2026-09-24)
 
 - **Mina reward rate:** blank on purpose (our pool is too small for a steady rate); decide later.
-- **Mina fee:** Auro's list says 5%; /networks/mainnet/mina (an existing chain page, from the old
-  Networks database, whose "Expected Reward Rate" list is stale) names no fee. Confirm.
+- **Mina fee:** Auro's list says 5%; the old Networks database's Mina page (its "Expected Reward
+  Rate" list is stale) names no fee. Confirm.
 - **Lido and SSV.network are one row, "Lido DVT"** (the user, 2026-09-24): the same 500 validators,
   Lido's Simple DVT module on an SSV cluster. The Lido row was renamed and carries Lido's values;
   the SSV.network row was archived (Notion trash, restorable). A new **Stake at** URL property holds
@@ -1760,13 +1805,13 @@ that have no guide yet. Until their guides exist the button goes elsewhere:
 | Chain4Energy | Delegate with Keplr | DTEAM's explorer, our validator's page (Delegate connects Keplr) |
 
 **When a guide for one of them is added** to the Guides Database (with its Networks set relation
-pointing at the mainnet row, so it gets /guides/mainnet/&lt;chain&gt;), switch that page over:
+pointing at the mainnet row; its path in Super is /guides/&lt;chain&gt;), switch that page over:
 
 1. in `notion/chain-pages.json`, set the chain's `wallet` to `{"label": "Delegate with <the guide's
    wallet>", "url": "https://www.notion.so/<the guide's page id, no dashes>"}` — the same shape as
    the other 24;
 2. `python3 scripts/chain_pages.py --buttons "<Name>"` (replaces only the button block);
-3. after Super republishes, check the chain page's green button reads /guides/mainnet/&lt;chain&gt;.
+3. after Super republishes, check the chain page's green button reads /guides/&lt;chain&gt;.
 
 Raise this whenever guides are being worked on.
 
@@ -1860,8 +1905,7 @@ reads them) + Home → Networks → chain; **guide.js** Home → Guides → guid
 
 **Done 2026-09-28:** the Mina hard-fork post (a Home child page, in Notion's trash since 2026-09-25) is
 removed from Super (the user: "let it be"); the listing pages /networks/mainnet, /guides/mainnet and
-/guides/testnet carry the noindex line (page code is not inherited — their chain pages and guides do
-not). **Still open:** the 318 vote-row pages of the record (`meta:canonical` to the record, or leave);
+/guides/testnet are gone from Super with the paths (see "Paths"), and 404. **Still open:** the 318 vote-row pages of the record (`meta:canonical` to the record, or leave);
 the 301 for /terms-and-conditions (optional — nothing links it); the main pages' h1 counts.
 
 ## TODO — check every line break against its handoff (asked 2026-09-26, not started)
