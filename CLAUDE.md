@@ -165,10 +165,10 @@ Note: `git commit` also commits anything the user has staged — check `git stat
 | `head/site-body.html` | Super → Settings → Code → Body (temporary "under reconstruction" banner) |
 | `head/home.html` | Homepage → Code → Head (CSS only — home.js is in the site head) |
 | `head/networks.html` | /networks → Code → Head (view-picker + network.css; network.js is in the site head) |
-| `head/governance.html` | /governance-record → Code → Head |
+| `head/governance.html` | /governance → Code → Head (the page was /governance-record until 2026-09-28) |
 | `head/blog.html` | /blog → Code → Head (blog.css; blog.js is in the site head) |
 | `head/brand.html` | /brand → Code → Head (brand.css; brand.js is in the site head) |
-| `head/contact-us.html` | /contact-us → Code → Head |
+| `head/contact-us.html` | /contact → Code → Head (the page was /contact-us until 2026-09-28) |
 | `head/guides.html` | /guides → Code → Head (view-picker + guides.css) |
 | `head/investments.html` | /investments → Code → Head (investments.css; investments.js is in the site head) |
 | `head/security.html` | /security → Code → Head |
@@ -552,7 +552,7 @@ or if it yields nothing, the note stands in.
 | Dashboards (`/services#block-…81cf…`) | list, "Live now" | the Dashboards table on /services, in Order: each row's **Menu** property ("Sui RGP dashboard"), linked to its Link. Menu was added to the table for this on 2026-09-23 |
 | /governance-record | votes, "The latest votes" | the record's own table, newest first, six rows: the chain's mark (the set's glyph from the counts, else covers.js), "Terra · 4851" (Network · Reference), the vote as a dot — green yes, ink no, hollow abstain — and the day (since 2026-09-24; it was the four pillars' questions) |
 | /security | list | the page's `h2` headings |
-| /guides | guides | Guides database, first **seven**: chain mark (from the set on the same page), chain, wallet |
+| /guides | guides | Guides database, first **seven**: chain mark (from the set on the same page), the guide's **Title** ("Stake AVAX with Core", since v329 — it was the chain's name) and the wallet as the tag |
 | /blog | posts | first **four** cards, 89px rows: cover in miniature at 112×70 (the design's tint filter), title, first pill |
 | /brand | list | the rail's numbers — `01 · The marks` → *The marks* |
 | /investments | holds, 2 across | the Portfolio cards: logo, name, the four-digit year |
@@ -1429,8 +1429,8 @@ reconstruction" banner's Body snippet is to be removed in Super (head/site-body.
 blog's no-results state waits for a design. **The EigenCloud pair in the Learn panel:** two guides for
 one chain and one wallet — /guides/eigen-layer (11 steps, delegate on EigenLayer) and
 /guides/eigen-layer-lst (18 steps, stake ETH on Lido and restake the stETH) — and the second
-carried the first's Title. Its Title is now "Restake stETH with MetaMask", and navbar.js's /guides
-reader labels twins by what their Title says they do. The picker still offers one guide per chain
+carried the first's Title. Its Title is now "Restake stETH with MetaMask"; the navbar's /guides reader shows
+every guide by its Title since v329, so the twins read apart. The picker still offers one guide per chain
 and wallet, so the LST guide is not reachable from it.
 
 **The zk-snarks post's prose** was three JSON code blocks (13, 23 and 31 lines of sentences, 2,096px
@@ -1460,6 +1460,24 @@ answering until /networks/mainnet was removed; each removed URL is served stale 
 The code accepts both shapes (v324): chain.css/chain.js know a chain page by `parent-page__networks`
 (or `-mainnet`), guide.js takes `/guides/<chain>`, guide.css `[class*="parent-page__guides"]`,
 network.js reads `/networks/<chain>` links, og_cards.py lists chains under /networks/.
+
+**Renamed on 2026-09-28** (the user's review of every path; each old address 308s to its new one, and the
+code accepts both — v328): /governance-record → **/governance** (its database page →
+**/governance/votes**, noindex), /contact-us → **/contact**, /blog/agorictest-17-analysis →
+/blog/agoric-testnet-17-analysis, /blog/monad → /blog/monad-l1-scaling, /guides/eigen-layer-lst →
+/guides/eigen-layer-steth, /networks/humans and /guides/humans → humans-ai, /blog/zilliqa2 →
+/blog/zilliqa-2-launch, /blog/arc → /blog/arc-network, /blog/double-zero → /blog/doublezero. **Super moves a
+page's children with it** (the record's database page became /governance/governance-record, then was moved
+on). The navbar's Governance and Contact links were typed addresses (`type: "url"`) and were updated through
+`updateSite({navigation})` — the whole navigation object, read back identical but for those two; the footer's
+links are page references and followed by themselves. Three typed links in Notion that went through a
+redirect were updated (/investments' Send the spec, the record's empty-state and count-band links, an image
+caption in the Solana post). A sweep of every internal link on the 113 pages then found none through a
+redirect and none broken.
+**Proof links:** 23 record rows (Axelar 348–369, Umee 187) linked "View Txn Hash" to private Notion pages
+(404). The votes' transactions are gone from every public source (the nodes keep about a month; Axelarscan
+keeps no votes of ended proposals), so each now reads "View proposal" and links the proposal on Mintscan
+(old values in `backups/governance-proof-links-2026-09-28.json`).
 
 **The 404 page** (design *404 Page*, "D · the finder", v325–v326). **/page-not-found is the site's custom
 404** (Super Pro: `custom404PageId`, set 2026-09-28). Super shows it in a **full-screen iframe** over the
