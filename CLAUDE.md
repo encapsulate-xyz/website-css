@@ -109,6 +109,7 @@ User rules that stand on every task:
 | `svg/`, `img/` | every drawing and icon the CSS references, served from jsDelivr beside the CSS | referenced as `../svg/…` / `../img/…` from `dist/` |
 | `notion/page-covers.md` | cover copy for the nine inner pages | — |
 | `notion/github-actions-plan.md` | the GitHub Actions plan (2026-09-26, not built): the 26 things that go stale, where each lives in Notion, the proposed `jobs/` structure, the build order and the open decisions | — |
+| `notion/new-row-checklist.md` | **what a new row in each database needs beyond its page** (posts, chains, guides, the rest): its properties, its path in Super, the social card (`og_cards.py`), the fallback numbers and hardcoded lists, what to refresh and what to check. Go through it every time a row is added (the user, 2026-09-28) | — |
 | `notion/guide-screenshots.md` | how guide screenshots are captured and composed (agreed 2026-09-18, not yet applied) | — |
 | `build.py` | strips comments into `dist/`, copies the JS | — |
 | `scripts/paste_table.py` | prints the paste table from head/*.html vs what the live pages serve | — |
