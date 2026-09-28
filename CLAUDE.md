@@ -964,6 +964,15 @@ can never drift from the CSS that positions it.
 | Services, team, testimonial and blog covers | the same kind of Notion property | Super, plus `home.js` for the services swap |
 | Every word on the site | Notion blocks | — |
 
+**Glyphs are drawn from Super's image service, not the originals** (2026-09-29, v335). The set's covers are 600px
+PNGs (25–69KB); network.js, covers.js, footer.js and navbar.js each ask `/_next/image?url=…&w=…&q=75` (same origin; AVIF
+or WebP; 75 is the only quality it accepts) through a `sized(url, w)` helper, at least twice the drawn size: the
+closing band's rows and the footer 256, the cover field 384, the stage 640, the navbar 128; the lens already used 128.
+Checked side by side at 2× against the originals (mean difference under 0.6/255, the finest stripes identical).
+/networks went from 39 originals (~960KB) to none. SVGs and anything off Super's asset host pass through. **The
+favicon is `img/favicon-512.png`** (39KB, uploaded in Super → Settings → Site favicon on 2026-09-29; it was a 4097px,
+202KB PNG loaded on every page). The homepage's Organization logo still points at the old 4097px file, which Super keeps.
+
 The Notion API can now upload files (`POST /v1/file_uploads` → send the bytes → attach by
 `file_upload` id), so a glyph can be replaced end to end from here; external URLs still work too.
 
@@ -1939,6 +1948,24 @@ one row per step: Name ("01 · …"), Step, Body, Watch, Surface, Link, the capt
 `python3 scripts/og_cards.py guides --only sui`, and refresh. Until then the page is the thirteen Suiet
 screens. Slush's link that opens "Stake with Encapsulate" (`my.slush.app/staking/native-stake?validatorAddress=…`)
 is unverified — test it on a phone before using it on the button.
+
+## TODO — a guide links its chain page (agreed 2026-09-29; the user is taking it to Claude Design)
+
+A chain page's green button opens its guide, but a guide never links back to its chain page — the reader who wants the
+rate, the unbonding or the questions before staking has to find /networks/<chain> by hand, and Google sees the pair
+linked one way only. The user will ask Claude Design where the link sits in the guide (the head beside the chain's
+disc, or the close band beside the next guide); implement it from that handoff — the chain's page is the guide row's
+Networks set relation, so nothing is typed. Don't add it before the design.
+
+## TODO — every validator profile says the same thing (asked 2026-09-29)
+
+The fix list is `notion/mentions-checklist.md`: StakingRewards still says "KingSuper", EigenLayer, Minascan and nine
+Cosmos validators still say "fka KingSuper", four listings link the suspended `x.com/encapsulate_xyz` (the live
+account is @encapHQ), Ika's on-chain profile has no website, and three different descriptions are in use, none
+matching the site. **First the user picks one description** (ten options were offered on 2026-09-29), then every
+profile gets the same name (Encapsulate), website (https://encapsulate.xyz), X (@encapHQ) and description: on-chain
+edits by the ops team with each operator key, forms and profile edits by the user, and **pull requests from the
+`encapsulate-xyz` GitHub account — not yet; the user will say when.**
 
 ## TODO — the GitHub Actions (planned 2026-09-25/26, not built)
 
