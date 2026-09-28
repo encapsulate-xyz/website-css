@@ -2024,7 +2024,11 @@ on any other page (checked through client-side navigations): **post.js** BlogPos
 lede, the date in local time, the Author, the tag as articleSection) + breadcrumb Home → Blog → post;
 **chain.js** the five questions as FAQPage (Google stopped showing FAQ results in May 2026 but still
 reads them) + Home → Networks → chain; **guide.js** Home → Guides → guide (HowTo results are gone since
-2023). The homepage head also holds the Google Search Console verification tag — the site is verified.
+2023). **The site's name** (the user asked why results show "encapsulate.xyz"): Google takes it from the WebSite data
+(name "Encapsulate", present once scripts run), the title and `og:site_name`. Super writes each page's title into its
+own `og:site_name` and has no setting for it, so head/home.html carries `<meta property="og:site_name"
+content="Encapsulate">` (2026-09-29, Super support's advice) — it is served *before* Super's, and parsers take the first.
+Google shows the name once it re-crawls the homepage (indexing requested 2026-09-28).
 
 **Search Console and Bing (2026-09-28, done from the automation tab at the user's request).** Google had only
 `https://king.super.site/` (the site's old Super address, now a 404 with noindex, so nothing to move). A **Domain
@@ -2036,8 +2040,9 @@ Workspace, most likely); keep both. The sitemap is submitted, and indexing was r
 /guides — **Google had never seen /networks** ("URL is unknown to Google") and /blog was not indexed. Bing: the site
 was added by hand (the Search Console import brought only king.super.site) and verified by a CNAME in DigitalOcean,
 `36b290c4f7ac57fd3ecf97ffb2452be3` → `verify.bing.com.` (keep it); its sitemap is submitted. The homepage's
-`google-site-verification` meta (`hMGL…`, in head/home.html) predates this work and may verify another account's
-property, so it stays. king.super.site is still listed in both tools; removing it is the user's call.
+`google-site-verification` meta (`hMGL…`), which verified king.super.site, was removed from head/home.html (the user,
+2026-09-29), and the king.super.site property was removed from Search Console; Bing's site list has only encapsulate.xyz.
+**Nothing on the pages verifies the site now — the DNS records do.**
 **Driving these consoles:** the extension cannot screenshot or inject into Search Console, DigitalOcean or Bing (script
 injection times out), but `javascript_tool` works: read `document.body.innerText`, click a Wiz/Google button with
 `pointerdown/mousedown/pointerup/mouseup/click` MouseEvents at its centre (a plain `.click()` and the computer tool's
