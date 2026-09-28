@@ -31,7 +31,7 @@
 (function () {
   "use strict";
 
-  var VERSION = "1";
+  var VERSION = "2";
   var SOURCE = "/page-not-found";
   var STORE = "enc-nf-copy";
   var FRESH = 30 * 60 * 1000;
@@ -50,7 +50,8 @@
     label: "Search the site",
     words: {
       "placeholder": "Type a page or a network", "all": "All pages", "results": "{n} results",
-      "result": "1 result", "keys": "↑↓ move · enter opens", "none": "Nothing called “{q}” on the site.",
+      "result": "1 result", "closest": "Closest matches · {count}", "keys": "↑↓ move · enter opens",
+      "none": "Nothing called “{q}” on the site.",
       "clear": "Show every page", "kind page": "Page", "kind network": "Network",
       "network mainnet": "Our validator on {chain}.", "network testnet": "A testnet we help — listed on Networks."
     },
@@ -143,36 +144,75 @@
     return fetching;
   }
 
-  /* ── the finder ────────────────────────────────────────────────────────────────────────── */
+  /* ── the finder ──────────────────────────────────────────────────────────────────────────
+     The design's search (404 Page, revised 2026-09-28): each entry has its own name words and
+     weaker synonyms — a page's Words at .8, a network's generic words at .35, so "network" finds the
+     Networks page and not every chain. A typed word against a keyword: exact 1, the start of it .85,
+     the word running past it .7 × its share, a typo .6 (one edit, two from seven letters). An entry
+     scores the sum of its best match per typed word; results within half the top score are kept,
+     pages first on ties, and the count says "Closest matches" when nothing matched outright. */
+  var GENERIC = ["network", "networks", "chain", "protocol", "labs", "systems"];
   function toks(q) {
     return q.toLowerCase().split(/[^a-z0-9.]+/).filter(function (w) { return w.length > 1 && STOP.indexOf(w) < 0; });
   }
   function fill(s, map) { return String(s).replace(/\{(\w+)\}/g, function (all, k) { return map[k] != null ? map[k] : all; }); }
+  function words(s) {
+    var w = s.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean), joined = s.toLowerCase().replace(/[^a-z0-9]/g, "");
+    return w.indexOf(joined) < 0 ? w.concat([joined]) : w;
+  }
+  // typo distance: optimal string alignment (insert, delete, substitute, swap two neighbours)
+  function osa(a, b) {
+    var m = a.length, n = b.length, d = [], i, j;
+    if (Math.abs(m - n) > 2) return 9;
+    for (i = 0; i <= m; i++) d[i] = [i];
+    for (j = 1; j <= n; j++) d[0][j] = j;
+    for (i = 1; i <= m; i++) for (j = 1; j <= n; j++) {
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+    }
+    return d[m][n];
+  }
+  function wordScore(w, k) {
+    if (w === k) return 1;
+    if (k.indexOf(w) === 0) return 0.85;
+    if (w.length >= 4 && k.length >= 3 && w.indexOf(k) === 0) return 0.7 * k.length / w.length;
+    if (w.length >= 4 && k.length >= 3) {
+      var lim = w.length >= 7 ? 2 : 1;
+      if (osa(w, k) <= lim || (k.length > w.length && osa(w, k.slice(0, w.length)) <= lim)) return 0.6;
+    }
+    return 0;
+  }
+  function best(w, ks) { return ks.reduce(function (m, k) { return Math.max(m, wordScore(w, k)); }, 0); }
 
   function index(copy, nets) {
     var w = copy.words;
     var out = copy.pages.map(function (p) {
-      return { kind: w["kind page"], page: true, label: p[0], href: p[1], desc: p[3], keys: (p[0] + " " + p[2]).toLowerCase() };
+      return { kind: w["kind page"], page: true, label: p[0], href: p[1], desc: p[3],
+        name: words(p[0]), syn: p[2].toLowerCase().split(/\s+/).filter(Boolean), wt: 0.8 };
     });
     (nets || []).forEach(function (n) {
       if (!n || !n.name) return;
       var main = !!n.href;
       out.push({ kind: w["kind network"], page: false, label: n.name, href: main ? n.href : "/networks",
         desc: fill(main ? w["network mainnet"] : w["network testnet"], { chain: n.name }),
-        keys: (n.name + " network chain validator " + (main ? "mainnet" : "testnet")).toLowerCase() });
+        name: words(n.name).filter(function (x) { return GENERIC.indexOf(x) < 0; }),
+        syn: ["network", "chain", "validator", main ? "mainnet" : "testnet"], wt: 0.35 });
     });
     return out;
   }
 
   function search(all, q) {
-    var T = toks(q);
-    if (!T.length) return all.filter(function (x) { return x.page; });
-    return all.map(function (x) {
-      var keys = x.keys.split(" ");
-      return { x: x, sc: T.filter(function (t) { return keys.some(function (k) { return k.indexOf(t) === 0; }); }).length };
-    }).filter(function (o) { return o.sc > 0; }).sort(function (a, b) {
+    var T = toks(q), out;
+    if (!T.length) { out = all.filter(function (x) { return x.page; }); out.exact = true; return out; }
+    var scored = all.map(function (x) {
+      return { x: x, sc: T.reduce(function (s, w) { return s + Math.max(best(w, x.name), x.wt * best(w, x.syn)); }, 0) };
+    }).filter(function (o) { return o.sc > 0; });
+    var top = scored.reduce(function (m, o) { return Math.max(m, o.sc); }, 0);
+    out = scored.filter(function (o) { return o.sc >= top * 0.5; }).sort(function (a, b) {
       return b.sc - a.sc || (a.x.page === b.x.page ? a.x.label.localeCompare(b.x.label) : a.x.page ? -1 : 1);
     }).map(function (o) { return o.x; });
+    out.exact = top / T.length >= 0.85;
+    return out;
   }
 
   /* ── the page ──────────────────────────────────────────────────────────────────────────── */
@@ -337,7 +377,8 @@
       input.setAttribute("aria-expanded", st.R.length ? "true" : "false");
       if (!st.R.length) { noneLine.textContent = fill(w.none, { q: st.q }); mark(); return; }
       var head = el("div", "enc-nf__head");
-      head.appendChild(el("span", null, has ? (st.R.length === 1 ? w.result : fill(w.results, { n: st.R.length })) : w.all));
+      var count = st.R.length === 1 ? w.result : fill(w.results, { n: st.R.length });
+      head.appendChild(el("span", null, !has ? w.all : st.R.exact ? count : fill(w.closest, { count: count })));
       head.appendChild(el("span", "enc-nf__keys", w.keys));
       list.appendChild(head);
       st.R.forEach(function (r, i) {
@@ -512,7 +553,7 @@
       if (framedOnce || !live || !live.sec.isConnected || mode() !== (live && live.mode) || !asked) schedule();
     }).observe(document.body, { childList: true, subtree: true });
   }
-  window.encNotFound = { version: VERSION, read: read, search: search };
+  window.encNotFound = { version: VERSION, read: read, search: search, index: index, FALLBACK: FALLBACK };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
   else start();
 })();
