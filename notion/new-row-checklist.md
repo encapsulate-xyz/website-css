@@ -20,8 +20,9 @@ each box is something that has gone wrong, or would have, when it was skipped.
 
 - [ ] **Start from the template** — "New page", the database's default (rebuilt 2026-09-28): the
       contents column (Notion's table of contents) beside the article column, which opens on an empty
-      paragraph; then "More Blog Posts", its gallery and the button. Status starts as In Progress —
-      set Live when it is ready.
+      paragraph — nothing else. Status starts as In Progress — set Live when it is ready. ("More Blog
+      Posts", its gallery and its button were taken out on 2026-09-28: the post page hides them and
+      takes the next post from the /blog index, and its foot links back to /blog.)
 - [ ] **Properties:** Name (the title), Published Time, Tags (the first tag that is not Informative is
       its category; Informative alone is fine), Status = **Live** (anything else is left off the index),
       **Lede** (the head's two lines), Chain, Ticker, Mainnet (Live / Not yet launched — picks the
@@ -69,9 +70,11 @@ each box is something that has gone wrong, or would have, when it was skipped.
 ## Guides Database — a new guide (`1f6e800a…8181…`)
 
 - [ ] **Start from the template** "NETWORK_NAME" (rebuilt 2026-09-28 after the Axelar guide): the step
-      database with Axelar's properties and one sample step ("01 · Step title"), then "View More
-      Guides", its gallery and the button. Network starts as Mainnet and Status as Soon — set Live when
-      it is ready. Rename the page, and replace the sample step with the real ones.
+      database with Axelar's properties and one sample step ("01 · Step title") — nothing else.
+      Network starts as Mainnet and Status as Soon — set Live when it is ready. Rename the page, and
+      replace the sample step with the real ones. ("View More Guides", its gallery and its button were
+      taken out on 2026-09-28: a guide page hides them and takes the next guide from the /guides index,
+      and its close band carries "All guides". Only the guides not yet redone still show them.)
 - [ ] **Properties:** Name, **Title** ("Stake AXL with Keplr" — the head's title), **Lede** (the head's
       line; also the description), **Networks set** relation (the mainnet row — gives the page its
       /guides/mainnet/<chain> path and the chain's mark), **Wallet Set** relation (the wallet must be a
