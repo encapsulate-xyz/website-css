@@ -20,7 +20,14 @@
    stylesheets) — the bar, the footer and the drawer stayed Super's own. React does load a
    <script async>, so this file is linked async, and on a 404 whose scripts did not run it inserts
    each of them again, in order (revive): the bar, the footer, the drawer and the counts come
-   back. On every other page it does nothing. */
+   back. On every other page it does nothing.
+
+   Since 2026-09-28 /page-not-found is also Super's custom 404 page (Pro), and Super shows it in a
+   full-screen iframe over the missing address, which keeps its 404 status. Inside that frame the
+   page is an ordinary page — every script runs — so the design is built from its own blocks with
+   the outer window's address ("framed"); links, the finder's Enter and any route change leave the
+   frame for the outer window, and the tab takes the page's title. The first case above stays for
+   the day the setting is switched off. */
 (function () {
   "use strict";
 
@@ -197,10 +204,22 @@
     return s;
   }
 
+  // the outer window's path when this page is Super's custom 404, shown in a frame over a missing address
+  function outer() {
+    try {
+      if (window.top === window) return null;
+      var p = window.top.location.pathname;
+      return p.replace(/\/+$/, "") === SOURCE ? null : p;
+    } catch (e) { return null; }
+  }
   function address(mode) {
-    var raw = location.pathname;
+    var raw = mode === "framed" ? outer() || location.pathname : location.pathname;
     try { raw = decodeURIComponent(raw); } catch (e) {}
     return mode === "page" || raw === "/" ? EXAMPLE : raw;
+  }
+  function go(href) {
+    if (live && live.mode === "framed") window.top.location.href = new URL(href, location.href).href;
+    else window.location.href = href;
   }
 
   var live = null;   // { sec, mode, path, copy, nets, off() }
@@ -347,7 +366,7 @@
         mark(); keepVisible(st.act);
       } else if (e.key === "Enter") {
         e.preventDefault();
-        if (st.R[st.act]) window.location.href = st.R[st.act].href;
+        if (st.R[st.act]) go(st.R[st.act].href);
       } else if (e.key === "Escape") {
         input.value = st.q = ""; st.act = 0; render();
       }
@@ -401,10 +420,30 @@
     });
   }
 
+  /* ── in the frame: every way out goes to the outer window ─────────────────────────────── */
+  var framedOnce = false;
+  function leave(e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target && e.target.closest && e.target.closest("a[href]");
+    if (!a) return;
+    var href = a.getAttribute("href") || "";
+    // the booking drawer opens in place (booking.js); a hash stays on the page; a new tab is a new tab
+    if (!href || href.charAt(0) === "#" || /cal\.com\//.test(href) || a.target === "_blank") return;
+    e.preventDefault();
+    e.stopPropagation();
+    window.top.location.href = a.href;
+  }
+  function frame() {
+    if (framedOnce) return;
+    framedOnce = true;
+    document.addEventListener("click", leave, true);   // before React's own handlers, which would route in the frame
+  }
+
   /* ── when ──────────────────────────────────────────────────────────────────────────────── */
   function mode() {
     if (document.querySelector(".super-error__not-found")) return "404";
-    if (location.pathname.replace(/\/+$/, "") === SOURCE && document.querySelector(".notion-root .notion-heading")) return "page";
+    var here = location.pathname.replace(/\/+$/, "") === SOURCE;
+    if (here && document.querySelector(".notion-root .notion-heading")) return outer() ? "framed" : "page";
     return null;
   }
 
@@ -422,6 +461,11 @@
   var pending = null;
 
   function tick() {
+    // a route change inside the frame (the phone's menu routes without a link) is taken to the outer window
+    if (framedOnce && location.pathname.replace(/\/+$/, "") !== SOURCE) {
+      try { window.top.location.href = location.href; } catch (e) {}
+      return;
+    }
     var m = mode();
     var wrap = document.querySelector(".super-content-wrapper");
     if (!m || !wrap) {
@@ -433,7 +477,11 @@
     if (live) { live.off(); live = null; }
 
     var copy;
-    if (m === "page") copy = merged(read(document));
+    if (m === "framed") {
+      frame();
+      copy = merged(read(document));
+      try { if (window.top.document.title !== document.title) window.top.document.title = document.title || copy.docTitle; } catch (e) {}
+    } else if (m === "page") copy = merged(read(document));
     else {
       var s = stored();
       copy = merged(s && s.copy);
@@ -461,7 +509,7 @@
     new MutationObserver(function () {
       // Super's error block or the page's own blocks may arrive after the first pass, and on a 404
       // the revived navbar.js brings window.encCounts a moment later
-      if (!live || !live.sec.isConnected || mode() !== (live && live.mode) || !asked) schedule();
+      if (framedOnce || !live || !live.sec.isConnected || mode() !== (live && live.mode) || !asked) schedule();
     }).observe(document.body, { childList: true, subtree: true });
   }
   window.encNotFound = { version: VERSION, read: read, search: search };
