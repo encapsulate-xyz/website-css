@@ -79,7 +79,8 @@ each box is something that has gone wrong, or would have, when it was skipped.
       line; also the description), **Networks set** relation (the mainnet row — gives the page its
       /guides/mainnet/<chain> path and the chain's mark), **Wallet Set** relation (the wallet must be a
       Wallet Set row with its glyph in Files & media), Step, Time, Network (Mainnet / Testnet; Rough
-      keeps it off the picker), Status, Cover and Preview Cover (its card), Ticker.
+      keeps it off the picker), Status, Cover (its card in
+      the "View More Guides" gallery of the guides not yet redone, and the /guides listings), Ticker.
 - [ ] **The steps:** the guide's own slide database, one row per step — Name ("01 · Unlock Keplr"),
       Step, Body, Watch, Surface, Link, and the capture as the row's Cover. **Its gallery must show Body,
       Link, Step, Surface and Watch, in that order** (Axelar's); the template's gallery carries that
