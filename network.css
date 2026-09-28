@@ -350,7 +350,12 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 .enc-lens-fill {
   position: absolute;
-  inset: 0;
+  /* the figure's -0.06em tracking ends the h1's box before the last digit's ink, and a background
+     paints only inside its box: the copy's box reaches .12em past the h1 on every side and its
+     padding puts the digits back where the figure's are (the 7 was cut short, 2026-09-28) */
+  inset: -0.12em;
+  padding: 0.12em;
+  box-sizing: border-box;
   display: block;
   font: inherit;
   line-height: inherit;

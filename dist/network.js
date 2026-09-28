@@ -679,10 +679,10 @@
   }
 
   function draw() {
-    var fig = document.getElementById(FIG);
-    var list = fig && mainnets();
+    var fig = document.getElementById(FIG), fill = fig && fig.querySelector(":scope > .enc-lens-fill");
+    var list = fill && mainnets();
     if (!list || !list.length) return;
-    var r = fig.getBoundingClientRect();
+    var r = fill.getBoundingClientRect();   // the copy's own box, wider than the figure's (network.css)
     if (!r.width || !r.height) return;
     var ims = list.map(function (m) { return image(small(m.glyph)); });
     var k = Math.round(r.width) + "x" + Math.round(r.height) + "@" + window.innerWidth + "#" + list.length +
@@ -733,9 +733,9 @@
         frame = 0;
         var fg = document.getElementById(FIG), fl = fg && fg.querySelector(":scope > .enc-lens-fill");
         if (!fg || !fl) return;
-        var fr = fg.getBoundingClientRect(), tr = track.getBoundingClientRect();
+        var fr = fg.getBoundingClientRect(), lr = fl.getBoundingClientRect(), tr = track.getBoundingClientRect();
         if (at) {
-          fl.style.clipPath = "circle(" + R + "px at " + Math.round(at[0] - fr.left) + "px " + Math.round(at[1] - fr.top) + "px)";
+          fl.style.clipPath = "circle(" + R + "px at " + Math.round(at[0] - lr.left) + "px " + Math.round(at[1] - lr.top) + "px)";
           ring.style.transform = "translate(" + Math.round(at[0] - tr.left - R) + "px, " + Math.round(at[1] - tr.top - R) + "px) scale(1)";
           ring.style.opacity = "1";
           track.setAttribute("data-on", "");
