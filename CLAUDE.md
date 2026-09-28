@@ -1449,18 +1449,28 @@ nested under a folder page each (the Networks set database at /networks/mainnet,
 linked views, "Mainnet" and "Testnet", under /guides) whose listings were raw Notion. The 59 pages were
 moved in place (`updateSitePage` path; each kept its SEO title and page code), the three folder pages
 and the one testnet guide (Zilliqa: Super page removed, Notion row in the trash, copy in
-`backups/zilliqa-testnet-guide-2026-09-28.json`) removed from Super. **No redirects, by the user's
-choice**: the old addresses 404 onto the 404 page, whose finder turns their words into the new pages.
+`backups/zilliqa-testnet-guide-2026-09-28.json`) removed from Super. **Every old address 308s to its new
+one** (64 redirects: the 59 pages, /networks/mainnet → /networks, /guides/mainnet and /guides/testnet and
+/guides/testnet/zilliqa → /guides, /networks/mainnet/sommelier-finance → /networks/sommelier). They were
+added the same day, once the site went to **Super Pro** (the user upgraded for them; Personal refuses
+redirects) — through the API, `type: "permRedirect"` pages. The other 2024 chain URLs (solana, celestia,
+osmosis… chains we no longer run) and /networks/testnet/* stay 404: no page stands for them.
 A database page in Super also serves its rows by slug under its own path, so the old URLs kept
 answering until /networks/mainnet was removed; each removed URL is served stale once more, then 404s.
 The code accepts both shapes (v324): chain.css/chain.js know a chain page by `parent-page__networks`
 (or `-mainnet`), guide.js takes `/guides/<chain>`, guide.css `[class*="parent-page__guides"]`,
 network.js reads `/networks/<chain>` links, og_cards.py lists chains under /networks/.
 
-**The 404 page** (design *404 Page*, "D · the finder", v325). Super has no custom 404: every unknown
-address renders its own `.super-error.super-error__not-found` ("This page doesn't seem to exist. Click
-anywhere to go back.") between the bar and the footer. `notfound.js` draws the design beside it and
-`notfound.css` hides it (and, from the first paint, its text — shown again after 5s if nothing builds):
+**The 404 page** (design *404 Page*, "D · the finder", v325–v326). **/page-not-found is the site's custom
+404** (Super Pro: `custom404PageId`, set 2026-09-28). Super shows it in a **full-screen iframe** over the
+missing address, which keeps its 404 status; inside the frame it is an ordinary page, every script runs,
+and notfound.js builds it with the **outer window's address** ("framed" mode): links, the finder's Enter
+and any route change inside the frame go to the outer window (`leave()`, a capture-phase click handler,
+since Next's router would route inside the frame; cal.com links stay for the drawer), and the tab takes
+the page's title. Without the setting, every unknown address renders Super's own
+`.super-error.super-error__not-found` ("This page doesn't seem to exist. Click anywhere to go back.")
+between the bar and the footer; notfound.js then draws the design beside it and `notfound.css` hides it
+(and, from the first paint, its text — shown again after 5s if nothing builds). Either way it draws:
 the eyebrow, "Nothing at this address.", the lede, Book a call and Go to the homepage, the hollow 404
 with its two notes (hover a part or its note and the pair lights), and the finder — the address's own
 words already in the search field, searched against every page and every network (typing anywhere
@@ -1476,7 +1486,7 @@ focuses it; ↑↓, Enter, Escape).
   networks are the set's own (`encCounts().list`): a mainnet opens its chain page, a testnet-only chain
   /networks. On /page-not-found itself the design is built from the page's own blocks, with the
   design's example address, /staking-with-us.
-- **On a 404 Super runs none of the site head's scripts.** It puts the head only into React's payload,
+- **On Super's own 404 (the setting off) it runs none of the site head's scripts.** It puts the head only into React's payload,
   and React renders `<script defer>` without running it (measured: no script of ours requested, only
   the stylesheets) — the bar was bare, the footer Super's own list. React 19 does load a `<script
   async>`, so **notfound.js is the one async script in the site head**, and on a 404 where navbar.js
@@ -1905,8 +1915,13 @@ reads them) + Home → Networks → chain; **guide.js** Home → Guides → guid
 
 **Done 2026-09-28:** the Mina hard-fork post (a Home child page, in Notion's trash since 2026-09-25) is
 removed from Super (the user: "let it be"); the listing pages /networks/mainnet, /guides/mainnet and
-/guides/testnet are gone from Super with the paths (see "Paths"), and 404. **Still open:** the 318 vote-row pages of the record (`meta:canonical` to the record, or leave);
+/guides/testnet are gone from Super with the paths (see "Paths") and redirect. **Still open:**
 the 301 for /terms-and-conditions (optional — nothing links it); the main pages' h1 counts.
+**The vote pages are gone (2026-09-28):** 316 Super pages, one per row of the record, made in March–June
+2023 (rows added since never got one), empty (every one of the 1,153 rows' Notion pages has no blocks),
+linked from nowhere, yet in the sitemap and indexable. Removed from Super only — the Notion rows and the
+record's tables are untouched; their addresses are in `backups/governance-vote-pages-2026-09-28.json`.
+/governance-record and its database page /governance-record/governance-record stay.
 
 ## TODO — check every line break against its handoff (asked 2026-09-26, not started)
 
