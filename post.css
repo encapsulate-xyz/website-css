@@ -666,24 +666,6 @@ body:has(.notion-root[data-enc-post]) .notion-header { display: none !important;
   padding-inline: clamp(28px, 6vw, 96px);
 }
 
-/* ── a column list inside the article stacks under 1024px ──
-   This came from each post's own Code → CSS in Super (the old template's "For viewport" block), cleared
-   on 2026-09-28; the rest of that CSS styled Notion's contents block and "More Blog Posts", both hidden
-   here. Kept to the article, so the post's own two-column block is left to the rules above. */
-@media (max-width: 1024px) {
-  .notion-root[data-enc-post] .enc-po__article .notion-column {
-    width: 100% !important;
-    -webkit-margin-start: 0 !important;
-    margin-inline-start: 0 !important;
-  }
-
-  .notion-root[data-enc-post] .enc-po__article .notion-column .notion-image {
-    max-width: 100%;
-    height: auto;
-    margin: 0 auto;
-  }
-}
-
 /* ── narrow: the rail goes above the article ── */
 @media (max-width: 900px) {
   .notion-root[data-enc-post] .enc-po__body {

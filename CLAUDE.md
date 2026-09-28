@@ -931,9 +931,12 @@ Super: the blue table-of-contents rail, "More Blog Posts" limited to five, image
 tall under 1240, and — the one rule still doing anything — every Notion column full width under 1024.
 Measured in headless Chrome on eight posts at 390–1440 with the CSS on and off: nothing moved but the
 columns inside three posts (Governance Bot Improvements, IOTA Rebased, zk-SNARKs), which squeeze between
-547 and 1024px without it. **post.css stacks a column list inside the article under 1024px** (v330), and
-those three posts' old CSS went once it was live (checked with the post built: only a 3px page-mention line
-moves). The Solana post's YouTube embed now takes its true 16:9 on a phone (188px, was a 320px box).
+547 and 1024px without it. **So those columns were taken out in Notion** (the user, 2026-09-28: better than a
+CSS rule): each column list became its own blocks in order, first column then second, where it stood —
+Governance Bot's chain list and its image, IOTA Rebased's section and its embed, zk-SNARKs' figures 3 and 4
+and its "Drawback" section and image; empty paragraphs dropped, the four Notion-hosted images uploaded
+again (backup `backups/post-columns-2026-09-28.json`). The stacking rule that stood in for a day (v330) was
+removed in v333. **No post has columns inside its article** — write a post in one column. The Solana post's YouTube embed now takes its true 16:9 on a phone (188px, was a 320px box).
 
 ## Where each asset comes from — repo vs Notion (settled 2026-09-16)
 
