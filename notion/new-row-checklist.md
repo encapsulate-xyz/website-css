@@ -69,9 +69,11 @@ each box is something that has gone wrong, or would have, when it was skipped.
 
 ## Guides Database — a new guide (`1f6e800a…8181…`)
 
-- [ ] **Start from the template** "NETWORK_NAME" (rebuilt 2026-09-28 after the Axelar guide): the step
+- [ ] **Start from the template** "Stake TICKER with WALLET" (rebuilt 2026-09-28 after the Axelar guide; it was named
+      "NETWORK_NAME"): the step
       database with Axelar's properties and one sample step ("01 · Step title") — nothing else.
-      Network starts as Mainnet and Status as Soon — set Live when it is ready. Rename the page, and
+      Network starts as Mainnet and Status as Soon — set Live when it is ready. Name the page and its Title
+      the same way, "Stake SUI with Slush" (the ticker and the wallet), and
       replace the sample step with the real ones. ("View More Guides", its gallery and its button were
       taken out on 2026-09-28: a guide page hides them and takes the next guide from the /guides index,
       and its close band carries "All guides". Only the guides not yet redone still show them.)
