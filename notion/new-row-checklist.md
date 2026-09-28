@@ -18,6 +18,10 @@ each box is something that has gone wrong, or would have, when it was skipped.
 
 ## Blogs — a new post (`a148eb7f…`)
 
+- [ ] **Start from the template** — "New page", the database's default (rebuilt 2026-09-28): the
+      contents column (Notion's table of contents) beside the article column, which opens on an empty
+      paragraph; then "More Blog Posts", its gallery and the button. Status starts as In Progress —
+      set Live when it is ready.
 - [ ] **Properties:** Name (the title), Published Time, Tags (the first tag that is not Informative is
       its category; Informative alone is fine), Status = **Live** (anything else is left off the index),
       **Lede** (the head's two lines), Chain, Ticker, Mainnet (Live / Not yet launched — picks the
@@ -64,15 +68,19 @@ each box is something that has gone wrong, or would have, when it was skipped.
 
 ## Guides Database — a new guide (`1f6e800a…8181…`)
 
+- [ ] **Start from the template** "NETWORK_NAME" (rebuilt 2026-09-28 after the Axelar guide): the step
+      database with Axelar's properties and one sample step ("01 · Step title"), then "View More
+      Guides", its gallery and the button. Network starts as Mainnet and Status as Soon — set Live when
+      it is ready. Rename the page, and replace the sample step with the real ones.
 - [ ] **Properties:** Name, **Title** ("Stake AXL with Keplr" — the head's title), **Lede** (the head's
       line; also the description), **Networks set** relation (the mainnet row — gives the page its
       /guides/mainnet/<chain> path and the chain's mark), **Wallet Set** relation (the wallet must be a
       Wallet Set row with its glyph in Files & media), Step, Time, Network (Mainnet / Testnet; Rough
       keeps it off the picker), Status, Cover and Preview Cover (its card), Ticker.
 - [ ] **The steps:** the guide's own slide database, one row per step — Name ("01 · Unlock Keplr"),
-      Step, Body, Watch, Surface, Link, and the capture as the row's Cover. **Its view must show Step,
-      Body, Watch, Surface and Link** (a view setting — yours to switch on in Notion); without them the
-      page stays raw.
+      Step, Body, Watch, Surface, Link, and the capture as the row's Cover. **Its gallery must show Body,
+      Link, Step, Surface and Watch, in that order** (Axelar's); the template's gallery carries that
+      once it is set there, so a guide made from it inherits it — without them the page stays raw.
 - [ ] **A chain page that pointed outside the site** (Lido DVT, Vara, Chain4Energy) now points at the
       guide: set the chain's `wallet` in `notion/chain-pages.json` and run
       `python3 scripts/chain_pages.py --buttons "<Name>"`.
