@@ -1915,8 +1915,11 @@ reads them) + Home → Networks → chain; **guide.js** Home → Guides → guid
 
 **Done 2026-09-28:** the Mina hard-fork post (a Home child page, in Notion's trash since 2026-09-25) is
 removed from Super (the user: "let it be"); the listing pages /networks/mainnet, /guides/mainnet and
-/guides/testnet are gone from Super with the paths (see "Paths") and redirect. **Still open:**
-the 301 for /terms-and-conditions (optional — nothing links it); the main pages' h1 counts.
+/guides/testnet are gone from Super with the paths (see "Paths") and redirect; /terms-and-conditions
+308s to /terms-of-use (the user, 2026-09-28). **Still open:** the main pages' h1 counts.
+**Where the redirects are in Super:** Pages — each is a row in the tree at its old path (/networks → /mainnet
+→ /<chain>, /guides → /mainnet …, /terms-and-conditions at the root) with a folder-and-arrow icon; its ⋯ menu
+→ Redirect page shows Enabled, Permanent (301) and the destination.
 **The vote pages are gone (2026-09-28):** 316 Super pages, one per row of the record, made in March–June
 2023 (rows added since never got one), empty (every one of the 1,153 rows' Notion pages has no blocks),
 linked from nowhere, yet in the sitemap and indexable. Removed from Super only — the Notion rows and the
