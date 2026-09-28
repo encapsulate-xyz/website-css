@@ -1492,6 +1492,11 @@ focuses it; ↑↓, Enter, Escape).
   async>`, so **notfound.js is the one async script in the site head**, and on a 404 where navbar.js
   has not run (`!window.encNav`) it inserts every other website-css script again, in order (`async =
   false`): the bar, the footer, the booking drawer and the counts come back. Keep it async.
+- **The finder's search is the design's revised one** (v327): each entry's own name words and weaker
+  synonyms (a page's Words at .8, a network's generic words at .35), exact 1 / start .85 / overrun .7 ×
+  share / typo .6 (OSA distance), results within half the top score, "Closest matches · N results" when
+  nothing matched outright (the copy toggle's `closest` line). Checked against the design's own code on
+  21 queries in Node: same results, same order.
 - Deviations: the design's "Book a call" went to /contact-us — ours opens the drawer, as every Book a
   call does; its Governance page is /governance, ours /governance-record.
 
@@ -1924,7 +1929,8 @@ removed from Super (the user: "let it be"); the listing pages /networks/mainnet,
 2023 (rows added since never got one), empty (every one of the 1,153 rows' Notion pages has no blocks),
 linked from nowhere, yet in the sitemap and indexable. Removed from Super only — the Notion rows and the
 record's tables are untouched; their addresses are in `backups/governance-vote-pages-2026-09-28.json`.
-/governance-record and its database page /governance-record/governance-record stay.
+/governance-record and its database page /governance-record/governance-record stay; the database page has a
+noindex head (2026-09-28). /investments/gravity-bridge (a 404 listed in the sitemap) was removed from Super.
 
 ## TODO — check every line break against its handoff (asked 2026-09-26, not started)
 
