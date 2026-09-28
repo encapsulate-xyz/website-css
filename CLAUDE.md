@@ -1849,22 +1849,23 @@ pointing at the mainnet row; its path in Super is /guides/&lt;chain&gt;), switch
 
 Raise this whenever guides are being worked on.
 
-## TODO — the Sui guide moves to Slush (agreed 2026-09-28, waiting for captures)
+## TODO — the Sui guide moves to Slush (switched 2026-09-28; the steps wait for captures)
 
-Slush (Mysten Labs' own wallet, formerly Sui Wallet, first on sui.io/get-started) replaces Suiet in the Sui
-guide. **Done:** Slush is a Wallet Set row (`3e9e800a…81ba…`) with its glyph, made from the icon in
-`@mysten/slush-wallet` (a badge: light mark on a #0C0A1F disc) by `scripts/make_glyph.py` — the design
-project's glyph pipeline, identical to the brand kit's copy; spec in `scripts/GLYPH-SPEC.md`. **Held until the
-Slush captures exist**, because the Sui guide page is still the thirteen Suiet screens and switching the row
-would promise Slush everywhere (navbar, picker, chain button) and land on Suiet:
-1. the Sui guide's own slide database, rebuilt in the new design as Axelar's is — one row per step: Name
-   ("01 · …"), Step, Body, Watch, Surface, Link, the capture as Cover (captures: `notion/guide-screenshots.md`);
-2. its Guides Database row (`1f9e800a…8064…`): Wallet Set → Slush, Title "Stake SUI with Slush", Lede and
-   `meta:description` ("N steps across the Slush extension …"), Step, Time;
-3. `notion/chain-pages.json` Sui `wallet.label` → "Delegate with Slush", then
-   `python3 scripts/chain_pages.py --buttons "Sui"`; Slush's deep link that opens "Stake with Encapsulate"
-   (`my.slush.app/staking/native-stake?validatorAddress=…`) is unverified — test it on a phone first;
-4. `python3 scripts/og_cards.py guides --only sui`, refresh the guide, /guides and /networks/sui.
+Slush (Mysten Labs' own wallet, formerly Sui Wallet, first on sui.io/get-started) replaced Suiet in the Sui
+guide on 2026-09-28, at the user's word, before the new captures exist. **Done:** Slush is a Wallet Set row
+(`3e9e800a…81ba…`) with its glyph, made from the icon in `@mysten/slush-wallet` (a badge: light mark on a
+#0C0A1F disc) by `scripts/make_glyph.py` (the design project's pipeline, identical to the brand kit's;
+`scripts/GLYPH-SPEC.md`); the guide's row (`1f9e800a…8064…`) has Wallet Set → Slush, Title "Stake SUI with
+Slush", Lede and `meta:description` "Thirteen steps across the Slush extension …" (old values in
+`backups/sui-guide-row-2026-09-28.json`); the Sui chain page's button reads "Delegate with Slush"
+(`notion/chain-pages.json`, `chain_pages.py --buttons "Sui"`; Ika's guide stays on Suiet); the social card
+is regenerated. **Still to do once someone captures Slush** (its web app is blocked from India — the
+extension or the phone app): rebuild the guide's own slide database in the new design, as Axelar's is —
+one row per step: Name ("01 · …"), Step, Body, Watch, Surface, Link, the capture as Cover
+(`notion/guide-screenshots.md`) — then set the row's Step, Time and the Lede's count, re-run
+`python3 scripts/og_cards.py guides --only sui`, and refresh. Until then the page is the thirteen Suiet
+screens. Slush's link that opens "Stake with Encapsulate" (`my.slush.app/staking/native-stake?validatorAddress=…`)
+is unverified — test it on a phone before using it on the button.
 
 ## TODO — the GitHub Actions (planned 2026-09-25/26, not built)
 
