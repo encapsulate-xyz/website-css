@@ -299,7 +299,7 @@
         var out = [];
         Array.prototype.forEach.call(coll.querySelectorAll(".notion-collection-card"), function (c) {
           /* a card is named by its row id until the row has a path of its own in Super, and then by
-             the path ("block-networks-mainnet-monad") with an anchor to it — either will do */
+             the path ("block-networks-monad") with an anchor to it — either will do */
           var id = (/^block-([0-9a-f]{32})$/.exec(c.id || "") || [])[1] || "";
           var link = c.querySelector("a.notion-collection-card__anchor[href], a[href^='/networks/']");
           var stage = "", tier = "", order = NaN;
@@ -938,17 +938,19 @@
 
   /* ── build ─────────────────────────────────────────────────────────────────────────────── */
   /* Which row this page is. Super names the page after its path — "page-<row id>" at /<row id>,
-     "page-networks-mainnet-monad" once the page has a path of its own in Super (the chain pages
-     were given /networks/mainnet/<chain> on 2026-09-24) — so the id is read from the page's
-     data, where the page's entry carries its "uri" and, after its properties, its "blockId". */
+     "page-networks-monad" once the page has a path of its own in Super (the chain pages were given
+     /networks/mainnet/<chain> on 2026-09-24 and /networks/<chain> on 2026-09-28) — so the id is
+     read from the page's data, where the page's entry carries its "uri" and, after its
+     properties, its "blockId". */
   var ids = {};
   /* only a page that can be a chain page is looked at: a row served at its own id, or a page
-     under /networks/mainnet — anything else would cost a fetch on every client-side navigation */
+     under /networks — anything else would cost a fetch on every client-side navigation */
   function pageKey() {
     var m = document.querySelector('main[id^="page-"]');
     if (!m) return null;
     var key = m.id.slice(5);
-    return /^[0-9a-f]{32}$/.test(key.replace(/-/g, "")) || m.classList.contains("parent-page__networks-mainnet") ? key : null;
+    return /^[0-9a-f]{32}$/.test(key.replace(/-/g, "")) || m.classList.contains("parent-page__networks") ||
+      m.classList.contains("parent-page__networks-mainnet") ? key : null;
   }
   function idIn(text, path) {
     var at = text.indexOf('"uri":"' + path + '"');

@@ -288,7 +288,7 @@
       if (hit) shown++;
       // a testnet row says "Also mainnet" when the chain runs both
       var j = listIndex(nameOf(card));
-      attr(card, "data-enc-also", testnet && j >= 0 && /\/networks\/mainnet\//.test(setList[j].href || "") ? "" : null);
+      attr(card, "data-enc-also", testnet && j >= 0 && /^\/networks\/[^/?#]/.test(setList[j].href || "") ? "" : null);
     });
     var order = cards.filter(function (c) { return !c.hidden; });
     if (state.sort === "name") {
@@ -660,7 +660,7 @@
     });
     // before the counts arrive: the Mainnet view's cards are the mainnets, in Order, first in the set
     var cards = Array.prototype.filter.call(document.querySelectorAll(".notion-collection-card"), function (c) {
-      return !!c.querySelector("a[href^='/networks/mainnet/']");
+      return !!c.querySelector("a[href^='/networks/']");
     });
     if (cards.length < 5) return null;
     return cards.map(function (c, i) {

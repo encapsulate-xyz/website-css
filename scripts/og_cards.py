@@ -36,7 +36,7 @@ BLOGS = "a148eb7f-8ea9-4b95-b772-5809fef9e0dc"
 SET = "3dde800a-5138-8133-b7f1-d1ccdda08038"
 GUIDES = "1f6e800a-5138-8181-95f9-ed0a1403479e"
 WALLETS = "3dde800a-5138-8097-b664-fafed678f048"
-PREFIX = {"posts": "/blog/", "chains": "/networks/mainnet/", "guides": "/guides/"}
+PREFIX = {"posts": "/blog/", "chains": "/networks/", "guides": "/guides/"}
 GUIDE_COPY = {"crumb": "Encapsulate · Guides", "screens": "{N} screens", "scroll": "Scroll ↓"}  # guide.js CONTENT
 
 

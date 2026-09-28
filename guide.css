@@ -1,4 +1,4 @@
-/* /guides/<stage>/<chain> — design "Staking Guide Variation 1d", built by guide.js.
+/* /guides/<chain> — design "Staking Guide Variation 1d", built by guide.js.
 
    One step per screen. An ink head, then a paper band per step carrying the number, the surface,
    the title, the body, the note and the capture, then an ink close. Every word is a Notion block
@@ -560,7 +560,7 @@ html:has(.notion-root[data-enc-guide]) body,
    under the bar, which lies over the page (4f). Up to 900px it starts below the bar, as a cover
    does. (The hollow numeral behind a step's capture is by design, and is left as it is.) */
 @media (max-width: 900px) {
-  .super-content[class*="parent-page__guides-"] .notion-root:not([data-enc-guide]) {
+  .super-content[class*="parent-page__guides"] .notion-root:not([data-enc-guide]) {
     padding-top: 76px !important;
   }
 }

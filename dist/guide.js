@@ -1,4 +1,4 @@
-/* /guides/<stage>/<chain> — design "Staking Guide Variation 1d".
+/* /guides/<chain> — design "Staking Guide Variation 1d".
 
    One step per screen: an ink head with the chain-and-wallet mark, the title and the lede; then
    one band per step carrying the number, the surface it happens on, the title, the body, the
@@ -14,7 +14,7 @@
    Loaded from the SITE head: Super does not run a page's own scripts on a client-side
    navigation, so this builds off a MutationObserver like every other page script. */
 (function () {
-  var PATH = /^\/guides\/[^/]+\/[^/]+/;
+  var PATH = /^\/guides\/[^/]+/;   // /guides/<chain> since 2026-09-28 (/guides/<stage>/<chain> before)
   var LD = "enc-ld-guide";
 
   /* ── structured data (2026-09-27) ── for search engines: built from what the page shows, as a
