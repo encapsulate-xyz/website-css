@@ -23,12 +23,17 @@
     }
     t.setAttribute("data-n", String(n));
     t.textContent = "";
+    // the file's shape: the gates in an inline-flex inside the block, so the row keeps the line's
+    // descent under them (network.css .enc-tally__gates)
+    var row = document.createElement("span");
+    row.className = "enc-tally__gates";
+    t.appendChild(row);
     for (var g = 0; g * 5 < n; g++) {
       var m = Math.min(5, n - g * 5), gate = document.createElement("span");
       gate.className = "enc-tally__gate";
       for (var i = 0; i < Math.min(4, m); i++) gate.appendChild(document.createElement("i"));
       if (m === 5) gate.appendChild(document.createElement("b"));
-      t.appendChild(gate);
+      row.appendChild(gate);
     }
   }
 
@@ -613,53 +618,92 @@
    drawWells(): one well per cell, the mainnets in the set's Order row by row, each in the pastel of
    its place in the whole set, its glyph at 58% of the disc; redrawn when the figure resizes. The
    copy's digits follow the figure (network.js rewrites them from the set). Built only where a
-   pointer hovers — a touch screen sees the band as it was. */
+   pointer hovers — a touch screen sees the band as it was.
+   The discs are drawn the moment the mainnets are known — from the counts' list, or before it
+   arrives from the Mainnet view's own cards — and each glyph is drawn in as it lands (Super's own
+   128px copy, same-origin, 20KB for all 27): waiting for every original first left the lens empty
+   for seconds (the user's screenshot, 2026-09-28). Every paint looks the figure up afresh, so a
+   re-render of the heading cannot leave the lens drawing into a detached copy. */
 (function () {
   var BAND = "block-3dce800a51388154931ac3c9478a65b5";
   var FIG = "block-3dce800a5138818e8123ed8b8471935d";   // the mainnet figure, Heading 1
   var P = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
   var R = 120;                                          // the lens, px
   var hover = window.matchMedia("(hover: hover) and (pointer: fine)");
-  var imgs = {}, chains = null, drawn = "", frame = 0, sized = null;
+  var imgs = {}, chains = null, asked = false, key = "", url = "", frame = 0, sized = null, sizedFig = null, later = 0;
 
   function digits(fig) { return (fig.textContent || "").replace(/\D+/g, ""); }
 
-  function load(url) {
-    if (!imgs[url]) imgs[url] = new Promise(function (res) {
-      var im = new Image();
-      im.crossOrigin = "anonymous";          // assets.super.so answers with Access-Control-Allow-Origin: *
-      im.onload = function () { res(im); };
-      im.onerror = function () { res(null); };
-      im.src = url;
-    });
-    return imgs[url];
+  // Super's resized copy of a glyph, from the original or from a /_next/image link to it
+  function small(src) {
+    if (!src) return "";
+    var m = /[?&]url=([^&]+)/.exec(src);
+    var orig = m ? decodeURIComponent(m[1]) : src;
+    return "/_next/image?url=" + encodeURIComponent(orig) + "&w=128&q=75";
+  }
+  // the image once it has loaded, else null; the first ask starts the load and redraws on arrival
+  function image(src) {
+    if (!src) return null;
+    var it = imgs[src];
+    if (!it) {
+      it = imgs[src] = { im: new Image(), ok: false };
+      it.im.onload = function () { it.ok = true; clearTimeout(later); later = setTimeout(draw, 60); };
+      it.im.src = src;
+    }
+    return it.ok ? it.im : null;
   }
 
-  function wells(fig, fill) {
-    if (!chains || !chains.length) return;
+  // the mainnets in the set's Order, each with its glyph and the pastel of its place in the set
+  function mainnets() {
+    if (chains) return chains.filter(function (c) { return c.href; }).map(function (c) {
+      return { glyph: c.glyph, tint: P[chains.indexOf(c) % 5] };
+    });
+    // before the counts arrive: the Mainnet view's cards are the mainnets, in Order, first in the set
+    var cards = Array.prototype.filter.call(document.querySelectorAll(".notion-collection-card"), function (c) {
+      return !!c.querySelector("a[href^='/networks/mainnet/']");
+    });
+    if (cards.length < 5) return null;
+    return cards.map(function (c, i) {
+      var s = c.querySelector("[data-full-size]"), im = c.querySelector("img");
+      return { glyph: s ? s.getAttribute("data-full-size") : (im ? im.getAttribute("src") : ""), tint: P[i % 5] };
+    });
+  }
+
+  function apply(force) {
+    var fill = document.querySelector("#" + FIG + " > .enc-lens-fill");
+    if (!fill || !url) return;
+    if (force || fill.getAttribute("data-wells") !== key) {
+      fill.style.backgroundImage = url;
+      fill.setAttribute("data-wells", key);
+    }
+  }
+
+  function draw() {
+    var fig = document.getElementById(FIG);
+    var list = fig && mainnets();
+    if (!list || !list.length) return;
     var r = fig.getBoundingClientRect();
     if (!r.width || !r.height) return;
-    var key = Math.round(r.width) + "x" + Math.round(r.height) + "@" + window.innerWidth + "#" + chains.length;
-    if (key === drawn) return;
-    drawn = key;
+    var ims = list.map(function (m) { return image(small(m.glyph)); });
+    var k = Math.round(r.width) + "x" + Math.round(r.height) + "@" + window.innerWidth + "#" + list.length +
+      "/" + ims.filter(Boolean).length + (chains ? "c" : "p");
+    if (k === key) { apply(false); return; }
     var S = 2, W = Math.round(r.width * S), H = Math.round(r.height * S);
     var cell = Math.min(780, Math.max(280, window.innerWidth * 0.56)) / 14 * S;
     var cols = Math.ceil(W / cell), rows = Math.ceil(H / cell);
-    var main = chains.filter(function (c) { return c.href; });
-    Promise.all(main.map(function (c) { return c.glyph ? load(c.glyph) : Promise.resolve(null); })).then(function (ims) {
-      if (drawn !== key) return;
-      var cv = document.createElement("canvas");
-      cv.width = W; cv.height = H;
-      var x = cv.getContext("2d"), k = 0;
-      for (var ry = 0; ry < rows; ry++) for (var cx = 0; cx < cols; cx++) {
-        var i = k++ % main.length, m = main[i];
-        var X = cx * cell + cell / 2, Y = ry * cell + cell / 2, rad = cell * 0.43;
-        x.fillStyle = P[chains.indexOf(m) % 5];
-        x.beginPath(); x.arc(X, Y, rad, 0, Math.PI * 2); x.fill();
-        if (ims[i]) { var g = rad * 2 * 0.58; x.drawImage(ims[i], X - g / 2, Y - g / 2, g, g); }
-      }
-      try { fill.style.backgroundImage = "url(" + cv.toDataURL("image/png") + ")"; } catch (e) { /* a tainted canvas: no wells, no lens */ }
-    });
+    var cv = document.createElement("canvas");
+    cv.width = W; cv.height = H;
+    var x = cv.getContext("2d"), n = 0;
+    for (var ry = 0; ry < rows; ry++) for (var cx = 0; cx < cols; cx++) {
+      var i = n++ % list.length;
+      var X = cx * cell + cell / 2, Y = ry * cell + cell / 2, rad = cell * 0.43;
+      x.fillStyle = list[i].tint;
+      x.beginPath(); x.arc(X, Y, rad, 0, Math.PI * 2); x.fill();
+      if (ims[i]) { var g = rad * 2 * 0.58; x.drawImage(ims[i], X - g / 2, Y - g / 2, g, g); }
+    }
+    try { url = "url(" + cv.toDataURL("image/png") + ")"; } catch (e) { return; }
+    key = k;
+    apply(true);
   }
 
   function build() {
@@ -687,15 +731,17 @@
       var at = null;
       var paint = function () {
         frame = 0;
-        var fr = fig.getBoundingClientRect(), tr = track.getBoundingClientRect();
+        var fg = document.getElementById(FIG), fl = fg && fg.querySelector(":scope > .enc-lens-fill");
+        if (!fg || !fl) return;
+        var fr = fg.getBoundingClientRect(), tr = track.getBoundingClientRect();
         if (at) {
-          fill.style.clipPath = "circle(" + R + "px at " + Math.round(at[0] - fr.left) + "px " + Math.round(at[1] - fr.top) + "px)";
+          fl.style.clipPath = "circle(" + R + "px at " + Math.round(at[0] - fr.left) + "px " + Math.round(at[1] - fr.top) + "px)";
           ring.style.transform = "translate(" + Math.round(at[0] - tr.left - R) + "px, " + Math.round(at[1] - tr.top - R) + "px) scale(1)";
           ring.style.opacity = "1";
           track.setAttribute("data-on", "");
         } else {
           // closes into the figure's centre
-          fill.style.clipPath = "circle(0px at 50% 50%)";
+          fl.style.clipPath = "circle(0px at 50% 50%)";
           ring.style.transform = "translate(" + Math.round(fr.left + fr.width / 2 - tr.left - R) + "px, " + Math.round(fr.top + fr.height / 2 - tr.top - R) + "px) scale(0)";
           ring.style.opacity = "0";
           track.removeAttribute("data-on");
@@ -705,16 +751,19 @@
       track.addEventListener("mouseleave", function () { at = null; if (!frame) frame = requestAnimationFrame(paint); });
     }
 
-    if (!sized && typeof ResizeObserver === "function") {
-      sized = new ResizeObserver(function () { wells(fig, fill); });
+    if (typeof ResizeObserver === "function" && sizedFig !== fig) {
+      if (sized) sized.disconnect();
+      sized = new ResizeObserver(function () { draw(); });
       sized.observe(fig);
+      sizedFig = fig;
     }
-    if (!chains && typeof window.encCounts === "function") {
+    if (!chains && !asked && typeof window.encCounts === "function") {
+      asked = true;
       window.encCounts().then(function (c) {
-        if (c && c.list && c.list.length) { chains = c.list; wells(fig, fill); }
-      });
+        if (c && c.list && c.list.length) { chains = c.list; draw(); } else asked = false;
+      }, function () { asked = false; });
     }
-    wells(fig, fill);
+    draw();
   }
   // the figure's own text, without the copy inside it
   function stripped(fig) {

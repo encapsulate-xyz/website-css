@@ -167,7 +167,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   max-width: none !important;
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 11px !important;
-  line-height: 1.4 !important;
+  line-height: normal !important;   /* the file's mono(): no line-height */
   letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
   color: #B4B4B4 !important;
@@ -207,7 +207,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   max-width: none !important;
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 10.5px !important;
-  line-height: 1.4 !important;
+  line-height: normal !important;   /* the file's mono(): no line-height */
   letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
   white-space: nowrap !important;
@@ -285,7 +285,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   min-height: 0 !important;
   font-family: var(--type-mono), ui-monospace, monospace !important;
   font-size: 11px !important;
-  line-height: 1.4 !important;
+  line-height: normal !important;   /* the file's mono(): no line-height */
   letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
   color: #B4B4B4 !important;
@@ -306,6 +306,12 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 /* the tally: one stroke per mainnet, five to a gate, the fifth struck across */
 .enc-tally {
   grid-area: tally;
+  display: block;
+  font: 400 16px/normal "Hanken Grotesk", system-ui, sans-serif;
+}
+/* the file draws the gates as an inline-flex in a block, so the line under them keeps the font's
+   descent: the row is 77px at 72px strokes, which is where the line and the tally sit in it */
+.enc-tally__gates {
   display: inline-flex;
   flex-wrap: wrap;
   gap: 14px;
