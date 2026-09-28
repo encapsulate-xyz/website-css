@@ -2026,6 +2026,24 @@ lede, the date in local time, the Author, the tag as articleSection) + breadcrum
 reads them) + Home → Networks → chain; **guide.js** Home → Guides → guide (HowTo results are gone since
 2023). The homepage head also holds the Google Search Console verification tag — the site is verified.
 
+**Search Console and Bing (2026-09-28, done from the automation tab at the user's request).** Google had only
+`https://king.super.site/` (the site's old Super address, now a 404 with noindex, so nothing to move). A **Domain
+property `encapsulate.xyz`** was added to the user's Google account (aditya.verma.manit@gmail.com) and verified by a
+DNS TXT record in DigitalOcean, `google-site-verification=fYz06OKYsETn03m-AGcN7W7l9-dRvLkbXaEls9Mdzho` — **never
+remove it**, the property unverifies. The domain's other TXT records are Gmail's SPF (`v=spf1 include:_spf.google.com
+~all`) and an older `google-site-verification=IaV2…` belonging to another Google account (the one that set up
+Workspace, most likely); keep both. The sitemap is submitted, and indexing was requested for /, /networks, /blog and
+/guides — **Google had never seen /networks** ("URL is unknown to Google") and /blog was not indexed. Bing: the site
+was added by hand (the Search Console import brought only king.super.site) and verified by a CNAME in DigitalOcean,
+`36b290c4f7ac57fd3ecf97ffb2452be3` → `verify.bing.com.` (keep it); its sitemap is submitted. The homepage's
+`google-site-verification` meta (`hMGL…`, in head/home.html) predates this work and may verify another account's
+property, so it stays. king.super.site is still listed in both tools; removing it is the user's call.
+**Driving these consoles:** the extension cannot screenshot or inject into Search Console, DigitalOcean or Bing (script
+injection times out), but `javascript_tool` works: read `document.body.innerText`, click a Wiz/Google button with
+`pointerdown/mousedown/pointerup/mouseup/click` MouseEvents at its centre (a plain `.click()` and the computer tool's
+click did nothing there), set inputs with the native value setter + `input`, press Enter with a keydown. Keep long waits
+in the page (`window.__x`) and poll — an evaluate over 45s times out. Closing the second-last tab dissolves the group.
+
 **Done 2026-09-28:** the Mina hard-fork post (a Home child page, in Notion's trash since 2026-09-25) is
 removed from Super (the user: "let it be"); the listing pages /networks/mainnet, /guides/mainnet and
 /guides/testnet are gone from Super with the paths (see "Paths") and redirect; /terms-and-conditions
