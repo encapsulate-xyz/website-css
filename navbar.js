@@ -444,18 +444,13 @@
         var texts = propsOf(c).filter(function (t) { return !/^\d+$/.test(t); });
         var chain = texts.filter(function (t) { return marks[t.toLowerCase()]; })[0] ||
           (marks[title.toLowerCase()] ? title : "");
-        var wallet = texts.filter(function (t) { return t !== chain; })[0] || "";
-        // the guide's own Title ("Stake EIGEN with MetaMask"), for telling two guides apart
-        var what = texts.filter(function (t) { return / with /i.test(t) && t !== wallet; })[0] || "";
-        return { name: chain || title, wallet: wallet, what: what.replace(/ with .*$/i, ""),
+        /* a row reads as the guide's own Title, "Stake AVAX with Core" (the user, 2026-09-28), with
+           the wallet beside it; a guide without a Title on its card falls back to the chain */
+        var what = texts.filter(function (t) { return / with /i.test(t); })[0] || "";
+        var wallet = texts.filter(function (t) { return t !== chain && t !== what; })[0] || "";
+        return { name: what || chain || title, wallet: wallet,
           glyph: marks[(chain || title).toLowerCase()] || "", href: linkOf(c) || "/guides" };
       }).filter(function (r) { return r.name; });
-      /* two guides for one chain and one wallet (EigenCloud: delegating on EigenLayer, and restaking
-         stETH) read "EigenCloud · MetaMask" twice; there each says what it does instead */
-      var twins = list.map(function (r) {
-        return list.some(function (o) { return o !== r && o.name === r.name && o.wallet === r.wallet; });
-      });
-      list.forEach(function (r, i) { if (twins[i] && r.what) r.wallet = r.what; });
       return list;
     },
     "/blog": function (doc) {
@@ -1331,7 +1326,7 @@
 
   /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
      against its page from the console without opening the menu */
-  window.encNav = { version: 14, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
+  window.encNav = { version: 15, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
     groups: function () { return groups; }, harvest: function () { return { done: harvested, tries: harvestTries }; },
     ground: ground, isInk: isInk, groundUnder: groundUnder, wordmark: wearWordmark,
     band: band };
