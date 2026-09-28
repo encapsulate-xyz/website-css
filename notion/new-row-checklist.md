@@ -16,6 +16,53 @@ each box is something that has gone wrong, or would have, when it was skipped.
 - [ ] **Check it on the live site**: the page builds, it is in `sitemap.xml`, it has no `noindex`, and
       its `og:image`, title and description are the new ones.
 
+## SEO — every new page, whatever it is
+
+The user, 2026-09-28: every page added to the site goes through all of these before it is done — they are
+the steps of the SEO audit of 2026-09-26/28, for Google and for AI search. Keep this list current.
+
+- [ ] **Its head in Super carries its canonical**, `<link rel="canonical" href="https://encapsulate.xyz/<path>">`
+      (the homepage's ends in `/`). A page with a `head/*.html` file: add the line to the file, commit,
+      and paste the **whole file** over the page's head. A post, guide or chain page (no file): its head is
+      that one line. **Read the page's snippets first — a page holds one head, and writing a new one
+      replaces what is there** (on 2026-09-28 that took every main page's CSS; see CLAUDE.md "Head files").
+- [ ] **Title** under 60 characters, " - " as the separator where the page carries the site's name: a post's
+      own Name (or a shorter `meta:title`), a chain page "<Name> staking - Encapsulate" (`og_cards.py
+      chains`), a guide "<Chain> Staking Guide" in Super's SEO settings, a main page "<Page> - Encapsulate".
+- [ ] **A description of its own**, 120–160 characters, not shared with any other page: a post's Lede, a
+      guide's "Title. Lede" (`og_cards.py guides`), a chain page's facts sentence (`chain_pages.py --facts
+      "<Name>"`), a main page's Super SEO description. The pre-audit crawl found 17 guides sharing 5.
+- [ ] **Social card**: `scripts/og_cards.py posts|chains|guides --only <path>`, then **refresh the page in
+      Super twice** — the first build serves Notion's signed file link, which expires; the second serves
+      Super's `assets.super.so` copy. Check `og:image`'s host.
+- [ ] **The facts are in the HTML**, not only drawn by a script — AI crawlers (GPTBot, ClaudeBot,
+      PerplexityBot) do not run JavaScript. A chain page: `chain_pages.py --facts "<Name>"` after its
+      properties are set (and again whenever they change). A post or guide: its words are Notion blocks.
+- [ ] **Links in**: a plain `<a>` reaches it — a post from /blog, a chain page from /networks, a guide from
+      /guides and its chain page's green button, and a post about a chain that is live links that chain's
+      page in its foot.
+- [ ] **Structured data** builds: `script#enc-ld-post|chain|guide` in the head once the page has built
+      (post.js, chain.js, guide.js); the homepage's Organization and WebSite are in `head/home.html`.
+- [ ] **Not ready, not public**: a draft has no path in Super or is not Live; noindex only in that page's
+      own head, **never** in the site-wide head.
+- [ ] **A renamed or moved page** 308s from its old path (a `permRedirect` page in Super), and any typed
+      link to the old path in Notion is updated. A removed page with a clear successor redirects to it;
+      one without simply goes (404).
+- [ ] **Check the live HTML** after the refresh: status 200, one canonical and it is its own, the title, the
+      description, `og:image` on assets.super.so, no noindex, in `sitemap.xml`. For an important page, ask
+      Google to index it (Search Console → URL inspection → Request indexing — the user's account).
+
+## Removing a row
+
+- [ ] Back it up first (the row and its blocks, as `backups/<what>-<date>.json`).
+- [ ] Remove its page in Super (`removeSitePage`), then put it in Notion's trash — a refetch of a trashed
+      page makes it 404, but Super keeps serving its cached copy until then.
+- [ ] A successor exists (a guide for a guide post)? Add a 308 at the old path to it.
+- [ ] Refresh every page that listed it — /blog, the homepage, **and every post** (each still carries the
+      old "More Blog Posts" gallery in its HTML, hidden on screen but read by crawlers).
+- [ ] A post: the /blog cards and the social cards take their tint from the post's place on the index, so
+      the posts after it shift — re-run `og_cards.py posts --only …` for those whose `i % 5` changed.
+
 ## Blogs — a new post (`a148eb7f…`)
 
 - [ ] **Start from the template** — "New page", the database's default (rebuilt 2026-09-28): the

@@ -180,6 +180,19 @@ Note: `git commit` also commits anything the user has staged — check `git stat
 A page whose CSS moved to the repo has its Code → CSS box emptied. Pages not listed (team, etc.)
 have no repo file yet.
 
+**Each head file ends with the page's canonical line**, and every other page in Super (posts, guides, chain
+pages) has a head of that one line alone, `<link rel="canonical" href="https://encapsulate.xyz/<path>">`
+(2026-09-28). **A page holds one head, and writing one replaces it**: the canonical lines were first written
+into Super on their own, which replaced every head — /networks lost network.css (raw Notion, "2727"), every
+main page its CSS, the homepage its JSON-LD and Search Console tag — until the heads were pasted back from
+these files the same hour (the user: "edit our files … append the tags there and then copy that"). So a head
+changes here first, and the whole file is pasted.
+**No page has its own Code → CSS or Body any more except** the 30 unconverted guides (their old slide-deck
+CSS, still in use) and three posts held until post.css v330 is released (see "The blog post page"). The old
+post CSS (38 copies of the old template's table-of-contents and viewport rules) and Super's `embed.js` loader
+(on 17 pages; it only acts on a code block starting `super-embed:`, and none does) were cleared on
+2026-09-28 — contents and page map in `backups/super-snippets-2026-09-28.*`.
+
 **Super bakes the site Head into each page when it republishes that page.** After a site Head
 paste, pages pick it up unevenly; check each page's served `website-css@vN` before diagnosing.
 
@@ -880,6 +893,15 @@ handoff insists — stating it is what let it claim six minutes for a one-minute
 **The index is fetched once and parsed once, but the post is looked up on every build.** Caching
 the lookup gave every post the first one's mark, lede and next, because index → post is a
 client-side navigation and the script stays alive across it.
+
+**A post has no Code → CSS of its own** (cleared 2026-09-28). Every post carried the old template's CSS in
+Super: the blue table-of-contents rail, "More Blog Posts" limited to five, images centred, embeds 320px
+tall under 1240, and — the one rule still doing anything — every Notion column full width under 1024.
+Measured in headless Chrome on eight posts at 390–1440 with the CSS on and off: nothing moved but the
+columns inside three posts (Governance Bot Improvements, IOTA Rebased, zk-SNARKs), which squeeze between
+547 and 1024px without it. **post.css now stacks a column list inside the article under 1024px** (commit
+91a5b38, PR #1 — not yet a tag); those three posts keep their old CSS in Super until post.css v330 is live,
+then it goes too. The Solana post's YouTube embed now takes its true 16:9 on a phone (188px, was a 320px box).
 
 ## Where each asset comes from — repo vs Notion (settled 2026-09-16)
 
@@ -1935,10 +1957,14 @@ main pages (Super overrides) and the chain pages (`meta:title`, written by `og_c
 | Super → SEO | Default Social Image = the kit's `og-default.png`; Default Domain Indexing (the super.site copy) off |
 | the 12 main pages | title, description and image from the brand kit's `seo.csv` and `og-*.png` (Super overrides; the kit's " — " became " - " on 2026-09-28) |
 | the old pages | 2026-09-28: 13 removed from Super (/snapshots and its nine — their downloads were dead, minioapi.kingsuper.services gone and snapshots.encapsulate.xyz 502 — /services/celestia, /investments/portfolio, /investments/axelar), 6 redirected (/lido-dvt-staking and its three clusters → /networks/lido-dvt, /eigen-layer → /networks/eigencloud, /team → /); /rewards-calculator removed too (the user, the same day). The Notion pages are untouched; their ids are in `backups/old-super-pages-2026-09-28.json`. **Never put noindex in the site-wide Code head** |
-| every post (40) | `meta:image` = its 17d card, `meta:description` = its Lede |
-| every chain page (27) | `meta:image` = its hero, `meta:title` = "<Name> staking - Encapsulate" |
-| every guide (33) | `meta:image` = its head, `meta:description` = its Lede; the title stays Super's override ("Axelar Staking Guide") |
+| every post (38) | `meta:image` = its 17d card, `meta:description` = its Lede; three long titles shortened by `meta:title` (Berachain, Symbiotic, Canton) |
+| every chain page (27) | `meta:image` = its hero, `meta:title` = "<Name> staking - Encapsulate", `meta:description` = its facts sentence, and the facts as a paragraph in the page for crawlers that run no script (`chain_pages.py --facts`, 2026-09-28; chain.js hides it once it has built) |
+| every guide (32) | `meta:image` = its head, `meta:description` = "Title. Lede" (the Ledes alone repeated: 17 guides, 5 descriptions); the title stays Super's override ("Axelar Staking Guide") |
+| every page but the two noindex ones | a canonical `<link>` of its own address in its head (2026-09-28; see "Head files") |
 | structured data | v319 — see below |
+
+**A new page runs through all of it** — the steps are "SEO — every new page" in `notion/new-row-checklist.md`
+(the user, 2026-09-28).
 
 The 16 posts and 32 guides whose Super overrides held an old image or description had those two
 cleared (titles kept) so the Notion values apply; /blog/double-zero keeps its title override "Double
@@ -1968,7 +1994,13 @@ reads them) + Home → Networks → chain; **guide.js** Home → Guides → guid
 **Done 2026-09-28:** the Mina hard-fork post (a Home child page, in Notion's trash since 2026-09-25) is
 removed from Super (the user: "let it be"); the listing pages /networks/mainnet, /guides/mainnet and
 /guides/testnet are gone from Super with the paths (see "Paths") and redirect; /terms-and-conditions
-308s to /terms-of-use (the user, 2026-09-28). **Still open:** the main pages' h1 counts.
+308s to /terms-of-use (the user, 2026-09-28). **The guide posts are gone from the blog** (the user: "among
+all the blog posts there shouldn't be a guide"): "How to Stake Celestia TIA?" (/blog/celestia-staking-guide, now
+a 404 — there is no Celestia guide) and "How to Stake Agoric BLD?" (/blog/agoric-staking-guide, 308 to
+/guides/agoric) — Super pages removed, Notion rows in the trash, both backed up with their blocks in
+`backups/guide-posts-2026-09-28.json`; the nine posts behind them on the index changed tint, and their social
+cards were made again. "Aleo Node Setup With Monitoring" is a node-operator walkthrough tagged Informative
+and stays. **Still open:** the main pages' h1 counts.
 **Where the redirects are in Super:** Pages — each is a row in the tree at its old path (/networks → /mainnet
 → /<chain>, /guides → /mainnet …, /terms-and-conditions at the root) with a folder-and-arrow icon; its ⋯ menu
 → Redirect page shows Enabled, Permanent (301) and the destination.
