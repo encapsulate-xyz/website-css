@@ -484,7 +484,7 @@
      app, and a listener attached to a link goes with it. A modified click (new tab, new window,
      download) is left alone. */
   document.addEventListener("click", function (e) {
-    if (/^\/contact-us\/?$/.test(location.pathname)) return;   // that page has its own calendar
+    if (/^\/contact(-us)?\/?$/.test(location.pathname)) return;   // that page has its own calendar
     if (e.defaultPrevented || e.button !== 0) return;
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     var a = e.target.closest && e.target.closest('a[href*="cal.com/' + CAL_LINK + '"]');
@@ -500,7 +500,7 @@
 
   // a booking that came back through the query string (cal.com's redirect) opens on arrival
   window.addEventListener("load", function () {
-    if (/^\/contact-us\/?$/.test(location.pathname)) return;
+    if (/^\/contact(-us)?\/?$/.test(location.pathname)) return;
     var q = new URLSearchParams(location.search);
     if (!q.get("bookingUid") && !q.get("uid")) return;
     open(null);

@@ -59,12 +59,12 @@
       ["Home", "/", "home start", "Where we start: what we run, and for whom."],
       ["Networks", "/networks", "networks chains mainnet testnet reward rate stake staking validators", "Every chain we validate, with its reward rate."],
       ["Services", "/services", "services dashboards playbooks bots monitoring tools ansible", "Dashboards, playbooks, bots and monitoring, free to use."],
-      ["Governance", "/governance-record", "governance votes voting proposals record", "How we vote, and every vote we have cast."],
+      ["Governance", "/governance", "governance votes voting proposals record", "How we vote, and every vote we have cast."],
       ["Security", "/security", "security keys hsm slashing", "How we keep keys safe and validators signing."],
       ["Staking guides", "/guides", "guides guide staking stake delegate wallet keplr how", "Step by step, per chain and wallet."],
       ["Blog", "/blog", "blog posts articles notes", "Notes from running validators."],
       ["Investments", "/investments", "investments portfolio", "The projects we have backed."],
-      ["Contact", "/contact-us", "contact book call email talk", "Book a call, or write to us."]
+      ["Contact", "/contact", "contact book call email talk", "Book a call, or write to us."]
     ],
     docTitle: "Page not found - Encapsulate"
   };

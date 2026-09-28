@@ -376,7 +376,7 @@
     "headline without a search": { text: "No vote matches these filters." },
     "tail": { text: "{votes} votes \u00b7 {chains} chains" },
     "line": { text: "Every ballot we have cast is here, by chain and outcome. Pick a chain to see its record, or read how we decide." },
-    "action": { text: "How we vote", href: "/governance-record#block-a9ed1443a36c4f6da5ac9cbae489c031" },
+    "action": { text: "How we vote", href: "/governance#block-a9ed1443a36c4f6da5ac9cbae489c031" },
     "clear": { text: "Clear filters" }
   };
   function word(copy, k) { return (copy && copy[k]) || FALLBACK[k] || { text: "" }; }

@@ -30,7 +30,7 @@
     "/services": ["Dashboards, playbooks, bots, monitoring",
       "What we build and run around the validator.",
       "Dashboards, playbooks, bots and monitoring — used on our own set first."],
-    "/governance-record": ["Voting principles and history",
+    "/governance": ["Voting principles and history",
       "How we decide a vote, and the record of every one.",
       "Read, weigh, vote, publish."],
     "/security": ["Keys, isolation, no slashing",
@@ -48,7 +48,7 @@
     "/investments": ["What we back",
       "The networks and teams we have backed.",
       "Usually before mainnet, usually as an operator first."],
-    "/contact-us": ["The fastest route to us",
+    "/contact": ["The fastest route to us",
       "Book a call, or write.",
       "A founder answers within a working day."],
     "/#block-3dbe800a513880af9fe0c4bc175e1975": ["Terms for $200k and above",
@@ -87,7 +87,7 @@
     "Networks": "/networks",
     "Staking": "/networks",
     "Services": "/services",
-    "Practices": "/governance-record",
+    "Practices": "/governance",
     "Learn": "/blog"
   };
 
@@ -129,9 +129,9 @@
      capture drawn at 170% from its top-left corner). A destination with neither falls back to the
      design's ink tile carrying its name. Keyed by href — a section link is its own destination. */
   var COVERS = {
-    "/networks": "networks", "/services": "services", "/governance-record": "governance",
+    "/networks": "networks", "/services": "services", "/governance": "governance",
     "/security": "security", "/guides": "guides", "/blog": "blog", "/brand": "brand-kit",
-    "/investments": "investments", "/contact-us": "contact"
+    "/investments": "investments", "/contact": "contact"
   };
   var PANELS = {
     "/#block-3dbe800a513880af9fe0c4bc175e1975": "institutional",
@@ -380,7 +380,7 @@
     /* the latest votes (handoff, 2026-09-24): the record's own table, newest first — the chain,
        the proposal's reference, our vote and the day. Columns are found by their header labels,
        as governance.js finds them, and the glyph comes from the set (counts) or covers.js. */
-    "/governance-record": function (doc, extra) {
+    "/governance": function (doc, extra) {
       var table = doc.querySelector("table.notion-collection-table");
       if (!table) return [];
       var heads = all(table, "thead th").map(function (th) { return th.textContent.trim().toLowerCase(); });
@@ -404,7 +404,7 @@
           date: MON[when.getMonth()] + " " + when.getDate(),
           t: when.getTime(),
           glyph: glyphs[keyOfName(net)] || more[keyOfName(net)] || "",
-          href: "/governance-record"
+          href: "/governance"
         };
       }).filter(Boolean).sort(function (a, b) { return b.t - a.t; }).slice(0, 6);
     },
@@ -420,14 +420,14 @@
         return m ? { text: m[1], href: "/brand" + (p.id ? "#" + p.id : "") } : null;
       }).filter(Boolean).slice(0, 4);
     },
-    "/contact-us": function (doc) {
+    "/contact": function (doc) {
       return CONTACT.map(function (id) {
         var n = doc.getElementById(id);
         if (!n) return null;
         var label = n.querySelector("summary") || n;
         /* a fold's summary runs on past a middle dot into its own note; the name is what is before */
         var text = label.textContent.replace(/^[‣▸▶\s]+/, "").split(" · ")[0].trim();
-        return text ? { text: text, href: "/contact-us#" + id } : null;
+        return text ? { text: text, href: "/contact#" + id } : null;
       }).filter(Boolean);
     },
     "/guides": function (doc) {
@@ -492,10 +492,15 @@
       return (isNaN(a.order) ? 1e9 : a.order) - (isNaN(b.order) ? 1e9 : b.order);
     });
   };
-  var KIND = { "/networks": "chains", "/governance-record": "votes", "/security": "list",
-    "/brand": "list", "/contact-us": "list", "/guides": "guides", "/blog": "posts",
+  var KIND = { "/networks": "chains", "/governance": "votes", "/security": "list",
+    "/brand": "list", "/contact": "list", "/guides": "guides", "/blog": "posts",
     "/investments": "holds", "/services": "tiles" };
   KIND[DASH_LINK] = "list";
+  /* the pages' addresses before 2026-09-28 (/governance was /governance-record, /contact /contact-us): a
+     menu link Super still holds, or a page it has not refetched, finds the same entry */
+  [["/governance-record", "/governance"], ["/contact-us", "/contact"]].forEach(function (p) {
+    [CONTENT, COVERS, READ, KIND].forEach(function (m) { if (m[p[1]] && !m[p[0]]) m[p[0]] = m[p[1]]; });
+  });
 
   function outward(a, href) {
     a.href = href || "#";

@@ -4,9 +4,9 @@
    which stay in Notion). The page is picked by its path; any other page is left alone.
 
      /networks           9a  Scatter            the chain marks, sized by tier
-     /contact-us         8a  Two voices
+     /contact            8a  Two voices
      /investments        3c  Position row
-     /governance-record  2c  Vote columns
+     /governance         2c  Vote columns
      /brand              6a  Mark and swatches
      /blog               5b  Offset posts
      /security           7l  Separate signers
@@ -170,7 +170,7 @@
     },
 
     // 8a · Two voices
-    "/contact-us": function () {
+    "/contact": function () {
       return [d(70, 40, 28, P[0], { z: 2 }), d(85, 60, 26, P[2], { z: 3 }),
         d(62, 70, 11, P[3]), d(94, 30, 9, P[1]), d(76, 82, 7, P[4])];
     },
@@ -183,7 +183,7 @@
     },
 
     // 2c · Vote columns — one column per chain, height = its count
-    "/governance-record": function () {
+    "/governance": function () {
       var VOTES = [7, 5, 8, 4, 6, 8, 3, 7], max = Math.max.apply(null, VOTES);
       return VOTES.map(function (n, i) {
         return barB(58 + i * 5.6, 16, 4.2, n / max * 72, "999px 999px 0 0", P[i % 5]);
@@ -235,6 +235,9 @@
       return out;
     }
   };
+  // the pages' addresses before 2026-09-28
+  FIELDS["/governance-record"] = FIELDS["/governance"];
+  FIELDS["/contact-us"] = FIELDS["/contact"];
 
   // the cover fills the first screen from where it starts — the bar lies over it; only the banner sits above
   function setVar(el, name, value) {

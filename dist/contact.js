@@ -13,7 +13,7 @@
    "label · value" lines the design draws as two columns, and gives the Copy button its feedback
    (the same exception the homepage contact section already has). Styles: contact-us.css. */
 (function () {
-  var PATH = /^\/contact-us\/?$/;
+  var PATH = /^\/contact(-us)?\/?$/;   // /contact since 2026-09-28
 
   function el(tag, cls, text) {
     var e = document.createElement(tag);

@@ -464,7 +464,7 @@
 #block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/supra"]){--net-brand: #DD1438;}
 #block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/gravity-bridge"]){--net-brand: #6B4CF6;}
 #block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/agoric"]){--net-brand: #BB2D40;}
-#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/humans"]){--net-brand: #3D5AFE;}
+#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/humans"]),#block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/humans-ai"]){--net-brand: #3D5AFE;}
 #block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/ixo"]){--net-brand: #009FD1;}
 #block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/gitopia"]){--net-brand: #F17A2B;}
 #block-d07ab52b60ba4788bd8df0c9e74c5ad4 .notion-collection-card:has(a[href$="/chain4energy"]){--net-brand: #1FA85B;}
