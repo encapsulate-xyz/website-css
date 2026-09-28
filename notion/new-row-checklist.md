@@ -76,13 +76,13 @@ each box is something that has gone wrong, or would have, when it was skipped.
       the same way, "Stake SUI with Slush" (the ticker and the wallet), and
       replace the sample step with the real ones. ("View More Guides", its gallery and its button were
       taken out on 2026-09-28: a guide page hides them and takes the next guide from the /guides index,
-      and its close band carries "All guides". Only the guides not yet redone still show them.)
+      and its close band carries "All guides". It was taken out of every other guide the same day.)
 - [ ] **Properties:** Name, **Title** ("Stake AXL with Keplr" — the head's title), **Lede** (the head's
       line; also the description), **Networks set** relation (the mainnet row — the chain's mark; its
       path in Super is /guides/<chain>), **Wallet Set** relation (the wallet must be a
       Wallet Set row with its glyph in Files & media), Step, Time, Network (Mainnet / Testnet; Rough
-      keeps it off the picker), Status, Cover (its card in
-      the "View More Guides" gallery of the guides not yet redone, and the /guides listings), Ticker.
+      keeps it off the picker), Status. (Cover went on 2026-09-28 with the "View More Guides" sections it
+      pictured; Ticker is read by nothing.)
 - [ ] **The steps:** the guide's own slide database, one row per step — Name ("01 · Unlock Keplr"),
       Step, Body, Watch, Surface, Link, and the capture as the row's Cover. **Its gallery must show Body,
       Link, Step, Surface and Watch, in that order** (Axelar's); the template's gallery carries that

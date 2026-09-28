@@ -1475,6 +1475,16 @@ links are page references and followed by themselves. Three typed links in Notio
 redirect were updated (/investments' Send the spec, the record's empty-state and count-band links, an image
 caption in the Solana post). A sweep of every internal link on the 113 pages then found none through a
 redirect and none broken.
+**The Guides database lost Cover and the View More sections (2026-09-28).** Cover held the old "Staking Guide"
+thumbnails (the pre-rebrand card design; Sui's still showed Suiet) and was shown only in the "View More Guides"
+grid at the foot of the guides not yet redone. That section — an empty paragraph, the heading, a linked view of
+the Guides data source (`1f6e800a…8164…57da`, checked on each live page) and a column list holding a "View More
+Guides" button to /guides — was deleted from 30 guides (120 blocks, `backups/view-more-guides-2026-09-28.json`),
+then the property (its 32 images in `backups/guide-covers-2026-09-28/`). The guides end at their own content;
+the navbar and the footer reach /guides. **Ticker** on the Guides database is read by nothing and can go too.
+**The picker falls back to a guide's Name when its Networks set is empty** (guides.js `read()`), so a guide named
+"Stake … with …" (the template's pattern since 2026-09-28) must have its Networks set.
+
 **Proof links:** 23 record rows (Axelar 348–369, Umee 187) linked "View Txn Hash" to private Notion pages
 (404). The votes' transactions are gone from every public source (the nodes keep about a month; Axelarscan
 keeps no votes of ended proposals), so each now reads "View proposal" and links the proposal on Mintscan
