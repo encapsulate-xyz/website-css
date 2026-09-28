@@ -372,6 +372,9 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   transition: clip-path 0.12s ease-out;
   pointer-events: none;
 }
+.enc-lens-fill::before {
+  content: attr(data-digits);
+}
 .enc-lens-track {
   position: absolute;
   inset: 48px;

@@ -2,7 +2,7 @@
    from the Networks set, and the set drawn as the design's index. Loaded from the site head;
    everything runs off one observer, so a client-side arrival at /networks builds it too. */
 (function () {
-  window.encNetwork = { version: 3 };   // a marker, so a live page can be asked whether this ran
+  window.encNetwork = { version: 4 };   // a marker, so a live page can be asked whether this ran
 
   /* ── the Network Count band (design "Network Count Patterns", I · the hollow, 2026-09-25) ──
      The figures, the label, the line and the testnet row are Notion's (network.css lays them
@@ -717,7 +717,10 @@
       fig.appendChild(fill);
     }
     var n = digits(stripped(fig));
-    if (fill.textContent !== n) fill.textContent = n;
+    /* the copy's digits are drawn by CSS from an attribute, not written as text: as text they were part
+       of the heading, and a search engine read the figure as "2727" (2026-09-28) */
+    if (fill.textContent) fill.textContent = "";
+    if (fill.getAttribute("data-digits") !== n) fill.setAttribute("data-digits", n);
 
     var track = band.querySelector(":scope > .enc-lens-track");
     if (!track) {

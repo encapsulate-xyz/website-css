@@ -19,7 +19,7 @@
    navigation, so this builds off a MutationObserver like the other page scripts. */
 (function () {
   var PATH = /^\/blog\/.+/;
-  var VERSION = "9";
+  var VERSION = "10";
   var LD = "enc-ld-post";
 
   /* ── structured data (2026-09-27) ── for search engines: built from what the page shows, as a
@@ -151,7 +151,9 @@
        lede is the long one, the chain is the short one that is left, and the author is a name */
     var chain = "", ticker = "", lede = "", author = "";
     texts.forEach(function (t) {
-      if (/^[A-Z0-9]{2,6}$/.test(t)) { if (!ticker) ticker = t; }
+      /* a chain named in capitals ("NEAR", "IOTA") looks like a ticker, and its ticker is the same
+         word: the second one is the chain */
+      if (/^[A-Z0-9]{2,6}$/.test(t)) { if (!ticker) ticker = t; else if (!chain) chain = t; }
       else if (t.length > 60) { if (t.length > lede.length) lede = t; }
       else if (/^[A-Z][a-z]+(\s+[A-Z][a-zA-Z.]+)+$/.test(t) && !author) author = t;
       else if (t.length <= 24 && !chain) chain = t;
@@ -259,6 +261,20 @@
     if (label) label.textContent = say("reading");
   }
 
+  /* a live chain's ask goes to that chain's own page, /networks/<chain>, not the index (the user,
+     2026-09-28). The set's list, which navbar.js reads once per visit, carries each mainnet's page;
+     the post's Chain is matched by name with case and punctuation ignored ("NEAR" is "Near"), and
+     the button stays on /networks until the list arrives or if the chain has no page. */
+  function nameKey(s) { return (s || "").toLowerCase().replace(/[^a-z0-9]/g, ""); }
+  function chainPage(post, a) {
+    if (!window.encCounts) return;
+    var key = nameKey(post.chain);
+    Promise.resolve(window.encCounts()).then(function (c) {
+      var hit = c && (c.list || []).filter(function (x) { return x.href && nameKey(x.name) === key; })[0];
+      if (hit) a.href = hit.href;
+    }).catch(function () { /* /networks stands */ });
+  }
+
   /* the foot: the post's own ask when the database says which chain it is about, and the
      standing one when it does not */
   function foot(next, post) {
@@ -274,6 +290,7 @@
     if (kind === "live") {
       primary = el("a", "enc-po__btn enc-po__btn--primary", say("foot live button", post));
       primary.href = NETWORKS;
+      chainPage(post, primary);
     } else if (kind === "soon") {
       /* mainnet is not ours yet, so the button is there and does nothing: it says what it will
          be, and says why on hover rather than sending the reader somewhere else */
