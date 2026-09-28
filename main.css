@@ -1032,6 +1032,267 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   color: #6B6F68;
 }
 
+/* THE PANEL'S SEARCH (handoff 2026-09-28, Y4a of Search Trigger Patterns; navbar.js searchFoot).
+   The foot is the box alone, under the hairline: a paper box on the paper panel with the input
+   ring (#D9D9D2, #B9B9B1 hovered, ink while it has focus), the scope as an ink token, the typed
+   example behind a drawn caret, the keycap. Its results take over the panel's body — the grid's
+   own columns stay underneath, hidden, so the panel keeps its height. */
+.enc-nav__foot--search { display: block; }
+.enc-nav__search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+  height: 44px;
+  width: 100%;
+  padding: 0 12px 0 10px;
+  border-radius: 10px;
+  background: #FAFAF8;
+  border: 1px solid #D9D9D2;
+  box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 1);
+  transition: border-color 0.16s;
+  cursor: text;
+}
+.enc-nav__search:hover { border-color: #B9B9B1; }
+.enc-nav__search:focus-within { border-color: #000000; }
+/* the 3px ring for the keyboard only: a press marks the page (navbar.js), Tab clears the mark */
+html:not([data-enc-mouse]) .enc-nav__search:has(input:focus-visible) {
+  outline: 3px solid rgba(0, 0, 0, 0.32);
+  outline-offset: 2px;
+}
+.enc-nav__search-tok {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #000000;
+  color: #FAFAF8;
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.enc-nav__search-q {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  align-self: stretch;
+  min-width: 0;
+}
+.enc-nav__search input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  box-shadow: none;
+  -webkit-appearance: none;
+  appearance: none;
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 14.5px;
+  color: #000000;
+}
+.enc-nav__search input::-webkit-search-decoration,
+.enc-nav__search input::-webkit-search-cancel-button { -webkit-appearance: none; }
+.enc-nav__search-ex,
+.enc-nav__search-hint {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 14.5px;
+  color: #6B6F68;
+  white-space: nowrap;
+}
+.enc-nav__search-ex { display: inline-flex; align-items: center; gap: 6px; }
+.enc-nav__search-word { display: inline-flex; align-items: center; color: #000000; font-weight: 500; }
+.enc-nav__search-word > i {
+  display: inline-block;
+  width: 1.5px;
+  height: 1.05em;
+  margin-left: 1px;
+  background: #000000;
+}
+.enc-nav__search-hint { visibility: hidden; }
+/* the example only while the box is empty and idle; on focus the hint takes its place */
+.enc-nav__search input:focus ~ .enc-nav__search-ex,
+.enc-nav__search input:not(:placeholder-shown) ~ .enc-nav__search-ex { visibility: hidden; }
+.enc-nav__search input:focus:placeholder-shown ~ .enc-nav__search-hint { visibility: visible; }
+.enc-nav__search-key {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  height: 24px;
+  padding: 0 7px;
+  border-radius: 4px;
+  border: 1px solid #D9D9D2;
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: #6B6F68;
+  white-space: nowrap;
+}
+
+.enc-nav__grid { position: relative; }
+.enc-nav__grid[data-enc-searching] > :not(.enc-nav__results) { visibility: hidden; }
+.enc-nav__results {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  background: #FAFAF8;
+}
+.enc-nav__results[hidden] { display: none !important; }
+.enc-nav__mono {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6B6F68;
+}
+.enc-nav__results-head { display: flex; justify-content: space-between; gap: 12px; padding: 4px 8px 0; }
+.enc-nav__results-grid { display: grid; gap: 2px 16px; align-content: start; }
+.enc-nav__results-grid[data-enc-tight] { gap: 8px 16px; }
+.enc-nav__results-group { grid-column: 1 / -1; padding: 14px 12px 2px; }
+.enc-nav__results-group.is-first { padding-top: 2px; }
+.enc-nav__results-none { display: flex; flex-direction: column; gap: 6px; padding: 8px; }
+.enc-nav__results-none-a {
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: #000000;
+}
+.enc-nav__results-none-b {
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 12.5px;
+  color: #6B6F68;
+}
+/* a result is the panel's own row: a chain as in the chains column, a guide, post or tool as a
+   ledger row, a vote as the record draws it, a company thing led by the thing itself */
+.enc-nav__hit {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 11px;
+  align-items: center;
+  min-height: 52px;
+  padding: 8px 12px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  text-decoration: none !important;
+  color: #000000;
+  transition: background-color 0.16s ease;
+}
+.enc-nav__hit--row { align-items: baseline; }
+.enc-nav__hit[aria-selected="true"] { background: #F2F2ED; }
+.enc-nav__hit--net {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 8px;
+  min-width: 0;
+}
+.enc-nav__hit-disc {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.enc-nav__hit-disc img { display: block; width: 90%; height: 90%; object-fit: contain; }
+.enc-nav__hit-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 14px;
+  color: #000000;
+}
+.enc-nav__hit-rate {
+  margin-left: auto;
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 11px;
+  white-space: nowrap;
+  color: #6B6F68;
+}
+.enc-nav__hit-rate[data-enc-live] { color: #3F6B27; }
+.enc-nav__hit-n {
+  font-family: var(--type-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  color: #575B55;
+}
+.enc-nav__hit-lead {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #F2F2ED;
+  font-size: 13px;
+  font-weight: 500;
+  color: #000000;
+}
+.enc-nav__hit-lead img { display: block; width: 78%; height: 78%; object-fit: contain; }
+.enc-nav__hit-lead[data-enc-swatch] { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08); }
+.enc-nav__hit-lead[data-enc-arrow]::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: #000000;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 5h6M5 2l3 3-3 3'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 5h6M5 2l3 3-3 3'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.enc-nav__hit-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.enc-nav__hit-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 14.5px;
+  font-weight: 500;
+  letter-spacing: -0.006em;
+  color: #000000;
+}
+.enc-nav__hit-desc {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--type-body), system-ui, sans-serif;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: #6B6F68;
+}
+.enc-nav__hit-vote { display: inline-flex; align-items: center; gap: 8px; }
+.enc-nav__hit-vote .enc-nav__mono { font-size: 9.5px; }
+.enc-nav__hit-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  box-sizing: border-box;
+  border-radius: 999px;
+  border: 1.5px solid #9B9B94;
+}
+.enc-nav__hit-dot[data-vote="Yes"] { border: 0; background: #99CC66; }
+.enc-nav__hit-dot[data-vote="No"] { border: 0; background: #000000; }
+.enc-nav__hit-dot[data-vote="No with veto"] { border: 0; background: #E9A9C2; }
+
 /* THE WIDE BAR HOLDS DOWN TO 960px, the design's own switch (handoff, 2026-09-24): at its 44px
    gutters and 12px item sides the five items fit beside the mark and the CTA from 960 up. Super
    hides the items by its own rules on narrower widths, so above 960 they are stated here. Below

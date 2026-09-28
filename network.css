@@ -369,8 +369,13 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   -webkit-background-clip: text;
   background-clip: text;
   clip-path: circle(0px at 50% 50%);
-  transition: clip-path 0.12s ease-out;
+  /* leaving, the reveal travels into the figure's centre and closes there on the ring's curve (.36s);
+     while it follows the pointer it keeps up at .12s (the handoff, re-read 2026-09-28) */
+  transition: clip-path 0.36s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
+}
+.enc-lens-fill[data-on] {
+  transition: clip-path 0.12s ease-out;
 }
 .enc-lens-fill::before {
   content: attr(data-digits);
@@ -396,6 +401,10 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   pointer-events: none;
   opacity: 0;
   transform: translate(-999px, -999px) scale(0);
+  /* leaving, the ring travels with the reveal into the centre, and fades only as it lands */
+  transition: transform 0.36s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.12s linear 0.24s;
+}
+.enc-lens-track[data-on] .enc-lens-ring {
   transition: transform 0.12s ease-out, opacity 0.12s ease-out;
 }
 

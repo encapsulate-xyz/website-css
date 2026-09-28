@@ -366,6 +366,38 @@
     return img ? originalSrc(img.getAttribute("src")) : "";
   }
 
+  /* the Guides database's cards, and the blog's: the panel shows the first few, the search reads them all */
+  function guidesOf(doc, limit) {
+    var db = doc.getElementById(GUIDES);
+    /* the chain marks are on the same page, in the set the picker reads: name -> glyph */
+    var marks = {};
+    all(doc, ".notion-collection-card").forEach(function (c) {
+      if (db && db.contains(c)) return;
+      var n = titleOf(c), g = glyphOf(c);
+      if (n && g && !marks[n.toLowerCase()]) marks[n.toLowerCase()] = g;
+    });
+    var list = (db ? all(db, ".notion-collection-card") : []).slice(0, limit || undefined).map(function (c) {
+      var title = titleOf(c);
+      var texts = propsOf(c).filter(function (t) { return !/^\d+$/.test(t); });
+      var chain = texts.filter(function (t) { return marks[t.toLowerCase()]; })[0] ||
+        (marks[title.toLowerCase()] ? title : "");
+      /* a row reads as the guide's own Title, "Stake AVAX with Core" (the user, 2026-09-28), with
+         the wallet beside it; a guide without a Title on its card falls back to the chain */
+      var what = texts.filter(function (t) { return / with /i.test(t); })[0] || "";
+      var wallet = texts.filter(function (t) { return t !== chain && t !== what; })[0] || "";
+      return { name: what || chain || title, wallet: wallet, chain: chain,
+        glyph: marks[(chain || title).toLowerCase()] || "", href: linkOf(c) || "/guides" };
+    }).filter(function (r) { return r.name; });
+    return list;
+  }
+  function postsOf(doc, limit) {
+    return all(doc, ".notion-collection-card").slice(0, limit || undefined).map(function (c) {
+      var pill = c.querySelector(".notion-pill");
+      return { name: titleOf(c), tag: pill ? pill.textContent.trim() : "",
+        glyph: glyphOf(c), href: linkOf(c) || "/blog" };
+    }).filter(function (r) { return r.name; });
+  }
+
   var READ = {
     "/networks": function (doc) {
       var db = doc.getElementById(SET);
@@ -430,36 +462,8 @@
         return text ? { text: text, href: "/contact#" + id } : null;
       }).filter(Boolean);
     },
-    "/guides": function (doc) {
-      var db = doc.getElementById(GUIDES);
-      /* the chain marks are on the same page, in the set the picker reads: name -> glyph */
-      var marks = {};
-      all(doc, ".notion-collection-card").forEach(function (c) {
-        if (db && db.contains(c)) return;
-        var n = titleOf(c), g = glyphOf(c);
-        if (n && g && !marks[n.toLowerCase()]) marks[n.toLowerCase()] = g;
-      });
-      var list = (db ? all(db, ".notion-collection-card") : []).slice(0, 7).map(function (c) {
-        var title = titleOf(c);
-        var texts = propsOf(c).filter(function (t) { return !/^\d+$/.test(t); });
-        var chain = texts.filter(function (t) { return marks[t.toLowerCase()]; })[0] ||
-          (marks[title.toLowerCase()] ? title : "");
-        /* a row reads as the guide's own Title, "Stake AVAX with Core" (the user, 2026-09-28), with
-           the wallet beside it; a guide without a Title on its card falls back to the chain */
-        var what = texts.filter(function (t) { return / with /i.test(t); })[0] || "";
-        var wallet = texts.filter(function (t) { return t !== chain && t !== what; })[0] || "";
-        return { name: what || chain || title, wallet: wallet,
-          glyph: marks[(chain || title).toLowerCase()] || "", href: linkOf(c) || "/guides" };
-      }).filter(function (r) { return r.name; });
-      return list;
-    },
-    "/blog": function (doc) {
-      return all(doc, ".notion-collection-card").slice(0, 4).map(function (c) {
-        var pill = c.querySelector(".notion-pill");
-        return { name: titleOf(c), tag: pill ? pill.textContent.trim() : "",
-          glyph: glyphOf(c), href: linkOf(c) || "/blog" };
-      }).filter(function (r) { return r.name; });
-    },
+    "/guides": function (doc) { return guidesOf(doc, 7); },
+    "/blog": function (doc) { return postsOf(doc, 4); },
     "/investments": function (doc) {
       var db = doc.getElementById(PORTFOLIO);
       return (db ? all(db, ".notion-collection-card") : []).map(function (c) {
@@ -612,6 +616,590 @@
     }
   };
 
+  /* ── THE PANEL'S SEARCH (handoff 2026-09-28, Navbar 4f Page: Y4a of Search Trigger Patterns) ──
+     Every panel's foot is a search scoped to its own group: Networks the networks, Services the
+     tools, Practices the votes, Learn the guides and posts, Company the brand kit, the investments
+     and the contact routes. The box: the scope as an ink token, a typed example behind a drawn
+     caret while it is empty and idle, the keycap. ↑↓ move, Enter opens, Esc clears; the results take
+     over the panel's body in the panel's own rows, and while the box has focus the panel stays open.
+     The scorer is the design's site-search.js — the 404 finder's, made scoped. What it searches is
+     read from the pages themselves when a box is first used: the design's lists were copied from its
+     own files on 28 Sep and would drift. The words are here, as the rest of the bar's are. */
+  var SEARCH = {
+    "Networks": { tok: "Networks", noun: "networks", ex: ["Sui", "Monad", "Axelar", "Near", "Avalanche"], cols: 3, item: "net",
+      none: "No network called “{q}”.", hint: "Try a chain’s name." },
+    "Services": { tok: "Tools", noun: "tools", ex: ["Sui", "Cosmos SDK", "Solana", "Monad", "Axelar"], cols: 3, item: "row",
+      groups: [["Dashboard", "Dashboards"], ["Playbook", "Playbooks"], ["Bot", "Bots"], ["Monitoring", "Monitoring"], ["Script", "Scripts"]],
+      none: "No tool called “{q}”.", hint: "Most are named for their chain — try one." },
+    "Practices": { tok: "Votes", noun: "votes", ex: ["Terra", "4851", "Axelar", "Agoric", "Passage"], cols: 2, item: "vote",
+      none: "No vote matches “{q}”.", hint: "Try a chain or a proposal number." },
+    "Learn": { tok: "Posts & guides", noun: "posts and guides", ex: ["Sui", "Keplr", "Axelar", "Gno.land", "Terra"], cols: 3, item: "row",
+      groups: [["Guide", "Guides"], ["Post", "Posts"]],
+      none: "No post or guide called “{q}”.", hint: "Try a chain or a wallet." },
+    "Company": { tok: "Company", noun: "the kit, investments and contact", ex: ["Wordmark", "Fonts", "Berachain", "Green", "Email"], cols: 3, item: "company",
+      groups: [["File", "Files"], ["Colour", "Colours"], ["Typeface", "Typefaces"], ["Investment", "Investments"], ["Contact", "Contact"]],
+      none: "Nothing here called “{q}”.", hint: "Try a file, a colour, a typeface or a company we back." }
+  };
+  SEARCH.Staking = SEARCH.Networks;
+  var SAY = {
+    "try": "Try", search: "Search {noun}", one: "1 result for “{q}”", many: "{n} results for “{q}”",
+    closest: "Closest matches · ", nothing: "No results", keys: "↑↓ move · enter opens",
+    net: "Our validator on {name}.", testnet: "A testnet we help — listed on Networks.", testnetTag: "Testnet",
+    guide: "Step by step, with {wallet}.", mark: "Mark", wordmark: "Wordmark", ground: "for {ground} grounds",
+    backed: "Backed {year}", validates: "we validate it", voted: "voted {vote}"
+  };
+  function fill(t, v) { return t.replace(/\{(\w+)\}/g, function (m, k) { return v[k] != null ? v[k] : ""; }); }
+  var KEYCAP = /Mac|iP(hone|ad|od)/.test(navigator.platform || navigator.userAgent || "") ? "⌘K" : "Ctrl K";
+  var BANDS = { playbooks: "/services#block-3e4e800a513881719a14e42a6532c579", bots: "/services#block-3e4e800a513881598024c57e15cbd370" };
+
+  /* the scorer, as site-search.js has it: each entry has its own name words and weaker synonyms;
+     one typed word against one keyword is exact 1 · its start .85 · runs past it up to .7 · a typo .6.
+     A word "hits" an entry when it matches exactly or as a start; if any entry is hit by every word,
+     entries reached only by likeness are dropped ("font" returns the typefaces, not "contact"). With
+     nothing at all, a word one edit away (two from five letters) is accepted; under four, never. */
+  var S_GENERIC = ["network", "networks", "chain", "protocol", "labs", "systems"];
+  var S_STOP = ["with", "us", "the", "and", "for", "to", "of", "on", "in", "our", "your", "my", "page", "www", "html", "index", "en"];
+  function sWords(s) {
+    var w = String(s || "").toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+    var joined = String(s || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+    return joined && w.indexOf(joined) < 0 ? w.concat([joined]) : w;
+  }
+  function sToks(q) {
+    return String(q || "").toLowerCase().split(/[^a-z0-9.]+/).filter(function (w) { return w.length > 1 && S_STOP.indexOf(w) < 0; });
+  }
+  function sEdits(a, b) {
+    var m = a.length, n = b.length, d = [], i, j;
+    if (Math.abs(m - n) > 2) return 9;
+    for (i = 0; i <= m; i++) d[i] = [i];
+    for (j = 1; j <= n; j++) d[0][j] = j;
+    for (i = 1; i <= m; i++) for (j = 1; j <= n; j++) {
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+    }
+    return d[m][n];
+  }
+  function sWordScore(w, k) {
+    if (w === k) return 1;
+    if (k.indexOf(w) === 0) return 0.85;
+    if (w.length >= 4 && k.length >= 3 && w.indexOf(k) === 0) return 0.7 * k.length / w.length;
+    if (w.length >= 4 && k.length >= 3) {
+      var lim = w.length >= 7 ? 2 : 1;
+      if (sEdits(w, k) <= lim || (k.length > w.length && sEdits(w, k.slice(0, w.length)) <= lim)) return 0.6;
+    }
+    return 0;
+  }
+  function sBest(w, ks) { return ks.reduce(function (m, k) { return Math.max(m, sWordScore(w, k)); }, 0); }
+  function sNear(w, list) {
+    if (w.length < 4) return 0;
+    var lim = w.length >= 5 ? 2 : 1, bestD = 9;
+    (list || []).forEach(function (x) { var d = sEdits(w, x); if (d < bestD) bestD = d; });
+    return bestD <= lim ? (bestD === 1 ? 0.7 : 0.55) : 0;
+  }
+  function sRank(q, entries) {
+    var T = sToks(q), STRONG = 0.849;
+    if (!T.length) return Object.assign([], { exact: true });
+    var scored = entries.map(function (x) {
+      var sc = 0, hit = true;
+      T.forEach(function (w) { var n = sBest(w, x.name), y = sBest(w, x.syn); sc += Math.max(n, x.wt * y); if (Math.max(n, y) < STRONG) hit = false; });
+      return { x: x, sc: sc, hit: hit };
+    }).filter(function (o) { return o.sc > 0; });
+    if (!scored.length) entries.forEach(function (x) {
+      var sc = 0, every = true;
+      T.forEach(function (w) { var v = Math.max(sNear(w, x.name), x.wt * sNear(w, x.syn)); if (!v) every = false; sc += v; });
+      if (every && sc > 0) scored.push({ x: x, sc: sc, hit: false });
+    });
+    var anyHit = scored.some(function (o) { return o.hit; });
+    var pool = anyHit ? scored.filter(function (o) { return o.hit; }) : scored;
+    var top = pool.reduce(function (mx, o) { return Math.max(mx, o.sc); }, 0);
+    var out = pool.filter(function (o) { return o.sc >= top * 0.5; })
+      .sort(function (a, b) { return b.sc - a.sc || a.x.label.localeCompare(b.x.label); })
+      .map(function (o) { return o.x; });
+    return Object.assign(out, { exact: anyHit });
+  }
+  function sEntry(kind, label, href, desc, nameText, syn, wt, more) {
+    var e = { kind: kind, label: label, href: href, desc: desc || "",
+      name: sWords(nameText || label).filter(function (w) { return S_GENERIC.indexOf(w) < 0 && S_STOP.indexOf(w) < 0; }),
+      syn: syn || [], wt: wt == null ? 0.5 : wt };
+    return more ? Object.assign(e, more) : e;
+  }
+  window.encSearch = { rank: sRank, toks: sToks, words: sWords, entry: sEntry };
+
+  /* what each scope searches, read from its pages once per visit */
+  var scopes = {};
+  function tableOf(doc, test) {
+    var hit = null;
+    all(doc, "table.notion-collection-table").some(function (t) {
+      var heads = all(t, "thead th").map(function (th) { return th.textContent.trim().toLowerCase(); });
+      if (test(heads)) { hit = { table: t, heads: heads }; return true; }
+      return false;
+    });
+    if (!hit) return [];
+    return all(hit.table, "tbody tr").map(function (tr) {
+      var row = {};
+      hit.heads.forEach(function (h, i) {
+        var td = tr.children[i];
+        var a = td && td.querySelector("a[href]");
+        row[h] = { text: td ? td.textContent.trim() : "", href: a ? a.getAttribute("href") : "" };
+      });
+      return row;
+    }).sort(function (a, b) { return (parseFloat((a.order || {}).text) || 0) - (parseFloat((b.order || {}).text) || 0); });
+  }
+  function cellText(row, k) { return (row[k] && row[k].text) || ""; }
+  function cellHref(row, k) { return (row[k] && row[k].href) || ""; }
+  var INDEX = {
+    "Networks": function () {
+      return Promise.all([counts(), pageOf("/networks")]).then(function (r) {
+        var c = r[0], doc = r[1], rates = {};
+        var db = doc && doc.getElementById(SET);
+        (db ? all(db, ".notion-collection-card") : []).forEach(function (card) {
+          var rt = card.querySelector(".property-597e3d69"), n = titleOf(card);
+          if (n && rt && rt.textContent.trim()) rates[n] = rt.textContent.trim();
+        });
+        return ((c && c.list) || []).map(function (x, i) {
+          var main = /^\/networks\/[^/?#]/.test(x.href || "");
+          return sEntry("Network", x.name, main ? x.href : "/networks",
+            main ? fill(SAY.net, { name: x.name }) : SAY.testnet, x.name,
+            ["network", "chain", "validator", main ? "mainnet" : "testnet"], 0.35,
+            { glyph: x.glyph, tint: TINTS[i % TINTS.length], tag: main ? (rates[x.name] || "—") : SAY.testnetTag, live: main && !!rates[x.name] });
+        });
+      });
+    },
+    "Services": function () {
+      return pageOf("/services").then(function (doc) {
+        if (!doc) return [];
+        var out = [];
+        tableOf(doc, function (hs) { return hs.indexOf("menu") >= 0 && hs.indexOf("address") >= 0; }).forEach(function (r) {
+          out.push(sEntry("Dashboard", cellText(r, "menu") || cellText(r, "name") + " dashboard", cellHref(r, "link") || "/services",
+            cellText(r, "address") + " · " + cellText(r, "description"), cellText(r, "name") + " " + cellText(r, "address").replace(/\./g, " "),
+            sWords("dashboard dashboards graph live public " + cellText(r, "name"))));
+        });
+        tableOf(doc, function (hs) { return hs.indexOf("repository") >= 0 && hs.indexOf("visibility") >= 0; }).forEach(function (r) {
+          var open = /public/i.test(cellText(r, "visibility"));
+          out.push(sEntry("Playbook", cellText(r, "name") + " playbook", open && cellHref(r, "link") ? cellHref(r, "link") : BANDS.playbooks,
+            cellText(r, "repository") + " · " + cellText(r, "description"), cellText(r, "name") + " " + cellText(r, "repository").replace(/-/g, " "),
+            sWords("playbook playbooks ansible node setup install validator")));
+        });
+        tableOf(doc, function (hs) { return hs.indexOf("event") >= 0 && hs.indexOf("headline") >= 0; }).forEach(function (r) {
+          out.push(sEntry("Bot", cellText(r, "name"), BANDS.bots, cellText(r, "headline"), cellText(r, "name") + " " + cellText(r, "event"),
+            sWords("bot bots discord alert alerts notify")));
+        });
+        var seen = {};
+        tableOf(doc, function (hs) { return hs.indexOf("repository") >= 0 && hs.indexOf("visibility") < 0; }).forEach(function (r) {
+          var repo = cellText(r, "repository");
+          if (!repo || seen[repo]) return;
+          seen[repo] = 1;
+          out.push(sEntry(/script/i.test(cellText(r, "name")) ? "Script" : "Monitoring", repo, cellHref(r, "link") || "/services",
+            cellText(r, "description"), repo.replace(/-/g, " ") + " " + cellText(r, "name"),
+            sWords("monitoring grafana prometheus alerting exporter script " + cellText(r, "name"))));
+        });
+        return out;
+      });
+    },
+    "Practices": function () {
+      return Promise.all([pageOf("/governance"), counts()]).then(function (r) {
+        var doc = r[0], c = r[1] || {};
+        if (!doc) return [];
+        var at = {}, glyphs = c.glyphs || {}, more = typeof window.encGlyphs === "function" ? window.encGlyphs() : {};
+        ((c.list) || []).forEach(function (x, i) { at[keyOfName(x.name)] = i; });
+        var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        return tableOf(doc, function (hs) {
+          return (hs.indexOf("network") >= 0 || hs.indexOf("chain") >= 0) && (hs.indexOf("our vote") >= 0 || hs.indexOf("vote option") >= 0);
+        }).map(function (row) {
+          var pick = function (names) { for (var i = 0; i < names.length; i++) if (row[names[i]]) return row[names[i]]; return { text: "", href: "" }; };
+          var net = pick(["network", "chain"]).text, ref = pick(["reference", "proposal id"]).text,
+            title = pick(["proposal", "proposal title"]).text, vote = pick(["our vote", "vote option"]).text,
+            proof = pick(["proof", "voting proof"]).href, when = new Date(pick(["recorded", "voted on"]).text);
+          if (!net) return null;
+          var k = keyOfName(net), l = vote.toLowerCase();
+          var outcome = /veto/.test(l) ? "No with veto" : /^no/.test(l) ? "No" : /^abst/.test(l) ? "Abstain" : /^yes/.test(l) ? "Yes" : vote;
+          var date = isNaN(when) ? "" : MON[when.getMonth()] + " " + when.getDate() + ", " + when.getFullYear();
+          return sEntry("Vote", title || net + " proposal " + ref, proof || "/governance",
+            net + " · " + ref + " · " + fill(SAY.voted, { vote: outcome }) + (date ? " · " + date : ""),
+            title + " " + net + " " + ref, sWords("vote votes voted proposal governance ballot " + outcome), 0.5,
+            { chain: net, num: ref, outcome: outcome, date: date, glyph: glyphs[k] || more[k] || "",
+              tint: TINTS[(at[k] != null ? at[k] : net.length) % TINTS.length] });
+        }).filter(Boolean);
+      });
+    },
+    "Learn": function () {
+      return Promise.all([pageOf("/guides"), pageOf("/blog")]).then(function (r) {
+        var out = [];
+        (r[0] ? guidesOf(r[0], 0) : []).forEach(function (g) {
+          out.push(sEntry("Guide", g.name, g.href, g.wallet ? fill(SAY.guide, { wallet: g.wallet }) : "",
+            g.name + " " + g.chain + " " + g.wallet,
+            ["guide", "guides", "stake", "staking", "delegate", "wallet"].concat(sWords(g.wallet))));
+        });
+        (r[1] ? postsOf(r[1], 0) : []).forEach(function (p) {
+          out.push(sEntry("Post", p.name, p.href, p.tag ? p.tag + "." : "", p.name,
+            ["post", "posts", "blog", "article"].concat(sWords(p.tag))));
+        });
+        return out;
+      });
+    },
+    "Company": function () {
+      return Promise.all([pageOf("/brand"), pageOf("/investments"), pageOf("/contact")]).then(function (r) {
+        var brand = r[0], inv = r[1], con = r[2], out = [];
+        if (brand) {
+          /* the spreads' own anchors: "01 · The marks", "02 · Colour", "03 · Type" */
+          var spread = {};
+          all(brand, ".notion-root p.notion-text").forEach(function (p) {
+            var m = /^(\d\d)\s*[·.\-]/.exec(p.textContent.trim());
+            if (m && p.id && !spread[m[1]]) spread[m[1]] = "/brand#" + p.id;
+          });
+          var seenFile = {};
+          all(brand, "img[alt$='.svg']").forEach(function (im) {
+            var f = im.getAttribute("alt");
+            if (seenFile[f]) return;
+            seenFile[f] = 1;
+            var g = /reversed/.test(f) ? ["Ink", "#2A2C28"] : /green/.test(f) ? ["Green", "#99CC66"] : ["Light", "#FAFAF8"];
+            var wm = /wordmark/.test(f);
+            out.push(sEntry("File", f, spread["01"] || "/brand",
+              (wm ? SAY.wordmark : SAY.mark) + " · " + fill(SAY.ground, { ground: g[0].toLowerCase() }),
+              f.replace(/\.svg$/, "").replace(/-/g, " ") + " " + g[0],
+              sWords("file files logo mark svg download " + (wm ? "wordmark" : "")), 0.5,
+              { ground: g[1], src: originalSrc(im.getAttribute("src")) }));
+          });
+          all(brand, ".notion-collection-card").forEach(function (card) {
+            var name = titleOf(card), props = propsOf(card);
+            var hex = props.filter(function (t) { return /^#[0-9a-f]{6}$/i.test(t); })[0];
+            if (!name || !hex) return;
+            var rest = props.filter(function (t) { return t !== hex && !/^\d+$/.test(t); });
+            out.push(sEntry("Colour", name + " " + hex.toUpperCase(), spread["02"] || "/brand", rest.join(" · "),
+              name + " " + hex.slice(1), sWords("colour color colours hex brand"), 0.5, { swatch: hex }));
+          });
+          all(brand, ".notion-root p.notion-text").forEach(function (p) {
+            var t = p.textContent.trim();
+            if (!/^[A-Z][A-Za-z ,]+ · \d{3}\s*[–-]\s*\d{3}$/.test(t)) return;
+            var prev = p.previousElementSibling, face = prev ? prev.textContent.trim() : "";
+            if (!face || face.length > 30) return;
+            out.push(sEntry("Typeface", face, spread["03"] || "/brand", t, face,
+              sWords("font fonts typeface type " + t.split(" · ")[0]), 0.5, { face: face }));
+          });
+        }
+        /* the Portfolio's cards: the year, the category and the Validator pill, matched by value */
+        var pdb = inv && inv.getElementById(PORTFOLIO);
+        (pdb ? all(pdb, ".notion-collection-card") : []).forEach(function (card) {
+          var name = titleOf(card), props = propsOf(card);
+          if (!name) return;
+          var year = props.filter(function (t) { return /^(19|20)\d\d$/.test(t); })[0] || "";
+          var ours = props.some(function (t) { return /we run a validator/i.test(t); });
+          var pill = card.querySelector(".notion-pill");
+          var cat = pill && !/validator|in the set/i.test(pill.textContent) ? pill.textContent.trim() : "";
+          out.push(sEntry("Investment", name, "/investments",
+            [year ? fill(SAY.backed, { year: year }) : "", cat, ours ? SAY.validates : ""].filter(Boolean).join(" · "),
+            name + " " + cat, sWords("investment investments invest backed portfolio position " + year), 0.5,
+            { glyph: glyphOf(card), tint: TINTS[name.length % TINTS.length] }));
+        });
+        var SYN = ["book call meeting calendar schedule", "email mail write message", "institutional institution large stake terms", "discord twitter x linkedin social"];
+        (con ? READ["/contact"](con) : []).forEach(function (x, i) {
+          out.push(sEntry("Contact", x.text, x.href, "", x.text, sWords((SYN[i] || "") + " contact")));
+        });
+        return out;
+      });
+    }
+  };
+  INDEX.Staking = INDEX.Networks;
+  function scopeOf(group) {
+    if (!scopes[group] && INDEX[group]) scopes[group] = INDEX[group]().catch(function () { delete scopes[group]; return []; });
+    return scopes[group] || Promise.resolve([]);
+  }
+
+  /* the typed example: type in, hold, back out, next name — ~95ms frames; reduced motion shows the
+     first name in full and never ticks */
+  var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var typeTick = 0, ticking = 0;   // not "tick": that is the bar's own update, below
+  function typedNow(ex) {
+    if (still) return [ex[0], ex[0].length];
+    var plan = ex.map(function (w) { return [w, w.length, 16, Math.ceil(w.length / 2), 5]; });
+    var total = plan.reduce(function (a, p) { return a + p[1] + p[2] + p[3] + p[4]; }, 0), f = typeTick % total;
+    for (var i = 0; i < plan.length; i++) {
+      var p = plan[i], span = p[1] + p[2] + p[3] + p[4];
+      if (f < span) {
+        if (f < p[1]) return [p[0], f + 1];
+        f -= p[1];
+        if (f < p[2]) return [p[0], p[0].length];
+        f -= p[2];
+        if (f < p[3]) return [p[0], Math.max(0, p[0].length - (f + 1) * 2)];
+        return [p[0], 0];
+      }
+      f -= span;
+    }
+    return [ex[0], 0];
+  }
+  function typeAll() {
+    var boxes = all(document, ".enc-nav__search");
+    boxes.forEach(function (box) {
+      var sc = SEARCH[box.getAttribute("data-enc-group")], word = box.querySelector(".enc-nav__search-word > span");
+      if (!sc || !word) return;
+      var tp = typedNow(sc.ex), t = tp[0].slice(0, tp[1]);
+      if (word.textContent !== t) word.textContent = t;
+    });
+    if (!boxes.length && ticking) { clearInterval(ticking); ticking = 0; }
+  }
+  function startTyping() {
+    typeAll();
+    if (still || ticking) return;
+    ticking = setInterval(function () { typeTick++; typeAll(); }, 95);
+  }
+
+  function searching() {
+    var a = document.activeElement;
+    return !!(a && a.matches && a.matches(".enc-nav__search input"));
+  }
+
+  /* the box at the panel's foot, and the results over the panel's body */
+  function searchFoot(panel, grid, group) {
+    var sc = SEARCH[group], id = "enc-nav-res-" + keyOfName(group);
+    var foot = el("div", "enc-nav__foot enc-nav__foot--search");
+    var box = el("div", "enc-nav__search");
+    box.setAttribute("data-enc-group", group);
+    box.appendChild(el("span", "enc-nav__search-tok", sc.tok));
+    var q = el("span", "enc-nav__search-q");
+    var input = el("input");
+    input.type = "search";
+    input.placeholder = " ";
+    input.setAttribute("role", "combobox");
+    input.setAttribute("aria-label", fill(SAY.search, { noun: sc.noun }));
+    input.setAttribute("aria-expanded", "false");
+    input.setAttribute("aria-controls", id);
+    input.setAttribute("aria-autocomplete", "list");
+    input.setAttribute("autocomplete", "off");
+    input.spellcheck = false;
+    q.appendChild(input);
+    var ex = el("span", "enc-nav__search-ex");
+    ex.setAttribute("aria-hidden", "true");
+    ex.appendChild(document.createTextNode(SAY["try"]));
+    var word = el("span", "enc-nav__search-word");
+    word.appendChild(el("span", null, ""));
+    word.appendChild(el("i"));
+    ex.appendChild(word);
+    q.appendChild(ex);
+    var hint = el("span", "enc-nav__search-hint", fill(SAY.search, { noun: sc.noun }));
+    hint.setAttribute("aria-hidden", "true");
+    q.appendChild(hint);
+    box.appendChild(q);
+    var key = el("span", "enc-nav__search-key", KEYCAP);
+    key.setAttribute("aria-hidden", "true");
+    box.appendChild(key);
+    foot.appendChild(box);
+    panel.appendChild(foot);
+
+    var res = el("div", "enc-nav__results");
+    res.id = id;
+    res.setAttribute("role", "listbox");
+    res.setAttribute("aria-label", "Results");
+    res.hidden = true;
+    grid.appendChild(res);
+
+    var R = [], act = 0, entries = null;
+    function show() {
+      var text = input.value, has = sToks(text).length > 0;
+      res.hidden = !has;
+      if (has) grid.setAttribute("data-enc-searching", ""); else grid.removeAttribute("data-enc-searching");
+      input.setAttribute("aria-expanded", has ? "true" : "false");
+      if (!has) { input.removeAttribute("aria-activedescendant"); return; }
+      if (!entries) {
+        scopeOf(group).then(function (list) { entries = list; if (input.value === text) show(); });
+        return;
+      }
+      R = sRank(text, entries);
+      if (sc.groups && R.length) {
+        var exact = R.exact, order = sc.groups.map(function (g) { return g[0]; });
+        R = Object.assign(order.reduce(function (a, k) { return a.concat(R.filter(function (r) { return r.kind === k; })); }, [])
+          .concat(R.filter(function (r) { return order.indexOf(r.kind) < 0; })), { exact: exact });
+      }
+      act = Math.min(act, Math.max(0, R.length - 1));
+      draw(text.trim());
+    }
+    function draw(qt) {
+      res.textContent = "";
+      var head = el("div", "enc-nav__results-head");
+      head.appendChild(el("span", "enc-nav__mono", R.length
+        ? (R.exact ? "" : SAY.closest) + fill(R.length === 1 ? SAY.one : SAY.many, { n: R.length, q: qt })
+        : SAY.nothing));
+      if (R.length) head.appendChild(el("span", "enc-nav__mono", SAY.keys));
+      res.appendChild(head);
+      if (!R.length) {
+        var empty = el("div", "enc-nav__results-none");
+        empty.appendChild(el("span", "enc-nav__results-none-a", fill(sc.none, { q: qt })));
+        empty.appendChild(el("span", "enc-nav__results-none-b", sc.hint));
+        res.appendChild(empty);
+        input.removeAttribute("aria-activedescendant");
+        return;
+      }
+      var list = el("div", "enc-nav__results-grid");
+      list.style.gridTemplateColumns = "repeat(" + sc.cols + ", minmax(0, 1fr))";
+      if (sc.item === "net") list.setAttribute("data-enc-tight", "");
+      var prev = null, gi = 0;
+      R.forEach(function (r, i) {
+        if (sc.groups && r.kind !== prev) {
+          var n = R.filter(function (x) { return x.kind === r.kind; }).length;
+          var lab = (sc.groups.filter(function (g) { return g[0] === r.kind; })[0] || [r.kind, r.kind])[1];
+          var gh = el("div", "enc-nav__results-group" + (gi++ ? "" : " is-first"));
+          gh.setAttribute("role", "presentation");
+          gh.appendChild(el("span", "enc-nav__mono", lab + " · " + n));
+          list.appendChild(gh);
+          prev = r.kind;
+        }
+        list.appendChild(item(r, i));
+      });
+      res.appendChild(list);
+      mark();
+    }
+    function item(r, i) {
+      var a = el("a", "enc-nav__hit enc-nav__hit--" + sc.item);
+      a.href = r.href;
+      a.id = id + "-o" + i;
+      a.setAttribute("role", "option");
+      if (!/^\//.test(r.href) && !/^mailto:/.test(r.href)) { a.target = "_blank"; a.rel = "noopener"; }
+      a.addEventListener("mouseenter", function () { if (act !== i) { act = i; mark(); } });
+      a.addEventListener("click", function (e) { open(r, e); });
+      if (sc.item === "net") {
+        var g = el("span", "enc-nav__hit-disc");
+        g.style.background = r.tint || "#F2F2ED";
+        if (r.glyph) { var im = el("img"); im.src = r.glyph; im.alt = ""; im.loading = "lazy"; g.appendChild(im); }
+        a.appendChild(g);
+        a.appendChild(el("span", "enc-nav__hit-name", r.label));
+        var t = el("span", "enc-nav__hit-rate", r.tag);
+        if (r.live) t.setAttribute("data-enc-live", "");
+        a.appendChild(t);
+        return a;
+      }
+      var lead;
+      if (sc.item === "row") lead = el("span", "enc-nav__hit-n", String(i + 1).padStart(2, "0"));
+      else if (sc.item === "vote" || r.kind === "Investment") {
+        lead = el("span", "enc-nav__hit-disc");
+        lead.style.background = r.tint || "#F2F2ED";
+        if (r.glyph) { var gi2 = el("img"); gi2.src = r.glyph; gi2.alt = ""; gi2.loading = "lazy"; lead.appendChild(gi2); }
+      } else {
+        lead = el("span", "enc-nav__hit-lead");
+        if (r.kind === "File") { lead.style.background = r.ground; if (r.src) { var fi = el("img"); fi.src = r.src; fi.alt = ""; lead.appendChild(fi); } }
+        else if (r.kind === "Colour") { lead.style.background = r.swatch; lead.setAttribute("data-enc-swatch", ""); }
+        else if (r.kind === "Typeface") { lead.textContent = "Aa"; lead.style.fontFamily = "'" + r.face + "', sans-serif"; }
+        else lead.setAttribute("data-enc-arrow", "");
+      }
+      a.appendChild(lead);
+      var txt = el("span", "enc-nav__hit-text");
+      txt.appendChild(el("span", "enc-nav__hit-label", r.label));
+      if (sc.item === "vote") {
+        var sub = el("span", "enc-nav__hit-desc enc-nav__hit-vote");
+        sub.appendChild(el("span", "enc-nav__mono", r.chain + " · " + r.num));
+        var dot = el("span", "enc-nav__hit-dot");
+        dot.setAttribute("data-vote", r.outcome);
+        sub.appendChild(dot);
+        sub.appendChild(document.createTextNode(r.outcome + (r.date ? " · " + r.date : "")));
+        txt.appendChild(sub);
+      } else if (r.desc) txt.appendChild(el("span", "enc-nav__hit-desc", r.desc));
+      a.appendChild(txt);
+      return a;
+    }
+    function mark() {
+      all(res, ".enc-nav__hit").forEach(function (a, i) {
+        var on = i === act;
+        a.setAttribute("aria-selected", on ? "true" : "false");
+        if (on) { input.setAttribute("aria-activedescendant", a.id); if (a.scrollIntoView && document.activeElement === input) a.scrollIntoView({ block: "nearest" }); }
+      });
+    }
+    function open(r, e) {
+      if (!r) return;
+      if (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.button)) return;
+      var router = window.next && window.next.router;
+      if (/^\/(?!\/)/.test(r.href) && router && typeof router.push === "function") {
+        if (e) e.preventDefault();
+        input.blur();
+        router.push(r.href);
+      } else if (!e) {
+        if (/^\//.test(r.href) || /^mailto:/.test(r.href)) location.href = r.href; else window.open(r.href, "_blank", "noopener");
+      }
+    }
+
+    input.addEventListener("input", function () { act = 0; show(); });
+    input.addEventListener("focus", function () { scopeOf(group); });
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault(); e.stopPropagation();
+        if (!R.length) return;
+        act = e.key === "ArrowDown" ? Math.min(R.length - 1, act + 1) : Math.max(0, act - 1);
+        mark();
+      } else if (e.key === "Enter") {
+        e.preventDefault(); e.stopPropagation();
+        if (!res.hidden) open(R[act], null);
+      } else if (e.key === "Escape") {
+        e.preventDefault(); e.stopPropagation();
+        if (input.value) { input.value = ""; act = 0; show(); } else input.blur();
+      }
+    });
+    input.addEventListener("blur", function () { setTimeout(release, 0); });
+    /* a press anywhere in the box types into it */
+    box.addEventListener("mousedown", function (e) {
+      if (e.target === input) return;
+      e.preventDefault();
+      input.focus();
+    });
+    /* the results keep the box focused while they are pressed */
+    res.addEventListener("mousedown", function (e) { e.preventDefault(); });
+    startTyping();
+  }
+
+  /* while the box has focus the panel stays open: the bar's own band stands down (band()), and a
+     pointer leaving bar and panel is not reported to React, whose leave would close it. Once the box
+     lets go and the pointer is elsewhere, the panel is told the pointer has left. */
+  var pointerAt = null;
+  function overNav(x, y) {
+    var bar = document.querySelector("nav.super-navbar");
+    var p = document.querySelector(".super-navbar__list-content, .super-navbar__viewport");
+    var hit = document.elementFromPoint(x, y);
+    return !!(hit && ((bar && bar.contains(hit)) || (p && p.contains(hit))));
+  }
+  function release() {
+    if (searching()) return;
+    var bar = document.querySelector("nav.super-navbar");
+    var t = bar && bar.querySelector('.super-navbar__list[data-state="open"], .super-navbar__list[aria-expanded="true"]');
+    if (!t) return;
+    if (pointerAt && overNav(pointerAt[0], pointerAt[1])) return;
+    t.dispatchEvent(mouse("pointerleave"));
+    t.dispatchEvent(new MouseEvent("mouseleave", { bubbles: true }));
+  }
+  function searchGlobal() {
+    if (window.__encNavSearch) return;
+    window.__encNavSearch = true;
+    window.addEventListener("pointermove", function (e) { pointerAt = [e.clientX, e.clientY]; }, { passive: true, capture: true });
+    ["pointerout", "mouseout"].forEach(function (type) {
+      window.addEventListener(type, function (e) {
+        if (!searching()) return;
+        var to = e.relatedTarget;
+        var bar = document.querySelector("nav.super-navbar");
+        var p = document.querySelector(".super-navbar__list-content, .super-navbar__viewport");
+        if (to && ((bar && bar.contains(to)) || (p && p.contains(to)))) return;
+        e.stopPropagation();
+      }, true);
+    });
+    /* the keyboard ring only for the keyboard: a press marks the page, Tab clears it */
+    window.addEventListener("mousedown", function () { document.documentElement.setAttribute("data-enc-mouse", ""); }, true);
+    window.addEventListener("keydown", function (e) {
+      if (e.key === "Tab") document.documentElement.removeAttribute("data-enc-mouse");
+      /* the keycap: ⌘K (Ctrl K) goes to the open panel's search, or opens the current page's group
+         and goes to its search — the Networks group where the page has none */
+      if ((e.metaKey || e.ctrlKey) && !e.altKey && (e.key === "k" || e.key === "K")) {
+        if (!matchMedia("(min-width: 960px)").matches) return;
+        e.preventDefault();
+        var open = document.querySelector(".enc-nav__search input");
+        if (open) { open.focus(); return; }
+        var bar = document.querySelector("nav.super-navbar");
+        if (!bar) return;
+        var triggers = all(bar, ".super-navbar__list");
+        var want = triggers.filter(function (t) { return t.hasAttribute("data-enc-current") && SEARCH[t.textContent.trim()]; })[0] ||
+          triggers.filter(function (t) { return SEARCH[t.textContent.trim()]; })[0];
+        if (!want) return;
+        want.click();
+        var tries = 0, wait = setInterval(function () {
+          var i = document.querySelector(".enc-nav__search input");
+          if (i || ++tries > 30) { clearInterval(wait); if (i) i.focus(); }
+        }, 50);
+      }
+    }, true);
+  }
+
   /* which of Super's groups this panel belongs to: radix ties trigger and content by id */
   function groupOf(panel) {
     var key = (panel.id || "").replace(/^.*-content-/, "");
@@ -683,8 +1271,12 @@
     third.appendChild(about);
     grid.appendChild(third);
 
-    // the foot: the group's own line, and how many pages are in it
+    // the foot: the group's search (handoff 2026-09-28); a group without one keeps its own line
+    // and how many pages are in it
     var group = groupOf(panel);
+    if (SEARCH[group]) searchFoot(panel, grid, group);
+    else footLine();
+    function footLine() {
     var foot = el("div", "enc-nav__foot");
     var footLink = el("a", "enc-nav__open");
     footLink.appendChild(el("span", null,
@@ -698,6 +1290,7 @@
     foot.appendChild(el("span", "enc-nav__count",
       links.length + (links.length === 1 ? " page" : " pages")));
     panel.appendChild(foot);
+    }
     /* a panel that carries the Networks page takes its counts from the set */
     if (links.some(function (a) {
       var h = a.getAttribute("href") || "";
@@ -1078,7 +1671,7 @@
       if (!t) return;
       var p = panel();
       var inside = bar.contains(e.target) || (p && p.contains(e.target));
-      if (!inside) shut(t);
+      if (!inside && !searching()) shut(t);   // the panel's search holds it open while it has focus
     }, true);
   }
 
@@ -1320,13 +1913,14 @@
     Array.prototype.forEach.call(triggersOf(), record);
     markCurrent();
     band();
+    searchGlobal();
     compact();
     warmWhenIdle();
   }
 
   /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
      against its page from the console without opening the menu */
-  window.encNav = { version: 15, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
+  window.encNav = { version: 16, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
     groups: function () { return groups; }, harvest: function () { return { done: harvested, tries: harvestTries }; },
     ground: ground, isInk: isInk, groundUnder: groundUnder, wordmark: wearWordmark,
     band: band };

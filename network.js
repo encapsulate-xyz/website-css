@@ -2,7 +2,7 @@
    from the Networks set, and the set drawn as the design's index. Loaded from the site head;
    everything runs off one observer, so a client-side arrival at /networks builds it too. */
 (function () {
-  window.encNetwork = { version: 4 };   // a marker, so a live page can be asked whether this ran
+  window.encNetwork = { version: 5 };   // a marker, so a live page can be asked whether this ran
 
   /* ── the Network Count band (design "Network Count Patterns", I · the hollow, 2026-09-25) ──
      The figures, the label, the line and the testnet row are Notion's (network.css lays them
@@ -742,16 +742,23 @@
           ring.style.transform = "translate(" + Math.round(at[0] - tr.left - R) + "px, " + Math.round(at[1] - tr.top - R) + "px) scale(1)";
           ring.style.opacity = "1";
           track.setAttribute("data-on", "");
+          fl.setAttribute("data-on", "");
         } else {
           // closes into the figure's centre
           fl.style.clipPath = "circle(0px at 50% 50%)";
           ring.style.transform = "translate(" + Math.round(fr.left + fr.width / 2 - tr.left - R) + "px, " + Math.round(fr.top + fr.height / 2 - tr.top - R) + "px) scale(0)";
           ring.style.opacity = "0";
           track.removeAttribute("data-on");
+          fl.removeAttribute("data-on");
         }
       };
-      track.addEventListener("mousemove", function (e) { at = [e.clientX, e.clientY]; if (!frame) frame = requestAnimationFrame(paint); });
-      track.addEventListener("mouseleave", function () { at = null; if (!frame) frame = requestAnimationFrame(paint); });
+      track.__lens = {
+        at: function (x, y) { at = [x, y]; if (!frame) frame = requestAnimationFrame(paint); },
+        out: function () { if (!at) return; at = null; if (!frame) frame = requestAnimationFrame(paint); }
+      };
+      track.addEventListener("mousemove", function (e) { track.__lens.at(e.clientX, e.clientY); });
+      track.addEventListener("mouseleave", function () { track.__lens.out(); });
+      follow();
     }
 
     if (typeof ResizeObserver === "function" && sizedFig !== fig) {
@@ -767,6 +774,31 @@
       }, function () { asked = false; });
     }
     draw();
+  }
+  /* the lens follows the pointer through a scroll (the handoff's lensAtPointer, re-read 2026-09-28): a
+     scroll carries the page under a pointer that has not moved, so no mousemove comes. The pointer's last
+     place is kept, and on each scroll frame the lens goes to it while it is over the track, and closes into
+     the figure's centre once the page has carried the track out from under it. Listened for once. */
+  var px = null, py = null, scrolled = 0, following = false;
+  function follow() {
+    if (following) return;
+    following = true;
+    var keep = function (e) { px = e.clientX; py = e.clientY; };
+    ["pointermove", "wheel", "pointerdown"].forEach(function (t) {
+      window.addEventListener(t, keep, { passive: true, capture: true });
+    });
+    var onScroll = function () {
+      cancelAnimationFrame(scrolled);
+      scrolled = requestAnimationFrame(function () {
+        var tr = document.querySelector(".enc-lens-track");
+        if (px == null || !tr || !tr.__lens) return;
+        var r = tr.getBoundingClientRect();
+        if (px >= r.left && px <= r.right && py >= r.top && py <= r.bottom) tr.__lens.at(px, py);
+        else tr.__lens.out();
+      });
+    };
+    document.addEventListener("scroll", onScroll, { passive: true, capture: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
   }
   // the figure's own text, without the copy inside it
   function stripped(fig) {
