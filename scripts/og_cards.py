@@ -11,7 +11,7 @@ Each card is 1200×630 and is the page's own design, not a new one:
           A title that would run into the glyph wraps short of its ink (the design's rule: white
           type stays on ink). Also writes meta:description = the row's Lede.
   chains  the chain page's hero, captured from the live page at 1440×756 with the bar hidden.
-          Also writes meta:title = "<Name> staking — Encapsulate".
+          Also writes meta:title = "<Name> staking - Encapsulate".
   guides  the guide page's head (design 1d), built from the row the way guide.js builds it and
           drawn by guide.css, at 800×420. Also writes meta:description = the row's Lede.
 
@@ -127,7 +127,7 @@ def jobs_chains(tmp, only):
                      "css": "nav.super-navbar{display:none!important}",
                      "waitFor": "document.querySelector('[data-enc-chain]:not([data-enc-chain=\"pending\"])') && document.fonts.status==='loaded'",
                      "wait": 3000, "js": "window.scrollTo(0,0); 1"},
-                    {"id": rid, "path": path, "title": val(r, "Name") + " staking — Encapsulate"}))
+                    {"id": rid, "path": path, "title": val(r, "Name") + " staking - Encapsulate"}))
     return out
 
 

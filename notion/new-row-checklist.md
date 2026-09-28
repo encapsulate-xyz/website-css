@@ -62,7 +62,7 @@ each box is something that has gone wrong, or would have, when it was skipped.
       covers.js (the /networks cover's discs).
 - [ ] **Social card** (mainnet only, after the chain page builds live — it is a capture of its hero):
       `python3 scripts/og_cards.py chains --only <chain>`. Sets `meta:image` and `meta:title`
-      "<Name> staking — Encapsulate". The description is the page's own line.
+      "<Name> staking - Encapsulate". The description is the page's own line.
 - [ ] **Refresh:** the chain page, /networks, /services and the homepage.
 - [ ] **Check:** the chain page (figures, address ring, questions, buttons), its row in the /networks
       index and in the close's drifting rows, the navbar's Networks panel (first 21 in Order).

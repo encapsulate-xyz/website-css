@@ -1814,15 +1814,22 @@ in a hidden automation tab, stops rendering; opening a row's settings is a full 
 scripts do not survive it. **A refetch of a page trashed in Notion makes it 404** — Super had been
 serving /blog/mina-hard-fork from cache (see the open items).
 
+**The separator is a hyphen, " - "** (the user, 2026-09-28, after measuring and reading the studies):
+in Arial 20px, Google's desktop title font, " - " is 17.8px, " | " 16.3px and " — " 31.1px. Google often
+swaps a pipe for a dash (it removed or replaced pipes in 41% of titles against 19.7% for dashes, Zyppy's
+2022 study of 80,959 titles), which is why Yoast dropped the pipe in 2021. Google names the hyphen first
+among separators, and no separator affects ranking. Every "<Page> - Encapsulate" title uses it: the 12
+main pages (Super overrides) and the chain pages (`meta:title`, written by `og_cards.py`).
+
 **What is set now:**
 
 | Where | What |
 |---|---|
 | Super → SEO | Default Social Image = the kit's `og-default.png`; Default Domain Indexing (the super.site copy) off |
-| the 12 main pages | title, description and image from the brand kit's `seo.csv` and `og-*.png` (Super overrides) |
+| the 12 main pages | title, description and image from the brand kit's `seo.csv` and `og-*.png` (Super overrides; the kit's " — " became " - " on 2026-09-28) |
 | 20 old pages | `<meta name="robots" content="noindex">` in each page's Code → Head: /eigen-layer, /rewards-calculator, /team, /services/celestia, /snapshots and its nine, /lido-dvt-staking and its three, /investments/portfolio, /investments/axelar (/investments/gravity-bridge is a 404). **Never in the site-wide Code head** |
 | every post (40) | `meta:image` = its 17d card, `meta:description` = its Lede |
-| every chain page (27) | `meta:image` = its hero, `meta:title` = "<Name> staking — Encapsulate" |
+| every chain page (27) | `meta:image` = its hero, `meta:title` = "<Name> staking - Encapsulate" |
 | every guide (33) | `meta:image` = its head, `meta:description` = its Lede; the title stays Super's override ("Axelar Staking Guide") |
 | structured data | v319 — see below |
 
