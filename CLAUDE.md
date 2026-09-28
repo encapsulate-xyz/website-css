@@ -354,7 +354,13 @@ from assets.super.so, which allows cross-origin reads, so the canvas can be expo
 in `circle(120px)` under the pointer; a track 48px inside the band (`.enc-lens-track`, z 3, no
 cursor while on) carries the 240px ring (`.enc-lens-ring`), and leaving closes both into the figure's
 centre. Built only under `(hover: hover) and (pointer: fine)`. The tally reads the figure's own
-digits, not the copy's (it read "2727" once).
+digits, not the copy's (it read "2727" once). **The copy's digits are CSS** (`data-digits` + `::before`, v331), so the h1's text is "27" — as text they
+were part of the heading and search engines read "2727". **Re-read 2026-09-28 (v332):** leaving, the ring and the
+reveal travel into the figure's centre over .36s on one curve (`cubic-bezier(.4, 0, .2, 1)`) and the ring
+fades only as it lands (opacity .12s after .24s); while on, both keep .12s ease-out. The lens follows the
+pointer through a scroll (the file's `lensAtPointer`): the pointer's last place is kept, and on each
+scroll frame the lens goes to it while it is over the track and closes once the page carries the track
+away (network.js `follow()`).
 **It is a snap stop** (the user, 2026-09-26, v314): one screen tall, and network.js ports the
 record's count-band rules (a gesture towards it from within half a screen lands on it, a rest within
 a third settles onto it; nothing under 701px or with reduced motion). Driven with real wheel events
@@ -555,6 +561,28 @@ booking drawer (60). Escape, the button, a row or a resize past 959 close it.
   sheet's own ink rail, and the paper bar turned ink (seen on /networks).
 - The design's row hover (`.nav-row:hover`, the second paper) is kept on paper only; on ink it
   would put paper type on a paper wash.
+
+**The panel's foot is a search of its own group** (handoff re-read 2026-09-28, v332; *Search Trigger
+Patterns* Y4a). It replaced the foot line and the page count. The box: the scope as an ink token
+(Networks, Tools, Votes, Posts & guides, Company), a typed example behind a drawn caret while it is empty
+and idle (~95ms frames; reduced motion shows the first name), "Search <noun>" once focused, the ⌘K / Ctrl K
+keycap; `#D9D9D2` ring, `#B9B9B1` hovered, ink while focused, the 3px ring for the keyboard only
+(`html[data-enc-mouse]`). Typing puts the results over the panel's body (the grid stays underneath,
+hidden, so the panel keeps its height) in the panel's own rows: chains with their rate, ledger rows for
+guides, posts and tools, the record's line for votes, and the kit's things led by the thing itself —
+grouped scopes carry a mono header per kind ("Guides · 9"). ↑↓, Enter, Esc (clears, then lets go); while
+the box has focus the panel stays open — band() stands down and a pointer leaving bar and panel is not
+reported to React. ⌘K goes to the open panel's box, or opens the current page's group (the file draws the
+keycap but wires nothing; this is ours). **The scorer is the design's `site-search.js`** (`window.encSearch`
+— exact 1, start .85, overrun .7, typo .6; entries hit by every word win; a typo fallback when nothing
+matches). **What it searches is read from the pages when a box is first used, not the design's copied
+lists:** Networks the set (`encCounts().list`, rates from /networks), Tools /services' four tables by
+header (the Bots table holds the three events — Releases, Proposals, Validator alerts — not the file's bot
+names), Votes the record's table (all 1,150 rows; a result opens its Proof), Posts & guides /guides and
+/blog (a guide by its Title, as the Learn column shows it), Company /brand (the kit's files, the Colour
+database, the three faces), /investments' Portfolio and /contact's four routes. Its words are `SEARCH` and
+`SAY` in navbar.js. **Never name a navbar.js variable `tick`** — that is the bar's own update; the typing
+counter was called that for one build and stopped paint, ground, the current mark and the band.
 
 **The third column is read, not written.** The handoff's rule (Aditya, 2026-09-21): it lists the
 page's own sub-pages or section headings, *taken from the page as built — nothing typed in, so it
