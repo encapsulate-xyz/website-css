@@ -104,7 +104,10 @@ each box is something that has gone wrong, or would have, when it was skipped.
 - **Portfolio** (/investments, `807c8bde…`): Name, Description, Category, Since, Validator (one of its
   two options), the logo in Files & media. Refresh /investments.
 - **Wallet Set** (`3dde800a…8097…`): Name and the wallet's glyph in Files & media — a guide's badge and
-  the picker read it.
+  the picker read it. **Make the glyph with `scripts/make_glyph.py`** from the wallet's own logo, an SVG if at
+  all possible (a wallet's npm package or wallet-standard registration often carries it as a data URI —
+  Slush's came from `@mysten/slush-wallet`), following `scripts/GLYPH-SPEC.md`: pure black on transparency,
+  600×600, longest solid side 288, centred, opaque share 5–13%. Check it beside the others on paper and ink.
 - **Team** (homepage "Who we are"): Photo (first file = the portrait), roles as pills — **a role pill's
   colour is the portrait's tint**, set it in Notion (the API cannot).
 - **/services tables** (Dashboards, Playbooks, Bot events, Monitoring builds): fill **Order** — Super

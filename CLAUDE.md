@@ -116,6 +116,7 @@ User rules that stand on every task:
 | `scripts/paste_table.py` | prints the paste table from head/*.html vs what the live pages serve | — |
 | `scripts/livecheck.mjs` | loads a live page in headless Chrome with pinned tags' files served from this repo (or a pushed commit) — pass every tag the page pins, comma-separated (`v263,v227,v220`), runs a check in the page, optional real mouse, wheel and key steps (`move`, `click` — a real press and release — `wheel(x, y, dy)` and `press(key)`) and a screenshot. The scratchpad copies it replaced were lost on 2026-09-24 | — |
 | `scripts/audit.mjs` | audits a live page at many widths (default 16, 320–2560; touch under 835) with every tag it pins served from this repo: sideways scroll and what causes it, text cut by its box, broken images, script errors, failed requests, screenshots per screen (`--shots`), a page check of your own (`--check`). `BLOCK=1` loads the page with none of our files, `ALLOW=a.js,b.js` with only those scripts — how a fault is traced to us or to Super. Built for the audit of 2026-09-26 |
+| `scripts/make_glyph.py`, `scripts/GLYPH-SPEC.md` | the glyph pipeline (the design project's, identical to the brand kit's): any logo → pure black on transparency, 600×600, longest solid side 288, centred; modes alpha / inverse / badge; the spec's checks | — |
 | `scripts/og_cards.py`, `scripts/og/` | the social cards (og:image) of the database pages — `posts`, `chains` or `guides`: renders each page's card from its own design (`og/post.html` = Blog Cover System 17d, the chain hero captured live, `og/guide.html` = the guide head drawn by guide.css; `og/render.mjs` is the one-tab headless renderer) and attaches it to the row's `meta:image` with its text properties (see "SEO") | — |
 | `img/og/` | the one card that cannot live in Notion: the Mina hard-fork post, which is not a Blogs row (set as its image override in Super) | Super's page settings |
 | `scripts/shots.py`, `img/shots/` | panel captures of the live tools (Sui RGP, the Solana graph), 1100×750 at DPR 2 from headless Chrome — the extension's screenshots time out on those pages, and a WebGL graph needs swiftshader or it comes back blank. Not wired into any page yet (2026-09-23): the tools table that names their tiles arrived cut off | — |
@@ -1847,6 +1848,23 @@ pointing at the mainnet row; its path in Super is /guides/&lt;chain&gt;), switch
 3. after Super republishes, check the chain page's green button reads /guides/&lt;chain&gt;.
 
 Raise this whenever guides are being worked on.
+
+## TODO — the Sui guide moves to Slush (agreed 2026-09-28, waiting for captures)
+
+Slush (Mysten Labs' own wallet, formerly Sui Wallet, first on sui.io/get-started) replaces Suiet in the Sui
+guide. **Done:** Slush is a Wallet Set row (`3e9e800a…81ba…`) with its glyph, made from the icon in
+`@mysten/slush-wallet` (a badge: light mark on a #0C0A1F disc) by `scripts/make_glyph.py` — the design
+project's glyph pipeline, identical to the brand kit's copy; spec in `scripts/GLYPH-SPEC.md`. **Held until the
+Slush captures exist**, because the Sui guide page is still the thirteen Suiet screens and switching the row
+would promise Slush everywhere (navbar, picker, chain button) and land on Suiet:
+1. the Sui guide's own slide database, rebuilt in the new design as Axelar's is — one row per step: Name
+   ("01 · …"), Step, Body, Watch, Surface, Link, the capture as Cover (captures: `notion/guide-screenshots.md`);
+2. its Guides Database row (`1f9e800a…8064…`): Wallet Set → Slush, Title "Stake SUI with Slush", Lede and
+   `meta:description` ("N steps across the Slush extension …"), Step, Time;
+3. `notion/chain-pages.json` Sui `wallet.label` → "Delegate with Slush", then
+   `python3 scripts/chain_pages.py --buttons "Sui"`; Slush's deep link that opens "Stake with Encapsulate"
+   (`my.slush.app/staking/native-stake?validatorAddress=…`) is unverified — test it on a phone first;
+4. `python3 scripts/og_cards.py guides --only sui`, refresh the guide, /guides and /networks/sui.
 
 ## TODO — the GitHub Actions (planned 2026-09-25/26, not built)
 
