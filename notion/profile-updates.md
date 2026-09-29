@@ -99,7 +99,7 @@ rate): the chain pages print "After our commission · as of {date}", and each of
 measured rate × (1 − the old commission) — site ÷ measured was 0.94–0.96 on the 5% chains, 0.91 on Axelar (9%) and 0.92
 on Lumera (8%). So a commission change always moves the rate.
 
-## Rechecked again, 2026-09-29 18:40 UTC — 23 of 48 done
+## Rechecked again, 2026-09-29 18:40 UTC — 24 of 48 done with IOTA
 
 | Row | Now |
 |---|---|
@@ -107,7 +107,8 @@ on Lumera (8%). So a commission change always moves the rate.
 | 18 NEAR | **done on chain** (`pool-details.near`): name, the agreed description, website, X `encaphq`, `security@encapsulate.xyz`, the 512 px logo, and **the new Discord invite** |
 | 28 X @encapHQ | the bio is the agreed description (the user); the name and the Linktree are left on purpose |
 | 30 LinkedIn, 37 Discord server | marked done by the user; Discord's description reads the agreed text from outside, LinkedIn cannot be read from outside |
-| 15 Sui, 16 IOTA | still the old description |
+| 16 IOTA | **done on chain** (verified 19:00 UTC, epoch 512): name, the agreed description, website and the 512 px logo in the active validator's own record; commission 8%, unchanged |
+| 15 Sui | still the old description |
 | 38 Espresso | merged; the node still serves the old description, so it has not been restarted yet |
 
 **The older Discord invite `q6cmGycxsr` is now carried only by Voyager**, whose form was sent on 2026-09-29. Once Voyager
