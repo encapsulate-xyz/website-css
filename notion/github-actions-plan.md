@@ -9,6 +9,10 @@ repo from the plan of 2026-09-25 evening, which had drifted back to Python and t
 one?" without saying why. What was decided that morning stands: **JavaScript** (after the library
 research the user asked for) and **a separate private repo, `site-data`**. The user caught it.
 
+**The plan as a page (2026-09-30):** the artifact "Encapsulate Actions Plan", in the paper theme the user asked for, built
+by `OUT=<path> python3 scripts/actions_plan/build.py` (its link is in Claude's memory, not in this public file). It
+carries this file's sections 2–6 with the day's figures, and the additions of section 7 below.
+
 ## 1. What was asked, and what was answered
 
 | Date | The user asked | The answer |
@@ -238,3 +242,42 @@ summary to the report. About twenty lines each.
    principle-based lines of `gov_rationales`, or left for the user — it is words in our name.
 6. **Public endpoints only, or our own nodes too?** In a private repo our endpoints can sit as secrets;
    public ones are enough to start.
+
+## 7. Added on 2026-09-30 — from the work of 28–29 Sep
+
+Read again against Notion and the live site on 2026-09-30, when the plan became a page.
+
+**What moved in section 2**
+
+| id | Now |
+|---|---|
+| H7 | fixed by hand on 2026-09-29: the typed fallback says "27 secured" (it said 25) |
+| N1 | 18 rates dated 2026-09-24, 8 dated 2026-09-29 (the eight whose commission changed), Mina blank on purpose |
+| N2 | 2% to 38.72%. **Eight chains' commission changed on chain on 2026-09-29 and the site showed the old figures until a recheck of the profiles found it** — the case for checking commission rather than trusting that it only changes when we say |
+| G1 | 1,153 rows over 29 networks; last recorded Terra 09-11, Axelar 08-28, Agoric 08-24, Passage 07-14; ixo 2023-07-19 (the record calls it "Ixo"); none under Althea, humans.ai, Lumera |
+| B1, U1 | 38 posts and 32 guides, every Read, Step and Time filled |
+| W2 | none: all 111 pages serve the current release (v337) |
+| W3 | Agoric's explorer (explorers.guru) went dark and was replaced with Mintscan on 2026-09-29; the 23 private proof links were repaired on 2026-09-28 |
+
+**New rows**
+
+| id | Where | What | Kept by | How it drifts | The job would |
+|---|---|---|---|---|---|
+| N7 | chain pages | the facts paragraph and `meta:description` of each chain page | `chain_pages.py --facts`, run by hand | whenever N1 or N2 changes (rewritten by hand for eight chains on 2026-09-29) | rewrite it after every write to N1 — `networks.yml` |
+| P1 | explorers, wallets, registries | name, description, website and links on every validator profile (the 48-row tracker, `notion/profile-updates.md`) | by hand | an edit on chain, a registry rebuilt from an old file, a pull request left unmerged | read every profile weekly and report what no longer says the agreed values — `audit.yml`, `jobs/audit/profiles.mjs`, `config/profile.yml`. The reads are already written once, as the recheck of 2026-09-29 |
+| P2 | every profile, guide and the footer | the Discord invite `PQJX5JVS8h` | by hand | if it is ever revoked | check that it still resolves — `audit.yml` |
+| E1 | posts, guides, chain pages | the social card (`meta:image`) and description of a new row | `og_cards.py`, run by hand | every new row | report the rows that have none — `content.yml`, `jobs/content/seo.mjs`. Rendering a card needs Chrome, so the job reports first; making the card in the job is a later step |
+
+The alerts have ids now: A1 Avalanche's delegation room, A2 unclaimed rewards on Vara and Avail, A3 a validator jailed
+or inactive. That makes 35 things that go stale and 3 alerts.
+
+**What also moves to `site-data`:** `og_cards.py`, `scripts/validator_profiles/` and `scripts/profile_tracker/` — each
+writes to Notion, a chain or the tracker, and none is downloaded by a browser.
+
+**Recommendations for the open decisions** (offered on the page; none is decided): 1 an issue in the private repo;
+2 yes, the notes move with the scripts that read them; 3 as written, with commission among the checks; 4 yes, first;
+5 the row goes live, the rationale is drafted and listed in the summary for the user to edit; 6 public endpoints to
+start.
+
+**One thing the jobs cannot do:** tell Super to refetch a page. That call needs the dashboard's own sign-in, not a
+key, so after a write the site follows on Super's schedule (about four hours), as the plan already assumes.
