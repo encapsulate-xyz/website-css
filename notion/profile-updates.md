@@ -122,7 +122,9 @@ numbered steps, and where a message has to be sent, the message to copy. They ar
 ban-evasion policy lets it suspend "any other account we believe the same account holder or entity may be operating …
 regardless of when the other account was created". @encapHQ is already visibly the same organisation — its name is
 "Encapsulate HQ" and its Linktree links encapsulate.xyz and our GitHub — so the website field adds little either way.
-Advice given: change the bio, leave the Linktree, and appeal for `@encapsulate_xyz`
+Asked again whether to set the name to "Encapsulate" and the website to the site: **no, not now** — the policy's words are "replace or mimic a
+suspended account", and the same name with the same website is a closer copy of the suspended one, for little gain
+(the name already says Encapsulate, the Linktree already leads to the site). Advice given: change the bio, leave the name and the Linktree, and appeal for `@encapsulate_xyz`
 (help.x.com/en/forms/account-access/appeals), which is the only thing that settles it. The user decides.
 
 ## Only what is active is tracked (the user, 2026-09-29)

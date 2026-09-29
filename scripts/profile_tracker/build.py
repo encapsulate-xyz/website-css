@@ -268,11 +268,13 @@ row("r27", "27", "you", "form", "Mina, Minascan", "Staketab's Submit service for
 row("r28", "28", "you", "settings", "X @encapHQ", "profile settings", [
     ("Bio", T_X, AGREED),
     ("Website", U("https://linktr.ee/encapHQ"), [V("No change for now"), V("", "t", "your call")]),
+    ("Display name", "Encapsulate HQ", [V("No change for now"), V("", "t", "your call")]),
 ], pri="top", link=("Open X's profile settings", "https://x.com/settings/profile"), steps=[
     "Sign in as @encapHQ and open the link, or press Edit profile on the profile page.",
     "Bio: paste the agreed description. It is 157 characters and X allows 160.",
-    "Website: leave the Linktree. It already leads to encapsulate.xyz.",
+    "Website and display name: leave both. X's rule is against an account that replaces or mimics a suspended one, and the same name with the same website is a closer copy of @encapsulate_xyz.",
     "Save.",
+    "Appeal for @encapsulate_xyz. Once that is settled either way, the name and the website can follow: https://help.x.com/en/forms/account-access/appeals",
 ], cav="X may suspend any account of an entity it has suspended, whenever that account was made, and the name Encapsulate HQ and the Linktree already "
        "tie this account to the site. So the website field adds little either way. What settles it is an appeal for @encapsulate_xyz: "
        "https://help.x.com/en/forms/account-access/appeals")
