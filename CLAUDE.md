@@ -112,6 +112,7 @@ User rules that stand on every task:
 | `notion/github-actions-plan.md` | the GitHub Actions plan (2026-09-26, not built): the 26 things that go stale, where each lives in Notion, the proposed `jobs/` structure, the build order and the open decisions | — |
 | `notion/new-row-checklist.md` | **what a new row in each database needs beyond its page** (posts, chains, guides, the rest): its properties, its path in Super, the social card (`og_cards.py`), the fallback numbers and hardcoded lists, what to refresh and what to check. Go through it every time a row is added (the user, 2026-09-28) | — |
 | `notion/mentions-checklist.md` | **where Encapsulate is listed and what to fix** (2026-09-29): every validator profile, registry and directory checked read-only — name, website, X — ranked by value, with who fixes each (you, ops with the operator key, or a PR). `x.com/encapsulate_xyz` is suspended; the live account is @encapHQ | — |
+| `notion/staked-total-2026-09-29.md` | the stake with our validators on 2026-09-29, per chain, from each chain's own endpoints and CoinGecko prices: $84.8M ("over $80 million"), the Lido cluster counted in full. Redo before publishing a new figure | — |
 | `notion/guide-screenshots.md` | how guide screenshots are captured and composed (agreed 2026-09-18, not yet applied) | — |
 | `build.py` | strips comments into `dist/`, copies the JS | — |
 | `scripts/paste_table.py` | prints the paste table from head/*.html vs what the live pages serve | — |
@@ -1971,6 +1972,7 @@ plus the open-source line, the user's pick (C): **"Validator infrastructure for 
 through mainnet. Running validators since 2020, with open-source tooling for every chain we run."** (160 characters) —
 no figures in it; a dated, verified staked total goes only into the long versions (StakingRewards, LinkedIn, GitHub);
 the total counts the Lido Simple DVT cluster's 500 validators (16,000 ETH) in full as ours (the user, 2026-09-29);
+measured 2026-09-29 at $84.8M — publish "over $80 million" — per chain with sources in `notion/staked-total-2026-09-29.md`;
 `security@encapsulate.xyz` stays the explorers' contact on purpose; the logo there is the old 4097px PNG (use the
 512px one). Then, per profile: on-chain
 edits by the ops team with each operator key, forms and profile edits by the user, and **pull requests from the
