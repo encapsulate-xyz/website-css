@@ -52,7 +52,8 @@ Endur, SupraScan, Avascan — in Chrome). Each row's finding is in the tracker a
 | 13 and 14, twelve validators: Terra, Althea, Gitopia, Gravity Bridge, humans.ai, Sommelier, Passage, Chain4Energy, Axelar, Agoric (the newer), ixo, Lumera | **done on chain**, by the user's side: name "Encapsulate", the agreed description; website, identity and contact untouched |
 | 13.2, Agoric's older validator | set aside; still "fka KingSuper" |
 | 15 Sui, 16 IOTA, 17 Ika, 18 NEAR, 19 Espresso, 20 EigenLayer, 21 SSV operator 924 | open, nothing changed. Ika's website and description are empty and its logo field holds the word "Encapsulate" |
-| 25 StakingRewards, 26 Voyager, 28–29 X, 32 Keybase, 33 Endur, 34 SupraScan, 35 Avascan, 36 Lido forum, 37 Discord | open, nothing changed |
+| 25 StakingRewards, 28–29 X, 32 Keybase, 33 Endur, 34 SupraScan, 35 Avascan, 36 Lido forum, 37 Discord | open, nothing changed |
+| 26 Voyager | form sent by Claude the same evening; Voyager's team publishes it |
 | 27 Minascan | sent; Staketab has not published it yet |
 | 31 GitHub organisation | description and email set; the domain is not verified |
 | 24 the testnets, 30 LinkedIn | not read (LinkedIn shows its About text only to a signed-in admin) |
@@ -97,6 +98,31 @@ permission check): Commission, Reward rate and Rate updated on the eight rows, `
 rate): the chain pages print "After our commission · as of {date}", and each of the eight old values equals that day's
 measured rate × (1 − the old commission) — site ÷ measured was 0.94–0.96 on the 5% chains, 0.91 on Axelar (9%) and 0.92
 on Lumera (8%). So a commission change always moves the rate.
+
+## The user's rows carry their links and steps (2026-09-29)
+
+Asked for: "for all of these add links and steps on how to do it", then "if you can fill any of these form and submit
+and close that line item please do". Every row that is the user's has a button to the page where the work is done and
+numbered steps, and where a message has to be sent, the message to copy. They are in `scripts/profile_tracker/build.py`
+(`link=`, `steps=`). What the research changed:
+
+| Row | Found |
+|---|---|
+| 25 StakingRewards | `providers.stakingrewards.com` is gone. Providers edit their profile in a dashboard, `vsp.stakingrewards.com` (sign-in by email code): Name (50), Unique selling point (70), Description (350), Location, Logo (2 MB), socials; problems go to its Data requests page. Signing up makes an account, so it is the user's. The contact form on the site is for funds and exchanges and was **not** sent |
+| 26 Voyager | "Add validator info" opens a Google Form, "Voyager Validator whitelisting" — no wallet. **Sent by Claude on 2026-09-29** and acknowledged: name, the agreed description, the 512 px logo, website, X / Discord / LinkedIn / GitHub, the staker address and its STRK pool, contact security@encapsulate.xyz (not shown publicly). Voyager's team checks each entry by hand |
+| 28, 29 X | see below: the website stays the Linktree for now; the old handle needs nothing |
+| 32 Keybase | the identity is the user `encapsulate`, whose full name is "Encapsulate Limited" (to become Encapsulate); proofs are added with `keybase prove twitter encapHQ` and `keybase prove dns encapsulate.xyz`. A GitHub proof is a gist from a person's account, so it is left out |
+| 33 Endur, 34 Supra | no form: Endur's Telegram `t.me/endurfi` or Discord, Supra's Discord `discord.com/invite/supralabs`; each row carries the message to send |
+| 35 Avascan | not Telegram: Avascan's **Validator Claim** — a message signed in Core with the validator's beneficiary address (`NodeID-… "Alias" "Manager" website logo`), posted in `#avalanche-validator` on Avascan's Discord; applied within a day |
+| 36 Lido forum | the forum is Discourse: the website is a profile field; the username can no longer be changed by the user (the account is from July 2023) and the post's edit window has passed, so both go to the moderators |
+| 37 Discord | Server Settings → Server Profile → Description, on desktop or web only |
+
+**X and the suspended account** (the user asked whether putting the site on @encapHQ could get it banned too). X's
+ban-evasion policy lets it suspend "any other account we believe the same account holder or entity may be operating …
+regardless of when the other account was created". @encapHQ is already visibly the same organisation — its name is
+"Encapsulate HQ" and its Linktree links encapsulate.xyz and our GitHub — so the website field adds little either way.
+Advice given: change the bio, leave the Linktree, and appeal for `@encapsulate_xyz`
+(help.x.com/en/forms/account-access/appeals), which is the only thing that settles it. The user decides.
 
 ## Only what is active is tracked (the user, 2026-09-29)
 
