@@ -5,11 +5,14 @@ comes from (what each profile says today, ranked by value); this file is the wor
 forms are still theirs.**
 
 **The tracker is an artifact**, "Encapsulate Profile Updates" (private to the user; its link is in Claude's memory, not in this
-public file): the same updates as 49 rows — the Cosmos validators and the two SSV operators are one row each — every
-row with what the profile says **now** (read live on 2026-09-29) beside what it becomes, filters by who, status, how and
-weight, and a status and a note per row kept in the artifact's database (collection `updates`, one document per row:
-`{status: open|started|done, note, at}`). It is built by `scripts/profile_tracker/build.py` from `template.html`; the
-rows and their current values are the list in that script.
+public file): the same updates as 50 rows — the Cosmos validators and the two SSV operators are one row each — every
+row with what the profile says **now** beside what it becomes, filters by who, status, route, pull request and weight,
+and a status, a note, the pull request and the last live check per row kept in the artifact's database (collection
+`updates`, one document per row: `{status: open|started|done|skipped, note, at, pr, live, liveAt}`). It is built by
+`scripts/profile_tracker/build.py` from `template.html`; the rows and their current values are the list in that script.
+**Redesigned on 2026-09-29** (the user: "it looks messy, make it modern"): one summary bar, the agreed profile as a card
+of values that copy on a click, one toolbar, and rows that are a single line until opened. A done row's columns read
+"Before | Now", an open one's "Now | Becomes".
 
 ## State on 2026-09-29, after the user's go ("fix everything you can fix here")
 
@@ -17,16 +20,17 @@ rows and their current values are the list in that script.
 |---|---|---|
 | 1 | `encapsulate-xyz/assets` | **merged** — [#1](https://github.com/encapsulate-xyz/assets/pull/1). The 512px logo at the old path (the 4097px one kept as `encapsulate-4097.png`), the description in both files, `eigenlayer.json` |
 | 2 | `encapsulate-xyz/.github` | **merged** — [#9](https://github.com/encapsulate-xyz/.github/pull/9) |
-| 3 | Monad | open — [#1003](https://github.com/monad-developers/validator-info/pull/1003). Their validator passes. **Reviewed only once its link is posted in Monad's validator Discord channel** |
+| 3 | Monad | **merged 2026-09-29** by Monad's team — [#1003](https://github.com/monad-developers/validator-info/pull/1003); the mainnet and testnet files on main carry the agreed values. No message in their Discord was needed |
 | 4 | Zilliqa | open — [#211](https://github.com/Zilliqa/zq2-staking/pull/211) |
 | 5 | Symbiotic | open — [#526](https://github.com/symbioticfi/metadata-mainnet/pull/526). **Merged only after the link is emailed to verify@symbiotic.fi from an encapsulate.xyz address** |
 | 6 | EigenLayer | open — [#96](https://github.com/Layr-Labs/eigendata/pull/96). The repo last merged in July 2025; row 20 is the quick way |
-| 7 | Mina, Auro | open — [#108](https://github.com/aurowallet/launch/pull/108) |
+| 7 | Mina, Auro | **merged 2026-09-29** by Auro's team — [#108](https://github.com/aurowallet/launch/pull/108) |
 | 8 | Terra | open — [#676](https://github.com/terra-money/validator-profiles/pull/676). The repo last merged in January 2025. The profile is rewritten from the site's own words; contacts and Terra's alerts go to security@ |
 | 9 | REStake registry | open — [#5205](https://github.com/eco-stake/validator-registry/pull/5205). 13 bonded validators on 12 chains |
 | 10 | awesome-celestia | open — [#131](https://github.com/celestiaorg/awesome-celestia/pull/131). Every link in our section was dead; it now lists our three live Celestia repos and the log-analysis post |
 | 11 | awesome-berachain-validators | open — [#23](https://github.com/chuck-bear/awesome-berachain-validators/pull/23). The repo last merged in April 2025 |
 | 12 | Agoric and Althea lists | **set aside** — neither repo has merged since 2023; Agoric's file is a pledge in the user's own name |
+| 38 | Espresso, the node's own description | open — [#16](https://github.com/encapsulate-xyz/espresso-ansible/pull/16), ours to merge. See "Espresso" below |
 | 31 | GitHub organisation | description and email set through the API (the token could, after all); **verifying the domain is left to the user** |
 
 `scripts/profile_tracker/prs.json` maps each row to its pull request and `python3 scripts/profile_tracker/prs.py` prints
@@ -34,6 +38,62 @@ every state. **How the pull requests were made:** a branch cut from the upstream
 under `encapsulate-xyz` (the org's existing forks were stale and would not sync), opened by `aditya-manit`. Every commit
 and description carries the session's attribution lines. **Both of our own repos had admin enforcement on**; the user
 asked for it to be turned off and the two merged (`gh pr merge N --admin --merge`) — it is off on `assets` and `.github`.
+
+## Rechecked live on 2026-09-29, 14:50 UTC — 16 of 50 done
+
+Every row was read again from the chain, the repo or the page (the explorers that refuse a script — Voyager, Minascan,
+Endur, SupraScan, Avascan — in Chrome). Each row's finding is in the tracker as its "Checked" line.
+
+| Rows | State |
+|---|---|
+| 1, 2, 3, 7 | done (merged, and the files upstream carry the agreed values) |
+| 4, 5, 6, 8, 9, 10, 11, 38 | pull request open, none reviewed yet |
+| 13 and 14, twelve validators: Terra, Althea, Gitopia, Gravity Bridge, humans.ai, Sommelier, Passage, Chain4Energy, Axelar, Agoric (the newer), ixo, Lumera | **done on chain**, by the user's side: name "Encapsulate", the agreed description; website, identity and contact untouched |
+| 13.2, Agoric's older validator | set aside; still "fka KingSuper" |
+| 15 Sui, 16 IOTA, 17 Ika, 18 NEAR, 19 Espresso, 20 EigenLayer, 21 and 22 SSV, 23 the Sui candidate | open, nothing changed. Ika's website and description are empty and its logo field holds the word "Encapsulate" |
+| 25 StakingRewards, 26 Voyager, 28–29 X, 32 Keybase, 33 Endur, 34 SupraScan, 35 Avascan, 36 Lido forum, 37 Discord | open, nothing changed |
+| 27 Minascan | sent; Staketab has not published it yet |
+| 31 GitHub organisation | description and email set; the domain is not verified |
+| 24 the testnets, 30 LinkedIn | not read (LinkedIn shows its About text only to a signed-in admin) |
+
+**The Cosmos edits also changed the commission on eight validators** — the risk in finding 1 of the titanium review
+below. Read from each chain (`commission.update_time` is today on all eight):
+
+| Chain | Before | Now | Changed (UTC) | The site's Networks set says |
+|---|---|---|---|---|
+| Sommelier | 2% | 10% | 14:19 | 2% |
+| Lumera | 8% | 10% | 14:22 | 8% |
+| Axelar | 9% | 10% | 14:23 | 9% |
+| Passage | 5% | 10% | 14:23 | 5% |
+| Gitopia | 5% | 9% | 14:24 | 5% |
+| humans.ai | 5% | 9% | 14:24 | 5% |
+| Althea | 5% | 9% | 14:24 | 5% |
+| Agoric | 5% | 9% | 14:33 | 5% |
+
+The four at 9% rose by their chain's daily limit (`max_change_rate` 4%), so the target looks like 10% and they can take
+the last point a day later. Terra, Gravity Bridge, Chain4Energy and ixo were already at 10%. **The site is now wrong on
+these eight**: the Networks set's `Commission`, and its `Reward rate`, which is stated after our commission, and so
+each chain page's figures. Not changed yet — the user decides whether the new rates stand; then both properties are
+rewritten with the date.
+
+## Espresso — the profile lives on the node (2026-09-29)
+
+The stake table holds only an address (`updateMetadataUri`); ours is the node's own metrics page,
+`http://validator.espresso.mainnet.encapsulate.xyz:8088/status/metrics`, which the node fills from its
+`ESPRESSO_NODE_IDENTITY_*` variables. Those are set in `encapsulate-xyz/espresso-ansible` (public),
+`roles/node/templates/mainnet/general.env.j2`. **Pull request [#16](https://github.com/encapsulate-xyz/espresso-ansible/pull/16)**
+changes the description there; after merging, the playbook is run and the node restarted — nothing is signed.
+
+**The description in that file has no commas, on purpose.** Espresso reads the metrics page with the `prometheus-parse`
+crate (0.2.5, in both `staking-ui-service` and `staking-cli`), whose `Labels::parse` splits the label list on every
+comma, quoted or not: with the agreed text as written the dashboard would show only "Validator infrastructure for new
+chains". Quoting does not help — the repo's own history shows the old description going in quoted with its commas and
+losing them ten minutes later (76907a9, 2026-05-20). So the file carries the agreed words as sentences:
+
+> Validator infrastructure for new chains since 2020. Early to testnet. Quick to upgrade. Easy to reach. Trusted by Sui NEAR Monad Lido Starknet and more.
+
+Row 19 (pointing the stake table at `espresso-mainnet.json` in the assets repo, which carries the full text and the
+node's `pub_key`) is optional now: it is the only way to show the commas.
 
 ## The ops repo, `encapsulate-xyz/titanium` (private) — reviewed 2026-09-29
 

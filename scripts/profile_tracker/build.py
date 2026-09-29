@@ -127,6 +127,15 @@ row("r12", "12", "claude", "pr", "Agoric and Althea profile lists", "Agoric/vali
     ("Althea, validators.md row 67", [V("KingSuper"), U("github.com/aditya-manit")], [V("Encapsulate"), U("github.com/encapsulate-xyz")]),
 ], pri="optional", cav="Set aside. Neither repo has merged a pull request since 2023, and Agoric's file is a pledge signed in your own name, which is yours to rewrite.")
 
+T2_ENV = T2.replace(",", "")     # what the node serves today: the old description, its commas removed on 2026-05-20
+DESC_ENV = ("Validator infrastructure for new chains since 2020. Early to testnet. Quick to upgrade. Easy to reach. "
+            "Trusted by Sui NEAR Monad Lido Starknet and more.")
+assert "," not in DESC_ENV and DESC_ENV.replace(".", "").lower().split() == DESC.replace(",", "").replace(".", "").lower().split()
+row("r38", "38", "claude", "pr", "Espresso node identity", "encapsulate-xyz/espresso-ansible · general.env.j2", [
+    ("Description", T2_ENV, V(DESC_ENV, "t", "no commas")),
+], pri="top", cav="Espresso's dashboard reads the description from the node's metrics page and cuts it at the first comma, so here the agreed "
+                  "words are written as sentences. After merging: run the playbook and restart the node. Nothing is signed.")
+
 # ------------------------------------------------------------------ Ops: Cosmos, one row per validator
 both = [("terra", "Terra", "terrad", None), ("agoric-old", "Agoric, the older validator", "agd", "agoricvaloper1fy8r…dmv32. Our other Agoric validator is row 14.2."),
         ("althea", "Althea", "althea", None),
@@ -172,8 +181,10 @@ row("r18", "18", "ops", "tx", "NEAR", "pool-details.near · encapsulate.pool.nea
    cav="The logo follows row 01.")
 row("r19", "19", "ops", "tx", "Espresso", "StakeTable 0xCeF474…4451", [
     ("Metadata URI", U("http://validator.espresso.mainnet.encapsulate.xyz:8088/status/metrics", "blank when the node is down"), U(RAW + "espresso-mainnet.json")),
-    ("Description", T2, [AGREED, V("through the file")]),
-], cmd="updateMetadataUri, from the validator account", cav="After row 01.")
+    ("Description", T2_ENV, [AGREED, V("through the file, commas included")]),
+], cmd="updateMetadataUri, from the validator account", pri="optional",
+   cav="Optional once row 38 is live: the dashboard then reads the agreed words from the node itself. This transaction only brings the "
+       "commas back, by pointing at the JSON file, which already carries the node's public key.")
 row("r20", "20", "ops", "tx", "EigenLayer, the fast way", "DelegationManager 0x39053D51…f37A", [
     ("Metadata URI", U("https://raw.githubusercontent.com/Layr-Labs/eigendata/master/operators/Encapsulate/metadata.json"), U(RAW + "eigenlayer.json")),
     ("Name, description, X", "As in row 06", "Through the file"),
@@ -270,37 +281,44 @@ ids = [r["id"] for r in R]
 assert len(ids) == len(set(ids)) and all(re.fullmatch(r"[a-z0-9-]+", i) for i in ids)
 N = len(R)
 
+CHECKED = "29 Sep 2026"    # the day every row was last read against the live chain, repo or page
+
 def render_row(r):
     text = " ".join([r["n"], r["title"], r["where"], r["cmd"] or "", r["cav"] or "", HOW[r["how"]], WHO[r["who"]][0]] +
                     [f + " " + plain(a) + " " + plain(b) for f, a, b in r["changes"]]).lower()
     pri = ""
-    if r["pri"] == "top": pri = '<span class="chip top">Top fix</span>'
-    if r["pri"] == "optional": pri = '<span class="chip opt">Optional</span>'
+    if r["pri"] == "top": pri = '<span class="star">Top fix</span>'
+    if r["pri"] == "optional": pri = '<span class="opt">Optional</span>'
     cmd = ""
     if r["cmd"]:
-        btn = '<button type="button" class="copy" data-copy="%s">Copy</button>' % e(r["copy"]) if r["copy"] else ""
+        btn = '<button type="button" class="btn copy" data-copy="%s">Copy</button>' % e(r["copy"]) if r["copy"] else ""
         cmd = '<div class="cmd"><code>%s</code>%s</div>' % (e(r["cmd"]), btn)
-    cav = '<p class="r-cav">%s</p>' % e(r["cav"]) if r["cav"] else ""
-    chg = "".join('<tr><td class="f">%s</td><td class="now">%s</td><td class="new">%s</td></tr>' % (e(f), cell(a), cell(b)) for f, a, b in r["changes"])
+    cav = '<p class="cav">%s</p>' % e(r["cav"]) if r["cav"] else ""
+    chg = "".join('<div class="f%s">%s</div><div class="a" data-l="Now">%s</div><div class="b" data-l="Becomes">%s</div>'
+                  % (" first" if k == 0 else "", e(f), cell(a), cell(b)) for k, (f, a, b) in enumerate(r["changes"]))
     i = r["id"]
     return (
-        '<li class="row" id="row-{i}" data-row="{i}" data-who="{who}" data-how="{how}" data-pri="{pri_k}" data-text="{text}">'
-        '<div class="r-n">{n}</div>'
-        '<div class="r-main"><h3>{title}</h3><p class="where">{where}</p><div class="tags">{pri}</div></div>'
-        '<div class="r-how"><span class="chip how">{howl}</span><a class="pr" target="_blank" rel="noopener noreferrer" hidden></a>{cmd}</div>'
-        '<div class="r-status"><label class="vh" for="st-{i}">Status of {title}</label>'
+        '<li class="row" id="row-{i}" data-row="{i}" data-who="{who}" data-how="{how}" data-pri="{pri_k}" data-state="open" data-text="{text}">'
+        '<div class="r-head">'
+        '<button type="button" class="r-toggle" aria-expanded="false" aria-controls="p-{i}">'
+        '<span class="dot" aria-hidden="true"></span><span class="r-n">{n}</span>'
+        '<span class="r-name"><span class="r-title">{title}</span><span class="r-where">{where}</span></span></button>'
+        '<div class="r-meta">{pri}<span class="how">{howl}</span>'
+        '<a class="pr" target="_blank" rel="noopener noreferrer" hidden></a>'
+        '<label class="vh" for="st-{i}">Status of {title}</label>'
         '<select id="st-{i}" class="st" data-state="open" disabled>'
         '<option value="open">Open</option><option value="started">Started</option><option value="done">Done</option><option value="skipped">Set aside</option></select>'
-        '<span class="when" hidden></span></div>'
-        '<div class="r-chg"><table class="chg"><thead><tr><th scope="col">Field</th><th scope="col">Now</th><th scope="col">Becomes</th></tr></thead>'
-        '<tbody>{chg}</tbody></table></div>'
-        '{cav}'
+        '<button type="button" class="chev" tabindex="-1" aria-hidden="true"></button></div></div>'
+        '<div class="r-panel" id="p-{i}" hidden>'
+        '<p class="check" hidden><b>Checked</b><span></span></p>'
+        '<div class="chg"><div class="h f">Field</div><div class="h a">Now</div><div class="h b">Becomes</div>{chg}</div>'
+        '{cmd}{cav}'
         '<div class="r-note"><span class="note-text" hidden></span>'
         '<button type="button" class="link note-edit" hidden>Add a note</button>'
         '<form class="note-form" hidden><label class="vh" for="nt-{i}">Note for {title}</label>'
-        '<input id="nt-{i}" type="text" maxlength="240" autocomplete="off" placeholder="A link to the pull request, a transaction hash, or a word">'
-        '<button type="submit" class="btn">Save</button><button type="button" class="link cancel">Cancel</button></form></div>'
-        '</li>'
+        '<input id="nt-{i}" type="text" maxlength="240" autocomplete="off" placeholder="A link, a transaction hash, or a word">'
+        '<button type="submit" class="btn dark">Save</button><button type="button" class="link cancel">Cancel</button></form></div>'
+        '</div></li>'
     ).format(i=i, who=r["who"], how=r["how"], pri_k=r["pri"], text=e(text), n=e(r["n"]), title=e(r["title"]), where=e(r["where"]),
              pri=pri, cav=cav, howl=e(HOW[r["how"]]), cmd=cmd, chg=chg)
 
@@ -308,31 +326,16 @@ sections = ""
 for who in ("claude", "ops", "you"):
     rows = [r for r in R if r["who"] == who]
     sections += (
-        '<section class="group" id="{who}" data-group="{who}" aria-labelledby="h-{who}">'
-        '<div class="sec-head"><div class="sec-title"><h2 id="h-{who}">{name}</h2><span class="sec-count" data-count="{who}">{n} updates</span></div>'
-        '<p>{sub}</p></div>'
-        '<div class="cols-head" aria-hidden="true"><span>No.</span><span>Profile</span><span>How</span><span>Status</span></div>'
-        '<ol class="rows">{rows}</ol></section>'
+        '<section class="group" id="{who}" data-group="{who}" aria-labelledby="h-{who}" style="--c: var(--{who})">'
+        '<div class="g-head"><h2 id="h-{who}">{name}</h2><p>{sub}</p><span class="count" data-count="{who}">{n} updates</span></div>'
+        '<ol class="rows card">{rows}</ol></section>'
     ).format(who=who, name=WHO[who][0], sub=e(WHO[who][1]), n=len(rows), rows="".join(render_row(r) for r in rows))
 
-def pills(group, items):
-    out = '<div class="fgroup" role="group" aria-label="{g}"><span class="flabel">{g}</span>'.format(g=group[1])
-    for k, label in items:
-        out += '<button type="button" data-f="{f}" data-v="{k}" aria-pressed="{p}">{label}</button>'.format(
-            f=group[0], k=k, label=e(label), p="true" if k == "all" else "false")
-    return out + "</div>"
-
 used_how = [k for k in HOW if any(r["how"] == k for r in R)]
-filters = (
-    pills(("who", "Who"), [("all", "Everyone"), ("claude", "Claude"), ("ops", "Ops"), ("you", "You")]) +
-    pills(("status", "Status"), [("all", "Any"), ("open", "Open"), ("started", "Started"), ("done", "Done"), ("skipped", "Set aside")]) +
-    pills(("pr", "Pull request"), [("all", "Any"), ("open", "Open"), ("merged", "Merged")]) +
-    pills(("how", "How"), [("all", "Any")] + [(k, HOW[k]) for k in used_how]) +
-    pills(("pri", "Weight"), [("all", "Any"), ("top", "Top fixes"), ("optional", "Optional")])
-)
+hows = "".join('<option value="%s">%s</option>' % (k, e(HOW[k])) for k in used_how)
 
 page = open(os.path.join(HERE, "template.html")).read()
-page = (page.replace("{{SECTIONS}}", sections).replace("{{FILTERS}}", filters).replace("{{N}}", str(N))
+page = (page.replace("{{SECTIONS}}", sections).replace("{{HOWS}}", hows).replace("{{CHECKED}}", CHECKED).replace("{{N}}", str(N))
         .replace("{{DESC}}", e(DESC)).replace("{{S2}}", e(S2)).replace("{{S1}}", e(S1))
         .replace("{{IDS}}", json.dumps(ids)))
 assert "{{" not in page, re.findall(r"\{\{[A-Z0-9_]+\}\}", page)

@@ -114,7 +114,7 @@ User rules that stand on every task:
 | `notion/mentions-checklist.md` | **where Encapsulate is listed and what to fix** (2026-09-29): every validator profile, registry and directory checked read-only — name, website, X — ranked by value, with who fixes each (you, ops with the operator key, or a PR). `x.com/encapsulate_xyz` is suspended; the live account is @encapHQ | — |
 | `notion/profile-updates.md` | **the work list for the profiles** (2026-09-29): what every profile should say (name, the agreed description, website, X, Discord, logo) and all 37 updates in three tables — Claude's (our own repos and pull requests), a transaction with the operator key, and the user's forms and settings. Nothing done yet | — |
 | `scripts/validator_profiles/` | `edit.mjs` edits our 13 Cosmos validators' name and description (as operator or by authz), dry run first; `plan.json` names each signer; `find.mjs` looks for an address among a seed's accounts. Nothing sent yet — see its README | — |
-| `scripts/profile_tracker/` | builds the profile tracker page (an artifact, "Encapsulate Profile Updates"): `build.py` holds the 49 rows with each field's current value (read live 2026-09-29) and its new one, `template.html` the page — the agreed values at the top, filters, and a status and note per row kept in the artifact's database. `OUT=<path> python3 scripts/profile_tracker/build.py`, then republish the artifact from that path. `prs.json` maps a row to its pull request and `prs.py` prints each one's state (open, merged, checks) | — |
+| `scripts/profile_tracker/` | builds the profile tracker page (an artifact, "Encapsulate Profile Updates"): `build.py` holds the 50 rows with each field's current value (read live 2026-09-29) and its new one, `template.html` the page (redesigned 2026-09-29: a summary bar, the agreed profile as values that copy on a click, one toolbar, rows that open) — a status, a note, the pull request and the last live check per row are kept in the artifact's database. `OUT=<path> python3 scripts/profile_tracker/build.py`, then republish the artifact from that path. `prs.json` maps a row to its pull request and `prs.py` prints each one's state (open, merged, checks) | — |
 | `notion/tron-super-representative-2026-09-29.md` | a side quest: Staking4All's TRON validator is the Super Representative "CryptoGuyInZA", in the top 27 since 2018; what a seat takes (9,999 TRX to register, 22,000 votes to be listed, $207M of votes to produce blocks — decided by a few large holders) and what it pays | — |
 | `notion/staked-total-2026-09-29.md` | the stake with our validators on 2026-09-29, per chain, from each chain's own endpoints and CoinGecko prices: $84.8M, the Lido cluster counted in full; the homepage's live figure agreed within 1%. A record only — no profile carries a figure | — |
 | `notion/sui-guide-review-2026-09-29.md` | the review of the Sui guide: the 12 findings still open (where, what it says, what is wrong, a suggested fix), the two fixed, the eight the user set aside | — |
@@ -2048,6 +2048,12 @@ how they were made and what two of them still need from the user is at the top o
 the tracker current:** `python3 scripts/profile_tracker/prs.py` reads every pull request's state; write it into the
 row's document in the artifact's database (`pr.state`, and `status` "done" once merged) — see the memory
 `reference-artifacts`.
+**Rechecked live on 2026-09-29 (16 of 50 done):** twelve Cosmos validators are done on chain, and **the same edits
+raised the commission on eight of them** (Sommelier 2 → 10%, Lumera 8 → 10, Axelar 9 → 10, Passage 5 → 10, Gitopia,
+humans.ai, Althea and Agoric 5 → 9), so the Networks set's `Commission` and `Reward rate` are stale on those eight
+until the user says the new rates stand — the table is in `notion/profile-updates.md`. **Espresso's description lives
+on the node** (`encapsulate-xyz/espresso-ansible`, pull request #16) and **takes no commas**: Espresso's parser cuts a
+metric label at the first comma, so that one file carries the agreed words as sentences.
 
 ## TODO — the GitHub Actions (planned 2026-09-25/26, not built)
 

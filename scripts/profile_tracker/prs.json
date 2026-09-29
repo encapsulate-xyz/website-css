@@ -1,13 +1,14 @@
 {
-  "r01": "https://github.com/encapsulate-xyz/assets/pull/1",
-  "r02": "https://github.com/encapsulate-xyz/.github/pull/9",
-  "r03": "https://github.com/monad-developers/validator-info/pull/1003",
-  "r04": "https://github.com/Zilliqa/zq2-staking/pull/211",
-  "r05": "https://github.com/symbioticfi/metadata-mainnet/pull/526",
-  "r06": "https://github.com/Layr-Labs/eigendata/pull/96",
-  "r07": "https://github.com/aurowallet/launch/pull/108",
-  "r08": "https://github.com/terra-money/validator-profiles/pull/676",
-  "r09": "https://github.com/eco-stake/validator-registry/pull/5205",
-  "r10": "https://github.com/celestiaorg/awesome-celestia/pull/131",
-  "r11": "https://github.com/chuck-bear/awesome-berachain-validators/pull/23"
+ "r01": "https://github.com/encapsulate-xyz/assets/pull/1",
+ "r02": "https://github.com/encapsulate-xyz/.github/pull/9",
+ "r03": "https://github.com/monad-developers/validator-info/pull/1003",
+ "r04": "https://github.com/Zilliqa/zq2-staking/pull/211",
+ "r05": "https://github.com/symbioticfi/metadata-mainnet/pull/526",
+ "r06": "https://github.com/Layr-Labs/eigendata/pull/96",
+ "r07": "https://github.com/aurowallet/launch/pull/108",
+ "r08": "https://github.com/terra-money/validator-profiles/pull/676",
+ "r09": "https://github.com/eco-stake/validator-registry/pull/5205",
+ "r10": "https://github.com/celestiaorg/awesome-celestia/pull/131",
+ "r11": "https://github.com/chuck-bear/awesome-berachain-validators/pull/23",
+ "r38": "https://github.com/encapsulate-xyz/espresso-ansible/pull/16"
 }
