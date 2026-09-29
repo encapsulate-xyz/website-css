@@ -220,13 +220,9 @@ row("r24", "24", "ops", "tx", "The 20 testnets", "one validator per testnet", [
 LOGO = RAW + "encapsulate.png"
 STAKER = "0x0359e252e663765989b04c266a4daec77662b506ce5f026994cb8ad53628df2a"
 NODE = "NodeID-N3e9W3EngjabGnTZVqyZwunVcbCdrY5Qy"
-AVA_MSG = '%s "Encapsulate" "Encapsulate" %s %s' % (NODE, SITE, LOGO)
 ENDUR_MSG = ("Hello. We run the Starknet validator %s. Your dashboard shows it as \"Encapsulate Limited\": "
              "https://dashboard.endur.fi/validator/%s Could you change the name to \"Encapsulate\"? "
              "Website %s, logo %s. Thank you." % (STAKER, STAKER, SITE, LOGO))
-SUPRA_MSG = ("Hello. We run the Supra validator pool 0x15ac9afcd6a042bd61239305ad13663f2423663d6ea83ce5293561b77766cd3a. "
-             "SupraScan labels it \"Unknown\": https://suprascan.io/address/0x15ac9afcd6a042bd61239305ad13663f2423663d6ea83ce5293561b77766cd3a/f "
-             "Could it be labelled \"Encapsulate\"? Website %s, logo %s. Thank you." % (SITE, LOGO))
 
 SR_MSG = ("Hello. We are Encapsulate (%s), a validator operator since 2020, formerly named KingSuper. Our listing on Staking Rewards "
           "still carries the old name: https://www.stakingrewards.com/provider/kingsuper Could you update it? Name: Encapsulate. "
@@ -328,24 +324,20 @@ row("r33", "33", "you", "ask", "Starknet, Endur", "dashboard.endur.fi", [
     "Then check the page: https://dashboard.endur.fi/validator/" + STAKER,
 ], cmd=ENDUR_MSG, copy=ENDUR_MSG, cav="Endur may simply follow Voyager once Voyager publishes the form sent on 29 Sep; ask anyway, it names us differently today.")
 row("r34", "34", "you", "ask", "Supra, SupraScan", "suprascan.io", [
-    ("Name", "Unknown", "Encapsulate"),
-], link=("Open Supra's Discord", "https://discord.com/invite/supralabs"), steps=[
-    "Join Supra's Discord and find the channel for node operators or support.",
-    "Send the message below.",
-    "Then check the page: https://suprascan.io/address/0x15ac9afcd6a042bd61239305ad13663f2423663d6ea83ce5293561b77766cd3a/f",
-    "If Discord gets no answer, Supra's contact form: https://supra.com/contact/",
-], cmd=SUPRA_MSG, copy=SUPRA_MSG, cav="SupraScan has no form for labels; this is a request to their team.")
+    ("Name", "Unknown", [V("No change"), V("", "t", "no validator is named there")]),
+], pri="optional", link=("Open our address on SupraScan", "https://suprascan.io/address/0x15ac9afcd6a042bd61239305ad13663f2423663d6ea83ce5293561b77766cd3a/f"), steps=[
+    "Nothing to do. SupraScan labels validators Unknown as a rule: the three largest outside operators and a foundation validator, checked on 29 Sep 2026, all read Unknown.",
+    "Supra's own validator dashboard hides every operator's name too, all 77 of them: https://validators.supra.com/",
+    "The only names on SupraScan are Supra's team wallet and addresses that hold a .supra domain. None of the validators checked has one.",
+], cav="Set aside: there is no label to ask for. The message to Supra's team that stood here was removed.")
 row("r35", "35", "you", "ask", "Avalanche, Avascan", "Avascan's Validator Claim", [
-    ("Website", NONE("None shown"), U(SITE)),
     ("Alias and manager", "Encapsulate / Encapsulate", NONE("No change")),
-    ("Icon", NONE("Not read"), U(LOGO)),
-], link=("Open Avascan's guide", "https://docs.avascan.info/programs/validator-claim"), steps=[
-    "Open our validator's page and note the address under Beneficiary: https://avascan.info/staking/validator/" + NODE,
-    "In Core, with that address: Tools, Signing tools, Sign message. https://core.app",
-    "Sign the message below, exactly as it is, and copy the signature.",
-    "Post the message and the signature in the channel #avalanche-validator of Avascan's Discord: https://discord.gg/XxKz4gHy3J",
-    "Avascan applies claims within a day, on working days.",
-], cmd=AVA_MSG, copy=AVA_MSG, cav="It takes the key of the validator's reward address, so it may be one for ops. Not Telegram, as this row said before: a signed message, posted in Discord.")
+    ("Website", NONE("None shown"), [V("No change"), V("", "t", "Avascan shows no website")]),
+], pri="optional", link=("Open our validator on Avascan", "https://avascan.info/staking/validator/" + NODE), steps=[
+    "Nothing to do. Our validator is already claimed: it reads Encapsulate / Encapsulate.",
+    "Avascan shows a validator's alias, manager and icon, and no website. Allnodes' claimed validator, checked on 29 Sep 2026, has none either.",
+    "Their claim message does take a website and a logo link, so if the icon ever needs changing, that is the route: https://docs.avascan.info/programs/validator-claim",
+], cav="This row asked for a website on Avascan. There is no such field to show it, so the row is closed.")
 row("r36", "36", "you", "settings", "Lido research forum", "research.lido.fi · user KingSuper", [
     ("Website", NONE("Empty"), U(SITE)),
     ("Display name", "Aditya | encapsulate.xyz", NONE("No change")),
