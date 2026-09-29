@@ -56,7 +56,7 @@
     "next": "Next: {chain}",
     "all": "All guides",
     "help": "Need help? Ask on Discord",
-    "help url": "https://discord.gg/q6cmGycxsr"
+    "help url": "https://discord.gg/PQJX5JVS8h"
   };
   var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
   /* the design spells the count where it reads as a sentence ("Eight screens") and keeps digits

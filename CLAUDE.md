@@ -2000,10 +2000,12 @@ Networks set relation, so nothing is typed. Don't add it before the design.
 
 **Six account rows are parked** (the user, 2026-09-29: "keep it added in the artifact for now, we will visit them later"):
 X @encapHQ, X @_KingSuper_, LinkedIn, Keybase, the Lido forum and the Discord server — each noted in the tracker; do not
-change any of them until the user names it. **The Discord invite `q6cmGycxsr`** is the site's own (footer, contact page,
-the guide copy's help url): it has no expiry date, was made by the user's account and points at the channel
-`moderator-only` — if that channel is deleted the invite dies. The server's invite list (the user's screenshot, 2026-09-29)
-confirms it: the only invite, 81 uses, no use limit, never expires. It stays the link on every profile.
+change any of them until the user names it. **The Discord invite is `https://discord.gg/PQJX5JVS8h`** since 2026-09-29 (the user made it from the announcement
+channel; never expires, no use limit). It replaced `q6cmGycxsr` — made from `#moderator-only`, whose name showed in the
+invite's preview — in 33 Notion blocks (the homepage's and /contact's Discord lines, the "Ask us on Discord" button of 29
+guides, the guide copy's `help url`; old values in `backups/discord-invite-2026-09-29.json`), Super's footer, the homepage
+head's `sameAs`, guide.js's fallback, our two GitHub repos and the three open pull requests that carry a Discord link.
+**`q6cmGycxsr` still works and must not be revoked**: on-chain profiles (NEAR) and Voyager carry it until they are changed.
 **The work list is `notion/profile-updates.md`** (every update, how — pull request, transaction or form — and who).
 The check it comes from is `notion/mentions-checklist.md`: StakingRewards still says "KingSuper", EigenLayer, Minascan and nine
 Cosmos validators still say "fka KingSuper", four listings link the suspended `x.com/encapsulate_xyz` (the live

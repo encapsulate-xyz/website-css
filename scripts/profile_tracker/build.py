@@ -26,7 +26,8 @@ T_X = ("Backed by five years of experience, Encapsulate secures 40+ networks wit
 AGREED = object()            # the agreed description
 SITE = "https://encapsulate.xyz"
 X_NEW, X_OLD = "https://x.com/encapHQ", "https://x.com/encapsulate_xyz"
-DC_NEW, DC_OLD = "https://discord.gg/q6cmGycxsr", "https://discord.com/invite/S5x4e2AHVV"
+DC_NEW, DC_OLD = "https://discord.gg/PQJX5JVS8h", "https://discord.com/invite/S5x4e2AHVV"
+DC_MID = "https://discord.gg/q6cmGycxsr"      # the invite used until 2026-09-29; still valid, it points at #moderator-only
 RAW = "https://raw.githubusercontent.com/encapsulate-xyz/assets/refs/heads/main/"
 
 HOW = {"push": "Our own repo", "pr": "Pull request", "tx": "Transaction", "form": "Form", "settings": "Account settings", "ask": "Ask their team"}
@@ -65,6 +66,7 @@ row("r01", "01", "claude", "push", "Assets repo", "encapsulate-xyz/assets", [
     ("Description, espresso-mainnet.json", T2, AGREED),
     ("Logo, encapsulate.png", "4097 × 4097 px, 207 KB", "512 × 512 px, 40 KB, at the same path"),
     ("eigenlayer.json", NONE("Does not exist"), "A new file, for row 20"),
+    ("Discord, README.md", U(DC_MID, "older invite"), U(DC_NEW)),
     ("encapsulate-4097.png", NONE("Does not exist"), "The original logo, kept under this name"),
 ], pri="top", cav="Goes first. Sui, IOTA, NEAR, Espresso and Monad read their logo from this repo, so the new one reaches them with no transaction.")
 row("r02", "02", "claude", "push", "GitHub organisation page", "encapsulate-xyz/.github · profile/README.md", [
@@ -164,6 +166,7 @@ row("r17", "17", "ops", "tx", "Ika", "on-chain validator metadata, read by Ikasc
 ], cmd="set_validator_metadata, in a transaction that holds the validator's operation cap", pri="top")
 row("r18", "18", "ops", "tx", "NEAR", "pool-details.near · encapsulate.pool.near", [
     ("Description", T2, AGREED),
+    ("Discord", U(DC_MID, "older invite"), U(DC_NEW)),
 ], cmd="near call pool-details.near update_field '{\"pool_id\": \"encapsulate.pool.near\", \"name\": \"description\", \"value\": \"<description>\"}' --accountId <pool owner>",
    copy="near call pool-details.near update_field '{\"pool_id\": \"encapsulate.pool.near\", \"name\": \"description\", \"value\": \"%s\"}' --accountId <pool owner>" % DESC,
    cav="The logo follows row 01.")
@@ -216,6 +219,7 @@ row("r25", "25", "you", "form", "StakingRewards", "providers.stakingrewards.com 
 row("r26", "26", "you", "form", "Starknet, Voyager", "Voyager's Add validator info, with the staker's wallet", [
     ("Description", [V("It says over $500 million."), V("", "t", "full text not readable from outside")], AGREED),
     ("X", U(X_OLD, "suspended"), U(X_NEW)),
+    ("Discord", U(DC_MID, "older invite"), U(DC_NEW)),
 ])
 row("r27", "27", "you", "form", "Mina, Minascan", "Staketab's Submit service form", [
     ("Name", "Encapsulate (fka KingSuper)", "Encapsulate"),

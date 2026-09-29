@@ -7,7 +7,7 @@ validators' on-chain profiles, the other chains' profiles, and the directories a
 
 **Facts found along the way**
 - `x.com/encapsulate_xyz` is **suspended**; several listings still link it. The live account is **@encapHQ**.
-- The Discord invite `discord.com/invite/S5x4e2AHVV` has **expired**; the site's `discord.gg/q6cmGycxsr` works.
+- The Discord invite `discord.com/invite/S5x4e2AHVV` has **expired**; the site's `discord.gg/q6cmGycxsr` works (replaced on 2026-09-29 by `discord.gg/PQJX5JVS8h`, made from the announcement channel).
 - `king.super.site` returns 404 (no redirect); `kingsuper.org` 301s to `https://encapsulate.xyz/`.
 - No profile carries a mistyped domain; the Cosmos website fields are all exactly `https://encapsulate.xyz`.
 - Descriptions come in three versions ("Others trust, we validate!…", "five years… 40+ networks… nearly half a
