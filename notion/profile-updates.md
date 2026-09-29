@@ -35,6 +35,31 @@ under `encapsulate-xyz` (the org's existing forks were stale and would not sync)
 and description carries the session's attribution lines. **Both of our own repos had admin enforcement on**; the user
 asked for it to be turned off and the two merged (`gh pr merge N --admin --merge`) — it is off on `assets` and `.github`.
 
+## The ops repo, `encapsulate-xyz/titanium` (private) — reviewed 2026-09-29
+
+Its pull request #49 (merged) put the agreed description into `DETAILS` of the 12 Cosmos settings files and
+`VALIDATOR_DESCRIPTION` of Sui, IOTA and Ika — all 15 exact, nothing old left anywhere in the repo. **On-chain nothing
+changes until each chain's script is run.** What the review found beyond the pull request:
+
+| # | Finding | What to do |
+|---|---|---|
+| 1 | **Every Cosmos settings file has `COMMISSION_RATE=0.07`, and both `edit_validator.js` and `exec_authz.js` send the rate whenever it is set.** On-chain the rates are 2% (Sommelier), 5% (Agoric, Althea, Gitopia, humans.ai, Passage), 8% (Lumera), 9% (Axelar) and 10% (Chain4Energy, Gravity Bridge, ixo, Terra). Every one of those changes is within the chain's allowed step, so a description run would also set commission to 7% on all twelve | run the edit with `COMMISSION_RATE` empty, or set each file to the chain's own rate |
+| 2 | Espresso's `METADATA_URI` is still the node's own `http://…:8088` address | point it at `espresso-mainnet.json` in the assets repo, then `update_metadata_uri.js` |
+| 3 | NEAR has no script for `pool-details.near`; its description and Discord link are still the old ones | a small script or one `near call … update_field` per field |
+| 4 | Sui, IOTA and Ika need `update_validator_info.js` run; on Ika it also fixes the empty website and the logo field | run per chain |
+| 5 | The older Agoric validator (`…3dmv32`, still bonded, "fka KingSuper") is not in any settings file — titanium says it is being unbonded | leave it |
+| 6 | A design mock in `ui/design/` prints "Encapsulate (fka KingSuper)" | optional |
+
+## Mina, Minascan — submitted 2026-09-29
+
+Sent through Minascan's MetaHub form (a Typeform; "to update, fill out the same form and send it again"). **It was
+submitted before the user could review it** — they had wanted to look first. Values: name Encapsulate, the agreed
+description, logo by link (the assets repo's `encapsulate.png`), validator `B62qjWmF…FaRYY`, website, contact
+`security@encapsulate.xyz`, X `https://x.com/encapHQ`, GitHub, Discord `https://discord.gg/PQJX5JVS8h`; and, carried
+over from the profile as it stood: fee 5%, payout "1 / month", Discord contact "kingsuper". Telegram and additional
+terms left empty. **The site's Mina chain page says rewards are paid "every two epochs — about 15 days"; Minascan and
+the chain's own record say monthly** — one of the two wants correcting.
+
 ## What every profile should say
 
 | Field | Value |

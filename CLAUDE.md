@@ -2004,6 +2004,8 @@ Networks set relation, so nothing is typed. Don't add it before the design.
 state). **A seed the user supplies is never opened, printed or copied — only a script may read it** (the user: "you must
 not read it"), from a local file that git ignores. The one supplied on 2026-09-29 opens the voting wallet (`…lz32rfqz…`), which holds
 only `MsgVote`; the edit permission is with `…p8uxq4ska2…`, so the script stopped before signing and nothing was sent.
+**Outside forms are filled, shown and left for the user to submit** (2026-09-29, after the Minascan form went in before
+they could review it: "you let me review before submit, i will submit"). The same for anything sent to another team.
 **Six account rows are parked** (the user, 2026-09-29: "keep it added in the artifact for now, we will visit them later"):
 X @encapHQ, X @_KingSuper_, LinkedIn, Keybase, the Lido forum and the Discord server — each noted in the tracker; do not
 change any of them until the user names it. **The Discord invite is `https://discord.gg/PQJX5JVS8h`** since 2026-09-29 (the user made it from the announcement
