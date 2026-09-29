@@ -7,3 +7,8 @@ backups/
 __pycache__/
 .DS_Store
 scripts/__pycache__/
+
+# Secrets. Never committed: this repository is public.
+seed.txt
+*.seed
+.env
