@@ -114,7 +114,7 @@ numbered steps, and where a message has to be sent, the message to copy. They ar
 | 32 Keybase | the identity is the user `encapsulate`, whose full name is "Encapsulate Limited" (to become Encapsulate); proofs are added with `keybase prove twitter encapHQ` and `keybase prove dns encapsulate.xyz`. A GitHub proof is a gist from a person's account, so it is left out |
 | 33 Endur, 34 Supra | no form: Endur's Telegram `t.me/endurfi` or Discord, Supra's Discord `discord.com/invite/supralabs`; each row carries the message to send |
 | 35 Avascan | not Telegram: Avascan's **Validator Claim** — a message signed in Core with the validator's beneficiary address (`NodeID-… "Alias" "Manager" website logo`), posted in `#avalanche-validator` on Avascan's Discord; applied within a day |
-| 36 Lido forum | the forum is Discourse: the website is a profile field; the username can no longer be changed by the user (the account is from July 2023) and the post's edit window has passed, so both go to the moderators |
+| 36 Lido forum | checked in the user's signed-in session on 2026-09-29 (the forum is Discourse; its own JSON answers): **the username cannot be changed** (`can_edit_username` false) and **post 5 of July 2023 cannot be edited** (`can_edit` false; it can only be deleted, which would pull a question others answered) — the user had guessed as much. The profile can: the website is empty and can be set, the display name is "Aditya \| encapsulate.xyz". The row is optional now and asks only for the website |
 | 37 Discord | Server Settings → Server Profile → Description, on desktop or web only |
 
 **X and the suspended account** (the user asked whether putting the site on @encapHQ could get it banned too). X's
