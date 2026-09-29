@@ -115,7 +115,7 @@ User rules that stand on every task:
 | `notion/profile-updates.md` | **the work list for the profiles** (2026-09-29): what every profile should say (name, the agreed description, website, X, Discord, logo) and all 37 updates in three tables — Claude's (our own repos and pull requests), a transaction with the operator key, and the user's forms and settings. Nothing done yet | — |
 | `scripts/profile_tracker/` | builds the profile tracker page (an artifact, "Encapsulate Profile Updates"): `build.py` holds the 49 rows with each field's current value (read live 2026-09-29) and its new one, `template.html` the page — the agreed values at the top, filters, and a status and note per row kept in the artifact's database. `OUT=<path> python3 scripts/profile_tracker/build.py`, then republish the artifact from that path | — |
 | `notion/staked-total-2026-09-29.md` | the stake with our validators on 2026-09-29, per chain, from each chain's own endpoints and CoinGecko prices: $84.8M, the Lido cluster counted in full; the homepage's live figure agreed within 1%. A record only — no profile carries a figure | — |
-| `notion/sui-guide-review-2026-09-29.md` | the read-only review of the Sui guide: 22 findings, each with where, what it says, what is wrong and a suggested fix. Waiting for the user's decisions | — |
+| `notion/sui-guide-review-2026-09-29.md` | the review of the Sui guide: the 13 findings still open (where, what it says, what is wrong, a suggested fix), the one fixed, the eight the user set aside | — |
 | `notion/guide-screenshots.md` | how guide screenshots are captured and composed (agreed 2026-09-18, not yet applied) | — |
 | `build.py` | strips comments into `dist/`, copies the JS | — |
 | `scripts/paste_table.py` | prints the paste table from head/*.html vs what the live pages serve | — |
@@ -1939,12 +1939,13 @@ Raise this whenever guides are being worked on.
 
 ## TODO — the Sui guide moves to Slush (rebuilt 2026-09-28; reviewed 2026-09-29, the fixes wait for the user)
 
-**What follows this paragraph is history.** The guide's slide database was rebuilt on 2026-09-28: **nine steps on
+**What follows this paragraph is history.** The guide's slide database was rebuilt on 2026-09-28: **nine steps (ten since 2026-09-29) on
 SuiVision's dashboard with the Slush extension**, no Suiet left, and the live page builds in the new design. A read-only
-review on 2026-09-29 found 22 things (`notion/sui-guide-review-2026-09-29.md`) — the three that matter: the shared close
-line "Rewards accrue from the next block" is wrong for Sui (next epoch, about 24 h), the social card still says
-thirteen, and no step tells the reader to pick Slush from SuiVision's wallet list. **Nothing was fixed: the user asked
-to review the list first** ("dont fix it yourself").
+review on 2026-09-29 found 22 things (`notion/sui-guide-review-2026-09-29.md`). **The user's decisions the same day:**
+fix 2 (done — the social card made again, it reads "Ten"), and set aside 11, 12, 13, 15, 18, 20, 21 and 22. The team
+added step 04 "Select the wallet", so the guide is **ten steps**. Thirteen findings are still open and wait for the
+user's word — the one that matters most is the shared close line "Rewards accrue from the next block", wrong for Sui
+(next epoch, about 24 h). **Fix only the numbers the user names** ("dont fix it yourself").
 
 Slush (Mysten Labs' own wallet, formerly Sui Wallet, first on sui.io/get-started) replaced Suiet in the Sui
 guide on 2026-09-28, at the user's word, before the new captures exist. **Done:** Slush is a Wallet Set row
