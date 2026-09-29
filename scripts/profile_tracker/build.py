@@ -343,9 +343,9 @@ row("r36", "36", "you", "settings", "Lido research forum", "research.lido.fi · 
     ("Display name", "Aditya | encapsulate.xyz", NONE("No change")),
     ("Username", "KingSuper", [V("No change"), V("", "t", "the forum does not allow it")]),
     ("Post 5 of the Wave 5 thread", U("https://king.super.site/", "404"), [V("No change"), V("", "t", "the forum does not allow it")]),
-], pri="optional", link=("Open the forum's profile settings", "https://research.lido.fi/u/kingsuper/preferences/profile"), steps=[
-    "Open the link, signed in. Website: https://encapsulate.xyz Then Save. That is all this row can change.",
-    "The username cannot be changed and the post of July 2023 cannot be edited: checked on 29 Sep 2026 in your signed-in session, where the forum answers no to both.",
+], pri="optional", link=("Open the forum profile", "https://research.lido.fi/u/KingSuper"), steps=[
+    "Done by Claude on 29 Sep 2026, at your word: the website is https://encapsulate.xyz and the profile shows it.",
+    "The username cannot be changed and the post of July 2023 cannot be edited: checked the same day in your signed-in session, where the forum answers no to both.",
     "A moderator could do both, but it is one dead link in an old question, so it is left as it is. The post: https://research.lido.fi/t/announcement-onboarding-for-ethereum-wave-5/4809/5",
 ], cav="The post can still be deleted, which would take a question others answered out of the thread. Not advised.")
 row("r37", "37", "you", "settings", "Discord server", "server settings", [
