@@ -30,7 +30,7 @@ of values that copy on a click, one toolbar, and rows that are a single line unt
 | 10 | awesome-celestia | open — [#131](https://github.com/celestiaorg/awesome-celestia/pull/131). Every link in our section was dead; it now lists our three live Celestia repos and the log-analysis post |
 | 11 | awesome-berachain-validators | open — [#23](https://github.com/chuck-bear/awesome-berachain-validators/pull/23). The repo last merged in April 2025 |
 | 12 | Agoric and Althea lists | **set aside** — neither repo has merged since 2023; Agoric's file is a pledge in the user's own name |
-| 38 | Espresso, the node's own description | open — [#16](https://github.com/encapsulate-xyz/espresso-ansible/pull/16), ours to merge. See "Espresso" below |
+| 38 | Espresso, the node's own description | **merged 2026-09-29** — [#16](https://github.com/encapsulate-xyz/espresso-ansible/pull/16). The node still serves the old text until it is restarted; **the user restarts it**. See "Espresso" below |
 | 31 | GitHub organisation | description and email set through the API (the token could, after all); **verifying the domain is left to the user** |
 
 `scripts/profile_tracker/prs.json` maps each row to its pull request and `python3 scripts/profile_tracker/prs.py` prints
@@ -73,8 +73,24 @@ below. Read from each chain (`commission.update_time` is today on all eight):
 The four at 9% rose by their chain's daily limit (`max_change_rate` 4%), so the target looks like 10% and they can take
 the last point a day later. Terra, Gravity Bridge, Chain4Energy and ixo were already at 10%. **The site is now wrong on
 these eight**: the Networks set's `Commission`, and its `Reward rate`, which is stated after our commission, and so
-each chain page's figures. Not changed yet — the user decides whether the new rates stand; then both properties are
-rewritten with the date.
+each chain page's figures. **The user said the new rates stand (2026-09-29).** The values to write, from the chain's
+commission and staking-explorer.com's measured rate the same day (rate = measured × (1 − commission)):
+
+| Chain | Commission | Measured | Reward rate, was | Reward rate, becomes |
+|---|---|---|---|---|
+| Agoric | 9% | 6.99% | 6.6% | 6.4% |
+| Althea | 9% | 25.37% | 24.2% | 23.1% |
+| Gitopia | 9% | 44.71% | 42.9% | 40.7% |
+| humans.ai | 9% | 34.93% | 33.2% | 31.8% |
+| Passage | 10% | 7.48% | 7.1% | 6.7% |
+| Sommelier | 10% | 0% | 0% | 0% |
+| Axelar | 10% | 15.48% | 14.1% | 13.9% |
+| Lumera | 10% | 52.01% | 47.8% | 46.8% |
+
+**Not written yet**: the write to Notion was refused by the session's permission check, so the rows still hold the old
+values (copied to `backups/networks-set-commission-2026-09-29.json`). Once written: `chain_pages.py --facts` for the
+eight, refresh /networks and the eight chain pages in Super, and make their social cards again. If the four at 9% go
+to 10%, their rows need the edit once more.
 
 ## Espresso — the profile lives on the node (2026-09-29)
 
@@ -82,7 +98,10 @@ The stake table holds only an address (`updateMetadataUri`); ours is the node's 
 `http://validator.espresso.mainnet.encapsulate.xyz:8088/status/metrics`, which the node fills from its
 `ESPRESSO_NODE_IDENTITY_*` variables. Those are set in `encapsulate-xyz/espresso-ansible` (public),
 `roles/node/templates/mainnet/general.env.j2`. **Pull request [#16](https://github.com/encapsulate-xyz/espresso-ansible/pull/16)**
-changes the description there; after merging, the playbook is run and the node restarted — nothing is signed.
+changes the description there (merged 2026-09-29); the node is then restarted — nothing is signed. **The restart is the
+user's**: the host refuses the `~/.ssh/ansible` key on the user's laptop (one key offered, "Too many authentication
+failures"), and no other key was tried. The repo's full playbook also rebuilds the binary with cargo on the host; for
+this change only the environment file and a restart are needed.
 
 **The description in that file has no commas, on purpose.** Espresso reads the metrics page with the `prometheus-parse`
 crate (0.2.5, in both `staking-ui-service` and `staking-cli`), whose `Labels::parse` splits the label list on every
