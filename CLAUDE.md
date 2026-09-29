@@ -2007,8 +2007,10 @@ only `MsgVote`; the edit permission is with `…p8uxq4ska2…`, so the script st
 **Outside forms are filled, shown and left for the user to submit** (2026-09-29, after the Minascan form went in before
 they could review it: "you let me review before submit, i will submit"). The same for anything sent to another team —
 **unless the user says in that message to send it** ("you do it", "fill … and submit"): Agoric's and Althea's pull
-requests and Voyager's form went out that way the same day. Report every value sent. A sign-up is never mine to make
-(StakingRewards' dashboard).
+requests and Voyager's form went out that way the same day. Report every value sent. A sign-up is never mine to make.
+**StakingRewards has no free claim any more** (the user corrected me: its dashboard is only for providers in the paid
+rating programme, €4,500 a year at our stake); the route is an email to partnerships@stakingrewards.com, left as a draft
+in the Gmail of info@encapsulate.xyz — **the account the Gmail connector is signed in to**.
 **Six account rows are parked** (the user, 2026-09-29: "keep it added in the artifact for now, we will visit them later"):
 X @encapHQ, X @_KingSuper_, LinkedIn, Keybase, the Lido forum and the Discord server — each noted in the tracker; do not
 change any of them until the user names it. **The Discord invite is `https://discord.gg/PQJX5JVS8h`** since 2026-09-29 (the user made it from the announcement

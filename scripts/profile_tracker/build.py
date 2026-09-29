@@ -228,22 +228,25 @@ SUPRA_MSG = ("Hello. We run the Supra validator pool 0x15ac9afcd6a042bd61239305a
              "SupraScan labels it \"Unknown\": https://suprascan.io/address/0x15ac9afcd6a042bd61239305ad13663f2423663d6ea83ce5293561b77766cd3a/f "
              "Could it be labelled \"Encapsulate\"? Website %s, logo %s. Thank you." % (SITE, LOGO))
 
-row("r25", "25", "you", "settings", "StakingRewards", "vsp.stakingrewards.com · /provider/kingsuper", [
+SR_MSG = ("Hello. We are Encapsulate (%s), a validator operator since 2020, formerly named KingSuper. Our listing on Staking Rewards "
+          "still carries the old name: https://www.stakingrewards.com/provider/kingsuper Could you update it? Name: Encapsulate. "
+          "Page address: /provider/encapsulate. Website: %s. X: %s. Logo: %s. Description: %s "
+          "Our validators carry the same name and website on chain. Thank you." % (SITE, SITE, X_NEW, LOGO, DESC))
+row("r25", "25", "you", "ask", "StakingRewards", "partnerships@stakingrewards.com · /provider/kingsuper", [
     ("Name", "KingSuper", "Encapsulate"),
     ("Logo", "A crown with the word KING", "The current mark"),
     ("Website", NONE("None"), U(SITE)),
     ("X", U("https://twitter.com/_KingSuper_"), U(X_NEW)),
     ("Description", "KingSuper is a staking infrastructure provider listed on Staking Rewards.", AGREED),
-    ("Unique selling point", NONE("None"), S1),
     ("Page address", U("/provider/kingsuper"), U("/provider/encapsulate")),
-], pri="top", link=("Open the provider dashboard", "https://vsp.stakingrewards.com/"), steps=[
-    "Open the dashboard and enter a company address, such as hello@encapsulate.xyz. A code comes by email. This makes an account, so it has to be you.",
-    "Once in, claim the provider KingSuper. Its public page is https://www.stakingrewards.com/provider/kingsuper",
-    "About your service: Name, Encapsulate. Unique selling point (70 characters at most), the first sentence. Description (350 at most), the agreed description. Logo, the 512 px PNG: " + LOGO,
-    "Socials and links: the website and X from the values at the top of this page.",
-    "For the page address, or if the claim is refused: Data requests, then Report general issue, at https://vsp.stakingrewards.com/data-requests",
-], cav="The most valuable single fix. What follows the sign-in is from StakingRewards' own guide; the sign-in itself is as far as Claude could see. "
-       "providers.stakingrewards.com no longer exists, and the contact form on their site is for funds and exchanges, so it was not used.")
+    ("Stake and validators shown", NONE("None"), "Ours, once they map our addresses"),
+], pri="top", link=("Open our listing", "https://www.stakingrewards.com/provider/kingsuper"), steps=[
+    "A draft to partnerships@stakingrewards.com is in the Gmail of info@encapsulate.xyz, written by Claude on 29 Sep 2026. Read it and press Send: https://mail.google.com/mail/?authuser=info@encapsulate.xyz#drafts",
+    "Without the draft: write to partnerships@stakingrewards.com, the address their guide gives for everything outside the rating, and send the message below.",
+    "Editing the listing ourselves is only for providers in their rating programme, which is paid by stake: EUR 4,500 a year between 30 and 100 million dollars. "
+    "Those providers sign in at https://vsp.stakingrewards.com/ To apply: https://www.stakingrewards.com/ratings/staking-providers",
+], cmd=SR_MSG, copy=SR_MSG, cav="There is no free claim any more: providers.stakingrewards.com is gone. The contact form on their site was tried twice on 29 Sep and "
+       "answered with its own error both times, so nothing was sent through it. The listing is a stub today: no stake, no validators.")
 row("r26", "26", "you", "form", "Starknet, Voyager", "Voyager's form, Validator whitelisting", [
     ("Description", "Encapsulate validates on 40+ blockchain networks, safeguarding over $500 million in delegated stake since 2020.", AGREED),
     ("X", U(X_OLD, "suspended"), U(X_NEW)),
