@@ -112,7 +112,7 @@ User rules that stand on every task:
 | `notion/github-actions-plan.md` | the GitHub Actions plan (2026-09-26, not built): the 26 things that go stale, where each lives in Notion, the proposed `jobs/` structure, the build order and the open decisions | — |
 | `notion/new-row-checklist.md` | **what a new row in each database needs beyond its page** (posts, chains, guides, the rest): its properties, its path in Super, the social card (`og_cards.py`), the fallback numbers and hardcoded lists, what to refresh and what to check. Go through it every time a row is added (the user, 2026-09-28) | — |
 | `notion/mentions-checklist.md` | **where Encapsulate is listed and what to fix** (2026-09-29): every validator profile, registry and directory checked read-only — name, website, X — ranked by value, with who fixes each (you, ops with the operator key, or a PR). `x.com/encapsulate_xyz` is suspended; the live account is @encapHQ | — |
-| `notion/staked-total-2026-09-29.md` | the stake with our validators on 2026-09-29, per chain, from each chain's own endpoints and CoinGecko prices: $84.8M ("over $80 million"), the Lido cluster counted in full. Redo before publishing a new figure | — |
+| `notion/staked-total-2026-09-29.md` | the stake with our validators on 2026-09-29, per chain, from each chain's own endpoints and CoinGecko prices: $84.8M, the Lido cluster counted in full; the homepage's live figure agreed within 1%. A record only — no profile carries a figure | — |
 | `notion/guide-screenshots.md` | how guide screenshots are captured and composed (agreed 2026-09-18, not yet applied) | — |
 | `build.py` | strips comments into `dist/`, copies the JS | — |
 | `scripts/paste_table.py` | prints the paste table from head/*.html vs what the live pages serve | — |
@@ -1963,17 +1963,20 @@ Networks set relation, so nothing is typed. Don't add it before the design.
 The fix list is `notion/mentions-checklist.md`: StakingRewards still says "KingSuper", EigenLayer, Minascan and nine
 Cosmos validators still say "fka KingSuper", four listings link the suspended `x.com/encapsulate_xyz` (the live
 account is @encapHQ), Ika's on-chain profile has no website, and three different descriptions are in use, none
-matching the site. **First the user picks one description** (ten options were offered on 2026-09-29), then every
-profile gets the same name (Encapsulate), website (https://encapsulate.xyz), X (@encapHQ) and description.
+matching the site. Every profile gets the same name (Encapsulate), website (https://encapsulate.xyz), X (@encapHQ)
+and description.
 **The source is the `encapsulate-xyz/assets` repo** (its README's "Explorer Profile" JSON and `espresso-mainnet.json`,
 last edited 2025-09-23: "Backed by five years of experience, Encapsulate secures 40+ networks with nearly half a
-billion dollars…" — stale on every count); update it first. Decided 2026-09-29: the short description is option 1
-plus the open-source line, the user's pick (C): **"Validator infrastructure for new chains, from the first testnet
-through mainnet. Running validators since 2020, with open-source tooling for every chain we run."** (160 characters) —
-no figures in it; a dated, verified staked total goes only into the long versions (StakingRewards, LinkedIn, GitHub);
-the total counts the Lido Simple DVT cluster's 500 validators (16,000 ETH) in full as ours (the user, 2026-09-29);
-measured 2026-09-29 at $84.8M — publish "over $80 million" — per chain with sources in `notion/staked-total-2026-09-29.md`;
-the homepage's own live figure (the user's script) read $83,996,080 the same day, within 1% of it;
+billion dollars…" — stale on every count); update it first.
+**One description, everywhere** (the user, 2026-09-29: one short description, C, rather than a short and a long
+one) — option 1 plus the open-source line: **"Validator infrastructure for new chains, from the first testnet
+through mainnet. Running validators since 2020, with open-source tooling for every chain we run."**
+(160 characters: it fits X's bio, 160, and a Cosmos validator's details, 280; a field shorter than that takes its
+first sentence alone, 80 characters). **There is no long version, and no figure or count in any profile**: the
+homepage shows the staked total live (the user's script), and a typed figure is what went stale before ("$500
+million", "$248 million", "nearly half a billion"). For the record, the stake was measured on 2026-09-29 at $84.8M,
+the Lido Simple DVT cluster's 500 validators (16,000 ETH) counted in full as ours (the user) — per chain with sources
+in `notion/staked-total-2026-09-29.md` — and the homepage read $83,996,080 the same day, within 1% of it.
 `security@encapsulate.xyz` stays the explorers' contact on purpose; the logo there is the old 4097px PNG (use the
 512px one). Then, per profile: on-chain
 edits by the ops team with each operator key, forms and profile edits by the user, and **pull requests from the

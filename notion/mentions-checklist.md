@@ -11,7 +11,10 @@ validators' on-chain profiles, the other chains' profiles, and the directories a
 - `king.super.site` returns 404 (no redirect); `kingsuper.org` 301s to `https://encapsulate.xyz/`.
 - No profile carries a mistyped domain; the Cosmos website fields are all exactly `https://encapsulate.xyz`.
 - Descriptions come in three versions ("Others trust, we validate!…", "five years… 40+ networks… nearly half a
-  billion", "$500 million… since 2020") — none matches the site (since 2020, 27 mainnets, 35 chains). Agree one.
+  billion", "$500 million… since 2020") — none matches the site (since 2020, 27 mainnets, 35 chains).
+  **Agreed 2026-09-29, one description everywhere:** "Validator infrastructure for new chains, from the first testnet
+  through mainnet. Running validators since 2020, with open-source tooling for every chain we run." (160 characters, no
+  figures; a shorter field takes the first sentence alone). No long version.
 
 ## In order of value
 

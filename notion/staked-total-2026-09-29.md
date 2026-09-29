@@ -5,7 +5,8 @@ Read-only from each chain's public endpoints; prices from CoinGecko's simple pri
 The Lido Simple DVT cluster counts in full as ours (the user, 2026-09-29). Redo this before publishing a new figure —
 two tokens carry most of it, so the dollar total moves with SUI and ETH.
 
-**Total: $84.8 million — publish as "over $80 million" (September 2026).**
+**Total: $84.8 million.** A record only: no profile carries a figure (the user, 2026-09-29 — one short description
+with no numbers in it); the homepage shows the live total.
 
 | Chain | Stake | Price USD | Value USD | Source |
 |---|---|---|---|---|
@@ -47,8 +48,8 @@ measurement, a total it can only reach with the Lido cluster counted in full. Th
 $14K — it earns nothing) and four jailed or unbonded old Cosmos validators (about $300 together).
 
 **Notes**
-- ETH (51%) and SUI (42%) are 93% of the total: ±$100 on ETH moves it ±$1.6M, ±$0.01 on SUI ±$0.3M. Hence "over $80
-  million" rather than the exact sum.
+- ETH (51%) and SUI (42%) are 93% of the total: ±$100 on ETH moves it ±$1.6M, ±$0.01 on SUI ±$0.3M. A fall of about
+  5% in both puts it under $80M, which is why no rounded figure is typed into a profile either.
 - Sui, IOTA, Ika, NEAR and Supra report one pool balance including our own stake and compounded rewards; Supra's is a
   pre-bonded (PBO) pool, much of it probably locked allocation.
 - **Mina looks wrong**: 5,093 MINA in 16 delegations against 396 blocks produced in 30 days on Minascan — our main Mina
