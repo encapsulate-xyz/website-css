@@ -112,6 +112,7 @@ User rules that stand on every task:
 | `notion/github-actions-plan.md` | the GitHub Actions plan (2026-09-26, not built): the 26 things that go stale, where each lives in Notion, the proposed `jobs/` structure, the build order and the open decisions | — |
 | `notion/new-row-checklist.md` | **what a new row in each database needs beyond its page** (posts, chains, guides, the rest): its properties, its path in Super, the social card (`og_cards.py`), the fallback numbers and hardcoded lists, what to refresh and what to check. Go through it every time a row is added (the user, 2026-09-28) | — |
 | `notion/mentions-checklist.md` | **where Encapsulate is listed and what to fix** (2026-09-29): every validator profile, registry and directory checked read-only — name, website, X — ranked by value, with who fixes each (you, ops with the operator key, or a PR). `x.com/encapsulate_xyz` is suspended; the live account is @encapHQ | — |
+| `notion/profile-updates.md` | **the work list for the profiles** (2026-09-29): what every profile should say (name, the agreed description, website, X, Discord, logo) and all 37 updates in three tables — Claude's (our own repos and pull requests), a transaction with the operator key, and the user's forms and settings. Nothing done yet | — |
 | `notion/staked-total-2026-09-29.md` | the stake with our validators on 2026-09-29, per chain, from each chain's own endpoints and CoinGecko prices: $84.8M, the Lido cluster counted in full; the homepage's live figure agreed within 1%. A record only — no profile carries a figure | — |
 | `notion/guide-screenshots.md` | how guide screenshots are captured and composed (agreed 2026-09-18, not yet applied) | — |
 | `build.py` | strips comments into `dist/`, copies the JS | — |
@@ -1962,7 +1963,8 @@ Networks set relation, so nothing is typed. Don't add it before the design.
 
 ## TODO — every validator profile says the same thing (asked 2026-09-29)
 
-The fix list is `notion/mentions-checklist.md`: StakingRewards still says "KingSuper", EigenLayer, Minascan and nine
+**The work list is `notion/profile-updates.md`** (every update, how — pull request, transaction or form — and who).
+The check it comes from is `notion/mentions-checklist.md`: StakingRewards still says "KingSuper", EigenLayer, Minascan and nine
 Cosmos validators still say "fka KingSuper", four listings link the suspended `x.com/encapsulate_xyz` (the live
 account is @encapHQ), Ika's on-chain profile has no website, and three different descriptions are in use, none
 matching the site. Every profile gets the same name (Encapsulate), website (https://encapsulate.xyz), X (@encapHQ)
@@ -2096,7 +2098,11 @@ remove it**, the property unverifies. The domain's other TXT records are Gmail's
 Workspace, most likely); keep both. The sitemap is submitted, and indexing was requested for /, /networks, /blog and
 /guides — **Google had never seen /networks** ("URL is unknown to Google") and /blog was not indexed. Bing: the site
 was added by hand (the Search Console import brought only king.super.site) and verified by a CNAME in DigitalOcean,
-`36b290c4f7ac57fd3ecf97ffb2452be3` → `verify.bing.com.` (keep it); its sitemap is submitted. The homepage's
+`36b290c4f7ac57fd3ecf97ffb2452be3` → `verify.bing.com.` (keep it); its sitemap is submitted. **Search Console showed the sitemap as "Couldn't
+fetch" on 2026-09-29** ("Sitemap could not be read", nothing more): the file answers 200 as application/xml, parses, lists 111
+URLs that all answer 200, robots.txt names it, and Google's own live test of the URL said "URL is available to Google" — the
+status of a sitemap Google has queued and not read yet, on a property one day old. Two listed URLs are noindex on purpose
+(/governance/votes, /page-not-found); Super writes the sitemap, so they will show as a warning in the Pages report. The homepage's
 `google-site-verification` meta (`hMGL…`), which verified king.super.site, was removed from head/home.html (the user,
 2026-09-29), and the king.super.site property was removed from Search Console; Bing's site list has only encapsulate.xyz.
 **Nothing on the pages verifies the site now — the DNS records do.**
