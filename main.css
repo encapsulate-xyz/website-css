@@ -681,6 +681,7 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
+  min-width: 0;
 }.enc-nav__line-name {
   font-family: var(--type-display), sans-serif;
   font-weight: 600;
@@ -692,6 +693,21 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   font-size: 13px;
   color: #6B6F68;
   text-align: right;
+}
+
+/* ONE LINE AT EVERY WIDTH (the user, 2026-09-29: "they should be all same height at all sizes").
+   The capture and this line under it are what set the panel's row, so a line that wraps makes its
+   panel taller than the others: "Services and tooling" beside "Dashboards, playbooks, bots,
+   monitoring" needs 393px and wrapped wherever the middle column is narrower — under 1180px that
+   panel stood 20px over the other four. The name stays whole and the line beside it gives way,
+   cut with an ellipsis; where both fit, as at the design's own width, nothing changes. */
+.enc-nav__line-name { flex: none; white-space: nowrap; }
+.enc-nav__line-desc {
+  flex: 0 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* THE THIRD COLUMN: the page's own content where it has any (navbar.js reads it off the page),

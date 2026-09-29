@@ -60,9 +60,11 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
 .enc-nav__preview:hover .enc-nav__tile{border-color: #9B9B94;}
 .enc-nav__tile-name{position: absolute;left: 16px;top: 15px;right: 38%;font-family: var(--type-display),sans-serif;font-weight: 600;font-size: 16px;line-height: 1.1;letter-spacing: -0.022em;color: #FAFAF8;}
 .enc-nav__tile[data-enc-shot] .enc-nav__tile-name{display: none;}
-.enc-nav__line{display: flex;align-items: baseline;justify-content: space-between;gap: 12px;}
+.enc-nav__line{display: flex;align-items: baseline;justify-content: space-between;gap: 12px;min-width: 0;}
 .enc-nav__line-name{font-family: var(--type-display),sans-serif;font-weight: 600;font-size: 16px;letter-spacing: -0.02em;color: #000000;}
 .enc-nav__line-desc{font-family: var(--type-body),system-ui,sans-serif;font-size: 13px;color: #6B6F68;text-align: right;}
+.enc-nav__line-name{flex: none;white-space: nowrap;}
+.enc-nav__line-desc{flex: 0 1 auto;min-width: 0;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
 .enc-nav__third{min-width: 0;}
 .enc-nav__extra{display: none;min-width: 0;}
 .enc-nav__third[data-enc-filled] .enc-nav__about{display: none;}

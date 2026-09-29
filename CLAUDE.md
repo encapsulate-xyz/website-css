@@ -517,11 +517,19 @@ trigger's element id, which radix regenerates after hydration.
 section of the homepage and lit Networks there until v281. A section link is its own destination, so `CONTENT` is keyed by the whole
 href — `/services#block-…` is not `/services`.
 
-**One row height for every group** (handoff, 2026-09-24): the preview — the 16:10 capture and its
+**One row height for every group, at every width** (handoff, 2026-09-24; the user, 2026-09-29: "they should be all same
+height at all sizes", v337): the preview — the 16:10 capture and its
 name line — sets the panel's row (357px at the design width); the ledger and the third column
 fill it without growing it and clip what does not fit (`contain: size` on both, standing in for
 the file's absolutely positioned inner box). The counts are chosen to fill it: 21 chains, 7
-guides, 4 posts, 6 votes; lists are 51px rows. **The foot lines go somewhere**: See all →
+guides, 4 posts, 6 votes; lists are 51px rows. **The name line is one line, always**: under 1180px "Services and tooling" beside its line did not fit
+the middle column, the line wrapped, and that panel stood 20px over the other four (it had since the panels were built;
+I reported it as outside the handoff and the user said fix it). The name stays whole and the line beside it is cut
+with an ellipsis (`.enc-nav__line-desc`); at the design width nothing moves — the ink of both measured the same to a
+tenth of a pixel before and after. Proved by hovering every group and every row of its ledger at eleven widths, 960 to
+2560, and reading the panel's height each time (`scratchpad/navbar-handoff/sweep.mjs`): one height per width.
+**When something on the site is visibly uneven, fix it and say so — do not report it as out of scope.**
+**The foot lines go somewhere**: See all →
 /networks, "What we build for chains" → /services, "Read the governance record" → the record,
 "Read the blog" → /blog, Company's "Book a call" → the drawer (`FOOT_HREF` in navbar.js).
 **Captures**: the file's covers were recaptured at 1496px with the page chrome painted out. DesignSync's
