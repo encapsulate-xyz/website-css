@@ -44,7 +44,7 @@ asked for it to be turned off and the two merged (`gh pr merge N --admin --merge
 | Where a field is shorter than 157 characters | the first two sentences (103), or the first alone (52) |
 | Website | `https://encapsulate.xyz` — no `www.`, no `http:`, no trailing slash |
 | X | `https://x.com/encapHQ` (`x.com/encapsulate_xyz` is suspended) |
-| Discord | `https://discord.gg/q6cmGycxsr` — the link the site's footer and contact page use; Discord's API reports `expires_at: null` for it (2026-09-29), made by the user's own account, **pointing at the channel `moderator-only`**; whether it has a use limit cannot be read from outside (Server settings → Invites). `discord.com/invite/S5x4e2AHVV` has expired |
+| Discord | `https://discord.gg/q6cmGycxsr` — the link the site's footer and contact page use; Discord's API reports `expires_at: null` for it (2026-09-29), made by the user's own account, **pointing at the channel `moderator-only`**; the server's own invite list (the user's screenshot, 2026-09-29) shows it as the only invite, 81 uses, no use limit, expiry ∞. `discord.com/invite/S5x4e2AHVV` has expired |
 | Contact on explorers | `security@encapsulate.xyz` (on purpose) |
 | Logo | `img/favicon-512.png`, put into `encapsulate-xyz/assets` as `encapsulate.png` — the same path, so every profile that already points at it follows |
 
