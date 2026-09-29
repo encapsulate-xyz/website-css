@@ -1970,6 +1970,7 @@ billion dollars…" — stale on every count); update it first. Decided 2026-09-
 plus the open-source line, the user's pick (C): **"Validator infrastructure for new chains, from the first testnet
 through mainnet. Running validators since 2020, with open-source tooling for every chain we run."** (160 characters) —
 no figures in it; a dated, verified staked total goes only into the long versions (StakingRewards, LinkedIn, GitHub);
+the total counts the Lido Simple DVT cluster's 500 validators (16,000 ETH) in full as ours (the user, 2026-09-29);
 `security@encapsulate.xyz` stays the explorers' contact on purpose; the logo there is the old 4097px PNG (use the
 512px one). Then, per profile: on-chain
 edits by the ops team with each operator key, forms and profile edits by the user, and **pull requests from the
