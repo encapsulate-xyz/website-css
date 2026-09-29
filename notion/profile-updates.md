@@ -4,6 +4,13 @@ Asked for on 2026-09-29, once the description was agreed. `notion/mentions-check
 comes from (what each profile says today, ranked by value); this file is the work list. **Nothing here has been done
 yet — the user says when.**
 
+**The tracker is an artifact**, "Encapsulate Profile Updates" (private to the user; its link is in Claude's memory, not in this
+public file): the same updates as 49 rows — the Cosmos validators and the two SSV operators are one row each — every
+row with what the profile says **now** (read live on 2026-09-29) beside what it becomes, filters by who, status, how and
+weight, and a status and a note per row kept in the artifact's database (collection `updates`, one document per row:
+`{status: open|started|done, note, at}`). It is built by `scripts/profile_tracker/build.py` from `template.html`; the
+rows and their current values are the list in that script.
+
 ## What every profile should say
 
 | Field | Value |
@@ -50,7 +57,7 @@ cannot author one).
 | 18 | NEAR | description | `update_field` on `pool-details.near`, from the pool's owner |
 | 19 | Espresso | the metadata URI, to `espresso-mainnet.json` in our assets repo (it is the node's own `http://…:8088` address now, blank when the node is down) | `updateMetadataUri` on the StakeTable `0xCeF474…4451` |
 | 20 | EigenLayer — the fast way | the metadata URI, to a JSON in our assets repo | `updateOperatorMetadataURI` on the DelegationManager `0x39053D51…f37A`, from the operator address |
-| 21 | SSV operators 924 and 1056 | description, X | the SSV app, signed with the owner wallet `0xf3C9…7a80` |
+| 21 | SSV operators 924 and 1056 | description, X | the SSV app, signed with the owner wallet — `0xf3C9…7a80` for 924 (active, the 500 Lido validators), `0x1007…8262` for 1056 (inactive, none) |
 | 22 | SSV operator 469 (old, no validators) | remove it | `removeOperator(469)` from `0xa8e7…5B98` |
 | 23 | Sui — the candidate "dummyvalidator" `0xeac3…09ec` | remove it | `request_remove_validator_candidate` |
 | 24 | The 20 testnets | the same name and description | the same commands, per chain — **not checked yet** |
@@ -59,6 +66,12 @@ The binaries for rows 13–14: `terrad`, `agd`, `althea`, `gitopiad`, `gravity`,
 `c4ed`, `axelard`, `ixod`, `lumerad`. `edit-validator` changes only the flags it is given.
 
 Avail and Vara need nothing: their on-chain identity has no description field, and the name, website and X are right.
+
+**Found while reading the current values (2026-09-29):** on Gitopia and Gravity Bridge the *bonded* validator is the one
+named "fka KingSuper", and an old jailed one is already named "Encapsulate" — after the rename two will share the name.
+Axelar has an old jailed validator reading "Redelegate to Encapsulate" and ixo one still reading "fka KingSuper"; both are
+out of the set and stay. Zilliqa's file lists our pool twice (both entries change). Monad's two files take their logo
+from our assets repo, as Sui, IOTA, NEAR and Espresso do. The X bio is the "five years… 40+ networks… half a billion" text.
 
 ## 3. You — forms and account settings
 
