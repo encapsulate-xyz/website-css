@@ -122,15 +122,16 @@ row("r11", "11", "claude", "pr", "awesome-berachain-validators", "chuck-bear/awe
     ("Cutting board tool", [V("Encapsulate (fka KingSuper) cutting board tool"), U("https://cb.berachain.testnet.encapsulate.xyz", "dead")], NONE("Removed")),
     ("Ansible playbook", "Already says Encapsulate, and its link works", NONE("No change")),
 ], pri="top")
-row("r12", "12", "claude", "pr", "Agoric and Althea profile lists", "Agoric/validator-profiles · althea-net/community", [
-    ("Agoric, folder", "KingSuper", "Encapsulate"),
-    ("Agoric, the validator the pledge names", U("agoricvaloper1fy8r…3dmv32", "the older one"), U("agoricvaloper1p8ux…g25ldj", "the new one only")),
-    ("Agoric, the pledge's first line", "I, Aditya Kumar Verma (aka KingSuper)", "I, Aditya Kumar Verma of Encapsulate (formerly KingSuper)"),
-    ("Althea, row 67, name", [V("KingSuper"), U("github.com/aditya-manit")], [V("Encapsulate"), U("github.com/encapsulate-xyz")]),
-    ("Althea, row 67, contact", "KingSuper#3702", U("hello@encapsulate.xyz")),
-    ("Althea, row 67, validator", U("altheavaloper1vaxz…mputd", "not on mainnet"), U("altheavaloper1d2x0…72axt")),
-], pri="optional", cav="Both changes are ready on branches of our forks; opening each pull request is yours, since the pledge is in your own name. "
-                       "Neither repo has merged a pull request since 2023.")
+row("r12", "12.1", "claude", "pr", "Agoric validator profiles", "Agoric/validator-profiles · KingSuper/README.md", [
+    ("Folder", "KingSuper", "Encapsulate"),
+    ("The validator the pledge names", U("agoricvaloper1fy8r…3dmv32", "the older one"), U("agoricvaloper1p8ux…g25ldj", "the new one only")),
+    ("The pledge's first line", "I, Aditya Kumar Verma (aka KingSuper)", "I, Aditya Kumar Verma of Encapsulate (formerly KingSuper)"),
+], pri="optional", cav="The commitments in the pledge are unchanged. This repo has not merged a pull request since 2023.")
+row("r12-althea", "12.2", "claude", "pr", "Althea validator list", "althea-net/community · defi/validators.md, row 67", [
+    ("Name", [V("KingSuper"), U("github.com/aditya-manit")], [V("Encapsulate"), U("github.com/encapsulate-xyz")]),
+    ("Contact", "KingSuper#3702", U("hello@encapsulate.xyz")),
+    ("Validator", U("altheavaloper1vaxz…mputd", "not on mainnet"), U("altheavaloper1d2x0…72axt")),
+], pri="optional", cav="This repo has not merged a pull request since 2023.")
 
 T2_ENV = T2.replace(",", "")     # what the node serves today: the old description, its commas removed on 2026-05-20
 DESC_ENV = ("Validator infrastructure for new chains since 2020. Early to testnet. Quick to upgrade. Easy to reach. "

@@ -5,7 +5,7 @@ comes from (what each profile says today, ranked by value); this file is the wor
 forms are still theirs.**
 
 **The tracker is an artifact**, "Encapsulate Profile Updates" (private to the user; its link is in Claude's memory, not in this
-public file): the same updates as 47 rows — the Cosmos validators are one row each — every
+public file): the same updates as 48 rows — the Cosmos validators are one row each — every
 row with what the profile says **now** beside what it becomes, filters by who, status, route, pull request and weight,
 and a status, a note, the pull request and the last live check per row kept in the artifact's database (collection
 `updates`, one document per row: `{status: open|started|done|skipped, note, at, pr, live, liveAt}`). It is built by
@@ -29,7 +29,8 @@ of values that copy on a click, one toolbar, and rows that are a single line unt
 | 9 | REStake registry | open — [#5205](https://github.com/eco-stake/validator-registry/pull/5205). 13 bonded validators on 12 chains |
 | 10 | awesome-celestia | open — [#131](https://github.com/celestiaorg/awesome-celestia/pull/131). Every link in our section was dead; it now lists our three live Celestia repos and the log-analysis post |
 | 11 | awesome-berachain-validators | open — [#23](https://github.com/chuck-bear/awesome-berachain-validators/pull/23). The repo last merged in April 2025 |
-| 12 | Agoric and Althea lists | **ready, not opened** (the user, 2026-09-29: "update but only for the new validator in agoric"). Branch `encapsulate-profile` on our forks `encapsulate-xyz/validator-profiles-1` (Agoric: the folder renamed to Encapsulate, the pledge's link now the new validator `…g25ldj` on Mintscan, its first line "of Encapsulate (formerly KingSuper)", the commitments untouched) and `encapsulate-xyz/community` (Althea: row 67 with the name, the org's GitHub, hello@encapsulate.xyz and the mainnet validator). **The user opens each pull request** — the pledge is in their own name. Neither repo has merged since 2023 |
+| 12.1 | Agoric profile | open — [#129](https://github.com/Agoric/validator-profiles/pull/129), raised 2026-09-29 at the user's word ("you do it"). The folder renamed to Encapsulate, the pledge's link now only the new validator `…g25ldj` on Mintscan, its first line "of Encapsulate (formerly KingSuper)", the commitments untouched. The repo has not merged since 2023 |
+| 12.2 | Althea list | open — [#129](https://github.com/althea-net/community/pull/129), the same day. Row 67 of `defi/validators.md`: the name, the org's GitHub, hello@encapsulate.xyz and the mainnet validator (the old row named one that is not on mainnet). The repo has not merged since 2023 |
 | 38 | Espresso, the node's own description | **merged 2026-09-29** — [#16](https://github.com/encapsulate-xyz/espresso-ansible/pull/16). The node still serves the old text until it is restarted; **the user restarts it**. See "Espresso" below |
 | 31 | GitHub organisation | description and email set through the API (the token could, after all); **verifying the domain is left to the user** |
 
