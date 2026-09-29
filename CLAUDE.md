@@ -2000,8 +2000,8 @@ Networks set relation, so nothing is typed. Don't add it before the design.
 ## TODO — every validator profile says the same thing (asked 2026-09-29)
 
 **The Cosmos edits are written and waiting for the right key** (2026-09-29): `scripts/validator_profiles/` (its README has the
-state). The user put a seed in `seed.txt` in the repo's folder ("you must not read it") — it is git-ignored and chmod 600,
-**never open it, print it or copy it; only a script may read it**. It opens the voting wallet (`…lz32rfqz…`), which holds
+state). **A seed the user supplies is never opened, printed or copied — only a script may read it** (the user: "you must
+not read it"), from a local file that git ignores. The one supplied on 2026-09-29 opens the voting wallet (`…lz32rfqz…`), which holds
 only `MsgVote`; the edit permission is with `…p8uxq4ska2…`, so the script stopped before signing and nothing was sent.
 **Six account rows are parked** (the user, 2026-09-29: "keep it added in the artifact for now, we will visit them later"):
 X @encapHQ, X @_KingSuper_, LinkedIn, Keybase, the Lido forum and the Discord server — each noted in the tracker; do not
