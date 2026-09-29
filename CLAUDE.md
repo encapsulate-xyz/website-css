@@ -2018,7 +2018,7 @@ channel; never expires, no use limit). It replaced `q6cmGycxsr` — made from `#
 invite's preview — in 33 Notion blocks (the homepage's and /contact's Discord lines, the "Ask us on Discord" button of 29
 guides, the guide copy's `help url`; old values in `backups/discord-invite-2026-09-29.json`), Super's footer, the homepage
 head's `sameAs`, guide.js's fallback, our two GitHub repos and the three open pull requests that carry a Discord link.
-**`q6cmGycxsr` still works and must not be revoked**: on-chain profiles (NEAR) and Voyager carry it until they are changed.
+**`q6cmGycxsr` still works and must not be revoked yet**: Voyager carries it until its team publishes the form sent on 2026-09-29 (NEAR was changed on chain that evening).
 **The work list is `notion/profile-updates.md`** (every update, how — pull request, transaction or form — and who).
 The check it comes from is `notion/mentions-checklist.md`: StakingRewards still says "KingSuper", EigenLayer, Minascan and nine
 Cosmos validators still say "fka KingSuper", four listings link the suspended `x.com/encapsulate_xyz` (the live
