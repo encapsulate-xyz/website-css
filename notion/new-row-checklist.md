@@ -104,7 +104,8 @@ the steps of the SEO audit of 2026-09-26/28, for Google and for AI search. Keep 
       outside the site" in CLAUDE.md), else the chain's own staking page.
 - [ ] **Counts follow by themselves** (read from the set on /services), but the numbers typed as the
       fallback do not: "27 mainnets · 20 testnets" and "Thirty-five teams chose us." on /networks, the
-      homepage's stat, the /services ask, and CONTENT/FOOT in navbar.js ("27 mainnets", "See all 27").
+      homepage's stat and its Why Stake card ("27 secured" — the "No slashing" row's **Caption right**; it still
+      read 25 on 2026-09-29), the /services ask, and CONTENT/FOOT in navbar.js ("27 mainnets", "See all 27").
 - [ ] **Hardcoded glyph lists**, only if the chain should appear there: footer.js (ten glyphs) and
       covers.js (the /networks cover's discs).
 - [ ] **Social card** (mainnet only, after the chain page builds live — it is a capture of its hero):

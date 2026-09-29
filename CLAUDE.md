@@ -1758,7 +1758,9 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
   Only the digits (or the leading spelled number) are replaced, so the words stay Notion's. **The
   numbers typed in Notion, and CONTENT/FOOT in navbar.js, are the fallback** — keep them right when
   the set changes, since they are what shows if /services cannot be read or before it arrives. If
-  the view on /services loses its Stage property, every count falls back.
+  the view on /services loses its Stage property, every count falls back. A crawler that runs no script reads the
+  typed number: the Why Stake card said "25 secured" beside the stat's 27 until 2026-09-29 (the "No slashing" row's
+  Caption right, in the homepage's Why Stake database `bd1e4d48…`; old value in `backups/why-stake-caption-2026-09-29.json`).
 - **The old `Networks` database is not to be used for anything** (the user, 2026-09-24) — not for
   values, not for chain pages. Its item pages carry stale "Expected Reward Rate" lists.
 - **Every script now prefers this database:** `covers.js` reads it by id, `home.js` uses it when a
