@@ -1963,7 +1963,15 @@ The fix list is `notion/mentions-checklist.md`: StakingRewards still says "KingS
 Cosmos validators still say "fka KingSuper", four listings link the suspended `x.com/encapsulate_xyz` (the live
 account is @encapHQ), Ika's on-chain profile has no website, and three different descriptions are in use, none
 matching the site. **First the user picks one description** (ten options were offered on 2026-09-29), then every
-profile gets the same name (Encapsulate), website (https://encapsulate.xyz), X (@encapHQ) and description: on-chain
+profile gets the same name (Encapsulate), website (https://encapsulate.xyz), X (@encapHQ) and description.
+**The source is the `encapsulate-xyz/assets` repo** (its README's "Explorer Profile" JSON and `espresso-mainnet.json`,
+last edited 2025-09-23: "Backed by five years of experience, Encapsulate secures 40+ networks with nearly half a
+billion dollars…" — stale on every count); update it first. Decided 2026-09-29: the short description is option 1
+plus the open-source line — "Validator infrastructure for new chains, from the first testnet through mainnet. Running
+validators since 2020, with open-source dashboards, playbooks, bots and monitoring." (A; B/C the shorter endings) —
+no figures in it; a dated, verified staked total goes only into the long versions (StakingRewards, LinkedIn, GitHub);
+`security@encapsulate.xyz` stays the explorers' contact on purpose; the logo there is the old 4097px PNG (use the
+512px one). Then, per profile: on-chain
 edits by the ops team with each operator key, forms and profile edits by the user, and **pull requests from the
 `encapsulate-xyz` GitHub account — not yet; the user will say when.**
 
