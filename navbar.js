@@ -627,7 +627,7 @@
   };
 
   /* ── THE PANEL'S SEARCH (handoff 2026-09-28, Navbar 4f Page: Y4a of Search Trigger Patterns) ──
-     Every panel's foot is a search scoped to its own group: Networks the networks, Services the
+     Every panel opens with a search scoped to its own group: Networks the networks, Services the
      tools, Practices the votes, Learn the guides and posts, Company the brand kit, the investments
      and the contact routes. The box: the scope as an ink token, a typed example behind a drawn
      caret while it is empty and idle, the keycap. ↑↓ move, Enter opens, Esc clears; the results take
@@ -957,10 +957,11 @@
     return !!(a && a.matches && a.matches(".enc-nav__search input"));
   }
 
-  /* the box at the panel's foot, and the results over the panel's body */
-  function searchFoot(panel, grid, group) {
+  /* the box at the panel's head, over its three columns (handoff 2026-09-29: it was the foot), and
+     the results over the panel's body */
+  function searchHead(panel, grid, group) {
     var sc = SEARCH[group], id = "enc-nav-res-" + keyOfName(group);
-    var foot = el("div", "enc-nav__foot enc-nav__foot--search");
+    var head = el("div", "enc-nav__head");
     var box = el("div", "enc-nav__search");
     box.setAttribute("data-enc-group", group);
     box.appendChild(el("span", "enc-nav__search-tok", sc.tok));
@@ -991,8 +992,8 @@
     var key = el("span", "enc-nav__search-key", KEYCAP);
     key.setAttribute("aria-hidden", "true");
     box.appendChild(key);
-    foot.appendChild(box);
-    panel.appendChild(foot);
+    head.appendChild(box);
+    panel.insertBefore(head, grid);
 
     var res = el("div", "enc-nav__results");
     res.id = id;
@@ -1281,10 +1282,10 @@
     third.appendChild(about);
     grid.appendChild(third);
 
-    // the foot: the group's search (handoff 2026-09-28); a group without one keeps its own line
-    // and how many pages are in it
+    // the group's search, at the panel's head (handoff 2026-09-29; at its foot for a day); a group
+    // without one keeps a foot: its own line and how many pages are in it
     var group = groupOf(panel);
-    if (SEARCH[group]) searchFoot(panel, grid, group);
+    if (SEARCH[group]) searchHead(panel, grid, group);
     else footLine();
     function footLine() {
     var foot = el("div", "enc-nav__foot");
@@ -1930,7 +1931,7 @@
 
   /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
      against its page from the console without opening the menu */
-  window.encNav = { version: 17, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
+  window.encNav = { version: 18, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
     groups: function () { return groups; }, harvest: function () { return { done: harvested, tries: harvestTries }; },
     ground: ground, isInk: isInk, groundUnder: groundUnder, wordmark: wearWordmark,
     band: band };

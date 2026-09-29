@@ -569,8 +569,13 @@ booking drawer (60). Escape, the button, a row or a resize past 959 close it.
 - The design's row hover (`.nav-row:hover`, the second paper) is kept on paper only; on ink it
   would put paper type on a paper wash.
 
-**The panel's foot is a search of its own group** (handoff re-read 2026-09-28, v332; *Search Trigger
-Patterns* Y4a). It replaced the foot line and the page count. The box: the scope as an ink token
+**The panel opens with a search of its own group** (handoff re-read 2026-09-28, v332; *Search Trigger
+Patterns* Y4a). It replaced the foot line and the page count, and **since the handoff of 2026-09-29 (v336) it stands at
+the panel's head, over the three columns** — no rule, 6px under it on top of the panel's 22px gap, so 26px down to the
+box and 28px from the box to the columns; every group's panel is 478px tall at 1440 (navbar.js `searchHead`,
+`.enc-nav__head`). It was the panel's foot, under a hairline, for one day. The file's only change that day was this
+move — found by diffing it against the copy kept from the pass before, which is the quickest way to read a handoff of
+a file already built. The box: the scope as an ink token
 (Networks, Tools, Votes, Posts & guides, Company), a typed example behind a drawn caret while it is empty
 and idle (~95ms frames; reduced motion shows the first name), "Search <noun>" once focused, the ⌘K / Ctrl K
 keycap; `#D9D9D2` ring, `#B9B9B1` hovered, ink while focused, the 3px ring for the keyboard only

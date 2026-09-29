@@ -1032,12 +1032,13 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
   color: #6B6F68;
 }
 
-/* THE PANEL'S SEARCH (handoff 2026-09-28, Y4a of Search Trigger Patterns; navbar.js searchFoot).
-   The foot is the box alone, under the hairline: a paper box on the paper panel with the input
-   ring (#D9D9D2, #B9B9B1 hovered, ink while it has focus), the scope as an ink token, the typed
-   example behind a drawn caret, the keycap. Its results take over the panel's body — the grid's
-   own columns stay underneath, hidden, so the panel keeps its height. */
-.enc-nav__foot--search { display: block; }
+/* THE PANEL'S SEARCH (handoff 2026-09-28, Y4a of Search Trigger Patterns; navbar.js searchHead).
+   The box opens the panel, over its three columns (handoff 2026-09-29: it stood at the foot, under
+   a hairline, for a day): no rule, 6px under it on top of the panel's own 22px gap. A paper box on
+   the paper panel with the input ring (#D9D9D2, #B9B9B1 hovered, ink while it has focus), the
+   scope as an ink token, the typed example behind a drawn caret, the keycap. Its results take over
+   the panel's body — the grid's own columns stay underneath, hidden, so the panel keeps its height. */
+.enc-nav__head { display: block; width: 100%; padding-bottom: 6px; }
 .enc-nav__search {
   position: relative;
   display: flex;
