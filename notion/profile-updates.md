@@ -1,8 +1,8 @@
 # Every profile to update — what, how and who (2026-09-29)
 
 Asked for on 2026-09-29, once the description was agreed. `notion/mentions-checklist.md` is the read-only check this
-comes from (what each profile says today, ranked by value); this file is the work list. **Nothing here has been done
-yet — the user says when.**
+comes from (what each profile says today, ranked by value); this file is the work list. **The user gave the go on 2026-09-29 for Claude's rows; the transactions and the
+forms are still theirs.**
 
 **The tracker is an artifact**, "Encapsulate Profile Updates" (private to the user; its link is in Claude's memory, not in this
 public file): the same updates as 49 rows — the Cosmos validators and the two SSV operators are one row each — every
@@ -10,6 +10,30 @@ row with what the profile says **now** (read live on 2026-09-29) beside what it 
 weight, and a status and a note per row kept in the artifact's database (collection `updates`, one document per row:
 `{status: open|started|done, note, at}`). It is built by `scripts/profile_tracker/build.py` from `template.html`; the
 rows and their current values are the list in that script.
+
+## State on 2026-09-29, after the user's go ("fix everything you can fix here")
+
+| Row | What | State |
+|---|---|---|
+| 1 | `encapsulate-xyz/assets` | **merged** — [#1](https://github.com/encapsulate-xyz/assets/pull/1). The 512px logo at the old path (the 4097px one kept as `encapsulate-4097.png`), the description in both files, `eigenlayer.json` |
+| 2 | `encapsulate-xyz/.github` | **merged** — [#9](https://github.com/encapsulate-xyz/.github/pull/9) |
+| 3 | Monad | open — [#1003](https://github.com/monad-developers/validator-info/pull/1003). Their validator passes. **Reviewed only once its link is posted in Monad's validator Discord channel** |
+| 4 | Zilliqa | open — [#211](https://github.com/Zilliqa/zq2-staking/pull/211) |
+| 5 | Symbiotic | open — [#526](https://github.com/symbioticfi/metadata-mainnet/pull/526). **Merged only after the link is emailed to verify@symbiotic.fi from an encapsulate.xyz address** |
+| 6 | EigenLayer | open — [#96](https://github.com/Layr-Labs/eigendata/pull/96). The repo last merged in July 2025; row 20 is the quick way |
+| 7 | Mina, Auro | open — [#108](https://github.com/aurowallet/launch/pull/108) |
+| 8 | Terra | open — [#676](https://github.com/terra-money/validator-profiles/pull/676). The repo last merged in January 2025. The profile is rewritten from the site's own words; contacts and Terra's alerts go to security@ |
+| 9 | REStake registry | open — [#5205](https://github.com/eco-stake/validator-registry/pull/5205). 13 bonded validators on 12 chains |
+| 10 | awesome-celestia | open — [#131](https://github.com/celestiaorg/awesome-celestia/pull/131). Every link in our section was dead; it now lists our three live Celestia repos and the log-analysis post |
+| 11 | awesome-berachain-validators | open — [#23](https://github.com/chuck-bear/awesome-berachain-validators/pull/23). The repo last merged in April 2025 |
+| 12 | Agoric and Althea lists | **set aside** — neither repo has merged since 2023; Agoric's file is a pledge in the user's own name |
+| 31 | GitHub organisation | description and email set through the API (the token could, after all); **verifying the domain is left to the user** |
+
+`scripts/profile_tracker/prs.json` maps each row to its pull request and `python3 scripts/profile_tracker/prs.py` prints
+every state. **How the pull requests were made:** a branch cut from the upstream's own default branch, pushed to a fork
+under `encapsulate-xyz` (the org's existing forks were stale and would not sync), opened by `aditya-manit`. Every commit
+and description carries the session's attribution lines. **Both of our own repos had admin enforcement on**; the user
+asked for it to be turned off and the two merged (`gh pr merge N --admin --merge`) — it is off on `assets` and `.github`.
 
 ## What every profile should say
 

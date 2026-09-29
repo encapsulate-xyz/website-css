@@ -29,7 +29,7 @@ X_NEW, X_OLD = "https://x.com/encapHQ", "https://x.com/encapsulate_xyz"
 DC_NEW, DC_OLD = "https://discord.gg/q6cmGycxsr", "https://discord.com/invite/S5x4e2AHVV"
 RAW = "https://raw.githubusercontent.com/encapsulate-xyz/assets/refs/heads/main/"
 
-HOW = {"push": "Push to our repo", "pr": "Pull request", "tx": "Transaction", "form": "Form", "settings": "Account settings", "ask": "Ask their team"}
+HOW = {"push": "Our own repo", "pr": "Pull request", "tx": "Transaction", "form": "Form", "settings": "Account settings", "ask": "Ask their team"}
 WHO = {"claude": ("Claude", "Our own repos and pull requests. Each waits for your word."),
        "ops": ("Ops", "Signed with the operator key or the owner wallet."),
        "you": ("You", "Forms, account settings and messages to other teams.")}
@@ -65,6 +65,7 @@ row("r01", "01", "claude", "push", "Assets repo", "encapsulate-xyz/assets", [
     ("Description, espresso-mainnet.json", T2, AGREED),
     ("Logo, encapsulate.png", "4097 × 4097 px, 207 KB", "512 × 512 px, 40 KB, at the same path"),
     ("eigenlayer.json", NONE("Does not exist"), "A new file, for row 20"),
+    ("encapsulate-4097.png", NONE("Does not exist"), "The original logo, kept under this name"),
 ], pri="top", cav="Goes first. Sui, IOTA, NEAR, Espresso and Monad read their logo from this repo, so the new one reaches them with no transaction.")
 row("r02", "02", "claude", "push", "GitHub organisation page", "encapsulate-xyz/.github · profile/README.md", [
     ("Opening text", "Revolutionizing Blockchain Staking. Welcome to Encapsulate's official GitHub page! We provide the infrastructure you need to earn rewards from your blockchain tokens through staking.", AGREED),
@@ -75,16 +76,16 @@ row("r03", "03", "claude", "pr", "Monad", "monad-developers/validator-info · ma
     ("Description", T2 + ".", AGREED),
     ("X", U(X_OLD, "suspended"), U(X_NEW)),
     ("Website", U(SITE + "/"), U(SITE)),
-], pri="top", cav="Two files, the same three changes in each. Post the pull request in Monad's Discord once it is open.")
+], pri="top", cav="Two files, the same three changes in each. Monad reviews a pull request only after its link is posted in their validator Discord channel.")
 row("r04", "04", "claude", "pr", "Zilliqa", "Zilliqa/zq2-staking · src/misc/stakingPoolsConfig.ts", [
-    ("Description", T_ZIL, [AGREED, V("with encapsulate.xyz linked inside it")]),
+    ("Description", T_ZIL, [AGREED, V("followed by a link to encapsulate.xyz")]),
     ("Website", NONE("The portal has no field for it"), "Carried by the link in the description"),
 ], cav="Our pool is listed twice in the file, so both entries change.")
 row("r05", "05", "claude", "pr", "Symbiotic", "symbioticfi/metadata-mainnet · operators/0x69F5…2F09/info.json", [
     ("Description", T1, AGREED),
     ("X", U(X_OLD, "suspended"), U(X_NEW)),
     ("Discord", U(DC_OLD, "expired"), U(DC_NEW)),
-], pri="top", cav="They may ask for a message signed by the operator address.")
+], pri="top", cav="Symbiotic merges only after the pull request's link is emailed to verify@symbiotic.fi from an encapsulate.xyz address.")
 row("r06", "06", "claude", "pr", "EigenLayer", "Layr-Labs/eigendata · operators/Encapsulate/metadata.json", [
     ("Name", "Encapsulate (fka KingSuper)", "Encapsulate"),
     ("Description", T_EIGEN, AGREED),
@@ -99,7 +100,8 @@ row("r08", "08", "claude", "pr", "Terra validator profiles", "terra-money/valida
     ("Moniker", "KingSuper", "Encapsulate"),
     ("Website", U("https://king.super.site", "404"), U(SITE)),
     ("Text", "We are a team of software developers and operate on 18 networks in total, some of them includes the graph protocol, mina, osmosis, agoric, umee, juno.", AGREED),
-    ("Contacts", "A personal Gmail address, a personal Telegram handle and a Discord tag", U("security@encapsulate.xyz")),
+    ("Contacts", "A personal Gmail address, a personal Telegram handle and a Discord tag", [U("security@encapsulate.xyz"), U("@aditya_encapsulate")]),
+    ("Alerts from Terra", "Sent to the personal Gmail address", U("security@encapsulate.xyz")),
     ("Logo", "KingSuper.png, the crown", "The current mark"),
 ], pri="top")
 row("r09", "09", "claude", "pr", "REStake and cosmos.directory", "eco-stake/validator-registry", [
@@ -107,11 +109,13 @@ row("r09", "09", "claude", "pr", "REStake and cosmos.directory", "eco-stake/vali
     ("Our validators", NONE("Not listed"), "Encapsulate/chains.json with the 13 validator addresses"),
 ], pri="top")
 row("r10", "10", "claude", "pr", "awesome-celestia", "celestiaorg/awesome-celestia · README.md", [
-    ("Heading", "List of Contributions from Encapsulate (fka KingSuper)", "List of Contributions from Encapsulate"),
+    ("Heading", "List of Contributions from Encapsulate (fka KingSuper)", "Contributions from Encapsulate"),
     ("RPC, LCD, gRPC", U("celestia-mainnet-rpc, -lcd and -grpc.kingsuper.services", "dead"), NONE("Removed")),
     ("Snapshots", U("encapsulate.xyz/snapshots/celestia-bridge-mainnet, -app-mainnet, -bridge-testnet", "404"), NONE("Removed")),
-    ("Tools", U("celestia-pfb and celestia-node-checker.kingsuper.services", "dead"), NONE("Removed")),
-], pri="top")
+    ("Hosted tools", U("celestia-pfb and celestia-node-checker.kingsuper.services", "dead"), "The source of both tools on GitHub"),
+    ("Ansible playbook", NONE("Not listed"), U("github.com/encapsulate-xyz/celestia-bridge-ansible")),
+    ("Research", NONE("Not listed"), U("encapsulate.xyz/blog/celestia-testnet-log-analysis")),
+], pri="top", cav="Every link in our section was dead. It now lists what is still live, so the mention stays.")
 row("r11", "11", "claude", "pr", "awesome-berachain-validators", "chuck-bear/awesome-berachain-validators · README.md", [
     ("Cutting board tool", [V("Encapsulate (fka KingSuper) cutting board tool"), U("https://cb.berachain.testnet.encapsulate.xyz", "dead")], NONE("Removed")),
     ("Ansible playbook", "Already says Encapsulate, and its link works", NONE("No change")),
@@ -119,7 +123,7 @@ row("r11", "11", "claude", "pr", "awesome-berachain-validators", "chuck-bear/awe
 row("r12", "12", "claude", "pr", "Agoric and Althea profile lists", "Agoric/validator-profiles · althea-net/community", [
     ("Agoric, folder and pledge", "KingSuper", "Encapsulate"),
     ("Althea, validators.md row 67", [V("KingSuper"), U("github.com/aditya-manit")], [V("Encapsulate"), U("github.com/encapsulate-xyz")]),
-], pri="optional", cav="Both lists have been inactive since 2023.")
+], pri="optional", cav="Set aside. Neither repo has merged a pull request since 2023, and Agoric's file is a pledge signed in your own name, which is yours to rewrite.")
 
 # ------------------------------------------------------------------ Ops: Cosmos, one row per validator
 both = [("terra", "Terra", "terrad", None), ("agoric-old", "Agoric, the older validator", "agd", "agoricvaloper1fy8r…dmv32. Our other Agoric validator is row 14.2."),
@@ -279,10 +283,10 @@ def render_row(r):
         '<li class="row" id="row-{i}" data-row="{i}" data-who="{who}" data-how="{how}" data-pri="{pri_k}" data-text="{text}">'
         '<div class="r-n">{n}</div>'
         '<div class="r-main"><h3>{title}</h3><p class="where">{where}</p><div class="tags">{pri}</div></div>'
-        '<div class="r-how"><span class="chip how">{howl}</span>{cmd}</div>'
+        '<div class="r-how"><span class="chip how">{howl}</span><a class="pr" target="_blank" rel="noopener noreferrer" hidden></a>{cmd}</div>'
         '<div class="r-status"><label class="vh" for="st-{i}">Status of {title}</label>'
         '<select id="st-{i}" class="st" data-state="open" disabled>'
-        '<option value="open">Open</option><option value="started">Started</option><option value="done">Done</option></select>'
+        '<option value="open">Open</option><option value="started">Started</option><option value="done">Done</option><option value="skipped">Set aside</option></select>'
         '<span class="when" hidden></span></div>'
         '<div class="r-chg"><table class="chg"><thead><tr><th scope="col">Field</th><th scope="col">Now</th><th scope="col">Becomes</th></tr></thead>'
         '<tbody>{chg}</tbody></table></div>'
@@ -317,7 +321,8 @@ def pills(group, items):
 used_how = [k for k in HOW if any(r["how"] == k for r in R)]
 filters = (
     pills(("who", "Who"), [("all", "Everyone"), ("claude", "Claude"), ("ops", "Ops"), ("you", "You")]) +
-    pills(("status", "Status"), [("all", "Any"), ("open", "Open"), ("started", "Started"), ("done", "Done")]) +
+    pills(("status", "Status"), [("all", "Any"), ("open", "Open"), ("started", "Started"), ("done", "Done"), ("skipped", "Set aside")]) +
+    pills(("pr", "Pull request"), [("all", "Any"), ("open", "Open"), ("merged", "Merged")]) +
     pills(("how", "How"), [("all", "Any")] + [(k, HOW[k]) for k in used_how]) +
     pills(("pri", "Weight"), [("all", "Any"), ("top", "Top fixes"), ("optional", "Optional")])
 )
