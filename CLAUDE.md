@@ -113,6 +113,7 @@ User rules that stand on every task:
 | `notion/new-row-checklist.md` | **what a new row in each database needs beyond its page** (posts, chains, guides, the rest): its properties, its path in Super, the social card (`og_cards.py`), the fallback numbers and hardcoded lists, what to refresh and what to check. Go through it every time a row is added (the user, 2026-09-28) | — |
 | `notion/mentions-checklist.md` | **where Encapsulate is listed and what to fix** (2026-09-29): every validator profile, registry and directory checked read-only — name, website, X — ranked by value, with who fixes each (you, ops with the operator key, or a PR). `x.com/encapsulate_xyz` is suspended; the live account is @encapHQ | — |
 | `notion/profile-updates.md` | **the work list for the profiles** (2026-09-29): what every profile should say (name, the agreed description, website, X, Discord, logo) and all 37 updates in three tables — Claude's (our own repos and pull requests), a transaction with the operator key, and the user's forms and settings. Nothing done yet | — |
+| `scripts/validator_profiles/` | `edit.mjs` edits our 13 Cosmos validators' name and description (as operator or by authz), dry run first; `plan.json` names each signer; `find.mjs` looks for an address among a seed's accounts. Nothing sent yet — see its README | — |
 | `scripts/profile_tracker/` | builds the profile tracker page (an artifact, "Encapsulate Profile Updates"): `build.py` holds the 49 rows with each field's current value (read live 2026-09-29) and its new one, `template.html` the page — the agreed values at the top, filters, and a status and note per row kept in the artifact's database. `OUT=<path> python3 scripts/profile_tracker/build.py`, then republish the artifact from that path. `prs.json` maps a row to its pull request and `prs.py` prints each one's state (open, merged, checks) | — |
 | `notion/staked-total-2026-09-29.md` | the stake with our validators on 2026-09-29, per chain, from each chain's own endpoints and CoinGecko prices: $84.8M, the Lido cluster counted in full; the homepage's live figure agreed within 1%. A record only — no profile carries a figure | — |
 | `notion/sui-guide-review-2026-09-29.md` | the review of the Sui guide: the 12 findings still open (where, what it says, what is wrong, a suggested fix), the two fixed, the eight the user set aside | — |
@@ -1998,6 +1999,10 @@ Networks set relation, so nothing is typed. Don't add it before the design.
 
 ## TODO — every validator profile says the same thing (asked 2026-09-29)
 
+**The Cosmos edits are written and waiting for the right key** (2026-09-29): `scripts/validator_profiles/` (its README has the
+state). The user put a seed in `seed.txt` in the repo's folder ("you must not read it") — it is git-ignored and chmod 600,
+**never open it, print it or copy it; only a script may read it**. It opens the voting wallet (`…lz32rfqz…`), which holds
+only `MsgVote`; the edit permission is with `…p8uxq4ska2…`, so the script stopped before signing and nothing was sent.
 **Six account rows are parked** (the user, 2026-09-29: "keep it added in the artifact for now, we will visit them later"):
 X @encapHQ, X @_KingSuper_, LinkedIn, Keybase, the Lido forum and the Discord server — each noted in the tracker; do not
 change any of them until the user names it. **The Discord invite is `https://discord.gg/PQJX5JVS8h`** since 2026-09-29 (the user made it from the announcement

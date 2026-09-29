@@ -1,0 +1,413 @@
+[
+ {
+  "chain": "terra",
+  "registry": "terra2",
+  "chain_id": "phoenix-1",
+  "prefix": "terra",
+  "valoper": "terravaloper1yh4u76y405t3ff9lyrzhhe8legjx9k3as5mujs",
+  "account": "terra1yh4u76y405t3ff9lyrzhhe8legjx9k3asmhpzr",
+  "moniker": "Encapsulate (fka KingSuper)",
+  "fees": [
+   [
+    "uluna",
+    0.015,
+    0.015,
+    0.015
+   ]
+  ],
+  "slip44": 330,
+  "key_algos": null,
+  "sdk": "v0.50.15-terra.0",
+  "signer": "terra1p8uxq4ska2psv2k8wknljh568k5qfnwtvtlfr9",
+  "mode": "authz",
+  "balances": {
+   "ibc/2C962DAB9F57FE0921435426AE75196009FAA1981BF86991203C8411F8980FDB": "45",
+   "ibc/B3504E092456BA618CC28AC671A71FB08C6CA0FD0BE7C8A5B5A3E2DD933CC9E4": "10",
+   "uluna": "774259036"
+  },
+  "account_type": "/cosmos.auth.v1beta1.BaseAccount",
+  "pubkey_type": "/cosmos.crypto.secp256k1.PubKey",
+  "sequence": "1",
+  "account_number": "781894"
+ },
+ {
+  "chain": "agoric",
+  "registry": "agoric",
+  "chain_id": "agoric-3",
+  "prefix": "agoric",
+  "valoper": "agoricvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtg25ldj",
+  "account": "agoric1p8uxq4ska2psv2k8wknljh568k5qfnwtcj8k3n",
+  "moniker": "Encapsulate",
+  "fees": [
+   [
+    "ubld",
+    null,
+    0.03,
+    0.05
+   ]
+  ],
+  "slip44": 564,
+  "key_algos": null,
+  "sdk": "v0.53.6-alpha.agoric.1",
+  "signer": "agoric1p8uxq4ska2psv2k8wknljh568k5qfnwtcj8k3n",
+  "mode": "direct",
+  "balances": {
+   "ubld": "240000"
+  },
+  "account_type": "/cosmos.auth.v1beta1.BaseAccount",
+  "pubkey_type": "/cosmos.crypto.secp256k1.PubKey",
+  "sequence": "4",
+  "account_number": "91996"
+ },
+ {
+  "chain": "agoric",
+  "registry": "agoric",
+  "chain_id": "agoric-3",
+  "prefix": "agoric",
+  "valoper": "agoricvaloper1fy8r6zq3dde6n7ak6eqy5zsrp3s7sz833dmv32",
+  "account": "agoric1fy8r6zq3dde6n7ak6eqy5zsrp3s7sz83p4g9dt",
+  "moniker": "Encapsulate (fka KingSuper)",
+  "fees": [
+   [
+    "ubld",
+    null,
+    0.03,
+    0.05
+   ]
+  ],
+  "slip44": 564,
+  "key_algos": null,
+  "sdk": "v0.53.6-alpha.agoric.1",
+  "signer": "agoric1p8uxq4ska2psv2k8wknljh568k5qfnwtcj8k3n",
+  "mode": "authz",
+  "balances": {
+   "ubld": "240000"
+  },
+  "account_type": "/cosmos.auth.v1beta1.BaseAccount",
+  "pubkey_type": "/cosmos.crypto.secp256k1.PubKey",
+  "sequence": "4",
+  "account_number": "91996"
+ },
+ {
+  "chain": "althea",
+  "registry": "althea",
+  "chain_id": "althea_258432-1",
+  "prefix": "althea",
+  "valoper": "altheavaloper1d2x0t42a6anth3lt38ld5997m6e5ya5fw72axt",
+  "account": "althea1d2x0t42a6anth3lt38ld5997m6e5ya5f27encw",
+  "moniker": "Encapsulate (fka KingSuper)",
+  "fees": [
+   [
+    "aalthea",
+    100000000000,
+    100000000000,
+    100000000000
+   ]
+  ],
+  "slip44": 118,
+  "key_algos": null,
+  "sdk": "v0.46.17",
+  "signer": "althea1p8uxq4ska2psv2k8wknljh568k5qfnwt7dq8dq",
+  "mode": "authz",
+  "balances": {
+   "aalthea": "2729945059766130548573",
+   "ibc/17CD484EE7D9723B847D95015FA3EBD1572FD13BC84FB838F55B18A57450F25B": "5318427"
+  },
+  "account_type": "/ethermint.types.v1.EthAccount",
+  "pubkey_type": "/cosmos.crypto.secp256k1.PubKey",
+  "sequence": "2",
+  "account_number": "2183"
+ },
+ {
+  "chain": "gitopia",
+  "registry": "gitopia",
+  "chain_id": "gitopia",
+  "prefix": "gitopia",
+  "valoper": "gitopiavaloper1s0lankh33kprer2l22nank5rvsuh9ksag3grfh",
+  "account": "gitopia1s0lankh33kprer2l22nank5rvsuh9ksaqtvnfv",
+  "moniker": "Encapsulate (fka KingSuper)",
+  "fees": [
+   [
+    "ulore",
+    0.001,
+    0.0012,
+    0.0016
+   ]
+  ],
+  "slip44": 118,
+  "key_algos": [
+   "secp256k1"
+  ],
+  "sdk": "v0.47.13",
+  "signer": "gitopia1p8uxq4ska2psv2k8wknljh568k5qfnwt5hz7wx",
+  "mode": "authz",
+  "balances": {
+   "ulore": "240000"
+  },
+  "account_type": "/cosmos.auth.v1beta1.BaseAccount",
+  "pubkey_type": "/cosmos.crypto.secp256k1.PubKey",
+  "sequence": "3",
+  "account_number": "764625"
+ },
+ {
+  "chain": "gravity-bridge",
+  "registry": "gravitybridge",
+  "chain_id": "gravity-bridge-3",
+  "prefix": "gravity",
+  "valoper": "gravityvaloper1s0lankh33kprer2l22nank5rvsuh9ksatgqzfn",
+  "account": "gravity1s0lankh33kprer2l22nank5rvsuh9ksa6reur8",
+  "moniker": "Encapsulate (fka KingSuper)",
+  "fees": [
+   [
+    "ugraviton",
+    0,
+    0,
+    0
+   ],
+   [
+    "gravity0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+    null,
+    0.0002,
+    0.0005
+   ],
+   [
+    "gravity0xdAC17F958D2ee523a2206206994597C13D831ec7",
+    null,
+    0.0002,
+    0.0005
+   ]
+  ],
+  "slip44": 118,
+  "key_algos": [
+   "secp256k1"
+  ],
+  "sdk": "v0.50.14",
+  "signer": "gravity1p8uxq4ska2psv2k8wknljh568k5qfnwtwlh3yd",
+  "mode": "authz",
+  "balances": {
+   "ugraviton": "236523"
+  },
+  "account_type": "/cosmos.auth.v1beta1.BaseAccount",
+  "pubkey_type": "/cosmos.crypto.secp256k1.PubKey",
+  "sequence": "7",
+  "account_number": "136010"
+ },
+ {
+  "chain": "humans-ai",
+  "registry": "humans",
+  "chain_id": "humans_1089-1",
+  "prefix": "human",
+  "valoper": "humanvaloper1d2x0t42a6anth3lt38ld5997m6e5ya5fsqguy3",
+  "account": "human1d2x0t42a6anth3lt38ld5997m6e5ya5funjn05",
+  "moniker": "Encapsulate (fka KingSuper)",
+  "fees": [
+   [
+    "aheart",
+    250000000,
+    80000000000,
+    100000000000
+   ]
+  ],
+  "slip44": 60,
+  "key_algos": [
+   "ethsecp256k1"
+  ],
+  "sdk": "v0.46.11",
+  "signer": "human1p8uxq4ska2psv2k8wknljh568k5qfnwtgqt866",
+  "mode": "authz",
+  "balances": {
+   "aheart": "240000000000000000"
+  },
+  "account_type": "/ethermint.types.v1.EthAccount",
+  "pubkey_type": "/cosmos.crypto.secp256k1.PubKey",
+  "sequence": "2",
+  "account_number": "5205"
+ },
+ {
+  "chain": "passage",
+  "registry": "passage",
+  "chain_id": "passage-2",
+  "prefix": "pasg",
+  "valoper": "pasgvaloper1s0lankh33kprer2l22nank5rvsuh9ksawhck2v",
+  "account": "pasg1s0lankh33kprer2l22nank5rvsuh9ksaatj7ts",
+  "moniker": "Encapsulate (fka KingSuper)",
+  "fees": [
+   [
+    "upasg",
+    12.5,
+    12.5,
+    12.5
+   ]
+  ],
+  "slip44": 118,
+  "key_algos": [
+   "secp256k1"
+  ],
+  "sdk": "v0.50.13",
+  "signer": "pasg1p8uxq4ska2psv2k8wknljh568k5qfnwtfhunv6",
+  "mode": "authz",
+  "balances": {
+   "upasg": "30000000"
+  },
+  "account_type": "/cosmos.auth.v1beta1.BaseAccount",
+  "pubkey_type": "/cosmos.crypto.secp256k1.PubKey",
+  "sequence": "2",
+  "account_number": "11225"
+ },
+ {
+  "chain": "sommelier",
+  "registry": "sommelier",
+  "chain_id": "sommelier-3",
+  "prefix": "somm",
+  "valoper": "sommvaloper1s0lankh33kprer2l22nank5rvsuh9ksa8324s2",
+  "account": "somm1s0lankh33kprer2l22nank5rvsuh9ksaj0ygh9",
+  "moniker": "Encapsulate (fka KingSuper)",
+  "fees": [
+   [
+    "usomm",
+    null,
+    0.01,
+    0.025
+   ]
+  ],
+  "slip44": 118,
+  "key_algos": [
+   "secp256k1"
+  ],
+  "sdk": "v0.47.15",
+  "signer": "somm1p8uxq4ska2psv2k8wknljh568k5qfnwtxn29s0",
+  "mode": "authz",
+  "balances": {
+   "usomm": "240000"
+  },
+  "account_type": "/cosmos.auth.v1beta1.BaseAccount",
+  "pubkey_type": "/cosmos.crypto.secp256k1.PubKey",
+  "sequence": "2",
+  "account_number": "22475"
+ },
+ {
+  "chain": "chain4energy",
+  "registry": "chain4energy",
+  "chain_id": "perun-1",
+  "prefix": "c4e",
+  "valoper": "c4evaloper1s0lankh33kprer2l22nank5rvsuh9ksad20r7x",
+  "account": "c4e1s0lankh33kprer2l22nank5rvsuh9ksaatjfl3",
+  "moniker": "Encapsulate (fka KingSuper)",
+  "fees": [
+   [
+    "uc4e",
+    0,
+    0.01,
+    0.025
+   ]
+  ],
+  "slip44": 118,
+  "key_algos": [
+   "secp256k1"
+  ],
+  "sdk": "v0.47.12",
+  "signer": "c4e1p8uxq4ska2psv2k8wknljh568k5qfnwtfhuycm",
+  "mode": "authz",
+  "balances": {
+   "uc4e": "240000"
+  },
+  "account_type": "/cosmos.auth.v1beta1.BaseAccount",
+  "pubkey_type": "/cosmos.crypto.secp256k1.PubKey",
+  "sequence": "2",
+  "account_number": "112808"
+ },
+ {
+  "chain": "axelar",
+  "registry": "axelar",
+  "chain_id": "axelar-dojo-1",
+  "prefix": "axelar",
+  "valoper": "axelarvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtwq9yct",
+  "account": "axelar1p8uxq4ska2psv2k8wknljh568k5qfnwtwpnp2y",
+  "moniker": "Encapsulate",
+  "fees": [
+   [
+    "uaxl",
+    0.007,
+    0.007,
+    0.007
+   ]
+  ],
+  "slip44": 118,
+  "key_algos": [
+   "secp256k1"
+  ],
+  "sdk": "v0.53.8-0.20260727171651-58987c2bcde6",
+  "signer": "axelar1p8uxq4ska2psv2k8wknljh568k5qfnwtwpnp2y",
+  "mode": "direct",
+  "balances": {
+   "uaxl": "240000"
+  },
+  "account_type": "/cosmos.auth.v1beta1.BaseAccount",
+  "pubkey_type": "/cosmos.crypto.secp256k1.PubKey",
+  "sequence": "9",
+  "account_number": "643584"
+ },
+ {
+  "chain": "ixo",
+  "registry": "impacthub",
+  "chain_id": "ixo-5",
+  "prefix": "ixo",
+  "valoper": "ixovaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtlmt2an",
+  "account": "ixo1p8uxq4ska2psv2k8wknljh568k5qfnwt46mm9k",
+  "moniker": "Encapsulate",
+  "fees": [
+   [
+    "uixo",
+    0.025,
+    0.025,
+    0.025
+   ]
+  ],
+  "slip44": 118,
+  "key_algos": [
+   "secp256k1",
+   "ed25519"
+  ],
+  "sdk": "v0.50.11-lsm",
+  "signer": "ixo1p8uxq4ska2psv2k8wknljh568k5qfnwt46mm9k",
+  "mode": "direct",
+  "balances": {
+   "uixo": "240000"
+  },
+  "account_type": "/cosmos.auth.v1beta1.BaseAccount",
+  "pubkey_type": "/cosmos.crypto.secp256k1.PubKey",
+  "sequence": "5",
+  "account_number": "17196"
+ },
+ {
+  "chain": "lumera",
+  "registry": "lumera",
+  "chain_id": "lumera-mainnet-1",
+  "prefix": "lumera",
+  "valoper": "lumeravaloper18qpd0yrk0gkcvah0zpyq89uqzd2y6q25dlmcux",
+  "account": "lumera18qpd0yrk0gkcvah0zpyq89uqzd2y6q25z9gy69",
+  "moniker": "Encapsulate",
+  "fees": [
+   [
+    "ulume",
+    0.025,
+    0.025,
+    0.025
+   ]
+  ],
+  "slip44": 118,
+  "key_algos": [
+   "secp256k1"
+  ],
+  "sdk": "v0.53.5",
+  "signer": "lumera1p8uxq4ska2psv2k8wknljh568k5qfnwtjs9j0h",
+  "mode": "authz",
+  "balances": {
+   "ulume": "240000"
+  },
+  "account_type": "/cosmos.auth.v1beta1.BaseAccount",
+  "pubkey_type": "/cosmos.crypto.secp256k1.PubKey",
+  "sequence": "2",
+  "account_number": "168537"
+ }
+]
