@@ -1998,6 +1998,11 @@ Networks set relation, so nothing is typed. Don't add it before the design.
 
 ## TODO — every validator profile says the same thing (asked 2026-09-29)
 
+**Six account rows are parked** (the user, 2026-09-29: "keep it added in the artifact for now, we will visit them later"):
+X @encapHQ, X @_KingSuper_, LinkedIn, Keybase, the Lido forum and the Discord server — each noted in the tracker; do not
+change any of them until the user names it. **The Discord invite `q6cmGycxsr`** is the site's own (footer, contact page,
+the guide copy's help url): it has no expiry date, was made by the user's account and points at the channel
+`moderator-only` — if that channel is deleted the invite dies; a use limit cannot be seen from outside.
 **The work list is `notion/profile-updates.md`** (every update, how — pull request, transaction or form — and who).
 The check it comes from is `notion/mentions-checklist.md`: StakingRewards still says "KingSuper", EigenLayer, Minascan and nine
 Cosmos validators still say "fka KingSuper", four listings link the suspended `x.com/encapsulate_xyz` (the live
