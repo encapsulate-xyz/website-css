@@ -12,9 +12,10 @@ validators' on-chain profiles, the other chains' profiles, and the directories a
 - No profile carries a mistyped domain; the Cosmos website fields are all exactly `https://encapsulate.xyz`.
 - Descriptions come in three versions ("Others trust, we validate!…", "five years… 40+ networks… nearly half a
   billion", "$500 million… since 2020") — none matches the site (since 2020, 27 mainnets, 35 chains).
-  **Agreed 2026-09-29, one description everywhere:** "Validator infrastructure for new chains, from the first testnet
-  through mainnet. Running validators since 2020, with open-source tooling for every chain we run." (160 characters, no
-  figures; a shorter field takes the first sentence alone). No long version.
+  **Agreed 2026-09-29, one description everywhere:** "Validator infrastructure for new chains, since 2020. Early to
+  testnet, quick to upgrade, easy to reach. Trusted by Sui, NEAR, Monad, Lido, Starknet and more." (157 characters,
+  no figures; a shorter field takes the first sentence, or the first two). No long version. If we leave one of the
+  five named chains, every profile needs the edit.
 
 ## In order of value
 
@@ -23,7 +24,7 @@ validators' on-chain profiles, the other chains' profiles, and the directories a
 | 1 | **StakingRewards.com** (the most-cited aggregator) | only `/provider/kingsuper`: "KingSuper", crown logo, no website, X `_KingSuper_` | Claim the profile (free, providers.stakingrewards.com) or use their contact form: name Encapsulate, logo, `https://encapsulate.xyz`, @encapHQ | You |
 | 2 | **EigenLayer operator** `0xA6c3…2062` (also feeds validator.info) | "Encapsulate (fka KingSuper)", X suspended, old description | Host a new metadata.json (name, @encapHQ, description) and call `updateOperatorMetadataURI` on the DelegationManager from the operator address; or a PR to `Layr-Labs/eigendata` (slow) | Ops |
 | 3 | **Suspended X link** — SSV operators 924 and 1056, Monad registry, Symbiotic | `x.com/encapsulate_xyz` (Symbiotic also the expired Discord) | SSV app → edit operator metadata; PR to `monad-developers/validator-info` (mainnet + testnet); PR to `symbioticfi/metadata-mainnet` | Ops / PR |
-| 4 | **Cosmos monikers** — Terra, Agoric (the older validator), Althea, Gitopia, Gravity Bridge, humans.ai, Passage, Sommelier, Chain4Energy | "Encapsulate (fka KingSuper)" + "Others trust, we validate!…" | `<binary> tx staking edit-validator --new-moniker "Encapsulate" --details "<agreed text>"` with each operator key; the other four (Axelar, Agoric, ixo, Lumera) only need the new details | Ops |
+| 4 | **Cosmos monikers** — Terra, Agoric (the older validator), Althea, Gitopia, Gravity Bridge, humans.ai, Passage, Sommelier, Chain4Energy | "Encapsulate (fka KingSuper)" + "Others trust, we validate!…" | `<binary> tx staking edit-validator --new-moniker "Encapsulate" --details "<the agreed description>"` with each operator key; the other four (Axelar, Agoric, ixo, Lumera) only need the new details | Ops |
 | 5 | **REStake / cosmos.directory registry** (`eco-stake/validator-registry`) | not listed | PR adding `Encapsulate/profile.json` (name, identity `B68A51B88F28CEF1`, website) and `chains.json` with the valoper addresses | PR |
 | 6 | **X @encapHQ** | Website field is a Linktree | Set it to `https://encapsulate.xyz`; bio says "40+ networks" | You |
 | 7 | **Minascan** (Staketab; minaexplorer redirects here) | "Encapsulate (fka KingSuper)", `http://encapsulate.xyz/`, X `_KingSuper_`, expired Discord | Resubmit their "Submit service" form (manual review ~24h) | You |

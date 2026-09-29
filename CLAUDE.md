@@ -1970,15 +1970,22 @@ and description.
 **The source is the `encapsulate-xyz/assets` repo** (its README's "Explorer Profile" JSON and `espresso-mainnet.json`,
 last edited 2025-09-23: "Backed by five years of experience, Encapsulate secures 40+ networks with nearly half a
 billion dollars…" — stale on every count); update it first.
-**One description, everywhere** (the user, 2026-09-29: one short description, C, rather than a short and a long
-one) — option 1 plus the open-source line: **"Validator infrastructure for new chains, from the first testnet
-through mainnet. Running validators since 2020, with open-source tooling for every chain we run."**
-(160 characters: it fits X's bio, 160, and a Cosmos validator's details, 280; a field shorter than that takes its
-first sentence alone, 80 characters). **There is no long version, and no figure or count in any profile**: the
-homepage shows the staked total live (the user's script), and a typed figure is what went stale before ("$500
-million", "$248 million", "nearly half a billion"). For the record, the stake was measured on 2026-09-29 at $84.8M,
-the Lido Simple DVT cluster's 500 validators (16,000 ETH) counted in full as ours (the user) — per chain with sources
-in `notion/staked-total-2026-09-29.md` — and the homepage read $83,996,080 the same day, within 1% of it.
+**One description, everywhere** (the user, 2026-09-29: one short description rather than a short and a long one),
+**the user's own wording**, written to read as a bio and still speak to a chain team: **"Validator infrastructure
+for new chains, since 2020. Early to testnet, quick to upgrade, easy to reach. Trusted by Sui, NEAR, Monad, Lido,
+Starknet and more."** (157 characters: it fits X's bio, 160, and a Cosmos validator's details, 280; a shorter field
+takes its first sentence, 52 characters, or its first two, 103). "Trusted by" is the user's choice ("Trusted on" was
+offered: Lido selected us, the others are open to anyone with the stake). The names are the set's god tier with
+**Starknet in Avalanche's place** (agreed 2026-09-29): a chain team will look us up on the chains we name, and our
+Avalanche node is the smallest of them (about $106K), did not validate 2026-02-02 → 2026-05-15 and sits at its
+delegation cap. **If we leave a named chain, every profile needs the edit.** It replaced "C" ("Validator
+infrastructure for new chains, from the first testnet through mainnet. Running validators since 2020, with open-source
+tooling for every chain we run."), the pick of earlier the same day. **There is no long version, and no figure or
+count in any profile**: the homepage shows the staked total live (the user's script), and a typed figure is what went
+stale before ("$500 million", "$248 million", "nearly half a billion"). For the record, the stake was measured on
+2026-09-29 at $84.8M, the Lido Simple DVT cluster's 500 validators (16,000 ETH) counted in full as ours (the user) —
+per chain with sources in `notion/staked-total-2026-09-29.md` — and the homepage read $83,996,080 the same day,
+within 1% of it.
 `security@encapsulate.xyz` stays the explorers' contact on purpose; the logo there is the old 4097px PNG (use the
 512px one). Then, per profile: on-chain
 edits by the ops team with each operator key, forms and profile edits by the user, and **pull requests from the
