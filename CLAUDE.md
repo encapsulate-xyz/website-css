@@ -1183,6 +1183,9 @@ fill rising with the reader's progress; an ink close with the next guide.
 | The head's Title and Lede | **properties of the `Guides Database` row** (added 2026-09-22) — Super does not render a row's properties on its own page, so they are read off /guides, as post.js reads the blog index |
 | The crumb, "Watch out", "{N} screens", the close band, the Discord line | the **"Guide page copy" toggle on /guides**, `key · value` lines — one place for 33 guides. `{n}` is the step count, `{N}` the same spelled ("Eight screens"), `{next}` and `{chain}` the next guide |
 
+**The guide card's lede wraps with `text-wrap: pretty`** (`scripts/og/guide.html`, 2026-09-29): the Sui card ended on a
+line of one word, "at.". It applies to each guide's card the next time that card is made.
+
 **After changing a guide row's Title or Lede, refresh /guides as well as the guide's own page in Super** (2026-09-29):
 the guide's head reads them off /guides, so the page kept the old Lede until the index was refreshed; then make the social
 card again (`og_cards.py guides --only /guides/<chain>`), since it prints the Lede.
@@ -1948,9 +1951,13 @@ SuiVision's dashboard with the Slush extension**, no Suiet left, and the live pa
 review on 2026-09-29 found 22 things (`notion/sui-guide-review-2026-09-29.md`). **The user's decisions the same day:**
 fix 2 and 4 (done — the Lede reads "Ten steps across SuiVision and the Slush extension…" and the social card was made
 again from it), and set aside 11, 12, 13, 15, 18, 20, 21 and 22. The team added step 04 "Select the wallet", so the guide
-is **ten steps**. Twelve findings are still open and wait for the
-user's word — the one that matters most is the shared close line "Rewards accrue from the next block", wrong for Sui
-(next epoch, about 24 h). **Fix only the numbers the user names** ("dont fix it yourself").
+is **ten steps**. **The other twelve (1, 3, 5, 6, 7, 8, 9, 10, 14, 16, 17, 19) were fixed the same day at the user's
+word** ("okay fix everything"): step wording, links and Watch notes, Time 5, the surfaces as "On suivision.xyz" / "In the
+Slush extension" (new select options — the old two stay in the schema), and the shared close line, now "Rewards start
+once your stake is active. Next up: {next}." for every guide (guide.js's fallback says the same from the next release).
+Old values: `backups/sui-guide-fixes-2026-09-29.json`. **The review file still lists them as open ON PURPOSE**: the user
+shared it with a teammate to go through his mistakes and will say when it can be marked done — do not update
+`notion/sui-guide-review-2026-09-29.md` before that.
 
 Slush (Mysten Labs' own wallet, formerly Sui Wallet, first on sui.io/get-started) replaced Suiet in the Sui
 guide on 2026-09-28, at the user's word, before the new captures exist. **Done:** Slush is a Wallet Set row

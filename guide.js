@@ -52,7 +52,7 @@
     "watch": "Watch out",
     "done": "Done · {n} of {n}",
     "close title": "Staked with Encapsulate.",
-    "close line": "Rewards accrue from the next block. Next up: {next}.",
+    "close line": "Rewards start once your stake is active. Next up: {next}.",
     "next": "Next: {chain}",
     "all": "All guides",
     "help": "Need help? Ask on Discord",
