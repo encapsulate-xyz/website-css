@@ -60,7 +60,7 @@ are summarised below.
 | Monad | `0x79129e1306dc1e81F3a2cC5e3B5171fb92FFd99d` | The address only, as asked (delegators stake to validator ID 91). No slashing implemented |
 | Near | `encapsulate.pool.near` | 4 epochs to unlock (~21–31 h at today's epoch length) |
 | Sui | `0x01d03daf…26ff7` | Old validator "fka KingSuper" `0x970f9006…` ran epochs 0–849, never penalised. Tallying rule removes rewards, never principal |
-| Axelar | `axelarvaloper1p8uxq4…9yct` | Old "Redelegate to Encapsulate" validator is jailed, no slashes. Rate refreshed 2026-09-25: staking-explorer 15.54% × (1 − 9%) = 14.1% (was 14.4%). Keplr shows 14.26% / 12.98% after commission — its own estimate from the chain params, so the guide's captures will not match the set exactly; cosmos.directory returns 0 for Axelar |
+| Axelar | `axelarvaloper1p8uxq4…9yct` | Old "Redelegate to Encapsulate" validator is jailed, no slashes. Rate refreshed 2026-09-29 with the new commission: staking-explorer 15.48% × (1 − 10%) = 13.9% (2026-09-25: 15.54% × (1 − 9%) = 14.1%). Keplr shows 14.26% / 12.98% after commission — its own estimate from the chain params, so the guide's captures will not match the set exactly; cosmos.directory returns 0 for Axelar |
 | EigenCloud | `0xA6c3F159…22062` | Rate 5.7%: the EigenLayer app's 7-day APR for EIGEN restaked with us (the user's screenshot, 2026-09-24; EigenExplorer was paused and the app refuses scripts). Registered to EigenDA and eOracle, in no operator set, 0% slashable |
 | IOTA | `0xedd654b2…27c9ab` | |
 | Mina | `B62qjWmF…FaRYY` | **Rate left blank**: ~5,100 MINA delegated, ~one block expected every 8 months, so any APR would mislead. Fee 5% is advertised, paid off-chain |
@@ -82,6 +82,26 @@ are summarised below.
 | Passage | `pasgvaloper1s0lank…ck2v` | |
 | Sommelier | `sommvaloper1s0lank…24s2` | **0%**: both incentive programmes ended (cutoff heights passed); the chain's own APY query returns 0. Slash fractions are both 0, so it cannot slash |
 | Chain4Energy | `c4evaloper1s0lank…0r7x` | Explorer: ping.pub (the user's link) |
+
+## Commission raised on eight Cosmos validators (2026-09-29)
+
+The profile edits of 2026-09-29 also changed the commission (titanium's settings send the rate with the edit). The user
+confirmed the new rates stand, and the rows were rewritten the same day: rate = staking-explorer.com's measured APR
+("Based on rewards distribution", read from `staking-explorer.com/explorer/<chain>`) × (1 − commission).
+
+| Chain | Commission | Measured | Reward rate |
+|---|---|---|---|
+| Agoric | 5% → 9% | 6.99% | 6.6% → 6.4% |
+| Althea | 5% → 9% | 25.37% | 24.2% → 23.1% |
+| Gitopia | 5% → 9% | 44.71% | 42.9% → 40.7% |
+| humans.ai | 5% → 9% | 34.93% | 33.2% → 31.8% |
+| Passage | 5% → 10% | 7.48% | 7.1% → 6.7% |
+| Sommelier | 2% → 10% | 0% | 0% |
+| Axelar | 9% → 10% | 15.48% | 14.1% → 13.9% |
+| Lumera | 8% → 10% | 52.01% | 47.8% → 46.8% |
+
+The four at 9% rose by their chain's daily limit (4 points); if they go to 10%, write them again. Agoric's Explorer is
+Mintscan since the same day (explorers.guru is gone).
 
 ## Refreshing
 

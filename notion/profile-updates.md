@@ -5,7 +5,7 @@ comes from (what each profile says today, ranked by value); this file is the wor
 forms are still theirs.**
 
 **The tracker is an artifact**, "Encapsulate Profile Updates" (private to the user; its link is in Claude's memory, not in this
-public file): the same updates as 50 rows — the Cosmos validators and the two SSV operators are one row each — every
+public file): the same updates as 47 rows — the Cosmos validators are one row each — every
 row with what the profile says **now** beside what it becomes, filters by who, status, route, pull request and weight,
 and a status, a note, the pull request and the last live check per row kept in the artifact's database (collection
 `updates`, one document per row: `{status: open|started|done|skipped, note, at, pr, live, liveAt}`). It is built by
@@ -29,7 +29,7 @@ of values that copy on a click, one toolbar, and rows that are a single line unt
 | 9 | REStake registry | open — [#5205](https://github.com/eco-stake/validator-registry/pull/5205). 13 bonded validators on 12 chains |
 | 10 | awesome-celestia | open — [#131](https://github.com/celestiaorg/awesome-celestia/pull/131). Every link in our section was dead; it now lists our three live Celestia repos and the log-analysis post |
 | 11 | awesome-berachain-validators | open — [#23](https://github.com/chuck-bear/awesome-berachain-validators/pull/23). The repo last merged in April 2025 |
-| 12 | Agoric and Althea lists | **set aside** — neither repo has merged since 2023; Agoric's file is a pledge in the user's own name |
+| 12 | Agoric and Althea lists | **ready, not opened** (the user, 2026-09-29: "update but only for the new validator in agoric"). Branch `encapsulate-profile` on our forks `encapsulate-xyz/validator-profiles-1` (Agoric: the folder renamed to Encapsulate, the pledge's link now the new validator `…g25ldj` on Mintscan, its first line "of Encapsulate (formerly KingSuper)", the commitments untouched) and `encapsulate-xyz/community` (Althea: row 67 with the name, the org's GitHub, hello@encapsulate.xyz and the mainnet validator). **The user opens each pull request** — the pledge is in their own name. Neither repo has merged since 2023 |
 | 38 | Espresso, the node's own description | **merged 2026-09-29** — [#16](https://github.com/encapsulate-xyz/espresso-ansible/pull/16). The node still serves the old text until it is restarted; **the user restarts it**. See "Espresso" below |
 | 31 | GitHub organisation | description and email set through the API (the token could, after all); **verifying the domain is left to the user** |
 
@@ -50,7 +50,7 @@ Endur, SupraScan, Avascan — in Chrome). Each row's finding is in the tracker a
 | 4, 5, 6, 8, 9, 10, 11, 38 | pull request open, none reviewed yet |
 | 13 and 14, twelve validators: Terra, Althea, Gitopia, Gravity Bridge, humans.ai, Sommelier, Passage, Chain4Energy, Axelar, Agoric (the newer), ixo, Lumera | **done on chain**, by the user's side: name "Encapsulate", the agreed description; website, identity and contact untouched |
 | 13.2, Agoric's older validator | set aside; still "fka KingSuper" |
-| 15 Sui, 16 IOTA, 17 Ika, 18 NEAR, 19 Espresso, 20 EigenLayer, 21 and 22 SSV, 23 the Sui candidate | open, nothing changed. Ika's website and description are empty and its logo field holds the word "Encapsulate" |
+| 15 Sui, 16 IOTA, 17 Ika, 18 NEAR, 19 Espresso, 20 EigenLayer, 21 SSV operator 924 | open, nothing changed. Ika's website and description are empty and its logo field holds the word "Encapsulate" |
 | 25 StakingRewards, 26 Voyager, 28–29 X, 32 Keybase, 33 Endur, 34 SupraScan, 35 Avascan, 36 Lido forum, 37 Discord | open, nothing changed |
 | 27 Minascan | sent; Staketab has not published it yet |
 | 31 GitHub organisation | description and email set; the domain is not verified |
@@ -87,10 +87,36 @@ commission and staking-explorer.com's measured rate the same day (rate = measure
 | Axelar | 10% | 15.48% | 14.1% | 13.9% |
 | Lumera | 10% | 52.01% | 47.8% | 46.8% |
 
-**Not written yet**: the write to Notion was refused by the session's permission check, so the rows still hold the old
-values (copied to `backups/networks-set-commission-2026-09-29.json`). Once written: `chain_pages.py --facts` for the
-eight, refresh /networks and the eight chain pages in Super, and make their social cards again. If the four at 9% go
-to 10%, their rows need the edit once more.
+**Written on 2026-09-29** at the user's word ("try again in notion"; the first try was refused by the session's
+permission check): Commission, Reward rate and Rate updated on the eight rows, `chain_pages.py --facts` for each,
+/networks, /, /services and the eight chain pages refreshed in Super, the eight cards made again. Old values:
+`backups/networks-set-commission-2026-09-29.json`. If the four at 9% go to 10%, their rows need the edit once more.
+
+**The rate on the site is after our commission — checked, not assumed** (the user remembered it as the chain's own
+rate): the chain pages print "After our commission · as of {date}", and each of the eight old values equals that day's
+measured rate × (1 − the old commission) — site ÷ measured was 0.94–0.96 on the 5% chains, 0.91 on Axelar (9%) and 0.92
+on Lumera (8%). So a commission change always moves the rate.
+
+## Only what is active is tracked (the user, 2026-09-29)
+
+"What are these other ssv? only add the active cluster, same for sui only active one." Three rows left the tracker and
+their numbers are not reused:
+
+| Row | What it was | Why it is not tracked |
+|---|---|---|
+| 21.2 | SSV operator 1056, "Lido - Encapsulate", owner `0x1007…8262` | no validators, inactive; a second registration beside the live one |
+| 22 | SSV operator 469, "KingSuper", owner `0xa8e7…5B98` | no validators, inactive; the operator from before the rename |
+| 23 | the Sui validator candidate "dummyvalidator" `0xeac3…09ec` | a candidate that never joined the set; our Sui validator is row 15 |
+
+Row 21 is operator 924 alone: the one that runs the 500 Lido validators.
+
+## Found on the way (2026-09-29)
+
+The Agoric chain page's "Our validator" button pointed at `agoric.explorers.guru`, which now answers 404 (the site is
+gone; Agoric's own `main.explorer.agoric.net` redirects to Mintscan). It and the row's Explorer are Mintscan's page for
+the validator now, read in Chrome to show "Encapsulate, Active" (`notion/chain-pages.json`, `chain_pages.py --buttons
+Agoric`). Every other mainnet row's Explorer answered; Gitopia's and ixo's ping.pub pages load without the validator's
+data, as before, and Mintscan has no ixo.
 
 ## Espresso — the profile lives on the node (2026-09-29)
 

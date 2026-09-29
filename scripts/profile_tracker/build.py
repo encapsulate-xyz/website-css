@@ -123,9 +123,14 @@ row("r11", "11", "claude", "pr", "awesome-berachain-validators", "chuck-bear/awe
     ("Ansible playbook", "Already says Encapsulate, and its link works", NONE("No change")),
 ], pri="top")
 row("r12", "12", "claude", "pr", "Agoric and Althea profile lists", "Agoric/validator-profiles · althea-net/community", [
-    ("Agoric, folder and pledge", "KingSuper", "Encapsulate"),
-    ("Althea, validators.md row 67", [V("KingSuper"), U("github.com/aditya-manit")], [V("Encapsulate"), U("github.com/encapsulate-xyz")]),
-], pri="optional", cav="Set aside. Neither repo has merged a pull request since 2023, and Agoric's file is a pledge signed in your own name, which is yours to rewrite.")
+    ("Agoric, folder", "KingSuper", "Encapsulate"),
+    ("Agoric, the validator the pledge names", U("agoricvaloper1fy8r…3dmv32", "the older one"), U("agoricvaloper1p8ux…g25ldj", "the new one only")),
+    ("Agoric, the pledge's first line", "I, Aditya Kumar Verma (aka KingSuper)", "I, Aditya Kumar Verma of Encapsulate (formerly KingSuper)"),
+    ("Althea, row 67, name", [V("KingSuper"), U("github.com/aditya-manit")], [V("Encapsulate"), U("github.com/encapsulate-xyz")]),
+    ("Althea, row 67, contact", "KingSuper#3702", U("hello@encapsulate.xyz")),
+    ("Althea, row 67, validator", U("altheavaloper1vaxz…mputd", "not on mainnet"), U("altheavaloper1d2x0…72axt")),
+], pri="optional", cav="Both changes are ready on branches of our forks; opening each pull request is yours, since the pledge is in your own name. "
+                       "Neither repo has merged a pull request since 2023.")
 
 T2_ENV = T2.replace(",", "")     # what the node serves today: the old description, its commas removed on 2026-05-20
 DESC_ENV = ("Validator infrastructure for new chains since 2020. Early to testnet. Quick to upgrade. Easy to reach. "
@@ -190,33 +195,22 @@ row("r20", "20", "ops", "tx", "EigenLayer, the fast way", "DelegationManager 0x3
     ("Name, description, X", "As in row 06", "Through the file"),
 ], cmd="updateOperatorMetadataURI, from the operator address 0xA6c3…2062", pri="top",
    cav="After row 01. Only one of rows 06 and 20 is needed.")
-row("r21-924", "21.1", "ops", "tx", "SSV operator 924", "SSV app · owner wallet 0xf3C9…7a80", [
+row("r21-924", "21", "ops", "tx", "SSV operator 924", "SSV app · owner wallet 0xf3C9…7a80", [
     ("Description", T_SSV, AGREED),
     ("X", U(X_OLD, "suspended"), U(X_NEW)),
     ("Name", "Lido - Encapsulate", NONE("No change")),
 ], cmd="Edit operator metadata in the SSV app and sign with the owner wallet", pri="top",
-   cav="The active one: it runs the 500 Lido validators.")
-row("r21-1056", "21.2", "ops", "tx", "SSV operator 1056", "SSV app · owner wallet 0x1007…8262", [
-    ("Description", T_SSV, AGREED),
-    ("X", U(X_OLD, "suspended"), U(X_NEW)),
-    ("Name", "Lido - Encapsulate", NONE("No change")),
-], cmd="Edit operator metadata in the SSV app and sign with the owner wallet",
-   cav="Inactive, with no validators. Its owner wallet is not the one that owns 924.")
-row("r22", "22", "ops", "tx", "SSV operator 469", "owner wallet 0xa8e7…5B98", [
-    ("Name", "KingSuper", NONE("Operator removed")),
-    ("Website", U("https://kingsuper.org"), NONE("Operator removed")),
-    ("X", U("https://twitter.com/_KingSuper_"), NONE("Operator removed")),
-    ("Description", T_SSV469, NONE("Operator removed")),
-], cmd="removeOperator(469)", cav="Inactive, with no validators.")
-row("r23", "23", "ops", "tx", "Sui candidate, dummyvalidator", "candidate 0xeac3…09ec", [
-    ("Name", "dummyvalidator", NONE("Candidate removed")),
-    ("Every other field", "na", NONE("Candidate removed")),
-], cmd="request_remove_validator_candidate")
+   cav="Our one active operator: it runs the 500 Lido validators. Operators 1056 and 469 hold no validators and are not tracked; "
+       "the same goes for the Sui candidate dummyvalidator (the user, 29 Sep 2026: only what is active).")
 row("r24", "24", "ops", "tx", "The 20 testnets", "one validator per testnet", [
     ("Name", NONE("Not read yet"), "Encapsulate"),
     ("Description", NONE("Not read yet"), AGREED),
 ], cmd="The same commands, chain by chain",
    cav="Not checked yet. A new chain's team is most likely to meet us on its own testnet.")
+
+# Not tracked, by the user's word (2026-09-29, "only add the active cluster, same for sui only active one"): SSV operators 1056
+# ("Lido - Encapsulate", owner 0x1007…8262, no validators) and 469 ("KingSuper", owner 0xa8e7…5B98, no validators), and the
+# Sui validator candidate "dummyvalidator" 0xeac3…09ec. Rows 21.2, 22 and 23 held them; the numbers are not reused.
 
 # ------------------------------------------------------------------ You
 row("r25", "25", "you", "form", "StakingRewards", "providers.stakingrewards.com · /provider/kingsuper", [
