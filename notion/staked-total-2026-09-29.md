@@ -39,6 +39,10 @@ two tokens carry most of it, so the dollar total moves with SUI and ETH.
 | Lumera | 1,301,298.20 LUME | no price | — | no market price yet |
 | **Total** | | | **84,830,429** | |
 
+**Cross-check:** the homepage's stats band ("Staked Assets Under Management", kept by the user's own script, which
+changes through the day) read $83,996,080 on 2026-09-29 and $84,235,402 on 2026-09-27 — within 1% of this
+measurement, a total it can only reach with the Lido cluster counted in full. The two methods agree.
+
 **Left out:** the old Sui validator "fka KingSuper" (inactive since epoch 849, 11,971.89 SUI still withdrawable, about
 $14K — it earns nothing) and four jailed or unbonded old Cosmos validators (about $300 together).
 

@@ -1973,6 +1973,7 @@ through mainnet. Running validators since 2020, with open-source tooling for eve
 no figures in it; a dated, verified staked total goes only into the long versions (StakingRewards, LinkedIn, GitHub);
 the total counts the Lido Simple DVT cluster's 500 validators (16,000 ETH) in full as ours (the user, 2026-09-29);
 measured 2026-09-29 at $84.8M — publish "over $80 million" — per chain with sources in `notion/staked-total-2026-09-29.md`;
+the homepage's own live figure (the user's script) read $83,996,080 the same day, within 1% of it;
 `security@encapsulate.xyz` stays the explorers' contact on purpose; the logo there is the old 4097px PNG (use the
 512px one). Then, per profile: on-chain
 edits by the ops team with each operator key, forms and profile edits by the user, and **pull requests from the
