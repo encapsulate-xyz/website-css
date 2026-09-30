@@ -196,9 +196,9 @@ html[data-enc-sheet]{overflow: hidden !important;}
 .enc-sheet,.enc-sheet *{box-sizing: border-box;}
 .enc-sheet{position: fixed;top: 64px;right: 0;bottom: 0;left: 0;z-index: 55;background: #FAFAF8;font-family: var(--type-body),system-ui,sans-serif;}
 .enc-sheet[data-enc-ink]{background: #2A2C28;}
-.enc-sheet__rail{flex: none;display: flex;flex-direction: column;justify-content: space-between;align-items: center;padding: 24px 16px 32px;background: #2A2C28;}
+.enc-sheet__rail{flex: none;display: flex;flex-direction: column;justify-content: space-between;align-items: center;padding: 24px clamp(8px,3vw,16px) 32px;background: #2A2C28;}
 .enc-sheet[data-enc-ink] .enc-sheet__rail{border-right: 1px solid rgba(250,250,248,0.18);}
-.enc-sheet__tab{-webkit-appearance: none;appearance: none;cursor: pointer;width: 100%;min-height: 44px;margin: 0;padding: 8px 6px;border: 0;background: transparent;text-align: center;font-family: var(--type-display),sans-serif;font-size: 44px;font-weight: 600;line-height: 1;letter-spacing: -0.02em;color: #2A2C28;text-shadow: 1px 0 0 rgba(250,250,248,0.5),-1px 0 0 rgba(250,250,248,0.5),0 1px 0 rgba(250,250,248,0.5),0 -1px 0 rgba(250,250,248,0.5),0.71px 0.71px 0 rgba(250,250,248,0.5),-0.71px 0.71px 0 rgba(250,250,248,0.5),0.71px -0.71px 0 rgba(250,250,248,0.5),-0.71px -0.71px 0 rgba(250,250,248,0.5);transition: color 0.16s;}
+.enc-sheet__tab{-webkit-appearance: none;appearance: none;cursor: pointer;width: 100%;min-height: 44px;margin: 0;padding: 8px 6px;border: 0;background: transparent;text-align: center;font-family: var(--type-display),sans-serif;font-size: clamp(28px,8.4vw,44px);font-weight: 600;line-height: 1;letter-spacing: -0.02em;color: #2A2C28;text-shadow: 1px 0 0 rgba(250,250,248,0.5),-1px 0 0 rgba(250,250,248,0.5),0 1px 0 rgba(250,250,248,0.5),0 -1px 0 rgba(250,250,248,0.5),0.71px 0.71px 0 rgba(250,250,248,0.5),-0.71px 0.71px 0 rgba(250,250,248,0.5),0.71px -0.71px 0 rgba(250,250,248,0.5),-0.71px -0.71px 0 rgba(250,250,248,0.5);transition: color 0.16s;}
 .enc-sheet__tab[aria-selected="true"]{color: #FAFAF8;text-shadow: none;}
 .enc-sheet__tab:focus-visible{outline: 3px solid rgba(250,250,248,0.5);outline-offset: 2px;}
 .enc-sheet__pane{flex: 1 1 auto;min-width: 0;min-height: 0;display: flex;flex-direction: column;padding: 16px 16px 40px;overflow-y: auto;}

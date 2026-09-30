@@ -1436,14 +1436,16 @@ html[data-enc-sheet] {
   background: #2A2C28;
 }
 
-/* the rail is ink on both grounds; its width is its numerals' */
+/* the rail is ink on both grounds; its width is its numerals' — and those follow the screen (the file's
+   clamp(28px, 8.4vw, 44px) numerals and clamp(8px, 3vw, 16px) sides): 70.6px at 360, 75.5 at 390, 97.9 from
+   524px up, as the design renders (the user, 2026-09-30: "this number side bar is flexible, yours is fixed") */
 .enc-sheet__rail {
   flex: none;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 24px 16px 32px;
+  padding: 24px clamp(8px, 3vw, 16px) 32px;
   background: #2A2C28;
 }
 .enc-sheet[data-enc-ink] .enc-sheet__rail {
@@ -1463,7 +1465,7 @@ html[data-enc-sheet] {
   background: transparent;
   text-align: center;
   font-family: var(--type-display), sans-serif;
-  font-size: 44px;
+  font-size: clamp(28px, 8.4vw, 44px);
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.02em;
