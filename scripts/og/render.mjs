@@ -13,7 +13,9 @@ import { join } from "node:path";
 const jobs = JSON.parse(readFileSync(process.argv[2], "utf8"));
 const CONC = +(process.env.CONC || 4);
 const profile = mkdtempSync(join(tmpdir(), "og-"));
-const chrome = spawn("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", [
+// CHROME names the binary: the Mac's by default, /usr/bin/google-chrome on a GitHub runner (site-data's content job)
+const CHROME = process.env.CHROME || (process.platform === "linux" ? "google-chrome" : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome");
+const chrome = spawn(CHROME, [
   "--headless=new", "--hide-scrollbars", "--remote-debugging-port=0", "--allow-file-access-from-files",
   `--user-data-dir=${profile}`, "--window-size=1200,630", "about:blank"], { stdio: "ignore" });
 const sleep = ms => new Promise(r => setTimeout(r, ms));
