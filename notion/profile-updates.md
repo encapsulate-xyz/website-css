@@ -31,7 +31,7 @@ of values that copy on a click, one toolbar, and rows that are a single line unt
 | 11 | awesome-berachain-validators | open — [#23](https://github.com/chuck-bear/awesome-berachain-validators/pull/23). The repo last merged in April 2025 |
 | 12.1 | Agoric profile | open — [#129](https://github.com/Agoric/validator-profiles/pull/129), raised 2026-09-29 at the user's word ("you do it"). The folder renamed to Encapsulate, the pledge's link now only the new validator `…g25ldj` on Mintscan, its first line "of Encapsulate (formerly KingSuper)", the commitments untouched. The repo has not merged since 2023 |
 | 12.2 | Althea list | open — [#129](https://github.com/althea-net/community/pull/129), the same day. Row 67 of `defi/validators.md`: the name, the org's GitHub, hello@encapsulate.xyz and the mainnet validator (the old row named one that is not on mainnet). The repo has not merged since 2023 |
-| 38 | Espresso, the node's own description | **merged 2026-09-29** — [#16](https://github.com/encapsulate-xyz/espresso-ansible/pull/16). The node still serves the old text until it is restarted; **the user restarts it**. See "Espresso" below |
+| 38 | Espresso, the node's own description | **done 2026-09-30** — [#16](https://github.com/encapsulate-xyz/espresso-ansible/pull/16) merged 2026-09-29, the node restarted by the user, and its metrics page read back with the agreed description on 2026-09-30. See "Espresso" below |
 | 31 | GitHub organisation | description and email set through the API (the token could, after all); **verifying the domain is left to the user** |
 
 `scripts/profile_tracker/prs.json` maps each row to its pull request and `python3 scripts/profile_tracker/prs.py` prints
@@ -109,7 +109,7 @@ on Lumera (8%). So a commission change always moves the rate.
 | 30 LinkedIn, 37 Discord server | marked done by the user; Discord's description reads the agreed text from outside, LinkedIn cannot be read from outside |
 | 16 IOTA | **done on chain** (verified 19:00 UTC, epoch 512): name, the agreed description, website and the 512 px logo in the active validator's own record; commission 8%, unchanged |
 | 15 Sui | still the old description |
-| 38 Espresso | merged; the node still serves the old description, so it has not been restarted yet |
+| 38 Espresso | **done 2026-09-30**: the node serves the agreed description (read after the restart). Row 19, the metadata URI transaction, was closed the same day without a transaction (the user): the dashboard reads the words from the node |
 
 **The older Discord invite `q6cmGycxsr` is now carried only by Voyager**, whose form was sent on 2026-09-29. Once Voyager
 publishes the new entry, nothing of ours points at it any more; until then it must stay.
@@ -183,7 +183,8 @@ losing them ten minutes later (76907a9, 2026-05-20). So the file carries the agr
 > Validator infrastructure for new chains since 2020. Early to testnet. Quick to upgrade. Easy to reach. Trusted by Sui NEAR Monad Lido Starknet and more.
 
 Row 19 (pointing the stake table at `espresso-mainnet.json` in the assets repo, which carries the full text and the
-node's `pub_key`) is optional now: it is the only way to show the commas.
+node's `pub_key`) was **closed on 2026-09-30 without a transaction** (the user): the node itself serves the agreed words
+since its restart, so the only thing the transaction would add is the commas.
 
 ## The ops repo, `encapsulate-xyz/titanium` (private) — reviewed 2026-09-29
 
