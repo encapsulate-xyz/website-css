@@ -1987,7 +1987,13 @@ flash of empty values and a key in the page.
   whole fee a staker pays, and ours is inside it**: the StakingRouter gives the Simple DVT module 8%
   and Lido's treasury 2%; the module's share for our cluster goes to a 0xSplits wallet
   (`0xcddc0b19…a187`) that returns 2/7 to Lido's Agent (`0x3e40D73E…9C8c`) and shares 5/7 equally
-  among the seven operators, 10.2% of it each — about 0.82% of the rewards our validators earn.
+  among the seven operators, 10.2% of it each — **about 0.714% of the rewards our validators earn** (corrected
+  2026-10-01 from the reward contracts on chain: 8% module fee × 87.5% × 10.2041% — a 12.5% cut comes off the module's
+  share before the split, which the 0.82% of 2026-09-24 missed), about $7,663 a year on the 16,000 ETH. **The module is
+  closed and winding down**: no keys waiting, no deposits since 2026-03-18, and a Lido reply quoted on its forum says
+  the 10 remaining 500-key clusters end in **May 2027** unless moved — the next step is asking Lido's Curated Module
+  Committee to move ours into Curated Module v2's multi-operator DVT type (planned Q4 2026). Detail in the L1 openings
+  research, `backups/l1-openings-2026-09-30/eth/eth-1.json`.
   Operator #48 "Lido x SSV: Mysterious Manta" (160 keys, all exited) was also ours, shut down on
   purpose (the user, 2026-09-24), so it counts toward nothing.
   The mainnet count went 28 → 27 everywhere: the homepage's "Number of
