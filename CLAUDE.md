@@ -1992,7 +1992,8 @@ flash of empty values and a key in the page.
   share before the split, which the 0.82% of 2026-09-24 missed), about $7,663 a year on the 16,000 ETH. **The module is
   closed and winding down**: no keys waiting, no deposits since 2026-03-18, and a Lido reply quoted on its forum says
   the 10 remaining 500-key clusters end in **May 2027** unless moved — the next step is asking Lido's Curated Module
-  Committee to move ours into Curated Module v2's multi-operator DVT type (planned Q4 2026). Detail in the L1 openings
+  Committee to move ours into Curated Module v2's multi-operator DVT type (planned Q4 2026). **Our SSV operator in the
+  cluster is #924** (99.5% over 30 days); 469 ("KingSuper") and 1056 hold no validators. Detail in the L1 openings
   research, `backups/l1-openings-2026-09-30/eth/eth-1.json`.
   Operator #48 "Lido x SSV: Mysterious Manta" (160 keys, all exited) was also ours, shut down on
   purpose (the user, 2026-09-24), so it counts toward nothing.
