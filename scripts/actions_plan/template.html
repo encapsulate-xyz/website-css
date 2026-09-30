@@ -198,7 +198,7 @@
     <div class="crumb"><span>Encapsulate · Site data</span><i></i><span>Plan and state · {{CHECKED}}</span></div>
     <h1>The GitHub Actions</h1>
     <p class="lede">Scheduled jobs that keep the site's numbers and facts current by writing them into Notion, which the site already reads. This page is how they work, everything they look after, and where the code lives — ten of the items run on a schedule since 30 September (marked <span class="live">running</span>); the rest are planned.</p>
-    <span class="state">Three workflows run in the private site-data repo since 30 Sep 2026 — governance and networks daily, homepage every six hours — and write ten of the items below. The rest are still updated by hand until their jobs are built</span>
+    <span class="state">Four workflows run in the private site-data repo since 30 Sep 2026 — governance, networks and content daily, homepage every six hours — and write fifteen of the items below. The rest are still updated by hand until their jobs are built</span>
     <p class="checked">Every figure under "now" was read from Notion and the live site on {{CHECKED}}; the running items show what the job last wrote.</p>
     <nav class="toc" aria-label="On this page">
       <a href="#how">How a job works</a><a href="#inventory">Everything that goes stale</a><a href="#repos">The two repos</a><a href="#workflows">The five workflows</a><a href="#order">Build order</a><a href="#decisions">Decisions</a><a href="#current">Already current</a>
@@ -206,8 +206,8 @@
   </header>
 
   <div class="card short" aria-label="In short">
-    <div><b>{{N_ITEMS}}</b><span>things on the site that go stale, plus {{N_WATCH}} alerts; ten are written by a job today</span></div>
-    <div><b>5</b><span>workflows, each about thirty lines that start one script; governance, networks and homepage run since 30 Sep, content and audit are planned</span></div>
+    <div><b>{{N_ITEMS}}</b><span>things on the site that go stale, plus {{N_WATCH}} alerts; fifteen are written by a job today</span></div>
+    <div><b>5</b><span>workflows, each about thirty lines that start one script; governance, networks, homepage and content run since 30 Sep, audit is planned</span></div>
     <div><b>2</b><span>repos: this one stays public, the jobs are in the private site-data</span></div>
     <div><b>{{N_OPEN}}</b><span>questions left to settle — every one became a decision, listed below</span></div>
   </div>
@@ -265,7 +265,7 @@
 
   <section id="workflows">
     <div class="s-head"><span class="num">04</span><h2>The five workflows</h2>
-      <p>Each one is a schedule, the secrets, and one command per job; the codes are the rows above. Governance, networks and homepage are live; content and audit are the next to build.</p></div>
+      <p>Each one is a schedule, the secrets, and one command per job; the codes are the rows above. Governance, networks, homepage and content are live; audit is the next to build.</p></div>
     <div class="flows">
       {{WORKFLOWS}}
     </div>
@@ -273,7 +273,7 @@
 
   <section id="order">
     <div class="s-head"><span class="num">05</span><h2>Build order</h2>
-      <p>Each step is useful on its own. The first five are done (30 Sep); the rest follow in this order.</p></div>
+      <p>Each step is useful on its own. The first six are done (30 Sep); the rest follow in this order.</p></div>
     <ol class="card steps">
       {{STEPS}}
     </ol>

@@ -141,7 +141,7 @@ item("A1", "watch", "audit", "Avalanche's remaining room for delegations", "Aler
 item("A2", "watch", "audit", "Rewards left unclaimed on Vara and Avail", "Alerts", "Vara's expire after 84 eras", "Nobody", "Every era", "Email before they expire; claiming needs the keys")
 item("A3", "watch", "audit", "A validator of ours jailed or inactive", "Alerts", "None", "Nobody", "On an incident", "Email at once, and N5 writes the status")
 
-LIVE = {'G1': 'votes.mjs', 'G2': 'upgrades.mjs', 'G4': 'rationales.mjs', 'G5': 'count.mjs', 'N1': 'values.mjs', 'N2': 'values.mjs', 'N3': 'values.mjs', 'N7': 'facts.mjs', 'H1': 'stake.mjs', 'H2': 'stake.mjs'}   # the items a scheduled job writes since 30 Sep, and the job
+LIVE = {'G1': 'votes.mjs', 'G2': 'upgrades.mjs', 'G4': 'rationales.mjs', 'G5': 'count.mjs', 'N1': 'values.mjs', 'N2': 'values.mjs', 'N3': 'values.mjs', 'N7': 'facts.mjs', 'H1': 'stake.mjs', 'H2': 'stake.mjs', 'E1': 'seo.mjs', 'B1': 'seo.mjs', 'B2': 'seo.mjs', 'U1': 'seo.mjs', 'U3': 'seo.mjs'}   # the items a scheduled job writes since 30 Sep, and the job
 def render_item(x):
     new = ' <span class="new">new</span>' if x["new"] else ""
     if x["id"] in LIVE: new += ' <span class="live">running · %s</span>' % e(LIVE[x["id"]])
@@ -195,7 +195,7 @@ THIS = [
 DATA = [
  ("dir", ".github/workflows/", "When to run, the secrets, one command each; a `dry` switch on each"),
  ("", "  governance.yml  networks.yml", "Daily, daily"),
- ("", "  homepage.yml", "Every six hours"),
+ ("", "  homepage.yml  content.yml", "Every six hours; daily"),
  ("dir sep", "lib/", ""),
  ("", "  notion.mjs", "The client: paced, plain text, knows a dry run"),
  ("", "  report.mjs", "The one log line, the run's issue, and the exit code that is the email"),
@@ -208,12 +208,13 @@ DATA = [
  ("", "  governance/", "votes, upgrades, rationales"),
  ("", "  networks/", "values, and the chain pages' facts"),
  ("", "  homepage/", "stake: the two figures"),
- ("added", "  content/  audit/", "Blog read, guide steps, dashboards, portfolio; links, glyphs, profiles — to come"),
+ ("", "  content/", "seo: every row's card, title, description; a post's Read and Lede, a guide's Time and Lede"),
+ ("added", "  audit/", "links, glyphs, profiles — to come"),
  ("dir sep", "config/", ""),
  ("", "  chains.json", "The Cosmos chains: registry, validators, explorer, since, the rate's source; the release repos"),
  ("", "  stake.json", "Every mainnet: family, address, endpoints, decimals, CoinGecko id, the 29 Sep reference"),
  ("dir sep", "bin/issue.mjs", "Opens the run's issue from the reports"),
- ("dir", "state/stake.json", "The last good reading per chain, committed by the run"),
+ ("dir", "state/", "stake.json (the last good reading per chain), rates.json (each run's APR), seo.json (each card's inputs) — committed by the runs"),
  ("", "package.json", "No dependencies: plain Node"),
 ]
 repos = (
@@ -227,7 +228,7 @@ WF = [
  ("governance", "Daily", [("G1", "New Cosmos votes become rows"), ("G2", "Upgrades on the other nine chains"), ("G4", "A rationale for each new row"), ("G5", "The votes-cast figure")]),
  ("homepage", "Every 6 h", [("H1", "The stake with our validators, priced"), ("H2", "The accounts staking with us")]),
  ("networks", "Daily", [("N1", "Rates, written with their date"), ("N2, N3", "Commission and unbonding, written"), ("N7", "Chain page facts, rewritten after a write"), ("N4–N6", "Slashing, status, Lido: checked"), ("S1", "The security page agrees with them")]),
- ("content", "Daily", [("B1–B3", "Blog: read minutes, missing fields"), ("U1–U2", "Guides: steps, time, old captures"), ("V1–V2", "Dashboards and repositories"), ("I1", "Investments against the Networks set"), ("E1", "Rows with no social card")]),
+ ("content", "Daily", [("E1", "Every row's card, title and description"), ("B1, B2", "A post's Read and Lede"), ("U1, U3", "A guide's Time and Lede"), ("V1–V2, I1, U2", "Dashboards, repositories, investments, old captures — to come")]),
  ("audit", "Daily", [("P1–P2", "Every profile, and the Discord invite"), ("W1–W3", "Glyph lists, old releases, dead links"), ("F1, H7", "Typed fallbacks"), ("C1–C2", "Chain rules and off-site buttons"), ("A1–A3", "The three alerts")]),
 ]
 workflows = "".join(
@@ -238,6 +239,7 @@ STEPS = [
  ("Make the repo — done 30 Sep", "The private `site-data` repo exists with the Notion token in its secrets. The alert email is GitHub's own failure mail to the repo's watchers; Super's token is still to be checked."),
  ("Move the governance jobs — done 30 Sep", "The Notion client and the three governance jobs are JavaScript, with a dry run and the report, on a daily schedule."),
  ("Cosmos votes become rows — done 30 Sep", "The votes job asks each chain for our vote; its first dry run found one row missing (Lumera #14)."),
+ ("The SEO job — done 30 Sep", "Every row's card, title and description on the three page databases, a post's Read and Lede, a guide's Time and Lede; the cards drawn by website-css's own renderer on the runner."),
  ("The homepage figures — done 30 Sep", "The stake with our validators and the accounts staking with us, read from every mainnet every six hours; your own script retires once the first run has written."),
  ("Blog and guide fields", "Read minutes, steps and time."),
  ("Cosmos network values — done 30 Sep", "Rates written behind the sanity band from the sources the rows were researched with, commission and unbonding written, a jailed validator flagged; Lido and slashing to come."),

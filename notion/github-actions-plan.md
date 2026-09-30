@@ -2,9 +2,9 @@
 
 Scheduled jobs that keep the site's data current by writing it into Notion. Discussed with the user
 across ten exchanges (2026-09-16 → 2026-09-27) and **built from 2026-09-30** in the private `site-data` repo:
-three workflows run there — governance and networks daily, homepage every six hours — and write ten of the items
-in section 2 (G1, G2, G4, G5, N1, N2, N3, N7, H1, H2). Every other item is updated by hand until its job is built
-(content and audit are next). The TODO in CLAUDE.md points here.
+four workflows run there — governance, networks and content daily, homepage every six hours — and write fifteen
+of the items in section 2 (G1, G2, G4, G5, N1, N2, N3, N7, H1, H2, E1, B1, B2, U1, U3). Every other item is updated
+by hand until its job is built (audit is next). The TODO in CLAUDE.md points here.
 
 **Corrected on 2026-09-27.** The first rewrite of this file (earlier the same day) took its language and
 repo from the plan of 2026-09-25 evening, which had drifted back to Python and to "this repo or a private

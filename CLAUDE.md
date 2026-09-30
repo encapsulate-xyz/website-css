@@ -2293,11 +2293,16 @@ record's tables are untouched; their addresses are in `backups/governance-vote-p
 /governance-record and its database page /governance-record/governance-record stay; the database page has a
 noindex head (2026-09-28). /investments/gravity-bridge (a 404 listed in the sitemap) was removed from Super.
 
-## TODO — a GitHub Action for the SEO card and text on every database row (asked 2026-09-30, not started)
+## The SEO job — every database row's card, title, description, and four content properties (built 2026-09-30)
 
-A scheduled job in `site-data` (`jobs/content/seo.mjs`, `content.yml`; item E1 in the plan) that goes through the
-Notion databases whose rows are pages on the site and, for each row whose `meta:image`, `meta:title` or
-`meta:description` is **missing or stale**, makes it and writes it. **Checked 2026-09-30 against the sitemap (111
+`site-data/jobs/content/seo.mjs`, `content.yml` (daily, 07:10 UTC; item E1 with B1, B2, U1, U3 in the plan): it goes
+through the Notion databases whose rows are pages on the site and, for each row whose `meta:image`, `meta:title` or
+`meta:description` is **missing or stale**, makes it and writes it — the card by **website-css's own `og_cards.py`**,
+which the workflow checks out beside site-data and runs with the runner's Chrome (`CHROME=google-chrome`;
+`og/render.mjs` takes the binary from that variable), so the card is the site's design and nothing is ported.
+**First run 2026-09-30:** 96 card hashes seeded (no card redrawn), the posts' `meta:title` (= Name) and two `Read`
+values written; a forced redraw (`REDRAW=<row ids>`) proved the path on the Mac (the Axelar guide) and on the
+runner (the Double Zero post — identical to the Mac's card). The run's issue names each card's changed inputs. **Checked 2026-09-30 against the sitemap (111
 pages) — every row page opened and read for content; only three databases qualify, 96 pages:**
 
 | Database | Pages | Content | Card design |
@@ -2328,8 +2333,8 @@ pages) — every row page opened and read for content; only three databases qual
 Everything else — Author, Tags, Chain, Ticker, Mainnet, Published Time on a post; Step, Title, Network, the relations,
 Status on a guide; Tier, Order, Role, Since, Compounding, Address, Cover, Token on a chain — stays a person's.
 
-**The guide titles, as the pattern would write them** (proposed 2026-09-30 for the user's review; **not written yet —
-the user: "let me review and then start when I say"**):
+**The guide titles, written 2026-09-30 on the chain pages' pattern** (the user: "yes do it"; old values in
+`backups/guide-titles-2026-09-30.json`), live the same hour; Monad's Time went 5 → 4 with them:
 
 | Guide | Today | Proposed |
 |---|---|---|
@@ -2362,7 +2367,9 @@ page with no content is skipped and named in the issue.
 - a Super override on the page beats the Notion value — report a row whose override hides a new card, do not clear it;
 - one issue per run listing each card made (before → after), as the other jobs do.
 
-Until it runs, a new row goes through `notion/new-row-checklist.md` by hand.
+A new row still goes through `notion/new-row-checklist.md` for what the job does not do (its path in Super, the
+fallbacks, the checks); the card and the meta text come the next morning, or at once with
+`python3 scripts/og_cards.py <kind> --only <slug>` here.
 
 ## TODO — check every line break against its handoff (asked 2026-09-26, not started)
 
