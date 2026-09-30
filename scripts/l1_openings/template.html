@@ -21,7 +21,16 @@
     --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
   }
   body { background: var(--ground); color: var(--text); font: 400 15.5px/1.6 var(--body); padding-inline: clamp(16px, 4vw, 40px); padding-block: 44px 96px; -webkit-font-smoothing: antialiased; }
-  .wrap { max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; gap: 52px; }
+  .wrap { max-width: 1320px; margin: 0 auto; display: flex; flex-direction: column; gap: 44px; }
+  /* the page: a rail on the left carrying the section list and every filter, the body on the right; one
+     column under 1000px, where the rail stands over the body and is not sticky */
+  .page { display: grid; grid-template-columns: 236px minmax(0, 1fr); gap: 44px; align-items: start; }
+  .rail { position: sticky; top: 16px; display: flex; flex-direction: column; gap: 24px; max-height: calc(100vh - 32px); overflow-y: auto; scrollbar-width: thin; padding-bottom: 8px; }
+  .body { display: flex; flex-direction: column; gap: 52px; min-width: 0; }
+  @media (max-width: 999px) {
+    .page { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+    .rail { position: static; max-height: none; overflow: visible; }
+  }
   h1, h2, h3, h4 { font-family: var(--display); color: var(--ink); margin: 0; text-wrap: balance; }
   h1 { font-weight: 600; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spacing: -0.03em; }
   h2 { font-weight: 600; font-size: clamp(23px, 3vw, 29px); line-height: 1.15; letter-spacing: -0.022em; }
@@ -41,9 +50,18 @@
   .crumb i { flex: 0 0 1px; align-self: stretch; min-height: 12px; background: #A5A5A5; }
   .lede { font-size: 18px; line-height: 1.55; max-width: 62ch; }
   .checked { font-size: 13.5px; color: var(--muted); max-width: 80ch; }
-  .toc { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 6px; }
-  .toc a { font-size: 13.5px; font-weight: 500; text-decoration: none; padding: 8px 14px; border-radius: 10px; background: var(--card); border: 1px solid var(--line-2); box-shadow: var(--shadow); color: var(--ink); }
-  .toc a:hover { border-color: #B9B9B1; }
+  .toc { display: flex; flex-direction: column; gap: 2px; }
+  .toc a { display: grid; grid-template-columns: 26px minmax(0, 1fr); align-items: baseline; gap: 8px; font-size: 13.5px; font-weight: 500; text-decoration: none; padding: 8px 10px 8px 12px; border-radius: 10px; color: var(--muted); border-left: 2px solid transparent; }
+  .toc a i { font: 400 11px/1 var(--mono); letter-spacing: .08em; color: var(--faint); font-style: normal; }
+  .toc a:hover { color: var(--ink); background: var(--sunk); }
+  .toc a[aria-current="true"] { color: var(--ink); border-left-color: var(--ink); background: var(--sunk); }
+  .toc a[aria-current="true"] i { color: var(--ink); }
+  @media (max-width: 999px) {
+    .toc { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+    .toc a { display: inline-flex; padding: 8px 14px; border: 1px solid var(--line-2); border-left-width: 1px; background: var(--card); box-shadow: var(--shadow); color: var(--ink); }
+    .toc a i { display: none; }
+    .toc a[aria-current="true"] { border-color: var(--ink); }
+  }
 
   section { display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 20px; }
   .s-head { display: flex; flex-direction: column; gap: 8px; }
@@ -96,21 +114,39 @@
   select { background: var(--sunk); border: 1px solid transparent; border-radius: 10px; padding: 8px 30px 8px 12px; font: 500 13.5px/1 var(--body); color: var(--text); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%); background-position: calc(100% - 15px) 50%, calc(100% - 10px) 50%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; }
   .tok { font: 400 12px/1 var(--mono); color: var(--faint); letter-spacing: .04em; }
 
-  /* toolbar */
-  .bar { display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: center; padding: 10px 12px; }
-  .tabs { display: inline-flex; flex-wrap: wrap; background: var(--sunk); border-radius: 10px; padding: 3px; gap: 2px; }
-  .tabs button { border: 0; background: transparent; padding: 7px 12px; border-radius: 8px; font: 500 13.5px/1 var(--body); color: var(--muted); cursor: pointer; display: inline-flex; gap: 7px; align-items: center; white-space: nowrap; }
+  /* the filters — every one of them reaches every network on the page: the picks, the ranked list, our
+     testnets, the upcoming networks and the ones with no role */
+  .bar { display: flex; flex-direction: column; gap: 14px; padding: 14px 12px 12px; }
+  .bar h4 { padding: 0 2px; }
+  .f-group { display: flex; flex-direction: column; gap: 6px; }
+  .tabs { display: flex; flex-direction: column; background: var(--sunk); border-radius: 10px; padding: 3px; gap: 2px; }
+  .tabs button { border: 0; background: transparent; padding: 7px 10px; border-radius: 8px; font: 500 13.5px/1 var(--body); color: var(--muted); cursor: pointer; display: flex; gap: 7px; align-items: center; white-space: nowrap; text-align: left; }
+  .tabs button i { margin-left: auto; }
   .tabs button:hover { color: var(--ink); }
   .tabs button[aria-pressed="true"] { background: var(--dark); color: #FAFAF8; }
   .tabs i { font-style: normal; font-size: 12px; color: var(--faint); font-variant-numeric: tabular-nums; }
   .tabs button[aria-pressed="true"] i { color: #C9C9C4; }
-  .check { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 500; color: var(--text); padding: 8px 12px; border-radius: 10px; background: var(--sunk); cursor: pointer; }
+  .check { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 500; color: var(--text); padding: 8px 12px; border-radius: 10px; background: var(--sunk); cursor: pointer; }
   .check input { accent-color: #2A2C28; width: 15px; height: 15px; margin: 0; }
-  .search { flex: 1 1 200px; min-width: 0; display: flex; }
+  select { width: 100%; }
+  .search { min-width: 0; display: flex; }
   .search input { width: 100%; min-width: 0; font: 400 14px/1.2 var(--body); color: var(--ink); background: var(--sunk); border: 1px solid transparent; border-radius: 10px; padding: 9px 12px; }
   .search input::placeholder { color: var(--faint); }
   .search input:focus { border-color: var(--line-2); background: var(--card); }
-  .bar-end { display: flex; gap: 14px; align-items: center; margin-left: auto; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .bar-end { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; padding: 4px 2px 0; border-top: 1px solid var(--line); padding-top: 12px; }
+  .bar-end #shown { flex: 1 1 auto; }
+  @media (max-width: 999px) {
+    .bar { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 10px 12px; padding: 10px 12px; }
+    .bar h4 { display: none; }
+    .f-group { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 10px 12px; }
+    .tabs { flex-direction: row; flex-wrap: wrap; display: inline-flex; }
+    .tabs button { display: inline-flex; }
+    .tabs button i { margin-left: 0; }
+    select { width: auto; }
+    .search { flex: 1 1 200px; }
+    .bar-end { border-top: 0; padding-top: 0; margin-left: auto; }
+    .bar-end #shown { flex: 0 0 auto; }
+  }
   .link { background: none; border: 0; padding: 0; font: 500 13.5px/1.4 var(--body); color: var(--muted); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; cursor: pointer; }
   .link:hover { color: var(--ink); }
 
@@ -158,7 +194,8 @@
   .src a { text-decoration-thickness: 1px; }
   .unk { font-size: 13px; color: var(--muted); }
 
-  @media (max-width: 900px) {
+  /* the rows' three columns need about 800px; the body has that from 1000px up */
+  @media (max-width: 999px) {
     .r-head { grid-template-columns: minmax(0, 1fr); padding: 6px 10px 12px 6px; position: relative; }
     .r-toggle { padding-right: 40px; }
     .r-facts, .r-meta { padding-left: 52px; justify-content: flex-start; }
@@ -166,17 +203,18 @@
     .r-meta { position: static; padding-right: 0; min-height: 0; }
     .chev { top: 12px; right: 8px; margin-top: 0; }
     .r-panel { grid-template-columns: minmax(0, 1fr); padding: 6px 16px 22px 16px; }
-    .bar-end { margin-left: 0; }
   }
   @media (max-width: 520px) { .kv { grid-template-columns: minmax(0, 1fr); gap: 0 0; } .kv dd { padding-bottom: 8px; } }
 
   .plain { list-style: none; margin: 0; padding: 0 22px; }
-  .plain li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 4px 24px; padding: 14px 0; border-top: 1px solid var(--line); font-size: 14px; align-items: baseline; }
-  .plain li:first-child { border-top: 0; }
+  .plain li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 4px 24px; padding: 14px 0; border-top: 0; font-size: 14px; align-items: baseline; }
   .plain li b { font-weight: 600; color: var(--ink); }
   .plain li span { color: var(--muted); }
   @media (max-width: 700px) { .plain li { grid-template-columns: minmax(0, 1fr); } }
   .empty { padding: 28px 24px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; }
+  .plain li[hidden], .pick[hidden], .row[hidden], .level[hidden] { display: none; }
+  .plain li:first-child { border-top: 0; }
+  .plain li:not([hidden]) ~ li:not([hidden]) { border-top: 1px solid var(--line); }
   footer { font-size: 13px; color: var(--faint); max-width: 88ch; display: flex; flex-direction: column; gap: 8px; }
 </style>
 
@@ -186,59 +224,71 @@
     <h1>Where we could validate next</h1>
     <p class="lede">{{N}} networks we do not validate yet, in order from the easiest to join to the hardest, and {{U}} that are not on mainnet yet. For each: how a validator gets in, what it costs, and whether the network is asking for validators now.</p>
     <p class="checked">{{METHOD}}</p>
-    <nav class="toc" aria-label="On this page">
-      <a href="#start">Start here</a><a href="#all">Every network</a><a href="#testnets">Already in by testnet</a><a href="#opening">Not on mainnet yet</a><a href="#none">No validator role</a><a href="#method">How this was researched</a>
-    </nav>
   </header>
 
   <div class="scale" aria-label="How hard each network is to join">
     {{SCALE}}
   </div>
 
+  <div class="page">
+  <aside class="rail">
+    <nav class="toc" aria-label="On this page">
+      <a href="#start"><i>01</i>Start here</a><a href="#all"><i>02</i>Every network</a><a href="#testnets"><i>03</i>Already in by testnet</a><a href="#opening"><i>04</i>Not on mainnet yet</a><a href="#none"><i>05</i>No validator role</a><a href="#method"><i>06</i>How this was researched</a>
+    </nav>
+    <div class="card bar" id="filters">
+      <div class="f-group"><h4>Level</h4>
+        <div class="tabs" role="group" aria-label="Level">
+          <button type="button" data-v="all" aria-pressed="true">All <i data-n="all"></i></button>
+          <button type="button" data-v="1" aria-pressed="false">Open now <i data-n="1"></i></button>
+          <button type="button" data-v="2" aria-pressed="false">Within reach <i data-n="2"></i></button>
+          <button type="button" data-v="3" aria-pressed="false">Needs backing <i data-n="3"></i></button>
+          <button type="button" data-v="4" aria-pressed="false">Hard <i data-n="4"></i></button>
+          <button type="button" data-v="5" aria-pressed="false">Closed <i data-n="5"></i></button>
+        </div></div>
+      <div class="f-group"><h4>Tier</h4>
+        <label class="vh" for="f-tier">Tier</label>
+        <select id="f-tier"><option value="all">Every tier</option><option value="god">god</option><option value="high">high</option><option value="medium">medium</option><option value="low">low</option><option value="filth">filth</option></select>
+        <label class="check"><input type="checkbox" id="f-rec"> Taking operators now</label></div>
+      <div class="f-group"><h4>Find</h4>
+        <div class="search"><label class="vh" for="q">Find</label><input id="q" type="search" autocomplete="off" placeholder="A network, a token, a programme"></div></div>
+      <div class="bar-end"><span id="shown"></span><button type="button" class="link" id="clear">Clear</button><button type="button" class="link" id="expand">Open all</button></div>
+    </div>
+  </aside>
+  <div class="body">
+
   <section id="start">
     <div class="s-head"><span class="num">01</span><h2>Start here</h2>
       <p>{{PICKS_LEDE}}</p></div>
     <ol class="picks">{{PICKS}}</ol>
+    <div class="card empty" data-empty hidden><span>None of the picks matches.</span></div>
   </section>
 
   <section id="all">
     <div class="s-head"><span class="num">02</span><h2>Every network, easiest first</h2>
       <p>Inside each level the higher tier comes first (our Networks set's scale: god, high, medium, low, filth), then the networks taking operators now, then the ones that need the least stake; a network that pays little or is being wound down comes last. Open a row for the steps, the programmes and the sources.</p></div>
-    <div class="card bar" id="filters">
-      <div class="tabs" role="group" aria-label="Level">
-        <button type="button" data-v="all" aria-pressed="true">All <i data-n="all"></i></button>
-        <button type="button" data-v="1" aria-pressed="false">Open now <i data-n="1"></i></button>
-        <button type="button" data-v="2" aria-pressed="false">Within reach <i data-n="2"></i></button>
-        <button type="button" data-v="3" aria-pressed="false">Needs backing <i data-n="3"></i></button>
-        <button type="button" data-v="4" aria-pressed="false">Hard <i data-n="4"></i></button>
-        <button type="button" data-v="5" aria-pressed="false">Closed <i data-n="5"></i></button>
-      </div>
-      <label class="check"><input type="checkbox" id="f-rec"> Taking operators now</label>
-      <label class="vh" for="f-tier">Tier</label>
-      <select id="f-tier"><option value="all">Every tier</option><option value="god">god</option><option value="high">high</option><option value="medium">medium</option><option value="low">low</option><option value="filth">filth</option></select>
-      <div class="search"><label class="vh" for="q">Find</label><input id="q" type="search" autocomplete="off" placeholder="Find a network, a token, a programme"></div>
-      <div class="bar-end"><span id="shown"></span><button type="button" class="link" id="expand">Open all</button></div>
-    </div>
     {{LEVELS}}
-    <div class="card empty" id="empty" hidden><span>No network matches.</span><button type="button" class="link" id="clear">Clear filters</button></div>
+    <div class="card empty" data-empty hidden><span>No network here matches.</span></div>
   </section>
 
   <section id="testnets">
     <div class="s-head"><span class="num">03</span><h2>Already in by testnet</h2>
       <p>Networks where we run a testnet validator today and no mainnet one. The step to mainnet is usually the shortest road of all.</p></div>
     {{TESTNETS}}
+    <div class="card empty" data-empty hidden><span>No network here matches.</span></div>
   </section>
 
   <section id="opening">
     <div class="s-head"><span class="num">04</span><h2>Not on mainnet yet, or still picking its validators</h2>
       <p>Networks on devnet or testnet, and live networks whose validator set is still hand-picked and being formed. Little or nothing is earned yet; a testnet seat or an early conversation is what puts us in line for a mainnet one. Ordered the same way: easiest first, then the higher tier. The stage and the mainnet date are on each row; a live, open mainnet is ranked with the rest above.</p></div>
     {{OPENING}}
+    <div class="card empty" data-empty hidden><span>No network here matches.</span></div>
   </section>
 
   <section id="none">
     <div class="s-head"><span class="num">05</span><h2>No validator role to take</h2>
       <p>Checked and set aside: networks secured by mining, by a single operator, or by a role that is not validating.</p></div>
     <ul class="card plain">{{NONE}}</ul>
+    <div class="card empty" data-empty hidden><span>No network here matches.</span></div>
   </section>
 
   <section id="method">
@@ -248,38 +298,59 @@
 
   <footer><span>Left out on purpose, because we already validate them on mainnet: {{EXCLUDED}}.</span>
     <span>Built by scripts/l1_openings in the website-css repo. The research files are kept out of that public repo.</span></footer>
+  </div>
+  </div>
 </div>
 
 <script>
 (function () {
-  var rows = [].slice.call(document.querySelectorAll("#all .row")), levels = [].slice.call(document.querySelectorAll("#all .level"));
+  // every network on the page is one item: a ranked row, a testnet or upcoming row, a pick, a no-role line.
+  // The filters reach all of them; the level counts and "N of M" count the networks (a pick repeats a
+  // network that is in the list, so the picks are not counted).
+  var items = [].slice.call(document.querySelectorAll("[data-d][data-text]"));
+  var networks = items.filter(function (el) { return !el.classList.contains("pick"); });
+  var rows = items.filter(function (el) { return el.classList.contains("row"); });
+  var levels = [].slice.call(document.querySelectorAll(".level"));
   var f = { d: "all", rec: false, tier: "all", q: "" }, allOpen = false;
-  var counts = { all: rows.length };
-  rows.forEach(function (r) { var d = r.getAttribute("data-d"); counts[d] = (counts[d] || 0) + 1; });
+  var counts = { all: networks.length };
+  networks.forEach(function (r) { var d = r.getAttribute("data-d"); counts[d] = (counts[d] || 0) + 1; });
   [].slice.call(document.querySelectorAll("[data-n]")).forEach(function (n) { n.textContent = counts[n.getAttribute("data-n")] || 0; });
   function open(r, on) {
     r.querySelector(".r-panel").hidden = !on;
     if (on) r.setAttribute("data-open", ""); else r.removeAttribute("data-open");
     r.querySelector(".r-toggle").setAttribute("aria-expanded", String(on));
   }
-  [].slice.call(document.querySelectorAll(".row")).forEach(function (r) {
+  rows.forEach(function (r) {
     function flip() { open(r, r.querySelector(".r-panel").hidden); }
     r.querySelector(".r-toggle").addEventListener("click", flip);
     r.querySelector(".chev").addEventListener("click", flip);
   });
+  function matches(el, words) {
+    var ok = (f.d === "all" || el.getAttribute("data-d") === f.d) && (!f.rec || el.getAttribute("data-rec") === "yes") && (f.tier === "all" || el.getAttribute("data-tier") === f.tier);
+    if (ok && words.length) { var t = el.getAttribute("data-text"); ok = words.every(function (w) { return t.indexOf(w) >= 0; }); }
+    return ok;
+  }
   function apply() {
     var n = 0, words = f.q.toLowerCase().split(/\s+/).filter(Boolean);
-    rows.forEach(function (r) {
-      var ok = (f.d === "all" || r.getAttribute("data-d") === f.d) && (!f.rec || r.getAttribute("data-rec") === "yes") && (f.tier === "all" || r.getAttribute("data-tier") === f.tier);
-      if (ok && words.length) { var t = r.getAttribute("data-text"); ok = words.every(function (w) { return t.indexOf(w) >= 0; }); }
-      r.hidden = !ok; if (ok) n++;
+    items.forEach(function (el) {
+      var ok = matches(el, words);
+      el.hidden = !ok;
+      if (ok && !el.classList.contains("pick")) n++;
     });
     levels.forEach(function (l) { l.hidden = !l.querySelector(".row:not([hidden])"); });
-    document.getElementById("shown").textContent = n === rows.length ? n + " networks" : n + " of " + rows.length;
-    document.getElementById("empty").hidden = n > 0;
+    // a section whose every network is hidden says so, in place of its list
+    [].slice.call(document.querySelectorAll("section")).forEach(function (sec) {
+      var note = sec.querySelector("[data-empty]"); if (!note) return;
+      var any = sec.querySelector("[data-d][data-text]:not([hidden])");
+      note.hidden = !!any;
+      [].slice.call(sec.querySelectorAll(".rows.card, .picks, .plain")).forEach(function (list) { if (!list.closest(".level")) list.hidden = !any; });
+    });
+    var shown = document.getElementById("shown");
+    shown.textContent = n === networks.length ? n + " networks" : n + " of " + networks.length;
     [].slice.call(document.querySelectorAll("#filters .tabs button")).forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-v") === f.d)); });
     document.getElementById("f-rec").checked = f.rec;
     document.getElementById("f-tier").value = f.tier;
+    document.getElementById("clear").hidden = f.d === "all" && !f.rec && f.tier === "all" && !f.q;
   }
   document.getElementById("filters").addEventListener("click", function (e) {
     var b = e.target.closest(".tabs button"); if (!b) return; f.d = b.getAttribute("data-v"); apply();
@@ -298,5 +369,19 @@
   var h = (location.hash || "").slice(1);
   if (/^[1-5]$/.test(h)) f.d = h;
   apply();
+
+  // the section list marks the section on screen: the last one whose top has passed a third of the viewport
+  var links = [].slice.call(document.querySelectorAll(".toc a")), secs = links.map(function (a) { return document.querySelector(a.getAttribute("href")); });
+  var ticking = false;
+  function mark() {
+    ticking = false;
+    var line = window.innerHeight / 3, current = 0;
+    secs.forEach(function (sec, i) { if (sec && sec.getBoundingClientRect().top <= line) current = i; });
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) current = secs.length - 1;
+    links.forEach(function (a, i) { if (i === current) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(mark); } }, { passive: true });
+  window.addEventListener("resize", mark);
+  mark();
 })();
 </script>

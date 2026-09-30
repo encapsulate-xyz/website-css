@@ -45,7 +45,8 @@ async function run(job) {
   if (job.wait) await sleep(job.wait);
   let out = null;
   if (job.js) out = await ev(job.js);
-  const shot = await S("Page.captureScreenshot", { format: "png", ...(job.clip ? { clip: { ...job.clip, scale: 1 } } : {}), captureBeyondViewport: false });
+  if (job.clip && job.clipFrom) job.clip.y = (await ev(`document.getElementById(${JSON.stringify(job.clipFrom)}).getBoundingClientRect().top + window.scrollY - 80`)) || 0;
+  const shot = await S("Page.captureScreenshot", { format: "png", ...(job.clip ? { clip: { ...job.clip, scale: 1 } } : {}), captureBeyondViewport: !!job.clip });
   writeFileSync(job.out, Buffer.from(shot.result.data, "base64"));
   await send("Target.closeTarget", { targetId });
   console.log(job.out.split("/").pop(), out != null ? JSON.stringify(out) : "");

@@ -201,14 +201,20 @@ for d in (1, 2, 3, 4, 5):
     levels += ('<div class="level" data-d="%d" id="level-%d"><div class="l-head"><h3>%s</h3><p>%s</p><span class="count">%d</span></div><ul class="rows card">%s</ul></div>'
                % (d, d, e(LEVEL[d][0]), e(LEVEL[d][1]), len(grp), body))
 
+# the scale counts every network with a level — the ranked list, our testnets and the upcoming ones — the same
+# count the rail's level filter shows, so the two agree on one screen
+levelled = main + testnets + opening
 scale = "".join('<a class="lvl" href="#all" data-d="%d"><b>%d</b><strong>%s</strong><span>%s</span></a>'
-                % (d, sum(1 for x in main if x["difficulty"] == d), e(LEVEL[d][0]), e(LEVEL[d][1])) for d in (1, 2, 3, 4, 5))
+                % (d, sum(1 for x in levelled if x["difficulty"] == d), e(LEVEL[d][0]), e(LEVEL[d][1])) for d in (1, 2, 3, 4, 5))
 
 tn = "".join(render(x, i + 1, True) for i, x in enumerate(testnets))
 testnet_html = ('<ul class="rows card">%s</ul>' % tn) if tn else '<div class="card empty"><span>None in this research.</span></div>'
 op = "".join(render(x, i + 1, True) for i, x in enumerate(opening))
 opening_html = ('<ul class="rows card">%s</ul>' % op) if op else '<div class="card empty"><span>None in this research.</span></div>'
-none_html = "".join('<li><b>%s <span class="chip tier" data-tier="%s">%s</span></b><span>%s</span></li>' % (e(x["chain"]), x["_tier"], x["_tier"], linked(x.get("difficulty_why") or x.get("what") or "")) for x in none) or "<li><b>None</b><span></span></li>"
+# a no-role line carries the same filter attributes as a row (level 0: it shows only under "All")
+none_html = "".join('<li data-d="0" data-rec="no" data-tier="%s" data-text="%s"><b>%s <span class="chip tier" data-tier="%s">%s</span></b><span>%s</span></li>'
+                    % (x["_tier"], e(" ".join([x["chain"], str(x.get("token") or ""), x["_tier"], str(x.get("what") or ""), str(x.get("difficulty_why") or "")]).lower()),
+                       e(x["chain"]), x["_tier"], x["_tier"], linked(x.get("difficulty_why") or x.get("what") or "")) for x in none) or "<li><b>None</b><span></span></li>"
 
 by = {x["_id"]: x for x in rows}
 if not picks.get("picks"): picks["picks"] = [{"chain": x["chain"], "why": x.get("difficulty_why", "")} for x in main[:6]]
@@ -217,8 +223,11 @@ for p in picks["picks"]:
     x = by.get(key(p["chain"]))
     if not x: sys.exit("picks.json names a network that is not in the research: " + p["chain"])
     d = x["difficulty"]
-    ph += ('<li class="card pick"><div class="pick-top"><h3>%s</h3><span class="tok">%s</span><span class="chip tier" data-tier="%s">%s</span><span class="chip dot" data-d="%d">%s</span>%s</div><p>%s</p><p class="pick-next"><b>First step.</b> %s</p></li>'
-           % (e(x["chain"]), e(tok(x)), x["_tier"], x["_tier"], d, e(LEVEL[d][0]), '<span class="chip yes">Taking operators</span>' if str(x.get("recruiting_now", "")).lower() == "yes" else "",
+    rec = str(x.get("recruiting_now", "")).lower() == "yes"
+    # a pick carries the row's filter attributes too, so the rail's filters reach it
+    text = " ".join([x["chain"], str(x.get("token") or ""), x["_tier"], LEVEL[d][0], str(x.get("what") or ""), p["why"], p.get("next") or ""]).lower()
+    ph += ('<li class="card pick" data-d="%d" data-rec="%s" data-tier="%s" data-text="%s"><div class="pick-top"><h3>%s</h3><span class="tok">%s</span><span class="chip tier" data-tier="%s">%s</span><span class="chip dot" data-d="%d">%s</span>%s</div><p>%s</p><p class="pick-next"><b>First step.</b> %s</p></li>'
+           % (d, "yes" if rec else "no", x["_tier"], e(text), e(x["chain"]), e(tok(x)), x["_tier"], x["_tier"], d, e(LEVEL[d][0]), '<span class="chip yes">Taking operators</span>' if rec else "",
               linked(p["why"]), linked(p.get("next") or x.get("best_next_step") or "")))
 
 METHOD = picks.get("method") or ""
