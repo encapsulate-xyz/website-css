@@ -2292,10 +2292,23 @@ noindex head (2026-09-28). /investments/gravity-bridge (a 404 listed in the site
 
 ## TODO — a GitHub Action for the SEO card and text on every database row (asked 2026-09-30, not started)
 
-A scheduled job in `site-data` (`jobs/content/seo.mjs`, `content.yml`; item E1 in the plan) that goes through **every
-Notion database whose rows are pages on the site** — Blogs, the Networks set's mainnet rows, the Guides Database, and
-any other database with pages in Super (Portfolio, the record's database page is noindex and out) — and, for each row
-whose `meta:image`, `meta:title` or `meta:description` is **missing or stale**, makes it and writes it:
+A scheduled job in `site-data` (`jobs/content/seo.mjs`, `content.yml`; item E1 in the plan) that goes through the
+Notion databases whose rows are pages on the site and, for each row whose `meta:image`, `meta:title` or
+`meta:description` is **missing or stale**, makes it and writes it. **Checked 2026-09-30 against the sitemap (111
+pages) — every row page opened and read for content; only three databases qualify, 96 pages:**
+
+| Database | Pages | Content | Card design |
+|---|---|---|---|
+| Blogs (`a148eb7f…`) | 38 at /blog/… | all open (200), 37–64+ blocks | post 17d |
+| Networks set (`3dde800a…33b7f1…`), mainnet rows | 27 at /networks/… | all open, ~19 blocks each | the chain hero |
+| Guides Database (`1f6e800a…`) | 31 of 32 at /guides/… | all open; **/guides/mina is empty** — its Notion page has no blocks, the live page shows only "MINA" | the guide head |
+
+**Left out:** `/guides/mina` until it has content (then it joins); `/governance/votes` (the record's database page:
+noindex, a table, no card); and every other database — Portfolio, Team, Why Stake, Colour, Wallet Set, Governance
+Mechanism, Governance Record (its 316 row pages were removed from Super on 2026-09-28), the /services tables
+(Dashboards, Playbooks, Bot events, Monitoring builds) and the guides' slide databases — whose rows are not pages on
+the site. The job takes its list from the sitemap each run, so a database that gains pages is picked up, and a row
+page with no content is skipped and named in the issue.
 
 - **the card** rendered as `scripts/og_cards.py` does today (post 17d, chain hero, guide head) in the runner's headless
   Chrome, uploaded through the file-upload API and attached to `meta:image`;
