@@ -53,14 +53,19 @@ html:has(.notion-root[data-enc-guide]) body,
   overflow-anchor: none;
 }
 
+/* The snap is switched on by guide.js only once the built page stands at its top (`data-enc-guide-snap`
+   on html, 2026-09-30). Keyed on the build alone, the footer — the raw page's one snap stop — was the
+   snapped target when the bands went in above it, so a mandatory snap re-aligned the page to the footer
+   and the restore to the top then ran as a 1.5s smooth scroll: every reload opened at the foot and
+   climbed (the user's report). */
 @media (min-width: 701px) and (prefers-reduced-motion: no-preference) {
-  html:has(.notion-root[data-enc-guide]) {
+  html[data-enc-guide-snap]:has(.notion-root[data-enc-guide]) {
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
   }
-  .enc-gd__band,
-  body:has(.notion-root[data-enc-guide]) .super-footer,
-  body:has(.notion-root[data-enc-guide]) footer {
+  html[data-enc-guide-snap] .enc-gd__band,
+  html[data-enc-guide-snap] body:has(.notion-root[data-enc-guide]) .super-footer,
+  html[data-enc-guide-snap] body:has(.notion-root[data-enc-guide]) footer {
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }

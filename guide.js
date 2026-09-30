@@ -40,7 +40,7 @@
       return { "@type": "ListItem", "position": i + 1, "name": c[0], "item": "https://encapsulate.xyz" + c[1] };
     }) };
   }
-  var VERSION = "2";
+  var VERSION = "3";
   var INDEX = "/guides";
 
   /* the fallback if the "Guide page copy" toggle goes missing */
@@ -489,16 +489,24 @@
          the top is restored here for the frames where it has already happened; a link to a band
          (#block-…) is left alone. */
       var atTop = (window.scrollY || document.documentElement.scrollTop || 0) < 40;
+      /* the snap is off while the bands go in (guide.css keys it on this attribute): with it on, the
+         footer — the raw page's one stop — stayed the snapped target and the page re-aligned to it */
+      document.documentElement.removeAttribute("data-enc-guide-snap");
       root.insertBefore(wrap, root.firstChild);
+      var snapOn = function () { document.documentElement.setAttribute("data-enc-guide-snap", ""); };
       if (atTop && !location.hash) {
         var top = function () {
-          window.scrollTo(0, 0);
+          /* instant: the page's own scroll-behavior is smooth, and a restore that animated from the
+             foot was what the reader saw on every reload */
+          window.scrollTo({ top: 0, left: 0, behavior: "instant" });
           if (document.documentElement.scrollTop) document.documentElement.scrollTop = 0;
         };
         top();
         requestAnimationFrame(top);
         setTimeout(top, 0);
-        setTimeout(top, 120);
+        setTimeout(function () { top(); snapOn(); }, 120);
+      } else {
+        setTimeout(snapOn, 120);
       }
 
       var bands = wrap.querySelectorAll(".enc-gd__step");
@@ -520,7 +528,7 @@
   }
 
   function tick() {
-    if (!guidePage()) { ld(null); return; }
+    if (!guidePage()) { ld(null); document.documentElement.removeAttribute("data-enc-guide-snap"); return; }
     var root = document.querySelector(".notion-root");
     if (!root || root.getAttribute("data-enc-guide") === VERSION) return;
     var old = root.querySelector(".enc-gd");
