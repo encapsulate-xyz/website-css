@@ -2136,8 +2136,11 @@ since 2026-09-30: `governance.yml` (daily: votes — **our** votes, asked chain 
 running the release is the vote or it carries a proposal; rationales — fills only empty or boilerplate ones, never
 rewrites a written one), `networks.yml` (daily: Reward rate + Rate updated, Commission, Unbonding on the Cosmos rows,
 then the chain page's facts paragraph and `meta:description`; the rate from the source the row was researched with —
-staking-explorer's measured APR, `terra2` not `terra`, cosmos.directory for Gravity Bridge, Chain4Energy's minter — held
-for a hand when it moves by more than a third; `ACCEPT=<chain>` writes it once past the band) and `homepage.yml`
+staking-explorer's measured APR, `terra2` not `terra`, cosmos.directory for Gravity Bridge, Chain4Energy's minter —
+**written only when two consecutive runs read it within 0.5 points of each other** and it moves the row by 0.5 points
+(state/rates.json; staking-explorer's ixo figure read 13.77% at 08:00 and 28.08% at 17:00 on 2026-09-30, and the first
+had been written at the user's word — a one-off reading never moves a row again), held for a hand when it moves by more
+than a third; `ACCEPT=<chain>` writes it once past both) and `homepage.yml`
 (every six hours: the stats band's two headings from every mainnet's stake, priced on CoinGecko; a chain that fails to
 read keeps its last good reading in `state/stake.json`; the customers heading is written only when every chain that
 can count did — **Sui's ~10,000 stakers have no open source yet**, so it is held; Mina is a typed reading until a
@@ -2308,11 +2311,12 @@ pages) — every row page opened and read for content; only three databases qual
 | Database | `meta:image` | `meta:description` | `meta:title` |
 |---|---|---|---|
 | Blogs | the 17d card — it shows the **tag, the date, the title, the Cover glyph and the tint** (the post's place on the index) and nothing else; remade when one of those changes | = the row's `Lede` | = the post's `Name`, written where empty; a title someone shortened by hand stays (Berachain, Symbiotic, Canton, and "Double Zero" for "What is IBRL and Why Does It Matter?"); a new `Name` over 60 characters is reported for a hand |
-| Networks set | the chain hero — it shows the **name, the line under it, the green button's label (the guide's wallet), the address in the ring, the glyph and the tint** (the chain's place in the set's Order); remade when one of those changes. **No rate, commission or unbonding is on the card** (the user caught this, 2026-09-30: the first version of this table said otherwise), so a value change never remakes it | the facts sentence — the same function the networks job (N7) uses after a value change, so either job writes the same words | "<Name> staking - Encapsulate", written where missing or different |
+| Networks set | the chain hero — it shows the **name, the line under it, the green button's label (the guide's wallet), the address in the ring, the glyph and the tint** (the chain's place in the set's Order); remade when one of those changes. **No rate, commission or unbonding is on the card** (the user caught this, 2026-09-30: the first version of this table said otherwise), so a value change never remakes it | **not this job's**: the networks job (N7) writes it — after every value change, and since 2026-09-30 also where a row has none — and is its only writer; the SEO job leaves it alone | "<Name> staking - Encapsulate", written where missing or different |
 | Guides Database | the guide head — it shows the **chain's name (the crumb), `Title`, `Lede`, the step count ("Seven screens"), the chain's glyph and tint and the wallet's mark**; remade when one of those changes | = "`Title`. `Lede`" | "<Chain> Staking Guide" — the property was added on 2026-09-30 and filled from Super's 32 title overrides, which were then cleared (below); the job writes it where empty and never over a title someone worded by hand |
 
 **The job owns all three `meta:*` on all three databases** (the user, 2026-09-30: "I want this GitHub Action to update
-everything related to SEO"), which needs Super to hold **no override** on those pages — an override beats Notion. Done
+everything related to SEO") — except the chain pages' description, which the networks job already writes and keeps
+(one writer per property; the user caught the duplicate, 2026-09-30) — which needs Super to hold **no override** on those pages — an override beats Notion. Done
 the same day: `meta:title` added to the Guides Database and filled from Super's 32 guide title overrides (verbatim, but
 "Juno staking Guide" → "Juno Staking Guide"), "Double Zero" written to its Blogs row, and **all 43 title overrides
 cleared in Super** (32 guides, 11 posts — ten of the posts' were copies of the row's own name). Every one of the 43

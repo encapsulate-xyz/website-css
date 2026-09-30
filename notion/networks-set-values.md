@@ -112,7 +112,10 @@ Classic, 2.34%), cosmos.directory's `calculated_apr` for Gravity Bridge, Chain4E
 year, 70% to validators, over the bonded stake — the same 7.8%), none for Sommelier. A rate that moves by more than a
 third is held for a hand; `ACCEPT=ixo node jobs/networks/values.mjs` writes it once. **First run, 2026-09-30:** Terra
 34.3 → 35.1% (measured 39%), Axelar 13.9 → 13.6%, Gravity Bridge 17.4 → 16.3%, humans.ai 31.8 → 31.7%, and **ixo 24.7 →
-12.4%** (staking-explorer's measured APR fell from ~27% to 13.8% since 24 Sep; the user accepted it).
+12.4%** (staking-explorer's measured APR read 13.77% at 08:00 UTC; the user accepted it) — **undone the same evening:**
+the same page read 28.08% at 17:00 UTC, so the morning's figure was a dip in staking-explorer's measurement, not in
+the chain, and the row went to **25.3%** (28.08% × 0.9). Since then a rate is written only when two consecutive runs
+read it within 0.5 points of each other (`state/rates.json`), and only for a move of 0.5 points or more.
 
 ## Refreshing (by hand — the job above does this now)
 
