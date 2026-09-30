@@ -80,6 +80,10 @@ item("P2", "report", "audit", "The Discord invite", "Validator profiles", "`disc
      "If it is ever revoked, every profile and guide links nowhere", "Check that it still opens the server; email if it does not (a new invite is yours to make)", new=True)
 
 # ---- homepage
+item("H1", "write", "homepage", "Staked Assets Under Management", "Homepage", "$ 60,395,092 on 30 Sep (it read $83,996,080 the day before)", "Your own script, until now",
+     "With every price and every delegation; a chain the script cannot read drops out of the total", "Read the stake with our validator on every mainnet, price it on CoinGecko, write the heading when it changes — a chain that fails to read keeps its last reading, so the total never falls with an outage", new=True)
+item("H2", "write", "homepage", "Total Customers", "Homepage", "14,720", "Your own script, until now",
+     "Every delegation", "Count the accounts staking with us on every chain that can tell, write the heading when the count changes", new=True)
 item("H4", "none", "—", "Uptime", "Homepage", "99.96 %", "By hand", "Nothing computes it, and it has no definition yet",
      "Nothing until you define it: which chains, what window, which source")
 item("H6", "none", "—", "The heading “Six years”", "Homepage", "Typed", "By hand", "Wrong from 2027. The figures under it are calculated; the heading is not",
@@ -185,42 +189,40 @@ THIS = [
  ("", "CLAUDE.md", "How the site is built, and every decision"),
 ]
 DATA = [
- ("dir", ".github/workflows/", "When to run, the secrets, one command each"),
- ("", "  governance.yml  networks.yml", "Daily, weekly"),
- ("", "  content.yml  audit.yml", "Daily, daily"),
+ ("dir", ".github/workflows/", "When to run, the secrets, one command each; a `dry` switch on each"),
+ ("", "  governance.yml  networks.yml", "Daily, daily"),
+ ("", "  homepage.yml", "Every six hours"),
  ("dir sep", "lib/", ""),
- ("", "  notion.mjs", "The client: rate-limited, plain text, knows a dry run"),
- ("", "  report.mjs", "The short log line, the run's issue, and the email when something drifted"),
- ("", "  http.mjs  history.mjs", "Retries and fallback endpoints; the rate history"),
+ ("", "  notion.mjs", "The client: paced, plain text, knows a dry run"),
+ ("", "  report.mjs", "The one log line, the run's issue, and the exit code that is the email"),
+ ("", "  http.mjs  hash.mjs  bech32.mjs  evm.mjs", "Retries and fallback endpoints, JSON-RPC; keccak, xxhash, ss58; ABI calls"),
  ("dir sep", "sources/", "One reader per chain family, all returning the same shape"),
  ("", "  cosmos.mjs  sui.mjs  near.mjs", "Sui's reader also reads IOTA and Ika"),
- ("", "  avalanche.mjs  substrate.mjs  evm.mjs", "Substrate is Avail and Vara; EVM is Monad, Zilliqa, Espresso"),
- ("", "  starknet.mjs  mina.mjs  supra.mjs  lido.mjs", ""),
- ("", "  releases.mjs", "GitHub releases, for upgrades"),
+ ("", "  avalanche.mjs  substrate.mjs  evm.mjs", "Substrate is Avail and Vara; EVM is Lido, EigenLayer, Espresso, Zilliqa, Monad"),
+ ("", "  starknet.mjs  mina.mjs  supra.mjs  prices.mjs", "Prices from CoinGecko"),
  ("dir sep", "jobs/", ""),
- ("", "  governance/", "votes, upgrades, proposals, rationales"),
+ ("", "  governance/", "votes, upgrades, rationales"),
  ("", "  networks/", "values, and the chain pages' facts"),
- ("", "  content/", "blog read, guide steps, dashboards, portfolio"),
- ("added", "  content/seo.mjs", "Rows with no card or description"),
- ("", "  audit/", "links, glyphs, served releases, watches"),
- ("added", "  audit/profiles.mjs", "Every profile against the agreed values"),
+ ("", "  homepage/", "stake: the two figures"),
+ ("added", "  content/  audit/", "Blog read, guide steps, dashboards, portfolio; links, glyphs, profiles — to come"),
  ("dir sep", "config/", ""),
- ("", "  chains.yml", "Per chain: family, endpoints, what is written and what is checked"),
- ("", "  decisions.yml", "The accepted history per chain"),
- ("added", "  profile.yml", "The agreed name, description and links"),
- ("dir sep", "history/rates.csv", "One line per chain per run"),
- ("", "package.json", "The chains' own libraries; the only dependency file"),
+ ("", "  chains.json", "The Cosmos chains: registry, validators, explorer, since, the rate's source; the release repos"),
+ ("", "  stake.json", "Every mainnet: family, address, endpoints, decimals, CoinGecko id, the 29 Sep reference"),
+ ("dir sep", "bin/issue.mjs", "Opens the run's issue from the reports"),
+ ("dir", "state/stake.json", "The last good reading per chain, committed by the run"),
+ ("", "package.json", "No dependencies: plain Node"),
 ]
 repos = (
  '<div class="card repo"><div class="repo-head"><div class="line"><h3>website-css</h3><span class="badge">public</span><span class="badge">this repo, as it is</span></div>'
  '<p>Everything a browser downloads, and the tools that test and release it. Nothing here changes when the second repo appears.</p></div>%s</div>'
- '<div class="card repo"><div class="repo-head"><div class="line"><h3>site-data</h3><span class="badge priv">private</span><span class="badge">to be made</span></div>'
- '<p>JavaScript on Node, plain modules, no build step. Chosen because every chain family has a maintained library of its own in JavaScript.</p></div>%s</div>'
+ '<div class="card repo"><div class="repo-head"><div class="line"><h3>site-data</h3><span class="badge priv">private</span><span class="badge">made 30 Sep</span></div>'
+ '<p>JavaScript on Node, plain modules, no dependencies and no build step: every chain is read with fetch and a few hand-rolled hashes.</p></div>%s</div>'
 ) % (tree(THIS), tree(DATA))
 
 WF = [
  ("governance", "Daily", [("G1", "New Cosmos votes become rows"), ("G2", "Upgrades on the other nine chains"), ("G4", "A rationale for each new row"), ("G5", "The votes-cast figure")]),
- ("networks", "Weekly", [("N1", "Rates, written with their date"), ("N7", "Chain page facts, rewritten after a write"), ("N2–N6", "Commission, unbonding, slashing, status, Lido: checked"), ("S1", "The security page agrees with them")]),
+ ("homepage", "Every 6 h", [("H1", "The stake with our validators, priced"), ("H2", "The accounts staking with us")]),
+ ("networks", "Daily", [("N1", "Rates, written with their date"), ("N2, N3", "Commission and unbonding, written"), ("N7", "Chain page facts, rewritten after a write"), ("N4–N6", "Slashing, status, Lido: checked"), ("S1", "The security page agrees with them")]),
  ("content", "Daily", [("B1–B3", "Blog: read minutes, missing fields"), ("U1–U2", "Guides: steps, time, old captures"), ("V1–V2", "Dashboards and repositories"), ("I1", "Investments against the Networks set"), ("E1", "Rows with no social card")]),
  ("audit", "Daily", [("P1–P2", "Every profile, and the Discord invite"), ("W1–W3", "Glyph lists, old releases, dead links"), ("F1, H7", "Typed fallbacks"), ("C1–C2", "Chain rules and off-site buttons"), ("A1–A3", "The three alerts")]),
 ]
@@ -229,11 +231,12 @@ workflows = "".join(
  % (n, when, "".join('<li><code>%s</code><span>%s</span></li>' % (e(a), e(b)) for a, b in rows)) for n, when, rows in WF)
 
 STEPS = [
- ("Make the repo", "Create the private `site-data` repo, put the current Notion token and the alert email in its secrets, check whether Super's token can join them."),
- ("Move the governance jobs", "Port the Notion client and the three governance scripts to JavaScript, with a dry run and the report, and put them on a schedule. No new logic."),
- ("Cosmos votes become rows", "The biggest gap that is closed by hand today."),
+ ("Make the repo — done 30 Sep", "The private `site-data` repo exists with the Notion token in its secrets. The alert email is GitHub's own failure mail to the repo's watchers; Super's token is still to be checked."),
+ ("Move the governance jobs — done 30 Sep", "The Notion client and the three governance jobs are JavaScript, with a dry run and the report, on a daily schedule."),
+ ("Cosmos votes become rows — done 30 Sep", "The votes job asks each chain for our vote; its first dry run found one row missing (Lumera #14)."),
+ ("The homepage figures — done 30 Sep", "The stake with our validators and the accounts staking with us, read from every mainnet every six hours; your own script retires once the first run has written."),
  ("Blog and guide fields", "Read minutes, steps and time."),
- ("Cosmos network values, and Lido", "Rates written behind the sanity band; commission, unbonding and slashing checked through the decisions list."),
+ ("Cosmos network values — done 30 Sep", "Rates written behind the sanity band from the sources the rows were researched with, commission and unbonding written, a jailed validator flagged; Lido and slashing to come."),
  ("The audit jobs and the alerts", "Profiles, dead links, old releases, fallbacks, and the three watches."),
  ("Rates for the other chain families", "One reader at a time. Each chain moves from Manual to Auto as its reader lands."),
 ]
@@ -257,6 +260,8 @@ DECIDED = [
  "30 Sep: new vote rows go live with no review; the rationale is written by the principle-based lines that wrote every row so far, no model in the loop.",
  "30 Sep: an upgrade counts only where running the release is the vote: Sui and IOTA protocol versions, NEAR versions and NEPs, Avalanche ACPs, Mina MIPs and hard forks, Zilliqa hard forks. Client releases on Starknet, EigenCloud and Monad do not.",
  "30 Sep: public endpoints to start; our own nodes later, as secrets, where a public one is unreliable.",
+ "30 Sep: the homepage's staked total and customer count move into site-data too, and the user's own script that writes them today retires.",
+ "30 Sep: a rationale someone wrote is never rewritten by a job, however short; only an empty or boilerplate one is filled.",
 ]
 decided = "".join("<li><span>%s</span></li>" % e(x) for x in DECIDED)
 OPEN = [
@@ -267,7 +272,6 @@ opened = "".join('<li><span class="open-n">%d</span><b>%s</b>%s<p class="rec"><b
                  % (i + 1, e(a), ("<p>%s</p>" % e(b)) if b else "", e(c)) for i, (a, b, c) in enumerate(OPEN))
 
 CURRENT = [
- ("Staked assets and total customers", "Homepage. $83,996,080 and 14,722 when read", "Your own script"),
  ("Number of networks, “27 secured”, the years", "Homepage", "Calculated from Notion"),
  ("27 mainnets, 20 testnets, “Thirty-five teams”", "Networks page, navbar, services", "Calculated from the set"),
  ("The latest votes and the chains with their rates", "Navbar", "Read from Notion"),

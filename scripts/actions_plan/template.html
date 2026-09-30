@@ -199,15 +199,15 @@
     <span class="state">Nothing is built yet. Until it is, the site's values are updated by hand</span>
     <p class="checked">Every figure under "now" was read from Notion and the live site on {{CHECKED}}.</p>
     <nav class="toc" aria-label="On this page">
-      <a href="#how">How a job works</a><a href="#inventory">What needs updating</a><a href="#repos">The two repos</a><a href="#workflows">The four workflows</a><a href="#order">Build order</a><a href="#decisions">Decisions</a><a href="#current">Already current</a>
+      <a href="#how">How a job works</a><a href="#inventory">What needs updating</a><a href="#repos">The two repos</a><a href="#workflows">The five workflows</a><a href="#order">Build order</a><a href="#decisions">Decisions</a><a href="#current">Already current</a>
     </nav>
   </header>
 
   <div class="card short" aria-label="In short">
     <div><b>{{N_ITEMS}}</b><span>things on the site that go stale, plus {{N_WATCH}} alerts</span></div>
-    <div><b>4</b><span>workflows, each about twenty lines that start one script</span></div>
-    <div><b>2</b><span>repos: this one stays public, the jobs go in a private one</span></div>
-    <div><b>{{N_OPEN}}</b><span>question left to settle before any code is written</span></div>
+    <div><b>5</b><span>workflows, each about thirty lines that start one script; three of them run since 30 Sep</span></div>
+    <div><b>2</b><span>repos: this one stays public, the jobs are in the private site-data</span></div>
+    <div><b>{{N_OPEN}}</b><span>question left to settle</span></div>
   </div>
 
   <section id="how">
@@ -262,7 +262,7 @@
   </section>
 
   <section id="workflows">
-    <div class="s-head"><span class="num">04</span><h2>The four workflows</h2>
+    <div class="s-head"><span class="num">04</span><h2>The five workflows</h2>
       <p>Each one is a schedule, the secrets, and one command per job. The codes are the rows above.</p></div>
     <div class="flows">
       {{WORKFLOWS}}

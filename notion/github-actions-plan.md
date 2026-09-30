@@ -44,6 +44,8 @@ only if we change it). The ids (H1, G1…) are what the workflows in section 4 r
 
 | id | Where | What | Now | Kept by | How it drifts | The job would |
 |---|---|---|---|---|---|---|
+| H1 | Homepage stats band | Staked Assets Under Management | $ 60,395,092 on 30 Sep ($83,996,080 the day before) | your script, until now | with every price and every delegation; a chain the script cannot read drops out of the total | **Write** (`jobs/homepage/stake.mjs`, 30 Sep): the stake with our validator on every mainnet (`sources/<family>.mjs`), priced on CoinGecko, the heading written when it changes; a chain that fails to read keeps its last good reading (`state/stake.json`, seven days), a stake that moved by more than half is held until a second run reads the same, a total that moved by more than a third is not written — so an outage never shows as a fall |
+| H2 | Homepage stats band | Total Customers | 14,720 | your script, until now | every delegation | **Write**: the accounts staking with us on every chain that can tell, summed; a chain that cannot tell (Lido's stakers) counts nothing and the issue says so |
 | H4 | Homepage stats band | Uptime | 99.96 % | hand | Nothing computes it, and it has no definition yet (which chains, what window, which source) | Nothing until it is defined; then compute it, or report its age |
 | H6 | Homepage, Why Stake | the card heading "Six years" | typed | hand | Wrong from 2027 (the "6" and "2026 in progress" under it are calculated; the heading is not) | — (fix once: "Since 2020", already an open item in CLAUDE.md) |
 | H7 | Homepage, Why Stake | "25 secured" | typed | hand (fallback) | Already stale: the script shows 27, the typed fallback says 25 | Report fallback drift |
@@ -83,8 +85,6 @@ Vara (they expire after 84 eras) and Avail; a validator of ours gone inactive or
 
 | Where | What | Now | Kept by |
 |---|---|---|---|
-| Homepage stats band | Staked Assets Under Management | $84,235,402 | your script (outside this repo; it changes through the day) |
-| Homepage stats band | Total Customers | 14,725 | your script |
 | Homepage stats band | Number of Networks Supported | 27 | calculated (home.js, from the Networks set) |
 | Homepage stats band | Soft Slashing Protection | 100 % | fixed — a promise, not a measurement |
 | Homepage, Why Stake | the years ("6", "2026 in progress") and the dots | | calculated |
@@ -222,14 +222,20 @@ summary to the report. About twenty lines each.
 
 ## 5. Build order
 
-0. Create the private `site-data` repo, rotate the Notion token into its secrets, and settle the open
-   decisions below.
-1. Port the Notion client and the governance scripts to JavaScript, with `--dry` and the report, and
-   put them on a schedule — no new logic, it proves the pipe. Retire the Python copies here.
-2. Cosmos votes → new record rows: the biggest manual gap.
+0. ~~Create the private `site-data` repo~~ — **done 30 Sep** (`github.com/encapsulate-xyz/site-data`, the
+   current Notion token in its secrets; rotation later, decision 4). The open decisions are settled below but
+   8.
+1. ~~Port the Notion client and the governance scripts to JavaScript~~ — **done 30 Sep**: `jobs/governance/
+   {votes,upgrades,rationales}.mjs`, `DRY=1`, the report → `out/<job>.md` → one issue a run (`bin/issue.mjs`),
+   `governance.yml` daily. The Python copies stay here until the first scheduled run has written.
+2. ~~Cosmos votes → new record rows~~ — **done 30 Sep** (`votes.mjs`; first dry run: Lumera #14 missing).
 3. Blog Read and guide Step/Time.
-4. Cosmos network values (rates written behind the sanity band and Rate source; the checks, through
-   the decisions list) and Lido.
+4. ~~Cosmos network values~~ — **done 30 Sep** (`jobs/networks/values.mjs`: rates from the sources the rows
+   were researched with — staking-explorer's measured APR, cosmos.directory for Gravity Bridge, Chain4Energy's
+   minter — behind the one-third band; commission and unbonding written; a jailed validator flagged; the
+   chain page's facts paragraph and description rewritten after a write). Lido and slashing still to come.
+4b. **The homepage figures** — **done 30 Sep** (`jobs/homepage/stake.mjs`, `homepage.yml` every six hours; the
+   user, 30 Sep: "add it too in this repo, we will remove the previous script which is currently working").
 5. The audit jobs and the watches.
 6. Rates for the other families, one reader at a time, each chain moved from Manual to Auto as its
    reader lands.
@@ -270,13 +276,20 @@ summary to the report. About twenty lines each.
    and **a Starknet version the community voted on** (v0.14). A plain client release — Juno's attestation
    updates, a Mina daemon release before the fork, a Monad patch — is not a vote and does not become a row.
 3. **Whatever a script can write, it writes** (the user, 30 Sep: "automate more things without manual
-   intervention, move things from checks and reports to writes whatever you can"). 26 of the 35 items are
+   intervention, move things from checks and reports to writes whatever you can"). 28 of the 37 items are (30 Sep, with the homepage's two figures)
    writes now; what stays for a hand is what needs a key, a form or a judgement: the profiles on other
    people's registries and chains, the Discord invite, dead links, wallet screenshots, a post's author, and
    the three alerts. **Every run opens one issue** in `site-data` listing everything it wrote (before and
    after) and everything it could not; **one email goes out only when something drifted that a job cannot
    fix, or the run failed.** No email on a quiet run.
 6. **Public endpoints to start**; our own nodes later, as secrets, where a public one is unreliable.
+9. **The homepage's staked total and customer count move into `site-data`** (the user, 30 Sep), and the user's
+   own script that writes the two headings today retires once the first scheduled run has written. The Lido
+   Simple DVT cluster counts in full (500 × 32 ETH), as the 29 Sep measurement did; Lido's stakers cannot be
+   attributed to one operator, so they add nothing to the customer count.
+10. **A rationale someone wrote is never rewritten by a job**, however short. The Python script's one-off
+   tightening of 17 Sep (lead-ins dropped, cut to two sentences) is not repeated on a schedule; the job fills
+   only an empty or boilerplate rationale, with the same principle-based lines.
 
 **Open — needed before any code**
 8. **Can Super's dashboard token live as a secret?** Refreshing pages after a release (W2) and pasting a
