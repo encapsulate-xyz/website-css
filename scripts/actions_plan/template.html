@@ -207,7 +207,7 @@
     <div><b>{{N_ITEMS}}</b><span>things on the site that go stale, plus {{N_WATCH}} alerts</span></div>
     <div><b>4</b><span>workflows, each about twenty lines that start one script</span></div>
     <div><b>2</b><span>repos: this one stays public, the jobs go in a private one</span></div>
-    <div><b>{{N_OPEN}}</b><span>decisions to settle before any code is written</span></div>
+    <div><b>{{N_OPEN}}</b><span>question left to settle before any code is written</span></div>
   </div>
 
   <section id="how">
@@ -217,22 +217,22 @@
       <li class="card"><h3>Schedule</h3><p>A workflow starts on its timer, on a Run button, or on a pull request, where it is always dry.</p></li>
       <li class="card"><h3>Read</h3><p>The script reads the chain or the service through that chain family's own library.</p></li>
       <li class="card"><h3>Compare</h3><p>It sets what it read beside what Notion holds, and beside the list of cases already decided.</p></li>
-      <li class="card"><h3>Write or report</h3><p>A value that drifts is written to Notion. A value a person set is only reported, in a private summary.</p></li>
-      <li class="card end"><h3>The site</h3><p>Super republishes from Notion on its own schedule. No paste, no release, nothing fetched in the browser.</p></li>
+      <li class="card"><h3>Check, then write</h3><p>A value that differs and passes its check (a number in range, a real date, a text of the row's own shape, two sources agreeing) is written to Notion, plain text. One that fails, or that needs a key or a form, goes in the email.</p></li>
+      <li class="card end"><h3>The site</h3><p>The pages read Notion when they render, so the site follows once Super refetches the page. No paste, no release, nothing fetched in the browser.</p></li>
     </ol>
 
     <div class="tiers">
-      <div class="card tier" data-c="write"><span class="chip write">Writes</span><h3>What drifts and has one true reading</h3><p>The job changes Notion itself.</p><ul><li>Reward rate with its date</li><li>New vote rows</li><li>Read minutes</li><li>Guide steps and time</li><li>Dashboard status</li></ul></div>
-      <div class="card tier" data-c="check"><span class="chip check">Checks</span><h3>What a person set</h3><p>The job compares and tells you. The site changes only when you say.</p><ul><li>Commission</li><li>Unbonding</li><li>Slashing events</li><li>Validators run</li><li>Status</li><li>Profiles</li></ul></div>
-      <div class="card tier" data-c="watch"><span class="chip watch">Watches</span><h3>What is not site data</h3><p>Alerts only. Nothing on the site depends on them.</p><ul><li>Avalanche's delegation room</li><li>Unclaimed rewards</li><li>A validator jailed or inactive</li></ul></div>
+      <div class="card tier" data-c="write"><span class="chip write">Writes</span><h3>Whatever a script can read, it writes</h3><p>The job changes Notion itself, only where the value differs and only after its check.</p><ul><li>Reward rate with its date</li><li>Commission, unbonding, slashing, status</li><li>Our votes and the release-borne proposals</li><li>Read minutes, guide steps, social cards</li><li>Dashboard status, repo visibility</li><li>The typed fallbacks and counts</li></ul></div>
+      <div class="card tier" data-c="check"><span class="chip check">Reports</span><h3>What needs a key, a form or a judgement</h3><p>In the run's issue every time; in one email only when it has drifted.</p><ul><li>Profiles on other people's registries and chains</li><li>The Discord invite</li><li>Dead links</li><li>Wallet screenshots</li><li>A post's author</li></ul></div>
+      <div class="card tier" data-c="watch"><span class="chip watch">Watches</span><h3>What is not site data</h3><p>An email at once. Nothing on the site depends on them.</p><ul><li>Avalanche's delegation room</li><li>Unclaimed rewards</li><li>A validator jailed or inactive</li></ul></div>
     </div>
 
     <div class="card rules">
       <div><h4>Only rows marked Auto are written</h4><p>A Rate source choice on each network. Mina, EigenCloud and Sommelier stay Manual.</p></div>
       <div><h4>A sanity band</h4><p>A new rate more than a third away from the current one is held back and flagged.</p></div>
-      <div><h4>A decisions list</h4><p>Each chain's accepted history, such as Gravity Bridge shown as 0. A check flags only what is new.</p></div>
+      <div><h4>A decisions list</h4><p>Each chain's accepted history, such as Gravity Bridge shown as 0. A writer follows it and reports only what is new.</p></div>
       <div><h4>A history file</h4><p>One line per chain per run, so any figure on the site can be traced to the day it was read.</p></div>
-      <div><h4>Quiet logs</h4><p>The run's log says "12 written, 2 held back". Which chain and what number go only to the private summary.</p></div>
+      <div><h4>One issue a run, one email on drift</h4><p>The run's log says "12 written, 2 held back". Every run opens an issue in the private repo with before and after for each write and the list left for a hand; an email goes out only when that list is not empty or the run failed.</p></div>
       <div><h4>One writer at a time</h4><p>Jobs queue for Notion, write plain text only, and stay under its three requests a second.</p></div>
     </div>
   </section>
@@ -244,7 +244,6 @@
       <div class="tabs" role="group" aria-label="What the job would do">
         <button type="button" data-v="all" aria-pressed="true">All <i data-n="all"></i></button>
         <button type="button" data-v="write" aria-pressed="false">Writes <i data-n="write"></i></button>
-        <button type="button" data-v="check" aria-pressed="false">Checks <i data-n="check"></i></button>
         <button type="button" data-v="report" aria-pressed="false">Reports <i data-n="report"></i></button>
         <button type="button" data-v="watch" aria-pressed="false">Watches <i data-n="watch"></i></button>
         <button type="button" data-v="none" aria-pressed="false">By hand <i data-n="none"></i></button>

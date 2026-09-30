@@ -72,7 +72,7 @@ item("C2", "write", "audit", "The green button that still points off the site", 
      "Lido DVT, Vara and Chain4Energy have no guide yet", "By hand", "When their guides exist", "Point it at the guide the moment a Guides row for the chain exists (`chain_pages.py --buttons`)")
 
 # ---- profiles
-item("P1", "check", "audit", "Name, description, website and links on every profile", "Validator profiles",
+item("P1", "report", "audit", "Name, description, website and links on every profile", "Validator profiles",
      "48 updates tracked, 24 done on 29 Sep. Fifteen validators read the agreed text on chain", "By hand, from the tracker",
      "An edit on chain, a registry rebuilt from an old file, a pull request left unmerged",
      "Read every profile weekly; what no longer says the agreed values goes in the email (on-chain edits need the operator keys, registries need their forms)", new=True)
@@ -190,7 +190,7 @@ DATA = [
  ("", "  content.yml  audit.yml", "Daily, daily"),
  ("dir sep", "lib/", ""),
  ("", "  notion.mjs", "The client: rate-limited, plain text, knows a dry run"),
- ("", "  report.mjs", "The short log line and the private summary"),
+ ("", "  report.mjs", "The short log line, the run's issue, and the email when something drifted"),
  ("", "  http.mjs  history.mjs", "Retries and fallback endpoints; the rate history"),
  ("dir sep", "sources/", "One reader per chain family, all returning the same shape"),
  ("", "  cosmos.mjs  sui.mjs  near.mjs", "Sui's reader also reads IOTA and Ika"),
@@ -244,7 +244,7 @@ DECIDED = [
  "JavaScript on Node, plain modules, no TypeScript.",
  "Two repos: this one stays public, the jobs go in a private one.",
  "Notion is the only thing the jobs write. Nothing is fetched live in the page.",
- "Logs say almost nothing; details go to a private summary.",
+ "Logs say almost nothing; the details go to the run's issue in the private repo.",
  "“1882 votes cast since 2020” stays.",
  "Until the jobs exist, the values are updated by hand.",
  "30 Sep: every run opens one issue in the private repo with everything it wrote (before and after) and everything it could not, and sends one email only when something drifted that a job cannot fix, or the run failed, the way the other jobs already alert (the user will give the address).",
