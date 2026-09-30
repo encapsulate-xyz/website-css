@@ -83,7 +83,11 @@
   .chip.dead { --bg: #FAFAF8; --fg: #8A2B2B; border: 1px solid #E3B9B9; padding: 4px 9px; }
   .blk.dead { background: #FBEDED; color: #6E2424; border-radius: 10px; padding: 12px 14px; font-size: 14px; }
   .blk.dead b { color: #4A1414; font-weight: 600; }
+  .chip.in { --bg: #FAFAF8; --fg: var(--green-ink); border: 1px solid #BFDDA0; padding: 4px 9px; }
+  .blk.in { background: var(--d1-bg); color: var(--d1-ink); border-radius: 10px; padding: 12px 14px; font-size: 14px; }
+  .blk.in b { color: var(--ink); font-weight: 600; }
   .chip.plain { --bg: var(--sunk); --fg: var(--d0-ink); border: 1px solid var(--line); padding: 4px 9px; }
+  .chip.stage { --bg: #FAFAF8; --fg: var(--ink); border-style: dashed; }
   /* the tier: our Networks set's own words, its Notion colours as a square */
   .chip.tier { --bg: var(--sunk); --fg: var(--ink); font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 5px 9px 5px 8px; border: 1px solid var(--line); }
   .chip.tier::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--sq); }
@@ -180,10 +184,10 @@
   <header>
     <div class="crumb"><span>Encapsulate · New networks</span><i></i><span>Research · {{CHECKED}}</span></div>
     <h1>Where we could validate next</h1>
-    <p class="lede">{{N}} networks we do not validate yet, in order from the easiest to join to the hardest. For each: how a validator gets in, what it costs, and whether the network is asking for validators now.</p>
+    <p class="lede">{{N}} networks we do not validate yet, in order from the easiest to join to the hardest, and {{U}} that are not on mainnet yet. For each: how a validator gets in, what it costs, and whether the network is asking for validators now.</p>
     <p class="checked">{{METHOD}}</p>
     <nav class="toc" aria-label="On this page">
-      <a href="#start">Start here</a><a href="#all">Every network</a><a href="#testnets">Already in by testnet</a><a href="#opening">Open testnets</a><a href="#none">No validator role</a><a href="#method">How this was researched</a>
+      <a href="#start">Start here</a><a href="#all">Every network</a><a href="#testnets">Already in by testnet</a><a href="#opening">Not on mainnet yet</a><a href="#none">No validator role</a><a href="#method">How this was researched</a>
     </nav>
   </header>
 
@@ -226,8 +230,8 @@
   </section>
 
   <section id="opening">
-    <div class="s-head"><span class="num">04</span><h2>Testnets taking operators</h2>
-      <p>Networks with no mainnet to validate yet, whose test network is open to operators today. Nothing is earned there, or very little; the record is what carries over.</p></div>
+    <div class="s-head"><span class="num">04</span><h2>Not on mainnet yet, or still picking its validators</h2>
+      <p>Networks on devnet or testnet, and live networks whose validator set is still hand-picked and being formed. Little or nothing is earned yet; a testnet seat or an early conversation is what puts us in line for a mainnet one. Ordered the same way: easiest first, then the higher tier. The stage and the mainnet date are on each row; a live, open mainnet is ranked with the rest above.</p></div>
     {{OPENING}}
   </section>
 

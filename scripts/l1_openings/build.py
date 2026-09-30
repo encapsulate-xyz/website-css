@@ -112,6 +112,14 @@ def short(x, a, b):
     if re.match(r"(?i)not applicable", t): return "No seat yet"
     if re.match(r"(?i)(none|no )", t): return "None"
     return "Not published"
+def whenShort(x):
+    """The closed row's mainnet figure for an upcoming network: the date or target, or a word."""
+    w = str(x.get("mainnet_when") or "").strip()
+    if not w or re.match(r"(?i)not published", w): return "Not published"
+    m = re.search(r"(?i)(live|launched)", w)
+    if m and len(w) > 30: return "Live"
+    m = re.search(r"(?i)((Q[1-4]|H[12])\s*\d{4}|(early|mid|late|spring|summer|autumn|fall|winter)\s+\d{4}|\b(20\d\d)\b)", w)
+    return m.group(1) if m else (w if len(w) <= 22 else "See inside")
 def order(x):
     rec = {"yes": 0, "no evidence": 1, "no": 2}.get(str(x.get("recruiting_now", "")).lower(), 1)
     need = x.get("stake_to_be_active_usd")
@@ -120,12 +128,16 @@ def order(x):
     except Exception: need = 1e15
     return (x["difficulty"], 1 if x.get("_flag") else 0, TIERS.index(x["_tier"]), rec, need, x["chain"].lower())
 
+# "upcoming": not on mainnet yet, or a mainnet whose validator set is still being selected (the research's own
+# group, or a name in picks.json's testnet_only list). They stand in their own section, ordered like the rest.
 early = [key(n) for n in picks.get("testnet_only", [])]
 for n in picks.get("testnet_only", []):
     if not any(x["_id"] == key(n) for x in rows): sys.exit("picks.json names a testnet that is not in the research: " + n)
+for x in rows:
+    if x["_id"] in early and x.get("group") != "our testnet": x["group"] = "upcoming"
 testnets = sorted([x for x in rows if x.get("group") == "our testnet"], key=order)
-opening = sorted([x for x in rows if x["_id"] in early and x.get("group") != "our testnet"], key=order)
-rest = [x for x in rows if x.get("group") != "our testnet" and x["_id"] not in early]
+opening = sorted([x for x in rows if x.get("group") == "upcoming" and x["difficulty"] != 0], key=order)
+rest = [x for x in rows if x.get("group") not in ("our testnet", "upcoming")] + [x for x in rows if x.get("group") == "upcoming" and x["difficulty"] == 0]
 none = sorted([x for x in rest if x["difficulty"] == 0], key=lambda x: x["chain"].lower())
 main = sorted([x for x in rest if x["difficulty"] != 0], key=order)
 
@@ -138,7 +150,9 @@ def render(x, n, level_chip=False):
     chips += '<span class="chip tier" data-tier="%s">%s</span>' % (x["_tier"], x["_tier"])
     chips += '<span class="chip plain">%s</span>' % e(route)
     if x.get("is_l1") is False and d != 0: chips += '<span class="chip plain">Not a layer 1</span>'
-    if x.get("_flag"): chips += '<span class="chip dead">%s</span>' % e(x["_flag"]["label"])
+    stage = str(x.get("stage") or "").strip()
+    if stage: chips += '<span class="chip plain stage">%s</span>' % e(stage[0].upper() + stage[1:])
+    if x.get("_flag"): chips += '<span class="chip %s">%s</span>' % ("in" if x["_flag"]["label"] == "Already in" else "dead", e(x["_flag"]["label"]))
     if rec: chips += '<span class="chip yes">Taking operators</span>'
     own, act = money(x, "min_self_stake", "min_self_stake_usd"), money(x, "stake_to_be_active", "stake_to_be_active_usd")
     own_s, act_s = short(x, "min_self_stake", "min_self_stake_usd"), short(x, "stake_to_be_active", "stake_to_be_active_usd")
@@ -149,7 +163,8 @@ def render(x, n, level_chip=False):
         e(p["name"]), "yes" if str(p.get("open_now", "")).lower() == "yes" else "plain",
         {"yes": "Open now", "no": "Closed now"}.get(str(p.get("open_now", "")).lower(), "Not known if open"),
         linked(p.get("gives") or ""), ('<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>' % (e(p["url"]), e(host(p["url"])))) if p.get("url") else "") for p in progs)
-    kv = [("Validators", seats), ("Our own stake", own), ("To be active", act), ("Hardware", x.get("hardware")), ("Identity checks", x.get("kyc_or_entity")),
+    kv = [("Stage", stage or None), ("Mainnet", x.get("mainnet_when")), ("Testnet to mainnet", x.get("testnet_to_mainnet")), ("Funding", x.get("funding")),
+          ("Validators", seats), ("Our own stake", own), ("To be active", act), ("Hardware", x.get("hardware")), ("Identity checks", x.get("kyc_or_entity")),
           ("Earnings and cost", x.get("economics")), ("Asking now?", x.get("recruiting_evidence")), ("Where to ask", "; ".join(lst(x.get("contacts"))))]
     kvh = "".join("<dt>%s</dt><dd>%s</dd>" % (e(a), linked(b)) for a, b in kv if b not in (None, "", []))
     src = ", ".join('<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>' % (e(u), e(host(u))) for u in lst(x.get("sources")) if str(u).startswith("http"))
@@ -158,7 +173,7 @@ def render(x, n, level_chip=False):
     return ('<li class="row" data-d="{d}" data-rec="{rec}" data-tier="{tier}" data-text="{text}">'
             '<div class="r-head"><button type="button" class="r-toggle" aria-expanded="false"><span class="r-n">{n}</span>'
             '<span class="r-name"><span class="r-title">{chain}<span class="tok">{tok}</span></span><span class="r-what">{what}</span></span></button>'
-            '<div class="r-facts"><span><em>Our own stake</em>{own}</span><span><em>To be active</em>{act}</span></div>'
+            '<div class="r-facts"><span><em>Our own stake</em>{own}</span><span><em>{f2}</em>{act}</span></div>'
             '<div class="r-meta">{chips}<button type="button" class="chev" tabindex="-1" aria-hidden="true"></button></div></div>'
             '<div class="r-panel" hidden>'
             '{dead}<div class="blk why" data-d="{d}"><span><b>{lv}.</b> {why}</span></div>'
@@ -167,9 +182,10 @@ def render(x, n, level_chip=False):
             '<div class="blk wide"><dl class="kv">{kv}</dl></div>'
             '<div class="blk wide src">{conf}{unk}<span>Sources: {src}</span></div>'
             '</div></li>').format(
-        dead=('<div class="blk wide dead"><span><b>%s.</b> %s</span></div>' % (e(x["_flag"]["label"]), linked(x["_flag"]["why"]))) if x.get("_flag") else "",
+        dead=('<div class="blk wide %s"><span><b>%s.</b> %s</span></div>' % ("in" if x["_flag"]["label"] == "Already in" else "dead", e(x["_flag"]["label"]), linked(x["_flag"]["why"]))) if x.get("_flag") else "",
         d=d, rec="yes" if rec else "no", tier=x["_tier"], text=e(text), n="%02d" % n, chain=e(x["chain"]), tok=e(tok(x)), what=linked(x.get("what") or ""),
-        own=e(own_s), act=e(act_s), chips=chips, lv=e(LEVEL[d][0]), why=linked(x.get("difficulty_why") or ""), nxt=linked(x.get("best_next_step") or "Not set"),
+        own=e(own_s), f2="Mainnet" if x.get("group") == "upcoming" else "To be active",
+        act=e(whenShort(x) if x.get("group") == "upcoming" else act_s), chips=chips, lv=e(LEVEL[d][0]), why=linked(x.get("difficulty_why") or ""), nxt=linked(x.get("best_next_step") or "Not set"),
         steps=('<div class="blk"><h4>How to join</h4><ol>%s</ol></div>' % steps) if steps else "",
         prog=('<div class="blk"><h4>Help for a newcomer</h4><ul class="prog">%s</ul></div>' % prog) if prog else '<div class="blk"><h4>Help for a newcomer</h4><p class="unk">No programme found.</p></div>',
         kv=kvh, conf=('<span>Confidence in this entry: %s.</span> ' % e(conf)) if conf else "",
@@ -210,9 +226,9 @@ METHOD_LIST = "".join("<li><b>%s</b><span>%s</span></li>" % (e(a), linked(b)) fo
 
 page = open(os.path.join(HERE, "template.html")).read()
 for k, v in (("LEVELS", levels), ("SCALE", scale), ("PICKS", ph), ("PICKS_LEDE", e(picks.get("lede", ""))), ("TESTNETS", testnet_html), ("OPENING", opening_html), ("NONE", none_html),
-             ("METHOD_LIST", METHOD_LIST), ("METHOD", e(METHOD)), ("EXCLUDED", e(", ".join(OURS))), ("CHECKED", e(CHECKED)), ("N", str(len(main)))):
+             ("METHOD_LIST", METHOD_LIST), ("METHOD", e(METHOD)), ("EXCLUDED", e(", ".join(OURS))), ("CHECKED", e(CHECKED)), ("N", str(len(main))), ("U", str(len(opening)))):
     page = page.replace("{{%s}}" % k, v)
 assert "{{" not in page, re.findall(r"\{\{[A-Z_]+\}\}", page)
 open(OUT, "w").write(page)
-print("networks", len(main), {d: sum(1 for x in main if x["difficulty"] == d) for d in (1, 2, 3, 4, 5)}, "| our testnets", len(testnets), "| open testnets", len(opening), "| no role", len(none),
+print("networks", len(main), {d: sum(1 for x in main if x["difficulty"] == d) for d in (1, 2, 3, 4, 5)}, "| our testnets", len(testnets), "| upcoming", len(opening), "| no role", len(none),
       "| tiers", {t: sum(1 for x in rows if x["_tier"] == t) for t in TIERS}, "| taking operators", sum(1 for x in main if str(x.get("recruiting_now", "")).lower() == "yes"), "| bytes", len(page))
