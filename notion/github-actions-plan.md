@@ -291,10 +291,18 @@ summary to the report. About twenty lines each.
    tightening of 17 Sep (lead-ins dropped, cut to two sentences) is not repeated on a schedule; the job fills
    only an empty or boilerplate rationale, with the same principle-based lines.
 
-**Open — needed before any code**
-8. **Can Super's dashboard token live as a secret?** Refreshing pages after a release (W2) and pasting a
-   head (W1) go through Super's GraphQL API, signed in as the user. If the token expires, both fall back to
-   the email. Check its lifetime first; rotate it with the Notion token.
+8. ~~Can Super's dashboard token live as a secret?~~ **Settled 30 Sep: no refresh from a job.** The user: "it will
+   update sooner or later on its own anyways" — Super's own sync picks the Notion writes up; the dashboard token stays
+   out of the secrets. W1/W2 (heads and glyph lists) remain pull requests and the paste routine.
+11. **Every exception to a plain reading of a number is written down once**, in `site-data/config/exceptions.md`
+   (the user, 30 Sep: "document this … and let me know if we have made any other exception"): which validators are
+   ours — **Terra's four** (the endorsed Encapsulate and Luna Whale, Lunatic Validator, Long Live Luna, run by us and
+   not endorsed publicly, counted in the homepage's stake and customers), Agoric's two, Lido's cluster in full, the old
+   Sui and Cosmos validators left out — Gravity Bridge's slashing 0, the rates set by hand, the record's rules. A job
+   applies it; a check never re-argues it; a new exception goes there first.
+12. **The customers heading** counts the accounts staking with any validator of ours, every chain summed (14,192 on
+   30 Sep; Sui's 7 from Blockberry; Lido's stakers cannot be attributed). The user's own script that wrote the two
+   headings is switched off (30 Sep).
 
 ## 7. Added on 2026-09-30 — from the work of 28–29 Sep
 

@@ -262,12 +262,12 @@ DECIDED = [
  "30 Sep: public endpoints to start; our own nodes later, as secrets, where a public one is unreliable.",
  "30 Sep: the homepage's staked total and customer count move into site-data too, and the user's own script that writes them today retires.",
  "30 Sep: a rationale someone wrote is never rewritten by a job, however short; only an empty or boilerplate one is filled.",
+ "30 Sep: a job does not refresh Super after a write — Super's own sync picks the Notion change up (the user: not necessary). The dashboard token stays out of the secrets.",
+ "30 Sep: every exception to a plain reading of a number is in site-data's config/exceptions.md — which validators are ours (Terra's four: the endorsed one and Luna Whale, Lunatic Validator, Long Live Luna, run by us and not endorsed publicly, counted in the homepage's stake and customers; Agoric's two; Lido's cluster in full), Gravity Bridge's 0, the rates set by hand, the record's rules. A job applies it; a check never re-argues it.",
+ "30 Sep: the customers heading counts the accounts staking with any validator of ours, every chain summed (14,192); Sui's from Blockberry (7), Lido's not countable. The user's own script is switched off.",
 ]
 decided = "".join("<li><span>%s</span></li>" % e(x) for x in DECIDED)
-OPEN = [
- ("Can Super's dashboard token live as a secret?", "W1 and W2 refresh pages and paste heads through Super's API, which is signed in as you. If the token expires, both fall back to the email.",
-  "Check the token's lifetime first; if it holds, use it, and rotate it with the Notion token."),
-]
+OPEN = []
 opened = "".join('<li><span class="open-n">%d</span><b>%s</b>%s<p class="rec"><b>Recommended:</b> %s</p></li>'
                  % (i + 1, e(a), ("<p>%s</p>" % e(b)) if b else "", e(c)) for i, (a, b, c) in enumerate(OPEN))
 
