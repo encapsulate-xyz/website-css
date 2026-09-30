@@ -392,8 +392,8 @@ drawer's copy. Add a page to the menu in Super and it appears; give it a CONTENT
 carries its line.
 
 **The lit item is an ink tab** (handoff 2026-09-25, v278 — "M" in the file's Navbar Rest State
-Patterns): the page you are on at rest, and the hovered or open group while anything in the bar
-is under the pointer, is a **36px ink pill with paper type** drawn behind the label (`::after`, inset
+Patterns): the page you are on at rest, and the hovered or open group while a group is under the pointer
+or its panel is open, is a **36px ink pill with paper type** drawn behind the label (`::after`, inset
 3px inside the 44px item's 1px border); on the ink bar a **paper pill with ink type**. Its caret is
 `#9FA39B` on the ink pill at rest and paper once hovered or open; `#6B6F68` on the paper pill at
 rest, ink hovered. No ring and no highlight. The caret sits 11px from its label (the file's 6px
@@ -408,8 +408,12 @@ becomes the ink tab at once. Ours waited for radix to mount the panel (~200ms), 
 spent that time lighting the hovered item the at-rest ink way — a paper pill — before flipping to
 the ink tab on the paper bar (the user's report, 2026-09-25). `navbar.js` `paint()` counts
 `.super-navbar__list:hover` as open and repaints on the bar's `pointerover`/`pointerout`; the
-ink bar's hover rules were deleted. Book a call is not a group: over it the bar stays ink and
-nothing is lit, as in the file.
+ink bar's hover rules were deleted. Book a call is not a group: over it the bar stays ink.
+**The current page's tab stays lit over Book a call, the logo and the Menu button** (v342; the handoff's one change of
+2026-09-30, after the user asked the designer "when we hover the Book a call button the highlighted selected goes
+away, is this expected?" — the file's `anyOpen` is now true only for a hovered group or its panel). Until v342 any
+hover in the bar cleared it (`.super-navbar__actions :hover` was in the current-tab rules' guard). Measured with real
+pointer moves on /networks and the Axelar guide.
 
 **One ring, one job** (handoff, 2026-09-23, v259; restyled 2026-09-24, v267): the ring — since
 v267 a **transparent** pill with a `#D9D9D2` ring and the full-white top highlight, ink type, on a
