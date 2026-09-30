@@ -39,9 +39,9 @@ item("G1", "write", "governance", "New votes on the 12 Cosmos chains", "Governan
      "By hand", "Every vote we cast", "Add the missing rows")
 item("G2", "write", "governance", "Protocol upgrades on nine chains", "Governance record",
      "Latest: IOTA and Sui 9 Sep, Avalanche 8 Sep, Mina and Starknet 3 Sep, Monad 4 Aug, Near 9 Jul",
-     "`gov_upgrades.py` and `gov_proposals.py`, run by hand", "Every release that asks something of a validator", "Run on a schedule")
+     "`gov_upgrades.py` and `gov_proposals.py`, run by hand", "Every protocol upgrade the validators vote in by running it: a protocol version, an ACP, a NEP, a MIP, a hard fork. Never a plain release (the user, 30 Sep)", "Run on a schedule")
 item("G4", "write", "governance", "The rationale on each new row", "Governance record", "Every row has one today",
-     "`gov_rationales.py`, run by hand", "Every new row", "Draft it after G1 and G2, or leave it for you (decision 5)")
+     "`gov_rationales.py`, run by hand", "Every new row", "Written after G1 and G2 by the same principle-based lines that wrote the 1,153 rows today; no review (decision 5, 30 Sep)")
 item("G5", "write", "governance", "“1882 votes cast since 2020”", "Governance record",
      "1882: the 1,153 rows plus 729 votes from before the record was kept", "By hand", "It does not move when a vote is added",
      "Keep it at 729 plus the rows")
@@ -229,7 +229,7 @@ workflows = "".join(
  % (n, when, "".join('<li><code>%s</code><span>%s</span></li>' % (e(a), e(b)) for a, b in rows)) for n, when, rows in WF)
 
 STEPS = [
- ("Make the repo and settle the decisions", "Create the private `site-data` repo, put the current Notion token and the Discord webhook in its secrets, settle the two open questions."),
+ ("Make the repo and settle the decisions", "Create the private `site-data` repo, put the current Notion token and the alert email in its secrets, settle the one open question."),
  ("Move the governance jobs", "Port the Notion client and the three governance scripts to JavaScript, with a dry run and the report, and put them on a schedule. No new logic."),
  ("Cosmos votes become rows", "The biggest gap that is closed by hand today."),
  ("Blog and guide fields", "Read minutes, steps and time."),
@@ -247,10 +247,11 @@ DECIDED = [
  "Logs say almost nothing; details go to a private summary.",
  "“1882 votes cast since 2020” stays.",
  "Until the jobs exist, the values are updated by hand.",
- "30 Sep: the summary is an issue in the private repo, one per run, and a Discord message through a channel webhook only when a check fails.",
+ "30 Sep: the summary is an issue in the private repo, one per run, and an email only when a run fails or a check trips, the way the other jobs already alert (the user will give the address).",
  "30 Sep: the research notes (the set's values, the chain pages' source) move to the private repo.",
  "30 Sep: the current Notion token is used for now and rotated later.",
- "30 Sep: new vote rows go live with no review, rationale included.",
+ "30 Sep: new vote rows go live with no review; the rationale is written by the principle-based lines that wrote every row so far, no model in the loop.",
+ "30 Sep: an upgrade counts only where running the release is the vote: Sui and IOTA protocol versions, NEAR versions and NEPs, Avalanche ACPs, Mina MIPs and hard forks, Zilliqa hard forks. Client releases on Starknet, EigenCloud and Monad do not.",
  "30 Sep: public endpoints to start; our own nodes later, as secrets, where a public one is unreliable.",
 ]
 decided = "".join("<li><span>%s</span></li>" % e(x) for x in DECIDED)
@@ -258,9 +259,6 @@ OPEN = [
  ("Which fields are written and which only reported", "To be talked through.",
   "Write rates, read minutes, guide steps and dashboard status. Report commission, unbonding, slashing, validators run and status. "
   "29 Sep showed why: a commission changed on chain and the site did not follow."),
- ("How a new vote's rationale is written", "The row goes live with no review, so the words are the job's.",
-  "The templated principle-based lines (accurate about the vote and the kind of proposal, never a specific claim, nothing to run) "
-  "plus one sentence written by Claude from the proposal's own text, with the template alone as the fallback. Or the template alone."),
 ]
 opened = "".join('<li><span class="open-n">%d</span><b>%s</b>%s<p class="rec"><b>Recommended:</b> %s</p></li>'
                  % (i + 1, e(a), ("<p>%s</p>" % e(b)) if b else "", e(c)) for i, (a, b, c) in enumerate(OPEN))

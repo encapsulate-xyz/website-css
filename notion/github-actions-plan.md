@@ -48,7 +48,7 @@ only if we change it). The ids (H1, G1…) are what the workflows in section 4 r
 | H6 | Homepage, Why Stake | the card heading "Six years" | typed | hand | Wrong from 2027 (the "6" and "2026 in progress" under it are calculated; the heading is not) | — (fix once: "Since 2020", already an open item in CLAUDE.md) |
 | H7 | Homepage, Why Stake | "25 secured" | typed | hand (fallback) | Already stale: the script shows 27, the typed fallback says 25 | Report fallback drift |
 | G1 | /governance-record, the homepage table, the navbar's latest votes | New votes on the 12 Cosmos chains (Terra, Axelar, Agoric, Passage, Althea, Gravity Bridge, Humans, ixo, Lumera, Sommelier, Gitopia, Chain4Energy) | 1,153 rows over 29 networks | hand | Last recorded: Terra 2026-09-11, Axelar 08-28, Agoric 08-24, Passage 07-14; Gravity Bridge 2024-11-28, Sommelier 2024-11-13; Gitopia 2023-06-04, Chain4Energy 2023-04-04; none under Althea, Humans, ixo, Lumera — no proposals since, or votes missed | Add the missing rows |
-| G2 | same | Protocol upgrades on 9 chains (Avalanche, Near, Sui, IOTA, Zilliqa, Mina, Starknet, EigenCloud, Monad) | | `gov_upgrades.py`, `gov_proposals.py`, run by hand | Every release | Run on a schedule |
+| G2 | same | Protocol upgrades voted in by running the release (Avalanche ACPs, Near versions and NEPs, Sui and IOTA versions, Zilliqa and Mina hard forks and MIPs) | | `gov_upgrades.py`, `gov_proposals.py`, run by hand | Every such upgrade; never a plain release (decision 7) | Run on a schedule |
 | G3 | same | Votes on Avail, Espresso, Ika, Supra, Vara, Lido DVT | | not covered | Every vote | Later, one chain at a time |
 | G4 | same | The rationale on each new row | | `gov_rationales.py`, run by hand | Every new row | Run after G1–G2, or leave for review (decision 5) |
 | G5 | /governance-record count band | "1882 · Votes cast since 2020" | 1882 | hand | Right today — 729 votes from before the record + the 1,153 rows (decided 2026-09-26) — but it does not move when a vote is added | Could be calculated as 729 + the rows (governance.js), or updated by the job |
@@ -230,19 +230,24 @@ summary to the report. About twenty lines each.
 - Until the jobs exist, the values are updated by hand (2026-09-16).
 
 **Decided on 2026-09-30** (the user, in conversation)
-1. **The private summary is an issue in `site-data`**, one per run, and **a Discord message only when a
-   check fails** — sent by a channel webhook (Discord → the channel → Integrations → Webhooks; the URL is
-   the repo secret `DISCORD_WEBHOOK`; the job POSTs `{content}` to it with fetch — no bot, no user token).
+1. **The private summary is an issue in `site-data`**, one per run, and **an email only when a run fails
+   or a check trips** — the way the other jobs already alert (the user, 30 Sep: "use email instead"; the
+   address and how it is sent are the user's to give).
 2. **The research notes move to `site-data`** (`notion/networks-set-values.md`, `notion/chain-pages.json`);
    CLAUDE.md points to them.
 4. **The current Notion token is used for now**; it is rotated later (the user). It goes into the repo's
    secrets as it is.
-5. **New vote rows go live with no review**, rationale included (the user: "no review just update"). How
-   the rationale is written is the one thing left to pick: the templated principle-based lines alone
-   (`gov_rationales`: accurate about the vote and the kind of proposal, never a specific claim, no
-   external dependency), or those lines plus one sentence written by Claude from the proposal's own text
-   (an API key as a secret, a few cents a row, a fallback to the template when the text is missing). Both
-   are possible; see the conversation of 2026-09-30.
+5. **New vote rows go live with no review**, rationale included (the user: "no review just update"), and
+   **the rationale is written the way every row was written so far**: the principle-based lines of
+   `gov_rationales` — chosen by our vote and the kind of proposal, accurate about both, never a specific
+   claim, the same line for the same row on every run. No model in the loop (the user: "lets use the same
+   method").
+7. **An upgrade counts only where running the release is the vote** (the user, 30 Sep: "only include those
+   upgrades where we vote by upgrade, not every release"): Sui and IOTA protocol versions, NEAR protocol
+   versions and their NEPs, Avalanche ACPs, Mina MIPs and hard forks, Zilliqa hard forks. A client release
+   that is not a protocol change — Starknet's Juno releases, EigenCloud's ELIP releases (the Protocol
+   Council votes those, operators only update), Monad's consensus client releases — is not a vote and
+   does not become a row.
 6. **Public endpoints to start**; our own nodes later, as secrets, where a public one is unreliable.
 
 **Open — needed before any code**
