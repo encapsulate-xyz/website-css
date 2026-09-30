@@ -242,19 +242,28 @@ summary to the report. About twenty lines each.
    `gov_rationales` — chosen by our vote and the kind of proposal, accurate about both, never a specific
    claim, the same line for the same row on every run. No model in the loop (the user: "lets use the same
    method").
-7. **An upgrade counts only where running the release is the vote** (the user, 30 Sep: "only include those
-   upgrades where we vote by upgrade, not every release"): Sui and IOTA protocol versions, NEAR protocol
-   versions and their NEPs, Avalanche ACPs, Mina MIPs and hard forks, Zilliqa hard forks. A client release
-   that is not a protocol change — Starknet's Juno releases, EigenCloud's ELIP releases (the Protocol
-   Council votes those, operators only update), Monad's consensus client releases — is not a vote and
-   does not become a row.
+7. **An upgrade counts only where running the release is the vote, or where the release carries an
+   improvement proposal** (the user, 30 Sep: "only include those upgrades where we vote by upgrade, not
+   every release", then "keep the record which were a client upgrade due to an improvement proposal like
+   for Monad there was MIP-8"): Sui and IOTA protocol versions, NEAR protocol versions and their NEPs,
+   Avalanche ACPs, Mina MIPs and hard forks, Zilliqa hard forks, **Monad releases that activate a MIP**
+   (`monad-crypto/MIPs`: v0.13.0 carried MONAD_NINE with MIP-3, 4 and 5; v0.15.0 MIP-12; v0.16.0 MIP-8 as
+   MONAD_TEN — the row is titled by the MIP, as an ACP row is), **EigenCloud releases that carry an ELIP**,
+   and **a Starknet version the community voted on** (v0.14). A plain client release — Juno's attestation
+   updates, a Mina daemon release before the fork, a Monad patch — is not a vote and does not become a row.
+3. **Whatever a script can write, it writes** (the user, 30 Sep: "automate more things without manual
+   intervention, move things from checks and reports to writes whatever you can"). 26 of the 35 items are
+   writes now; what stays for a hand is what needs a key, a form or a judgement: the profiles on other
+   people's registries and chains, the Discord invite, dead links, wallet screenshots, a post's author, and
+   the three alerts. **Every run opens one issue** in `site-data` listing everything it wrote (before and
+   after) and everything it could not; **one email goes out only when something drifted that a job cannot
+   fix, or the run failed.** No email on a quiet run.
 6. **Public endpoints to start**; our own nodes later, as secrets, where a public one is unreliable.
 
 **Open — needed before any code**
-3. **Which fields are written and which only reported.** To be talked through (the user, 2026-09-30).
-   Recommended: write Reward rate + Rate updated, Read, Step/Time and Dashboards status; report Commission,
-   Unbonding, Slashing events, Validators run and **Status** — a jailing is something to act on before the
-   site says it.
+8. **Can Super's dashboard token live as a secret?** Refreshing pages after a release (W2) and pasting a
+   head (W1) go through Super's GraphQL API, signed in as the user. If the token expires, both fall back to
+   the email. Check its lifetime first; rotate it with the Notion token.
 
 ## 7. Added on 2026-09-30 — from the work of 28–29 Sep
 

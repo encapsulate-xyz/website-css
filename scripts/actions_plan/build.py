@@ -55,41 +55,41 @@ item("N1", "write", "networks", "Reward rate and the day it was read", "Networks
 item("N7", "write", "networks", "Each chain page's facts paragraph and description", "Networks and chain pages",
      "Rewritten by hand on 29 Sep for eight chains", "`chain_pages.py --facts`, run by hand", "Whenever a rate or a commission changes",
      "Rewrite it after every write to N1", new=True)
-item("N2", "check", "networks", "Commission", "Networks and chain pages",
+item("N2", "write", "networks", "Commission", "Networks and chain pages",
      "2% to 38.72%. Eight chains changed on 29 Sep, and the site showed the old figures until a recheck found it", "By hand",
-     "Only when we change it", "Compare with the chain and report")
-item("N3", "check", "networks", "Unbonding time", "Networks and chain pages", "7 days, 21 days, 2 weeks to a year",
-     "By hand, researched once", "When a chain changes its rules", "Compare and report")
-item("N4", "check", "networks", "Slashing events", "Networks and chain pages", "0 on every chain, Gravity Bridge by decision",
-     "By hand, by your rule", "Only on an incident", "Check against the decisions list")
-item("N5", "check", "networks", "Status: active or jailed", "Networks and chain pages", "All active", "By hand", "Only on an incident",
-     "Compare and report, so you can act before the site says it")
-item("N6", "check", "networks", "Validators run, on the Lido DVT page", "Networks and chain pages", "500", "By hand",
-     "If keys are added or exit", "Compare and report")
-item("C1", "report", "audit", "Chain rules: minimum stake, reward cadence, fees", "Networks and chain pages",
-     "Researched once, in `chain-pages.json`", "By hand", "When a chain changes its parameters", "Report what no longer matches")
-item("C2", "report", "audit", "The green button that still points off the site", "Networks and chain pages",
-     "Lido DVT, Vara and Chain4Energy have no guide yet", "By hand", "When their guides exist", "Flag it once a guide appears")
+     "Only when we change it", "Write it from the chain; a change re-reads the rate (N1) and rewrites the facts (N7)")
+item("N3", "write", "networks", "Unbonding time", "Networks and chain pages", "7 days, 21 days, 2 weeks to a year",
+     "By hand, researched once", "When a chain changes its rules", "Write it from the chain's parameters, in the words the row uses")
+item("N4", "write", "networks", "Slashing events", "Networks and chain pages", "0 on every chain, Gravity Bridge by decision",
+     "By hand, by your rule", "Only on an incident", "Write the count from the chain, through the decisions list (Gravity Bridge stays 0); a new slash also goes in the email")
+item("N5", "write", "networks", "Status: active or jailed", "Networks and chain pages", "All active", "By hand", "Only on an incident",
+     "Write it from the chain, and email at once (A3)")
+item("N6", "write", "networks", "Validators run, on the Lido DVT page", "Networks and chain pages", "500", "By hand",
+     "If keys are added or exit", "Write it from Lido's Simple DVT module: operator #43's deposited keys less the exited")
+item("C1", "write", "audit", "Chain rules: minimum stake, reward cadence, fees", "Networks and chain pages",
+     "Researched once, in `chain-pages.json`", "By hand", "When a chain changes its parameters", "Write what the chain exposes (minimum stake, unbonding); the rest, cadence and wallet links, goes in the email when it no longer matches")
+item("C2", "write", "audit", "The green button that still points off the site", "Networks and chain pages",
+     "Lido DVT, Vara and Chain4Energy have no guide yet", "By hand", "When their guides exist", "Point it at the guide the moment a Guides row for the chain exists (`chain_pages.py --buttons`)")
 
 # ---- profiles
 item("P1", "check", "audit", "Name, description, website and links on every profile", "Validator profiles",
      "48 updates tracked, 24 done on 29 Sep. Fifteen validators read the agreed text on chain", "By hand, from the tracker",
      "An edit on chain, a registry rebuilt from an old file, a pull request left unmerged",
-     "Read every profile weekly and report what no longer says the agreed values", new=True)
-item("P2", "check", "audit", "The Discord invite", "Validator profiles", "`discord.gg/PQJX5JVS8h`, set never to expire", "By hand",
-     "If it is ever revoked, every profile and guide links nowhere", "Check that it still opens the server", new=True)
+     "Read every profile weekly; what no longer says the agreed values goes in the email (on-chain edits need the operator keys, registries need their forms)", new=True)
+item("P2", "report", "audit", "The Discord invite", "Validator profiles", "`discord.gg/PQJX5JVS8h`, set never to expire", "By hand",
+     "If it is ever revoked, every profile and guide links nowhere", "Check that it still opens the server; email if it does not (a new invite is yours to make)", new=True)
 
 # ---- homepage
 item("H4", "none", "—", "Uptime", "Homepage", "99.96 %", "By hand", "Nothing computes it, and it has no definition yet",
      "Nothing until you define it: which chains, what window, which source")
 item("H6", "none", "—", "The heading “Six years”", "Homepage", "Typed", "By hand", "Wrong from 2027. The figures under it are calculated; the heading is not",
      "Fix once, by hand: “Since 2020”")
-item("H7", "report", "audit", "“27 secured”, the typed fallback", "Homepage", "27. It said 25 until 29 Sep", "By hand",
-     "Visitors see the calculated figure; a crawler reads the typed one", "Report when the two differ")
+item("H7", "write", "audit", "“27 secured”, the typed fallback", "Homepage", "27. It said 25 until 29 Sep", "By hand",
+     "Visitors see the calculated figure; a crawler reads the typed one", "Write the set's count into the Notion text")
 
 # ---- security
-item("S1", "check", "networks", "“0 slashing events since 2020”, twice", "Security", "0", "By hand", "Only on an incident. It has to agree with N4",
-     "Check it against N4")
+item("S1", "write", "networks", "“0 slashing events since 2020”, twice", "Security", "0", "By hand", "Only on an incident. It has to agree with N4",
+     "Write it from N4's total")
 item("S2", "none", "—", "“Routine releases inside 24 h” and the other promises", "Security", "Policy", "Fixed", "Only if the policy changes",
      "Nothing: these are promises, not measurements")
 
@@ -98,42 +98,42 @@ item("B1", "write", "content", "Read minutes on each post", "Blog and guides", "
      "Fill it from the post's words")
 item("U1", "write", "content", "Steps and time on each guide", "Blog and guides", "32 guides, all filled", "By hand", "Every new guide",
      "Fill it from the guide's own slides")
-item("E1", "report", "content", "Social card and description on a new row", "Blog and guides",
+item("E1", "write", "content", "Social card and description on a new row", "Blog and guides",
      "Every post, chain page and guide has both today", "`og_cards.py`, run by hand", "Every new post, guide or chain",
-     "Report the rows that have none", new=True)
-item("B2", "report", "content", "Lede, chain, ticker and author on each post", "Blog and guides", "All filled", "By hand", "Every new post",
-     "Report what is missing")
-item("B3", "report", "content", "Whether a post's chain is live yet", "Blog and guides", "Set per post", "By hand", "When a chain launches",
-     "Report a post whose chain has launched")
+     "Render the card and write it with the description (`og_cards.py` in the runner's headless Chrome)", new=True)
+item("B2", "write", "content", "Lede, chain, ticker and author on each post", "Blog and guides", "All filled", "By hand", "Every new post",
+     "Write the Lede from the post's opening, Chain and Ticker when the title or tag names a chain in the set; the Author goes in the email")
+item("B3", "write", "content", "Whether a post's chain is live yet", "Blog and guides", "Set per post", "By hand", "When a chain launches",
+     "Write Live once the chain has a mainnet row in the set")
 item("U2", "report", "content", "Wallet screenshots in the guides", "Blog and guides", "30 guides still carry the old captures", "By hand",
-     "Wallets change their screens", "Flag the guides that are oldest")
+     "Wallets change their screens", "The oldest captures go in the email; a screenshot cannot be retaken by a job")
 
 # ---- services and investments
 item("V1", "write", "content", "Dashboard status, “LIVE”", "Services and investments", "3 dashboards, all live", "By hand",
      "If a dashboard goes down", "Load each link and write what it finds")
-item("V2", "report", "content", "Each repository's address and visibility", "Services and investments", "Set per row", "By hand",
-     "If a repo moves or goes private", "Report it")
-item("I1", "report", "content", "“We run a validator here”", "Services and investments", "8 positions", "By hand",
-     "When we join or leave a chain", "Report where it disagrees with the Networks set")
+item("V2", "write", "content", "Each repository's address and visibility", "Services and investments", "Set per row", "By hand",
+     "If a repo moves or goes private", "Write Visibility from GitHub; a moved or deleted repo goes in the email")
+item("I1", "write", "content", "“We run a validator here”", "Services and investments", "8 positions", "By hand",
+     "When we join or leave a chain", "Write it from the Networks set")
 item("V3", "none", "—", "The example events in the bots band", "Services and investments", "Typed examples", "By hand",
      "They look dated as time passes", "Nothing: refresh them by hand now and then")
 
 # ---- across the site
 item("W3", "report", "audit", "Dead links: proofs, explorers, guide links", "Across the site",
      "Agoric's explorer went dark and was replaced on 29 Sep. 23 proof links were repaired on 28 Sep", "Nobody", "Explorers move or close",
-     "Open every link and report the ones that fail")
-item("W2", "report", "audit", "Pages running an old release", "Across the site", "None: all 111 pages serve the current one",
-     "`paste_table.py`, run by hand", "After every release, until each page is refreshed", "Report them")
-item("F1", "report", "audit", "The typed fallbacks behind calculated figures", "Across the site",
+     "Open every link; the ones that fail go in the email, since a replacement takes judgement")
+item("W2", "write", "audit", "Pages running an old release", "Across the site", "None: all 111 pages serve the current one",
+     "`paste_table.py`, run by hand", "After every release, until each page is refreshed", "Refresh them through Super's own API, if its dashboard token can live as a secret (to check); otherwise they go in the email")
+item("F1", "write", "audit", "The typed fallbacks behind calculated figures", "Across the site",
      "27, 20, “Thirty-five”, “24 chains · 25 guides”, and the navbar's own lines", "By hand",
-     "They show only if the calculation fails, and age as chains and guides are added", "Report the drift")
-item("W1", "report", "audit", "The glyph lists inside `footer.js` and `covers.js`", "Across the site", "Ten addresses, written into the code",
-     "Hard-coded", "When a chain's glyph is replaced in Notion", "Open a pull request on this repo")
+     "They show only if the calculation fails, and age as chains and guides are added", "Write the counts into the Notion texts; the lines inside navbar.js go by pull request")
+item("W1", "write", "audit", "The glyph lists inside `footer.js` and `covers.js`", "Across the site", "Ten addresses, written into the code",
+     "Hard-coded", "When a chain's glyph is replaced in Notion", "Open and merge a pull request on this repo, tag it, and paste the head (W2's token question again)")
 
 # ---- alerts
-item("A1", "watch", "audit", "Avalanche's remaining room for delegations", "Alerts", "About 47 AVAX left on 24 Sep", "Nobody", "With every delegation", "Tell you when it nears the cap")
-item("A2", "watch", "audit", "Rewards left unclaimed on Vara and Avail", "Alerts", "Vara's expire after 84 eras", "Nobody", "Every era", "Tell you before they expire")
-item("A3", "watch", "audit", "A validator of ours jailed or inactive", "Alerts", "None", "Nobody", "On an incident", "Tell you at once")
+item("A1", "watch", "audit", "Avalanche's remaining room for delegations", "Alerts", "About 47 AVAX left on 24 Sep", "Nobody", "With every delegation", "Email at once when it nears the cap; a delegation cannot be moved by a job")
+item("A2", "watch", "audit", "Rewards left unclaimed on Vara and Avail", "Alerts", "Vara's expire after 84 eras", "Nobody", "Every era", "Email before they expire; claiming needs the keys")
+item("A3", "watch", "audit", "A validator of ours jailed or inactive", "Alerts", "None", "Nobody", "On an incident", "Email at once, and N5 writes the status")
 
 def render_item(x):
     new = ' <span class="new">new</span>' if x["new"] else ""
@@ -229,7 +229,7 @@ workflows = "".join(
  % (n, when, "".join('<li><code>%s</code><span>%s</span></li>' % (e(a), e(b)) for a, b in rows)) for n, when, rows in WF)
 
 STEPS = [
- ("Make the repo and settle the decisions", "Create the private `site-data` repo, put the current Notion token and the alert email in its secrets, settle the one open question."),
+ ("Make the repo", "Create the private `site-data` repo, put the current Notion token and the alert email in its secrets, check whether Super's token can join them."),
  ("Move the governance jobs", "Port the Notion client and the three governance scripts to JavaScript, with a dry run and the report, and put them on a schedule. No new logic."),
  ("Cosmos votes become rows", "The biggest gap that is closed by hand today."),
  ("Blog and guide fields", "Read minutes, steps and time."),
@@ -247,7 +247,8 @@ DECIDED = [
  "Logs say almost nothing; details go to a private summary.",
  "“1882 votes cast since 2020” stays.",
  "Until the jobs exist, the values are updated by hand.",
- "30 Sep: the summary is an issue in the private repo, one per run, and an email only when a run fails or a check trips, the way the other jobs already alert (the user will give the address).",
+ "30 Sep: every run opens one issue in the private repo with everything it wrote (before and after) and everything it could not, and sends one email only when something drifted that a job cannot fix, or the run failed, the way the other jobs already alert (the user will give the address).",
+ "30 Sep: whatever a script can write, it writes, with no hand in between (the user: automate more). What is left for a hand is the profiles on other people's registries and chains, dead links, wallet screenshots, a post's author, and the three alerts.",
  "30 Sep: the research notes (the set's values, the chain pages' source) move to the private repo.",
  "30 Sep: the current Notion token is used for now and rotated later.",
  "30 Sep: new vote rows go live with no review; the rationale is written by the principle-based lines that wrote every row so far, no model in the loop.",
@@ -256,9 +257,8 @@ DECIDED = [
 ]
 decided = "".join("<li><span>%s</span></li>" % e(x) for x in DECIDED)
 OPEN = [
- ("Which fields are written and which only reported", "To be talked through.",
-  "Write rates, read minutes, guide steps and dashboard status. Report commission, unbonding, slashing, validators run and status. "
-  "29 Sep showed why: a commission changed on chain and the site did not follow."),
+ ("Can Super's dashboard token live as a secret?", "W1 and W2 refresh pages and paste heads through Super's API, which is signed in as you. If the token expires, both fall back to the email.",
+  "Check the token's lifetime first; if it holds, use it, and rotate it with the Notion token."),
 ]
 opened = "".join('<li><span class="open-n">%d</span><b>%s</b>%s<p class="rec"><b>Recommended:</b> %s</p></li>'
                  % (i + 1, e(a), ("<p>%s</p>" % e(b)) if b else "", e(c)) for i, (a, b, c) in enumerate(OPEN))
