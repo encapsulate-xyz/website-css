@@ -40,13 +40,35 @@ This replaces the 1528 × 800 (1.91:1) canvas of 2026-09-18.
 | Annotation | one ink ring, 3px outside the control, baked into the capture (see *Annotating*) |
 | Redaction | one style for the whole set: same blur radius, or same solid box, never a mix |
 
-## Capturing — `scripts/guide_shot.mjs`, not DevTools (2026-09-30)
+## Capturing without the jump to the top (2026-09-30)
 
 DevTools' screenshots re-apply the device metrics for the capture, and a page that scrolls at the document level
 springs back to the top — with **Capture node screenshot** on `<html>` (a node screenshot of `<html>` is the whole
-document) and with ⌘⇧P → **Capture screenshot** in device mode alike (the user, 2026-09-30: "this is what I am doing
-but it's scrolling to the top"). So the captures are taken through the DevTools protocol by a script that holds the
-frame and touches nothing at capture time:
+document) and with ⌘⇧P → **Capture screenshot** in **device mode** alike (the user: "this is what I am doing but it's
+scrolling to the top"). Device mode was only there to fix the size and DPR 2; both can come from elsewhere, and then
+⌘⇧P → Capture screenshot is a plain capture of the viewport and nothing moves.
+
+### The simple way — a popup window at the frame's size, device mode off
+
+1. In any tab's console (the dashboard's address; `360` in place of `1400` for a wallet page):
+
+   ```js
+   w = window.open('https://suivision.xyz/…', '', 'width=1400,height=788,popup=yes'); setTimeout(() => w.resizeBy(1400 - w.innerWidth, 788 - w.innerHeight), 1500)
+   ```
+
+   Chrome opens a popup a pixel short (1400 × 787) and the `resizeBy` corrects it (measured 2026-09-30: 1400 × 788).
+2. **Put the popup on the MacBook's own screen** — the DPR comes from the display now, not from a device — and check
+   in its console: `innerWidth + "×" + innerHeight + " @" + devicePixelRatio` → `1400×788 @2`.
+3. Open DevTools on the popup **undocked** (⌘⌥I, then the ⋮ menu → the separate-window dock) — docked, it would take
+   part of the viewport — and leave the device toolbar **off**.
+4. Scroll and click to the spot, ⌘⇧P → **Capture screenshot** → 2800 × 1576, the page where you left it.
+
+A wallet screen that belongs to a pending request still cannot be re-opened as a page; for that one, right-click
+its root container (not `<html>`) → Capture node screenshot, or the script below.
+
+### The other way — `scripts/guide_shot.mjs`
+
+A script that holds the frame through the DevTools protocol and touches nothing at capture time:
 
 ```
 node --experimental-websocket scripts/guide_shot.mjs open [url]      # the Guides Chrome: its own profile, wallets installed once
