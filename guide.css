@@ -471,21 +471,27 @@ html:has(.notion-root[data-enc-guide]) body,
   flex-wrap: wrap;
 }
 
-/* the way out for the stuck: its own line under the two buttons */
-.enc-gd a.enc-gd__help {
+/* the side routes (handoff 2026-09-30): the chain's terms and questions, then the way out for the
+   stuck — one line under the two buttons, so neither is weighed against the ways forward */
+.enc-gd__side {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 28px;
+  row-gap: 0;
+  margin-top: 4px;
+}
+.enc-gd a.enc-gd__tert {
   display: inline-flex;
   align-items: center;
-  align-self: flex-start;
   gap: 10px;
   min-height: 44px;
-  margin-top: 4px;
   text-decoration: none !important;
   font-size: 15px;
   font-weight: 500;
   letter-spacing: -0.006em;
   color: var(--gd-paper);
 }
-.enc-gd a.enc-gd__help:hover .enc-gd__badge { transform: translateX(3px); }
+.enc-gd a.enc-gd__tert:hover .enc-gd__badge { transform: translateX(3px); }
 
 /* the buttons are §07's, on ink */
 .enc-gd a.enc-gd__btn {
@@ -568,11 +574,10 @@ html:has(.notion-root[data-enc-guide]) body,
 /* ── THE RESPONSIVE AUDIT (2026-09-26) ────────────────────────────────────────────────────────
    Scoped to the widths where the audit measured the fault; nothing outside them moves. */
 
-/* above 1728 the capture stops growing at 1180px while the step's words stayed pinned to the right
-   edge — 648px apart at 2560. The step keeps the 1728 composition, centred. */
-@media (min-width: 1729px) {
-  .enc-gd__step .enc-gd__content { width: 100%; max-width: 1568px; margin-inline: auto; }
-}
+/* Above 1728 the step used to be centred at 1568px (the audit of 2026-09-26: the capture stops
+   growing at 1180px and the words stood 648px from it at 2560). The handoff pins the words to the
+   band's own edge at every width — at 1920 they ended 176px from it here and 80px in the file — so
+   the centring went on 2026-09-30 (the user: "fix the right margin"). */
 
 /* on a tablet held upright a wallet capture (788px at its own width) ran 42px past the screen once
    the snap landed on its step: it is held to what the screen leaves under the step's words */

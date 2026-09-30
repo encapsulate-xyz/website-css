@@ -40,7 +40,7 @@
       return { "@type": "ListItem", "position": i + 1, "name": c[0], "item": "https://encapsulate.xyz" + c[1] };
     }) };
   }
-  var VERSION = "1";
+  var VERSION = "2";
   var INDEX = "/guides";
 
   /* the fallback if the "Guide page copy" toggle goes missing */
@@ -55,6 +55,7 @@
     "close line": "Rewards start once your stake is active. Next up: {next}.",
     "next": "Next: {chain}",
     "all": "All guides",
+    "terms": "{chain}\u2019s terms and common questions",
     "help": "Need help? Ask on Discord",
     "help url": "https://discord.gg/PQJX5JVS8h"
   };
@@ -99,8 +100,11 @@
   function badge(kind) {
     var b = el("span", "enc-gd__badge");
     b.setAttribute("data-enc-badge", kind);
+    /* the glyph carries the verb (the design): up-right leaves the site, a right arrow stays on it */
     b.innerHTML = kind === "arrow"
       ? '<svg viewBox="0 0 12 12" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9L9 3"/><path d="M4.5 3H9v4.5"/></svg>'
+      : kind === "go"
+      ? '<svg viewBox="0 0 12 12" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6h7"/><path d="M6.5 3l3 3-3 3"/></svg>'
       : kind === "minus"
         ? '<svg viewBox="0 0 12 12" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 6h8"/></svg>'
         : '<svg viewBox="0 0 12 12" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 2v8"/><path d="M2 6h8"/></svg>';
@@ -190,7 +194,7 @@
   /* every gallery card on the index, keyed by its title — the chain marks and the wallet marks
      are two of those galleries, so one map answers both */
   function marks(doc) {
-    var map = {};
+    var map = {}, pages = {};
     /* The chain's mark and the wallet's are the Networks set and the Wallet Set on the same page
        — one a gallery, the other a table (a view can be either, as guides.js found). A mark is a
        `data-full-size` on the card, not an <img>: Super draws a collection's Cover as a span with
@@ -202,7 +206,13 @@
       var shot = c.querySelector("[data-full-size]");
       var url = shot ? (shot.getAttribute("data-full-size") || original(shot)) : "";
       if (name && url && !map[name.toLowerCase()]) map[name.toLowerCase()] = url;
+      /* a mainnet row of the set is a page (/networks/<chain>, since 2026-09-24) and its card links
+         there; that is where the guide's close band sends the reader for the chain's terms and
+         questions (handoff of 2026-09-30). A testnet-only chain has no page, so no link. */
+      var page = c.querySelector("a.notion-collection-card__anchor[href^='/networks/']");
+      if (name && page && !pages[name.toLowerCase()]) pages[name.toLowerCase()] = page.getAttribute("href");
     });
+    map.__pages = pages;
     return map;
   }
 
@@ -401,7 +411,7 @@
     return wrap;
   }
 
-  function close(me, next, total) {
+  function close(me, next, total, pages) {
     var s = el("section", "enc-gd__band enc-gd__close");
     s.appendChild(mono(say("done", { n: total })));
     s.appendChild(el("h2", "enc-gd__closetitle", say("close title")));
@@ -419,17 +429,30 @@
     row.appendChild(all);
     s.appendChild(row);
 
-    /* the design's way out for the stuck, on its own line so it is not weighed against the two
-       ways forward */
+    /* the side routes, on their own line so they are not weighed against the two ways forward
+       (handoff, 2026-09-30): the chain's own page first — it owns the figures (rate, commission,
+       unbonding) and the questions, so the guide links there instead of repeating them — then the
+       way out for the stuck. The chain page is the set's card on /guides, so a testnet-only chain
+       (no page) has no link; the words are the copy toggle's. */
+    var side = el("div", "enc-gd__side");
+    var chainPage = pages && pages[(me.chain || me.name || "").toLowerCase()];
+    if (chainPage && say("terms")) {
+      var terms = el("a", "enc-gd__tert enc-gd__terms");
+      terms.href = chainPage.replace(/\/$/, "") + "#terms";
+      terms.appendChild(el("span", null, say("terms", { chain: me.chain || me.name })));
+      terms.appendChild(badge("go"));
+      side.appendChild(terms);
+    }
     if (say("help") && say("help url")) {
-      var help = el("a", "enc-gd__help");
+      var help = el("a", "enc-gd__tert enc-gd__help");
       help.href = say("help url");
       help.target = "_blank";
       help.rel = "noopener";
       help.appendChild(el("span", null, say("help")));
       help.appendChild(badge("arrow"));
-      s.appendChild(help);
+      side.appendChild(help);
     }
+    if (side.firstChild) s.appendChild(side);
     return s;
   }
 
@@ -452,7 +475,7 @@
       var wrap = el("div", "enc-gd");
       wrap.appendChild(head(me, info.marks || {}, list.length));
       list.forEach(function (st, i) { wrap.appendChild(stepBand(st, i, list.length)); });
-      wrap.appendChild(close(me, info.next, list.length));
+      wrap.appendChild(close(me, info.next, list.length, (info.marks || {}).__pages));
 
       // the guide's place under /guides, for search engines (HowTo results are gone since 2023)
       var here = location.pathname.replace(/\/$/, "");

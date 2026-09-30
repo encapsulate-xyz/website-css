@@ -361,6 +361,27 @@
     return out;
   }
 
+  /* A link to a band (/networks/<chain>#terms, from a guide's close band) arrives before the bands
+     exist, so the browser's own jump finds nothing; and React's adoption of the page a moment later
+     puts the scroll back at the top. So the landing is taken after the first build and held for a
+     few seconds — retried only while the page is still where the last attempt left it, so a reader
+     who has started scrolling is never pulled back. */
+  function landHash() {
+    var id = (location.hash || "").slice(1).split(/[?&]/)[0], set = null, tries = 0;
+    if (!id) return;
+    function go() {
+      var target = document.getElementById(id);
+      if (!target || !target.closest(".enc-ch")) return;
+      if (set != null && Math.abs(window.scrollY - set) > 2) return;   // the reader moved
+      var top = target.getBoundingClientRect().top;
+      /* landed: the band's top at the viewport's, or just under it — the page's own snap (proximity,
+         with Super's scroll padding) rests every band 62px down, and a link lands where a scroll would */
+      if (top < -2 || top > 96) { target.scrollIntoView(); set = window.scrollY; }
+      if (++tries < 6) setTimeout(go, [0, 300, 700, 1200, 2000, 3000][tries]);
+    }
+    go();
+  }
+
   /* ── the page ──────────────────────────────────────────────────────────────────────────── */
   function Page(root, id, row, words, list, src) {
     var P = this;
@@ -517,6 +538,7 @@
   Page.prototype.band = function (key, label, kids) {
     var s = el("section", "enc-ch__bandsec");
     s.setAttribute("data-enc-band", key);
+    s.id = key;   /* /networks/<chain>#terms — where a guide's close band sends the reader (2026-09-30) */
     var top = el("div", "enc-ch__top");
     top.appendChild(this.crumb());
     top.appendChild(this.mono(label, "enc-ch__label"));
@@ -1051,6 +1073,7 @@
       if (qa.length) graph.push({ "@type": "FAQPage", "@id": "https://encapsulate.xyz" + here + "#questions", "mainEntity": qa });
       ld({ "@context": "https://schema.org", "@graph": graph });
       if (first && (window.scrollY || 0) < 40 && !location.hash) window.scrollTo(0, 0);
+      if (first && location.hash) landHash();
       onScroll();
   }
 
