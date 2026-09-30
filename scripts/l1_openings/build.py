@@ -34,6 +34,7 @@ def linked(text):
     return out + e(text[k:])
 def host(u):
     m = re.match(r"https?://([^/]+)", u or ""); return (m.group(1) if m else u).replace("www.", "")
+def cap(t): return t[:1].upper() + t[1:]
 def usd(n):
     if n in (None, "", 0) and n != 0: return ""
     try: n = float(n)
@@ -112,28 +113,48 @@ def earns(x):
         return {"usd": r["earns_usd"], "fixed": True, "apr": apr, "src": src, "note": note}
     total, n = r.get("total_staked_usd"), r.get("active_validators") or x.get("validators_now")
     if not (isinstance(apr, (int, float)) and isinstance(total, (int, float)) and total > 0 and isinstance(n, (int, float)) and n > 0):
-        return None if apr is None or not isinstance(total, (int, float)) else {"usd": None, "apr": apr, "src": src, "note": note}
+        # something is missing: say what, with the research's own note (no rewards yet, no fixed set, no market…)
+        if not r: return None
+        return {"usd": None, "apr": apr, "total": total, "n": n, "src": src, "note": note}
     avg = total / n
     com = r.get("median_commission") if isinstance(r.get("median_commission"), (int, float)) else DEFAULT_COMMISSION
     own = x.get("min_self_stake_usd") if isinstance(x.get("min_self_stake_usd"), (int, float)) else 0
+    # where a "validator" is one fixed-size key (Ethereum, Gnosis, PulseChain, Waterfall: tens of thousands of them) an
+    # operator's income scales with the keys it runs, so the figure is per key, not per seat
+    if n > 20000:
+        return {"usd": apr * avg * com, "avg": avg, "n": int(n), "total": total, "com": com, "apr": apr, "own": 0, "src": src, "note": note, "key": True}
     return {"usd": apr * avg * com + apr * own, "avg": avg, "n": int(n), "total": total, "com": com, "apr": apr, "own": own, "src": src, "note": note}
 
 def earns_short(x):
     v = earns(x)
     if not v or v.get("usd") is None: return "—" if x["difficulty"] else ""
-    if v.get("fixed"): return usd(v["usd"]) + " <i>· fixed pay</i>"
-    return usd(v["usd"]) + " <i>· avg seat %s</i>" % usd(v["avg"])
+    if v.get("fixed"): return ("None" if not v["usd"] else usd(v["usd"])) + " <i>%s</i>" % ("no staking" if not v["usd"] else "fixed pay")
+    if v.get("key"): return usd(v["usd"]) + " <i>per key</i>"
+    return usd(v["usd"]) + " <i>avg seat %s</i>" % usd(v["avg"])
 
 def earns_long(x):
     v = earns(x)
     if not v: return None
     link = (' (<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>)' % (e(v["src"]), e(host(v["src"])))) if v.get("src") else ""
-    if v.get("fixed"): return "%s a year — validators here are paid a fixed sum, not a rate. %s%s" % (usd(v["usd"]), e(v.get("note", "")), link)
-    if v.get("usd") is None: return "The chain pays about %.1f%% a year on staked tokens, but its total stake could not be read, so the seat's worth is not computed%s%s" % (v["apr"] * 100, ". " + e(v["note"]) if v.get("note") else "", link)
+    if v.get("fixed"):
+        if not v["usd"]: return "Nothing — validators here are not paid from staking. %s%s" % (e(v.get("note", "")), link)
+        return "%s a year — validators here are paid a fixed sum, not a rate. %s%s" % (usd(v["usd"]), e(v.get("note", "")), link)
+    if v.get("usd") is None:
+        have = []
+        if isinstance(v.get("apr"), (int, float)): have.append("the chain pays about %.1f%% a year on staked tokens" % (v["apr"] * 100))
+        if isinstance(v.get("total"), (int, float)) and v["total"]: have.append("%s is staked" % usd(v["total"]))
+        if isinstance(v.get("n"), (int, float)) and v["n"]: have.append("%d validators are in the set" % v["n"])
+        head = (cap(", ".join(have)) + ", but the seat's worth cannot be worked out. ") if have else "Not worked out. "
+        return head + e(v.get("note", "")) + link
+    if v.get("key"):
+        return ("Here a validator is one fixed-size key: %s keys hold %s, %s a key, and a key earns about %s a year at the chain's %.1f%%. "
+                "An operator earns its commission on the keys it runs for others — about <b>%s a key a year</b> at %d%% — so income grows with the keys run, not with one seat%s%s") % (
+            format(v["n"], ","), usd(v["total"]), usd(v["avg"]), usd(v["avg"] * v["apr"]), v["apr"] * 100, usd(v["usd"]), round(v["com"] * 100),
+            ("; " + e(v["note"])) if v.get("note") else "", link)
     own = (" plus about %s on the minimum own stake" % usd(v["apr"] * v["own"])) if v["own"] and v["apr"] * v["own"] >= 1 else ""
-    return ("The average validator holds %s of stake — %s staked over %d in the set. At the chain's %.1f%% rate and %d%% commission that pays about <b>%s a year</b>%s. "
+    return ("The average validator holds %s of stake — %s staked over %s in the set. At the chain's %.1f%% rate and %d%% commission that pays about <b>%s a year</b>%s. "
             "A new seat starts far below the average and grows only with delegations%s%s") % (
-        usd(v["avg"]), usd(v["total"]), v["n"], v["apr"] * 100, round(v["com"] * 100), usd(v["usd"]), own, ("; " + e(v["note"])) if v.get("note") else "", link)
+        usd(v["avg"]), usd(v["total"]), format(v["n"], ","), v["apr"] * 100, round(v["com"] * 100), usd(v["usd"]), own, ("; " + e(v["note"])) if v.get("note") else "", link)
 
 def money(x, a, b):
     t = str(x.get(a) or "").strip(); n = x.get(b); u = usd(n)
