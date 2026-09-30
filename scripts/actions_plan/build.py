@@ -249,6 +249,8 @@ DECIDED = [
  "Until the jobs exist, the values are updated by hand.",
  "30 Sep: every run opens one issue in the private repo with everything it wrote (before and after) and everything it could not, and sends one email only when something drifted that a job cannot fix, or the run failed, the way the other jobs already alert (the user will give the address).",
  "30 Sep: whatever a script can write, it writes, with no hand in between (the user: automate more). What is left for a hand is the profiles on other people's registries and chains, dead links, wallet screenshots, a post's author, and the three alerts.",
+ "30 Sep: a writer writes only what differs, and only after the value passes its check (a number in range, a real date, a text of the row's own shape, two readers agreeing where two exist); what fails goes in the email, never into Notion.",
+ "Everything is written to Notion, nothing to the site's code: the pages read Notion at render, so a new value reaches the site when Super refetches the page. Only the hard-coded lists in the scripts (W1) go by pull request and release.",
  "30 Sep: the research notes (the set's values, the chain pages' source) move to the private repo.",
  "30 Sep: the current Notion token is used for now and rotated later.",
  "30 Sep: new vote rows go live with no review; the rationale is written by the principle-based lines that wrote every row so far, no model in the loop.",

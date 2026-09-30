@@ -150,13 +150,31 @@ Vara (they expire after 84 eras) and Avail; a validator of ours gone inactive or
   bridge-module penalties shown as 0 (decided 2026-09-24), Avail's cancelled offline slash, the slashes
   on Gitopia's and ixo's old validators we shut down. A check flags only what goes beyond it: "tell me
   what's new", not "re-argue what we decided".
-- **Guardrails on every write.**
+- **Guardrails on every write** (the user, 2026-09-30: "only update if it changes, and run checks so you
+  don't update it with gibberish").
+  - **A writer writes only what differs.** It reads the row first and compares; the same value is a no-op
+    and leaves no trace in Notion's history. A changed value is written once, plain text, and listed in
+    the run's issue as before → after.
+  - **Every value passes its check before it is written, or it goes in the email instead.** A rate is a
+    number between 0 and 100 with at most one decimal, inside the sanity band; a count is a whole number;
+    a date is a real date no later than today; a text (unbonding, a facts paragraph) is built from the
+    row's own template and must match the shape of what it replaces; a status is one of the row's
+    select options; a reader that answers with nothing, an error page or a number outside its range
+    writes nothing and reports. Two readers must agree where two exist (a chain's endpoint and an
+    explorer), or the value is held.
   - A **Rate source** select on the Networks set (Auto / Manual): the job writes only Auto rows. Mina
     (blank on purpose), EigenCloud (no public API) and Sommelier (0% by rule) stay Manual.
   - A **sanity band**: a new rate more than a third away from the current one is held back and flagged.
   - A **history file** (`history/rates.csv`), one line per chain per run, committed in `site-data`.
   - **Plain text only** into Notion (never the annotations read back — the lesson of 2026-09-24).
   - **One Notion writer at a time** (a shared `concurrency` group), under Notion's 3 requests a second.
+- **Everything is written to Notion, nothing to the site's code.** The pages read Notion at render:
+  the chain page decodes its row's properties from the page Super serves (the estimate is stake × the
+  row's Reward rate, computed in the browser), /networks and the navbar read the set's cards, the posts
+  read their rows. So a value written to Notion reaches the site once **Super refetches the page** — its
+  own sync, or the ↻ through its API (item W2) — with no release and no head paste. The only writes that
+  touch code are the hard-coded lists (W1: the glyph addresses in footer.js and covers.js, the typed
+  lines in navbar.js), which go by pull request, release and head paste.
 - **Two outputs.** The run's log says almost nothing ("rates: 12 written, 2 held back; checks: 1
   needs attention"). The details — which chain, what it found, the numbers — go only to the **private
   summary** (decision 1). Nothing prints a comparison in a log.
