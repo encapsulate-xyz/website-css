@@ -84,6 +84,13 @@ for name, new in (picks.get("rename") or {}).items():
     if not hit: sys.exit("picks.json renames a network that is not in the research: " + name)
     hit[0]["chain"] = new
 rows = [x for x in rows if x["_id"] not in [key(n) for n in picks.get("drop", [])]]
+# every network carries a tier on the Networks set's own scale ("tiers": {chain: "god"|"high"|"medium"|"low"|"filth"})
+TIERS = ["god", "high", "medium", "low", "filth"]
+tiers = {key(n): t for n, t in (picks.get("tiers") or {}).items()}
+for x in rows:
+    t = tiers.get(x["_id"])
+    if t not in TIERS: sys.exit("picks.json gives no tier (or an unknown one) for " + x["chain"])
+    x["_tier"] = t
 for x in rows:
     try: x["difficulty"] = int(x.get("difficulty"))
     except Exception: x["difficulty"] = 3
@@ -111,7 +118,7 @@ def order(x):
     if need is None: need = x.get("min_self_stake_usd")
     try: need = float(need)
     except Exception: need = 1e15
-    return (x["difficulty"], 1 if x.get("_flag") else 0, rec, need, x["chain"].lower())
+    return (x["difficulty"], 1 if x.get("_flag") else 0, TIERS.index(x["_tier"]), rec, need, x["chain"].lower())
 
 early = [key(n) for n in picks.get("testnet_only", [])]
 for n in picks.get("testnet_only", []):
@@ -126,8 +133,9 @@ def render(x, n, level_chip=False):
     d = x["difficulty"]; rec = str(x.get("recruiting_now", "")).lower() == "yes"
     route = ROUTE.get(str(x.get("route", "")).lower(), str(x.get("route") or "Unknown"))
     progs = [p for p in lst(x.get("programmes")) if isinstance(p, dict) and p.get("name")]
-    text = " ".join([x["chain"], str(x.get("token") or ""), str(x.get("what") or ""), route, str(x.get("difficulty_why") or "")] + [p["name"] for p in progs]).lower()
+    text = " ".join([x["chain"], str(x.get("token") or ""), str(x.get("what") or ""), route, x["_tier"], str(x.get("difficulty_why") or "")] + [p["name"] for p in progs]).lower()
     chips = ('<span class="chip dot" data-d="%d">%s</span>' % (d, e(LEVEL[d][0]))) if level_chip else ""
+    chips += '<span class="chip tier" data-tier="%s">%s</span>' % (x["_tier"], x["_tier"])
     chips += '<span class="chip plain">%s</span>' % e(route)
     if x.get("is_l1") is False and d != 0: chips += '<span class="chip plain">Not a layer 1</span>'
     if x.get("_flag"): chips += '<span class="chip dead">%s</span>' % e(x["_flag"]["label"])
@@ -147,7 +155,7 @@ def render(x, n, level_chip=False):
     src = ", ".join('<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>' % (e(u), e(host(u))) for u in lst(x.get("sources")) if str(u).startswith("http"))
     unk = "; ".join(lst(x.get("unknowns")))
     conf = str(x.get("confidence") or "").lower()
-    return ('<li class="row" data-d="{d}" data-rec="{rec}" data-text="{text}">'
+    return ('<li class="row" data-d="{d}" data-rec="{rec}" data-tier="{tier}" data-text="{text}">'
             '<div class="r-head"><button type="button" class="r-toggle" aria-expanded="false"><span class="r-n">{n}</span>'
             '<span class="r-name"><span class="r-title">{chain}<span class="tok">{tok}</span></span><span class="r-what">{what}</span></span></button>'
             '<div class="r-facts"><span><em>Our own stake</em>{own}</span><span><em>To be active</em>{act}</span></div>'
@@ -160,7 +168,7 @@ def render(x, n, level_chip=False):
             '<div class="blk wide src">{conf}{unk}<span>Sources: {src}</span></div>'
             '</div></li>').format(
         dead=('<div class="blk wide dead"><span><b>%s.</b> %s</span></div>' % (e(x["_flag"]["label"]), linked(x["_flag"]["why"]))) if x.get("_flag") else "",
-        d=d, rec="yes" if rec else "no", text=e(text), n="%02d" % n, chain=e(x["chain"]), tok=e(tok(x)), what=linked(x.get("what") or ""),
+        d=d, rec="yes" if rec else "no", tier=x["_tier"], text=e(text), n="%02d" % n, chain=e(x["chain"]), tok=e(tok(x)), what=linked(x.get("what") or ""),
         own=e(own_s), act=e(act_s), chips=chips, lv=e(LEVEL[d][0]), why=linked(x.get("difficulty_why") or ""), nxt=linked(x.get("best_next_step") or "Not set"),
         steps=('<div class="blk"><h4>How to join</h4><ol>%s</ol></div>' % steps) if steps else "",
         prog=('<div class="blk"><h4>Help for a newcomer</h4><ul class="prog">%s</ul></div>' % prog) if prog else '<div class="blk"><h4>Help for a newcomer</h4><p class="unk">No programme found.</p></div>',
@@ -184,7 +192,7 @@ tn = "".join(render(x, i + 1, True) for i, x in enumerate(testnets))
 testnet_html = ('<ul class="rows card">%s</ul>' % tn) if tn else '<div class="card empty"><span>None in this research.</span></div>'
 op = "".join(render(x, i + 1, True) for i, x in enumerate(opening))
 opening_html = ('<ul class="rows card">%s</ul>' % op) if op else '<div class="card empty"><span>None in this research.</span></div>'
-none_html = "".join("<li><b>%s</b><span>%s</span></li>" % (e(x["chain"]), linked(x.get("difficulty_why") or x.get("what") or "")) for x in none) or "<li><b>None</b><span></span></li>"
+none_html = "".join('<li><b>%s <span class="chip tier" data-tier="%s">%s</span></b><span>%s</span></li>' % (e(x["chain"]), x["_tier"], x["_tier"], linked(x.get("difficulty_why") or x.get("what") or "")) for x in none) or "<li><b>None</b><span></span></li>"
 
 by = {x["_id"]: x for x in rows}
 if not picks.get("picks"): picks["picks"] = [{"chain": x["chain"], "why": x.get("difficulty_why", "")} for x in main[:6]]
@@ -193,8 +201,8 @@ for p in picks["picks"]:
     x = by.get(key(p["chain"]))
     if not x: sys.exit("picks.json names a network that is not in the research: " + p["chain"])
     d = x["difficulty"]
-    ph += ('<li class="card pick"><div class="pick-top"><h3>%s</h3><span class="tok">%s</span><span class="chip dot" data-d="%d">%s</span>%s</div><p>%s</p><p class="pick-next"><b>First step.</b> %s</p></li>'
-           % (e(x["chain"]), e(tok(x)), d, e(LEVEL[d][0]), '<span class="chip yes">Taking operators</span>' if str(x.get("recruiting_now", "")).lower() == "yes" else "",
+    ph += ('<li class="card pick"><div class="pick-top"><h3>%s</h3><span class="tok">%s</span><span class="chip tier" data-tier="%s">%s</span><span class="chip dot" data-d="%d">%s</span>%s</div><p>%s</p><p class="pick-next"><b>First step.</b> %s</p></li>'
+           % (e(x["chain"]), e(tok(x)), x["_tier"], x["_tier"], d, e(LEVEL[d][0]), '<span class="chip yes">Taking operators</span>' if str(x.get("recruiting_now", "")).lower() == "yes" else "",
               linked(p["why"]), linked(p.get("next") or x.get("best_next_step") or "")))
 
 METHOD = picks.get("method") or ""
@@ -207,4 +215,4 @@ for k, v in (("LEVELS", levels), ("SCALE", scale), ("PICKS", ph), ("PICKS_LEDE",
 assert "{{" not in page, re.findall(r"\{\{[A-Z_]+\}\}", page)
 open(OUT, "w").write(page)
 print("networks", len(main), {d: sum(1 for x in main if x["difficulty"] == d) for d in (1, 2, 3, 4, 5)}, "| our testnets", len(testnets), "| open testnets", len(opening), "| no role", len(none),
-      "| taking operators", sum(1 for x in main if str(x.get("recruiting_now", "")).lower() == "yes"), "| bytes", len(page))
+      "| tiers", {t: sum(1 for x in rows if x["_tier"] == t) for t in TIERS}, "| taking operators", sum(1 for x in main if str(x.get("recruiting_now", "")).lower() == "yes"), "| bytes", len(page))

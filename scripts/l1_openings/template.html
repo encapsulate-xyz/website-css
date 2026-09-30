@@ -84,6 +84,12 @@
   .blk.dead { background: #FBEDED; color: #6E2424; border-radius: 10px; padding: 12px 14px; font-size: 14px; }
   .blk.dead b { color: #4A1414; font-weight: 600; }
   .chip.plain { --bg: var(--sunk); --fg: var(--d0-ink); border: 1px solid var(--line); padding: 4px 9px; }
+  /* the tier: our Networks set's own words, its Notion colours as a square */
+  .chip.tier { --bg: var(--sunk); --fg: var(--ink); font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 5px 9px 5px 8px; border: 1px solid var(--line); }
+  .chip.tier::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--sq); }
+  [data-tier="god"] { --sq: #7B5EA7; } [data-tier="high"] { --sq: #D9853F; } [data-tier="medium"] { --sq: #C99A1E; } [data-tier="low"] { --sq: #93978F; } [data-tier="filth"] { --sq: #8A6A4A; }
+  .plain li b .chip.tier { margin-left: 8px; vertical-align: middle; }
+  select { background: var(--sunk); border: 1px solid transparent; border-radius: 10px; padding: 8px 30px 8px 12px; font: 500 13.5px/1 var(--body); color: var(--text); cursor: pointer; appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%); background-position: calc(100% - 15px) 50%, calc(100% - 10px) 50%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; }
   .tok { font: 400 12px/1 var(--mono); color: var(--faint); letter-spacing: .04em; }
 
   /* toolbar */
@@ -193,7 +199,7 @@
 
   <section id="all">
     <div class="s-head"><span class="num">02</span><h2>Every network, easiest first</h2>
-      <p>Inside each level the networks that are taking operators now come first, then the ones that need the least stake; a network that pays little or is being wound down comes last. Open a row for the steps, the programmes and the sources.</p></div>
+      <p>Inside each level the higher tier comes first (our Networks set's scale: god, high, medium, low, filth), then the networks taking operators now, then the ones that need the least stake; a network that pays little or is being wound down comes last. Open a row for the steps, the programmes and the sources.</p></div>
     <div class="card bar" id="filters">
       <div class="tabs" role="group" aria-label="Level">
         <button type="button" data-v="all" aria-pressed="true">All <i data-n="all"></i></button>
@@ -204,6 +210,8 @@
         <button type="button" data-v="5" aria-pressed="false">Closed <i data-n="5"></i></button>
       </div>
       <label class="check"><input type="checkbox" id="f-rec"> Taking operators now</label>
+      <label class="vh" for="f-tier">Tier</label>
+      <select id="f-tier"><option value="all">Every tier</option><option value="god">god</option><option value="high">high</option><option value="medium">medium</option><option value="low">low</option><option value="filth">filth</option></select>
       <div class="search"><label class="vh" for="q">Find</label><input id="q" type="search" autocomplete="off" placeholder="Find a network, a token, a programme"></div>
       <div class="bar-end"><span id="shown"></span><button type="button" class="link" id="expand">Open all</button></div>
     </div>
@@ -241,7 +249,7 @@
 <script>
 (function () {
   var rows = [].slice.call(document.querySelectorAll("#all .row")), levels = [].slice.call(document.querySelectorAll("#all .level"));
-  var f = { d: "all", rec: false, q: "" }, allOpen = false;
+  var f = { d: "all", rec: false, tier: "all", q: "" }, allOpen = false;
   var counts = { all: rows.length };
   rows.forEach(function (r) { var d = r.getAttribute("data-d"); counts[d] = (counts[d] || 0) + 1; });
   [].slice.call(document.querySelectorAll("[data-n]")).forEach(function (n) { n.textContent = counts[n.getAttribute("data-n")] || 0; });
@@ -258,7 +266,7 @@
   function apply() {
     var n = 0, words = f.q.toLowerCase().split(/\s+/).filter(Boolean);
     rows.forEach(function (r) {
-      var ok = (f.d === "all" || r.getAttribute("data-d") === f.d) && (!f.rec || r.getAttribute("data-rec") === "yes");
+      var ok = (f.d === "all" || r.getAttribute("data-d") === f.d) && (!f.rec || r.getAttribute("data-rec") === "yes") && (f.tier === "all" || r.getAttribute("data-tier") === f.tier);
       if (ok && words.length) { var t = r.getAttribute("data-text"); ok = words.every(function (w) { return t.indexOf(w) >= 0; }); }
       r.hidden = !ok; if (ok) n++;
     });
@@ -267,13 +275,15 @@
     document.getElementById("empty").hidden = n > 0;
     [].slice.call(document.querySelectorAll("#filters .tabs button")).forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-v") === f.d)); });
     document.getElementById("f-rec").checked = f.rec;
+    document.getElementById("f-tier").value = f.tier;
   }
   document.getElementById("filters").addEventListener("click", function (e) {
     var b = e.target.closest(".tabs button"); if (!b) return; f.d = b.getAttribute("data-v"); apply();
   });
   document.getElementById("f-rec").addEventListener("change", function () { f.rec = this.checked; apply(); });
+  document.getElementById("f-tier").addEventListener("change", function () { f.tier = this.value; apply(); });
   document.getElementById("q").addEventListener("input", function () { f.q = this.value.trim(); apply(); });
-  document.getElementById("clear").addEventListener("click", function () { f = { d: "all", rec: false, q: "" }; document.getElementById("q").value = ""; apply(); });
+  document.getElementById("clear").addEventListener("click", function () { f = { d: "all", rec: false, tier: "all", q: "" }; document.getElementById("q").value = ""; apply(); });
   document.getElementById("expand").addEventListener("click", function () {
     allOpen = !allOpen; rows.forEach(function (r) { if (!r.hidden) open(r, allOpen); });
     this.textContent = allOpen ? "Close all" : "Open all";
