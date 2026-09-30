@@ -186,6 +186,18 @@
   .chev::before { content: ""; width: 7px; height: 7px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); }
   .row[data-open] .chev::before { transform: translateY(2px) rotate(-135deg); }
 
+  /* the review mark: a small check beside the chips; ticked, it turns the ink of the level list's chosen tab */
+  .rv { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line-2); background: var(--card); border-radius: 999px; padding: 4px 10px 4px 7px; font: 500 12px/1 var(--body); color: var(--muted); cursor: pointer; white-space: nowrap; }
+  .rv:hover { color: var(--ink); border-color: #B9B9B1; }
+  .rv-box { width: 13px; height: 13px; border-radius: 4px; border: 1.5px solid var(--line-2); background: var(--card); box-sizing: border-box; flex: none; }
+  .rv[aria-pressed="true"] { background: var(--dark); border-color: var(--dark); color: #FAFAF8; }
+  .rv[aria-pressed="true"] .rv-box { border-color: #FAFAF8; background: #FAFAF8 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.5l2.5 2.5 4.5-5' fill='none' stroke='%232A2C28' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 10px no-repeat; }
+  .rv[aria-pressed="true"] .rv-t i { font-style: normal; color: #C9C9C4; }
+  .rv[disabled] { cursor: default; }
+  .rv[disabled]:not([aria-pressed="true"]) { display: none; }
+  .row[data-reviewed] .r-title { color: var(--muted); }
+  .plain li .rv { margin-left: 8px; vertical-align: middle; }
+  .pick-top .chip.rvd { --bg: var(--dark); --fg: #FAFAF8; }
   .r-panel { padding: 6px 22px 24px 60px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 18px 36px; }
   .blk { display: flex; flex-direction: column; gap: 6px; min-width: 0; font-size: 14px; line-height: 1.55; }
   .blk.wide { grid-column: 1 / -1; }
@@ -407,5 +419,78 @@
   window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(mark); } }, { passive: true });
   window.addEventListener("resize", mark);
   mark();
+})();
+
+// Review marks, kept in the artifact's database (collection "reviewed", one document per network, keyed as the
+// rows are): who marked it and when. Everyone who can open the page sees them; anyone who can change its data can
+// tick or untick one. Without the database (a saved copy, a viewer it is not served to) the buttons stay hidden.
+(async function () {
+  if (!window.claude || !claude.use) return;
+  var db = await claude.use("db");
+  if (!db) return;
+  var user = await claude.use("user");
+  var me = user ? await user.id() : null;
+  var canWrite = user ? await user.can("data.write") : null;
+  var buttons = [].slice.call(document.querySelectorAll("button[data-rv]"));
+  var readOnly = canWrite === false || !me;
+  buttons.forEach(function (b) { b.hidden = false; if (readOnly) b.disabled = true; });
+  var state = {}, names = {}, busy = {};
+  var fmt = function (iso) { try { return new Date(iso).toLocaleDateString(undefined, { day: "numeric", month: "short" }); } catch (e) { return ""; } };
+  async function resolveNames() {
+    if (!user) return;
+    var ids = Object.keys(state).map(function (k) { return state[k].by; }).filter(function (id) { return id && !(id in names); });
+    if (!ids.length) return;
+    try { var ps = await user.profiles(ids); ids.forEach(function (id) { names[id] = (ps[id] && ps[id].name) || ""; }); } catch (e) {}
+  }
+  function paint() {
+    buttons.forEach(function (b) {
+      var k = b.getAttribute("data-rv"), r = state[k], on = !!r, t = b.querySelector(".rv-t");
+      if (b.getAttribute("aria-pressed") !== String(on)) b.setAttribute("aria-pressed", String(on));
+      var label = on ? "Reviewed" : "Mark reviewed";
+      var who = on ? (names[r.by] || "") : "";
+      var html = on ? label + (r.at ? " <i>" + fmt(r.at) + "</i>" : "") : label;
+      if (t.innerHTML !== html) t.innerHTML = html;
+      b.title = on ? "Reviewed" + (who ? " by " + who : "") + (r.at ? " on " + new Date(r.at).toLocaleDateString() : "") + (readOnly ? "" : " — click to clear") : "Mark this network as reviewed";
+      var row = b.closest("[data-key]");
+      if (row) { if (on) row.setAttribute("data-reviewed", ""); else row.removeAttribute("data-reviewed"); }
+    });
+    // a pick shows the same state as a chip beside its tier
+    [].slice.call(document.querySelectorAll(".pick[data-key]")).forEach(function (p) {
+      var on = !!state[p.getAttribute("data-key")], chip = p.querySelector(".chip.rvd");
+      if (on && !chip) { chip = document.createElement("span"); chip.className = "chip rvd"; chip.textContent = "Reviewed"; p.querySelector(".pick-top").appendChild(chip); }
+      if (!on && chip) chip.remove();
+    });
+  }
+  db.collection("reviewed").onSnapshot(async function (snap) {
+    var next = {};
+    snap.docs.forEach(function (d) { if (d.exists) next[d.id] = d.data(); });
+    state = next;
+    paint();
+    await resolveNames();
+    paint();
+  }, function () { buttons.forEach(function (b) { b.hidden = true; }); });
+  document.addEventListener("click", async function (ev) {
+    var b = ev.target.closest("button[data-rv]");
+    if (!b || b.disabled || readOnly) return;
+    ev.preventDefault(); ev.stopPropagation();
+    var k = b.getAttribute("data-rv");
+    if (busy[k]) return;
+    busy[k] = true;
+    var ref = db.collection("reviewed").doc(k), was = state[k];
+    try {
+      if (was) { delete state[k]; paint(); await ref.delete(); }
+      else {
+        var row = b.closest("[data-key]"), name = row ? ((row.querySelector(".r-title, h3, b") || {}).textContent || "").trim() : k;
+        state[k] = { by: me, at: new Date().toISOString(), network: name.split("\n")[0].trim().slice(0, 80) };
+        paint();
+        await ref.set(state[k]);
+      }
+    } catch (e) {
+      if (was) state[k] = was; else delete state[k];
+      if (e && e.code === "invalid_argument") { readOnly = true; buttons.forEach(function (x) { x.disabled = true; }); }
+      paint();
+    }
+    busy[k] = false;
+  });
 })();
 </script>

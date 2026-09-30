@@ -96,6 +96,9 @@ for x in rows:
     try: x["difficulty"] = int(x.get("difficulty"))
     except Exception: x["difficulty"] = 3
 
+# the review mark: one button per network, shown only when the page's database is there (the page script unhides it)
+RV = '<button type="button" class="rv" data-rv="%s" aria-pressed="false" hidden><span class="rv-box" aria-hidden="true"></span><span class="rv-t">Mark reviewed</span></button>'
+
 REWARDS = {}
 _rw = os.path.join(DATA, "rewards.json")
 if os.path.exists(_rw):
@@ -233,11 +236,11 @@ def render(x, n, level_chip=False):
     src = ", ".join('<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>' % (e(u), e(host(u))) for u in lst(x.get("sources")) if str(u).startswith("http"))
     unk = "; ".join(lst(x.get("unknowns")))
     conf = str(x.get("confidence") or "").lower()
-    return ('<li class="row" data-d="{d}" data-rec="{rec}" data-help="{help}" data-tier="{tier}" data-text="{text}">'
+    return ('<li class="row" data-key="{key}" data-d="{d}" data-rec="{rec}" data-help="{help}" data-tier="{tier}" data-text="{text}">'
             '<div class="r-head"><button type="button" class="r-toggle" aria-expanded="false"><span class="r-n">{n}</span>'
             '<span class="r-name"><span class="r-title">{chain}<span class="tok">{tok}</span></span><span class="r-what">{what}</span></span></button>'
             '<div class="r-facts"><span><em>Our own stake</em>{own}</span><span><em>{f2}</em>{act}</span><span><em>Earns a year</em><span>{earn}</span></span></div>'
-            '<div class="r-meta">{chips}<button type="button" class="chev" tabindex="-1" aria-hidden="true"></button></div></div>'
+            '<div class="r-meta">{chips}{rv}<button type="button" class="chev" tabindex="-1" aria-hidden="true"></button></div></div>'
             '<div class="r-panel" hidden>'
             '{dead}<div class="blk why" data-d="{d}"><span><b>{lv}.</b> {why}</span></div>'
             '<div class="blk next"><span><b>First step.</b> {nxt}</span></div>'
@@ -247,7 +250,7 @@ def render(x, n, level_chip=False):
             '</div></li>').format(
         dead=('<div class="blk wide %s"><span><b>%s.</b> %s</span></div>' % ("in" if x["_flag"]["label"] == "Already in" else "dead", e(x["_flag"]["label"]), linked(x["_flag"]["why"]))) if x.get("_flag") else "",
         d=d, rec="yes" if rec else "no", help="yes" if help_open else "no", tier=x["_tier"], text=e(text), n="%02d" % n, chain=e(x["chain"]), tok=e(tok(x)), what=linked(x.get("what") or ""),
-        earn=earns_short(x),
+        earn=earns_short(x), key=x["_id"], rv=(RV % x["_id"]),
         own=e(own_s), f2="Mainnet" if x.get("group") == "upcoming" else "To be active",
         act=e(whenShort(x) if x.get("group") == "upcoming" else act_s), chips=chips, lv=e(LEVEL[d][0]), why=linked(x.get("difficulty_why") or ""), nxt=linked(x.get("best_next_step") or "Not set"),
         steps=('<div class="blk"><h4>How to join</h4><ol>%s</ol></div>' % steps) if steps else "",
@@ -276,9 +279,9 @@ testnet_html = ('<ul class="rows card">%s</ul>' % tn) if tn else '<div class="ca
 op = "".join(render(x, i + 1, True) for i, x in enumerate(opening))
 opening_html = ('<ul class="rows card">%s</ul>' % op) if op else '<div class="card empty"><span>None in this research.</span></div>'
 # a no-role line carries the same filter attributes as a row (level 0: it shows only under "All")
-none_html = "".join('<li data-d="0" data-rec="no" data-help="no" data-tier="%s" data-text="%s"><b>%s <span class="chip tier" data-tier="%s">%s</span></b><span>%s</span></li>'
-                    % (x["_tier"], e(" ".join([x["chain"], str(x.get("token") or ""), x["_tier"], str(x.get("what") or ""), str(x.get("difficulty_why") or "")]).lower()),
-                       e(x["chain"]), x["_tier"], x["_tier"], linked(x.get("difficulty_why") or x.get("what") or "")) for x in none) or "<li><b>None</b><span></span></li>"
+none_html = "".join('<li data-key="%s" data-d="0" data-rec="no" data-help="no" data-tier="%s" data-text="%s"><b>%s <span class="chip tier" data-tier="%s">%s</span></b><span>%s %s</span></li>'
+                    % (x["_id"], x["_tier"], e(" ".join([x["chain"], str(x.get("token") or ""), x["_tier"], str(x.get("what") or ""), str(x.get("difficulty_why") or "")]).lower()),
+                       e(x["chain"]), x["_tier"], x["_tier"], linked(x.get("difficulty_why") or x.get("what") or ""), RV % x["_id"]) for x in none) or "<li><b>None</b><span></span></li>"
 
 by = {x["_id"]: x for x in rows}
 if not picks.get("picks"): picks["picks"] = [{"chain": x["chain"], "why": x.get("difficulty_why", "")} for x in main[:6]]
@@ -291,8 +294,8 @@ for p in picks["picks"]:
     # a pick carries the row's filter attributes too, so the rail's filters reach it
     text = " ".join([x["chain"], str(x.get("token") or ""), x["_tier"], LEVEL[d][0], str(x.get("what") or ""), p["why"], p.get("next") or ""]).lower()
     help_open = any(str(q.get("open_now", "")).lower() == "yes" for q in lst(x.get("programmes")) if isinstance(q, dict))
-    ph += ('<li class="card pick" data-d="%d" data-rec="%s" data-help="%s" data-tier="%s" data-text="%s"><div class="pick-top"><h3>%s</h3><span class="tok">%s</span><span class="chip tier" data-tier="%s">%s</span><span class="chip dot" data-d="%d">%s</span>%s</div><p>%s</p><p class="pick-next"><b>First step.</b> %s</p></li>'
-           % (d, "yes" if rec else "no", "yes" if help_open else "no", x["_tier"], e(text), e(x["chain"]), e(tok(x)), x["_tier"], x["_tier"], d, e(LEVEL[d][0]), '<span class="chip yes">Taking operators</span>' if rec else "",
+    ph += ('<li class="card pick" data-key="%s" data-d="%d" data-rec="%s" data-help="%s" data-tier="%s" data-text="%s"><div class="pick-top"><h3>%s</h3><span class="tok">%s</span><span class="chip tier" data-tier="%s">%s</span><span class="chip dot" data-d="%d">%s</span>%s</div><p>%s</p><p class="pick-next"><b>First step.</b> %s</p></li>'
+           % (x["_id"], d, "yes" if rec else "no", "yes" if help_open else "no", x["_tier"], e(text), e(x["chain"]), e(tok(x)), x["_tier"], x["_tier"], d, e(LEVEL[d][0]), '<span class="chip yes">Taking operators</span>' if rec else "",
               linked(p["why"]), linked(p.get("next") or x.get("best_next_step") or "")))
 
 METHOD = picks.get("method") or ""
