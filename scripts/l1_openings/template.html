@@ -165,6 +165,7 @@
   .l-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; padding: 0 4px; }
   .l-head h3 { display: flex; align-items: center; gap: 10px; }
   .l-head h3::before { content: ""; width: 10px; height: 10px; border-radius: 999px; background: var(--dot); }
+  .l-head h3.nodot::before { display: none; }
   .l-head p { font-size: 13.5px; color: var(--muted); }
   .l-head .count { margin-left: auto; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .rows { list-style: none; margin: 0; padding: 0; overflow: hidden; display: flex; flex-direction: column; gap: 1px; background: var(--line); }
@@ -256,7 +257,7 @@
   <header>
     <div class="crumb"><span>Encapsulate · New networks</span><i></i><span>Research · {{CHECKED}}</span></div>
     <h1>Where we could validate next</h1>
-    <p class="lede">{{N}} networks we do not validate yet, in order from the easiest to join to the hardest, and {{U}} that are not on mainnet yet. For each: how a validator gets in, what it costs, and whether the network is asking for validators now.</p>
+    <p class="lede">{{N}} networks we do not validate yet, in order from the easiest to join to the hardest, {{U}} that are not on mainnet yet, and {{E}} operator programmes on Ethereum. For each: how a validator gets in, what it costs, and whether the network is asking for validators now.</p>
     <p class="checked">{{METHOD}}</p>
   </header>
 
@@ -267,7 +268,7 @@
   <div class="page">
   <aside class="rail">
     <nav class="toc" aria-label="On this page">
-      <a href="#start"><i>01</i>Start here</a><a href="#all"><i>02</i>Every network</a><a href="#testnets"><i>03</i>Already in by testnet</a><a href="#opening"><i>04</i>Not on mainnet yet</a><a href="#none"><i>05</i>No validator role</a><a href="#method"><i>06</i>How this was researched</a>
+      <a href="#start"><i>01</i>Start here</a><a href="#all"><i>02</i>Every network</a><a href="#testnets"><i>03</i>Already in by testnet</a><a href="#opening"><i>04</i>Not on mainnet yet</a><a href="#ethereum"><i>05</i>Ethereum</a><a href="#none"><i>06</i>No validator role</a><a href="#method"><i>07</i>How this was researched</a>
     </nav>
     <div class="card bar" id="filters">
       <div class="f-group"><h4>Level</h4>
@@ -329,15 +330,22 @@
     <div class="card empty" data-empty hidden><span>No network here matches.</span></div>
   </section>
 
+  <section id="ethereum">
+    <div class="s-head"><span class="num">05</span><h2>Ethereum: where an operator can join</h2>
+      <p>{{E}} operator programmes around Ethereum: liquid-staking operator sets, distributed validators, restaking, rollups and the proving and preconfirmation markets around them. Each is ranked on the same scale; the tier is the programme's size. "Earns a year" is what an operator makes: per 32-ETH key it runs where the programme pays by key, otherwise what a typical operator in the set makes. Where we are already in, the row says so and what the next step up would be.</p></div>
+    {{ETHEREUM}}
+    <div class="card empty" data-empty hidden><span>No programme here matches.</span></div>
+  </section>
+
   <section id="none">
-    <div class="s-head"><span class="num">05</span><h2>No validator role to take</h2>
+    <div class="s-head"><span class="num">06</span><h2>No validator role to take</h2>
       <p>Checked and set aside: networks secured by mining, by a single operator, or by a role that is not validating.</p></div>
     <ul class="card plain">{{NONE}}</ul>
     <div class="card empty" data-empty hidden><span>No network here matches.</span></div>
   </section>
 
   <section id="method">
-    <div class="s-head"><span class="num">06</span><h2>How this was researched</h2></div>
+    <div class="s-head"><span class="num">07</span><h2>How this was researched</h2></div>
     <ul class="card plain">{{METHOD_LIST}}</ul>
   </section>
 
