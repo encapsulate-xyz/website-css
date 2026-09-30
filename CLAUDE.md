@@ -2307,9 +2307,9 @@ pages) — every row page opened and read for content; only three databases qual
 
 | Database | `meta:image` | `meta:description` | `meta:title` |
 |---|---|---|---|
-| Blogs | the 17d card, remade when the title or the post's place on the index (its tint) changes | = the row's `Lede` | **not written**: set by hand only where a title is too long for a result (3 posts: Berachain, Symbiotic, Canton); the job reports a new title over 60 characters that has none |
-| Networks set | the chain hero, remade when the rate, commission, unbonding or name change | **not written by this job** — the networks job (N7) already rewrites it with the facts after every value change | "<Name> staking - Encapsulate", written where missing or different |
-| Guides Database | the guide head, remade when `Title`, `Lede`, `Step` or the chain/wallet marks change | = "`Title`. `Lede`" | **none** — the database has no such property; the page's title is Super's override ("Axelar Staking Guide") |
+| Blogs | the 17d card — it shows the **tag, the date, the title, the Cover glyph and the tint** (the post's place on the index) and nothing else; remade when one of those changes | = the row's `Lede` | **not written**: set by hand only where a title is too long for a result (3 posts: Berachain, Symbiotic, Canton); the job reports a new title over 60 characters that has none |
+| Networks set | the chain hero — it shows the **name, the line under it, the green button's label (the guide's wallet), the address in the ring, the glyph and the tint** (the chain's place in the set's Order); remade when one of those changes. **No rate, commission or unbonding is on the card** (the user caught this, 2026-09-30: the first version of this table said otherwise), so a value change never remakes it | **not written by this job** — the networks job (N7) already rewrites it with the facts after every value change | "<Name> staking - Encapsulate", written where missing or different |
+| Guides Database | the guide head — it shows the **chain's name (the crumb), `Title`, `Lede`, the step count ("Seven screens"), the chain's glyph and tint and the wallet's mark**; remade when one of those changes | = "`Title`. `Lede`" | **none** — the database has no such property; the page's title is Super's override ("Axelar Staking Guide") |
 
 **Left out:** `/guides/mina` until it has content (then it joins); `/governance/votes` (the record's database page:
 noindex, a table, no card); and every other database — Portfolio, Team, Why Stake, Colour, Wallet Set, Governance
@@ -2320,9 +2320,9 @@ page with no content is skipped and named in the issue.
 
 - **the card** rendered as `scripts/og_cards.py` does today (post 17d, chain hero, guide head) in the runner's headless
   Chrome, uploaded through the file-upload API and attached to `meta:image`;
-- **stale** means the row's words changed since its card was made (the title, the Lede, the rate and facts on a chain
-  page, the tint when a post's place on the index moves) — keep a hash of what each card was made from in `state/`,
-  and remake only when it differs;
+- **stale** means something the card actually shows changed since it was made — the lists in the table above, read off
+  the live cards on 2026-09-30 — keep a hash of exactly those inputs per row in `state/`, and remake only when it
+  differs. The chain page's rate is on the page, not on its card;
 - **the text** from the same rules as now: a post's Lede, a chain page's facts sentence and "<Name> staking - Encapsulate",
   a guide's "Title. Lede";
 - a Super override on the page beats the Notion value — report a row whose override hides a new card, do not clear it;
