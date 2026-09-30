@@ -2016,8 +2016,10 @@ target is the Networks set card on /guides that carries the chain's name — a m
 to it (`marks()` keeps `__pages`), a testnet-only chain has no page and so no link, as the file says. chain.js gives
 every band its key as an `id` (`terms`, `estimate`, `s0`…) and **holds the `#terms` landing** (`landHash()`): the bands
 do not exist when the browser tries the jump, and React's adoption puts the scroll back at the top, so the landing is
-retried over three seconds, only while the page is still where the last attempt left it. It rests 62px into the band,
-where the page's own snap (proximity, with Super's scroll padding) rests every band. Measured with the design rendered
+retried over three seconds until a wheel, touch or key from the reader (v339: a check on scrollY had taken Super's
+router's own scroll, 300ms after the first landing, for the reader and stopped half a screen short — the user's
+screenshot). **The bands start at the top** (v339): Super's `html { scroll-padding-top: 62px }` had rested every
+snap and every anchor jump 62px into the band; chain.css sets it to 0 on the chain page. Measured with the design rendered
 beside the live page (`scratchpad/guide-handoff/`): the row's boxes match to the pixel at 1440 and 1920, and it stacks
 at 390.
 **The right margin (the user, 2026-09-30):** above 1728 the step's content had been centred at 1568px (the audit of
