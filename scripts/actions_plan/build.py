@@ -102,9 +102,9 @@ item("B1", "write", "content", "Read minutes on each post", "Blog and guides", "
      "Fill it from the post's words")
 item("U1", "write", "content", "Steps and time on each guide", "Blog and guides", "32 guides, all filled", "By hand", "Every new guide",
      "Fill it from the guide's own slides")
-item("E1", "write", "content", "Social card and description on a new row", "Blog and guides",
-     "Every post, chain page and guide has both today", "`og_cards.py`, run by hand", "Every new post, guide or chain",
-     "Render the card and write it with the description (`og_cards.py` in the runner's headless Chrome)", new=True)
+item("E1", "write", "content", "Social card, title and description on every database row", "Blog and guides",
+     "Every post, chain page and guide has them today", "`og_cards.py`, run by hand", "Every new row, and every row whose words, rate or place change",
+     "Across every database whose rows are pages (Blogs, the Networks set, Guides, Portfolio…): make the card and text where missing or stale — stale when what the card was made from changed (a hash kept in state) — render in the runner's headless Chrome, upload, write `meta:*`; report a Super override that hides it (to build, asked 30 Sep)", new=True)
 item("B2", "write", "content", "Lede, chain, ticker and author on each post", "Blog and guides", "All filled", "By hand", "Every new post",
      "Write the Lede from the post's opening, Chain and Ticker when the title or tag names a chain in the set; the Author goes in the email")
 item("B3", "write", "content", "Whether a post's chain is live yet", "Blog and guides", "Set per post", "By hand", "When a chain launches",

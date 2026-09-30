@@ -2290,6 +2290,25 @@ record's tables are untouched; their addresses are in `backups/governance-vote-p
 /governance-record and its database page /governance-record/governance-record stay; the database page has a
 noindex head (2026-09-28). /investments/gravity-bridge (a 404 listed in the sitemap) was removed from Super.
 
+## TODO — a GitHub Action for the SEO card and text on every database row (asked 2026-09-30, not started)
+
+A scheduled job in `site-data` (`jobs/content/seo.mjs`, `content.yml`; item E1 in the plan) that goes through **every
+Notion database whose rows are pages on the site** — Blogs, the Networks set's mainnet rows, the Guides Database, and
+any other database with pages in Super (Portfolio, the record's database page is noindex and out) — and, for each row
+whose `meta:image`, `meta:title` or `meta:description` is **missing or stale**, makes it and writes it:
+
+- **the card** rendered as `scripts/og_cards.py` does today (post 17d, chain hero, guide head) in the runner's headless
+  Chrome, uploaded through the file-upload API and attached to `meta:image`;
+- **stale** means the row's words changed since its card was made (the title, the Lede, the rate and facts on a chain
+  page, the tint when a post's place on the index moves) — keep a hash of what each card was made from in `state/`,
+  and remake only when it differs;
+- **the text** from the same rules as now: a post's Lede, a chain page's facts sentence and "<Name> staking - Encapsulate",
+  a guide's "Title. Lede";
+- a Super override on the page beats the Notion value — report a row whose override hides a new card, do not clear it;
+- one issue per run listing each card made (before → after), as the other jobs do.
+
+Until it runs, a new row goes through `notion/new-row-checklist.md` by hand.
+
 ## TODO — check every line break against its handoff (asked 2026-09-26, not started)
 
 Go through every page and template the designs cover — the pages the navbar and footer reach, and
