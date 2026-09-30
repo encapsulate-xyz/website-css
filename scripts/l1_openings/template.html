@@ -126,6 +126,16 @@
   .tabs button[aria-pressed="true"] { background: var(--dark); color: #FAFAF8; }
   .tabs i { font-style: normal; font-size: 12px; color: var(--faint); font-variant-numeric: tabular-nums; }
   .tabs button[aria-pressed="true"] i { color: #C9C9C4; }
+  .tiers { display: flex; flex-direction: column; background: var(--sunk); border-radius: 10px; padding: 3px; gap: 2px; }
+  .tiers button { display: flex; align-items: center; gap: 9px; border: 1px solid transparent; background: transparent; padding: 6px 9px 6px 10px; border-radius: 8px; font: 500 13.5px/1 var(--body); color: var(--muted); cursor: pointer; text-align: left; white-space: nowrap; }
+  .tiers button::before { content: ""; width: 9px; height: 9px; border-radius: 2px; background: var(--sq); flex: 0 0 auto; }
+  .tiers button i { margin-left: auto; font-style: normal; font-size: 12px; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .tiers button::after { content: ""; width: 14px; height: 14px; border-radius: 4px; border: 1.5px solid var(--line-2); background: var(--card); flex: 0 0 auto; box-sizing: border-box; }
+  .tiers button:hover { color: var(--ink); }
+  .tiers button:hover::after { border-color: #B9B9B1; }
+  .tiers button[aria-pressed="true"] { color: var(--ink); background: var(--card); border-color: var(--line-2); box-shadow: var(--shadow); }
+  .tiers button[aria-pressed="true"] i { color: var(--muted); }
+  .tiers button[aria-pressed="true"]::after { background: var(--dark) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.5l2.5 2.5 4.5-5' fill='none' stroke='%23FAFAF8' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 10px no-repeat; border-color: var(--dark); }
   .check { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 500; color: var(--text); padding: 8px 12px; border-radius: 10px; background: var(--sunk); cursor: pointer; }
   .check input { accent-color: #2A2C28; width: 15px; height: 15px; margin: 0; }
   select { width: 100%; }
@@ -139,9 +149,9 @@
     .bar { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 10px 12px; padding: 10px 12px; }
     .bar h4 { display: none; }
     .f-group { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 10px 12px; }
-    .tabs { flex-direction: row; flex-wrap: wrap; display: inline-flex; }
-    .tabs button { display: inline-flex; }
-    .tabs button i { margin-left: 0; }
+    .tabs, .tiers { flex-direction: row; flex-wrap: wrap; display: inline-flex; }
+    .tabs button, .tiers button { display: inline-flex; }
+    .tabs button i, .tiers button i { margin-left: 0; }
     select { width: auto; }
     .search { flex: 1 1 200px; }
     .bar-end { border-top: 0; padding-top: 0; margin-left: auto; }
@@ -246,8 +256,13 @@
           <button type="button" data-v="5" aria-pressed="false">Closed <i data-n="5"></i></button>
         </div></div>
       <div class="f-group"><h4>Tier</h4>
-        <label class="vh" for="f-tier">Tier</label>
-        <select id="f-tier"><option value="all">Every tier</option><option value="god">god</option><option value="high">high</option><option value="medium">medium</option><option value="low">low</option><option value="filth">filth</option></select>
+        <div class="tiers" role="group" aria-label="Tier — pick any number" id="f-tier">
+          <button type="button" data-t="god" data-tier="god" aria-pressed="false">god <i data-tn="god"></i></button>
+          <button type="button" data-t="high" data-tier="high" aria-pressed="false">high <i data-tn="high"></i></button>
+          <button type="button" data-t="medium" data-tier="medium" aria-pressed="false">medium <i data-tn="medium"></i></button>
+          <button type="button" data-t="low" data-tier="low" aria-pressed="false">low <i data-tn="low"></i></button>
+          <button type="button" data-t="filth" data-tier="filth" aria-pressed="false">filth <i data-tn="filth"></i></button>
+        </div>
         <label class="check"><input type="checkbox" id="f-rec"> Taking operators now</label></div>
       <div class="f-group"><h4>Find</h4>
         <div class="search"><label class="vh" for="q">Find</label><input id="q" type="search" autocomplete="off" placeholder="A network, a token, a programme"></div></div>
@@ -311,10 +326,12 @@
   var networks = items.filter(function (el) { return !el.classList.contains("pick"); });
   var rows = items.filter(function (el) { return el.classList.contains("row"); });
   var levels = [].slice.call(document.querySelectorAll(".level"));
-  var f = { d: "all", rec: false, tier: "all", q: "" }, allOpen = false;
-  var counts = { all: networks.length };
-  networks.forEach(function (r) { var d = r.getAttribute("data-d"); counts[d] = (counts[d] || 0) + 1; });
+  var f = { d: "all", rec: false, tiers: {}, q: "" }, allOpen = false;
+  var counts = { all: networks.length }, tierCounts = {};
+  networks.forEach(function (r) { var d = r.getAttribute("data-d"), t = r.getAttribute("data-tier"); counts[d] = (counts[d] || 0) + 1; tierCounts[t] = (tierCounts[t] || 0) + 1; });
   [].slice.call(document.querySelectorAll("[data-n]")).forEach(function (n) { n.textContent = counts[n.getAttribute("data-n")] || 0; });
+  [].slice.call(document.querySelectorAll("[data-tn]")).forEach(function (n) { n.textContent = tierCounts[n.getAttribute("data-tn")] || 0; });
+  function anyTier() { return Object.keys(f.tiers).some(function (t) { return f.tiers[t]; }); }
   function open(r, on) {
     r.querySelector(".r-panel").hidden = !on;
     if (on) r.setAttribute("data-open", ""); else r.removeAttribute("data-open");
@@ -326,7 +343,7 @@
     r.querySelector(".chev").addEventListener("click", flip);
   });
   function matches(el, words) {
-    var ok = (f.d === "all" || el.getAttribute("data-d") === f.d) && (!f.rec || el.getAttribute("data-rec") === "yes") && (f.tier === "all" || el.getAttribute("data-tier") === f.tier);
+    var ok = (f.d === "all" || el.getAttribute("data-d") === f.d) && (!f.rec || el.getAttribute("data-rec") === "yes") && (!anyTier() || f.tiers[el.getAttribute("data-tier")]);
     if (ok && words.length) { var t = el.getAttribute("data-text"); ok = words.every(function (w) { return t.indexOf(w) >= 0; }); }
     return ok;
   }
@@ -349,16 +366,18 @@
     shown.textContent = n === networks.length ? n + " networks" : n + " of " + networks.length;
     [].slice.call(document.querySelectorAll("#filters .tabs button")).forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-v") === f.d)); });
     document.getElementById("f-rec").checked = f.rec;
-    document.getElementById("f-tier").value = f.tier;
-    document.getElementById("clear").hidden = f.d === "all" && !f.rec && f.tier === "all" && !f.q;
+    [].slice.call(document.querySelectorAll("#f-tier button")).forEach(function (b) { b.setAttribute("aria-pressed", String(!!f.tiers[b.getAttribute("data-t")])); });
+    document.getElementById("clear").hidden = f.d === "all" && !f.rec && !anyTier() && !f.q;
   }
   document.getElementById("filters").addEventListener("click", function (e) {
     var b = e.target.closest(".tabs button"); if (!b) return; f.d = b.getAttribute("data-v"); apply();
   });
   document.getElementById("f-rec").addEventListener("change", function () { f.rec = this.checked; apply(); });
-  document.getElementById("f-tier").addEventListener("change", function () { f.tier = this.value; apply(); });
+  document.getElementById("f-tier").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return; var t = b.getAttribute("data-t"); f.tiers[t] = !f.tiers[t]; apply();
+  });
   document.getElementById("q").addEventListener("input", function () { f.q = this.value.trim(); apply(); });
-  document.getElementById("clear").addEventListener("click", function () { f = { d: "all", rec: false, tier: "all", q: "" }; document.getElementById("q").value = ""; apply(); });
+  document.getElementById("clear").addEventListener("click", function () { f = { d: "all", rec: false, tiers: {}, q: "" }; document.getElementById("q").value = ""; apply(); });
   document.getElementById("expand").addEventListener("click", function () {
     allOpen = !allOpen; rows.forEach(function (r) { if (!r.hidden) open(r, allOpen); });
     this.textContent = allOpen ? "Close all" : "Open all";
