@@ -92,9 +92,12 @@ which screen the window is on.
 
    It must read **`360×788 @2`**. A wider width means the wallet loaded its popup layout instead
    of the panel one.
-5. Elements → right-click `<html>` → **Capture node screenshot** → **720 × 1576**. (DevTools'
-   ⌘⇧P Capture screenshot is not offered on a wallet target, and the wallet cannot capture itself:
-   `captureVisibleTab` needs a permission it does not hold.)
+5. **⌘⇧P → Capture screenshot** → **720 × 1576**: the viewport, at the scroll you are at. In this second
+   window the wallet is an ordinary page, so the command is there (it is not offered when you inspect the
+   wallet's own popup, and the wallet cannot capture itself: `captureVisibleTab` needs a permission it does not
+   hold). **Not "Capture node screenshot" on `<html>`** — a node screenshot of `<html>` is the whole document:
+   DevTools scrolls it to the top and captures the full page height, so a scrolled screen comes out from the top
+   (the user, 2026-09-30: "when we click on capture node screenshot, the page scrolls to the top").
 
 **If the address opens the wallet's home instead of the screen you were on**, that screen belongs
 to a pending request and cannot be re-opened. Shoot it where it is: put the window on the Mac's
@@ -105,8 +108,12 @@ file comes out 360 × 788, not 720 × 1576), size it from its own console:
 chrome.windows.getCurrent(w => chrome.windows.update(w.id, {width: w.width + 360 - innerWidth, height: w.height + 788 - innerHeight}))
 ```
 
-then Capture node screenshot as above. Every new prompt opens at the wallet's default size, so run
-it again on each one (↑ in the console brings it back).
+then, in Elements, right-click the wallet's **root container** — the element sized to the window (`#app`,
+`#root`, the box that holds the scrolling view), **not `<html>`** — → **Capture node screenshot**. Its box is the
+viewport, so nothing scrolls and the view keeps its scroll position; on `<html>` DevTools scrolls to the top and
+captures the whole document. If no such element exists, ⌘⇧P → **Capture area screenshot** and drag the window.
+Every new prompt opens at the wallet's default size, so run the resize again on each one (↑ in the console
+brings it back).
 
 ### Opening the side panel as a page
 
