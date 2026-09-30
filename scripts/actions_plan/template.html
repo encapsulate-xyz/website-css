@@ -89,6 +89,8 @@
   /* the inventory */
   .chip { display: inline-flex; align-items: center; gap: 6px; font: 500 12px/1 var(--body); padding: 5px 10px; border-radius: 999px; white-space: nowrap; background: var(--bg); color: var(--fg); }
   .chip::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: var(--dot); }
+  .live { display: inline-flex; align-items: center; gap: 6px; font: 500 11px/1 var(--mono); letter-spacing: .04em; color: var(--green-ink); background: #DCEEC7; border-radius: 999px; padding: 4px 8px; margin-left: 8px; vertical-align: middle; white-space: nowrap; }
+  .live::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: var(--green-ring); }
   .chip.write, [data-c="write"] { --bg: var(--write-bg); --fg: var(--write-ink); --dot: var(--write); --c: var(--write); }
   .chip.check, [data-c="check"] { --bg: var(--check-bg); --fg: var(--check-ink); --dot: var(--check); --c: var(--check); }
   .chip.report, [data-c="report"] { --bg: var(--report-bg); --fg: var(--report-ink); --dot: var(--report); --c: var(--report); }
@@ -195,7 +197,7 @@
   <header>
     <div class="crumb"><span>Encapsulate · Site data</span><i></i><span>Plan · {{CHECKED}}</span></div>
     <h1>The GitHub Actions plan</h1>
-    <p class="lede">Scheduled jobs that keep the site's numbers and facts current by writing them into Notion, which the site already reads. This page is how they would work, everything they would look after, and where the code would live.</p>
+    <p class="lede">Scheduled jobs that keep the site's numbers and facts current by writing them into Notion, which the site already reads. This page is how they work, everything they look after, and where the code lives — ten of the items run on a schedule since 30 September (marked <span class="live">running</span>); the rest are planned.</p>
     <span class="state">Nothing is built yet. Until it is, the site's values are updated by hand</span>
     <p class="checked">Every figure under "now" was read from Notion and the live site on {{CHECKED}}.</p>
     <nav class="toc" aria-label="On this page">

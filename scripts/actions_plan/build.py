@@ -43,7 +43,7 @@ item("G2", "write", "governance", "Protocol upgrades on nine chains", "Governanc
 item("G4", "write", "governance", "The rationale on each new row", "Governance record", "Every row has one today",
      "`gov_rationales.py`, run by hand", "Every new row", "Written after G1 and G2 by the same principle-based lines that wrote the 1,153 rows today; no review (decision 5, 30 Sep)")
 item("G5", "write", "governance", "“1882 votes cast since 2020”", "Governance record",
-     "1882: the 1,153 rows plus 729 votes from before the record was kept", "By hand", "It does not move when a vote is added",
+     "1,901 on 30 Sep: 729 votes from before the record was kept plus the 1,172 rows", "The job, after every governance run (by hand until 30 Sep)", "Every row added",
      "Keep it at 729 plus the rows")
 item("G3", "none", "—", "Votes on Avail, Espresso, Ika, Supra, Vara and Lido DVT", "Governance record", "Not in the record",
      "Nothing", "Every vote", "Later, one chain at a time")
@@ -80,10 +80,10 @@ item("P2", "report", "audit", "The Discord invite", "Validator profiles", "`disc
      "If it is ever revoked, every profile and guide links nowhere", "Check that it still opens the server; email if it does not (a new invite is yours to make)", new=True)
 
 # ---- homepage
-item("H1", "write", "homepage", "Staked Assets Under Management", "Homepage", "$ 60,395,092 on 30 Sep (it read $83,996,080 the day before)", "Your own script, until now",
+item("H1", "write", "homepage", "Staked Assets Under Management", "Homepage", "$ 84,406,761 on 30 Sep, written by the job", "The job, every six hours (your own script until 30 Sep)",
      "With every price and every delegation; a chain the script cannot read drops out of the total", "Read the stake with our validator on every mainnet, price it on CoinGecko, write the heading when it changes — a chain that fails to read keeps its last reading, so the total never falls with an outage", new=True)
-item("H2", "write", "homepage", "Total Customers", "Homepage", "14,720", "Your own script, until now",
-     "Every delegation", "Count the accounts staking with us on every chain that can tell, write the heading when the count changes", new=True)
+item("H2", "write", "homepage", "Total Customers", "Homepage", "14,192 on 30 Sep, written by the job", "The job (your own script until 30 Sep)",
+     "Every delegation", "The accounts staking with any validator of ours, every chain summed — Terra's four validators, Sui's 7 from Blockberry, Lido's not countable; written when the count changed and only when every chain that can count did", new=True)
 item("H4", "none", "—", "Uptime", "Homepage", "99.96 %", "By hand", "Nothing computes it, and it has no definition yet",
      "Nothing until you define it: which chains, what window, which source")
 item("H6", "none", "—", "The heading “Six years”", "Homepage", "Typed", "By hand", "Wrong from 2027. The figures under it are calculated; the heading is not",
@@ -139,8 +139,10 @@ item("A1", "watch", "audit", "Avalanche's remaining room for delegations", "Aler
 item("A2", "watch", "audit", "Rewards left unclaimed on Vara and Avail", "Alerts", "Vara's expire after 84 eras", "Nobody", "Every era", "Email before they expire; claiming needs the keys")
 item("A3", "watch", "audit", "A validator of ours jailed or inactive", "Alerts", "None", "Nobody", "On an incident", "Email at once, and N5 writes the status")
 
+LIVE = {'G1': 'votes.mjs', 'G2': 'upgrades.mjs', 'G4': 'rationales.mjs', 'G5': 'count.mjs', 'N1': 'values.mjs', 'N2': 'values.mjs', 'N3': 'values.mjs', 'N7': 'facts.mjs', 'H1': 'stake.mjs', 'H2': 'stake.mjs'}   # the items a scheduled job writes since 30 Sep, and the job
 def render_item(x):
     new = ' <span class="new">new</span>' if x["new"] else ""
+    if x["id"] in LIVE: new += ' <span class="live">running · %s</span>' % e(LIVE[x["id"]])
     flow = "" if x["flow"] == "—" else '<p><code>%s.yml</code></p>' % e(x["flow"])
     return ('<li class="item" data-tier="{tier}"><span class="id">{id}</span>'
             '<div class="what"><b>{what}{new}</b></div>'
@@ -279,6 +281,7 @@ CURRENT = [
  ("The estimate on a chain page", "Chain pages", "Calculated from the rate"),
  ("The positions and their years", "Investments", "Read from Notion"),
  ("“Updated 26 Sep 2026”", "Legal pages", "Fixed until the page is edited"),
+ ("Compounding (Auto / Manual / End) and Chain slashes (yes / no)", "Chain pages", "Fixed by each chain's protocol, researched 24 Sep; no job touches them — they change only if a chain changes its rules"),
 ]
 current = "".join("<li><b>%s</b><span>%s</span><em>%s</em></li>" % (e(a), e(b), e(c)) for a, b, c in CURRENT)
 FIX = [

@@ -44,8 +44,8 @@ only if we change it). The ids (H1, G1…) are what the workflows in section 4 r
 
 | id | Where | What | Now | Kept by | How it drifts | The job would |
 |---|---|---|---|---|---|---|
-| H1 | Homepage stats band | Staked Assets Under Management | $ 60,395,092 on 30 Sep ($83,996,080 the day before) | your script, until now | with every price and every delegation; a chain the script cannot read drops out of the total | **Write** (`jobs/homepage/stake.mjs`, 30 Sep): the stake with our validator on every mainnet (`sources/<family>.mjs`), priced on CoinGecko, the heading written when it changes; a chain that fails to read keeps its last good reading (`state/stake.json`, seven days), a stake that moved by more than half is held until a second run reads the same, a total that moved by more than a third is not written — so an outage never shows as a fall |
-| H2 | Homepage stats band | Total Customers | 14,720 | your script, until now | every delegation | **Write**: the accounts staking with us on every chain that can tell, summed; a chain that cannot tell (Lido's stakers) counts nothing and the issue says so |
+| H1 | Homepage stats band | Staked Assets Under Management | $ 84,406,761 on 30 Sep, written by the job | **the job, every six hours** (your script until 30 Sep) | with every price and every delegation; a chain the script cannot read drops out of the total | **Write** (`jobs/homepage/stake.mjs`, 30 Sep): the stake with our validator on every mainnet (`sources/<family>.mjs`), priced on CoinGecko, the heading written when it changes; a chain that fails to read keeps its last good reading (`state/stake.json`, seven days), a stake that moved by more than half is held until a second run reads the same, a total that moved by more than a third is not written — so an outage never shows as a fall |
+| H2 | Homepage stats band | Total Customers | 14,192 on 30 Sep, written by the job | **the job** (your script until 30 Sep) | every delegation | **Write**: the accounts staking with any validator of ours, every chain summed — Terra's four validators, Sui's 7 from Blockberry, Lido's not countable; written only when every chain that can count did |
 | H4 | Homepage stats band | Uptime | 99.96 % | hand | Nothing computes it, and it has no definition yet (which chains, what window, which source) | Nothing until it is defined; then compute it, or report its age |
 | H6 | Homepage, Why Stake | the card heading "Six years" | typed | hand | Wrong from 2027 (the "6" and "2026 in progress" under it are calculated; the heading is not) | — (fix once: "Since 2020", already an open item in CLAUDE.md) |
 | H7 | Homepage, Why Stake | "25 secured" | typed | hand (fallback) | Already stale: the script shows 27, the typed fallback says 25 | Report fallback drift |
@@ -97,6 +97,7 @@ Vara (they expire after 84 eras) and Avail; a validator of ours gone inactive or
 | Chain pages | the estimate | | calculated from N1 |
 | /investments | the positions, "since YEAR" | | read from Notion; the years are fixed facts |
 | Legal pages | "Updated 26 Sep 2026" | | fixed — changes only when the page is edited |
+| Chain pages | Compounding (Auto / Manual / End) and Chain slashes (yes / no) | per chain | fixed by each chain's protocol, researched 2026-09-24 (`notion/networks-set-values.md`); no job writes them — they change only if a chain changes its rules (asked 2026-09-30, "just checking") |
 
 ### Fixable now, without the jobs
 
