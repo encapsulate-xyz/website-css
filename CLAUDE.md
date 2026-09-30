@@ -2141,7 +2141,12 @@ for a hand when it moves by more than a third; `ACCEPT=<chain>` writes it once p
 (every six hours: the stats band's two headings from every mainnet's stake, priced on CoinGecko; a chain that fails to
 read keeps its last good reading in `state/stake.json`; the customers heading is written only when every chain that
 can count did — **Sui's ~10,000 stakers have no open source yet**, so it is held; Mina is a typed reading until a
-Blockberry key exists). **The Python scripts here (`gov_*.py`, `chain_pages.py --facts`) are superseded by those jobs
+Blockberry key exists). **Every exception to a plain reading of a number — which validators are ours (Terra's four: the endorsed
+Encapsulate and Luna Whale, Lunatic Validator, Long Live Luna, run by us and not endorsed publicly, counted in the
+homepage's stake and customers since 2026-09-30; Agoric's two; Lido's cluster in full), Gravity Bridge's 0, the rates
+set by hand, the record's rules — is `site-data/config/exceptions.md`; a new exception goes there first.** The Blockberry
+key (Sui's stakers, Mina's ledger) is a secret there too; it was shown in chat on 2026-09-30 — rotate it with the Notion
+token (the user: no reminders, it is a TODO). **The Python scripts here (`gov_*.py`, `chain_pages.py --facts`) are superseded by those jobs
 for what they cover**; `notion/networks-set-values.md` records the rule, the job writes the values. First writes on
 2026-09-30 at the user's word: 20 upgrade rows and 21 References, the Lumera #14 vote, five rates (ixo 24.7% → 12.4%
 accepted past the band).
@@ -2404,7 +2409,8 @@ today is external).
   the user prefers.
 - Networks cover glyph URLs are hardcoded in covers.js; could read the /networks gallery instead.
 - Mobile layout of the covers (field below the text under 800px) is not verified.
-- Refresh the Notion integration token.
+- Refresh the Notion integration token, and rotate the Blockberry key in site-data (both shown in chat once; the user
+  asked not to be reminded — 2026-09-30).
 - Search and sort controls for a gallery are possible but unbuilt: Super ships no search snippet
   (its "dynamic database filters" are roadmap), so an input plus reordering of the rendered cards
   would be ours. Sorting alone can be done with extra Notion views and the view picker.

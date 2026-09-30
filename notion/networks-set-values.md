@@ -65,7 +65,7 @@ are summarised below.
 | IOTA | `0xedd654b2…27c9ab` | |
 | Mina | `B62qjWmF…FaRYY` | **Rate left blank**: ~5,100 MINA delegated, ~one block expected every 8 months, so any APR would mislead. Fee 5% is advertised, paid off-chain |
 | Starknet | staker `0x0359e252…df2a` (pool `0x04e828f5…b3f6`) | The staker address is shown, as asked. 44 of 12,675 attestation epochs missed; Voyager still shows an old reward address |
-| Terra | `terravaloper1yh4u76…mujs` | |
+| Terra | `terravaloper1yh4u76…mujs` | The endorsed validator. **Three more are ours and not endorsed publicly** — Luna Whale `…lku6mlw`, Lunatic Validator `…2tsxsg2`, Long Live Luna `…562yre97`, 20% each — and count toward the homepage's stake and customers only (the user, 2026-09-30; `site-data/config/exceptions.md`) |
 | Zilliqa | delegation contract `0x1311059D…933C` (encapZIL) | Our pool's rewards ran at 69–79% of its stake share; peer pools with the same 8% earned 11–12.5% |
 | Avail | `5FqQ3hKu…KSTN` | Commission 20% — intended. A 7% offline slash (4,272 AVAIL) reported in the 2026-08-31 outage was cancelled by the Technical Committee — not applied, so 0. 18 eras of payouts unclaimed on 2026-09-24 |
 | Espresso | `0xea452aed…991b` | Explorer: espressonodes.com (the user's link) |
