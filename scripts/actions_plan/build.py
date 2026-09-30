@@ -36,7 +36,7 @@ g = lambda name: [x for x in G if x[0] == name][0]
 # ---- governance
 item("G1", "write", "governance", "New votes on the 12 Cosmos chains", "Governance record",
      "1,153 rows over 29 networks. Last recorded: Terra 11 Sep, Axelar 28 Aug, Agoric 24 Aug, Passage 14 Jul. Gravity Bridge and Sommelier, Nov 2024. None under Althea, humans.ai or Lumera",
-     "By hand", "Every vote we cast", "Add the missing rows")
+     "By hand", "Every vote we cast", "Ask each chain for OUR vote on every live proposal (the vote by our validator account, authz votes included) and add a row only where we voted, with the option we chose; a proposal we skipped is not a row. Daily, because a chain prunes a proposal's votes once its period ends")
 item("G2", "write", "governance", "Protocol upgrades on nine chains", "Governance record",
      "Latest: IOTA and Sui 9 Sep, Avalanche 8 Sep, Mina and Starknet 3 Sep, Monad 4 Aug, Near 9 Jul",
      "`gov_upgrades.py` and `gov_proposals.py`, run by hand", "Every protocol upgrade the validators vote in by running it: a protocol version, an ACP, a NEP, a MIP, a hard fork. Never a plain release (the user, 30 Sep)", "Run on a schedule")
@@ -249,6 +249,7 @@ DECIDED = [
  "Until the jobs exist, the values are updated by hand.",
  "30 Sep: every run opens one issue in the private repo with everything it wrote (before and after) and everything it could not, and sends one email only when something drifted that a job cannot fix, or the run failed, the way the other jobs already alert (the user will give the address).",
  "30 Sep: whatever a script can write, it writes, with no hand in between (the user: automate more). What is left for a hand is the profiles on other people's registries and chains, dead links, wallet screenshots, a post's author, and the three alerts.",
+ "30 Sep: the record is our votes, not the proposal list: the votes job asks each chain for the vote cast by our validator account and writes a row only where one exists. A release-borne proposal (ACP, NEP, MIP, ELIP, a hard fork) is a row on the strength of our node having run the release.",
  "30 Sep: a writer writes only what differs, and only after the value passes its check (a number in range, a real date, a text of the row's own shape, two readers agreeing where two exist); what fails goes in the email, never into Notion.",
  "Everything is written to Notion, nothing to the site's code: the pages read Notion at render, so a new value reaches the site when Super refetches the page. Only the hard-coded lists in the scripts (W1) go by pull request and release.",
  "30 Sep: the research notes (the set's values, the chain pages' source) move to the private repo.",
