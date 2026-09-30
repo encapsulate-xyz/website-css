@@ -125,13 +125,9 @@ RETITLE = {
     ("Zilliqa", "Hard fork — zq2 v0.19.0"): "Hard fork — protocol upgrade to zq2 v0.19",
     ("Zilliqa", "Hard fork — zq2 v0.20.0"): "Hard fork — protocol upgrade to zq2 v0.20",
     ("Zilliqa", "Zilliqa 2.0 hard fork (zq2 v0.21.0)"): "Zilliqa 2.0 hard fork",
-    ("Starknet", "Juno v0.16.0 — breaking release"): "Starknet v0.14 consensus upgrade (Juno v0.16.0)",
-    ("Starknet", "Juno v0.16.5 — breaking release"): "Starknet attestation upgrade (Juno v0.16.5)",
-    ("Starknet", "Juno v0.16.6 — validator release"): "Starknet validator upgrade (Juno v0.16.6)",
-    ("Monad", "monad-bft v0.15.0 — validator release"): "Consensus upgrade — monad-bft v0.15",
-    ("Monad", "monad-bft v0.16.0 — validator release"): "Consensus upgrade — monad-bft v0.16",
-    ("Mina", "Mainnet 3.3.0 release"): "Mainnet upgrade 3.3 — daemon consensus changes",
-    ("Mina", "Mainnet 3.4.0 release"): "Mainnet upgrade 3.4 — pre-Mesa daemon",
+    # 2026-09-30: the Juno attestation updates, the Monad client releases and the Mina daemon releases are gone
+    # from the record (a plain client release is not a vote); Monad rows are written per MIP by gov_upgrades.py
+    ("Starknet", "Juno v0.16.0 — breaking release"): "Starknet v0.14.0 upgrade",
     ("Mina", "Mainnet 3.5.0 stop-slot release"): "Mesa stop-slot upgrade (mainnet 3.5)",
 }
 

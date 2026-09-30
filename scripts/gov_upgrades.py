@@ -4,9 +4,12 @@ add the missing ones to the Governance Record.
 Run: python3 scripts/gov_upgrades.py --dry     (prints what it would add)
      python3 scripts/gov_upgrades.py           (writes the missing rows)
 
-What counts (the user's rule, 2026-09-17): a proposal or release that required a **vote** or a
-**software upgrade by the validator**. Everything else — weekly maintenance releases, rc/alpha
-builds, testnet-only tags — is left out.
+What counts (the user's rule, 2026-09-17, sharpened 2026-09-30): a release counts only where **running
+it is the vote** (a protocol version on Sui, IOTA and NEAR; an ACP on Avalanche; a hard fork on Zilliqa
+and Mina) or where it **carries an improvement proposal** (a Monad MIP, an EigenCloud ELIP, a Starknet
+version the community voted on). A plain client release — a Juno attestation update, a Mina daemon
+release before the fork, a Monad patch — is not a vote and never becomes a row. Weekly maintenance
+releases, rc/alpha builds and testnet-only tags are left out as before.
 
 Where each chain's truth lives. All of these are public and need no key:
 
@@ -18,10 +21,11 @@ Where each chain's truth lives. All of these are public and need no key:
                                           the stake must vote the version in
   IOTA        iotaledger/iota             [Mainnet] releases, same shape as Sui
   Zilliqa     Zilliqa/zq2                 releases whose notes contain a hard fork
-  Mina        MinaProtocol/mina           mainnet hard-fork and stop-slot releases
-  Starknet    NethermindEth/juno          the client the validator attests with; breaking releases
-  EigenCloud  Layr-Labs/eigenlayer-contracts   protocol releases operators are exposed to
-  Monad       category-labs/monad-bft     consensus client releases
+  Mina        MinaProtocol/mina           mainnet hard-fork and stop-slot releases (not the daemon releases between)
+  Starknet    NethermindEth/juno          only a release that carries a Starknet version upgrade ("Starknet v0.N")
+  EigenCloud  Layr-Labs/eigenlayer-contracts   protocol releases operators are exposed to (ELIPs)
+  Monad       category-labs/monad-bft     a release whose notes name a MIP: one row per MIP, titled from
+                                          monad-crypto/MIPs, with the MIP as reference and proof
 
 The date written is the release's own date (or the day voting opens where the notes give it) —
 never today's. On chains with no on-chain vote the row is YES because running the release is how
@@ -53,6 +57,25 @@ def releases(repo, per_page=100):
                     if os.environ.get("GITHUB_TOKEN") else {})})
     with urllib.request.urlopen(req, timeout=60) as r:
         return json.load(r)
+
+
+MIP_URL = "https://github.com/monad-crypto/MIPs/blob/main/MIPs/MIP-%s.md"
+_mips = {}
+def mip_title(n):
+    """The MIP's own title from monad-crypto/MIPs, or None for a draft or a number that does not exist."""
+    if n in _mips:
+        return _mips[n]
+    try:
+        req = urllib.request.Request("https://raw.githubusercontent.com/monad-crypto/MIPs/main/MIPs/MIP-%s.md" % n,
+                                     headers={"User-Agent": "encapsulate-site-data"})
+        text = urllib.request.urlopen(req, timeout=20).read().decode()
+        fm = text.split("---")[1] if text.startswith("---") else ""
+        title = re.search(r"^title:\s*(.+)$", fm, re.M)
+        status = re.search(r"^status:\s*(.+)$", fm, re.M)
+        _mips[n] = title.group(1).strip() if title and status and status.group(1).strip() in ("Final", "Living") else None
+    except Exception:
+        _mips[n] = None
+    return _mips[n]
 
 
 def candidates(chain, since="2025-01-01"):
@@ -95,15 +118,20 @@ def candidates(chain, since="2025-01-01"):
                         "A hard fork: a node that does not upgrade forks itself off the chain."))
         elif chain == "Mina":
             name = r.get("name") or tag
-            if not re.search(r"mainnet", name, re.I) or not re.search(r"hard.?fork|stop.?slot|stable", low + name.lower()):
+            # only the fork builds themselves: the release's NAME says stop slot, hard fork or the fork's name (Mesa).
+            # A daemon release between forks mentions the coming fork in its notes and is not a vote (2026-09-30)
+            if not re.search(r"mainnet", name, re.I) or not re.search(r"hard.?fork|stop.?slot|\bmesa\b", name.lower()):
                 continue
             out.append((name, None, when, url,
                         "Block producers had to be on this build for the chain to pass the transition cleanly."))
         elif chain == "Starknet":
-            if "breaking" not in low:
+            # only a Starknet version upgrade, which Starknet's governance votes on; an attestation-client
+            # update is not a vote (2026-09-30)
+            sv = re.search(r"[Ss]tarknet v?(0\.\d+(?:\.\d+)?)", body)
+            if "breaking" not in low or not sv:
                 continue
-            out.append(("Juno %s — breaking release" % tag, None, when, url,
-                        "Starknet attestations come from the node, so the node has to be current."))
+            out.append(("Starknet v%s upgrade" % sv.group(1), None, when, url,
+                        "The version upgrade Starknet's governance voted through; our node ran the release before activation."))
         elif chain == "EigenCloud":
             # only the named releases — the patch tags carry no operator-facing change
             name = (r.get("name") or "").split(":")[-1].strip()
@@ -112,10 +140,15 @@ def candidates(chain, since="2025-01-01"):
             out.append(("EigenLayer %s — %s" % (tag, name), None, when, url,
                         "A protocol release that changes what operators are exposed to."))
         elif chain == "Monad":
-            if not re.match(r"^v\d+\.\d+\.0$", tag):
+            # one row per MIP the release activates (monad-crypto/MIPs), titled by the proposal as an ACP row is
+            if not re.match(r"^v\d+\.\d+\.\d+$", tag):
                 continue
-            out.append(("monad-bft %s — validator release" % tag, None, when, url,
-                        "Consensus client release for the validator set; staying current is the obligation."))
+            for mip in sorted(set(re.findall(r"MIP-(\d+)", body)), key=int):
+                title = mip_title(mip)
+                if not title:
+                    continue
+                out.append((title, "MIP-%s" % mip, when, MIP_URL % mip,
+                            "Activated by running monad-bft %s: a validator accepts a MIP by running the release that carries it." % tag))
     return out
 
 
@@ -130,11 +163,13 @@ def add(chain, title, pid, date, proof, why):
         "Our vote": {"select": {"name": "YES"}},
         date_prop(): {"date": {"start": date}},
         "Proof": {"rich_text": [{"type": "text",
-                                        "text": {"content": "View Release", "link": {"url": proof}}}]},
+                                        "text": {"content": "View Proposal" if isinstance(pid, str) else "View Release",
+                                                 "link": {"url": proof}}}]},
         "Rationale": {"rich_text": [{"type": "text", "text": {"content": why}}]},
     }
     if pid is not None:
-        props["Reference"] = {"number": pid}
+        # Reference is rich text since 2026-09-17 (it holds "ACP-176"); a version number is written as text too
+        props["Reference"] = {"rich_text": [{"type": "text", "text": {"content": str(pid)}}]}
     return api("POST", "pages", {"parent": {"database_id": GOVERNANCE_DB}, "properties": props})
 
 

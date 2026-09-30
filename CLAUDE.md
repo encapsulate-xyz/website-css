@@ -1856,9 +1856,20 @@ is picked by a hash of the row id, so a row always gets the same line and a re-r
 The lines are **principle-based**: accurate about the vote and the kind of proposal, never claiming
 a specific action we cannot evidence. 2026-09-17: 1,106 rows — 465 tightened, 641 written.
 
-**Upgrades.** What counts is the user's rule: a proposal or release that required a **vote** or a
-**software upgrade by the validator**. Weekly maintenance releases, rc/alpha builds and
-testnet-only tags are left out. Every source is a public GitHub releases API and needs no key:
+**Upgrades.** What counts is the user's rule (2026-09-17, sharpened 2026-09-30: "only include those
+upgrades where we vote by upgrade, not every release", and "keep the record which were a client upgrade
+due to an improvement proposal, like Monad's MIP-8"): a release counts only where **running it is the
+vote** (a protocol version on Sui, IOTA and NEAR; an ACP on Avalanche; a hard fork on Zilliqa and Mina)
+or where it **carries an improvement proposal** (a Monad MIP from `monad-crypto/MIPs` — one row per MIP,
+titled by the proposal, as an ACP row is; an EigenCloud ELIP; a Starknet version the community voted
+on). A plain client release never becomes a row. **On 2026-09-30 the record was brought to that rule**
+(backup `backups/governance-upgrade-rows-2026-09-30.json`): Monad's two release rows became MIP-12
+"Decrease Block Time" (v0.15.0) and MIP-8 "Page-ified Storage State" (v0.16.0, MONAD_TEN); MONAD_NINE's
+three MIPs (3 Linear Memory, 4 Reserve Balance Introspection, 5 Fusaka EIP Activation, v0.13.0,
+2026-03-04) were added; Starknet's two Juno attestation updates and Mina's two daemon releases (3.3,
+3.4) went to Notion's trash; the Starknet row reads "Starknet v0.14.0 upgrade". Weekly maintenance
+releases, rc/alpha builds and testnet-only tags are left out as before. Every source is a public GitHub
+releases API and needs no key (`GITHUB_TOKEN`, if set, only raises the rate limit — `gh auth token`):
 
 | Chain | Repo | What marks a row |
 |---|---|---|
@@ -1867,10 +1878,10 @@ testnet-only tags are left out. Every source is a public GitHub releases API and
 | Sui | `MystenLabs/sui` | `mainnet-*` with "Protocol Version: N"; two thirds of the stake vote the version in |
 | IOTA | `iotaledger/iota` | `[Mainnet]` releases, same shape |
 | Zilliqa | `Zilliqa/zq2` | notes contain a hard fork |
-| Mina | `MinaProtocol/mina` | mainnet hard-fork and stop-slot releases |
-| Starknet | `NethermindEth/juno` | breaking releases of the client we attest with |
-| EigenCloud | `Layr-Labs/eigenlayer-contracts` | the named protocol releases |
-| Monad | `category-labs/monad-bft` | consensus client releases |
+| Mina | `MinaProtocol/mina` | a release whose **name** says stop slot, hard fork or Mesa (the daemon releases between forks mention the fork in their notes and are not votes) |
+| Starknet | `NethermindEth/juno` | a breaking release whose notes carry a Starknet version ("Starknet v0.14"), the upgrade the governance voted on |
+| EigenCloud | `Layr-Labs/eigenlayer-contracts` | the named protocol releases (their ELIPs) |
+| Monad | `category-labs/monad-bft` | a release whose notes name a MIP: one row per Final MIP, title and proof from `monad-crypto/MIPs` |
 
 **The date is the release's own date**, or the day voting opens where the notes give it — never
 today's. On a chain with no on-chain vote the row is YES because running the release is how support
@@ -1889,6 +1900,12 @@ as the proposal it is. `scripts/gov_proposals.py` rewrote what `gov_upgrades.py`
 | EigenCloud | each core release implements named ELIPs (`eigenfoundation/ELIPs`) |
 | Sui, IOTA, Zilliqa, Starknet, Monad | no proposal document — the vote is the protocol-version vote itself, or running the fork build. The reference stays empty and the row is titled as the protocol change, never as a release tag |
 
+**A dry run lists a candidate for every release the rule admits that has no row of the same title** — and
+`gov_proposals.py` retitles rows after they are added, so the dry run of 2026-09-30 named 48 "missing" rows
+that are all already in the record under their proposal's title (Sui/IOTA/NEAR versions, Zilliqa forks,
+the EigenCloud ELIP releases). The port to `site-data` should match on (chain, reference or version), not
+on the title, and use each chain's own "since" (`notion/chain-pages.json`) rather than 2025-01-01: the one
+true candidate left, "Starknet v0.13.4 upgrade" of 2025-02-19, predates that check.
 `Proposal Id` is **rich text** now (it holds "ACP-176"), which makes the id, the proof and the
 rationale all `td.text`. Both tables therefore tag their cells from the **header labels**
 (`governance.js` `columns()`, `home.js` `mark()`) and order on `[data-enc-cell]` — Notion's type
