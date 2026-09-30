@@ -229,7 +229,7 @@ workflows = "".join(
  % (n, when, "".join('<li><code>%s</code><span>%s</span></li>' % (e(a), e(b)) for a, b in rows)) for n, when, rows in WF)
 
 STEPS = [
- ("Make the repo and settle the decisions", "Create the private `site-data` repo, rotate the Notion token into its secrets, answer the six open questions."),
+ ("Make the repo and settle the decisions", "Create the private `site-data` repo, put the current Notion token and the Discord webhook in its secrets, settle the two open questions."),
  ("Move the governance jobs", "Port the Notion client and the three governance scripts to JavaScript, with a dry run and the report, and put them on a schedule. No new logic."),
  ("Cosmos votes become rows", "The biggest gap that is closed by hand today."),
  ("Blog and guide fields", "Read minutes, steps and time."),
@@ -247,20 +247,20 @@ DECIDED = [
  "Logs say almost nothing; details go to a private summary.",
  "“1882 votes cast since 2020” stays.",
  "Until the jobs exist, the values are updated by hand.",
+ "30 Sep: the summary is an issue in the private repo, one per run, and a Discord message through a channel webhook only when a check fails.",
+ "30 Sep: the research notes (the set's values, the chain pages' source) move to the private repo.",
+ "30 Sep: the current Notion token is used for now and rotated later.",
+ "30 Sep: new vote rows go live with no review, rationale included.",
+ "30 Sep: public endpoints to start; our own nodes later, as secrets, where a public one is unreliable.",
 ]
 decided = "".join("<li><span>%s</span></li>" % e(x) for x in DECIDED)
 OPEN = [
- ("Where the private summary goes", "Discord, Telegram, email, or an issue in the private repo.",
-  "An issue in the private repo. It is private already, keeps its history, and needs no bot."),
- ("Do the research notes move too?", "The researched values and the chain pages' source file are about the data, not the design.",
-  "Yes. They are the input of the scripts that move."),
- ("Which fields are written and which only reported", "",
+ ("Which fields are written and which only reported", "To be talked through.",
   "Write rates, read minutes, guide steps and dashboard status. Report commission, unbonding, slashing, validators run and status. "
   "29 Sep showed why: a commission changed on chain and the site did not follow."),
- ("Rotate the Notion token first", "It was shown in chat once, and it becomes a secret of the new repo.", "Yes, before step 0. Only you can do it."),
- ("New vote rows: live at once, or held?", "And their rationale: drafted by the job, or left for you, since it is words in our name.",
-  "The row goes live, since the vote is a fact on chain. The rationale is drafted and listed in the summary for you to edit."),
- ("Public endpoints, or our own nodes too?", "In a private repo our endpoints can sit as secrets.", "Public ones to start. Add ours where a public one is unreliable."),
+ ("How a new vote's rationale is written", "The row goes live with no review, so the words are the job's.",
+  "The templated principle-based lines (accurate about the vote and the kind of proposal, never a specific claim, nothing to run) "
+  "plus one sentence written by Claude from the proposal's own text, with the template alone as the fallback. Or the template alone."),
 ]
 opened = "".join('<li><span class="open-n">%d</span><b>%s</b>%s<p class="rec"><b>Recommended:</b> %s</p></li>'
                  % (i + 1, e(a), ("<p>%s</p>" % e(b)) if b else "", e(c)) for i, (a, b, c) in enumerate(OPEN))

@@ -229,19 +229,27 @@ summary to the report. About twenty lines each.
 - "1882 · Votes cast since 2020" stays (2026-09-26).
 - Until the jobs exist, the values are updated by hand (2026-09-16).
 
+**Decided on 2026-09-30** (the user, in conversation)
+1. **The private summary is an issue in `site-data`**, one per run, and **a Discord message only when a
+   check fails** — sent by a channel webhook (Discord → the channel → Integrations → Webhooks; the URL is
+   the repo secret `DISCORD_WEBHOOK`; the job POSTs `{content}` to it with fetch — no bot, no user token).
+2. **The research notes move to `site-data`** (`notion/networks-set-values.md`, `notion/chain-pages.json`);
+   CLAUDE.md points to them.
+4. **The current Notion token is used for now**; it is rotated later (the user). It goes into the repo's
+   secrets as it is.
+5. **New vote rows go live with no review**, rationale included (the user: "no review just update"). How
+   the rationale is written is the one thing left to pick: the templated principle-based lines alone
+   (`gov_rationales`: accurate about the vote and the kind of proposal, never a specific claim, no
+   external dependency), or those lines plus one sentence written by Claude from the proposal's own text
+   (an API key as a secret, a few cents a row, a fallback to the template when the text is missing). Both
+   are possible; see the conversation of 2026-09-30.
+6. **Public endpoints to start**; our own nodes later, as secrets, where a public one is unreliable.
+
 **Open — needed before any code**
-1. **Where the private summary goes:** Discord, Telegram, email, or an issue in the private repo (which
-   is private too, keeps its history and needs no bot).
-2. **Do the research notes move to `site-data`?** (`notion/networks-set-values.md`,
-   `notion/chain-pages.json` are about the data, not the design; CLAUDE.md would then point to them.)
-3. **Which fields are written and which only reported.** Recommended: write Reward rate + Rate updated,
-   Read, Step/Time and Dashboards status; report Commission, Unbonding, Slashing events, Validators run
-   and **Status** — a jailing is something to act on before the site says it.
-4. **Rotate the Notion token first.** It becomes a secret of `site-data`.
-5. **New vote rows: live on their own, or held for approval?** And their rationale: drafted by the
-   principle-based lines of `gov_rationales`, or left for the user — it is words in our name.
-6. **Public endpoints only, or our own nodes too?** In a private repo our endpoints can sit as secrets;
-   public ones are enough to start.
+3. **Which fields are written and which only reported.** To be talked through (the user, 2026-09-30).
+   Recommended: write Reward rate + Rate updated, Read, Step/Time and Dashboards status; report Commission,
+   Unbonding, Slashing events, Validators run and **Status** — a jailing is something to act on before the
+   site says it.
 
 ## 7. Added on 2026-09-30 — from the work of 28–29 Sep
 
