@@ -251,7 +251,7 @@ DECIDED = [
  "Notion is the only thing the jobs write. Nothing is fetched live in the page.",
  "Logs say almost nothing; the details go to the run's issue in the private repo.",
  "“1882 votes cast since 2020” stays.",
- "Until the jobs exist, the values are updated by hand.",
+ "Until an item's job exists, its value is updated by hand (ten items have theirs since 30 Sep).",
  "30 Sep: every run opens one issue in the private repo with everything it wrote (before and after) and everything it could not, and sends one email only when something drifted that a job cannot fix, or the run failed, the way the other jobs already alert (the user will give the address).",
  "30 Sep: whatever a script can write, it writes, with no hand in between (the user: automate more). What is left for a hand is the profiles on other people's registries and chains, dead links, wallet screenshots, a post's author, and the three alerts.",
  "30 Sep: the record is our votes, not the proposal list: the votes job asks each chain for the vote cast by our validator account and writes a row only where one exists. A release-borne proposal (ACP, NEP, MIP, ELIP, a hard fork) is a row on the strength of our node having run the release.",

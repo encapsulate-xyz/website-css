@@ -195,26 +195,26 @@
 
 <div class="wrap">
   <header>
-    <div class="crumb"><span>Encapsulate · Site data</span><i></i><span>Plan · {{CHECKED}}</span></div>
-    <h1>The GitHub Actions plan</h1>
+    <div class="crumb"><span>Encapsulate · Site data</span><i></i><span>Plan and state · {{CHECKED}}</span></div>
+    <h1>The GitHub Actions</h1>
     <p class="lede">Scheduled jobs that keep the site's numbers and facts current by writing them into Notion, which the site already reads. This page is how they work, everything they look after, and where the code lives — ten of the items run on a schedule since 30 September (marked <span class="live">running</span>); the rest are planned.</p>
-    <span class="state">Nothing is built yet. Until it is, the site's values are updated by hand</span>
-    <p class="checked">Every figure under "now" was read from Notion and the live site on {{CHECKED}}.</p>
+    <span class="state">Three workflows run in the private site-data repo since 30 Sep 2026 — governance and networks daily, homepage every six hours — and write ten of the items below. The rest are still updated by hand until their jobs are built</span>
+    <p class="checked">Every figure under "now" was read from Notion and the live site on {{CHECKED}}; the running items show what the job last wrote.</p>
     <nav class="toc" aria-label="On this page">
-      <a href="#how">How a job works</a><a href="#inventory">What needs updating</a><a href="#repos">The two repos</a><a href="#workflows">The five workflows</a><a href="#order">Build order</a><a href="#decisions">Decisions</a><a href="#current">Already current</a>
+      <a href="#how">How a job works</a><a href="#inventory">Everything that goes stale</a><a href="#repos">The two repos</a><a href="#workflows">The five workflows</a><a href="#order">Build order</a><a href="#decisions">Decisions</a><a href="#current">Already current</a>
     </nav>
   </header>
 
   <div class="card short" aria-label="In short">
-    <div><b>{{N_ITEMS}}</b><span>things on the site that go stale, plus {{N_WATCH}} alerts</span></div>
-    <div><b>5</b><span>workflows, each about thirty lines that start one script; three of them run since 30 Sep</span></div>
+    <div><b>{{N_ITEMS}}</b><span>things on the site that go stale, plus {{N_WATCH}} alerts; ten are written by a job today</span></div>
+    <div><b>5</b><span>workflows, each about thirty lines that start one script; governance, networks and homepage run since 30 Sep, content and audit are planned</span></div>
     <div><b>2</b><span>repos: this one stays public, the jobs are in the private site-data</span></div>
-    <div><b>{{N_OPEN}}</b><span>questions left to settle — every one is a decision below</span></div>
+    <div><b>{{N_OPEN}}</b><span>questions left to settle — every one became a decision, listed below</span></div>
   </div>
 
   <section id="how">
     <div class="s-head"><span class="num">01</span><h2>How a job works</h2>
-      <p>The logic lives in scripts. A GitHub Action only decides when a script runs and hands it the secrets, so every job also runs on a laptop, dry, and prints what it would write.</p></div>
+      <p>The logic lives in scripts. A GitHub Action only decides when a script runs and hands it the secrets, so every job also runs on a laptop, dry, and prints what it would write. This is how the three live workflows work today.</p></div>
     <ol class="flow">
       <li class="card"><h3>Schedule</h3><p>A workflow starts on its timer, on a Run button, or on a pull request, where it is always dry.</p></li>
       <li class="card"><h3>Read</h3><p>The script reads the chain or the service through that chain family's own library.</p></li>
@@ -241,9 +241,9 @@
 
   <section id="inventory">
     <div class="s-head"><span class="num">02</span><h2>What needs updating</h2>
-      <p>Everything on the site that can change, where it shows, what keeps it current today, and what a job would do about it. Rows marked new were added on 30 Sep 2026, from the work of the last two days.</p></div>
+      <p>Everything on the site that can change, where it shows, what keeps it current today, and what a job does — or will do — about it. Rows marked running are written by a scheduled job today; rows marked new were added on 30 Sep 2026.</p></div>
     <div class="card bar" id="filters">
-      <div class="tabs" role="group" aria-label="What the job would do">
+      <div class="tabs" role="group" aria-label="What the job does">
         <button type="button" data-v="all" aria-pressed="true">All <i data-n="all"></i></button>
         <button type="button" data-v="write" aria-pressed="false">Writes <i data-n="write"></i></button>
         <button type="button" data-v="report" aria-pressed="false">Reports <i data-n="report"></i></button>
@@ -257,7 +257,7 @@
 
   <section id="repos">
     <div class="s-head"><span class="num">03</span><h2>The two repos</h2>
-      <p>Anything a browser downloads stays in this repo, which has to be public for the CDN. Anything that writes to Notion moves to a new private repo, because it compares what the site claims with what the chain says.</p></div>
+      <p>Anything a browser downloads stays in this repo, which has to be public for the CDN. Anything that writes to Notion lives in the private site-data repo (made 30 Sep), because it compares what the site claims with what the chain says.</p></div>
     <div class="repos">
       {{REPOS}}
     </div>
@@ -265,7 +265,7 @@
 
   <section id="workflows">
     <div class="s-head"><span class="num">04</span><h2>The five workflows</h2>
-      <p>Each one is a schedule, the secrets, and one command per job. The codes are the rows above.</p></div>
+      <p>Each one is a schedule, the secrets, and one command per job; the codes are the rows above. Governance, networks and homepage are live; content and audit are the next to build.</p></div>
     <div class="flows">
       {{WORKFLOWS}}
     </div>
@@ -273,7 +273,7 @@
 
   <section id="order">
     <div class="s-head"><span class="num">05</span><h2>Build order</h2>
-      <p>Each step is useful on its own, and the first one adds no new logic: it only proves the pipe.</p></div>
+      <p>Each step is useful on its own. The first five are done (30 Sep); the rest follow in this order.</p></div>
     <ol class="card steps">
       {{STEPS}}
     </ol>
@@ -281,7 +281,7 @@
 
   <section id="decisions">
     <div class="s-head"><span class="num">06</span><h2>Decisions</h2>
-      <p>What is settled, and the six things that need your word before any code. Each open one carries a recommendation.</p></div>
+      <p>Everything is settled: the decisions, in the order they were made, and the questions that became decisions on 30 Sep.</p></div>
     <div class="two">
       <div class="card list"><h3>Decided</h3><ul class="tick">{{DECIDED}}</ul></div>
       <div class="card list"><h3>Open</h3><ul>{{OPEN}}</ul></div>
