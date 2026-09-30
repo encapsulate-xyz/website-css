@@ -320,17 +320,19 @@ body {
   background: #000000;
 }
 
-/* the page you are on, at rest */.super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__item.active, .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__item[aria-current="page"], .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current] {
+/* the page you are on, at rest — and while the pointer is on Book a call, the logo or the Menu button: the tab moves
+   only for a hovered group or its open panel (the file's anyOpen, 2026-09-30: "the CTA, logo and menu button leave it
+   on the current page"; until v342 any hover in the bar cleared it) */.super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__item.active, .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__item[aria-current="page"], .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__list[data-enc-current] {
   background: transparent !important;
   border-color: transparent !important;
   box-shadow: none !important;
   color: #FAFAF8 !important;
 }
-.super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__item.active::after, .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__item[aria-current="page"]::after, .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current]::after {
+.super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__item.active::after, .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__item[aria-current="page"]::after, .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__list[data-enc-current]::after {
   background: #000000;
 }
 /* its caret: the on-ink grey, paper once the group is hovered or open (below) */
-.super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current]::before {
+.super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__list[data-enc-current]::before {
   background: #9FA39B !important;
 }
 
@@ -353,15 +355,15 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
    showed for the ~200ms before radix opened the panel, then flipped to ink. */
 
 /* the current page's item at rest, on ink: the same paper tab */
-.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current],
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current] {
+.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__list[data-enc-current],
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__list[data-enc-current] {
   background: transparent !important;
   border-color: transparent !important;
   box-shadow: none !important;
   color: #000000 !important;
 }
-.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current]::after,
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current]::after {
+.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__list[data-enc-current]::after,
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__list[data-enc-current]::after {
   background: #FAFAF8;
 }
 
@@ -379,8 +381,8 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
 }
 
 /* the caret on ink: the on-ink grey where a pill is not lit, #6B6F68 on the paper tab at rest */
-.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current]::before,
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover, .super-navbar__actions :hover)) .super-navbar__list[data-enc-current]::before {
+.super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__list[data-enc-current]::before,
+body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__list[data-enc-current]::before {
   background: #6B6F68 !important;
 }
 
