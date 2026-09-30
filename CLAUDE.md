@@ -2005,13 +2005,27 @@ one row per step: Name ("01 · …"), Step, Body, Watch, Surface, Link, the capt
 screens. Slush's link that opens "Stake with Encapsulate" (`my.slush.app/staking/native-stake?validatorAddress=…`)
 is unverified — test it on a phone before using it on the button.
 
-## TODO — a guide links its chain page (agreed 2026-09-29; the user is taking it to Claude Design)
+## A guide links its chain page (handoff 2026-09-30, v338)
 
-A chain page's green button opens its guide, but a guide never links back to its chain page — the reader who wants the
-rate, the unbonding or the questions before staking has to find /networks/<chain> by hand, and Google sees the pair
-linked one way only. The user will ask Claude Design where the link sits in the guide (the head beside the chain's
-disc, or the close band beside the next guide); implement it from that handoff — the chain's page is the guide row's
-Networks set relation, so nothing is typed. Don't add it before the design.
+The close band's last line is **the side routes**, as *Staking Guide Variation 1d* draws them: two tertiaries on ink
+(Hanken 15/500, a 20px green badge that slides 3px on hover) 28px apart, 4px under the two buttons — **"Axelar's terms
+and common questions" → /networks/axelar#terms**, then "Need help? Ask on Discord". The glyph carries the verb: a right
+arrow stays on the site, the up-right arrow leaves it (`badge("go")` / `badge("arrow")` in guide.js). Nothing is typed:
+the label is the copy toggle's new `terms · {chain}’s terms and common questions` line (fallback in `CONTENT`), and the
+target is the Networks set card on /guides that carries the chain's name — a mainnet row is a page and its card links
+to it (`marks()` keeps `__pages`), a testnet-only chain has no page and so no link, as the file says. chain.js gives
+every band its key as an `id` (`terms`, `estimate`, `s0`…) and **holds the `#terms` landing** (`landHash()`): the bands
+do not exist when the browser tries the jump, and React's adoption puts the scroll back at the top, so the landing is
+retried over three seconds, only while the page is still where the last attempt left it. It rests 62px into the band,
+where the page's own snap (proximity, with Super's scroll padding) rests every band. Measured with the design rendered
+beside the live page (`scratchpad/guide-handoff/`): the row's boxes match to the pixel at 1440 and 1920, and it stacks
+at 390.
+**The right margin (the user, 2026-09-30):** above 1728 the step's content had been centred at 1568px (the audit of
+2026-09-26), so at 1920 the words ended 176px from the band's edge where the file has 80. The rule is gone; the words
+sit at the edge at every width, as the file draws them. **Where the close band's words live** (the user asked): every
+line of it is the "Guide page copy" toggle on /guides (`3e3e800a…a576f9`) — Done, Staked with Encapsulate., the close
+line, Next, All guides, terms, help — read by guide.js from the index it already fetches; the step words are the
+guide's own slide database and the Title and Lede the Guides Database row.
 
 ## TODO — every validator profile says the same thing (asked 2026-09-29)
 
