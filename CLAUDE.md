@@ -2303,6 +2303,14 @@ pages) — every row page opened and read for content; only three databases qual
 | Networks set (`3dde800a…33b7f1…`), mainnet rows | 27 at /networks/… | all open, ~19 blocks each | the chain hero |
 | Guides Database (`1f6e800a…`) | 31 of 32 at /guides/… | all open; **/guides/mina is empty** — its Notion page has no blocks, the live page shows only "MINA" | the guide head |
 
+**The properties it writes, per database** (read from the schemas 2026-09-30; nothing else on a row is touched):
+
+| Database | `meta:image` | `meta:description` | `meta:title` |
+|---|---|---|---|
+| Blogs | the 17d card, remade when the title or the post's place on the index (its tint) changes | = the row's `Lede` | **not written**: set by hand only where a title is too long for a result (3 posts: Berachain, Symbiotic, Canton); the job reports a new title over 60 characters that has none |
+| Networks set | the chain hero, remade when the rate, commission, unbonding or name change | **not written by this job** — the networks job (N7) already rewrites it with the facts after every value change | "<Name> staking - Encapsulate", written where missing or different |
+| Guides Database | the guide head, remade when `Title`, `Lede`, `Step` or the chain/wallet marks change | = "`Title`. `Lede`" | **none** — the database has no such property; the page's title is Super's override ("Axelar Staking Guide") |
+
 **Left out:** `/guides/mina` until it has content (then it joins); `/governance/votes` (the record's database page:
 noindex, a table, no card); and every other database — Portfolio, Team, Why Stake, Colour, Wallet Set, Governance
 Mechanism, Governance Record (its 316 row pages were removed from Super on 2026-09-28), the /services tables
