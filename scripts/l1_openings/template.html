@@ -169,7 +169,7 @@
   .l-head .count { margin-left: auto; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .rows { list-style: none; margin: 0; padding: 0; overflow: hidden; display: flex; flex-direction: column; gap: 1px; background: var(--line); }
   .row { background: var(--card); }
-  .r-head { display: grid; grid-template-columns: minmax(0, 1fr) 208px 262px; align-items: center; gap: 8px 20px; padding: 6px 14px 6px 6px; }
+  .r-head { display: grid; grid-template-columns: minmax(0, 1fr) 224px 262px; align-items: center; gap: 8px 20px; padding: 6px 14px 6px 6px; }
   .r-head:hover { background: #F5F5F0; }
   .r-toggle { display: grid; grid-template-columns: 34px minmax(0, 1fr); align-items: start; gap: 10px; background: none; border: 0; padding: 12px 8px; text-align: left; cursor: pointer; min-width: 0; border-radius: 10px; }
   .r-n { font: 400 12px/1.9 var(--mono); color: var(--faint); font-variant-numeric: tabular-nums; }
@@ -179,6 +179,7 @@
   .r-facts { display: flex; flex-direction: column; gap: 3px; font-size: 13px; line-height: 1.45; min-width: 0; }
   .r-facts span { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 8px; color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
   .r-facts em { font-style: normal; font-weight: 400; color: var(--faint); }
+  .r-facts i { font-style: normal; font-weight: 400; color: var(--muted); }
   .r-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; position: relative; padding-right: 34px; min-height: 28px; }
   .chev { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; color: var(--muted); background: none; border: 0; cursor: pointer; position: absolute; right: 0; top: 50%; margin-top: -14px; }
   .chev::before { content: ""; width: 7px; height: 7px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); }
@@ -263,7 +264,8 @@
           <button type="button" data-t="low" data-tier="low" aria-pressed="false">low <i data-tn="low"></i></button>
           <button type="button" data-t="filth" data-tier="filth" aria-pressed="false">filth <i data-tn="filth"></i></button>
         </div>
-        <label class="check"><input type="checkbox" id="f-rec"> Taking operators now</label></div>
+        <label class="check"><input type="checkbox" id="f-rec"> Taking operators now</label>
+        <label class="check"><input type="checkbox" id="f-help"> Newcomer help open</label></div>
       <div class="f-group"><h4>Find</h4>
         <div class="search"><label class="vh" for="q">Find</label><input id="q" type="search" autocomplete="off" placeholder="A network, a token, a programme"></div></div>
       <div class="bar-end"><span id="shown"></span><button type="button" class="link" id="clear">Clear</button><button type="button" class="link" id="expand">Open all</button></div>
@@ -326,7 +328,7 @@
   var networks = items.filter(function (el) { return !el.classList.contains("pick"); });
   var rows = items.filter(function (el) { return el.classList.contains("row"); });
   var levels = [].slice.call(document.querySelectorAll(".level"));
-  var f = { d: "all", rec: false, tiers: {}, q: "" }, allOpen = false;
+  var f = { d: "all", rec: false, help: false, tiers: {}, q: "" }, allOpen = false;
   var counts = { all: networks.length }, tierCounts = {};
   networks.forEach(function (r) { var d = r.getAttribute("data-d"), t = r.getAttribute("data-tier"); counts[d] = (counts[d] || 0) + 1; tierCounts[t] = (tierCounts[t] || 0) + 1; });
   [].slice.call(document.querySelectorAll("[data-n]")).forEach(function (n) { n.textContent = counts[n.getAttribute("data-n")] || 0; });
@@ -343,7 +345,7 @@
     r.querySelector(".chev").addEventListener("click", flip);
   });
   function matches(el, words) {
-    var ok = (f.d === "all" || el.getAttribute("data-d") === f.d) && (!f.rec || el.getAttribute("data-rec") === "yes") && (!anyTier() || f.tiers[el.getAttribute("data-tier")]);
+    var ok = (f.d === "all" || el.getAttribute("data-d") === f.d) && (!f.rec || el.getAttribute("data-rec") === "yes") && (!f.help || el.getAttribute("data-help") === "yes") && (!anyTier() || f.tiers[el.getAttribute("data-tier")]);
     if (ok && words.length) { var t = el.getAttribute("data-text"); ok = words.every(function (w) { return t.indexOf(w) >= 0; }); }
     return ok;
   }
@@ -366,18 +368,20 @@
     shown.textContent = n === networks.length ? n + " networks" : n + " of " + networks.length;
     [].slice.call(document.querySelectorAll("#filters .tabs button")).forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-v") === f.d)); });
     document.getElementById("f-rec").checked = f.rec;
+    document.getElementById("f-help").checked = f.help;
     [].slice.call(document.querySelectorAll("#f-tier button")).forEach(function (b) { b.setAttribute("aria-pressed", String(!!f.tiers[b.getAttribute("data-t")])); });
-    document.getElementById("clear").hidden = f.d === "all" && !f.rec && !anyTier() && !f.q;
+    document.getElementById("clear").hidden = f.d === "all" && !f.rec && !f.help && !anyTier() && !f.q;
   }
   document.getElementById("filters").addEventListener("click", function (e) {
     var b = e.target.closest(".tabs button"); if (!b) return; f.d = b.getAttribute("data-v"); apply();
   });
   document.getElementById("f-rec").addEventListener("change", function () { f.rec = this.checked; apply(); });
+  document.getElementById("f-help").addEventListener("change", function () { f.help = this.checked; apply(); });
   document.getElementById("f-tier").addEventListener("click", function (e) {
     var b = e.target.closest("button"); if (!b) return; var t = b.getAttribute("data-t"); f.tiers[t] = !f.tiers[t]; apply();
   });
   document.getElementById("q").addEventListener("input", function () { f.q = this.value.trim(); apply(); });
-  document.getElementById("clear").addEventListener("click", function () { f = { d: "all", rec: false, tiers: {}, q: "" }; document.getElementById("q").value = ""; apply(); });
+  document.getElementById("clear").addEventListener("click", function () { f = { d: "all", rec: false, help: false, tiers: {}, q: "" }; document.getElementById("q").value = ""; apply(); });
   document.getElementById("expand").addEventListener("click", function () {
     allOpen = !allOpen; rows.forEach(function (r) { if (!r.hidden) open(r, allOpen); });
     this.textContent = allOpen ? "Close all" : "Open all";

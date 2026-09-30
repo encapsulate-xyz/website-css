@@ -95,6 +95,46 @@ for x in rows:
     try: x["difficulty"] = int(x.get("difficulty"))
     except Exception: x["difficulty"] = 3
 
+REWARDS = {}
+_rw = os.path.join(DATA, "rewards.json")
+if os.path.exists(_rw):
+    REWARDS = {key(k): v for k, v in json.load(open(_rw)).items()}
+
+DEFAULT_COMMISSION = 0.10   # a newcomer's commission where the chain shows no median: ours is 9–10% on the Cosmos chains
+
+def earns(x):
+    """What a validator seat is worth a year to a newcomer: the average voting power on the chain (total staked over the
+    active set, in dollars) and the commission that stake pays at the chain's current rate — plus the rate on the
+    minimum own stake. A chain that pays validators a fixed sum carries earns_usd instead. Returns a dict or None."""
+    r = REWARDS.get(x["_id"]) or {}
+    apr, src, note = r.get("apr"), r.get("source") or "", r.get("note") or ""
+    if isinstance(r.get("earns_usd"), (int, float)):
+        return {"usd": r["earns_usd"], "fixed": True, "apr": apr, "src": src, "note": note}
+    total, n = r.get("total_staked_usd"), r.get("active_validators") or x.get("validators_now")
+    if not (isinstance(apr, (int, float)) and isinstance(total, (int, float)) and total > 0 and isinstance(n, (int, float)) and n > 0):
+        return None if apr is None or not isinstance(total, (int, float)) else {"usd": None, "apr": apr, "src": src, "note": note}
+    avg = total / n
+    com = r.get("median_commission") if isinstance(r.get("median_commission"), (int, float)) else DEFAULT_COMMISSION
+    own = x.get("min_self_stake_usd") if isinstance(x.get("min_self_stake_usd"), (int, float)) else 0
+    return {"usd": apr * avg * com + apr * own, "avg": avg, "n": int(n), "total": total, "com": com, "apr": apr, "own": own, "src": src, "note": note}
+
+def earns_short(x):
+    v = earns(x)
+    if not v or v.get("usd") is None: return "—" if x["difficulty"] else ""
+    if v.get("fixed"): return usd(v["usd"]) + " <i>· fixed pay</i>"
+    return usd(v["usd"]) + " <i>· avg seat %s</i>" % usd(v["avg"])
+
+def earns_long(x):
+    v = earns(x)
+    if not v: return None
+    link = (' (<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>)' % (e(v["src"]), e(host(v["src"])))) if v.get("src") else ""
+    if v.get("fixed"): return "%s a year — validators here are paid a fixed sum, not a rate. %s%s" % (usd(v["usd"]), e(v.get("note", "")), link)
+    if v.get("usd") is None: return "The chain pays about %.1f%% a year on staked tokens, but its total stake could not be read, so the seat's worth is not computed%s%s" % (v["apr"] * 100, ". " + e(v["note"]) if v.get("note") else "", link)
+    own = (" plus about %s on the minimum own stake" % usd(v["apr"] * v["own"])) if v["own"] and v["apr"] * v["own"] >= 1 else ""
+    return ("The average validator holds %s of stake — %s staked over %d in the set. At the chain's %.1f%% rate and %d%% commission that pays about <b>%s a year</b>%s. "
+            "A new seat starts far below the average and grows only with delegations%s%s") % (
+        usd(v["avg"]), usd(v["total"]), v["n"], v["apr"] * 100, round(v["com"] * 100), usd(v["usd"]), own, ("; " + e(v["note"])) if v.get("note") else "", link)
+
 def money(x, a, b):
     t = str(x.get(a) or "").strip(); n = x.get(b); u = usd(n)
     if isinstance(n, (int, float)) and n < 1: u = "" if n == 0 else "under $1"
@@ -145,6 +185,7 @@ def render(x, n, level_chip=False):
     d = x["difficulty"]; rec = str(x.get("recruiting_now", "")).lower() == "yes"
     route = ROUTE.get(str(x.get("route", "")).lower(), str(x.get("route") or "Unknown"))
     progs = [p for p in lst(x.get("programmes")) if isinstance(p, dict) and p.get("name")]
+    help_open = any(str(p.get("open_now", "")).lower() == "yes" for p in progs)
     text = " ".join([x["chain"], str(x.get("token") or ""), str(x.get("what") or ""), route, x["_tier"], str(x.get("difficulty_why") or "")] + [p["name"] for p in progs]).lower()
     chips = ('<span class="chip dot" data-d="%d">%s</span>' % (d, e(LEVEL[d][0]))) if level_chip else ""
     chips += '<span class="chip tier" data-tier="%s">%s</span>' % (x["_tier"], x["_tier"])
@@ -163,17 +204,18 @@ def render(x, n, level_chip=False):
         e(p["name"]), "yes" if str(p.get("open_now", "")).lower() == "yes" else "plain",
         {"yes": "Open now", "no": "Closed now"}.get(str(p.get("open_now", "")).lower(), "Not known if open"),
         linked(p.get("gives") or ""), ('<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>' % (e(p["url"]), e(host(p["url"])))) if p.get("url") else "") for p in progs)
+    earn_long = earns_long(x)
     kv = [("Stage", stage or None), ("Mainnet", x.get("mainnet_when")), ("Testnet to mainnet", x.get("testnet_to_mainnet")), ("Funding", x.get("funding")),
-          ("Validators", seats), ("Our own stake", own), ("To be active", act), ("Hardware", x.get("hardware")), ("Identity checks", x.get("kyc_or_entity")),
+          ("Validators", seats), ("Our own stake", own), ("To be active", act), ("Earns a year", earn_long), ("Hardware", x.get("hardware")), ("Identity checks", x.get("kyc_or_entity")),
           ("Earnings and cost", x.get("economics")), ("Asking now?", x.get("recruiting_evidence")), ("Where to ask", "; ".join(lst(x.get("contacts"))))]
-    kvh = "".join("<dt>%s</dt><dd>%s</dd>" % (e(a), linked(b)) for a, b in kv if b not in (None, "", []))
+    kvh = "".join("<dt>%s</dt><dd>%s</dd>" % (e(a), b if a == "Earns a year" else linked(b)) for a, b in kv if b not in (None, "", []))
     src = ", ".join('<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>' % (e(u), e(host(u))) for u in lst(x.get("sources")) if str(u).startswith("http"))
     unk = "; ".join(lst(x.get("unknowns")))
     conf = str(x.get("confidence") or "").lower()
-    return ('<li class="row" data-d="{d}" data-rec="{rec}" data-tier="{tier}" data-text="{text}">'
+    return ('<li class="row" data-d="{d}" data-rec="{rec}" data-help="{help}" data-tier="{tier}" data-text="{text}">'
             '<div class="r-head"><button type="button" class="r-toggle" aria-expanded="false"><span class="r-n">{n}</span>'
             '<span class="r-name"><span class="r-title">{chain}<span class="tok">{tok}</span></span><span class="r-what">{what}</span></span></button>'
-            '<div class="r-facts"><span><em>Our own stake</em>{own}</span><span><em>{f2}</em>{act}</span></div>'
+            '<div class="r-facts"><span><em>Our own stake</em>{own}</span><span><em>{f2}</em>{act}</span><span><em>Earns a year</em><span>{earn}</span></span></div>'
             '<div class="r-meta">{chips}<button type="button" class="chev" tabindex="-1" aria-hidden="true"></button></div></div>'
             '<div class="r-panel" hidden>'
             '{dead}<div class="blk why" data-d="{d}"><span><b>{lv}.</b> {why}</span></div>'
@@ -183,7 +225,8 @@ def render(x, n, level_chip=False):
             '<div class="blk wide src">{conf}{unk}<span>Sources: {src}</span></div>'
             '</div></li>').format(
         dead=('<div class="blk wide %s"><span><b>%s.</b> %s</span></div>' % ("in" if x["_flag"]["label"] == "Already in" else "dead", e(x["_flag"]["label"]), linked(x["_flag"]["why"]))) if x.get("_flag") else "",
-        d=d, rec="yes" if rec else "no", tier=x["_tier"], text=e(text), n="%02d" % n, chain=e(x["chain"]), tok=e(tok(x)), what=linked(x.get("what") or ""),
+        d=d, rec="yes" if rec else "no", help="yes" if help_open else "no", tier=x["_tier"], text=e(text), n="%02d" % n, chain=e(x["chain"]), tok=e(tok(x)), what=linked(x.get("what") or ""),
+        earn=earns_short(x),
         own=e(own_s), f2="Mainnet" if x.get("group") == "upcoming" else "To be active",
         act=e(whenShort(x) if x.get("group") == "upcoming" else act_s), chips=chips, lv=e(LEVEL[d][0]), why=linked(x.get("difficulty_why") or ""), nxt=linked(x.get("best_next_step") or "Not set"),
         steps=('<div class="blk"><h4>How to join</h4><ol>%s</ol></div>' % steps) if steps else "",
@@ -212,7 +255,7 @@ testnet_html = ('<ul class="rows card">%s</ul>' % tn) if tn else '<div class="ca
 op = "".join(render(x, i + 1, True) for i, x in enumerate(opening))
 opening_html = ('<ul class="rows card">%s</ul>' % op) if op else '<div class="card empty"><span>None in this research.</span></div>'
 # a no-role line carries the same filter attributes as a row (level 0: it shows only under "All")
-none_html = "".join('<li data-d="0" data-rec="no" data-tier="%s" data-text="%s"><b>%s <span class="chip tier" data-tier="%s">%s</span></b><span>%s</span></li>'
+none_html = "".join('<li data-d="0" data-rec="no" data-help="no" data-tier="%s" data-text="%s"><b>%s <span class="chip tier" data-tier="%s">%s</span></b><span>%s</span></li>'
                     % (x["_tier"], e(" ".join([x["chain"], str(x.get("token") or ""), x["_tier"], str(x.get("what") or ""), str(x.get("difficulty_why") or "")]).lower()),
                        e(x["chain"]), x["_tier"], x["_tier"], linked(x.get("difficulty_why") or x.get("what") or "")) for x in none) or "<li><b>None</b><span></span></li>"
 
@@ -226,8 +269,9 @@ for p in picks["picks"]:
     rec = str(x.get("recruiting_now", "")).lower() == "yes"
     # a pick carries the row's filter attributes too, so the rail's filters reach it
     text = " ".join([x["chain"], str(x.get("token") or ""), x["_tier"], LEVEL[d][0], str(x.get("what") or ""), p["why"], p.get("next") or ""]).lower()
-    ph += ('<li class="card pick" data-d="%d" data-rec="%s" data-tier="%s" data-text="%s"><div class="pick-top"><h3>%s</h3><span class="tok">%s</span><span class="chip tier" data-tier="%s">%s</span><span class="chip dot" data-d="%d">%s</span>%s</div><p>%s</p><p class="pick-next"><b>First step.</b> %s</p></li>'
-           % (d, "yes" if rec else "no", x["_tier"], e(text), e(x["chain"]), e(tok(x)), x["_tier"], x["_tier"], d, e(LEVEL[d][0]), '<span class="chip yes">Taking operators</span>' if rec else "",
+    help_open = any(str(q.get("open_now", "")).lower() == "yes" for q in lst(x.get("programmes")) if isinstance(q, dict))
+    ph += ('<li class="card pick" data-d="%d" data-rec="%s" data-help="%s" data-tier="%s" data-text="%s"><div class="pick-top"><h3>%s</h3><span class="tok">%s</span><span class="chip tier" data-tier="%s">%s</span><span class="chip dot" data-d="%d">%s</span>%s</div><p>%s</p><p class="pick-next"><b>First step.</b> %s</p></li>'
+           % (d, "yes" if rec else "no", "yes" if help_open else "no", x["_tier"], e(text), e(x["chain"]), e(tok(x)), x["_tier"], x["_tier"], d, e(LEVEL[d][0]), '<span class="chip yes">Taking operators</span>' if rec else "",
               linked(p["why"]), linked(p.get("next") or x.get("best_next_step") or "")))
 
 METHOD = picks.get("method") or ""
