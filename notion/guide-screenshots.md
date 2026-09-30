@@ -42,13 +42,29 @@ This replaces the 1528 × 800 (1.91:1) canvas of 2026-09-18.
 
 ## Capturing without the jump to the top (2026-09-30)
 
-DevTools' screenshots re-apply the device metrics for the capture, and a page that scrolls at the document level
-springs back to the top — with **Capture node screenshot** on `<html>` (a node screenshot of `<html>` is the whole
-document) and with ⌘⇧P → **Capture screenshot** in **device mode** alike (the user: "this is what I am doing but it's
-scrolling to the top"). Device mode was only there to fix the size and DPR 2; both can come from elsewhere, and then
-⌘⇧P → Capture screenshot is a plain capture of the viewport and nothing moves.
+**Why it jumps.** For a capture in device mode Chromium sets the emulated viewport to the page's whole height and back
+(a node screenshot of `<html>` does the same). While the viewport is as tall as the page the document cannot scroll,
+so its position clamps to 0, and some pages never get it back — MonadVision's `/myspace?feature=Stake` (its `html`
+is the scroller) loses it every time; our own pages happen to keep it. Measured 2026-09-30 through the protocol: a
+plain capture and a re-emulation leave the scroll alone; the viewport going 990 → 788 is what zeroes it.
 
-### The simple way — a popup window at the frame's size, device mode off
+### The simple way — two lines of CSS, then capture as usual
+
+Make the page scroll inside a box of **fixed pixel height** instead of the document: the viewport can then grow as
+much as it likes, the box keeps its scroll. In the page's console (device mode on, as before — `788` is the frame's
+height for both devices):
+
+```js
+document.head.insertAdjacentHTML('beforeend', '<style>html{overflow:hidden!important;height:788px!important}body{height:788px!important;overflow-y:auto!important;margin:0!important}</style>')
+```
+
+Scroll with the wheel as usual (it is `body` scrolling now), then ⌘⇧P → **Capture screenshot**. Tested on MonadVision:
+scrolled 202, captured at 202 (the card mid-frame, the footer in view), still at 202 after the capture and after a
+forced 990 → 788 viewport resize. It lasts until the page reloads. A `100vh` box would not do — it grows with the
+viewport and clamps the same way; the height must be in px. Anything that reads `window.scrollY` (a back-to-top
+button, a scroll-linked animation) sees 0 while the style is in — cosmetic, and gone on reload.
+
+### The other simple way — a popup window at the frame's size, device mode off
 
 1. In any tab's console (the dashboard's address; `360` in place of `1400` for a wallet page):
 
@@ -66,7 +82,7 @@ scrolling to the top"). Device mode was only there to fix the size and DPR 2; bo
 A wallet screen that belongs to a pending request still cannot be re-opened as a page; for that one, right-click
 its root container (not `<html>`) → Capture node screenshot, or the script below.
 
-### The other way — `scripts/guide_shot.mjs`
+### The third way — `scripts/guide_shot.mjs`
 
 A script that holds the frame through the DevTools protocol and touches nothing at capture time:
 
