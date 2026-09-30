@@ -1274,6 +1274,15 @@ footer included, off under 701px and with reduced motion.
 build, and Chrome's scroll anchoring answered by holding what they were looking at — the footer —
 in place. `overflow-anchor: none` for the page, and guide.js restores the top when the build
 started there (a `#block-…` link is left alone).
+**And it still opened at its foot and climbed** until v340 (the user, 2026-09-30: "why does every reload start
+at the bottom and scroll up"): the snap was keyed on the build, so the footer — the raw page's one snap stop — was
+the snapped target when the bands went in above it, a mandatory snap re-aligned the page to it (not anchoring:
+that was already off), and the restore to the top ran as a 1.5s smooth scroll under the page's own
+`scroll-behavior`. Now guide.js switches the snap on (`html[data-enc-guide-snap]`, which guide.css keys the snap
+rules on) only 120ms after the built page stands at its top, and the restore is `behavior: "instant"`. Reproduced
+and proved with a reload in headless Chrome, sampling scrollY every 60ms (`scratchpad/guide-handoff/steps-reload.mjs`):
+0 → 8038 → a 1.5s climb before; 0 throughout after. Headless wheel gestures do not move this page (mandatory snap
+with smooth scrolling), before or after — the snap was checked by computed style instead, identical to v338.
 
 ## The guides picker (/guides, guides.css + guides.js, 2026-09-16)
 
