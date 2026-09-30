@@ -2306,24 +2306,44 @@ pages) — every row page opened and read for content; only three databases qual
 | Networks set (`3dde800a…33b7f1…`), mainnet rows | 27 at /networks/… | all open, ~19 blocks each | the chain hero |
 | Guides Database (`1f6e800a…`) | 31 of 32 at /guides/… | all open; **/guides/mina is empty** — its Notion page has no blocks, the live page shows only "MINA" | the guide head |
 
-**The properties it writes, per database** (read from the schemas 2026-09-30; nothing else on a row is touched):
+**The properties it writes, per database** (settled 2026-09-30: all three `meta:*`, plus **`Read`, `Time` and the two
+`Lede`s** — "just these 4 more properties, keep the rest for manual update"; nothing else on a row is touched):
 
-| Database | `meta:image` | `meta:description` | `meta:title` |
-|---|---|---|---|
-| Blogs | the 17d card — it shows the **tag, the date, the title, the Cover glyph and the tint** (the post's place on the index) and nothing else; remade when one of those changes | = the row's `Lede` | = the post's `Name`, written where empty; a title someone shortened by hand stays (Berachain, Symbiotic, Canton, and "Double Zero" for "What is IBRL and Why Does It Matter?"); a new `Name` over 60 characters is reported for a hand |
-| Networks set | the chain hero — it shows the **name, the line under it, the green button's label (the guide's wallet), the address in the ring, the glyph and the tint** (the chain's place in the set's Order); remade when one of those changes. **No rate, commission or unbonding is on the card** (the user caught this, 2026-09-30: the first version of this table said otherwise), so a value change never remakes it | **not this job's**: the networks job (N7) writes it — after every value change, and since 2026-09-30 also where a row has none — and is its only writer; the SEO job leaves it alone | "<Name> staking - Encapsulate", written where missing or different |
-| Guides Database | the guide head — it shows the **chain's name (the crumb), `Title`, `Lede`, the step count ("Seven screens"), the chain's glyph and tint and the wallet's mark**; remade when one of those changes | = "`Title`. `Lede`" | "<Chain> Staking Guide" — the property was added on 2026-09-30 and filled from Super's 32 title overrides, which were then cleared (below); the job writes it where empty and never over a title someone worded by hand |
+| Database | Property | Rule |
+|---|---|---|
+| **Blogs** (38) | `meta:image` | the 17d card — it shows the tag, the date, the title, the Cover glyph and the tint (the post's place on the index) and nothing else; remade when one of those changes |
+| | `meta:title` | = the post's `Name`, written where empty; a title someone shortened by hand stays (Berachain, Symbiotic, Canton, "Double Zero"); a new `Name` over 60 characters is reported for a hand |
+| | `meta:description` | = the row's `Lede` |
+| | `Read` | the post's words at 230 a minute, rounded up (post.js's rule); written when it differs |
+| | `Lede` | where empty: the post's opening paragraph cut at a sentence end to the head's length (post.js's own fallback), written down so the card and description have it; a Lede someone wrote stays |
+| **Networks set** (27 mainnet rows) | `meta:image` | the chain hero — it shows the name, the line under it, the green button's label, the address in the ring, the glyph and the tint; remade when one of those changes. No rate, commission or unbonding is on the card |
+| | `meta:title` | "<Name> staking - Encapsulate", written where missing or different |
+| | `meta:description` | **not this job's** — the networks job writes it after every value change and where a row has none, and is its only writer |
+| **Guides Database** (31; /guides/mina waits for content) | `meta:image` | the guide head — it shows the chain's name, `Title`, `Lede`, the step count, the chain's glyph and tint and the wallet's mark; remade when one of those changes |
+| | `meta:title` | **"<Chain> staking guide - Encapsulate"** — the chain pages' pattern (the user, 2026-09-30); the chain is the Networks set relation's Name, else the name in the title today; a hand-written title stays (the EigenCloud pair needs one: see below) |
+| | `meta:description` | = "`Title`. `Lede`" |
+| | `Time` | half a minute a step, rounded to the nearest whole with a half going to the even one (9 → 4, 7 → 4, 13 → 6, 18 → 9) — the rule every guide but Monad (7 → 5) follows today; written when it differs. `Step` stays a person's, counted from the guide's slides |
+| | `Lede` | where empty: the template every guide follows — "<N> steps across <the surfaces>, one per screen, each with the screen you should be looking at." — from `Step` and the slides' `Surface` values; where the leading count word disagrees with `Step` ("Seven steps…" on a nine-step guide) only that word is put right; otherwise a Lede someone wrote stays |
 
-**The job owns all three `meta:*` on all three databases** (the user, 2026-09-30: "I want this GitHub Action to update
-everything related to SEO") — except the chain pages' description, which the networks job already writes and keeps
-(one writer per property; the user caught the duplicate, 2026-09-30) — which needs Super to hold **no override** on those pages — an override beats Notion. Done
-the same day: `meta:title` added to the Guides Database and filled from Super's 32 guide title overrides (verbatim, but
-"Juno staking Guide" → "Juno Staking Guide"), "Double Zero" written to its Blogs row, and **all 43 title overrides
-cleared in Super** (32 guides, 11 posts — ten of the posts' were copies of the row's own name). Every one of the 43
-pages serves the title it had (checked after a refresh). Backup: `backups/super-title-overrides-2026-09-30.txt` (path,
-Notion row, Super page, title). No database page has a Super SEO override of any kind now. **Open with the user:** six
-guide titles do not follow "<Chain> Staking Guide" with the chain's own name — "Eigen Layer" (no "Staking Guide"),
-"Gravity" (Gravity Bridge), "Humans" (humans.ai), "Iota" (IOTA), "Ixo" (ixo), "Omniflix" (OmniFlix).
+Everything else — Author, Tags, Chain, Ticker, Mainnet, Published Time on a post; Step, Title, Network, the relations,
+Status on a guide; Tier, Order, Role, Since, Compounding, Address, Cover, Token on a chain — stays a person's.
+
+**The guide titles, as the pattern would write them** (proposed 2026-09-30 for the user's review; **not written yet —
+the user: "let me review and then start when I say"**):
+
+| Guide | Today | Proposed |
+|---|---|---|
+| agoric, althea, avail, avalanche, axelar, espresso, gitopia, ika, lumera, mina, monad, passage, sommelier, starknet, sui, supra, terra, zilliqa | "<Chain> Staking Guide" | "<Chain> staking guide - Encapsulate" (Agoric, Althea, Avail, Avalanche, Axelar, Espresso, Gitopia, Ika, Lumera, Mina, Monad, Passage, Sommelier, Starknet, Sui, Supra, Terra, Zilliqa) |
+| near | Near Staking Guide | Near staking guide - Encapsulate (the row's Name, as the chain page: "Near staking - Encapsulate") |
+| gravity-bridge | Gravity Staking Guide | Gravity Bridge staking guide - Encapsulate |
+| humans-ai | Humans Staking Guide | humans.ai staking guide - Encapsulate |
+| iota | Iota Staking Guide | IOTA staking guide - Encapsulate |
+| ixo | Ixo Staking Guide | ixo staking guide - Encapsulate |
+| eigen-layer | Eigen Layer | EigenCloud staking guide - Encapsulate |
+| eigen-layer-steth | Eigen Layer ETH Restaking Guide | **EigenCloud stETH restaking guide - Encapsulate** (the one hand exception — two guides share the chain; from its Title "Restake stETH with MetaMask") |
+| juno, namada, quicksilver, stargaze, ux (no row in the set) | "<Chain> Staking Guide" | Juno / Namada / Quicksilver / Stargaze / UX staking guide - Encapsulate |
+| omniflix | Omniflix Staking Guide | OmniFlix staking guide - Encapsulate |
+| mellow | Mellow Vault Staking Guide | Mellow staking guide - Encapsulate |
 
 **Left out:** `/guides/mina` until it has content (then it joins); `/governance/votes` (the record's database page:
 noindex, a table, no card); and every other database — Portfolio, Team, Why Stake, Colour, Wallet Set, Governance

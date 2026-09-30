@@ -98,17 +98,19 @@ item("S2", "none", "—", "“Routine releases inside 24 h” and the other prom
      "Nothing: these are promises, not measurements")
 
 # ---- blog and guides
-item("B1", "write", "content", "Read minutes on each post", "Blog and guides", "38 posts, all filled", "By hand", "Every new post",
-     "Fill it from the post's words")
-item("U1", "write", "content", "Steps and time on each guide", "Blog and guides", "32 guides, all filled", "By hand", "Every new guide",
-     "Fill it from the guide's own slides")
-item("E1", "write", "content", "Everything SEO on every database row: the social card, the title and the description", "Blog and guides",
+item("B1", "write", "content", "Read minutes on each post", "Blog and guides", "38 posts, all filled", "By hand", "Every new post, and a post whose words change",
+     "In the SEO job (the user, 30 Sep): the post's words at 230 a minute, rounded up, written when it differs")
+item("U1", "write", "content", "Time on each guide", "Blog and guides", "32 guides, all filled", "By hand", "Every new guide, and a guide whose Step changes",
+     "In the SEO job (the user, 30 Sep): half a minute a step, rounded to the nearest whole (a half to the even one) — the rule every guide but Monad follows today; Step itself stays a person's, from the guide's slides")
+item("E1", "write", "content", "Everything SEO on every database row: the social card, the title and the description — the guides' title as the chain pages', “<Chain> staking guide - Encapsulate”", "Blog and guides",
      "Every post, chain page and guide has all three today, in Notion: Super's 43 title overrides were moved there on 30 Sep", "`og_cards.py`, run by hand", "Every new row, and every row whose card would change: a post's title, tag, date, glyph or tint; a chain's name, line, button, address or glyph; a guide's Title, Lede, step count or marks",
      "Across the three databases whose rows are pages with content — Blogs (38), the Networks set's mainnets (27), Guides (31; /guides/mina is empty and waits) — the list read from the sitemap each run: make the card and text where missing or stale — stale when something the card actually shows changed (a hash of those inputs kept in state; a chain's rate is not on its card) — render in the runner's headless Chrome, upload, write `meta:*`; report a Super override that hides it (to build, asked 30 Sep)", new=True)
-item("B2", "write", "content", "Lede, chain, ticker and author on each post", "Blog and guides", "All filled", "By hand", "Every new post",
-     "Write the Lede from the post's opening, Chain and Ticker when the title or tag names a chain in the set; the Author goes in the email")
-item("B3", "write", "content", "Whether a post's chain is live yet", "Blog and guides", "Set per post", "By hand", "When a chain launches",
-     "Write Live once the chain has a mainnet row in the set")
+item("B2", "write", "content", "Lede on each post", "Blog and guides", "All filled", "By hand", "Every new post",
+     "In the SEO job (the user, 30 Sep): where empty, the post's opening paragraph cut at a sentence end to the head's length — the fallback post.js uses — written down so the card and description have it; a Lede someone wrote stays. Chain, Ticker, Author, Tags, Mainnet stay a person's")
+item("B3", "none", "—", "Whether a post's chain is live yet", "Blog and guides", "Set per post", "By hand", "When a chain launches",
+     "By hand (the user, 30 Sep: only Read, Time and the two Ledes join the job)")
+item("U3", "write", "content", "Lede on each guide", "Blog and guides", "All filled", "By hand", "Every new guide, and a guide whose Step changes",
+     "In the SEO job (the user, 30 Sep): where empty, the template every guide follows — “<N> steps across <the surfaces>, one per screen, each with the screen you should be looking at.” — from Step and the slides' Surface; where the leading count word disagrees with Step, only that word is put right; otherwise a Lede someone wrote stays", new=True)
 item("U2", "report", "content", "Wallet screenshots in the guides", "Blog and guides", "30 guides still carry the old captures", "By hand",
      "Wallets change their screens", "The oldest captures go in the email; a screenshot cannot be retaken by a job")
 

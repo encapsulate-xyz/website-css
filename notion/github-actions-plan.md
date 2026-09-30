@@ -66,10 +66,11 @@ only if we change it). The ids (H1, G1…) are what the workflows in section 4 r
 | C2 | the Lido, Vara, Chain4Energy chain pages | the green button points off-site | | hand | When their guides exist | Flag |
 | S1 | /security | "0 · slashing events since 2020" (twice) | 0 | hand | Only on an incident; must agree with N4 | Check against N4 |
 | S2 | /security | "Routine releases inside 24 h", "emergency releases inside one hour", "24/7 rotation" | | fixed (policy) | Only if the policy changes | — |
-| B1 | /blog "Shortest read" | Read (minutes) per post | filled 2026-09-26 | hand | Every new post | Fill |
-| B2 | the post head | Lede, Chain, Ticker, Author per post | | hand | Every new post | Report missing |
-| B3 | the ask at a post's foot | Mainnet (Live / Not yet launched) per post | | hand | When a chain launches | Report |
-| U1 | /guides picker | Step and Time per guide | | hand | Every new guide | Fill (from the guide's own slides) |
+| B1 | /blog "Shortest read" | Read (minutes) per post | filled 2026-09-26 | hand | Every new post, and a post whose words change | **Write, in the SEO job** (the user, 2026-09-30): the post's words at 230 a minute, rounded up |
+| B2 | the post head | Lede per post (Chain, Ticker, Author, Tags stay a person's) | | hand | Every new post | **Write, in the SEO job** (2026-09-30): where empty, the post's opening cut to the head's length — post.js's own fallback — written down; a hand-written Lede stays |
+| B3 | the ask at a post's foot | Mainnet (Live / Not yet launched) per post | | hand | When a chain launches | — by hand (the user, 2026-09-30: only Read, Time and the two Ledes join the job) |
+| U1 | /guides picker | Time per guide (Step stays a person's, from the slides) | | hand | Every new guide, and a guide whose Step changes | **Write, in the SEO job** (2026-09-30): half a minute a step, rounded to the nearest whole, a half to the even one — the rule every guide but Monad (7 → 5) follows today |
+| U3 | the guide head | Lede per guide | | hand | Every new guide, and a guide whose Step changes | **Write, in the SEO job** (2026-09-30): where empty, the template every guide follows — "<N> steps across <the surfaces>, one per screen, each with the screen you should be looking at." — from Step and the slides' Surface; where the leading count word disagrees with Step, only that word is put right |
 | U2 | guide pages | the wallet screenshots | | hand | Wallets change their screens | Flag old guides |
 | V1 | /services | Dashboards Status ("LIVE") | | hand | If a dashboard goes down | Write (check each Link loads) |
 | V2 | /services | Repository, Visibility of the playbooks and monitoring builds | | hand | If a repo moves or goes private | Report |
