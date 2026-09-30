@@ -9,6 +9,7 @@ body:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])) .notion-header
 .enc-ch__hero,.enc-ch__bandsec{scroll-snap-align: start;}
 }
 html:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])){overflow-anchor: none;}
+html:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])){scroll-padding-top: 0;}
 .enc-ch{--ink: #000;--ink7: #3A3D38;--paper: #FAFAF8;--paper2: #F2F2ED;--grey: #6B6F68;--hair: #E2E2DB;--green: #99CC66;--g-ring: #7CAE48;--green-ink: #3F6B27;--dark: #2A2C28;--padx: clamp(20px,4vw,44px);width: 100vw;margin-inline: calc(50% - 50vw);display: flex;flex-direction: column;font-family: "Hanken Grotesk",system-ui,sans-serif;color: var(--ink);background: var(--paper);}
 .enc-ch *,.enc-ch *::before,.enc-ch *::after{box-sizing: border-box;}
 .enc-ch__mono,.enc-ch-dock .enc-ch__mono{font-family: "JetBrains Mono",monospace;font-size: 10.5px;letter-spacing: 0.12em;text-transform: uppercase;color: var(--grey,#6B6F68);line-height: 1.3;}

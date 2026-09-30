@@ -367,17 +367,21 @@
      few seconds — retried only while the page is still where the last attempt left it, so a reader
      who has started scrolling is never pulled back. */
   function landHash() {
-    var id = (location.hash || "").slice(1).split(/[?&]/)[0], set = null, tries = 0;
+    var id = (location.hash || "").slice(1).split(/[?&]/)[0], tries = 0, moved = false;
     if (!id) return;
+    /* only the reader's own gesture stops the retries: the scroll position alone cannot tell them
+       apart — Super's router scrolled the page itself 300ms after the first landing (to 565px, seen
+       2026-09-30), and a check on scrollY took that for the reader and gave up half a screen short */
+    var GESTURE = ["wheel", "touchstart", "keydown"];
+    function gesture() { moved = true; }
+    GESTURE.forEach(function (t) { window.addEventListener(t, gesture, { passive: true, capture: true }); });
+    function stop() { GESTURE.forEach(function (t) { window.removeEventListener(t, gesture, { capture: true }); }); }
     function go() {
       var target = document.getElementById(id);
-      if (!target || !target.closest(".enc-ch")) return;
-      if (set != null && Math.abs(window.scrollY - set) > 2) return;   // the reader moved
+      if (moved || !target || !target.closest(".enc-ch")) return stop();
       var top = target.getBoundingClientRect().top;
-      /* landed: the band's top at the viewport's, or just under it — the page's own snap (proximity,
-         with Super's scroll padding) rests every band 62px down, and a link lands where a scroll would */
-      if (top < -2 || top > 96) { target.scrollIntoView(); set = window.scrollY; }
-      if (++tries < 6) setTimeout(go, [0, 300, 700, 1200, 2000, 3000][tries]);
+      if (Math.abs(top) > 2) target.scrollIntoView();   /* landed: the band's top at the viewport's */
+      if (++tries < 6) setTimeout(go, [0, 300, 700, 1200, 2000, 3000][tries]); else stop();
     }
     go();
   }

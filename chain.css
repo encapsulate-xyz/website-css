@@ -46,6 +46,10 @@ body:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])) .notion-header
   .enc-ch__hero, .enc-ch__bandsec { scroll-snap-align: start; }
 }
 html:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])) { overflow-anchor: none; }
+/* Super pads every anchor jump and snap rest 62px (`html { scroll-padding-top: 62px }`, for a fixed
+   header this site does not have): a band snapped or linked to (#terms from a guide) stood 62px down,
+   with a strip of the band before it showing above. The bands start at the top here (2026-09-30). */
+html:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])) { scroll-padding-top: 0; }
 
 .enc-ch {
   --ink: #000;
