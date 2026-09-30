@@ -2211,7 +2211,7 @@ main pages (Super overrides) and the chain pages (`meta:title`, written by `og_c
 | the old pages | 2026-09-28: 13 removed from Super (/snapshots and its nine — their downloads were dead, minioapi.kingsuper.services gone and snapshots.encapsulate.xyz 502 — /services/celestia, /investments/portfolio, /investments/axelar), 6 redirected (/lido-dvt-staking and its three clusters → /networks/lido-dvt, /eigen-layer → /networks/eigencloud, /team → /); /rewards-calculator removed too (the user, the same day). The Notion pages are untouched; their ids are in `backups/old-super-pages-2026-09-28.json`. **Never put noindex in the site-wide Code head** |
 | every post (38) | `meta:image` = its 17d card, `meta:description` = its Lede; three long titles shortened by `meta:title` (Berachain, Symbiotic, Canton) |
 | every chain page (27) | `meta:image` = its hero, `meta:title` = "<Name> staking - Encapsulate", `meta:description` = its facts sentence, and the facts as a paragraph in the page for crawlers that run no script (`chain_pages.py --facts`, 2026-09-28; chain.js hides it once it has built) |
-| every guide (32) | `meta:image` = its head, `meta:description` = "Title. Lede" (the Ledes alone repeated: 17 guides, 5 descriptions); the title stays Super's override ("Axelar Staking Guide") |
+| every guide (32) | `meta:image` = its head, `meta:description` = "Title. Lede" (the Ledes alone repeated: 17 guides, 5 descriptions), `meta:title` = "Axelar Staking Guide" (in Notion since 2026-09-30; it was a Super override until then) |
 | every page but the two noindex ones | a canonical `<link>` of its own address in its head (2026-09-28; see "Head files") |
 | structured data | v319 — see below |
 
@@ -2307,9 +2307,19 @@ pages) — every row page opened and read for content; only three databases qual
 
 | Database | `meta:image` | `meta:description` | `meta:title` |
 |---|---|---|---|
-| Blogs | the 17d card — it shows the **tag, the date, the title, the Cover glyph and the tint** (the post's place on the index) and nothing else; remade when one of those changes | = the row's `Lede` | **not written**: set by hand only where a title is too long for a result (3 posts: Berachain, Symbiotic, Canton); the job reports a new title over 60 characters that has none |
-| Networks set | the chain hero — it shows the **name, the line under it, the green button's label (the guide's wallet), the address in the ring, the glyph and the tint** (the chain's place in the set's Order); remade when one of those changes. **No rate, commission or unbonding is on the card** (the user caught this, 2026-09-30: the first version of this table said otherwise), so a value change never remakes it | **not written by this job** — the networks job (N7) already rewrites it with the facts after every value change | "<Name> staking - Encapsulate", written where missing or different |
-| Guides Database | the guide head — it shows the **chain's name (the crumb), `Title`, `Lede`, the step count ("Seven screens"), the chain's glyph and tint and the wallet's mark**; remade when one of those changes | = "`Title`. `Lede`" | **none** — the database has no such property; the page's title is Super's override ("Axelar Staking Guide") |
+| Blogs | the 17d card — it shows the **tag, the date, the title, the Cover glyph and the tint** (the post's place on the index) and nothing else; remade when one of those changes | = the row's `Lede` | = the post's `Name`, written where empty; a title someone shortened by hand stays (Berachain, Symbiotic, Canton, and "Double Zero" for "What is IBRL and Why Does It Matter?"); a new `Name` over 60 characters is reported for a hand |
+| Networks set | the chain hero — it shows the **name, the line under it, the green button's label (the guide's wallet), the address in the ring, the glyph and the tint** (the chain's place in the set's Order); remade when one of those changes. **No rate, commission or unbonding is on the card** (the user caught this, 2026-09-30: the first version of this table said otherwise), so a value change never remakes it | the facts sentence — the same function the networks job (N7) uses after a value change, so either job writes the same words | "<Name> staking - Encapsulate", written where missing or different |
+| Guides Database | the guide head — it shows the **chain's name (the crumb), `Title`, `Lede`, the step count ("Seven screens"), the chain's glyph and tint and the wallet's mark**; remade when one of those changes | = "`Title`. `Lede`" | "<Chain> Staking Guide" — the property was added on 2026-09-30 and filled from Super's 32 title overrides, which were then cleared (below); the job writes it where empty and never over a title someone worded by hand |
+
+**The job owns all three `meta:*` on all three databases** (the user, 2026-09-30: "I want this GitHub Action to update
+everything related to SEO"), which needs Super to hold **no override** on those pages — an override beats Notion. Done
+the same day: `meta:title` added to the Guides Database and filled from Super's 32 guide title overrides (verbatim, but
+"Juno staking Guide" → "Juno Staking Guide"), "Double Zero" written to its Blogs row, and **all 43 title overrides
+cleared in Super** (32 guides, 11 posts — ten of the posts' were copies of the row's own name). Every one of the 43
+pages serves the title it had (checked after a refresh). Backup: `backups/super-title-overrides-2026-09-30.txt` (path,
+Notion row, Super page, title). No database page has a Super SEO override of any kind now. **Open with the user:** six
+guide titles do not follow "<Chain> Staking Guide" with the chain's own name — "Eigen Layer" (no "Staking Guide"),
+"Gravity" (Gravity Bridge), "Humans" (humans.ai), "Iota" (IOTA), "Ixo" (ixo), "Omniflix" (OmniFlix).
 
 **Left out:** `/guides/mina` until it has content (then it joins); `/governance/votes` (the record's database page:
 noindex, a table, no card); and every other database — Portfolio, Team, Why Stake, Colour, Wallet Set, Governance

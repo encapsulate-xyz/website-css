@@ -102,8 +102,8 @@ item("B1", "write", "content", "Read minutes on each post", "Blog and guides", "
      "Fill it from the post's words")
 item("U1", "write", "content", "Steps and time on each guide", "Blog and guides", "32 guides, all filled", "By hand", "Every new guide",
      "Fill it from the guide's own slides")
-item("E1", "write", "content", "Social card, title and description on every database row", "Blog and guides",
-     "Every post, chain page and guide has them today", "`og_cards.py`, run by hand", "Every new row, and every row whose card would change: a post's title, tag, date, glyph or tint; a chain's name, line, button, address or glyph; a guide's Title, Lede, step count or marks",
+item("E1", "write", "content", "Everything SEO on every database row: the social card, the title and the description", "Blog and guides",
+     "Every post, chain page and guide has all three today, in Notion: Super's 43 title overrides were moved there on 30 Sep", "`og_cards.py`, run by hand", "Every new row, and every row whose card would change: a post's title, tag, date, glyph or tint; a chain's name, line, button, address or glyph; a guide's Title, Lede, step count or marks",
      "Across the three databases whose rows are pages with content — Blogs (38), the Networks set's mainnets (27), Guides (31; /guides/mina is empty and waits) — the list read from the sitemap each run: make the card and text where missing or stale — stale when something the card actually shows changed (a hash of those inputs kept in state; a chain's rate is not on its card) — render in the runner's headless Chrome, upload, write `meta:*`; report a Super override that hides it (to build, asked 30 Sep)", new=True)
 item("B2", "write", "content", "Lede, chain, ticker and author on each post", "Blog and guides", "All filled", "By hand", "Every new post",
      "Write the Lede from the post's opening, Chain and Ticker when the title or tag names a chain in the set; the Author goes in the email")
