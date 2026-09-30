@@ -40,6 +40,38 @@ This replaces the 1528 × 800 (1.91:1) canvas of 2026-09-18.
 | Annotation | one ink ring, 3px outside the control, baked into the capture (see *Annotating*) |
 | Redaction | one style for the whole set: same blur radius, or same solid box, never a mix |
 
+## Capturing — `scripts/guide_shot.mjs`, not DevTools (2026-09-30)
+
+DevTools' screenshots re-apply the device metrics for the capture, and a page that scrolls at the document level
+springs back to the top — with **Capture node screenshot** on `<html>` (a node screenshot of `<html>` is the whole
+document) and with ⌘⇧P → **Capture screenshot** in device mode alike (the user, 2026-09-30: "this is what I am doing
+but it's scrolling to the top"). So the captures are taken through the DevTools protocol by a script that holds the
+frame and touches nothing at capture time:
+
+```
+node --experimental-websocket scripts/guide_shot.mjs open [url]      # the Guides Chrome: its own profile, wallets installed once
+node --experimental-websocket scripts/guide_shot.mjs tabs            # index, title, address
+node --experimental-websocket scripts/guide_shot.mjs hold <tab> dashboard|wallet
+```
+
+`hold` sets the frame on that tab — **dashboard 1400 × 788 @2, wallet 360 × 788 @2** — and keeps it while it runs.
+Scroll and click in the window as for any step; in the terminal type a name and Enter and the viewport is captured
+**exactly as it stands** into `~/Desktop/guide-shots/<name>.png` (2800 × 1576 or 720 × 1576); Enter alone numbers the
+file; `q` stops and clears the frame. Every capture prints the scroll before and after (a moved page would say MOVED).
+Proved on 2026-09-30: a page scrolled 900px captured at 900 and stayed there.
+
+- **The Guides Chrome is its own profile** (`~/Library/Application Support/Encapsulate Guides`): Chrome 136+ refuses
+  remote debugging on the default profile. Install Keplr and MetaMask in it once (a wallet for the guides, not the
+  treasury) and sign in; the profile persists.
+- **A wallet step**: open the wallet's screen as a page in that Chrome (the `location.href` route below) and
+  `hold <tab> wallet`. The wallet's own popup or side panel is also a tab to the protocol when it is open — `tabs`
+  lists it by its `chrome-extension://` address — so a pending request can be held and shot where it is.
+- The frame is the protocol's device override, which lives only while the session is open — which is why `hold`
+  is one command, and why the earlier two-step (size, then shoot) could not work.
+
+The device-mode recipe below still describes the frames and the wallet routes; use DevTools only to *find* things
+(the wallet's address, its real size), never to shoot.
+
 ## Chrome custom devices
 
 DevTools → Settings → Devices → **Add custom device**. Type is **Desktop** (not "Desktop (touch)" —
