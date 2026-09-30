@@ -103,7 +103,18 @@ confirmed the new rates stand, and the rows were rewritten the same day: rate = 
 The four at 9% rose by their chain's daily limit (4 points); if they go to 10%, write them again. Agoric's Explorer is
 Mintscan since the same day (explorers.guru is gone).
 
-## Refreshing
+## Refreshed by site-data since 2026-09-30
+
+`jobs/networks/values.mjs` in the private `site-data` repo (daily, `networks.yml`) reads each Cosmos chain and writes
+Reward rate + Rate updated, Commission and Unbonding where they differ, then the chain page's facts. The rate's source
+per chain is `config/chains.json` `rate`: staking-explorer.com's measured APR (`terra2` for Terra — `terra` is Terra
+Classic, 2.34%), cosmos.directory's `calculated_apr` for Gravity Bridge, Chain4Energy's minter and distributor (8M C4E a
+year, 70% to validators, over the bonded stake — the same 7.8%), none for Sommelier. A rate that moves by more than a
+third is held for a hand; `ACCEPT=ixo node jobs/networks/values.mjs` writes it once. **First run, 2026-09-30:** Terra
+34.3 → 35.1% (measured 39%), Axelar 13.9 → 13.6%, Gravity Bridge 17.4 → 16.3%, humans.ai 31.8 → 31.7%, and **ixo 24.7 →
+12.4%** (staking-explorer's measured APR fell from ~27% to 13.8% since 24 Sep; the user accepted it).
+
+## Refreshing (by hand — the job above does this now)
 
 Rates drift; re-read them and set **Rate updated** in the same edit. The planned scheduled job
 (CLAUDE.md, "a GitHub Action to fill the APY property") should write Reward rate and Rate updated

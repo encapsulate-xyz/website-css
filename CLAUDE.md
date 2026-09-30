@@ -570,10 +570,13 @@ booking drawer (60). Escape, the button, a row or a resize past 959 close it.
   the link if one is set (none are), else `CONTENT`'s.
 - **A row opens its page through `window.next.router.push`** — the app router Super's own links
   use — so it stays a client-side navigation (checked: same document, /networks → /services).
-- **The rail is 98px, not the file's `128px` grid track**: the file's `.nav-compact {display:
-  flex !important}` also lands on the sheet, so the design renders as a flex row and the rail takes
-  its numerals' width. The render is what the user sees, and every number matched it at 390
-  (rail 98, cover 260×163, tabs 66×60, rows 67). Its comment's "88px rail, Outfit 34" is stale.
+- **The rail is its numerals' width, and the numerals follow the screen** (v341, the user, 2026-09-30:
+  "this number side bar is flexible, yours is fixed width"): the file's `.nav-compact {display: flex
+  !important}` also lands on the sheet, so its `clamp(76px, 24vw, 128px)` grid track never applies and the
+  rail is a flex item sized by its numerals — `clamp(28px, 8.4vw, 44px)` at `padding: 8px 6px` inside the
+  rail's `24px clamp(8px, 3vw, 16px) 32px`. Measured on the design's own render and on the live page with real
+  clicks: 70.6px at 360, 75.5 at 390, 97.9 from 524px up, identical. Until v341 the numerals were a fixed 44px
+  and the rail 98px on every phone (the 390 check of 2026-09-24 had matched an older file).
 - **`ground()` does not measure while the sheet is open** — the ground under the bar is then the
   sheet's own ink rail, and the paper bar turned ink (seen on /networks).
 - The design's row hover (`.nav-row:hover`, the second paper) is kept on paper only; on ink it
@@ -2120,7 +2123,26 @@ and the Sui candidate left the tracker. **Espresso's description lives
 on the node** (`encapsulate-xyz/espresso-ansible`, pull request #16) and **takes no commas**: Espresso's parser cuts a
 metric label at the first comma, so that one file carries the agreed words as sentences.
 
-## TODO — the GitHub Actions (planned 2026-09-25/26, not built)
+## site-data — the jobs (built 2026-09-30)
+
+**`github.com/encapsulate-xyz/site-data`** (private; cloned at `~/IdeaProjects/site-data`) holds the jobs the plan
+below asked for: plain Node, no dependencies, `DRY=1` writes nothing, one line of log and `out/<job>.md` → one issue a
+run (`bin/issue.mjs`), exit 1 = GitHub's failure mail. Its README has the rules and the layout. Running on a schedule
+since 2026-09-30: `governance.yml` (daily: votes — **our** votes, asked chain by chain; upgrades — a row only where
+running the release is the vote or it carries a proposal; rationales — fills only empty or boilerplate ones, never
+rewrites a written one), `networks.yml` (daily: Reward rate + Rate updated, Commission, Unbonding on the Cosmos rows,
+then the chain page's facts paragraph and `meta:description`; the rate from the source the row was researched with —
+staking-explorer's measured APR, `terra2` not `terra`, cosmos.directory for Gravity Bridge, Chain4Energy's minter — held
+for a hand when it moves by more than a third; `ACCEPT=<chain>` writes it once past the band) and `homepage.yml`
+(every six hours: the stats band's two headings from every mainnet's stake, priced on CoinGecko; a chain that fails to
+read keeps its last good reading in `state/stake.json`; the customers heading is written only when every chain that
+can count did — **Sui's ~10,000 stakers have no open source yet**, so it is held; Mina is a typed reading until a
+Blockberry key exists). **The Python scripts here (`gov_*.py`, `chain_pages.py --facts`) are superseded by those jobs
+for what they cover**; `notion/networks-set-values.md` records the rule, the job writes the values. First writes on
+2026-09-30 at the user's word: 20 upgrade rows and 21 References, the Lumera #14 vote, five rates (ixo 24.7% → 12.4%
+accepted past the band).
+
+## TODO — the GitHub Actions (planned 2026-09-25/26, mostly built 2026-09-30 — see "site-data" above)
 
 **The whole plan is `notion/github-actions-plan.md`** (rewritten 2026-09-27 as one document, and
 corrected the same day): what the user asked and what was answered, **the inventory of everything on
