@@ -947,7 +947,13 @@ from the post's own row. `post.js`'s `CONTENT` is only the fallback if that togg
 
 **The Blogs database carries the page's facts**: `Lede` (the head's two lines — a post's own
 opening is the fallback, cut to the same length), `Chain`, `Ticker`, `Mainnet` (Live / Not yet
-launched — which picks the foot's ask) and `Author` (the byline). All are read off the index's
+launched — which picks the foot's ask) and `Author` (meant for the byline). **As found 2026-10-01:** the byline
+is read from **Person** (Notion's "Created by", which nobody can edit) — `Author` is not shown on the /blog view and
+post.js only takes a two-word name from a text, so `Author` is read by nothing; 20 posts say "Aditya Verma", the row's
+creator. **Mainnet's "Live" and Status's "Live" are the same word**: post.js took the first, so the 15 posts with no
+Mainnet read Status and asked the reader to delegate SOL, TIA… with us. Since v343 "Not yet launched" wins and the live
+ask stands only for a chain in our set's list; the navbar files a post by blog.js's rule (first tag other than
+Informative, never a Mainnet or Status pill) — so the view's property order no longer matters to either. All are read off the index's
 cards, so **they must be shown on the /blog gallery view**; blog.css hides Super's card content, so
 the index looks unchanged.
 
