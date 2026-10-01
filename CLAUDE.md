@@ -1634,7 +1634,9 @@ grid at the foot of the guides not yet redone. That section — an empty paragra
 the Guides data source (`1f6e800a…8164…57da`, checked on each live page) and a column list holding a "View More
 Guides" button to /guides — was deleted from 30 guides (120 blocks, `backups/view-more-guides-2026-09-28.json`),
 then the property (its 32 images in `backups/guide-covers-2026-09-28/`). The guides end at their own content;
-the navbar and the footer reach /guides. **Ticker** on the Guides database is read by nothing and can go too.
+the navbar and the footer reach /guides. **Ticker** on the Guides database was read by nothing and was deleted on
+2026-10-01 (values in `backups/guides-ticker-2026-10-01.json`); the ticker in a guide's Title ("Stake MON with
+MetaMask") is typed by hand — no job writes Title.
 **The picker falls back to a guide's Name when its Networks set is empty** (guides.js `read()`), so a guide named
 "Stake … with …" (the template's pattern since 2026-09-28) must have its Networks set.
 
