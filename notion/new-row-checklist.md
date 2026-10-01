@@ -128,7 +128,8 @@ the steps of the SEO audit of 2026-09-26/28, for Google and for AI search. Keep 
       replace the sample step with the real ones. ("View More Guides", its gallery and its button were
       taken out on 2026-09-28: a guide page hides them and takes the next guide from the /guides index,
       and its close band carries "All guides". It was taken out of every other guide the same day.)
-- [ ] **Properties:** Name, **Title** ("Stake AXL with Keplr" — the head's title), **Lede** (the head's
+- [ ] **Properties:** **Name** — the guide's title, "Stake AXL with Keplr" (the head, the navbar, the picker, the card;
+      there is no Title property since 2026-10-01), **Lede** (the head's
       line; also the description), **Networks set** relation (the mainnet row — the chain's mark; its
       path in Super is /guides/<chain>), **Wallet Set** relation (the wallet must be a
       Wallet Set row with its glyph in Files & media), Step, Time, Network (Mainnet / Testnet; Rough
