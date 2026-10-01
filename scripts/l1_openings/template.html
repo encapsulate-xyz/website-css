@@ -21,15 +21,22 @@
     --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
   }
   body { background: var(--ground); color: var(--text); font: 400 15.5px/1.6 var(--body); padding-inline: clamp(16px, 4vw, 40px); padding-block: 44px 96px; -webkit-font-smoothing: antialiased; }
-  .wrap { max-width: 1320px; margin: 0 auto; display: flex; flex-direction: column; gap: 44px; }
-  /* the page: a rail on the left carrying the section list and every filter, the body on the right; one
-     column under 1000px, where the rail stands over the body and is not sticky */
-  .page { display: grid; grid-template-columns: 236px minmax(0, 1fr); gap: 44px; align-items: start; }
-  .rail { position: sticky; top: 16px; display: flex; flex-direction: column; gap: 24px; max-height: calc(100vh - 32px); overflow-y: auto; scrollbar-width: thin; padding-bottom: 8px; }
-  .body { display: flex; flex-direction: column; gap: 52px; min-width: 0; }
+  .wrap { max-width: 1520px; margin: 0 auto; display: flex; flex-direction: column; gap: 44px; }
+  /* the page: the filters in a rail on the left, the body, the section list in a rail on the right (the user,
+     2026-10-01: "move toc to the right"). Under 1200px the section list is a row of links over the body; under
+     1000px everything is one column — the links, the filters, the body — and nothing is sticky */
+  .page { display: grid; grid-template-columns: 236px minmax(0, 1fr) 196px; grid-template-areas: "filters body toc"; column-gap: 40px; align-items: start; }
+  .rail { grid-area: filters; position: sticky; top: 16px; display: flex; flex-direction: column; gap: 24px; max-height: calc(100vh - 32px); overflow-y: auto; scrollbar-width: thin; padding-bottom: 8px; }
+  .toc-rail { grid-area: toc; position: sticky; top: 16px; }
+  .body { grid-area: body; display: flex; flex-direction: column; gap: 52px; min-width: 0; }
+  @media (max-width: 1199px) {
+    .page { grid-template-columns: 236px minmax(0, 1fr); grid-template-areas: "filters toc" "filters body"; row-gap: 28px; }
+    .rail { grid-row: 1 / span 2; }
+    .toc-rail { position: static; }
+  }
   @media (max-width: 999px) {
-    .page { grid-template-columns: minmax(0, 1fr); gap: 32px; }
-    .rail { position: static; max-height: none; overflow: visible; }
+    .page { grid-template-columns: minmax(0, 1fr); grid-template-areas: "toc" "filters" "body"; gap: 32px; }
+    .rail { grid-row: auto; position: static; max-height: none; overflow: visible; }
   }
   h1, h2, h3, h4 { font-family: var(--display); color: var(--ink); margin: 0; text-wrap: balance; }
   h1 { font-weight: 600; font-size: clamp(32px, 5vw, 50px); line-height: 1.04; letter-spacing: -0.03em; }
@@ -56,7 +63,9 @@
   .toc a:hover { color: var(--ink); background: var(--sunk); }
   .toc a[aria-current="true"] { color: var(--ink); border-left-color: var(--ink); background: var(--sunk); }
   .toc a[aria-current="true"] i { color: var(--ink); }
-  @media (max-width: 999px) {
+  .toc-rail h4 { margin: 0 0 8px 12px; font: 400 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+  @media (max-width: 1199px) {
+    .toc-rail h4 { display: none; }
     .toc { flex-direction: row; flex-wrap: wrap; gap: 8px; }
     .toc a { display: inline-flex; padding: 8px 14px; border: 1px solid var(--line-2); border-left-width: 1px; background: var(--card); box-shadow: var(--shadow); color: var(--ink); }
     .toc a i { display: none; }
@@ -283,9 +292,6 @@
 
   <div class="page">
   <aside class="rail">
-    <nav class="toc" aria-label="On this page">
-      <a href="#start"><i>01</i>Start here</a><a href="#all"><i>02</i>Every network</a><a href="#testnets"><i>03</i>Already in by testnet</a><a href="#opening"><i>04</i>Not on mainnet yet</a><a href="#ethereum"><i>05</i>Ethereum</a><a href="#none"><i>06</i>No validator role</a><a href="#method"><i>07</i>How this was researched</a>
-    </nav>
     <div class="card bar" id="filters">
       <div class="f-group">
         <label class="check worth"><input type="checkbox" id="f-worth" checked><span>Worth our time</span><i id="worth-n"></i></label></div>
@@ -370,6 +376,11 @@
   <footer><span>Left out on purpose, because we already validate them on mainnet: {{EXCLUDED}}.</span>
     <span>Built by scripts/l1_openings in the website-css repo. The research files are kept out of that public repo.</span></footer>
   </div>
+  <aside class="toc-rail"><h4>On this page</h4>
+    <nav class="toc" aria-label="On this page">
+      <a href="#start"><i>01</i>Start here</a><a href="#all"><i>02</i>Every network</a><a href="#testnets"><i>03</i>Already in by testnet</a><a href="#opening"><i>04</i>Not on mainnet yet</a><a href="#ethereum"><i>05</i>Ethereum</a><a href="#none"><i>06</i>No validator role</a><a href="#method"><i>07</i>How this was researched</a>
+    </nav>
+  </aside>
   </div>
 </div>
 
@@ -425,7 +436,11 @@
       el.hidden = !ok;
       if (ok && !el.classList.contains("pick")) n++;
     });
-    levels.forEach(function (l) { l.hidden = !l.querySelector(".row:not([hidden])"); });
+    levels.forEach(function (l) {
+      var v = l.querySelectorAll(".row:not([hidden])").length, c = l.querySelector(".l-head .count");
+      l.hidden = !v;
+      if (c && c.textContent !== String(v)) c.textContent = v;
+    });
     // a section whose every network is hidden says so, in place of its list
     [].slice.call(document.querySelectorAll("section")).forEach(function (sec) {
       var note = sec.querySelector("[data-empty]"); if (!note) return;
