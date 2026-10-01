@@ -381,9 +381,10 @@
       var texts = propsOf(c).filter(function (t) { return !/^\d+$/.test(t); });
       var chain = texts.filter(function (t) { return marks[t.toLowerCase()]; })[0] ||
         (marks[title.toLowerCase()] ? title : "");
-      /* a row reads as the guide's own Title, "Stake AVAX with Core" (the user, 2026-09-28), with
-         the wallet beside it; a guide without a Title on its card falls back to the chain */
-      var what = texts.filter(function (t) { return / with /i.test(t); })[0] || "";
+      /* a row reads as the guide's own title, "Stake AVAX with Core" (the user, 2026-09-28) — its page title
+         (Name) since 2026-10-01 — with the wallet beside it; a guide whose title is not of that shape falls back to
+         the chain */
+      var what = / with /i.test(title) ? title : (texts.filter(function (t) { return / with /i.test(t); })[0] || "");
       var wallet = texts.filter(function (t) { return t !== chain && t !== what; })[0] || "";
       return { name: what || chain || title, wallet: wallet, chain: chain,
         glyph: marks[(chain || title).toLowerCase()] || "", href: linkOf(c) || "/guides" };

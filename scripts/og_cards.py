@@ -162,7 +162,7 @@ def jobs_guides(tmp, only):
         cmark = [u for u in val(c, "Cover") or [] if u] if c else []
         wmark = [u for u in val(w, "Files & media") or [] if u] if w else []
         g = {"crumb": words["crumb"], "screens": words["screens"], "scroll": words["scroll"],
-             "name": val(r, "Name"), "chain": val(c, "Name") if c else "", "title": val(r, "Title"),
+             "name": val(r, "Name"), "chain": val(c, "Name") if c else "", "title": val(r, "Name"),
              "lede": val(r, "Lede"), "steps": int(val(r, "Step") or 0),
              "chainMark": fetch(cmark[0], tmp, "c-" + (c["id"] if c else "") + ".png") if cmark else "",
              "walletMark": fetch(wmark[0], tmp, "w-" + (w["id"] if w else "") + ".png") if wmark else ""}
@@ -173,9 +173,10 @@ def jobs_guides(tmp, only):
 
 
 def guide_description(r):
-    """A guide's meta:description: its Title, then its Lede (2026-09-28). The Ledes follow one sentence
-    pattern, so on their own 17 guides shared 5 descriptions word for word."""
-    title, lede = (val(r, "Title") or "").rstrip("."), val(r, "Lede") or ""
+    """A guide's meta:description: its title (the page's Name since 2026-10-01; a Title property before), then its
+    Lede (2026-09-28). The Ledes follow one sentence pattern, so on their own 17 guides shared 5 descriptions word
+    for word."""
+    title, lede = (val(r, "Name") or "").rstrip("."), val(r, "Lede") or ""
     return "%s. %s" % (title, lede) if title and lede else lede
 
 

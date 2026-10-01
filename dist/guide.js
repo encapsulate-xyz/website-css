@@ -243,15 +243,13 @@
       card.querySelectorAll(".notion-property__relation .notion-page__title"), textOf).filter(Boolean);
     var nums = Array.prototype.map.call(
       card.querySelectorAll(".notion-property__number"), textOf).filter(Boolean);
-    /* the two text properties are Title and Lede: the lede is the long one */
-    var title = "", lede = "";
-    texts.forEach(function (t) {
-      if (t.length > 90) { if (t.length > lede.length) lede = t; }
-      else if (!title) title = t;
-    });
+    /* the guide's title is its page title, Name — "Stake AVAX with Core" (2026-10-01; it was a Title property
+       beside a Name that had drifted) — and the Lede is its text property, the longest text that is not the name */
+    var name = textOf(card.querySelector(".notion-property__title")), lede = "";
+    texts.forEach(function (t) { if (t !== name && t.length > lede.length) lede = t; });
     return {
-      name: textOf(card.querySelector(".notion-property__title")),
-      title: title,
+      name: name,
+      title: name,
       lede: lede,
       chain: pages[0] || "",
       wallet: pages[1] || "",
