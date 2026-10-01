@@ -70,8 +70,8 @@ the steps of the SEO audit of 2026-09-26/28, for Google and for AI search. Keep 
       paragraph — nothing else. Status starts as In Progress — set Live when it is ready. ("More Blog
       Posts", its gallery and its button were taken out on 2026-09-28: the post page hides them and
       takes the next post from the /blog index, and its foot links back to /blog.)
-- [ ] **Properties:** Name (the title), Published Time, Tags (the first tag that is not Informative is
-      its category: one of Networks, Trends, Security, Zero knowledge, Operations), Status = **Live** (anything else is left off the index),
+- [ ] **Properties:** Name (the title), Published Time, Tags (**one**, the post's category: Networks,
+      Trends, Security, Zero knowledge or Operations), Status = **Live** (anything else is left off the index),
       **Lede** (the head's two lines), **Network** — pick the post's row in the Networks set (its mainnet row
       if we run the mainnet, else its testnet row; leave it empty for a chain not in the set or a post about
       no chain): it gives the closing ask, its chain name, the link and, through **Network token**, the ticker —
