@@ -143,7 +143,8 @@
       c.querySelectorAll(".notion-property__text"), textOf).filter(Boolean);
     /* the pills are matched by value, not by order: the state, whether the chain is ours, and
        whatever is left is the post's tag */
-    var pills = Array.prototype.map.call(c.querySelectorAll(".notion-pill"), textOf);
+    /* only the select properties' pills (Tags, Mainnet, Status): a relation or a rollup on the card is not a tag */
+    var pills = Array.prototype.map.call(c.querySelectorAll(".notion-property__select .notion-pill"), textOf);
     /* "Not yet launched" can only be Mainnet's; "Live" is Mainnet's or Status's (every post on the index is Status
        Live), so it is read as a stage only when it is the one Mainnet would carry — and foot() keeps the live ask
        only for a chain that is one of ours (2026-10-01: Solana's and Celestia's posts, Mainnet empty, read Status's

@@ -394,7 +394,7 @@
     return all(doc, ".notion-collection-card").slice(0, limit || undefined).map(function (c) {
       /* the post's tag the way /blog files it (blog.js): its first tag other than "Informative", never the
          Mainnet or Status pill the view also shows, whatever order the view puts them in */
-      var pills = Array.prototype.map.call(c.querySelectorAll(".notion-pill"), function (p) { return p.textContent.trim(); })
+      var pills = Array.prototype.map.call(c.querySelectorAll(".notion-property__select .notion-pill"), function (p) { return p.textContent.trim(); })
         .filter(function (n) { return n && !/^(live|not yet launched|we run it|not ours)$/i.test(n); });
       var tag = pills.filter(function (n) { return !/^informative$/i.test(n); })[0] || pills[0] || "";
       return { name: titleOf(c), tag: tag,
