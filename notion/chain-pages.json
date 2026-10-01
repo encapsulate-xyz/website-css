@@ -1050,7 +1050,7 @@
    }
   },
   {
-   "name": "Near",
+   "name": "NEAR",
    "token": "NEAR",
    "since": "2025-09-26",
    "unbonding": "22–30 hours",
@@ -1060,7 +1060,7 @@
    "wallet": {
     "label": "Delegate with Meteor",
     "url": "https://www.notion.so/27ae800a513880aea9fad4b57231b7db",
-    "guide": "/guides (Near)"
+    "guide": "/guides (NEAR)"
    },
    "work": [
     [

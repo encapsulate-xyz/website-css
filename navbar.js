@@ -394,7 +394,7 @@
     return all(doc, ".notion-collection-card").slice(0, limit || undefined).map(function (c) {
       /* the post's tag the way /blog files it (blog.js): its first tag other than "Informative", never the
          Mainnet or Status pill the view also shows, whatever order the view puts them in */
-      var pills = Array.prototype.map.call(c.querySelectorAll(".notion-property__select .notion-pill"), function (p) { return p.textContent.trim(); })
+      var pills = Array.prototype.map.call(c.querySelectorAll(".notion-property__select:not(.property-undefined) .notion-pill"), function (p) { return p.textContent.trim(); })
         .filter(function (n) { return n && !/^(live|not yet launched|we run it|not ours)$/i.test(n); });
       var tag = pills.filter(function (n) { return !/^informative$/i.test(n); })[0] || pills[0] || "";
       return { name: titleOf(c), tag: tag,
@@ -640,7 +640,7 @@
      read from the pages themselves when a box is first used: the design's lists were copied from its
      own files on 28 Sep and would drift. The words are here, as the rest of the bar's are. */
   var SEARCH = {
-    "Networks": { tok: "Networks", noun: "networks", ex: ["Sui", "Monad", "Axelar", "Near", "Avalanche"], cols: 3, item: "net",
+    "Networks": { tok: "Networks", noun: "networks", ex: ["Sui", "Monad", "Axelar", "NEAR", "Avalanche"], cols: 3, item: "net",
       none: "No network called “{q}”.", hint: "Try a chain’s name." },
     "Services": { tok: "Tools", noun: "tools", ex: ["Sui", "Cosmos SDK", "Solana", "Monad", "Axelar"], cols: 3, item: "row",
       groups: [["Dashboard", "Dashboards"], ["Playbook", "Playbooks"], ["Bot", "Bots"], ["Monitoring", "Monitoring"], ["Script", "Scripts"]],

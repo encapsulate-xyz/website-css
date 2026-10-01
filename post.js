@@ -138,13 +138,15 @@
   function read(c) {
     if (!c) return null;
     var img = c.querySelector("img");
-    var a = c.querySelector("a[href]");
+    var a = c.querySelector("a.notion-collection-card__anchor[href]") || c.querySelector("a[href]");
+    /* Super draws a rollup without the property-<hash> class every other property carries ("property-undefined"):
+       the Network token is read on its own below, so the typed texts are the rest */
     var texts = Array.prototype.map.call(
-      c.querySelectorAll(".notion-property__text"), textOf).filter(Boolean);
+      c.querySelectorAll(".notion-property__text:not(.property-undefined)"), textOf).filter(Boolean);
     /* the pills are matched by value, not by order: the state, whether the chain is ours, and
        whatever is left is the post's tag */
     /* only the select properties' pills (Tags, Mainnet, Status): a relation or a rollup on the card is not a tag */
-    var pills = Array.prototype.map.call(c.querySelectorAll(".notion-property__select .notion-pill"), textOf);
+    var pills = Array.prototype.map.call(c.querySelectorAll(".notion-property__select:not(.property-undefined) .notion-pill"), textOf);
     /* "Not yet launched" can only be Mainnet's; "Live" is Mainnet's or Status's (every post on the index is Status
        Live), so it is read as a stage only when it is the one Mainnet would carry — and foot() keeps the live ask
        only for a chain that is one of ours (2026-10-01: Solana's and Celestia's posts, Mainnet empty, read Status's
@@ -165,13 +167,24 @@
       else if (t.length <= 24 && !chain) chain = t;
     });
     if (!author) author = textOf(c.querySelector(".notion-property__person"));
+    /* the post's Network (2026-10-01): a relation to its row of the Networks set, which Super draws as a link to the
+       row — to /networks/<chain> where the row is a mainnet of ours, to a bare id where it is a testnet. Where a post
+       has one it gives the chain's name and our stage there, and the "Network token" rollup its ticker; the typed
+       Chain, Ticker and Mainnet are read only for a post without one */
+    var net = c.querySelector(".notion-property__relation a[href]"), netHref = "";
+    if (net && textOf(net)) {
+      chain = textOf(net);
+      netHref = net.getAttribute("href") || "";
+      live = /^\/networks\/[^/?#]+$/.test(netHref) ? "Live" : "Not yet launched";
+      ticker = textOf(c.querySelector(".notion-property__text.property-undefined"));
+    }
     return {
       title: textOf(c.querySelector(".notion-property__title")),
       tag: tag,
       date: textOf(c.querySelector(".date")),
       glyph: img ? original(img.getAttribute("src")) : "",
       href: a ? a.getAttribute("href") : "",
-      chain: chain, ticker: ticker, lede: lede, author: author,
+      chain: chain, ticker: ticker, lede: lede, author: author, chainHref: /^\/networks\//.test(netHref) ? netHref : "",
       stage: /^live$/i.test(live) ? "live" : (/^not yet launched$/i.test(live) ? "soon" : "")
     };
   }
@@ -273,6 +286,7 @@
      the button stays on /networks until the list arrives or if the chain has no page. */
   function nameKey(s) { return (s || "").toLowerCase().replace(/[^a-z0-9]/g, ""); }
   function chainPage(post, a) {
+    if (post.chainHref) { a.href = post.chainHref; return; }
     if (!window.encCounts) return;
     var key = nameKey(post.chain);
     Promise.resolve(window.encCounts()).then(function (c) {
