@@ -20,7 +20,12 @@ const chrome = spawn(CHROME, [
   `--user-data-dir=${profile}`, "--window-size=1200,630", "about:blank"], { stdio: "ignore" });
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 let port = 0;
-for (let i = 0; i < 60 && !port; i++) { await sleep(200); try { port = +readFileSync(join(profile, "DevToolsActivePort"), "utf8").split("\n")[0]; } catch {} }
+// a cold GitHub runner can take longer than the Mac to start Chrome: wait up to 30s, and say so if it never answers
+// (2026-10-02 — the content job's guide cards failed with no word of why)
+let chromeExit = null;
+chrome.on("exit", code => { chromeExit = code; });
+for (let i = 0; i < 150 && !port && chromeExit === null; i++) { await sleep(200); try { port = +readFileSync(join(profile, "DevToolsActivePort"), "utf8").split("\n")[0]; } catch {} }
+if (!port) { console.error(`render.mjs: Chrome (${CHROME}) did not open its debugging port${chromeExit !== null ? `; it exited with ${chromeExit}` : " in 30s"}`); process.exit(1); }
 const browser = await (await fetch(`http://127.0.0.1:${port}/json/version`)).json();
 const bws = new WebSocket(browser.webSocketDebuggerUrl);
 await new Promise(r => bws.addEventListener("open", r));
