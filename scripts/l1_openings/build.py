@@ -100,7 +100,7 @@ for name, flag in (picks.get("flags") or {}).items():
 for name, new in (picks.get("rename") or {}).items():
     hit = [x for x in rows if x["_id"] == key(name)]
     if not hit: sys.exit("picks.json renames a network that is not in the research: " + name)
-    hit[0]["chain"] = new
+    hit[0]["_name0"] = hit[0]["chain"]; hit[0]["chain"] = new
 rows = [x for x in rows if x["_id"] not in [key(n) for n in picks.get("drop", [])]]
 # every network carries a tier on the Networks set's own scale ("tiers": {chain: "god"|"high"|"medium"|"low"|"filth"})
 TIERS = ["god", "high", "medium", "low", "filth"]
@@ -119,6 +119,30 @@ for x in eth_rows:
 for x in rows:
     try: x["difficulty"] = int(x.get("difficulty"))
     except Exception: x["difficulty"] = 3
+
+# "Worth our time": every entry gets a verdict, shown by default and hidden only behind the rail's filter (the user,
+# 2026-10-01: "hide them by default … nothing is lost"). The test: a validator or operator role an outside operator can
+# take now or within about a year, on a project of substance. The first rule that applies decides:
+#   picks.json "worth" {chain: {"worth": bool, "why": str}}, a hand's decision · the research's own worth_adding ·
+#   we are in already (a flag "Already in"/"Partly in", or a testnet of ours) · a pick or the baseline · no validator
+#   role · closed · being wound down · pays too little · no paid role (Ethereum) · the filth tier · otherwise worth it.
+def verdict(x):
+    hands = picks.get("worth") or {}
+    hand = hands.get(x["chain"]) or hands.get(x.get("_name0", ""))
+    if isinstance(hand, dict) and "worth" in hand: return bool(hand["worth"]), hand.get("why") or ""
+    if isinstance(x.get("worth_adding"), bool): return x["worth_adding"], str(x.get("worth_why") or "")
+    fl = (x.get("_flag") or {}).get("label")
+    if fl in ("Already in", "Partly in") or x.get("group") == "our testnet": return True, "We are in already."
+    if x["_id"] in pick_ids or str(x.get("kind")) == "solo baseline": return True, ""
+    if x["difficulty"] == 0: return False, "No validator role an operator can take."
+    if x["difficulty"] == 5: return False, "Closed to outside operators today, with no stated way in."
+    if fl == "Winding down": return False, "Being wound down."
+    if fl == "Pays little": return False, "Easy to join, but pays too little to cover running it."
+    k, t = x.get("earn_per_key_usd"), x.get("earn_typical_usd")
+    if x.get("group") == "ethereum" and (k == 0 or t == 0) and not (k or t): return False, "No paid role for an operator."
+    if x["_tier"] == "filth": return False, "Too small: the bottom tier by market value."
+    return True, ""
+def WORTH_ATTR(x): return 'data-worth="%s"' % ("yes" if x["_worth"] else "no")
 
 # the review mark: one button per network, shown only when the page's database is there (the page script unhides it)
 RV = '<button type="button" class="rv" data-rv="%s" aria-pressed="false" hidden><span class="rv-box" aria-hidden="true"></span><span class="rv-t">Mark reviewed</span></button>'
@@ -237,6 +261,10 @@ for n in picks.get("testnet_only", []):
     if not any(x["_id"] == key(n) for x in rows): sys.exit("picks.json names a testnet that is not in the research: " + n)
 for x in rows:
     if x["_id"] in early and x.get("group") != "our testnet": x["group"] = "upcoming"
+pick_ids = {key(p["chain"]) for p in (picks.get("picks") or [])}
+for x in rows + eth_rows: x["_worth"], x["_worth_why"] = verdict(x)
+for name in (picks.get("worth") or {}):
+    if not any(name in (x["chain"], x.get("_name0")) for x in rows + eth_rows): sys.exit("picks.json judges a network that is not in the research: " + name)
 testnets = sorted([x for x in rows if x.get("group") == "our testnet"], key=order)
 opening = sorted([x for x in rows if x.get("group") == "upcoming" and x["difficulty"] != 0], key=order)
 rest = [x for x in rows if x.get("group") not in ("our testnet", "upcoming")] + [x for x in rows if x.get("group") == "upcoming" and x["difficulty"] == 0]
@@ -268,6 +296,7 @@ def render(x, n, level_chip=False):
     if x.get("group") == "ethereum" and x.get("kind"): chips += '<span class="chip plain">%s</span>' % e(str(x["kind"])[:1].upper() + str(x["kind"])[1:])
     if x.get("_flag"): chips += '<span class="chip %s">%s</span>' % ("in" if x["_flag"]["label"] in ("Already in", "Partly in") else "dead", e(x["_flag"]["label"]))
     if rec: chips += '<span class="chip yes">Taking operators</span>'
+    if not x["_worth"]: chips += '<span class="chip aside">Set aside</span>'
     own, act = money(x, "min_self_stake", "min_self_stake_usd"), money(x, "stake_to_be_active", "stake_to_be_active_usd")
     own_s, act_s = short(x, "min_self_stake", "min_self_stake_usd"), short(x, "stake_to_be_active", "stake_to_be_active_usd")
     vals = x.get("validators_now"); cap = x.get("seat_cap")
@@ -288,19 +317,20 @@ def render(x, n, level_chip=False):
     src = ", ".join('<a href="%s" target="_blank" rel="noopener noreferrer">%s</a>' % (e(u), e(host(u))) for u in lst(x.get("sources")) if str(u).startswith("http"))
     unk = "; ".join(lst(x.get("unknowns")))
     conf = str(x.get("confidence") or "").lower()
-    return ('<li class="row" data-key="{key}" data-d="{d}" data-rec="{rec}" data-help="{help}" data-tier="{tier}" data-text="{text}">'
+    return ('<li class="row" data-key="{key}" {worth} data-d="{d}" data-rec="{rec}" data-help="{help}" data-tier="{tier}" data-text="{text}">'
             '<div class="r-head"><button type="button" class="r-toggle" aria-expanded="false"><span class="r-n">{n}</span>'
             '<span class="r-name"><span class="r-title">{chain}<span class="tok">{tok}</span></span><span class="r-what">{what}</span></span></button>'
             '<div class="r-facts"><span><em>{f1}</em>{own}</span><span><em>{f2}</em>{act}</span><span><em>Earns a year</em><span>{earn}</span></span></div>'
             '<div class="r-meta">{chips}{rv}<button type="button" class="chev" tabindex="-1" aria-hidden="true"></button></div></div>'
             '<div class="r-panel" hidden>'
-            '{dead}<div class="blk why" data-d="{d}"><span><b>{lv}.</b> {why}</span></div>'
+            '{aside}{dead}<div class="blk why" data-d="{d}"><span><b>{lv}.</b> {why}</span></div>'
             '<div class="blk next"><span><b>First step.</b> {nxt}</span></div>'
             '{steps}{prog}'
             '<div class="blk wide"><dl class="kv">{kv}</dl></div>'
             '<div class="blk wide src">{conf}{unk}<span>Sources: {src}</span></div>'
             '</div></li>').format(
         dead=('<div class="blk wide %s"><span><b>%s.</b> %s</span></div>' % ("in" if x["_flag"]["label"] in ("Already in", "Partly in") else "dead", e(x["_flag"]["label"]), linked(x["_flag"]["why"]))) if x.get("_flag") else "",
+        worth=WORTH_ATTR(x), aside=('<div class="blk wide aside"><span><b>Set aside, not worth our time.</b> %s</span></div>' % linked(x["_worth_why"])) if not x["_worth"] and not (x.get("_flag") and x["_flag"]["label"] in ("Winding down", "Pays little")) else "",
         d=d, rec="yes" if rec else "no", help="yes" if help_open else "no", tier=x["_tier"], text=e(text), n="%02d" % n, chain=e(x["chain"]), tok=e(tok(x)), what=linked(x.get("what") or ""),
         earn=eth_earns_short(x) if x.get("group") == "ethereum" else earns_short(x), key=x["_id"], rv=(RV % x["_id"]),
         f1="Bond" if x.get("group") == "ethereum" else "Our own stake",
@@ -324,6 +354,7 @@ for d in (1, 2, 3, 4, 5):
 KINDS = [("liquid staking", "Liquid staking operator sets", "Run validators for a liquid-staking protocol's ETH: a curated seat, a bonded permissionless module, or vaults of your own."),
          ("DVT", "Distributed validator networks", "Operate a share of validators run as a cluster with other operators."),
          ("restaking", "Restaking operators", "Run the services restaked ETH secures, paid by the services and the restakers who delegate to you."),
+         ("validator network", "Validator networks", "Networks on Ethereum that pay a set of validators to check or secure something other than blocks."),
          ("staking marketplace", "Institutional routers", "Platforms and custodians that send their clients' ETH to independent operators."),
          ("L2 validation", "L2 sequencing, validation and proving", "Roles on Ethereum rollups and the proving markets that serve them."),
          ("preconfirmations", "Preconfirmations and relays", "Proposer-commitment networks and relays around Ethereum's block building."),
@@ -353,7 +384,7 @@ testnet_html = ('<ul class="rows card">%s</ul>' % tn) if tn else '<div class="ca
 op = "".join(render(x, i + 1, True) for i, x in enumerate(opening))
 opening_html = ('<ul class="rows card">%s</ul>' % op) if op else '<div class="card empty"><span>None in this research.</span></div>'
 # a no-role line carries the same filter attributes as a row (level 0: it shows only under "All")
-none_html = "".join('<li data-key="%s" data-d="0" data-rec="no" data-help="no" data-tier="%s" data-text="%s"><b>%s <span class="chip tier" data-tier="%s">%s</span></b><span>%s %s</span></li>'
+none_html = "".join('<li data-key="%s" data-worth="no" data-d="0" data-rec="no" data-help="no" data-tier="%s" data-text="%s"><b>%s <span class="chip tier" data-tier="%s">%s</span></b><span>%s %s</span></li>'
                     % (x["_id"], x["_tier"], e(" ".join([x["chain"], str(x.get("token") or ""), x["_tier"], str(x.get("what") or ""), str(x.get("difficulty_why") or "")]).lower()),
                        e(x["chain"]), x["_tier"], x["_tier"], linked(x.get("difficulty_why") or x.get("what") or ""), RV % x["_id"]) for x in none) or "<li><b>None</b><span></span></li>"
 
@@ -368,7 +399,7 @@ for p in picks["picks"]:
     # a pick carries the row's filter attributes too, so the rail's filters reach it
     text = " ".join([x["chain"], str(x.get("token") or ""), x["_tier"], LEVEL[d][0], str(x.get("what") or ""), p["why"], p.get("next") or ""]).lower()
     help_open = any(str(q.get("open_now", "")).lower() == "yes" for q in lst(x.get("programmes")) if isinstance(q, dict))
-    ph += ('<li class="card pick" data-key="%s" data-d="%d" data-rec="%s" data-help="%s" data-tier="%s" data-text="%s"><div class="pick-top"><h3>%s</h3><span class="tok">%s</span><span class="chip tier" data-tier="%s">%s</span><span class="chip dot" data-d="%d">%s</span>%s</div><p>%s</p><p class="pick-next"><b>First step.</b> %s</p></li>'
+    ph += ('<li class="card pick" data-key="%s" data-worth="yes" data-d="%d" data-rec="%s" data-help="%s" data-tier="%s" data-text="%s"><div class="pick-top"><h3>%s</h3><span class="tok">%s</span><span class="chip tier" data-tier="%s">%s</span><span class="chip dot" data-d="%d">%s</span>%s</div><p>%s</p><p class="pick-next"><b>First step.</b> %s</p></li>'
            % (x["_id"], d, "yes" if rec else "no", "yes" if help_open else "no", x["_tier"], e(text), e(x["chain"]), e(tok(x)), x["_tier"], x["_tier"], d, e(LEVEL[d][0]), '<span class="chip yes">Taking operators</span>' if rec else "",
               linked(p["why"]), linked(p.get("next") or x.get("best_next_step") or "")))
 
@@ -381,5 +412,5 @@ for k, v in (("ETHEREUM", eth_html), ("E", str(len(eth_rows))), ("LEVELS", level
     page = page.replace("{{%s}}" % k, v)
 assert "{{" not in page, re.findall(r"\{\{[A-Z_]+\}\}", page)
 open(OUT, "w").write(page)
-print("ethereum", len(eth_rows), "| networks", len(main), {d: sum(1 for x in main if x["difficulty"] == d) for d in (1, 2, 3, 4, 5)}, "| our testnets", len(testnets), "| upcoming", len(opening), "| no role", len(none),
+print("set aside", sum(1 for x in rows + eth_rows if not x["_worth"]), "| ethereum", len(eth_rows), "| networks", len(main), {d: sum(1 for x in main if x["difficulty"] == d) for d in (1, 2, 3, 4, 5)}, "| our testnets", len(testnets), "| upcoming", len(opening), "| no role", len(none),
       "| tiers", {t: sum(1 for x in rows if x["_tier"] == t) for t in TIERS}, "| taking operators", sum(1 for x in main if str(x.get("recruiting_now", "")).lower() == "yes"), "| bytes", len(page))

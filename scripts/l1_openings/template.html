@@ -136,6 +136,22 @@
   .tiers button[aria-pressed="true"] { color: var(--ink); background: var(--card); border-color: var(--line-2); box-shadow: var(--shadow); }
   .tiers button[aria-pressed="true"] i { color: var(--muted); }
   .tiers button[aria-pressed="true"]::after { background: var(--dark) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.5l2.5 2.5 4.5-5' fill='none' stroke='%23FAFAF8' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 10px no-repeat; border-color: var(--dark); }
+  /* the level list is the tier list's multi-select, with the level's own dot; "All" clears it */
+  .levels button::before { border-radius: 999px; background: var(--dot); width: 8px; height: 8px; }
+  .levels button.all::before { background: transparent; box-shadow: inset 0 0 0 1.5px var(--line-2); }
+  .levels button.all::after { display: none; }
+  .levels button.all[aria-pressed="true"] { color: var(--ink); background: var(--card); border-color: var(--line-2); box-shadow: var(--shadow); }
+  .check.worth { background: var(--dark); color: #FAFAF8; }
+  .check.worth input { accent-color: #99CC66; }
+  .check.worth { flex-wrap: wrap; row-gap: 2px; }
+  .check.worth span { white-space: nowrap; }
+  .check.worth i { flex-basis: 100%; padding-left: 23px; font-style: normal; font-size: 12px; color: #C9C9C4; font-variant-numeric: tabular-nums; }
+  .check.worth:has(input:not(:checked)) { background: var(--sunk); color: var(--text); }
+  .check.worth:has(input:not(:checked)) i { color: var(--faint); }
+  .chip.aside { --bg: #FAFAF8; --fg: var(--muted); border: 1px dashed var(--line-2); padding: 4px 9px; }
+  .blk.aside { background: var(--sunk); color: var(--text); border-radius: 10px; padding: 12px 14px; font-size: 14px; }
+  .blk.aside b { color: var(--ink); font-weight: 600; }
+  .empty .show-aside { margin-left: 6px; }
   .check { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 500; color: var(--text); padding: 8px 12px; border-radius: 10px; background: var(--sunk); cursor: pointer; }
   .check input { accent-color: #2A2C28; width: 15px; height: 15px; margin: 0; }
   select { width: 100%; }
@@ -271,14 +287,16 @@
       <a href="#start"><i>01</i>Start here</a><a href="#all"><i>02</i>Every network</a><a href="#testnets"><i>03</i>Already in by testnet</a><a href="#opening"><i>04</i>Not on mainnet yet</a><a href="#ethereum"><i>05</i>Ethereum</a><a href="#none"><i>06</i>No validator role</a><a href="#method"><i>07</i>How this was researched</a>
     </nav>
     <div class="card bar" id="filters">
+      <div class="f-group">
+        <label class="check worth"><input type="checkbox" id="f-worth" checked><span>Worth our time</span><i id="worth-n"></i></label></div>
       <div class="f-group"><h4>Level</h4>
-        <div class="tabs" role="group" aria-label="Level">
-          <button type="button" data-v="all" aria-pressed="true">All <i data-n="all"></i></button>
-          <button type="button" data-v="1" aria-pressed="false">Open now <i data-n="1"></i></button>
-          <button type="button" data-v="2" aria-pressed="false">Within reach <i data-n="2"></i></button>
-          <button type="button" data-v="3" aria-pressed="false">Needs backing <i data-n="3"></i></button>
-          <button type="button" data-v="4" aria-pressed="false">Hard <i data-n="4"></i></button>
-          <button type="button" data-v="5" aria-pressed="false">Closed <i data-n="5"></i></button>
+        <div class="tiers levels" role="group" aria-label="Level — pick any number" id="f-level">
+          <button type="button" class="all" data-l="all" aria-pressed="true">All <i data-n="all"></i></button>
+          <button type="button" data-l="1" data-d="1" aria-pressed="false">Open now <i data-n="1"></i></button>
+          <button type="button" data-l="2" data-d="2" aria-pressed="false">Within reach <i data-n="2"></i></button>
+          <button type="button" data-l="3" data-d="3" aria-pressed="false">Needs backing <i data-n="3"></i></button>
+          <button type="button" data-l="4" data-d="4" aria-pressed="false">Hard <i data-n="4"></i></button>
+          <button type="button" data-l="5" data-d="5" aria-pressed="false">Closed <i data-n="5"></i></button>
         </div></div>
       <div class="f-group"><h4>Tier</h4>
         <div class="tiers" role="group" aria-label="Tier — pick any number" id="f-tier">
@@ -364,12 +382,26 @@
   var networks = items.filter(function (el) { return !el.classList.contains("pick"); });
   var rows = items.filter(function (el) { return el.classList.contains("row"); });
   var levels = [].slice.call(document.querySelectorAll(".level"));
-  var f = { d: "all", rec: false, help: false, unrev: false, tiers: {}, q: "" }, allOpen = false;
-  var counts = { all: networks.length }, tierCounts = {};
-  networks.forEach(function (r) { var d = r.getAttribute("data-d"), t = r.getAttribute("data-tier"); counts[d] = (counts[d] || 0) + 1; tierCounts[t] = (tierCounts[t] || 0) + 1; });
-  [].slice.call(document.querySelectorAll("[data-n]")).forEach(function (n) { n.textContent = counts[n.getAttribute("data-n")] || 0; });
-  [].slice.call(document.querySelectorAll("[data-tn]")).forEach(function (n) { n.textContent = tierCounts[n.getAttribute("data-tn")] || 0; });
+  // the defaults: every level and tier, and only what is worth our time — an entry set aside stays one click away
+  function fresh() { return { lv: {}, rec: false, help: false, unrev: false, worth: true, tiers: {}, q: "" }; }
+  var f = fresh(), allOpen = false, counts = {};
+  var aside = function (el) { return el.getAttribute("data-worth") === "no"; };
+  // the counts beside the levels and tiers count the networks the "Worth our time" check lets through
+  function recount() {
+    counts = { all: 0 }; var tierCounts = {};
+    networks.forEach(function (r) {
+      if (f.worth && aside(r)) return;
+      var d = r.getAttribute("data-d"), t = r.getAttribute("data-tier");
+      counts.all++; counts[d] = (counts[d] || 0) + 1; tierCounts[t] = (tierCounts[t] || 0) + 1;
+    });
+    [].slice.call(document.querySelectorAll("[data-n]")).forEach(function (n) { var v = String(counts[n.getAttribute("data-n")] || 0); if (n.textContent !== v) n.textContent = v; });
+    [].slice.call(document.querySelectorAll("[data-tn]")).forEach(function (n) { var v = String(tierCounts[n.getAttribute("data-tn")] || 0); if (n.textContent !== v) n.textContent = v; });
+    document.getElementById("worth-n").textContent = networks.filter(aside).length + " set aside, one click away";
+    // the scale at the top counts the same way, so its figures agree with the list under it
+    [].slice.call(document.querySelectorAll(".scale a")).forEach(function (a) { var b = a.querySelector("b"), v = String(counts[a.getAttribute("data-d")] || 0); if (b && b.textContent !== v) b.textContent = v; });
+  }
   function anyTier() { return Object.keys(f.tiers).some(function (t) { return f.tiers[t]; }); }
+  function anyLevel() { return Object.keys(f.lv).some(function (d) { return f.lv[d]; }); }
   function open(r, on) {
     r.querySelector(".r-panel").hidden = !on;
     if (on) r.setAttribute("data-open", ""); else r.removeAttribute("data-open");
@@ -381,11 +413,12 @@
     r.querySelector(".chev").addEventListener("click", flip);
   });
   function matches(el, words) {
-    var ok = (f.d === "all" || el.getAttribute("data-d") === f.d) && (!f.rec || el.getAttribute("data-rec") === "yes") && (!f.help || el.getAttribute("data-help") === "yes") && (!f.unrev || !el.hasAttribute("data-reviewed")) && (!anyTier() || f.tiers[el.getAttribute("data-tier")]);
+    var ok = (!f.worth || !aside(el)) && (!anyLevel() || f.lv[el.getAttribute("data-d")]) && (!f.rec || el.getAttribute("data-rec") === "yes") && (!f.help || el.getAttribute("data-help") === "yes") && (!f.unrev || !el.hasAttribute("data-reviewed")) && (!anyTier() || f.tiers[el.getAttribute("data-tier")]);
     if (ok && words.length) { var t = el.getAttribute("data-text"); ok = words.every(function (w) { return t.indexOf(w) >= 0; }); }
     return ok;
   }
   function apply() {
+    recount();
     var n = 0, words = f.q.toLowerCase().split(/\s+/).filter(Boolean);
     items.forEach(function (el) {
       var ok = matches(el, words);
@@ -398,27 +431,37 @@
       var note = sec.querySelector("[data-empty]"); if (!note) return;
       var any = sec.querySelector("[data-d][data-text]:not([hidden])");
       note.hidden = !!any;
+      if (!note.hasAttribute("data-msg")) note.setAttribute("data-msg", note.textContent);
+      var hiddenAside = false;
+      if (!any && f.worth) { f.worth = false; hiddenAside = [].slice.call(sec.querySelectorAll("[data-d][data-text]")).some(function (el) { return matches(el, words); }); f.worth = true; }
+      var html = hiddenAside ? '<span>Everything here is set aside as not worth our time.<button type="button" class="link show-aside">Show them</button></span>' : "<span>" + note.getAttribute("data-msg") + "</span>";
+      if (note.innerHTML !== html) note.innerHTML = html;
       [].slice.call(sec.querySelectorAll(".rows.card, .picks, .plain")).forEach(function (list) { if (!list.closest(".level")) list.hidden = !any; });
     });
     var shown = document.getElementById("shown");
-    shown.textContent = n === networks.length ? n + " networks" : n + " of " + networks.length;
-    [].slice.call(document.querySelectorAll("#filters .tabs button")).forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-v") === f.d)); });
+    shown.textContent = n === counts.all ? n + " networks" : n + " of " + counts.all;
+    document.getElementById("f-worth").checked = f.worth;
+    [].slice.call(document.querySelectorAll("#f-level button")).forEach(function (b) { var l = b.getAttribute("data-l"); b.setAttribute("aria-pressed", String(l === "all" ? !anyLevel() : !!f.lv[l])); });
     document.getElementById("f-rec").checked = f.rec;
     document.getElementById("f-help").checked = f.help;
     [].slice.call(document.querySelectorAll("#f-tier button")).forEach(function (b) { b.setAttribute("aria-pressed", String(!!f.tiers[b.getAttribute("data-t")])); });
     [].slice.call(document.querySelectorAll("#f-rv button")).forEach(function (b) { b.setAttribute("aria-pressed", String((b.getAttribute("data-v") === "open") === f.unrev)); });
-    document.getElementById("clear").hidden = f.d === "all" && !f.rec && !f.help && !f.unrev && !anyTier() && !f.q;
+    document.getElementById("clear").hidden = !anyLevel() && !f.rec && !f.help && !f.unrev && f.worth && !anyTier() && !f.q;
   }
-  document.getElementById("filters").addEventListener("click", function (e) {
-    var b = e.target.closest(".tabs button"); if (!b) return; f.d = b.getAttribute("data-v"); apply();
+  document.getElementById("f-level").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return; var l = b.getAttribute("data-l");
+    if (l === "all") f.lv = {}; else f.lv[l] = !f.lv[l];
+    apply();
   });
+  document.getElementById("f-worth").addEventListener("change", function () { f.worth = this.checked; apply(); });
+  document.addEventListener("click", function (e) { if (e.target.closest(".show-aside")) { f.worth = false; apply(); } });
   document.getElementById("f-rec").addEventListener("change", function () { f.rec = this.checked; apply(); });
   document.getElementById("f-help").addEventListener("change", function () { f.help = this.checked; apply(); });
   document.getElementById("f-tier").addEventListener("click", function (e) {
     var b = e.target.closest("button"); if (!b) return; var t = b.getAttribute("data-t"); f.tiers[t] = !f.tiers[t]; apply();
   });
   document.getElementById("q").addEventListener("input", function () { f.q = this.value.trim(); apply(); });
-  document.getElementById("clear").addEventListener("click", function () { f = { d: "all", rec: false, help: false, unrev: false, tiers: {}, q: "" }; document.getElementById("q").value = ""; apply(); });
+  document.getElementById("clear").addEventListener("click", function () { f = fresh(); document.getElementById("q").value = ""; apply(); });
   document.getElementById("f-rv").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; f.unrev = b.getAttribute("data-v") === "open"; apply(); });
   // the review marks live in the second script; when they change, the list is filtered again
   document.addEventListener("rv-change", function () { apply(); });
@@ -427,10 +470,10 @@
     this.textContent = allOpen ? "Close all" : "Open all";
   });
   [].slice.call(document.querySelectorAll(".scale a")).forEach(function (a) {
-    a.addEventListener("click", function () { var d = a.getAttribute("data-d"); if (counts[d]) { f.d = d; apply(); } });
+    a.addEventListener("click", function () { var d = a.getAttribute("data-d"); f.lv = {}; f.lv[d] = true; apply(); });
   });
   var h = (location.hash || "").slice(1);
-  if (/^[1-5]$/.test(h)) f.d = h;
+  if (/^[1-5]$/.test(h)) f.lv[h] = true;
   apply();
 
   // the section list marks the section on screen: the last one whose top has passed a third of the viewport
