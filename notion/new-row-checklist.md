@@ -71,10 +71,11 @@ the steps of the SEO audit of 2026-09-26/28, for Google and for AI search. Keep 
       Posts", its gallery and its button were taken out on 2026-09-28: the post page hides them and
       takes the next post from the /blog index, and its foot links back to /blog.)
 - [ ] **Properties:** Name (the title), Published Time, Tags (the first tag that is not Informative is
-      its category; Informative alone is fine), Status = **Live** (anything else is left off the index),
-      **Lede** (the head's two lines), Chain (spelled as the Networks set names it — it is matched to our
-      chain page by name), Ticker, Mainnet (Live / Not yet launched — picks the foot's ask), **Read**
-      (minutes at 230 words a minute — "Shortest read"). **The byline is whoever creates the row** (Person =
+      its category: one of Networks, Trends, Security, Zero knowledge, Operations), Status = **Live** (anything else is left off the index),
+      **Lede** (the head's two lines), **Network** — pick the post's row in the Networks set (its mainnet row
+      if we run the mainnet, else its testnet row; leave it empty for a chain not in the set or a post about
+      no chain): it gives the closing ask, its chain name, the link and, through **Network token**, the ticker —
+      **Read** (minutes at 230 words a minute — "Shortest read"; the daily job fills it). **The byline is whoever creates the row** (Person =
       Notion's "Created by"; there is no Author property since 2026-10-01), so the post's author creates it.
 - [ ] **Cover (2000 * 408)**, first file = the post's **glyph**: a 600×600 PNG, black mark, the ink 80%
       of the frame (the `blog-glyphs` convention). It is the index card's mark, the post head's mark and

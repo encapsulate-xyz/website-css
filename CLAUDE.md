@@ -945,20 +945,26 @@ them from the index it already fetches, so forty posts share one source, and blo
 toggle so blog.css can hide it on the index. `{chain}` and `{ticker}` in those lines are filled
 from the post's own row. `post.js`'s `CONTENT` is only the fallback if that toggle goes missing.
 
-**The Blogs database carries the page's facts**: `Lede` (the head's two lines — a post's own
-opening is the fallback, cut to the same length), `Chain`, `Ticker`, `Mainnet` (Live / Not yet
-launched — which picks the foot's ask) and **Person** (Notion's "Created by", which nobody can edit): **the byline is the row's creator**, with the
-role from the Team database. `Author`, a text meant for the byline, was read by nothing (not shown on the /blog view)
-and was **deleted on 2026-10-01** at the user's word; its 17 values ("Maheswaran") are in
-`backups/blogs-author-2026-10-01.json`. 20 posts say "Aditya Verma", who created their rows — GenLayer's had Author
-"Maheswaran". **A post's author must create its row.** The chain page link: post.js matches `Chain` by name (lower case,
-letters and digits only) against the set's list (`encCounts().list`, read from /services), so Chain is spelled as the
-Networks set names it. **Mainnet's "Live" and Status's "Live" are the same word**: post.js took the first, so the 15 posts with no
-Mainnet read Status and asked the reader to delegate SOL, TIA… with us. Since v343 "Not yet launched" wins and the live
-ask stands only for a chain in our set's list; the navbar files a post by blog.js's rule (first tag other than
-Informative, never a Mainnet or Status pill) — so the view's property order no longer matters to either. All are read off the index's
-cards, so **they must be shown on the /blog gallery view**; blog.css hides Super's card content, so
-the index looks unchanged.
+**The Blogs database carries the page's facts** (reshaped 2026-10-01): `Lede` (the head's two lines — a post's own
+opening is the fallback, cut to the same length), **`Network`** — a one-way relation to the post's row of the Networks
+set — and **`Network token`**, a rollup of that row's Token. Super draws the relation as a link to the row:
+`/networks/<chain>` where it is a mainnet of ours, a bare id where it is a testnet. post.js (v345) takes the chain's
+name from the link, our stage from where it points (a chain page → the "Delegate" ask; a testnet → "Running the …
+testnet?"), the ticker from the rollup — **Super draws a rollup with the class `property-undefined`**, where every other
+property carries a fixed `property-<hash>` — and sends the live ask's button to the linked page. A post about a chain
+not in the set, or none, has no Network and gets the standing ask. **Chain, Ticker and Mainnet were deleted** the same
+day (values in `backups/blogs-chain-ticker-mainnet-2026-10-01.json`): all three only repeated the set; reading them by
+shape had misread XMTP as a ticker, and Mainnet's "Live" was the same word as Status's (v343). Proved before and after
+on all 38 posts (`scratchpad/blogrel/`): head, byline, lede, read time, the closing ask, its buttons and the structured
+data identical, but XMTP (its testnet ask, a fix) and Canton ("the Canton Network testnet", the set's name). The set's
+Near row became **NEAR** (its chain page title follows; Gno.land's testnet row gained Token GNOT). Rollups are kept out
+of every tag read (`.notion-property__select:not(.property-undefined)`). **The byline is Person** (Notion's "Created
+by", which nobody can edit) with the role from the Team database; `Author` was read by nothing and was deleted
+(`backups/blogs-author-2026-10-01.json`) — **a post's author must create its row**. **Tags, one per post since
+2026-10-01**: Networks (22), Operations (5), Zero knowledge (5), Security (3), Trends (3); the old six (Informative on 33
+posts, New Network, Testnet, Analysis, Services, Guide) are gone (`backups/blogs-tags-2026-10-01.json`). All of these
+are read off the index's cards, so **Network and Network token must be shown on the /blog gallery view**; blog.css
+hides Super's card content, so the index looks unchanged.
 
 **The post's own duplicate title and its "Written by" block were removed from all forty posts**
 (2026-09-21): the head is the title now, so the title comes from the header Super always renders,
