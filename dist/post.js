@@ -144,9 +144,14 @@
     /* the pills are matched by value, not by order: the state, whether the chain is ours, and
        whatever is left is the post's tag */
     var pills = Array.prototype.map.call(c.querySelectorAll(".notion-pill"), textOf);
-    var live = pills.filter(function (x) { return /^live$|^not yet launched$/i.test(x); })[0] || "";
+    /* "Not yet launched" can only be Mainnet's; "Live" is Mainnet's or Status's (every post on the index is Status
+       Live), so it is read as a stage only when it is the one Mainnet would carry — and foot() keeps the live ask
+       only for a chain that is one of ours (2026-10-01: Solana's and Celestia's posts, Mainnet empty, read Status's
+       "Live" and asked the reader to delegate SOL and TIA with us) */
+    var live = pills.filter(function (x) { return /^not yet launched$/i.test(x); })[0] ||
+      pills.filter(function (x) { return /^live$/i.test(x); })[0] || "";
     var mine = pills.filter(function (x) { return /^we run it$|^not ours$/i.test(x); })[0] || "";
-    var tag = pills.filter(function (x) { return x && x !== live && x !== mine; })[0] || "";
+    var tag = pills.filter(function (x) { return x && !/^live$|^not yet launched$/i.test(x) && x !== mine; })[0] || "";
     /* the card's text properties are told apart by shape: a ticker is short and upper case, the
        lede is the long one, the chain is the short one that is left, and the author is a name */
     var chain = "", ticker = "", lede = "", author = "";
@@ -279,6 +284,17 @@
      standing one when it does not */
   function foot(next, post) {
     var f = el("div", "enc-po__foot");
+    /* the live ask names our validator, so it stands only where the chain is one of our mainnets: once the set's
+       list answers, a post about a chain we do not run gets the standing ask instead */
+    if (post && post.chain && post.stage === "live" && window.encCounts) {
+      Promise.resolve(window.encCounts()).then(function (c) {
+        var list = (c && c.list) || [];
+        if (!list.length) return;
+        var key = nameKey(post.chain);
+        var ours = list.some(function (x) { return x.href && nameKey(x.name) === key; });
+        if (!ours && f.isConnected) f.replaceWith(foot(next, Object.assign({}, post, { stage: "" })));
+      }).catch(function () {});
+    }
     var left = el("div", "enc-po__footask");
     /* the ask follows OUR stage on that chain, which is what the Mainnet property carries: a
        post about a network we are not on, or about a group of them, gets the standing ask */
