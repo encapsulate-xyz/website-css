@@ -947,10 +947,13 @@ from the post's own row. `post.js`'s `CONTENT` is only the fallback if that togg
 
 **The Blogs database carries the page's facts**: `Lede` (the head's two lines — a post's own
 opening is the fallback, cut to the same length), `Chain`, `Ticker`, `Mainnet` (Live / Not yet
-launched — which picks the foot's ask) and `Author` (meant for the byline). **As found 2026-10-01:** the byline
-is read from **Person** (Notion's "Created by", which nobody can edit) — `Author` is not shown on the /blog view and
-post.js only takes a two-word name from a text, so `Author` is read by nothing; 20 posts say "Aditya Verma", the row's
-creator. **Mainnet's "Live" and Status's "Live" are the same word**: post.js took the first, so the 15 posts with no
+launched — which picks the foot's ask) and **Person** (Notion's "Created by", which nobody can edit): **the byline is the row's creator**, with the
+role from the Team database. `Author`, a text meant for the byline, was read by nothing (not shown on the /blog view)
+and was **deleted on 2026-10-01** at the user's word; its 17 values ("Maheswaran") are in
+`backups/blogs-author-2026-10-01.json`. 20 posts say "Aditya Verma", who created their rows — GenLayer's had Author
+"Maheswaran". **A post's author must create its row.** The chain page link: post.js matches `Chain` by name (lower case,
+letters and digits only) against the set's list (`encCounts().list`, read from /services), so Chain is spelled as the
+Networks set names it. **Mainnet's "Live" and Status's "Live" are the same word**: post.js took the first, so the 15 posts with no
 Mainnet read Status and asked the reader to delegate SOL, TIA… with us. Since v343 "Not yet launched" wins and the live
 ask stands only for a chain in our set's list; the navbar files a post by blog.js's rule (first tag other than
 Informative, never a Mainnet or Status pill) — so the view's property order no longer matters to either. All are read off the index's

@@ -72,14 +72,16 @@ the steps of the SEO audit of 2026-09-26/28, for Google and for AI search. Keep 
       takes the next post from the /blog index, and its foot links back to /blog.)
 - [ ] **Properties:** Name (the title), Published Time, Tags (the first tag that is not Informative is
       its category; Informative alone is fine), Status = **Live** (anything else is left off the index),
-      **Lede** (the head's two lines), Chain, Ticker, Mainnet (Live / Not yet launched — picks the
-      foot's ask), Author (the byline), **Read** (minutes at 230 words a minute — "Shortest read").
+      **Lede** (the head's two lines), Chain (spelled as the Networks set names it — it is matched to our
+      chain page by name), Ticker, Mainnet (Live / Not yet launched — picks the foot's ask), **Read**
+      (minutes at 230 words a minute — "Shortest read"). **The byline is whoever creates the row** (Person =
+      Notion's "Created by"; there is no Author property since 2026-10-01), so the post's author creates it.
 - [ ] **Cover (2000 * 408)**, first file = the post's **glyph**: a 600×600 PNG, black mark, the ink 80%
       of the frame (the `blog-glyphs` convention). It is the index card's mark, the post head's mark and
       the social card's glyph. No chain? Leave it empty — the card takes a pastel shape.
 - [ ] **The page:** the article in a two-column block with Notion's **table of contents** in the first
       column (post.js finds the post by it); **no** H1 repeating the title and **no** "Written by" block
-      (the head is the title, the byline comes from Author); no banner image at the top; section
+      (the head is the title, the byline comes from Person, the row's creator); no banner image at the top; section
       headings are Heading 2; a code block's caption starts with its file name in inline code for the
       kicker; a table with column labels has **Header row** on.
 - [ ] **Social card:** `python3 scripts/og_cards.py posts --only <slug>` (after the post is live — it
