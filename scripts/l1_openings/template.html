@@ -227,6 +227,9 @@
   .seg button[aria-pressed="true"] { background: var(--dark); color: #FAFAF8; }
   .seg i { font-style: normal; font-size: 12px; color: var(--faint); font-variant-numeric: tabular-nums; }
   .seg button[aria-pressed="true"] i { color: #C9C9C4; }
+  /* three choices do not fit the 236px column side by side: one per line, the count at the right, as Level and Tier */
+  .seg.stack { flex-direction: column; }
+  .seg.stack button { justify-content: space-between; padding: 8px 10px; }
   /* a reviewed entry takes the pastel green of the scale's "Open now", so a list reads at a glance */
   .row[data-reviewed] { background: #EEF6E4; }
   .row[data-reviewed] .r-head:hover { background: #E4F0D6; }
@@ -315,9 +318,10 @@
         <label class="check"><input type="checkbox" id="f-rec"> Taking operators now</label>
         <label class="check"><input type="checkbox" id="f-help"> Newcomer help open</label></div>
       <div class="f-group" id="f-rv-group" hidden><h4>Review</h4>
-        <div class="seg" role="group" aria-label="Review" id="f-rv">
+        <div class="seg stack" role="group" aria-label="Review" id="f-rv">
           <button type="button" data-v="all" aria-pressed="true">All <i id="rv-n-all"></i></button>
           <button type="button" data-v="open" aria-pressed="false">Not reviewed <i id="rv-n-open"></i></button>
+          <button type="button" data-v="done" aria-pressed="false">Reviewed <i id="rv-n-done"></i></button>
         </div></div>
       <div class="f-group"><h4>Find</h4>
         <div class="search"><label class="vh" for="q">Find</label><input id="q" type="search" autocomplete="off" placeholder="A network, a token, a programme"></div></div>
@@ -394,7 +398,7 @@
   var rows = items.filter(function (el) { return el.classList.contains("row"); });
   var levels = [].slice.call(document.querySelectorAll(".level"));
   // the defaults: every level and tier, and only what is worth our time — an entry set aside stays one click away
-  function fresh() { return { lv: {}, rec: false, help: false, unrev: false, worth: true, tiers: {}, q: "" }; }
+  function fresh() { return { lv: {}, rec: false, help: false, rv: "all", worth: true, tiers: {}, q: "" }; }
   var f = fresh(), allOpen = false, counts = {};
   var aside = function (el) { return el.getAttribute("data-worth") === "no"; };
   // the counts beside the levels and tiers count the networks the "Worth our time" check lets through
@@ -424,7 +428,7 @@
     r.querySelector(".chev").addEventListener("click", flip);
   });
   function matches(el, words) {
-    var ok = (!f.worth || !aside(el)) && (!anyLevel() || f.lv[el.getAttribute("data-d")]) && (!f.rec || el.getAttribute("data-rec") === "yes") && (!f.help || el.getAttribute("data-help") === "yes") && (!f.unrev || !el.hasAttribute("data-reviewed")) && (!anyTier() || f.tiers[el.getAttribute("data-tier")]);
+    var ok = (!f.worth || !aside(el)) && (!anyLevel() || f.lv[el.getAttribute("data-d")]) && (!f.rec || el.getAttribute("data-rec") === "yes") && (!f.help || el.getAttribute("data-help") === "yes") && (f.rv === "all" || (f.rv === "done") === el.hasAttribute("data-reviewed")) && (!anyTier() || f.tiers[el.getAttribute("data-tier")]);
     if (ok && words.length) { var t = el.getAttribute("data-text"); ok = words.every(function (w) { return t.indexOf(w) >= 0; }); }
     return ok;
   }
@@ -460,8 +464,8 @@
     document.getElementById("f-rec").checked = f.rec;
     document.getElementById("f-help").checked = f.help;
     [].slice.call(document.querySelectorAll("#f-tier button")).forEach(function (b) { b.setAttribute("aria-pressed", String(!!f.tiers[b.getAttribute("data-t")])); });
-    [].slice.call(document.querySelectorAll("#f-rv button")).forEach(function (b) { b.setAttribute("aria-pressed", String((b.getAttribute("data-v") === "open") === f.unrev)); });
-    document.getElementById("clear").hidden = !anyLevel() && !f.rec && !f.help && !f.unrev && f.worth && !anyTier() && !f.q;
+    [].slice.call(document.querySelectorAll("#f-rv button")).forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-v") === f.rv)); });
+    document.getElementById("clear").hidden = !anyLevel() && !f.rec && !f.help && f.rv === "all" && f.worth && !anyTier() && !f.q;
   }
   document.getElementById("f-level").addEventListener("click", function (e) {
     var b = e.target.closest("button"); if (!b) return; var l = b.getAttribute("data-l");
@@ -477,7 +481,7 @@
   });
   document.getElementById("q").addEventListener("input", function () { f.q = this.value.trim(); apply(); });
   document.getElementById("clear").addEventListener("click", function () { f = fresh(); document.getElementById("q").value = ""; apply(); });
-  document.getElementById("f-rv").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; f.unrev = b.getAttribute("data-v") === "open"; apply(); });
+  document.getElementById("f-rv").addEventListener("click", function (e) { var b = e.target.closest("button"); if (!b) return; f.rv = b.getAttribute("data-v"); apply(); });
   // the review marks live in the second script; when they change, the list is filtered again
   document.addEventListener("rv-change", function () { apply(); });
   document.getElementById("expand").addEventListener("click", function () {
@@ -553,6 +557,7 @@
     var done = nets.filter(function (el) { return el.hasAttribute("data-reviewed"); }).length;
     document.getElementById("rv-n-all").textContent = nets.length;
     document.getElementById("rv-n-open").textContent = nets.length - done;
+    document.getElementById("rv-n-done").textContent = done;
     document.dispatchEvent(new Event("rv-change"));
   }
   db.collection("reviewed").onSnapshot(async function (snap) {
