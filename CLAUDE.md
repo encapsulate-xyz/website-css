@@ -200,8 +200,13 @@ into Super on their own, which replaced every head — /networks lost network.cs
 main page its CSS, the homepage its JSON-LD and Search Console tag — until the heads were pasted back from
 these files the same hour (the user: "edit our files … append the tags there and then copy that"). So a head
 changes here first, and the whole file is pasted.
-**No page has its own Code → CSS or Body any more except** the 30 unconverted guides (their old slide-deck
-CSS, still in use). The old
+**No page has its own Code → CSS or Body any more.** The guides' old slide-deck CSS (one 2,126-character box,
+identical on 30 guides: the medium gallery as an 80vh bordered, snapping deck, 20px padding on `.notion-root` and
+`.super-content`, a 2px black rule above and below every `.notion-heading` — Super compiles the box and drops the
+stray comma that made that rule look dead — and the old "View more" gallery) was cleared from all 30 on 2026-10-02 (the user: "clear it from all
+the other guides too"). On the converted guides nothing visible moved (measured with the box switched off); **an
+unconverted guide now shows its slides as Super's plain gallery of tiles** until it is converted. The CSS and every
+box id are in `backups/guide-page-css-2026-10-02.json`, with how to put one back. The old
 post CSS (38 copies of the old template's table-of-contents and viewport rules) and Super's `embed.js` loader
 (on 17 pages; it only acts on a code block starting `super-embed:`, and none does) were cleared on
 2026-09-28 — contents and page map in `backups/super-snippets-2026-09-28.*`.
