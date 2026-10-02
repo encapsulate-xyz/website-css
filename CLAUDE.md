@@ -1310,7 +1310,12 @@ and two builds appended two sets of bands.
 
 Snapping is the design's, moved to the document: Super is the scroller, so
 `scroll-snap-type: y mandatory` is set on `html` for this page and every band is a stop, the
-footer included, off under 701px and with reduced motion.
+footer included, off under 701px and with reduced motion. **A step rests at the top** since v348 (the user's
+screenshot, 2026-10-02): Super's `html { scroll-padding-top: 62px }` had stood every key and trackpad snap 62px
+down with the band before it showing above — the chain pages' fault of v339, and older than the old page CSS
+(checked with it put back). guide.css sets it to 0 on a built guide. **Test a snap with a real key press**
+(`livecheck.mjs --steps`, `press('ArrowDown')`): a scripted `scrollTo` re-snaps to the band's own top and
+hides the padding.
 
 **The page opened at its foot** until 2026-09-23: ten screens are inserted above the reader on
 build, and Chrome's scroll anchoring answered by holding what they were looking at — the footer —
