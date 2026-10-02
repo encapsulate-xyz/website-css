@@ -80,7 +80,5 @@ html[data-enc-guide-snap] .enc-gd__band,html[data-enc-guide-snap] body:has(.noti
 .enc-gd__step[data-enc-shot="tall"] .enc-gd__shot{width: min(100%,360px);}
 .enc-gd__numeral{font-size: 120px;opacity: 0.5;}
 }
-@media (max-width: 900px){.super-content[class*="parent-page__guides"] .notion-root:not([data-enc-guide]){padding-top: 76px !important;}
-}
 @media (min-width: 701px) and (max-width: 900px){.enc-gd__step[data-enc-shot="tall"] .enc-gd__shot{width: auto;height: min(788px,calc(100svh - 300px));}
 }
