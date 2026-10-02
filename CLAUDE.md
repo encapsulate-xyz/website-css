@@ -1230,7 +1230,8 @@ checked against `notion/chain-pages.json` (minimum 1 ESP, fees in ETH, rewards p
 hand, 7 days to undelegate); the Lede names Espresso's dashboard, the card was made again. Old values:
 `backups/espresso-guide-2026-09-29.json`. **Open with the team:** capture 4 rings Approve while the amount reads 0 —
 the words say to type the amount first, so the capture wants retaking with an amount in.
-**Monad (2026-09-30, rewritten 2026-10-02): ten steps on MonadVision's MySpace → Stake with MetaMask.** The team
+**Monad (2026-09-30, rewritten 2026-10-02): eleven steps on MonadVision's MySpace → Stake with MetaMask** (the team
+added "Switch the validator" as step 2 the same day: the ⇄ on the Validator line; step 3 is the search and the pick). The team
 retook the captures with Encapsulate chosen (the first set showed MonadVision, the page's default) and split them into
 ten; the words were written again from each capture (old values `backups/monad-guide-2026-10-02.json`): the amount,
 choosing Encapsulate through the ⇄, Connect Wallet, MetaMask in the list, unlock, connect, Stake, confirm, the
@@ -1238,7 +1239,7 @@ success notice, the dashboard. Two Watch notes come from what the captures show:
 **"BSC: Validator Set"** — the label it has for `0x…1000` on BNB Chain, where that address is BSC's validator-set
 contract; on Monad it is the staking precompile (docs.monad.xyz) — and **the Stake card goes back to MonadVision after
 each stake**. Facts from `notion/chain-pages.json`: no minimum, 15% commission, rewards per proposed block claimed by
-hand, a withdrawal 4.5 to 9 hours after unstaking. The row: Step 10, Time 5, the Lede "Ten steps across MonadVision
+hand, a withdrawal 4.5 to 9 hours after unstaking. The row: Step 11, Time 6, the Lede "Eleven steps across MonadVision
 and the MetaMask extension…".
 **How to write a step from a capture:** say what the screen is, then the one action the ring is on; the Watch is the
 one check that prevents a loss on that screen (the address bar, the validator's address, the amount, the unbonding
