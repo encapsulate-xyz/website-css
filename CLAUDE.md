@@ -1511,11 +1511,12 @@ above 900px changes in this work. What was learned:
 - Per page: /governance-record's controls and rows reflow (the rationale is always open on touch),
   /security's sticky blocks are static, /investments' six questions wrap into a grid under 800,
   /networks' sort and search sit under the tabs up to 860, the chain dock wraps under 640 and the
-  hero stacks to 900, /blog's grid is two columns at 701–900, the raw guides clear the bar to 900.
+  hero stacks to 900, /blog's grid is two columns at 701–900. (The raw guides' 76px top padding to 900
+  went in v347, with the old page CSS that had forced their top to 40px: Super's own 80px now puts an
+  unconverted guide's first block 16px under the bar at every width.)
 - **Left alone on purpose:** the guide's hollow numeral lies behind the capture on a phone (the
   user: by design), the footer wordmark's crop, the cover field's left crop.
-- **Still open above 900px** (the user said leave it): the unconverted guides start under the bar
-  at every desktop width; /blog's grid squashes at 901–1024; the chain hero is tight at 901–960;
+- **Still open above 900px** (the user said leave it): /blog's grid squashes at 901–1024; the chain hero is tight at 901–960;
   the booking drawer wraps at 901–919.
 - **livecheck** now lets Chrome pick its own port (`--remote-debugging-port=0` + the profile's
   DevToolsActivePort): with a random port, parallel runs attached to each other's browsers.
