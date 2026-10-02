@@ -52,6 +52,11 @@ html:has(.notion-root[data-enc-guide]) body,
 .notion-root[data-enc-guide] {
   overflow-anchor: none;
 }
+/* Super pads every snap rest and anchor jump 62px (`html { scroll-padding-top: 62px }`, for a fixed
+   header this site does not have): a key or trackpad snap stood each step 62px down, with a strip of the
+   band before it showing above (the user's screenshot, 2026-10-02). The chain pages had the same fix in
+   v339. The bands start at the top. */
+html:has(.notion-root[data-enc-guide]) { scroll-padding-top: 0; }
 
 /* The snap is switched on by guide.js only once the built page stands at its top (`data-enc-guide-snap`
    on html, 2026-09-30). Keyed on the build alone, the footer — the raw page's one snap stop — was the
