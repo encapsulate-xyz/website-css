@@ -12,7 +12,7 @@ DATA = os.environ.get("DATA") or os.path.join(HERE, "research")
 OUT = os.environ.get("OUT") or os.path.join(HERE, "encapsulate-l1-openings.html")
 CHECKED = os.environ.get("CHECKED") or "30 Sep 2026"
 
-OURS = ["Agoric", "Althea", "Avail", "Avalanche", "Axelar", "Chain4Energy", "EigenCloud", "Espresso", "Gitopia", "Gravity Bridge", "IOTA", "Ika",
+OURS = ["Agoric", "Althea", "Avail", "Avalanche", "Axelar", "Chain4Energy", "Cosmos Hub", "EigenCloud", "Espresso", "Gitopia", "Gravity Bridge", "IOTA", "Ika",
         "Lido DVT", "Lumera", "Mina", "Monad", "Near", "Passage", "Sommelier", "Starknet", "Sui", "Supra", "Terra", "Vara", "Zilliqa", "humans.ai", "ixo"]
 LEVEL = {1: ("Open now", "Open to anyone, seats free, a few thousand dollars of our own at most. Live within weeks."),
          2: ("Within reach", "Open to join at a cost we can carry, or an application with regular rounds."),

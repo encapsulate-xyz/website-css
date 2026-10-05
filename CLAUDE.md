@@ -99,7 +99,7 @@ User rules that stand on every task:
 | `brand.css`, `brand.js` | /brand — four spreads with a sticky rail, the marks slab, the colour band (design *Brand Page*) | page Head + site Head |
 | `blog.css`, `blog.js` | /blog — the index (design J); blog.js builds each card's cover and its band span, and is loaded from the site head | page Head + site Head |
 | `post.css`, `post.js` | /blog/&lt;post&gt; — every post page (design *Blog Post Page*, variant J). A post has no page head of its own, so both are in the site head and scoped by path | site Head |
-| `chain.css`, `chain.js` | /networks/&lt;chain&gt; — the 27 chain pages (design *Chain Page Combined*), built from each Networks set row page. Site head, scoped by `[data-enc-chain]` | site Head |
+| `chain.css`, `chain.js` | /networks/&lt;chain&gt; — the 28 chain pages (design *Chain Page Combined*), built from each Networks set row page. Site head, scoped by `[data-enc-chain]` | site Head |
 | `notion/chain-pages.json`, `scripts/chain_pages.py` | each chain page's words and facts, researched per chain (sources, notes, how "since" was found), and the writer that puts them into the row pages | — |
 | `guide.css`, `guide.js` | /guides/&lt;chain&gt; — every guide page (design *Staking Guide Variation 1d*). A guide has no page head of its own, so both are in the site head and scoped by path | site Head |
 | `network.css`, `network.js` | /networks — the Network Count band (the hollow; network.js draws its tally), the set as the Networks Index, 5m. network.js is in the site head | its page Head + site Head |
@@ -1144,7 +1144,7 @@ second button goes to the contact page's form instead.
 Every **mainnet** row of the Networks set is a Notion page, and since 2026-09-24 each has a path
 of its own in Super: **/networks/&lt;chain&gt;** since 2026-09-28 (it was /networks/mainnet/&lt;chain&gt;; see
 "Paths") (avalanche, lido-dvt, monad,
-near, sui, axelar, eigencloud, iota, mina, starknet, terra, zilliqa, avail, espresso, ika, supra,
+near, sui, axelar, cosmos-hub (2026-10-05), eigencloud, iota, mina, starknet, terra, zilliqa, avail, espresso, ika, supra,
 vara, agoric, althea, gitopia, gravity-bridge, humans, ixo, lumera, passage, sommelier,
 chain4energy), each pointing at the row's share URL. `/<row id>` 307-redirects there. Added from
 the automation tab (the user asked); the Super editor loads slowly (15–45 s) and coordinate clicks
@@ -1784,6 +1784,14 @@ focuses it; ↑↓, Enter, Escape).
   rules) before assuming a file is deployed.
 
 ## The Networks set (2026-09-16)
+
+**A new chain we validate is one run, written down step by step in `notion/new-row-checklist.md` ("Networks set — a
+new chain we validate — the whole run")**: the glyph from the chain's own mark, the facts from the chain, both rows
+with the Order made room for, the chain page and its Super page, every typed count, what follows by itself (the
+counts, the lens, the homepage's network section — checked, not assumed), the site-data configs, its guide from the
+template, the card, the L1 openings page, the refresh. **Cosmos Hub went through it on 2026-10-05** (mainnet and
+testnet, Order 6 after Axelar, tier high; 28 mainnets, 21 testnets, 36 chains; v349; site-data PR #25; the guide
+"Delegate ATOM with Keplr" is Soon until its captures exist).
 
 `Networks set` (`3dde800a…33b7f1…`) replaces the old `Networks` database: **one row per deployment**,
 28 mainnet + 19 testnet, from design *Networks Set*. Properties: Name, Stage, Reward rate, Role,

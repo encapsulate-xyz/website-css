@@ -92,31 +92,122 @@ the steps of the SEO audit of 2026-09-26/28, for Google and for AI search. Keep 
 - [ ] **Check:** its card on /blog (category, date, glyph), the post's head, rail and "next post", and
       the Learn panel in the navbar (it reads the first four cards).
 
-## Networks set — a new chain (`3dde800a…33b7f1…`)
+## Networks set — a new chain we validate (`3dde800a…33b7f1…`) — the whole run
 
-- [ ] **Properties:** Name, Stage (Mainnet / Testnet), **Order** (its place in the set — every view is
-      sorted by it), **Tier** (god, high, medium, low, filth: which row of the /networks close it drifts
-      in, and its tile size on /services), **Cover** (the glyph PNG, uploaded), Role, Status, Link.
-      A mainnet row also: Address, Reward rate (after our commission, as text) with **Rate updated**,
-      Commission, Compounding, Unbonding, Unbonding days, Chain slashes, Slashing events, Explorer,
-      Token, Since — each read from the chain, with its source in `notion/networks-set-values.md`.
-- [ ] **A mainnet row is a chain page:** Super → Pages → /networks → add /<chain>, pointed at
-      the row's share URL. Research its words into `notion/chain-pages.json` (the line, what we run, the
-      five questions, sources) and write them with `python3 scripts/chain_pages.py` for that chain. Its
-      green button is our guide for that chain if there is one (see "three chain pages still point
-      outside the site" in CLAUDE.md), else the chain's own staking page.
-- [ ] **Counts follow by themselves** (read from the set on /services), but the numbers typed as the
-      fallback do not: "27 mainnets · 20 testnets" and "Thirty-five teams chose us." on /networks, the
-      homepage's stat and its Why Stake card ("27 secured" — the "No slashing" row's **Caption right**; it still
-      read 25 on 2026-09-29), the /services ask, and CONTENT/FOOT in navbar.js ("27 mainnets", "See all 27").
-- [ ] **Hardcoded glyph lists**, only if the chain should appear there: footer.js (ten glyphs) and
-      covers.js (the /networks cover's discs).
-- [ ] **Social card** (mainnet only, after the chain page builds live — it is a capture of its hero):
-      `python3 scripts/og_cards.py chains --only <chain>`. Sets `meta:image` and `meta:title`
-      "<Name> staking - Encapsulate". The description is the page's own line.
-- [ ] **Refresh:** the chain page, /networks, /services and the homepage.
-- [ ] **Check:** the chain page (figures, address ring, questions, buttons), its row in the /networks
-      index and in the close's drifting rows, the navbar's Networks panel (first 21 in Order).
+Done end to end for **Cosmos Hub on 2026-10-05** (mainnet and testnet, after Axelar); the user asked for it to be
+written down as a repeatable process. Go top to bottom; nothing here follows from anything else by itself unless it
+says so. Ask the user only what is theirs: the chain's place in the order ("after Axelar"), whether its testnet goes
+in too, and which logo if the chain has more than one.
+
+**1. The glyph** — the chain's own current mark, never a re-drawing.
+- [ ] Find the official vector: the chain's site (its structured data names the logo file — cosmos.network's
+      `"logo": …/images/cosmos-logo.svg`), its brand kit, then `cosmos/chain-registry` `<chain>/images`. A
+      wordmark carrying the mark can be cut: take the mark's `<path>` alone into its own SVG (the Cosmos Ø is
+      path 5 of the wordmark). The site icon (`/icon.png`) shows what the mark is meant to look like.
+- [ ] `scripts/make_glyph.py <mark.svg> <out.png> --mode alpha` (see `scripts/GLYPH-SPEC.md`). It needs
+      pillow, numpy and cairosvg, which no Python here has: `python3 -m venv <scratchpad>/glyphenv &&
+      <scratchpad>/glyphenv/bin/pip install pillow numpy cairosvg`, then run it with that python. Pass: 600×600,
+      opaque share 5–13%. Look at it on a pastel disc on paper and on ink before uploading.
+
+**2. The facts, read from the chain** — and written down in `notion/networks-set-values.md` (Per chain).
+- [ ] Rate: the site-data reader, `node -e` on `sources/cosmos.mjs` `apr({rate:{source:"measured",slug}})`
+      (staking-explorer.com; check the slug answers — `cosmoshub`, not `cosmos`), cross-checked with
+      `calculated_apr` and the wallet's own figure. **The row's rate is after our commission**: APR × (1 − rate),
+      one decimal.
+- [ ] Commission (rate, max, max change), unbonding, slashing params, minimum self-delegation, delegators.
+- [ ] **Since** = the validator's signing-info `start_height` → that block's time (the commission's
+      `update_time` is the creation time too). Block time = blocks since then over the seconds since then.
+- [ ] Any older validator of ours on the chain (KingSuper on the Hub): its state, and that it is not the one shown.
+
+**3. The rows**
+- [ ] Back up the whole set (`backups/networks-set-before-<chain>-<date>.json`).
+- [ ] **Make room in the Order**: every row (mainnet and testnet) at or after the new place moves down one —
+      a chain's mainnet and testnet rows share one Order, and every view sorts by it.
+- [ ] **Mainnet row**: Name, Stage Mainnet, Order, **Tier** (god, high, medium, low, filth — its row in the
+      /networks close, its tile on /services; the L1 openings page's `tiers` in picks.json says what it was rated),
+      Cover (the glyph, `notion.upload`, one upload per row), Token, Address, Reward rate + Rate updated,
+      Commission, Compounding, Unbonding, Unbonding days, Chain slashes, Slashing events, Explorer, Since.
+      Leave Status and Role empty (mainnet rows carry neither).
+- [ ] **Testnet row** if we run its testnet: Name, Stage Testnet, the same Order and Tier, Cover, Status
+      ("Live on both" — or "Not launched yet" for a testnet-only chain), Role ("Operating its testnet").
+
+**4. The chain page** (mainnet rows only)
+- [ ] `notion/chain-pages.json`: a record after its neighbour, in the others' shape — the line, the green
+      button, the four "what we run" rows, the five questions from step 2's facts, `research` with "since how",
+      "cadence", the rate, sources and notes, and `other` (our validator on the explorer).
+- [ ] **The green button** is our guide for that chain once the guide is Live; until then the wallet's own
+      staking page with our validator — for a Keplr chain
+      `https://wallet.keplr.app/chains/<keplr slug>?modal=staking&chain=<chain id>&validator_address=<valoper>&step_id=2`.
+      Load it in headless Chrome (`scripts/livecheck.mjs`) and check it lands on the chain.
+- [ ] `python3 scripts/chain_pages.py --dry "<Name>"`, then without `--dry`, then `--facts "<Name>"` (the facts
+      paragraph and `meta:description`).
+- [ ] **Super**: `createSitePage(input: {siteId, type: "page", notionPage: <row id, no dashes>, path:
+      "networks/<slug>"})`, then — the new page has no head — `createSiteSnippets` with its one canonical line.
+      (On a page that has a head, read it first and `updateSiteSnippet` the whole thing.)
+
+**5. The counts typed as fallbacks** — the live counts come from the set (`encCounts`, read from /services), but
+these are what shows before that read lands, and what a crawler reads. Find them by scanning the served HTML of /,
+/networks and /services for the numbers; on 2026-10-05 they were (block ids):
+- [ ] homepage stat `5a0aab75…` ("28"), Why Stake database (`bd1e4d48…`), the "No slashing" row (`464530ed…`)'s **Caption right**
+      ("28 secured");
+- [ ] /networks eyebrow `3e6e800a…8084ef7b` ("28 mainnets · 21 testnets"), the mainnet count `3dce800a…8471935d`
+      ("28"), the testnet count `3dce800a…75afdf49a2` ("21"), the close's heading `3e7e800a…fd75c9b60` ("Thirty-six
+      teams chose us." — the number of distinct chains, mainnet or testnet);
+- [ ] /services ask `3e4e800a…2f95f47fb4` ("Thirty-six chain teams…");
+- [ ] `navbar.js` CONTENT["/networks"] ("28 mainnets, 21 testnets") and FOOT ("See all 28") → build, release,
+      paste the site head (by hash), refresh every page.
+- Back up each block first; they are single plain runs — write plain text.
+
+**6. What follows by itself — check it, do not assume it** (`encCounts()` returns a **promise**: await it)
+- [ ] `await encCounts()` on /networks: mainnet, testnet and chains counts, and the chain in `list` at its Order
+      with glyph, href and tier.
+- [ ] /networks: its row in the index after its neighbour; **the lens** — save `.enc-lens-fill`'s background
+      (a canvas PNG) and look for the glyph after its neighbour; the close's drifting rows (`a.enc-set-name`).
+- [ ] **Homepage network section**: `.enc-net__disc` images in order (the chain after its neighbour), the stat,
+      "N secured".
+- [ ] The navbar's Networks panel and search, the /services ask tiles, other chain pages' pills.
+- Two lists are fixed designs and do **not** follow: footer.js ROTATE (ten chains) and covers.js's /networks cover
+  field (24 placed marks). Leave them unless the user asks.
+
+**7. The jobs (site-data, the GitHub Actions)**
+- [ ] `config/chains.json` (a Cosmos chain: set, record — the Governance Record's Network option, created on
+      the first vote — registry, prefix, valopers, explorer, proposal, since, rate) and `config/stake.json`
+      (family, registry, address, decimals, coingecko, reference). Another family needs its reader in `sources/`
+      first. **Keep the files' own formatting** (2-space JSON) or the diff is the whole file.
+- [ ] Dry-run with the chain in: `NOTION_TOKEN="$(cat ~/.notion-covers-token)" DRY=1 node jobs/networks/values.mjs`,
+      `jobs/governance/votes.mjs`, `STAKE_NO_WALK=1 … jobs/homepage/stake.mjs`; read the chain's lines in `out/*.md`
+      (values unchanged, the stake read).
+- [ ] Pull request, merge it at once (`gh pr merge N --admin --merge`).
+
+**8. Its guide** (the user, 2026-10-05: a new chain gets a guide page too)
+- [ ] Create it **from the template through the API** — Notion-Version `2025-09-03`, `POST /v1/pages` with
+      `parent: {type: "data_source_id", data_source_id: "1f6e800a-5138-8164-8d5d-000b068d57da"}` and
+      `template: {type: "template_id", template_id: "1f6e800a-5138-8128-ad09-dc4efb52033d"}` ("Stake TICKER with
+      WALLET"), properties Name ("Delegate ATOM with Keplr" — the verb its wallet's siblings use), Networks set →
+      the mainnet row, Wallet Set, Network Mainnet, **Status Soon**. The template's column and step database arrive
+      a few minutes after the page.
+- [ ] It stays Soon with no path in Super until the team adds the captures; then follow "Guides Database — a new
+      guide" below (the words, Live, /guides/<slug> with its canonical, the card, refresh /guides) and **switch
+      the chain page's green button to the guide** (`chain-pages.json` wallet → the guide's Notion URL,
+      `chain_pages.py --buttons "<Name>"`).
+
+**9. The social card** — after the chain page builds live:
+- [ ] `python3 scripts/og_cards.py chains --only <slug>` (sets `meta:image` and `meta:title` "<Name> staking -
+      Encapsulate"), then refresh the page **twice** and check `og:image` is on assets.super.so.
+
+**10. The L1 openings page** (the networks we do not validate yet)
+- [ ] Add the chain to `OURS` in `scripts/l1_openings/build.py`; take it out of `picks.json`'s `overrides`, `flags`,
+      `rename` and `picks` (the build exits on a name it no longer lists), and correct the Start here lede's counts.
+      Rebuild into the scratchpad and republish the artifact.
+
+**11. Refresh and check live**
+- [ ] Refresh the chain page, /networks, /services and the homepage — and every page after a site-head paste
+      (in-page loop, 3 at a time, a 30 s abort; retry the ones that time out with 90 s).
+- [ ] Every sitemap URL serves the new site head; the chain page is in the sitemap, 200, its own canonical,
+      title, description, `og:image` on assets.super.so, robots "index, follow", the facts paragraph in the HTML,
+      `script#enc-ld-chain`.
+- [ ] Optional, the user's: Search Console → URL inspection → Request indexing for the new page.
+- [ ] Update CLAUDE.md's chain page list and `notion/networks-set-values.md`.
 
 ## Guides Database — a new guide (`1f6e800a…8181…`)
 
