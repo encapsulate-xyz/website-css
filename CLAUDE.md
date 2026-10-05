@@ -1227,7 +1227,11 @@ fill rising with the reader's progress; an ink close with the next guide.
 | The head's title and Lede | the `Guides Database` row's **Name** (its page title) and **Lede** — Super does not render a row's properties on its own page, so they are read off /guides, as post.js reads the blog index. **Since 2026-10-01 (v346) the title is the Name**: a Title property ("Stake AVAX with Core") had stood beside a Name that drifted ("AVALANCHE", "Delegate ESP with Metamask"), and the /guides picker's answer card, which read the Name, showed the drifted one. Every Title was copied into its Name and Title deleted (`backups/guides-name-title-2026-10-01.json`); guide.js, navbar.js, og_cards.py and the SEO job read Name. Proved on the live site before and after each step (`scratchpad/guidename/`): all 32 guide pages, the picker's card for every chain and the navbar's Learn rows identical but the picker's card, now the guide's title. The 7 guides with no Networks set row (Stargaze, UX, Quicksilver, OmniFlix, Mellow, Namada, Juno) are **Status Concluded** (to be removed — the user); the /guides view lists only Live, so Mellow left it and the picker's counter reads "24 chains · 24 guides" |
 | The crumb, "Watch out", "{N} screens", the close band, the Discord line | the **"Guide page copy" toggle on /guides**, `key · value` lines — one place for 33 guides. `{n}` is the step count, `{N}` the same spelled ("Eight screens"), `{next}` and `{chain}` the next guide |
 
-**Converted guides so far: Axelar, Sui (ten steps, SuiVision + Slush), Espresso, Monad (below), Terra and Agoric** (2026-10-02:
+**Converted guides so far: Axelar, Sui (ten steps, SuiVision + Slush), Espresso, Monad (below), Terra, Agoric and NEAR** (NEAR,
+2026-10-05: eight steps in Meteor's web wallet at wallet.meteorwallet.app — no separate extension or confirmation window; the
+Watch notes carry the two traps the captures show, "Stake Now & Start Earning" staking with Dew Finance and the form opening
+on Meteor Pool, and the unlock as 22–30 hours though Meteor quotes 48–72; the Lede no longer says "extension and its dashboard";
+old values `backups/near-guide-2026-10-05.json`) (2026-10-02:
 seven steps each on the Keplr Dashboard with the Keplr extension, written from the team's captures; step 3 links Keplr's
 staking window with our validator already open, the address the capture itself was taken at — Agoric's is the current
 "Encapsulate" `agoricvaloper1p8uxq4…`, 9%, not the old "fka KingSuper" one; old values
