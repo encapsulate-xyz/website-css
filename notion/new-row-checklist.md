@@ -228,7 +228,7 @@ these are what shows before that read lands, and what a crawler reads. Find them
       keeps it off the picker), Status. (Cover went on 2026-09-28 with the "View More Guides" sections it
       pictured; Ticker is read by nothing.)
 - [ ] **The steps:** the guide's own slide database, one row per step — Name ("01 · Unlock Keplr"),
-      Step, Body, Watch, Surface, Link, and the capture as the row's Cover. **Every step has a Link** — the page its capture
+      Step, Body, Watch, Surface, Link, and the capture as the row's Cover. **Every step has a Surface and its Link** — the page its capture
       shows (the capture's file name is that address) or, for a wallet-extension step, the wallet's site (keplr.app,
       slush.app, metamask.io); the surface label is drawn as the link. **Its gallery must show Body,
       Link, Step, Surface and Watch, in that order** (Axelar's); the template's gallery carries that

@@ -1258,8 +1258,9 @@ and the MetaMask extension…".
 one check that prevents a loss on that screen (the address bar, the validator's address, the amount, the unbonding
 time) or nothing; never a sentence the capture does not show (Axelar's "the dollar value updates as you type" was
 copied into Sui, whose screen has no dollar value).
-**Every step carries a Link** (the user, 2026-10-05: "are you not adding the surface link on every page"): the surface label
-is drawn as that link. A website step links the page its capture shows, and the capture's own file name encodes the address
+**Every step carries a Surface and its Link** (the user, 2026-10-05: "are you not adding the surface link on every page", then
+"every step has a surface and the surface link"): the Surface is where the reader is ("On wallet.keplr.app", "In the Keplr
+extension") and the label is drawn as the Link. A website step links the page its capture shows, and the capture's own file name encodes the address
 (`wallet.keplr.app_chains_terra_tab=staking&modal=staking…(Guide-dashboard).png` → `https://wallet.keplr.app/chains/terra?tab=staking&modal=staking…`).
 A wallet-extension step links the wallet's site (`https://www.keplr.app/`, `https://slush.app/`, `https://metamask.io/`), as
 Axelar, Sui and Espresso did from the start. Terra, Agoric, NEAR and Monad had links on a few steps only; the other 20 were
