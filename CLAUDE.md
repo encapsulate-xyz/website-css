@@ -1791,7 +1791,8 @@ with the Order made room for, the chain page and its Super page, every typed cou
 counts, the lens, the homepage's network section — checked, not assumed), the site-data configs, its guide from the
 template, the card, the L1 openings page, the refresh. **Cosmos Hub went through it on 2026-10-05** (mainnet and
 testnet, Order 6 after Axelar, tier high; 28 mainnets, 21 testnets, 36 chains; v349; site-data PR #25; the guide
-"Delegate ATOM with Keplr" is Soon until its captures exist).
+"Delegate ATOM with Keplr" is Soon until its captures exist). **The Hub stays on the L1 openings page, as pick 01, until the
+user says to take it off** (2026-10-05; the note above `OURS` in `scripts/l1_openings/build.py` says how).
 
 `Networks set` (`3dde800a…33b7f1…`) replaces the old `Networks` database: **one row per deployment**,
 28 mainnet + 19 testnet, from design *Networks Set*. Properties: Name, Stage, Reward rate, Role,

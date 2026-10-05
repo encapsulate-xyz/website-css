@@ -198,7 +198,8 @@ these are what shows before that read lands, and what a crawler reads. Find them
 **10. The L1 openings page** (the networks we do not validate yet)
 - [ ] Add the chain to `OURS` in `scripts/l1_openings/build.py`; take it out of `picks.json`'s `overrides`, `flags`,
       `rename` and `picks` (the build exits on a name it no longer lists), and correct the Start here lede's counts.
-      Rebuild into the scratchpad and republish the artifact.
+      Rebuild into the scratchpad and republish the artifact. **Ask first** whether it should leave the page yet:
+      the user kept Cosmos Hub on it (as pick 01) on 2026-10-05 until they say otherwise (see the note above `OURS`).
 
 **11. Refresh and check live**
 - [ ] Refresh the chain page, /networks, /services and the homepage — and every page after a site-head paste

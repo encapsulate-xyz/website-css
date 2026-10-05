@@ -12,7 +12,10 @@ DATA = os.environ.get("DATA") or os.path.join(HERE, "research")
 OUT = os.environ.get("OUT") or os.path.join(HERE, "encapsulate-l1-openings.html")
 CHECKED = os.environ.get("CHECKED") or "30 Sep 2026"
 
-OURS = ["Agoric", "Althea", "Avail", "Avalanche", "Axelar", "Chain4Energy", "Cosmos Hub", "EigenCloud", "Espresso", "Gitopia", "Gravity Bridge", "IOTA", "Ika",
+# Cosmos Hub is ours since 2026-10-02 but stays on the page, as pick 01, until the user says to take it off
+# (2026-10-05: "for now keep it there and i will tell you when to remove") — then add it here, and drop it from
+# picks.json's overrides and picks (the backup picks.json.after-cosmos-* is that state).
+OURS = ["Agoric", "Althea", "Avail", "Avalanche", "Axelar", "Chain4Energy", "EigenCloud", "Espresso", "Gitopia", "Gravity Bridge", "IOTA", "Ika",
         "Lido DVT", "Lumera", "Mina", "Monad", "Near", "Passage", "Sommelier", "Starknet", "Sui", "Supra", "Terra", "Vara", "Zilliqa", "humans.ai", "ixo"]
 LEVEL = {1: ("Open now", "Open to anyone, seats free, a few thousand dollars of our own at most. Live within weeks."),
          2: ("Within reach", "Open to join at a cost we can carry, or an application with regular rounds."),
