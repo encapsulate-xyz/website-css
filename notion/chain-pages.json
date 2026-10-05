@@ -85,6 +85,82 @@
    }
   },
   {
+   "name": "Cosmos Hub",
+   "token": "ATOM",
+   "since": "2026-10-02",
+   "unbonding": "21 days",
+   "unbonding_days": 21,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
+   "wallet": {
+    "label": "Delegate with Keplr",
+    "url": "https://wallet.keplr.app/chains/cosmos-hub?modal=staking&chain=cosmoshub-4&validator_address=cosmosvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwt0m3udk&step_id=2"
+   },
+   "work": [
+    [
+     "Node operation",
+     "Bare metal, two regions, with a hot standby."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our signing and votes are on the explorer for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "No. Delegate any amount the chain itself allows."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. They stay in your wallet — delegation is non-custodial."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every block, about 6 seconds, to a balance you claim."
+    ],
+    [
+     "What happens if you go offline?",
+     "A standby node takes over. Past 95% missed of 10,000 blocks, the chain jails it and slashes 0.01%."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Unbonding takes 21 days; rewards stop the moment you ask."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "Created 2026-10-02T18:47:39Z (the commission's update_time). Signing-info start_height 33,227,488 is that block (rest.cosmos.directory/cosmoshub), index_offset 36,280 and missed_blocks_counter 0 on 2026-10-05, so it has signed continuously since. Our older Hub validator 'KingSuper' (cosmosvaloper1s0lankh33kprer2l22nank5rvsuh9ksam8l32u, 8%) is unbonded and jailed since June 2026, not tombstoned, 3.9996 ATOM; it is not the one shown.",
+    "cadence": "Every block via x/distribution (inflation plus fees), claimable. Block time measured 5.71 s over the 36,284 blocks since our validator started (33,227,488 → 33,263,772, 2026-10-02 18:47 → 2026-10-05 04:17 UTC).",
+    "rate": "staking-explorer.com/explorer/cosmoshub measured 19.64% (cosmos.directory calculated_apr 19.63%, Keplr's dashboard 19.62%) on 2026-10-05; after our 10% commission 17.7%. The site-data networks job keeps it current (config/chains.json, slug cosmoshub).",
+    "other wallets": {
+     "url": "https://wallet.keplr.app/chains/cosmos-hub",
+     "what": "Keplr Dashboard's Cosmos Hub staking page (the Hub's own site lists no wallets)"
+    },
+    "sources": [
+     "https://rest.cosmos.directory/cosmoshub/cosmos/slashing/v1beta1/params",
+     "https://rest.cosmos.directory/cosmoshub/cosmos/staking/v1beta1/params",
+     "https://rest.cosmos.directory/cosmoshub/cosmos/slashing/v1beta1/signing_infos/cosmosvalcons1tkp50l4xhk5h4rkthcdqfaj6g9xl0mcug5a3qn",
+     "https://rest.cosmos.directory/cosmoshub/cosmos/staking/v1beta1/validators/cosmosvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwt0m3udk",
+     "https://staking-explorer.com/explorer/cosmoshub",
+     "https://wallet.keplr.app/chains/cosmos-hub"
+    ],
+    "notes": "Downtime: window 10,000 blocks (~16 h at 5.7 s), min_signed 5%, slash 0.01%, jail 10 min minimum; double-signing slashes 5%. Commission 10%, max 20%, max change 4% a day; min self-delegation 1 ATOM. Active set capped at 180 (all full on 2026-10-05; the lowest held 42 ATOM, ours 1,750 at rank 161). Keplr link loaded the Hub's staking page; its staking window opens on our validator once a wallet is connected, as for Terra and Agoric. Glyph: the new Cosmos mark (the Ø of the cosmos.network wordmark, https://cosmos.network/images/cosmos-logo.svg), made with scripts/make_glyph.py."
+   },
+   "other": {
+    "label": "Our validator",
+    "url": "https://www.mintscan.io/cosmos/validators/cosmosvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwt0m3udk"
+   }
+  },
+  {
    "name": "Terra",
    "token": "LUNA",
    "since": "2022-05-28",
