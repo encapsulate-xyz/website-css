@@ -1228,8 +1228,8 @@ fill rising with the reader's progress; an ink close with the next guide.
 | The crumb, "Watch out", "{N} screens", the close band, the Discord line | the **"Guide page copy" toggle on /guides**, `key · value` lines — one place for 33 guides. `{n}` is the step count, `{N}` the same spelled ("Eight screens"), `{next}` and `{chain}` the next guide |
 
 **Converted guides so far: Axelar, Sui (ten steps, SuiVision + Slush), Espresso, Monad (below), Terra, Agoric, NEAR and Lumera**
-(Lumera, 2026-10-06: seven steps, the Terra and Agoric flow, 10% commission; its step 1 capture shows "Open Keplr to approve
-request(s)", so the words say to approve the connection; Lumera has no price in Keplr, so the fee is given in LUME; the
+(Lumera, 2026-10-06: seven steps, the Terra and Agoric flow, 10% commission; step 1 reads exactly as Terra's and Agoric's (the
+user, 2026-10-06: a clause on the capture's "Open Keplr to approve request(s)" made it longer than its siblings); Lumera has no price in Keplr, so the fee is given in LUME; the
 description said "Eight steps"; old values `backups/lumera-guide-2026-10-06.json`) (NEAR,
 2026-10-05: eight steps in Meteor's web wallet at wallet.meteorwallet.app — no separate extension or confirmation window; the
 Watch notes carry the two traps the captures show, "Stake Now & Start Earning" staking with Dew Finance and the form opening
