@@ -244,6 +244,54 @@ these are what shows before that read lands, and what a crawler reads. Find them
 - [ ] **Check:** the picker offers it (chain and wallet), its head (disc, wallet mark, title, lede, "N
       screens"), a step band, the close's "next guide", the navbar's Learn panel.
 
+## Converting a guide — the run (the team adds the captures, I write the words)
+
+Done this way for Axelar, Sui, Espresso, Monad, Terra, Agoric, NEAR, Lumera, Passage, Gravity Bridge and ixo; the
+user asked for it written down on 2026-10-08. A guide is converted once its step database holds one capture per
+step; the team names the steps, the words are mine.
+
+- [ ] **Fetch it**: `python3 scripts/guide_steps.py "<part of the guide's Name>"` — prints the row (Step, Time, Lede,
+      description) and every step (Name, Surface, Link, Body, the capture's file name), downloads the captures and
+      writes the backup `backups/<guide>-guide-<date>.json`.
+- [ ] **The chain's facts**: `notion/chain-pages.json` (its five answers: rewards cadence — every block, or once a day
+      on ixo — unbonding, downtime) and the Networks set row (Commission, Address, Token). A capture that shows a
+      different commission is a finding to report, not a number to copy.
+- [ ] **Look at every capture**, then write each step:
+      **Name** "01 · <the action>" (short: Press Start Staking, Find Encapsulate, Check our numbers, Enter an amount,
+      Unlock Keplr, Approve in Keplr, Check the dashboard);
+      **Surface** "On <host>" or "In the <wallet> extension";
+      **Link** — every step has one: a website step the address its capture was taken at (the file name is that
+      address: `wallet.keplr.app_chains_terra_tab=staking&modal=…` → `https://wallet.keplr.app/chains/terra?tab=staking&modal=…`;
+      `ping.pub_ixo` → `https://ping.pub/ixo`), an extension step the wallet's site (keplr.app, slush.app, metamask.io);
+      **Body** — what the screen is, then the one action the ring is on; **as short as the same step in its sibling
+      guides** (Lumera's step 1 grew a clause about a Keplr prompt and the user cut it, 2026-10-06);
+      **Watch** — the one check that prevents a loss on that screen (the address bar, the validator's address, the
+      amount and its unit, the message to approve, the unbonding wait) or nothing. Never a sentence the capture does
+      not show.
+- [ ] **Copy the model for its flow**, changing only the chain, the token, the address and the facts:
+
+      | Flow | Steps | Model guides |
+      |---|---|---|
+      | Keplr Dashboard + the Keplr extension | 7 | Terra, Agoric, Lumera, Passage |
+      | ping.pub + the Keplr extension | 7 | Gravity Bridge, ixo — check the amount's unit (Gravity's form showed ugraviton, a millionth of a GRAV) |
+      | Meteor's web wallet | 8 | NEAR — "Stake Now & Start Earning" stakes with Dew Finance; the form opens on Meteor Pool |
+      | MonadVision + MetaMask | 11 | Monad |
+      | Espresso's dashboard + MetaMask | 9 | Espresso |
+      | SuiVision + Slush | 10 | Sui |
+
+- [ ] **The guide row** follows the steps, not the other way round (Passage's row said nine for seven captures,
+      Gravity's and ixo's six): **Step** = the number of steps; **Time** = half a minute a step, a half going to the
+      even (7 → 4, 9 → 4, 8 → 4, 13 → 6); **Lede** "<N> steps across <the surfaces, plainly>, one per screen, each
+      with the screen you should be looking at."; **meta:description** "<Name>. <Lede>".
+- [ ] **Read it back**: every step has a Surface and a Link (`guide_steps.py` again shows them).
+- [ ] **Refresh** the guide and /guides in Super. If the Lede or Step changed, the card shows it: run the content job
+      (`gh workflow run content.yml -R encapsulate-xyz/site-data`, its state PR merges itself), check the card, then
+      refresh the guide twice.
+- [ ] **Check live** in headless Chrome: the guide builds, the steps in order, every surface label a link; the
+      description and `og:image` (on assets.super.so) are the new ones.
+- [ ] **Record it**: add it to "Converted guides so far" in CLAUDE.md with what was particular to it, and report a
+      table (Step | Surface | What it says | Watch out) plus anything in the captures the team may want to retake.
+
 ## The other databases
 
 - **Governance Record** (`c458e5dd…`): rows come from `scripts/gov_*.py` — run
