@@ -131,6 +131,7 @@ User rules that stand on every task:
 | `scripts/og_cards.py`, `scripts/og/` | the social cards (og:image) of the database pages — `posts`, `chains` or `guides`: renders each page's card from its own design (`og/post.html` = Blog Cover System 17d, the chain hero captured live, `og/guide.html` = the guide head drawn by guide.css; `og/render.mjs` is the one-tab headless renderer) and attaches it to the row's `meta:image` with its text properties (see "SEO") | — |
 | `img/og/` | the one card that cannot live in Notion: the Mina hard-fork post, which is not a Blogs row (set as its image override in Super) | Super's page settings |
 | `scripts/guide_steps.py` | the first step of converting a guide: finds a guide by part of its Name, prints its row and every step (Name, Surface, Link, Body, the capture's file name — which is the step's Link), downloads the captures and writes `backups/<guide>-guide-<date>.json`. The whole run is "Converting a guide — the run" in `notion/new-row-checklist.md` (2026-10-08) | — |
+| `scripts/guide_check.js` | the live check of a converted guide, for `livecheck.mjs`: built, title, steps in order, how many carry their surface as a link and which do not (2026-10-08) | — |
 | `scripts/shots.py`, `img/shots/` | panel captures of the live tools (Sui RGP, the Solana graph), 1100×750 at DPR 2 from headless Chrome — the extension's screenshots time out on those pages, and a WebGL graph needs swiftshader or it comes back blank. Not wired into any page yet (2026-09-23): the tools table that names their tiles arrived cut off | — |
 
 **Edit sources, run `python3 build.py`, commit source and `dist/` together. Never edit `dist/`.**
@@ -162,7 +163,9 @@ Repo **github.com/encapsulate-xyz/website-css** (public), served by jsDelivr:
    page ran no chain.js at all (no `window.encChain`, no resource entry) and showed its raw blocks
    after the 5s reveal; five fresh loads later all built. `NETLOG=1 scripts/livecheck.mjs …` prints
    every website-css request that fails.
-3. Commit (with the session's attribution trailer), push, `git tag -a vN -m … && git push origin vN`.
+3. **Never move a released tag — cut a new one.** jsDelivr caches per tag, so a moved tag can keep serving the old
+   file (v191 was moved twice on 2026-09-21 and is dead; v194 replaced it).
+   Commit (with the session's attribution trailer), push, `git tag -a vN -m … && git push origin vN`.
    **`main` has a protection rule since 2026-09-28** (a pull request and one approving review), with
    "enforce for admins" off (the user): a push to main goes through as an admin bypass (GitHub prints
    "Bypassed rule violations"), and a PR is merged with `gh pr merge N --admin --merge`. The PR author
@@ -274,6 +277,9 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
   (e.g. `/governance-record/governance-record`); a block link `https://www.notion.so/<page>#<block>`
   should become `/#block-…` — confirm after republish.
 - Super republishes on its own schedule; edits are not live immediately.
+- **A bulk delete matches each block's own text, never its descendants', and logs every id it removes** (2026-09-21): a
+  newsletter sweep matched the XMTP post's table of contents — which lists the page's headings — and deleted the whole
+  post column; it was put back by un-archiving the block from its id in the cached page.
 
 ## The systems in main.css
 
@@ -727,7 +733,11 @@ The headline's font comes from main.css §06 alone; home.css adds only its #000 
 is one Notion column list, the page's first block: the headline, the lede and the two buttons in
 the left column, the loop (a video block: `home-loop-paper.mp4`, served from Super's asset host,
 `assets.super.so/…/videos/2e7138f5-…/home-loop-paper.mp4`, identical to the repo's `video/` copy, checked
-2026-09-27) in the right. **Nothing in it makes space**: its six dividers, eight empty paragraphs and the button row's
+2026-09-27) in the right. **The loop's master has no alpha** (`FINAL EXPORT Encapsulat loop animation.mp4`, HEVC yuv420p, byte for byte
+Wistia's original, checked 2026-09-21), so it cannot sit on ink; a transparent version needs a ProRes 4444 or
+PNG-sequence re-export from whoever made the animation. **Super copies a video block's external file into its own storage when it publishes**, so the
+host in the block's URL does not matter; the user kept the current encode (2026-09-21, "no its good now") — a new encode
+is uploaded to the block. **Nothing in it makes space**: its six dividers, eight empty paragraphs and the button row's
 empty third column were deleted, and the loop moved in from the top of the page, where it had
 hung at fixed offsets (`top: -40px`, `90px` under 1728). home.css: the hero is one screen tall
 (`100svh`), the words sit between two flex springs 28px apart (design 11a), centred under the
@@ -763,9 +773,9 @@ an equal negative bottom margin so it takes no height from the rows (a plain top
 share the role's span into the two empty name rows, 47px each). Measured against a render of the
 file's own markup at 1440×900, 1920×1080, 1536×864, 1280×800 and 1024×768: names and intro exact,
 portrait, quote and role within 1–3px. Under 900px nothing moved (the stacked layout is ours; the file
-has no small-screen variant). **Still off, and Notion's to fix:** S Maheswaran's first role is a gray
-pill, so his tint falls back to `#E2E2DB` where the file has `#F8DDC6` — the option's colour must be
-set to orange in Notion (the API cannot change an option's colour).
+has no small-screen variant). **S Maheswaran's tint is grey on purpose** (the user, 2026-09-25: "keep what it was
+before"): his role stays **"Content & Socials Manager"** in grey, not the handoff's "Social media" in orange (`#F8DDC6`),
+so his disc and rings are the neutral `#E2E2DB`. The unused "Social media" option is still in the Role list.
 **The circles were in front of the portraits** until v318 — I said otherwise first, from a screenshot,
 and the user showed the seam across a shoulder. Super gives every card property `z-index: 10`, and a
 grid item's z-index counts even unpositioned, so each name and role was its own layer and the disc and
@@ -861,6 +871,10 @@ and turns the capsule and the reference line ink. **The dot is by the vote's wor
 Ten rows a page. The empty state is the shared empty set (see the filter bar). On a phone the rationale
 is collapsed too — a tap is a press.
 
+**The homepage's view of the record is filtered to the past month** (the user set it, 2026-09-28: "Recorded is within
+past month"), not limited by a load count: Super ignores Notion's load limits while its own "load limits" option is off,
+and switching that on would cut the record, the blog and the network lists too. Remove the filter and the homepage
+carries all 1,150+ rows again (about 4 MB); a month with no vote would show fewer than six.
 **The homepage's table is the same component** (the user, 2026-09-26, "in line fully"; v304). Both
 tables are views of the one database, so `governance.js` builds both (`ROW_TABLES`: the record, and
 the homepage's `4529386b…` with its first six rows only) and **main.css §13d** draws both, keyed by
@@ -928,7 +942,9 @@ no contents block.
 
 `post.js` re-reads that into the design and writes no copy into a post:
 
-- **The head** is ink and one screen tall (`min(92vh, 940px)`): the meta line, the title at
+- **The head** is ink and one screen tall (`min(92vh, 940px)` — **open**: it starts 107px down under the bar and
+  Super's padding, so at 1440×900 it ends 35px past the fold where the file's ends above it; the fix proposed on
+  2026-09-21 is `calc(100svh - var(--cover-top))`, as the covers do; the user: "don't change anything yet"): the meta line, the title at
   `clamp(38px,5.8vw,92px)` and the lede, over the chain's mark bled off the right at 16%.
   The **lede is the post's own opening paragraph**, lifted out of the body.
 - **The body** is `236px | 720px`, centred: the reading rail — progress (one anchor 40% down the
@@ -976,7 +992,7 @@ hides Super's card content, so the index looks unchanged.
 
 **The post's own duplicate title and its "Written by" block were removed from all forty posts**
 (2026-09-21): the head is the title now, so the title comes from the header Super always renders,
-and the byline is drawn from `Author`. The read time is derived at 230 words a minute, as the
+and the byline was drawn from `Author` (since 2026-10-01 it is Person — see below). The read time is derived at 230 words a minute, as the
 handoff insists — stating it is what let it claim six minutes for a one-minute post.
 
 **The index is fetched once and parsed once, but the post is looked up on every build.** Caching
@@ -1141,6 +1157,38 @@ properties on. Without them the band still runs and names each position.
 Removed from the page on 2026-09-21: the Tally form column ("Looking for Investments?", its
 paragraph and the quote) and the "Our Investments" heading — the design has neither, and the ask's
 second button goes to the contact page's form instead.
+
+## /security — what its claims rest on (2026-09-19)
+
+Recorded on 2026-10-08 from the discussion of 19 September, so the page's copy stays true. **Check a claim against
+these before changing the page's words.**
+
+- **Keys: there is no HSM** (the user, 2026-09-19). On the CometBFT chains the answer is **threshold signing with
+  horcrux**: one cluster of **three cosigners, any two of which sign** (2-of-3; since horcrux v3 one cluster signs every
+  chain it holds a shard for, so three hosts in all, spread across failure domains but not continents), the key made
+  into shards once and the original destroyed everywhere. The true line is "no single machine holds the key", **not**
+  "the key cannot be extracted" (the shards are encrypted files). softsign (an encrypted key on one isolated signer host)
+  is the fallback where horcrux is not available. **The non-CometBFT chains have no remote signer** — Sui, NEAR,
+  Avalanche, Starknet, Mina, Monad, Supra, Vara: the key lives with the node, protected by disk encryption, isolation
+  and failover discipline — so the page must not imply the same protection across every network. A YubiHSM with tmkms
+  would need our own hardware (USB-attached to the signer host); cloud VMs cannot. On 2026-09-19 no horcrux or tmkms role
+  existed in the org; **`encapsulate-xyz/remote-signer-ansible`** (a Horcrux playbook for the Cosmos validators) was
+  created on 2026-09-28.
+- **Access, as the private `server-setup-playbook` enforces it** (read 2026-09-19): public-key SSH only, no root, no
+  passwords; people sign in with **FIDO2 hardware keys** (`sk-ssh-ed25519`); named accounts only (`AllowUsers`), automation
+  its own account pinned to one address; **SSH only inside the Tailscale network**, the tailnet ACL in the repo, tested
+  and applied by CI with CODEOWNERS; sudo is a list of commands with `su`, `sudo -i`, `sudo -s` denied; **elevation
+  expires within an hour** (a systemd timer revokes it); every sudo command is mailed to the team; authorised keys
+  root-owned outside home directories; no agent, TCP or X11 forwarding; auditd, fail2ban, Wazuh, Suricata, Trivy, logs
+  shipped off the host; a break-glass account on its own port from one address.
+- **Gaps found that day** (ops', not changed from here): `rm` and `systemctl start *` in the operators' sudo list (both
+  amount to root); `NOPASSWD: ALL` for the ansible and break-glass accounts; no SSH certificate authority (keys never
+  expire, no central revocation); no session recording; SSO and MFA on Tailscale and GitHub not confirmed; no automated
+  patching or kernel hardening; secrets in ansible-vault rather than Vault at runtime; no backups or tested restore; no
+  offboarding task; no alerting on "new sudoers file", "authorized_keys changed", "break-glass used"; no drift check; no
+  `security.txt`.
+- **The public page says what, never where**: no port numbers, usernames, the break-glass address or "not on port 22" —
+  "SSH is reachable only inside the private network" says more and gives a scanner nothing.
 
 ## The chain pages (2026-09-24, design *Chain Page Combined*)
 
@@ -1314,10 +1362,10 @@ dashboard shot is wide (16:9) and runs under the header. `guide.js` reads the fi
 proportions on load and sets `[data-enc-shot]`. The band is one grid, so opening a note never
 squeezes the capture. Sizes and how the captures are taken: `notion/guide-screenshots.md`.
 
-**Axelar is nine steps, not eight.** The handoff writes eight; the guide's own slides number nine
-(its second file carries steps 1–3 in one frame, and the last is the dashboard confirmation), so
-"Check us before you pick" is split into *Find us in the list* and *Check our numbers*. The row's
-`Step` is what the picker and the head count, so it follows the slides.
+**Axelar was nine steps, not eight** (2026-09-22: the handoff wrote eight; its slides numbered nine, so "Check us
+before you pick" was split into *Find us in the list* and *Check our numbers*). **Today it is seven** (read 2026-10-08):
+the team rebuilt it on the Keplr Dashboard with a capture for every step — 01 Open Keplr's Axelar staking dashboard …
+07 Check it worked. The row's `Step` is what the picker and the head count, so it follows the slides.
 
 **Three traps paid for.** The deck was found by "the cards that are not links" until `Link` was
 switched on — Super renders a card with a url property as an anchor, so both collections became
@@ -2117,6 +2165,10 @@ is unverified — test it on a phone before using it on the button.
 
 ## A guide links its chain page (handoff 2026-09-30, v338)
 
+**A guide carries no questions-and-answers band, and the chain page's questions are not copied onto it** (the user,
+2026-09-29, "yes" to: they live once per chain on the chain page, with the FAQ data; two copies drift and engines pick
+one). The link to the chain page below stands in for it.
+
 The close band's last line is **the side routes**, as *Staking Guide Variation 1d* draws them: two tertiaries on ink
 (Hanken 15/500, a 20px green badge that slides 3px on hover) 28px apart, 4px under the two buttons — **"Axelar's terms
 and common questions" → /networks/axelar#terms**, then "Need help? Ask on Discord". The glyph carries the verb: a right
@@ -2252,8 +2304,10 @@ main pages (Super overrides) and the chain pages (`meta:title`, written by `og_c
 (the user, 2026-09-28).
 
 The 16 posts and 32 guides whose Super overrides held an old image or description had those two
-cleared (titles kept) so the Notion values apply; /blog/double-zero keeps its title override "Double
-Zero" for "What is IBRL and Why Does It Matter?". **A new post, guide or chain page gets its card with
+cleared (titles kept) so the Notion values apply. **On 2026-09-30 the title overrides went too** — all 11 posts' and
+32 guides' (backup `backups/super-title-overrides-2026-09-30.txt`); Double Zero's short title is its row's `meta:title`
+now. **No database page has a Super SEO override**, so whatever Notion holds is what is served — a new override in
+Super would hide the SEO job's writes. **A new post, guide or chain page gets its card with
 `python3 scripts/og_cards.py posts|guides|chains --only <slug>`**, then ↻ in Super (or its sync).
 
 **The cards** (1200×630, rendered at 2–3× and scaled down, one tab at a time — six tabs in one Chrome
@@ -2312,7 +2366,11 @@ a 404 — there is no Celestia guide) and "How to Stake Agoric BLD?" (/blog/agor
 /guides/agoric) — Super pages removed, Notion rows in the trash, both backed up with their blocks in
 `backups/guide-posts-2026-09-28.json`; the nine posts behind them on the index changed tint, and their social
 cards were made again. "Aleo Node Setup With Monitoring" is a node-operator walkthrough tagged Informative
-and stays. **Still open:** the main pages' h1 counts.
+and stays. **Still open:** the main pages' h1 counts; **phone speed** — Lighthouse 36–60 on phones on 2026-09-28, the
+largest element 10.8–17.8 s against 2.5 s (the hero's poster, v334, and the resized glyphs, v335, came after; not
+measured again); and the audit's item 10 — short dated statements for the homepage and /networks ("Encapsulate has run
+validators since 2020 and secures 27 mainnets.") wait for the user's words; no date beside the rates on /networks
+(Claude's advice). The rest of the audit is the artifact "Encapsulate Search Audit".
 **Where the redirects are in Super:** Pages — each is a row in the tree at its old path (/networks → /mainnet
 → /<chain>, /guides → /mainnet …, /terms-and-conditions at the root) with a folder-and-arrow icon; its ⋯ menu
 → Redirect page shows Enabled, Permanent (301) and the destination.
@@ -2520,6 +2578,27 @@ today is external).
   the user prefers.
 - Networks cover glyph URLs are hardcoded in covers.js; could read the /networks gallery instead.
 - Mobile layout of the covers (field below the text under 800px) is not verified.
+- **Found open by the audit of the session log on 2026-10-08** (each checked live that day):
+  - `head/home.html`'s JSON-LD description still reads "Validator infrastructure for new chains, from the first testnet
+    through mainnet." — not the agreed profile description (offered 2026-10-05, not answered).
+  - covers.js's fallback glyphs for Avail, Althea, Ika, Espresso and Gitopia (`encGlyphs()`, ids `2671f960…`,
+    `0f5ad2ad…`, `3420a833…`, `28c3a599…`, `16f82770…`) are the old files, none of them on /networks any more; point them
+    at the set's current Covers (promised 2026-09-25 "once /networks is republished").
+  - The navbar's Dashboards preview (`img/nav-panels/`) was exported mid-animation — the Solana frame shows through the
+    Aptos one; it wants a re-export from a still frame (asked 2026-09-24).
+  - Super's navbar CTA still reads "Book a Call"; the design writes "Book a call" (optional; Super → Navigation, the
+    user's to change).
+  - Gno.land's testnet row has no Status, where the other testnet-only chains say "Not launched yet" (asked 2026-09-26).
+  - The record keeps two partial rows on purpose (2026-09-25/26): Sui #1 (NO, no title, no date — beside the complete
+    Sui #1 row, YES, "Cetus Hack - Freezed Funds Rollback") and an undated twin of Omniflix #55. They need their data or
+    deleting.
+  - NEAR: Meteor shows 3.96% a year on every pool while our chain page shows 5.0% after our fee (2026-10-05) — a reader
+    who uses both may ask.
+  - **DATA** (Data Network, the Data Foundation, datafdn.org — not Streamr) has its glyph ready, `44-data.png`/`.svg` in
+    the design project's `network-glyphs/` and `~/Downloads` (2026-09-23), for when it becomes a Networks set row.
+- **A question for the user** (2026-09-28, not answered): the SEO section's "Driving Super without its UI" describes
+  how Super's dashboard API is reached, in this public repo — whether to move it to private memory, as the paste steps
+  were.
 - Refresh the Notion integration token, and rotate the Blockberry key in site-data (both shown in chat once; the user
   asked not to be reminded — 2026-09-30).
 - Search and sort controls for a gallery are possible but unbuilt: Super ships no search snippet

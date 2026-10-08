@@ -5,6 +5,14 @@ guide mixes dashboards (wide) with wallet popups (small), so screenshots taken a
 a different size, zoom and crop every time. The fix is to decide the frame once and compose every
 capture inside it, rather than cropping whatever each app happened to give.
 
+**Stills, not video** (the user, 2026-09-22, "Yes, images for the guides"): a still lets the reader take their time,
+compare the amount, the validator and the fee with their own screen, and is one capture to reshoot. Video only for a
+step that is itself a movement (a hover reveal, a drag, a list filtering as you type) — and then the still first, play
+on hover or tap, the still under reduced motion, a muted MP4 at the same 1400×788 / 360×788 sizes.
+
+**Every command to paste into a console goes in its own fenced `js` block**, never inline in a sentence (the user,
+2026-09-23: "make sure whatever we run in console is in its own code block").
+
 ## Two frames: 16:9 for dashboards, the popup's own shape for wallets (2026-09-22)
 
 **Dashboard steps** are **one file size, 2800 × 1576** (1400 × 788 CSS px at DPR 2), in a frame of

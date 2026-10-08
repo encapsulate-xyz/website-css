@@ -84,7 +84,9 @@ the steps of the SEO audit of 2026-09-26/28, for Google and for AI search. Keep 
       column (post.js finds the post by it); **no** H1 repeating the title and **no** "Written by" block
       (the head is the title, the byline comes from Person, the row's creator); no banner image at the top; section
       headings are Heading 2; a code block's caption starts with its file name in inline code for the
-      kicker; a table with column labels has **Header row** on.
+      kicker; a table with column labels has **Header row** on. **Export a diagram at least 1360px wide** — twice the
+      680px column; Super serves the original pixels (it does not blur them), so a narrower file is what looks soft
+      (2026-09-23).
 - [ ] **Social card:** `python3 scripts/og_cards.py posts --only <slug>` (after the post is live — it
       finds the row through the sitemap). Sets `meta:image` and `meta:description` (the Lede). No
       `meta:title`: the post's own title is the page title.
@@ -286,8 +288,10 @@ step; the team names the steps, the words are mine.
 - [ ] **Refresh** the guide and /guides in Super. If the Lede or Step changed, the card shows it: run the content job
       (`gh workflow run content.yml -R encapsulate-xyz/site-data`, its state PR merges itself), check the card, then
       refresh the guide twice.
-- [ ] **Check live** in headless Chrome: the guide builds, the steps in order, every surface label a link; the
-      description and `og:image` (on assets.super.so) are the new ones.
+- [ ] **Check live** in headless Chrome: the guide builds, the steps in order, every surface label a link —
+      `W=1440 H=900 node --experimental-websocket scripts/livecheck.mjs https://encapsulate.xyz/guides/<slug> v0
+      scripts/guide_check.js` must print `linked` equal to the step count and `missing: []`; then the description and
+      `og:image` (on assets.super.so) are the new ones.
 - [ ] **Record it**: add it to "Converted guides so far" in CLAUDE.md with what was particular to it, and report a
       table (Step | Surface | What it says | Watch out) plus anything in the captures the team may want to retake.
 
@@ -304,7 +308,9 @@ step; the team names the steps, the words are mine.
   Slush's came from `@mysten/slush-wallet`), following `scripts/GLYPH-SPEC.md`: pure black on transparency,
   600×600, longest solid side 288, centred, opaque share 5–13%. Check it beside the others on paper and ink.
 - **Team** (homepage "Who we are"): Photo (first file = the portrait), roles as pills — **a role pill's
-  colour is the portrait's tint**, set it in Notion (the API cannot).
+  colour is the portrait's tint**, set it in Notion (the API cannot). **A role is a designation** — a post someone holds
+  ("Content & Socials Manager", "Technical Writer"), not a remit ("Content & Community") — **and one per person**: the
+  byline prints it, and two pills would run together (the user, 2026-09-21).
 - **/services tables** (Dashboards, Playbooks, Bot events, Monitoring builds): fill **Order** — Super
   serves rows newest first and the page sorts by it — and a Dashboard needs its Capture and Menu.
 - **Colour** (/brand): Name, the value, Set; a ground also its Job line.
