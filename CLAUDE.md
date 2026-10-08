@@ -4,6 +4,14 @@ Custom CSS and JS for the Super.so (Notion) site at https://encapsulate.xyz. Des
 Design handoffs (project `9da1c502-69a5-4e9f-9b05-9b435acb854b`, read with the DesignSync tool,
 `get_file`) and are implemented section by section, verified on the live site.
 
+**The validator business is not here** (split on 2026-10-08, the user: "we have merged two big things into this one
+claude session"): the L1 openings page and its research, every validator profile and the profile tracker, the agreed
+profile description, and the notes on single networks (Cosmos Hub's delegation programme, Zcash, Canton, TRON, the
+watch list) are in **`~/IdeaProjects/validator-research`** (private, github.com/encapsulate-xyz/validator-research),
+with its own CLAUDE.md and its own Claude session. Do that work there, not here. They meet in two places: a chain we
+start validating (that side decides it and takes it off the L1 page; this side runs the new-chain checklist), and a
+commission changed by a profile edit (the site's rate follows; see "The Discord invite, and commission changes").
+
 ## How we work (agreed 2026-09-15)
 
 The user shares a design handoff. I:
@@ -111,14 +119,8 @@ User rules that stand on every task:
 | `notion/page-covers.md` | cover copy for the nine inner pages | — |
 | `notion/github-actions-plan.md` | the GitHub Actions plan (2026-09-26) and what runs (since 2026-09-30, in `site-data`): the 37 things that go stale, which ten a job writes, the structure, the build order and the decisions | — |
 | `scripts/actions_plan/` | builds the plan as a page (an artifact, "Encapsulate Actions Plan", **paper theme only** — the user, 2026-09-30): `build.py` holds the inventory, the two repo trees, the workflows, the build order and the decisions; `template.html` the page. `OUT=<path> python3 scripts/actions_plan/build.py`, then republish | — |
-| `scripts/l1_openings/` | builds the layer 1 openings page (an artifact, "Encapsulate L1 Openings", paper theme; asked 2026-09-30): networks we do not validate yet, from the easiest to join to the hardest. `build.py` reads `research-*.json` (one list of networks per research pass, in the shape `BRIEF.md` asks for) and `picks.json` (the Start here picks, **a tier for every network on the set's own scale — god, high, medium, low, filth — by market value and name** (the user, 2026-09-30; the same rule for the eight that are in the set, so Canton is god here and medium there), the flags "Pays little" and "Winding down", corrections made after a check by hand, shorter names, which entries are testnet only) from `DATA`, leaves out our 27 mainnets (the `OURS` list in build.py — change it when the set changes) and orders by level, then who is taking operators, then the stake needed; `template.html` is the page. **The research is not in this public repo** (it says what we could afford and whom we would approach): it is in `backups/l1-openings-2026-09-30/`, which git ignores. `DATA=<folder> OUT=<path> python3 scripts/l1_openings/build.py`, then republish | — |
 | `notion/new-row-checklist.md` | **what a new row in each database needs beyond its page** (posts, chains, guides, the rest): its properties, its path in Super, the social card (`og_cards.py`), the fallback numbers and hardcoded lists, what to refresh and what to check. Go through it every time a row is added (the user, 2026-09-28) | — |
-| `notion/mentions-checklist.md` | **where Encapsulate is listed and what to fix** (2026-09-29): every validator profile, registry and directory checked read-only — name, website, X — ranked by value, with who fixes each (you, ops with the operator key, or a PR). `x.com/encapsulate_xyz` is suspended; the live account is @encapHQ | — |
-| `notion/profile-updates.md` | **the work list for the profiles** (2026-09-29): what every profile should say (name, the agreed description, website, X, Discord, logo) and all 37 updates in three tables — Claude's (our own repos and pull requests), a transaction with the operator key, and the user's forms and settings. Nothing done yet | — |
-| `scripts/validator_profiles/` | `edit.mjs` edits our 13 Cosmos validators' name and description (as operator or by authz), dry run first; `plan.json` names each signer; `find.mjs` looks for an address among a seed's accounts. Nothing sent yet — see its README | — |
-| `scripts/profile_tracker/` | builds the profile tracker page (an artifact, "Encapsulate Profile Updates"): `build.py` holds the 48 rows with each field's current value (read live 2026-09-29) and its new one, `template.html` the page (redesigned 2026-09-29: a summary bar, the agreed profile as values that copy on a click, one toolbar, rows that open) — a status, a note, the pull request and the last live check per row are kept in the artifact's database. `OUT=<path> python3 scripts/profile_tracker/build.py`, then republish the artifact from that path. `prs.json` maps a row to its pull request and `prs.py` prints each one's state (open, merged, checks) | — |
-| `notion/tron-super-representative-2026-09-29.md` | a side quest: Staking4All's TRON validator is the Super Representative "CryptoGuyInZA", in the top 27 since 2018; what a seat takes (9,999 TRX to register, 22,000 votes to be listed, $207M of votes to produce blocks — decided by a few large holders) and what it pays | — |
-| `notion/staked-total-2026-09-29.md` | the stake with our validators on 2026-09-29, per chain, from each chain's own endpoints and CoinGecko prices: $84.8M, the Lido cluster counted in full; the homepage's live figure agreed within 1%. A record only — no profile carries a figure | — |
+| `notion/staked-total-2026-09-29.md` | the stake with our validators on 2026-09-29, per chain, from each chain's own endpoints and CoinGecko prices: $84.8M, the Lido cluster counted in full; the homepage's live figure agreed within 1%. A record only; site-data's stake job cites it as its reference (`config/stake.json`) | — |
 | `notion/sui-guide-review-2026-09-29.md` | the review of the Sui guide: the 12 findings still open (where, what it says, what is wrong, a suggested fix), the two fixed, the eight the user set aside | — |
 | `notion/guide-screenshots.md`, `scripts/guide_shot.mjs` | how guide screenshots are captured and composed (agreed 2026-09-18; 2026-09-30: a device-mode capture zeroes the scroll of a page whose document scrolls (MonadVision) because Chromium grows the viewport to the page's height for it — two lines of CSS in the console make `body` a 788px scroller and the position survives; a popup window at the frame's size with device mode off, or `guide_shot.mjs hold <tab> dashboard\|wallet`, are the other two routes) | — |
 | `build.py` | strips comments into `dist/`, copies the JS | — |
@@ -1809,10 +1811,10 @@ focuses it; ↑↓, Enter, Escape).
 new chain we validate — the whole run")**: the glyph from the chain's own mark, the facts from the chain, both rows
 with the Order made room for, the chain page and its Super page, every typed count, what follows by itself (the
 counts, the lens, the homepage's network section — checked, not assumed), the site-data configs, its guide from the
-template, the card, the L1 openings page, the refresh. **Cosmos Hub went through it on 2026-10-05** (mainnet and
+template, the card, the refresh — and the L1 openings page, which is validator-research's: tell that session the chain
+is ours. **Cosmos Hub went through it on 2026-10-05** (mainnet and
 testnet, Order 6 after Axelar, tier high; 28 mainnets, 21 testnets, 36 chains; v349; site-data PR #25; the guide
-"Delegate ATOM with Keplr" is Soon until its captures exist). **The Hub stays on the L1 openings page, as pick 01, until the
-user says to take it off** (2026-10-05; the note above `OURS` in `scripts/l1_openings/build.py` says how).
+"Delegate ATOM with Keplr" is Soon until its captures exist).
 
 `Networks set` (`3dde800a…33b7f1…`) replaces the old `Networks` database: **one row per deployment**,
 28 mainnet + 19 testnet, from design *Networks Set*. Properties: Name, Stage, Reward rate, Role,
@@ -2052,12 +2054,8 @@ flash of empty values and a key in the page.
   (`0xcddc0b19…a187`) that returns 2/7 to Lido's Agent (`0x3e40D73E…9C8c`) and shares 5/7 equally
   among the seven operators, 10.2% of it each — **about 0.714% of the rewards our validators earn** (corrected
   2026-10-01 from the reward contracts on chain: 8% module fee × 87.5% × 10.2041% — a 12.5% cut comes off the module's
-  share before the split, which the 0.82% of 2026-09-24 missed), about $7,663 a year on the 16,000 ETH. **The module is
-  closed and winding down**: no keys waiting, no deposits since 2026-03-18, and a Lido reply quoted on its forum says
-  the 10 remaining 500-key clusters end in **May 2027** unless moved — the next step is asking Lido's Curated Module
-  Committee to move ours into Curated Module v2's multi-operator DVT type (planned Q4 2026). **Our SSV operator in the
-  cluster is #924** (99.5% over 30 days); 469 ("KingSuper") and 1056 hold no validators. Detail in the L1 openings
-  research, `backups/l1-openings-2026-09-30/eth/eth-1.json`.
+  share before the split, which the 0.82% of 2026-09-24 missed), about $7,663 a year on the 16,000 ETH. The cluster's
+  future (the module is winding down, May 2027) and our SSV operator ids are validator-research's.
   Operator #48 "Lido x SSV: Mysterious Manta" (160 keys, all exited) was also ours, shut down on
   purpose (the user, 2026-09-24), so it counts toward nothing.
   The mainnet count went 28 → 27 everywhere: the homepage's "Number of
@@ -2141,70 +2139,23 @@ line of it is the "Guide page copy" toggle on /guides (`3e3e800a…a576f9`) — 
 line, Next, All guides, terms, help — read by guide.js from the index it already fetches; the step words are the
 guide's own slide database and the Title and Lede the Guides Database row.
 
-## TODO — every validator profile says the same thing (asked 2026-09-29)
+## The Discord invite, and commission changes (2026-09-29)
 
-**The Cosmos edits are written and waiting for the right key** (2026-09-29): `scripts/validator_profiles/` (its README has the
-state). **A seed the user supplies is never opened, printed or copied — only a script may read it** (the user: "you must
-not read it"), from a local file that git ignores. The one supplied on 2026-09-29 opens the voting wallet (`…lz32rfqz…`), which holds
-only `MsgVote`; the edit permission is with `…p8uxq4ska2…`, so the script stopped before signing and nothing was sent.
-**Outside forms are filled, shown and left for the user to submit** (2026-09-29, after the Minascan form went in before
-they could review it: "you let me review before submit, i will submit"). The same for anything sent to another team —
-**unless the user says in that message to send it** ("you do it", "fill … and submit"): Agoric's and Althea's pull
-requests and Voyager's form went out that way the same day. Report every value sent. A sign-up is never mine to make.
-**StakingRewards has no free claim any more** (the user corrected me: its dashboard is only for providers in the paid
-rating programme, €4,500 a year at our stake); the route is an email to partnerships@stakingrewards.com, left as a draft
-in the Gmail of info@encapsulate.xyz — **the account the Gmail connector is signed in to**.
-**Six account rows are parked** (the user, 2026-09-29: "keep it added in the artifact for now, we will visit them later"):
-X @encapHQ, X @_KingSuper_, LinkedIn, Keybase, the Lido forum and the Discord server — each noted in the tracker; do not
-change any of them until the user names it. **The Discord invite is `https://discord.gg/PQJX5JVS8h`** since 2026-09-29 (the user made it from the announcement
+The profile work these came from is validator-research's since 2026-10-08; what is left here is the site's.
+
+**The Discord invite is `https://discord.gg/PQJX5JVS8h`** since 2026-09-29 (the user made it from the announcement
 channel; never expires, no use limit). It replaced `q6cmGycxsr` — made from `#moderator-only`, whose name showed in the
 invite's preview — in 33 Notion blocks (the homepage's and /contact's Discord lines, the "Ask us on Discord" button of 29
 guides, the guide copy's `help url`; old values in `backups/discord-invite-2026-09-29.json`), Super's footer, the homepage
-head's `sameAs`, guide.js's fallback, our two GitHub repos and the three open pull requests that carry a Discord link.
-**`q6cmGycxsr` still works and must not be revoked yet**: Voyager carries it until its team publishes the form sent on 2026-09-29 (NEAR was changed on chain that evening).
-**The work list is `notion/profile-updates.md`** (every update, how — pull request, transaction or form — and who).
-The check it comes from is `notion/mentions-checklist.md`: StakingRewards still says "KingSuper", EigenLayer, Minascan and nine
-Cosmos validators still say "fka KingSuper", four listings link the suspended `x.com/encapsulate_xyz` (the live
-account is @encapHQ), Ika's on-chain profile has no website, and three different descriptions are in use, none
-matching the site. Every profile gets the same name (Encapsulate), website (https://encapsulate.xyz), X (@encapHQ)
-and description.
-**The source is the `encapsulate-xyz/assets` repo** (its README's "Explorer Profile" JSON and `espresso-mainnet.json`,
-last edited 2025-09-23: "Backed by five years of experience, Encapsulate secures 40+ networks with nearly half a
-billion dollars…" — stale on every count); update it first.
-**One description, everywhere** (the user, 2026-09-29: one short description rather than a short and a long one),
-**the user's own wording**, written to read as a bio and still speak to a chain team: **"Validator infrastructure
-for new chains, since 2020. Early to testnet, quick to upgrade, easy to reach. Trusted by Sui, NEAR, Monad, Lido,
-Starknet and more."** (157 characters: it fits X's bio, 160, and a Cosmos validator's details, 280; a shorter field
-takes its first sentence, 52 characters, or its first two, 103). "Trusted by" is the user's choice ("Trusted on" was
-offered: Lido selected us, the others are open to anyone with the stake). The names are the set's god tier with
-**Starknet in Avalanche's place** (agreed 2026-09-29): a chain team will look us up on the chains we name, and our
-Avalanche node is the smallest of them (about $106K), did not validate 2026-02-02 → 2026-05-15 and sits at its
-delegation cap. **If we leave a named chain, every profile needs the edit.** It replaced "C" ("Validator
-infrastructure for new chains, from the first testnet through mainnet. Running validators since 2020, with open-source
-tooling for every chain we run."), the pick of earlier the same day. **There is no long version, and no figure or
-count in any profile**: the homepage shows the staked total live (the user's script), and a typed figure is what went
-stale before ("$500 million", "$248 million", "nearly half a billion"). For the record, the stake was measured on
-2026-09-29 at $84.8M, the Lido Simple DVT cluster's 500 validators (16,000 ETH) counted in full as ours (the user) —
-per chain with sources in `notion/staked-total-2026-09-29.md` — and the homepage read $83,996,080 the same day,
-within 1% of it.
-`security@encapsulate.xyz` stays the explorers' contact on purpose; the logo there is the old 4097px PNG (use the
-512px one). Then, per profile: on-chain
-edits by the ops team with each operator key, forms and profile edits by the user. **The pull requests were raised on
-2026-09-29 at the user's word** ("fix everything you can fix here … if you have raised a pr add it there so we can keep
-track which one is merged"): our own two repos merged, nine open in other teams' repos, one row set aside — the list,
-how they were made and what two of them still need from the user is at the top of `notion/profile-updates.md`. **Keep
-the tracker current:** `python3 scripts/profile_tracker/prs.py` reads every pull request's state; write it into the
-row's document in the artifact's database (`pr.state`, and `status` "done" once merged) — see the memory
-`reference-artifacts`.
-**Rechecked live on 2026-09-29 (16 of 50 done):** twelve Cosmos validators are done on chain, and **the same edits
-raised the commission on eight of them** (Sommelier 2 → 10%, Lumera 8 → 10, Axelar 9 → 10, Passage 5 → 10, Gitopia,
-humans.ai, Althea and Agoric 5 → 9); the user confirmed them and the Networks set's `Commission` and `Reward rate` were
-rewritten the same day (`notion/networks-set-values.md`). **The site's rate is after our commission** — verified against
-the measured rates when the user remembered otherwise — so a commission change always means a new rate, new facts
-(`chain_pages.py --facts`) and a refresh. **Only active validators are tracked** (the user): SSV operators 1056 and 469
-and the Sui candidate left the tracker. **Espresso's description lives
-on the node** (`encapsulate-xyz/espresso-ansible`, pull request #16) and **takes no commas**: Espresso's parser cuts a
-metric label at the first comma, so that one file carries the agreed words as sentences.
+head's `sameAs` and guide.js's fallback. The old invite is not to be revoked yet — a profile outside the site still carries
+it (validator-research tracks it).
+
+**A commission can change with a profile edit, and the site's rate is after our commission** — verified against the
+measured rates when the user remembered otherwise — so a commission change always means a new rate, new facts and a
+refresh. On 2026-09-29 the profile edits raised eight Cosmos commissions (Sommelier 2 → 10%, Lumera 8 → 10, Axelar 9 →
+10, Passage 5 → 10, Gitopia, humans.ai, Althea and Agoric 5 → 9); the user confirmed them and the Networks set's
+`Commission` and `Reward rate` were rewritten the same day (`notion/networks-set-values.md`). Since 2026-09-30
+site-data's networks job reads Commission from chain daily on the Cosmos rows.
 
 ## site-data — the jobs (built 2026-09-30)
 

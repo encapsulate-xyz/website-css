@@ -75,7 +75,7 @@ item("C2", "write", "audit", "The green button that still points off the site", 
 item("P1", "report", "audit", "Name, description, website and links on every profile", "Validator profiles",
      "48 updates tracked, 24 done on 29 Sep. Fifteen validators read the agreed text on chain", "By hand, from the tracker",
      "An edit on chain, a registry rebuilt from an old file, a pull request left unmerged",
-     "Read every profile weekly; what no longer says the agreed values goes in the email (on-chain edits need the operator keys, registries need their forms)", new=True)
+     "Moved to validator-research on 8 Oct, with the profile work. There: read every profile weekly; what no longer says the agreed values goes in the email (on-chain edits need the operator keys, registries need their forms)", new=True)
 item("P2", "report", "audit", "The Discord invite", "Validator profiles", "`discord.gg/PQJX5JVS8h`, set never to expire", "By hand",
      "If it is ever revoked, every profile and guide links nowhere", "Check that it still opens the server; email if it does not (a new invite is yours to make)", new=True)
 
@@ -187,7 +187,6 @@ THIS = [
  ("moves", "  notion.py", "The Notion client"),
  ("moves", "  gov_upgrades.py  gov_proposals.py  gov_rationales.py", "The three governance jobs"),
  ("moves", "  chain_pages.py  og_cards.py", "Chain page words, social cards"),
- ("moves", "  validator_profiles/  profile_tracker/", "The profile edits and the tracker"),
  ("dir sep", "notion/", "The notes: this plan, the checklists, the researched values"),
  ("", "build.py", "Builds `dist/`"),
  ("", "CLAUDE.md", "How the site is built, and every decision"),
@@ -229,7 +228,7 @@ WF = [
  ("homepage", "Every 6 h", [("H1", "The stake with our validators, priced"), ("H2", "The accounts staking with us")]),
  ("networks", "Daily", [("N1", "Rates, written with their date"), ("N2, N3", "Commission and unbonding, written"), ("N7", "Chain page facts, rewritten after a write"), ("N4–N6", "Slashing, status, Lido: checked"), ("S1", "The security page agrees with them")]),
  ("content", "Daily", [("E1", "Every row's card, title and description"), ("B1, B2", "A post's Read and Lede"), ("U1, U3", "A guide's Time and Lede"), ("V1–V2, I1, U2", "Dashboards, repositories, investments, old captures — to come")]),
- ("audit", "Daily", [("P1–P2", "Every profile, and the Discord invite"), ("W1–W3", "Glyph lists, old releases, dead links"), ("F1, H7", "Typed fallbacks"), ("C1–C2", "Chain rules and off-site buttons"), ("A1–A3", "The three alerts")]),
+ ("audit", "Daily", [("P2", "The Discord invite"), ("W1–W3", "Glyph lists, old releases, dead links"), ("F1, H7", "Typed fallbacks"), ("C1–C2", "Chain rules and off-site buttons"), ("A1–A3", "The three alerts")]),
 ]
 workflows = "".join(
  '<div class="card wf"><div class="wf-head"><code>%s.yml</code><span class="badge">%s</span></div><ol>%s</ol></div>'

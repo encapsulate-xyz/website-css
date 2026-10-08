@@ -124,7 +124,7 @@ in too, and which logo if the chain has more than one.
 - [ ] **Make room in the Order**: every row (mainnet and testnet) at or after the new place moves down one —
       a chain's mainnet and testnet rows share one Order, and every view sorts by it.
 - [ ] **Mainnet row**: Name, Stage Mainnet, Order, **Tier** (god, high, medium, low, filth — its row in the
-      /networks close, its tile on /services; the L1 openings page's `tiers` in picks.json says what it was rated),
+      /networks close, its tile on /services; the L1 openings page rated it — ask the validator-research session for its tier),
       Cover (the glyph, `notion.upload`, one upload per row), Token, Address, Reward rate + Rate updated,
       Commission, Compounding, Unbonding, Unbonding days, Chain slashes, Slashing events, Explorer, Since.
       Leave Status and Role empty (mainnet rows carry neither).
@@ -195,11 +195,10 @@ these are what shows before that read lands, and what a crawler reads. Find them
 - [ ] `python3 scripts/og_cards.py chains --only <slug>` (sets `meta:image` and `meta:title` "<Name> staking -
       Encapsulate"), then refresh the page **twice** and check `og:image` is on assets.super.so.
 
-**10. The L1 openings page** (the networks we do not validate yet)
-- [ ] Add the chain to `OURS` in `scripts/l1_openings/build.py`; take it out of `picks.json`'s `overrides`, `flags`,
-      `rename` and `picks` (the build exits on a name it no longer lists), and correct the Start here lede's counts.
-      Rebuild into the scratchpad and republish the artifact. **Ask first** whether it should leave the page yet:
-      the user kept Cosmos Hub on it (as pick 01) on 2026-10-05 until they say otherwise (see the note above `OURS`).
+**10. The L1 openings page** (the networks we do not validate yet) — **not done from here**
+- [ ] The page and its research are in `~/IdeaProjects/validator-research` since 2026-10-08. Put a row in the reply's
+      Action table: "In the validator-research session: the chain is ours — take it off the L1 page". That session
+      asks the user first (Cosmos Hub stayed on it, as pick 01, at the user's word on 2026-10-05).
 
 **11. Refresh and check live**
 - [ ] Refresh the chain page, /networks, /services and the homepage — and every page after a site-head paste

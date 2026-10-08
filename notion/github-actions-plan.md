@@ -329,15 +329,16 @@ Read again against Notion and the live site on 2026-09-30, when the plan became 
 | id | Where | What | Kept by | How it drifts | The job would |
 |---|---|---|---|---|---|
 | N7 | chain pages | the facts paragraph and `meta:description` of each chain page | `chain_pages.py --facts`, run by hand | whenever N1 or N2 changes (rewritten by hand for eight chains on 2026-09-29) | rewrite it after every write to N1 — `networks.yml` |
-| P1 | explorers, wallets, registries | name, description, website and links on every validator profile (the 48-row tracker, `notion/profile-updates.md`) | by hand | an edit on chain, a registry rebuilt from an old file, a pull request left unmerged | read every profile weekly and report what no longer says the agreed values — `audit.yml`, `jobs/audit/profiles.mjs`, `config/profile.yml`. The reads are already written once, as the recheck of 2026-09-29 |
+| P1 | explorers, wallets, registries | name, description, website and links on every validator profile (the 48-row tracker, now validator-research's `notes/profile-updates.md`) | by hand | an edit on chain, a registry rebuilt from an old file, a pull request left unmerged | read every profile weekly and report what no longer says the agreed values — `audit.yml`, `jobs/audit/profiles.mjs`, `config/profile.yml`. The reads are already written once, as the recheck of 2026-09-29 |
 | P2 | every profile, guide and the footer | the Discord invite `PQJX5JVS8h` | by hand | if it is ever revoked | check that it still resolves — `audit.yml` |
 | E1 | Blogs (38), the Networks set's mainnets (27), Guides (31 — /guides/mina is empty and waits): the only databases whose rows are pages with content (checked against the sitemap, 30 Sep) | **all three `meta:*` on all three databases** (the user, 30 Sep): the social card, the title and the description of every row | `og_cards.py`, run by hand | every new row, and every row whose card would change — a post's title, tag, date, glyph or tint; a chain's name, line, button label, address or glyph (not its rate: the card does not show it); a guide's Title, Lede, step count or marks | **Write (asked 2026-09-30, to build)** — `content.yml`, `jobs/content/seo.mjs`: make the card and text where missing or stale (stale = the hash of what the card shows changed, kept in `state/`), render in the runner's headless Chrome, upload, attach; report a Super override that hides a new card |
 
 The alerts have ids now: A1 Avalanche's delegation room, A2 unclaimed rewards on Vara and Avail, A3 a validator jailed
 or inactive. That makes 35 things that go stale and 3 alerts.
 
-**What also moves to `site-data`:** `og_cards.py`, `scripts/validator_profiles/` and `scripts/profile_tracker/` — each
-writes to Notion, a chain or the tracker, and none is downloaded by a browser.
+**What also moves to `site-data`:** `og_cards.py` — it writes to Notion and is not downloaded by a browser.
+`scripts/validator_profiles/` and `scripts/profile_tracker/` went to **validator-research** instead, with the rest of the
+profile work (2026-10-08); P1, the weekly check of the profiles, belongs to that project now and is not built.
 
 **Recommendations for the open decisions** (offered on the page; none is decided): 1 an issue in the private repo;
 2 yes, the notes move with the scripts that read them; 3 as written, with commission among the checks; 4 yes, first;
