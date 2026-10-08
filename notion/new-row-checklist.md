@@ -9,8 +9,8 @@ each box is something that has gone wrong, or would have, when it was skipped.
 - [ ] The row is **shared to the web** in Notion, or Super cannot fetch it (a trashed or private page
       is a 404; one that was already live keeps serving from Super's cache until its next refetch).
 - [ ] Its **path in Super** (Pages) is the one we want — short and lower-case, like the others.
-- [ ] **No spacing blocks**: no dividers, no empty paragraphs — space is CSS (CLAUDE.md, "No divider
-      makes space anywhere").
+- [ ] **No spacing blocks**: no dividers, no empty paragraphs — space is CSS (`docs/homepage.md`, "No
+      divider makes space anywhere").
 - [ ] **Refresh the page in Super**, and the pages that list it (named below) — Super does not pick up
       a Notion edit until it refetches, and its own sync can take hours.
 - [ ] **Check it on the live site**: the page builds, it is in `sitemap.xml`, it has no `noindex`, and
@@ -209,7 +209,7 @@ these are what shows before that read lands, and what a crawler reads. Find them
       title, description, `og:image` on assets.super.so, robots "index, follow", the facts paragraph in the HTML,
       `script#enc-ld-chain`.
 - [ ] Optional, the user's: Search Console → URL inspection → Request indexing for the new page.
-- [ ] Update CLAUDE.md's chain page list and `notion/networks-set-values.md`.
+- [ ] Update the chain page list in `docs/chain-pages.md` and `notion/networks-set-values.md`.
 
 ## Guides Database — a new guide (`1f6e800a…8181…`)
 
@@ -292,7 +292,7 @@ step; the team names the steps, the words are mine.
       `W=1440 H=900 node --experimental-websocket scripts/livecheck.mjs https://encapsulate.xyz/guides/<slug> v0
       scripts/guide_check.js` must print `linked` equal to the step count and `missing: []`; then the description and
       `og:image` (on assets.super.so) are the new ones.
-- [ ] **Record it**: add it to "Converted guides so far" in CLAUDE.md with what was particular to it, and report a
+- [ ] **Record it**: add it to "Converted guides so far" in `docs/guides.md` with what was particular to it, and report a
       table (Step | Surface | What it says | Watch out) plus anything in the captures the team may want to retake.
 
 ## The other databases

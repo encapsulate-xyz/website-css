@@ -121,7 +121,7 @@ read it within 0.5 points of each other (`state/rates.json`), and only for a mov
 ## Refreshing (by hand — the job above does this now)
 
 Rates drift; re-read them and set **Rate updated** in the same edit. The planned scheduled job
-(CLAUDE.md, "a GitHub Action to fill the APY property") should write Reward rate and Rate updated
+(`docs/todo.md`, "a GitHub Action to fill the APY property") should write Reward rate and Rate updated
 together and leave the hand-set properties alone.
 
 ## Open (2026-09-24)
