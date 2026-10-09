@@ -1173,8 +1173,7 @@
     var t = bar && bar.querySelector('.super-navbar__list[data-state="open"], .super-navbar__list[aria-expanded="true"]');
     if (!t) return;
     if (pointerAt && overNav(pointerAt[0], pointerAt[1])) return;
-    t.dispatchEvent(mouse("pointerleave"));
-    t.dispatchEvent(new MouseEvent("mouseleave", { bubbles: true }));
+    shut(t);
   }
   function searchGlobal() {
     if (window.__encNavSearch) return;
@@ -1447,6 +1446,12 @@
   function mouse(type) {
     return new PointerEvent(type, { bubbles: true, pointerType: "mouse" });
   }
+  /* the pointer has left the open trigger. A pointerout from it to nowhere is what React reads as
+     its onPointerLeave (radix: start the close timer, and let the trigger open again on the next
+     pointermove); a pointerleave dispatched by hand is never seen by React. */
+  function shut(t) {
+    t.dispatchEvent(mouse("pointerout"));
+  }
 
   /* WHICH LINKS EACH GROUP HOLDS — read from Super's own data, not by opening the menu.
      Super embeds the whole navbar configuration in the page's inline data scripts: every group as
@@ -1638,7 +1643,19 @@
      of the same bar, shut it. The band keeps it: while the pointer is anywhere over the bar or
      its panel, the open trigger is told the pointer is still on it; the panel closes only when
      the pointer leaves both. The gaps never OPEN a panel — nothing is dispatched unless one is
-     already open — and Book a call closes it, as the design says. */
+     already open — and Book a call closes it, as the design says.
+
+     Until 2026-10-09 the band told the TRIGGER the pointer was on it (a pointermove), and that
+     cost the trigger its next open: radix's trigger opens on the first pointermove and then
+     ignores the rest until a pointer leave resets it, and a trigger the pointer never stood on
+     never gets that leave. So a tab whose panel the reader left through the bar and the panel
+     stayed shut when they came back to it, until they had been on another tab (the user's
+     report). Now the band tells the PANEL — a pointerover on it clears radix's close timer, as
+     the panel's own enter does, and leaves the trigger alone. And it says the pointer has left
+     with a pointerout: React builds onPointerEnter and onPointerLeave from pointerover and
+     pointerout, so the pointerleave sent before did nothing — Book a call never closed a panel.
+     Both are sent on a change of place, never on every move, or each leave would restart the
+     close timer and a panel would stay open as long as the pointer kept moving. */
   function band() {
     var bar = document.querySelector("nav.super-navbar");
     if (!bar || bar.hasAttribute("data-enc-band")) return;
@@ -1654,40 +1671,42 @@
     function panel() {
       return document.querySelector(".super-navbar__list-content, .super-navbar__viewport");
     }
-    function hold(t) {
-      t.dispatchEvent(mouse("pointerenter"));
-      t.dispatchEvent(mouse("pointermove"));
-      t.dispatchEvent(new MouseEvent("mouseenter", { bubbles: true }));
-    }
-    function shut(t) {
-      t.dispatchEvent(mouse("pointerleave"));
-      t.dispatchEvent(new MouseEvent("mouseleave", { bubbles: true }));
+    function hold() {
+      var p = panel();
+      if (p) p.dispatchEvent(mouse("pointerover"));
     }
 
     // hover is not a mutation, so the ground is painted on the pointer's own events too
     bar.addEventListener("pointerover", function () { setTimeout(paint, 0); });
     bar.addEventListener("pointerout", function () { setTimeout(paint, 0); });
 
-    var last = 0;
-    bar.addEventListener("pointermove", function (e) {
-      var t = openTrigger();
-      if (!t) return;
-      var actions = bar.querySelector(".super-navbar__actions");
-      if (actions && actions.contains(e.target)) { shut(t); return; }
-      // over a trigger radix is already holding it open; only the gaps need telling
-      if (e.target.closest && e.target.closest(".super-navbar__list")) return;
-      var now = Date.now();
-      if (now - last < 120) return;
-      last = now;
-      hold(t);
-    });
-
-    document.addEventListener("pointermove", function (e) {
-      var t = openTrigger();
-      if (!t) return;
+    /* where the pointer is: on a trigger and in the panel radix answers by itself; in a gap of the
+       bar the band holds the panel; on Book a call or off both it lets go. Only the reader's own
+       events count — the ones dispatched here pass through these listeners too. */
+    var place = "";
+    function placeOf(el) {
+      if (!el || !el.closest) return "out";
+      if (el.closest(".super-navbar__actions")) return "actions";
+      if (el.closest(".super-navbar__list")) return "trigger";
+      if (bar.contains(el)) return "gap";
       var p = panel();
-      var inside = bar.contains(e.target) || (p && p.contains(e.target));
-      if (!inside && !searching()) shut(t);   // the panel's search holds it open while it has focus
+      return p && p.contains(el) ? "panel" : "out";
+    }
+    function arrive(now) {
+      if (now === place) return;
+      place = now;
+      var t = openTrigger();
+      if (!t) return;
+      if (now === "gap") hold();
+      else if (now === "actions") shut(t);
+      else if (now === "out" && !searching()) shut(t);   // the panel's search holds it open while it has focus
+    }
+    document.addEventListener("pointerover", function (e) {
+      if (e.isTrusted) arrive(placeOf(e.target));
+    }, true);
+    // off the window: no element is entered, so the leave says it
+    document.addEventListener("pointerout", function (e) {
+      if (e.isTrusted && !e.relatedTarget) arrive("out");
     }, true);
   }
 
@@ -1936,7 +1955,7 @@
 
   /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
      against its page from the console without opening the menu */
-  window.encNav = { version: 18, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
+  window.encNav = { version: 19, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
     groups: function () { return groups; }, harvest: function () { return { done: harvested, tries: harvestTries }; },
     ground: ground, isInk: isInk, groundUnder: groundUnder, wordmark: wearWordmark,
     band: band };

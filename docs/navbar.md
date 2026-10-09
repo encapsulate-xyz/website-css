@@ -81,6 +81,20 @@ trigger nor the panel, so the gaps beside the logo and before the CTA shut it. `
 `band()` holds it open while the pointer is anywhere over the bar or its panel — the gaps never
 *open* one, since nothing is dispatched unless a panel is already open — and hovering Book a call
 closes it, as the design does.
+**It holds the panel, never the trigger** (v350, 2026-10-09; the user: "when I go back to the same tab it doesn't
+appear again, I have to hover on some other tab"). Until then `band()` sent the open trigger a pointermove from the
+gaps. Radix's trigger opens on its first pointermove and ignores the rest until a pointer leave resets it, and a
+trigger the pointer was never on gets no leave: so a tab whose panel the reader left by going down through the bar and
+the panel stayed shut when they came back, until they had been on another tab. Now a gap sends the **panel** a
+`pointerover` (radix: `onContentEnter`, which clears the close timer) and leaves the trigger alone. And the band
+said "the pointer has left" with `pointerleave`, which **React never reads** — it builds `onPointerEnter`/`onPointerLeave`
+from `pointerover`/`pointerout` — so Book a call never closed a panel, nor did the search box letting go; `shut()` is
+now a `pointerout` from the trigger to nowhere. Both are sent once per change of place (gap, Book a call, off bar and
+panel, off the window), never per move: each leave restarts radix's 150ms close timer, so a leave per move would hold
+a panel open as long as the pointer kept moving. Proved with real mouse moves in headless Chrome
+(`livecheck.mjs --steps`, 27 cases: back to the same tab after leaving down through the panel, through a side gap or
+off the window; resting in a gap; Book a call; between groups; the search box holding and letting go; moving inside
+and outside the panel) on /security at 1440 and the Axelar guide at 1920: v349 failed six, v350 none.
 
 **Read against the file element by element on 2026-09-23** (bar, track, item, caret, CTA, panel,
 ledger row, preview, third column, about, foot — every size, colour and string) and two pixels
@@ -149,7 +163,7 @@ trigger's element id, which radix regenerates after hydration.
   Reproduced in headless Chrome with real mouse events (`scripts/livecheck.mjs`, which
   reroutes a tag's files to a commit or to the local repo); with the harvest off, Services opened
   Services. `mouse(type)` (a `PointerEvent` with `pointerType: "mouse"`, the only kind radix
-  answers) is still used by `band()` to hold an open panel open. A group's section links (`/#block-…`) never make it current — "Institutional staking" is a
+  answers) is still used by `band()` to hold an open panel open (since v350 by telling the panel, not the trigger). A group's section links (`/#block-…`) never make it current — "Institutional staking" is a
 section of the homepage and lit Networks there until v281. A section link is its own destination, so `CONTENT` is keyed by the whole
 href — `/services#block-…` is not `/services`.
 
