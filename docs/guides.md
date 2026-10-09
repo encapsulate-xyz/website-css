@@ -19,7 +19,13 @@ fill rising with the reader's progress; an ink close with the next guide.
 | The crumb, "Watch out", "{N} screens", the close band, the Discord line | the **"Guide page copy" toggle on /guides**, `key · value` lines — one place for 33 guides. `{n}` is the step count, `{N}` the same spelled ("Eight screens"), `{next}` and `{chain}` the next guide |
 
 **Converted guides so far: Axelar, Sui (ten steps, SuiVision + Slush), Espresso, Monad (below), Terra, Agoric, NEAR, Lumera,
-Passage, Gravity Bridge and ixo** (2026-10-08: Passage on the Keplr flow; Gravity Bridge and ixo are seven steps on **ping.pub**
+Passage, Gravity Bridge, ixo and Sommelier** (2026-10-09: Sommelier on the Keplr flow, seven steps written as Passage's with
+SOMM, 28 days and `sommvaloper1s0lankh…a8324s2`; step 3 says the APR the captures show is "0% since Sommelier's inflation and
+incentives ended", the chain page's own reason. **The guide was named for MetaMask** — "Stake SOMM with MetaMask", Wallet
+Set MetaMask, a Lede on "the MetaMask extension", a description of "Nine steps", and the chain page's button "Delegate with
+MetaMask" — though MetaMask cannot stake SOMM and every capture is Keplr: now "Stake SOMM with Keplr", Wallet Set Keplr,
+`notion/chain-pages.json` and `chain_pages.py --buttons "Sommelier"` "Delegate with Keplr", both cards made again by the
+content job; old values `backups/stake-somm-with-metamask-guide-2026-10-09.json`) (2026-10-08: Passage on the Keplr flow; Gravity Bridge and ixo are seven steps on **ping.pub**
 with Keplr — "On ping.pub", every page step linked to `https://ping.pub/<chain>`; Gravity's step 3 warns that its form's unit
 was ugraviton, a millionth of a GRAV (its captures 1–3 and 6–7 are from two accounts); ixo's rewards are paid once a day; the
 rows said nine (Passage) and six steps — all three are seven now, Time 4, new ledes and cards; old values

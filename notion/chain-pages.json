@@ -874,7 +874,7 @@
    "compounding": "Manual",
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block, though today they are close to zero.",
    "wallet": {
-    "label": "Delegate with MetaMask",
+    "label": "Delegate with Keplr",
     "url": "https://www.notion.so/2a1e800a51388009b3bee55f5eb93eb9",
     "guide": "/guides (Sommelier)"
    },

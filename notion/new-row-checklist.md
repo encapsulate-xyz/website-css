@@ -247,7 +247,7 @@ these are what shows before that read lands, and what a crawler reads. Find them
 
 ## Converting a guide — the run (the team adds the captures, I write the words)
 
-Done this way for Axelar, Sui, Espresso, Monad, Terra, Agoric, NEAR, Lumera, Passage, Gravity Bridge and ixo; the
+Done this way for Axelar, Sui, Espresso, Monad, Terra, Agoric, NEAR, Lumera, Passage, Gravity Bridge, ixo and Sommelier; the
 user asked for it written down on 2026-10-08. A guide is converted once its step database holds one capture per
 step; the team names the steps, the words are mine.
 
@@ -273,13 +273,16 @@ step; the team names the steps, the words are mine.
 
       | Flow | Steps | Model guides |
       |---|---|---|
-      | Keplr Dashboard + the Keplr extension | 7 | Terra, Agoric, Lumera, Passage |
+      | Keplr Dashboard + the Keplr extension | 7 | Terra, Agoric, Lumera, Passage, Sommelier |
       | ping.pub + the Keplr extension | 7 | Gravity Bridge, ixo — check the amount's unit (Gravity's form showed ugraviton, a millionth of a GRAV) |
       | Meteor's web wallet | 8 | NEAR — "Stake Now & Start Earning" stakes with Dew Finance; the form opens on Meteor Pool |
       | MonadVision + MetaMask | 11 | Monad |
       | Espresso's dashboard + MetaMask | 9 | Espresso |
       | SuiVision + Slush | 10 | Sui |
 
+- [ ] **The guide's wallet follows the captures**: its Name ("Stake <TOKEN> with <wallet>"), its Wallet Set and the
+      chain page's green button (`notion/chain-pages.json` → `chain_pages.py --buttons "<Name>"`) must name the wallet
+      the captures show — Sommelier's row had come from the template as MetaMask, for a Keplr guide (2026-10-09).
 - [ ] **The guide row** follows the steps, not the other way round (Passage's row said nine for seven captures,
       Gravity's and ixo's six): **Step** = the number of steps; **Time** = half a minute a step, a half going to the
       even (7 → 4, 9 → 4, 8 → 4, 13 → 6); **Lede** "<N> steps across <the surfaces, plainly>, one per screen, each
