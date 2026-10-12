@@ -193,6 +193,18 @@ captures the whole document. If no such element exists, ⌘⇧P → **Capture ar
 Every new prompt opens at the wallet's default size, so run the resize again on each one (↑ in the console
 brings it back).
 
+**Core rejects a request the moment its window is hidden** (found 2026-10-12, the Avalanche guide: the user copied
+`location.href` from Core's approval window and the site said "User rejected the request" before the address could be
+opened). Core's approval screens run `useWindowGetsClosedOrHidden` (`packages/ui/src/hooks/` in ava-labs/core-extension):
+on `unload`, or on `visibilitychange` to `hidden`, the request is cancelled, and the service worker answers the site
+with `userRejectedRequest`. On a Mac a window that is entirely covered counts as hidden, so a DevTools window opened over
+it, ⌘N, the terminal brought to the front, minimising or switching Space each reject it. The copied address could not
+help anyway: the copy is an approval screen too and cancels the same way. So **a Core approval is shot where it
+stands, and its window stays at least partly in view the whole time**: `guide_shot.mjs tabs` lists it by its
+`chrome-extension://` address, then `hold <that tab> wallet` with the terminal beside it, not over it; or the resize and
+Capture node screenshot route above, with DevTools docked inside the window or placed beside it. Core's other screens
+(its home, the side panel) do not do this — only approvals.
+
 ### Opening the side panel as a page
 
 Only when `location.href` is not to hand — the set itself is shot from that address (above). Open
