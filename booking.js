@@ -10,8 +10,9 @@
    own <script> on a client-side navigation — see CLAUDE.md). It binds nothing at load: the click
    listener is on the document, so a link Super renders later is caught too.
 
-   /contact-us IS LEFT ALONE. That page has the calendar embedded in its own band and its own
+   /contact HAS NO DRAWER. That page has the calendar embedded in its own band and its own
    confirmation built from Notion's words; the drawer would be a second calendar over the first.
+   A "Book a call" there scrolls down to that band instead (toCalendar, below).
 
    THE WORDS ARE HERE, NOT IN NOTION. The rule on this site is that content lives in Notion, and it
    cannot be honoured for this surface: Super ships only the current page's blocks, and the drawer
@@ -479,17 +480,41 @@
     opener = null;
   }
 
+  /* On /contact the calendar is the page's own (contact.js mounts it in the booking band), so a
+     "Book a call" there — the bar's, the cover's, the footer's — goes down to
+     it instead of opening cal.com in a new tab (the user, 2026-10-13). Once a booking has landed
+     the band has stepped aside, and the confirmation that replaced it is where the link goes. The
+     calendar is centred on the screen when it fits, and starts 24px from the top when it does not
+     (the bar scrolls away with the page, so there is nothing to clear). Until contact.js has
+     mounted it, the link does what it always did. */
+  function toCalendar() {
+    var to = [document.getElementById("enc-cal"), document.querySelector(".enc-ct__done")]
+      .filter(function (n) { return n && n.getClientRects().length; })[0];
+    if (!to) return false;
+    if (window.encNav && window.encNav.closeSheet) window.encNav.closeSheet(false);   // the phone menu
+    var r = to.getBoundingClientRect();
+    var air = Math.max(24, (window.innerHeight - r.height) / 2);
+    var quiet = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: Math.max(0, r.top + window.pageYOffset - air),
+                      behavior: quiet ? "auto" : "smooth" });
+    return true;
+  }
+
   // ── every "Book a call" on the site ───────────────────────────────────────────────────────
   /* Bound on the document rather than on the links: Super re-renders the page as a single-page
      app, and a listener attached to a link goes with it. A modified click (new tab, new window,
      download) is left alone. */
   document.addEventListener("click", function (e) {
-    if (/^\/contact(-us)?\/?$/.test(location.pathname)) return;   // that page has its own calendar
     if (e.defaultPrevented || e.button !== 0) return;
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     var a = e.target.closest && e.target.closest('a[href*="cal.com/' + CAL_LINK + '"]');
     if (!a) return;
     if (a.closest(".enc-bk")) return;                          // the drawer's own escape hatch
+    if (/^\/contact(-us)?\/?$/.test(location.pathname)) {      // that page has its own calendar
+      if (a.closest(".enc-ct__call")) return;                  // its "Open it in a new tab"
+      if (toCalendar()) e.preventDefault();
+      return;
+    }
     e.preventDefault();
     open(a);
   });
