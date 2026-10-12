@@ -482,20 +482,20 @@
 
   /* On /contact the calendar is the page's own (contact.js mounts it in the booking band), so a
      "Book a call" there — the bar's, the cover's, the footer's — goes down to
-     it instead of opening cal.com in a new tab (the user, 2026-10-13). Once a booking has landed
-     the band has stepped aside, and the confirmation that replaced it is where the link goes. The
-     calendar is centred on the screen when it fits, and starts 24px from the top when it does not
-     (the bar scrolls away with the page, so there is nothing to clear). Until contact.js has
-     mounted it, the link does what it always did. */
+     it instead of opening cal.com in a new tab (the user, 2026-10-13). It lands on the band's
+     question — "Did your validator answer the last emergency upgrade?", just above the calendar
+     (the user: "point it to the question just above it") — with the band's top at the top of the
+     screen, so the question sits at the band's own padding; the bar scrolls away with the page,
+     so there is nothing to clear. Once a booking has landed the band has stepped aside, and the
+     confirmation that replaced it is where the link goes. Until contact.js has built the band,
+     the link does what it always did. */
   function toCalendar() {
-    var to = [document.getElementById("enc-cal"), document.querySelector(".enc-ct__done")]
+    var to = [document.querySelector(".enc-ct__call"), document.querySelector(".enc-ct__done")]
       .filter(function (n) { return n && n.getClientRects().length; })[0];
     if (!to) return false;
     if (window.encNav && window.encNav.closeSheet) window.encNav.closeSheet(false);   // the phone menu
-    var r = to.getBoundingClientRect();
-    var air = Math.max(24, (window.innerHeight - r.height) / 2);
     var quiet = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    window.scrollTo({ top: Math.max(0, r.top + window.pageYOffset - air),
+    window.scrollTo({ top: Math.max(0, to.getBoundingClientRect().top + window.pageYOffset),
                       behavior: quiet ? "auto" : "smooth" });
     return true;
   }

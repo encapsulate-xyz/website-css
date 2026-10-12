@@ -19,15 +19,18 @@ opens on every page, and main.css is the only stylesheet that is on every page.
   left alone, so "open in a new tab" still works.
 - **/contact-us is excluded** by path: that page has the calendar in its own band and its own
   confirmation built from Notion's words.
-- **On /contact, "Book a call" scrolls to that calendar** (2026-10-13, v351; the user: "it should point to
+- **On /contact, "Book a call" scrolls to that calendar's band** (2026-10-13, v351–v352; the user: "it should point to
   block where we have the calendar … it opens a new page why"). Excluding the page had left its three
   Book a call links — the bar's, the cover's, the footer's — doing what a cal.com link does by itself:
   opening cal.com in a new tab. `toCalendar()` now takes the click: it closes the phone menu
-  (`encNav.closeSheet`), and scrolls `#enc-cal` to the middle of the screen when it fits, 24px from
-  the top when not — the bar scrolls away with the page, so there is nothing to clear. After a booking
-  it goes to the confirmation instead (the band is hidden then). The band's own "Open it in a new tab"
-  (inside `.enc-ct__call`) is left a link, and so is any Book a call before contact.js has mounted the
-  calendar. No panel's foot is a Book a call (Company's panel has the search), so no panel needs
+  (`encNav.closeSheet`) and puts the band's top (`.enc-ct__call`) at the top of the screen, so its
+  question — "Did your validator answer the last emergency upgrade?" — sits at the band's own padding
+  (68px at 1440, 44 on a phone) with the spec and the calendar under it; the bar scrolls away with the
+  page, so there is nothing to clear. v351 centred the calendar itself; the user, the same day: "point
+  it to the question just above it" (v352). After a booking it goes to the confirmation instead (the
+  band is hidden then). The band's own "Open it in a new tab"
+  (inside `.enc-ct__call`) is left a link, and so is any Book a call before contact.js has built the
+  band. No panel's foot is a Book a call (Company's panel has the search), so no panel needs
   closing. Checked with real clicks at 1440, 820 and 390 (with the phone menu open).
 - **When the booking lands**, the paper half becomes the confirmation — tick, the facts, the two
   buttons, the cancel line and the four calendar exports — built from cal.com's payload.
