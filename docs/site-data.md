@@ -29,3 +29,11 @@ token (the user: no reminders, it is a TODO). **The Python scripts here (`gov_*.
 for what they cover**; `notion/networks-set-values.md` records the rule, the job writes the values. First writes on
 2026-09-30 at the user's word: 20 upgrade rows and 21 References, the Lumera #14 vote, five rates (ixo 24.7% → 12.4%
 accepted past the band).
+
+**Force pushes are blocked on every site-data branch but `ci/**`** (2026-10-13). A ruleset, "Block force pushes" (all
+branches, no bypass), went in that day, and the content job failed at "Open the state pull request": each job
+force-pushes its `ci/state-<job>` branch, which outlives its squash merge, so the push was refused (`GH013 … Cannot
+force-push to this branch`) after the Notion writes, and the state file was not kept. The user excluded
+`refs/heads/ci/**` the same day (rather than deleting head branches on merge, which leaves a failed merge stuck); the
+repeated content run merged #69, a networks run #70. **A new job that pushes a branch names it `ci/…`.** Its README
+says the same (#71).
