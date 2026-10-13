@@ -247,7 +247,7 @@ these are what shows before that read lands, and what a crawler reads. Find them
 
 ## Converting a guide — the run (the team adds the captures, I write the words)
 
-Done this way for Axelar, Sui, Espresso, Monad, Terra, Agoric, NEAR, Lumera, Passage, Gravity Bridge, ixo and Sommelier; the
+Done this way for Axelar, Sui, Espresso, Monad, Terra, Agoric, NEAR, Lumera, Passage, Gravity Bridge, ixo, Sommelier and IOTA; the
 user asked for it written down on 2026-10-08. A guide is converted once its step database holds one capture per
 step; the team names the steps, the words are mine.
 
@@ -279,6 +279,7 @@ step; the team names the steps, the words are mine.
       | MonadVision + MetaMask | 11 | Monad |
       | Espresso's dashboard + MetaMask | 9 | Espresso |
       | SuiVision + Slush | 10 | Sui |
+      | the IOTA Wallet extension + the IOTA explorer | 7 | IOTA — its popup is 360 × 600, so its captures are 720 × 1200 and its guide has a 360:600 frame of its own (guide.css, `#page-guides-iota`) |
 
 - [ ] **The guide's wallet follows the captures**: its Name ("Stake <TOKEN> with <wallet>"), its Wallet Set and the
       chain page's green button (`notion/chain-pages.json` → `chain_pages.py --buttons "<Name>"`) must name the wallet
@@ -287,6 +288,11 @@ step; the team names the steps, the words are mine.
       Gravity's and ixo's six): **Step** = the number of steps; **Time** = half a minute a step, a half going to the
       even (7 → 4, 9 → 4, 8 → 4, 13 → 6); **Lede** "<N> steps across <the surfaces, plainly>, one per screen, each
       with the screen you should be looking at."; **meta:description** "<Name>. <Lede>".
+- [ ] **A wallet capture that is not 720 × 1576** (`sips -g pixelWidth -g pixelHeight` on the downloads) is cropped at the
+      sides by the 360:788 frame. Either the team retakes it with the `Extension` device (`notion/guide-screenshots.md`),
+      or that guide gets a frame of the capture's shape in guide.css, scoped to its page (`#page-guides-<slug>`) — the user
+      wants it per guide, not for all (IOTA, 2026-10-13).
+- [ ] **A guide that was Soon** goes **Live** once its steps are in: the /guides view lists only Live.
 - [ ] **Read it back**: every step has a Surface and a Link (`guide_steps.py` again shows them).
 - [ ] **Refresh** the guide and /guides in Super. If the Lede or Step changed, the card shows it: run the content job
       (`gh workflow run content.yml -R encapsulate-xyz/site-data`, its state PR merges itself), check the card, then

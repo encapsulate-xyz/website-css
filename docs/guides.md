@@ -19,7 +19,17 @@ fill rising with the reader's progress; an ink close with the next guide.
 | The crumb, "Watch out", "{N} screens", the close band, the Discord line | the **"Guide page copy" toggle on /guides**, `key · value` lines — one place for 33 guides. `{n}` is the step count, `{N}` the same spelled ("Eight screens"), `{next}` and `{chain}` the next guide |
 
 **Converted guides so far: Axelar, Sui (ten steps, SuiVision + Slush), Espresso, Monad (below), Terra, Agoric, NEAR, Lumera,
-Passage, Gravity Bridge, ixo and Sommelier** (2026-10-09: Sommelier on the Keplr flow, seven steps written as Passage's with
+Passage, Gravity Bridge, ixo, Sommelier and IOTA** (2026-10-13: IOTA, seven steps — six in the IOTA Wallet extension, "In
+the IOTA Wallet extension" linked to https://www.iota.org/products/wallet, and the last "On explorer.iota.org", linked to the
+team's own stake as the capture's file name gives it. There is no approval screen: the form's Stake sends at once, which
+step 5's Watch says; step 6 reads the wallet's two countdowns (Staking Rewards Start = the next epoch, Redeem Rewards = the
+one after). 8% commission, minimum 1 IOTA, unstaking at once, rewards every 24 hours and compounding — `chain-pages.json`.
+The row was Status Soon with a page already in Super (/guides/iota, its canonical, the chain page's button on it): now Live,
+Time 3 → 4, a Lede on "the IOTA explorer" (it said "and its dashboard", the description "Four steps"). **IOTA Wallet's popup
+is 360 × 600, not 360 × 788**, and its captures came in at that size (720 × 1200): the 360:788 wallet frame cut the sides
+off their words ("taking APY"), so **guide.css gives the IOTA guide alone a 360:600 frame** (`#page-guides-iota`, v353;
+the user: "just made this change for iota don't for all"). Old values `backups/stake-iota-with-iota-wallet-guide-2026-10-13.json`)
+(2026-10-09: Sommelier on the Keplr flow, seven steps written as Passage's with
 SOMM, 28 days and `sommvaloper1s0lankh…a8324s2`; step 3 says the APR the captures show is "0% since Sommelier's inflation and
 incentives ended", the chain page's own reason. **The guide was named for MetaMask** — "Stake SOMM with MetaMask", Wallet
 Set MetaMask, a Lede on "the MetaMask extension", a description of "Nine steps", and the chain page's button "Delegate with

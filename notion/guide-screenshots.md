@@ -31,6 +31,11 @@ about 6px.
 | Wallet | Capture | DPR | File | Frame |
 |---|---|---|---|---|
 | Keplr and MetaMask | **360 × 788** | 2 | 720 × 1576 | 360:788 |
+| IOTA Wallet (2026-10-13) | 360 × 600, its popup | 2 | 720 × 1200 | 360:600, on the IOTA guide only (guide.css, `#page-guides-iota`) |
+
+IOTA's were shot at the popup's own size, and the 360:788 frame cut their sides off; rather than a retake, that guide got a
+frame of their shape. A retake at **360 × 788** with the `Extension` device (below) fits the standard frame and is sharper —
+a 600px capture is shown at 110% in a 660px band, 130% in a 778px one — and is the way for the next wallet.
 
 The wallet is shot from **its own page in a second window with the `Extension` device** (below),
 the dashboard with `Guide dashboard` — one device each, both DPR 2, so neither depends on which

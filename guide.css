@@ -396,6 +396,12 @@ html:has(.notion-root[data-enc-guide]) { scroll-padding-top: 0; }
   width: auto;
   height: calc(100vh - 240px);
 }
+/* IOTA Wallet's popup is 360 × 600, not 360 × 788, and its captures came in at that size (720 × 1200):
+   the 360:788 frame cut the sides off their words. On the IOTA guide alone the frame takes their shape
+   (the user, 2026-10-13: "just made this change for iota don't for all"). */
+#page-guides-iota .enc-gd__step[data-enc-shot="tall"] .enc-gd__shot {
+  aspect-ratio: 360 / 600;
+}
 .enc-gd__shot[data-enc-empty] { display: none; }
 
 /* ── the numeral: a paper glyph ringed in ink, filled green by progress ──────────────────── */
