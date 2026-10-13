@@ -140,7 +140,7 @@ User rules that stand on every task:
 | `covers.js` | inner-page cover graphics ("fields") | site Head |
 | `filterbar.js` | the filter bar (design *Filter Bar Patterns*, G · the command field) — one component for /networks, /governance-record and /blog; styles main.css §13c | site Head, before the page scripts |
 | `notfound.css`, `notfound.js` | the 404 page (design *404 Page*, D · the finder) — see "The 404 page". notfound.js is linked **async**, the only one | site Head |
-| `blocks.js` | Notion's generic blocks (design *Blog Article Blocks*): the code block's line numbers, prompts, colours, kicker and copy tick — the rest of the four blocks is main.css §12–13 | site Head |
+| `blocks.js` | Notion's generic blocks (design *Blog Article Blocks*): the code block's line numbers, prompts, colours, kicker and copy tick — the rest of the four blocks is main.css §12–13. Also the site's one link rule: a link to another site opens in a new tab | site Head |
 | `home.css`, `home-dial.css`, `home.js` | homepage sections, JS-enhanced styles, homepage scripts | homepage Head |
 | `brand.css`, `brand.js` | /brand — four spreads with a sticky rail, the marks slab, the colour band (design *Brand Page*) | page Head + site Head |
 | `blog.css`, `blog.js` | /blog — the index (design J); blog.js builds each card's cover and its band span, and is loaded from the site head | page Head + site Head |
@@ -421,6 +421,14 @@ load order.
   second for as long as it was open (48 mutations in 3s, measured on the live page, 2026-09-26).
   Write text only when it differs, move nodes only when the order is wrong, and check an idle page
   with a MutationObserver count (0 in 3s) after any change to a builder.
+- **A link to another site opens in a new tab** (the user, 2026-10-13: "open all the links to external websites on new
+  page"). Super gives Notion's own links `target="_blank"`; a script that builds a link sets it with `offsite(href)` —
+  the URL's hostname against the page's, `www.` dropped — and never with `href.indexOf(location.host) < 0`, which took
+  `rgp.sui.encapsulate.xyz` and the two `graph.*.encapsulate.xyz` dashboards for our own site and opened them in place
+  (services.js, navbar.js, footer.js and filterbar.js had it; v354). A link re-pointed on hover clears the target again
+  when its new href is ours. **blocks.js catches the rest as they are clicked** (window, capture phase), download links
+  included: browsers ignore `download` on another host's file and open it (/brand's marks). Checked on all 113 sitemap
+  pages, 4,042 such links: the only ones left in place are the Book a call buttons, which booking.js opens as the drawer.
 - **A link gets ONE rule under it.** Notion draws its own `text-decoration: underline`, so any rule
   that gives a link a `border-bottom` must also set `text-decoration: none !important` in the same
   block, or the link shows two lines. This has been reported three times (the contact band's

@@ -66,10 +66,15 @@
     return e;
   }
 
+  /* another site, a subdomain of ours included (rgp.sui.encapsulate.xyz): a new tab */
+  function offsite(href) {
+    try { var u = new URL(href, location.href); } catch (e) { return false; }
+    return /^https?:$/.test(u.protocol) && u.hostname.replace(/^www\./, "") !== location.hostname.replace(/^www\./, "");
+  }
   function link(cls, label, href, external) {
     var a = el("a", cls, label);
     a.href = href;
-    if (external || /^https?:\/\//.test(href) && href.indexOf(location.host) < 0) {
+    if (external || offsite(href)) {
       a.target = "_blank";
       a.rel = "noopener noreferrer";
     }

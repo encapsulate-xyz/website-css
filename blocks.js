@@ -21,6 +21,9 @@
      the copy tick Super's own copy button copies the code and reads "Copied" for two seconds;
                    the icon follows it.
 
+   And one thing for every link on the site, since this is the file every page loads for Notion's own
+   blocks: a link to another site opens in a new tab (2026-10-13, below).
+
    Nothing here writes a word: every character is the block's own. A block a page script reads
    and hides ([data-enc-source]) is left alone, and so is a Super embed (code that starts
    "super-embed:"). */
@@ -252,6 +255,23 @@
     clearTimeout(b.__encT);
     b.__encT = setTimeout(function () { b.removeAttribute("data-enc-copied"); }, 2000);
   });
+
+  /* a link to another site opens in a new tab (the user, 2026-10-13: "open all the links to external
+     websites on new page"). Super gives most Notion links target="_blank" itself, and our builders set it;
+     this catches whatever is left, whoever drew it, as it is clicked. On the window, in the capture
+     phase, so the target is set before notfound.js's frame handler and React's router look at the link;
+     the booking drawer still opens, as booking.js does not read the target. A download link counts too:
+     browsers ignore `download` on another host's file and open it (/brand's marks, on assets.super.so) */
+  function offsite(href) {
+    try { var u = new URL(href, location.href); } catch (e) { return false; }
+    return /^https?:$/.test(u.protocol) && u.hostname.replace(/^www\./, "") !== location.hostname.replace(/^www\./, "");
+  }
+  window.addEventListener("click", function (e) {
+    var a = e.target && e.target.closest && e.target.closest("a[href]");
+    if (!a || a.getAttribute("target") || !offsite(a.getAttribute("href"))) return;
+    a.target = "_blank";
+    if (!a.rel) a.rel = "noopener";
+  }, true);
 
   function tick() {
     Array.prototype.forEach.call(document.querySelectorAll(".notion-code"), enhance);

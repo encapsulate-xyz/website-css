@@ -70,6 +70,11 @@
   function chevron() { return svg(10, 6, "0 0 10 6", [["path", { d: "M1 1l4 4 4-4" }]], 1.5, "enc-fb__chev"); }
   function check() { return svg(12, 12, "0 0 12 12", [["path", { d: "M2 6.5l2.6 2.6L10 3.5" }]], 1.6, "enc-fb__check"); }
   function put(node, text) { if (node.textContent !== text) node.textContent = text; }
+  /* another site, a subdomain of ours included (rgp.sui.encapsulate.xyz): a new tab */
+  function offsite(href) {
+    try { var u = new URL(href, location.href); } catch (e) { return false; }
+    return /^https?:$/.test(u.protocol) && u.hostname.replace(/^www\./, "") !== location.hostname.replace(/^www\./, "");
+  }
 
   window.encFilterBar = function (cfg) {
     var state = cfg.state || { q: "", sort: "", f: {} };
@@ -326,7 +331,7 @@
     var t = el(href ? "a" : "button", "enc-es__act");
     if (href) {
       t.href = href;
-      if (/^https?:/.test(href) && href.indexOf(location.host) < 0) { t.target = "_blank"; t.rel = "noopener"; }
+      if (offsite(href)) { t.target = "_blank"; t.rel = "noopener"; }
     } else t.type = "button";
     t.appendChild(el("span", "enc-es__act-label", label));
     var disc = el("span", "enc-es__disc");

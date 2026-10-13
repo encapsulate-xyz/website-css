@@ -506,12 +506,17 @@
     [CONTENT, COVERS, READ, KIND].forEach(function (m) { if (m[p[1]] && !m[p[0]]) m[p[0]] = m[p[1]]; });
   });
 
+  /* another site, a subdomain of ours included (rgp.sui.encapsulate.xyz): a new tab */
+  function offsite(href) {
+    try { var u = new URL(href, location.href); } catch (e) { return false; }
+    return /^https?:$/.test(u.protocol) && u.hostname.replace(/^www\./, "") !== location.hostname.replace(/^www\./, "");
+  }
   function outward(a, href) {
     a.href = href || "#";
-    if (/^https?:\/\//.test(href || "") && href.indexOf(location.host) < 0) {
+    if (offsite(href || "")) {
       a.target = "_blank";
       a.rel = "noopener noreferrer";
-    }
+    } else { a.removeAttribute("target"); a.removeAttribute("rel"); }   // a panel's open link is re-pointed on hover
     return a;
   }
   /* a network glyph at the size it is drawn (2026-09-29): the set's covers are 600px PNGs of 25-69KB, drawn at

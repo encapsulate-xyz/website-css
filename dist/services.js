@@ -88,12 +88,17 @@
     return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   }
   function mono(text, cls) { return el("span", "enc-svc__mono" + (cls ? " " + cls : ""), text); }
+  /* another site, a subdomain of ours included (rgp.sui.encapsulate.xyz): a new tab */
+  function offsite(href) {
+    try { var u = new URL(href, location.href); } catch (e) { return false; }
+    return /^https?:$/.test(u.protocol) && u.hostname.replace(/^www\./, "") !== location.hostname.replace(/^www\./, "");
+  }
   function external(a, href) {
     a.href = href;
-    if (/^https?:/.test(href) && href.indexOf(location.host) < 0) {
+    if (offsite(href)) {
       a.target = "_blank";
       a.rel = "noopener";
-    }
+    } else { a.removeAttribute("target"); a.removeAttribute("rel"); }
     return a;
   }
   function glyph(src, size, tint, cls) {
