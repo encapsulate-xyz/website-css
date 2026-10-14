@@ -268,7 +268,9 @@ step; the team names the steps, the words are mine.
       guides** (Lumera's step 1 grew a clause about a Keplr prompt and the user cut it, 2026-10-06);
       **Watch** — the one check that prevents a loss on that screen (the address bar, the validator's address, the
       amount and its unit, the message to approve, the unbonding wait) or nothing. Never a sentence the capture does
-      not show.
+      not show. **An address the reader pastes is inline code** (⌘E, or `annotations.code` through the API) in Body
+      or Watch: the page makes it a press-to-copy (2026-10-14). Only the full address — never a short form the wallet
+      shows (`0xedd6…c9ab`) and never a site's address.
 - [ ] **Copy the model for its flow**, changing only the chain, the token, the address and the facts:
 
       | Flow | Steps | Model guides |

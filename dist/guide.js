@@ -50,6 +50,8 @@
     "screens": "{N} screens",
     "of": "of {n}",
     "watch": "Watch out",
+    "copy": "Copy",
+    "copied": "Copied",
     "done": "Done · {n} of {n}",
     "close title": "Staked with Encapsulate.",
     "close line": "Rewards start once your stake is active. Next up: {next}.",
@@ -111,6 +113,83 @@
     return b;
   }
 
+  /* ── an address to copy ────────────────────────────────────────────────────────────────────
+     A step's Body or Watch says which of its words can be copied: whatever is set as inline code in
+     Notion (⌘E) — an address, a validator's id (the user, 2026-10-14: "make it such that clicking on
+     the address copies it"; marked in Notion so nothing is guessed: encapsulate.pool.near reads like
+     a web address, and the short forms the wallets show are not for pasting). parts() keeps a
+     property's text as runs, the code ones marked; rich() writes them, each code run a control that
+     copies it. A span with the button role, not a <button>, so a long address still wraps inside its
+     sentence. "Copy" and "Copied" are the copy toggle's. */
+  function parts(node) {
+    var out = [];
+    (function walk(n) {
+      Array.prototype.forEach.call(n.childNodes, function (c) {
+        if (c.nodeType === 3) out.push({ t: c.nodeValue });
+        else if (c.nodeType === 1 && c.tagName === "CODE") out.push({ code: c.textContent.trim() });
+        else if (c.nodeType === 1) walk(c);
+      });
+    })(node);
+    return out.some(function (p) { return p.code; }) ? out : null;
+  }
+  function rich(node, runs, text) {
+    if (!runs) { node.textContent = text; return node; }
+    runs.forEach(function (p) {
+      if (p.code) node.appendChild(copyable(p.code));
+      else node.appendChild(document.createTextNode(p.t.replace(/\s+/g, " ")));
+    });
+    return node;
+  }
+  function copyable(text) {
+    var c = el("span", "enc-gd__copy");
+    c.setAttribute("role", "button");
+    c.setAttribute("tabindex", "0");
+    c.setAttribute("aria-label", say("copy") + " " + text);
+    c.title = say("copy");
+    c.appendChild(el("code", "enc-gd__addr", text));
+    var mark = el("span", "enc-gd__copymark");
+    mark.setAttribute("aria-hidden", "true");
+    c.appendChild(mark);
+    var said = el("span", "enc-gd__copied", say("copied"));
+    said.setAttribute("aria-live", "polite");
+    c.appendChild(said);
+    var timer = 0;
+    function go(e) {
+      e.preventDefault();
+      copyText(text).then(function () {
+        c.setAttribute("data-enc-copied", "");
+        clearTimeout(timer);
+        timer = setTimeout(function () { c.removeAttribute("data-enc-copied"); }, 2000);
+      }, function () {
+        /* no clipboard (an old browser, a denied permission): select it, for the reader's own copy */
+        var r = document.createRange();
+        r.selectNodeContents(c.firstChild);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(r);
+      });
+    }
+    c.addEventListener("click", go);
+    c.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") go(e); });
+    return c;
+  }
+  function copyText(text) {
+    function legacy() {
+      var t = el("textarea");
+      t.value = text;
+      t.setAttribute("readonly", "");
+      t.style.cssText = "position:fixed;top:0;left:0;opacity:0;pointer-events:none";
+      document.body.appendChild(t);
+      t.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      t.remove();
+      return ok ? Promise.resolve() : Promise.reject();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text).catch(legacy);
+    return legacy();
+  }
+
   /* ── the steps: the guide's own slide database ───────────────────────────────────────────
      One row per step, so a step's capture and its words are the same record: Name ("01 · Unlock
      Keplr"), Step, Body, Watch, Surface and Link, with the capture as the row's Cover. They must
@@ -141,10 +220,12 @@
          was tried first and swapped the two on any step whose note was the longer line
          (2026-09-23). A text that repeats the step's title is skipped: that is a Title property
          left switched on beside Name. */
-      var texts = Array.prototype.map.call(
-        card.querySelectorAll(".notion-property__text"), textOf).filter(function (t) {
+      var props = Array.prototype.filter.call(
+        card.querySelectorAll(".notion-property__text"), function (p) {
+          var t = textOf(p);
           return t && t !== (m[2] || "") && t !== name;
         });
+      var texts = props.map(textOf);
       var img = card.querySelector("img");
       /* Link renders as the card's own anchor when the view shows it, and as a url property when
          it does not, so take whichever is there */
@@ -155,6 +236,8 @@
         title: m[2] || name,
         body: texts[0] || "",
         watch: texts[1] || "",
+        bodyParts: props[0] ? parts(props[0]) : null,
+        watchParts: props[1] ? parts(props[1]) : null,
         surface: textOf(card.querySelector(".notion-property__select .notion-pill")) ||
                  textOf(card.querySelector(".notion-property__select")),
         href: url ? url.getAttribute("href") : "",
@@ -350,7 +433,7 @@
     var right = el("div", "enc-gd__right");
     right.appendChild(el("h2", "enc-gd__steptitle", step.title));
     var well = el("div", "enc-gd__well");
-    well.appendChild(el("p", "enc-gd__body", step.body));
+    well.appendChild(rich(el("p", "enc-gd__body"), step.bodyParts, step.body));
     right.appendChild(well);
     header.appendChild(right);
     content.appendChild(header);
@@ -394,7 +477,7 @@
     btn.appendChild(el("span", null, say("watch")));
     var b = badge("plus");
     btn.appendChild(b);
-    var note = el("div", "enc-gd__note", step.watch);
+    var note = rich(el("div", "enc-gd__note"), step.watchParts, step.watch);
     note.hidden = true;
     btn.addEventListener("click", function () {
       var open = btn.getAttribute("aria-expanded") === "true";

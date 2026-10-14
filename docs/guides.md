@@ -92,6 +92,18 @@ now sits above the row (`position: relative; z-index: 1`). A note with an addres
 by 69px; step 2 of Agoric, Gravity Bridge, ixo, Lumera, Passage, Sommelier and Terra on a phone): `.enc-gd__note`
 breaks anywhere. Pressed through on every note of the 13 converted guides at 1440 and 390.
 
+**An address copies on a press** (2026-10-14, v357; the user: "make it such that clicking on the address copies it",
+agreed after "first discuss how"). **What can be copied is marked in Notion**: inline code (⌘E) in a step's Body or Watch,
+which Super keeps as `<code class="code">` in the card's property; guide.js keeps a property's text as runs (`parts()`)
+and draws each code run as a span with the button role (`.enc-gd__copy`, so a long address wraps in its sentence):
+the address in JetBrains Mono, the code block's copy mark after it; a press or Enter/Space copies it
+(`navigator.clipboard`, else `execCommand("copy")`, else it is selected) and for two seconds the mark is the tick with
+"Copied" beside it. "Copy" (its label) and "Copied" are the copy toggle's `copy` and `copied` lines. A pattern was
+rejected: `encapsulate.pool.near` reads like `stake.espresso.network`, and the short forms are not for pasting. Marked
+on 2026-10-14, ten places: step 2's Watch of the seven Keplr guides that name a valoper (Agoric, Gravity Bridge, ixo,
+Lumera, Passage, Sommelier, Terra), IOTA 3's Watch, NEAR 5's Watch and 8's Body (old text in
+`backups/guide-addresses-2026-10-14.json`). Checked on all ten at 1440 and 390, and every guide's text unchanged.
+
 **After changing a guide row's Title or Lede, refresh /guides as well as the guide's own page in Super** (2026-09-29):
 the guide's head reads them off /guides, so the page kept the old Lede until the index was refreshed; then make the social
 card again (`og_cards.py guides --only /guides/<chain>`), since it prints the Lede.
