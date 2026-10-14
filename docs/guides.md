@@ -216,8 +216,11 @@ Notion's API cannot switch view properties on; that is a manual step.
 2026-09-26): the band is at least one viewport tall on the #F2F2ED ground, padded `64px
 clamp(28px,7vw,110px) 64px` (88px on top under 500, where the bar is two lines), with a bar across
 its top carrying the crumb and a counter — both Notion texts (the last two paragraphs in the callout);
-only the counter's two numbers are rewritten by the script, from the chains that have a guide and the
-guides it matched. A second IIFE in `guides.js` snaps to it with the Network Count gesture rules but a
+only the counter's two numbers are rewritten by the script: **the chains are the mainnets /networks counts**
+(`window.encCounts().mainnet`, the Networks set's rows; the picker's own 28 until it answers) and **the guides are the
+gallery's cards**, which its view keeps to the Live rows (2026-10-14, the user: "shouldn't the chain count be = what we
+display in network … guide count should be equal to whatever we have live"; it had read "13 chains · 13 guides", the
+chains that had a guide, and counted guides one per chain). A second IIFE in `guides.js` snaps to it with the Network Count gesture rules but a
 single stop: a gesture heading at the panel from within half a screen lands on it, a rest within a
 third of a screen settles onto it, nothing under 701px or with reduced motion. The catch rule is
 testable in Node (`scratchpad/snaptest.js`) — the automation tab fires no scroll events.

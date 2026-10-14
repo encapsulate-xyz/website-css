@@ -131,7 +131,9 @@
         steps: nums.length ? nums[0] : null, minutes: nums.length > 1 ? nums[1] : null
       };
     });
-    return { chains: chains, wallets: wallets, guides: guides };
+    /* every card in the gallery is a live guide (its view shows Live only), two on one chain included */
+    var live = guideCards.filter(function (c) { return titleOf(c); }).length;
+    return { chains: chains, wallets: wallets, guides: guides, live: live };
   }
 
   function build() {
@@ -173,15 +175,23 @@
       after = after.nextElementSibling;
     }
 
+    /* the chains are the mainnets /networks counts (window.encCounts, the Networks set's own rows),
+       the picker's own list until that answers; the guides are the live ones (the user, 2026-10-14:
+       "shouldn't the chain count be = what we display in network … guide count … whatever we have
+       live" — it read 13 · 13, the chains that have a guide) */
     var count = bar && bar.lastElementChild;
     if (count) {
       if (!count.hasAttribute("data-enc-count")) count.setAttribute("data-enc-count", count.textContent);
-      var figures = [
-        data.chains.filter(function (c) { return data.guides[c.key]; }).length,
-        Object.keys(data.guides).length
-      ], n = 0;
-      count.textContent = count.getAttribute("data-enc-count")
-        .replace(/\d+/g, function (m) { return n < figures.length ? figures[n++] : m; });
+      var tell = function (chains) {
+        var figures = [chains, data.live], n = 0;
+        var t = count.getAttribute("data-enc-count")
+          .replace(/\d+/g, function (m) { return n < figures.length ? figures[n++] : m; });
+        if (count.textContent !== t) count.textContent = t;
+      };
+      tell(data.chains.length);
+      if (typeof window.encCounts === "function") window.encCounts().then(function (c) {
+        if (c && c.mainnet) tell(c.mainnet);
+      });
     }
 
     // the sentence keeps its own words; the two swappable ones become spans
