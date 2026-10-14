@@ -84,6 +84,14 @@ filled on 2026-10-05 (old values `backups/guide-step-links-before-2026-10-05.jso
 **The guide card's lede wraps with `text-wrap: pretty`** (`scripts/og/guide.html`, 2026-09-29): the Sui card ended on a
 line of one word, "at.". It applies to each guide's card the next time that card is made.
 
+**A Watch out opens on the first press, and its note holds an address** (2026-10-14, v355; reported by a teammate on
+IOTA: "Gray Background not fills the text", "Watch out at step 5 … not getting opened in the first press"). On a tall
+step the note hangs from a 0-height `.enc-gd__hang` beside the capture; a long Body brought the button down past the
+row's top, and the row, later in the page, took the press — IOTA 5, Near 6 and 8, Monad 7 and 9 on a desktop. The hang
+now sits above the row (`position: relative; z-index: 1`). A note with an address in it ran out of its grey box (IOTA 3
+by 69px; step 2 of Agoric, Gravity Bridge, ixo, Lumera, Passage, Sommelier and Terra on a phone): `.enc-gd__note`
+breaks anywhere. Pressed through on every note of the 13 converted guides at 1440 and 390.
+
 **After changing a guide row's Title or Lede, refresh /guides as well as the guide's own page in Super** (2026-09-29):
 the guide's head reads them off /guides, so the page kept the old Lede until the index was refreshed; then make the social
 card again (`og_cards.py guides --only /guides/<chain>`), since it prints the Lede.

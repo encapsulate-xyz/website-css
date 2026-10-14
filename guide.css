@@ -240,6 +240,8 @@ html:has(.notion-root[data-enc-guide]) { scroll-padding-top: 0; }
 /* tall: the note hangs 10px under the body and takes no height, so the capture keeps its place
    24px under the header and the open note unfolds beside it */
 .enc-gd__hang {
+  position: relative;
+  z-index: 1; /* above the row: a long body brings the button down over the row, which took its press (IOTA's step 5, 2026-10-14) */
   height: 0;
   margin-top: -10px; /* takes back the column's 10px gap, so the header is exactly the design's */
   overflow: visible;
@@ -365,6 +367,7 @@ html:has(.notion-root[data-enc-guide]) { scroll-padding-top: 0; }
   font-size: 14.5px;
   line-height: 1.5;
   color: var(--gd-ink7);
+  overflow-wrap: anywhere; /* an address has no break in it: IOTA's 66-character one ran 69px out of the box */
 }
 .enc-gd__note[hidden] { display: none; }
 
