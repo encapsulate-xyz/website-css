@@ -90,7 +90,8 @@ step the note hangs from a 0-height `.enc-gd__hang` beside the capture; a long B
 row's top, and the row, later in the page, took the press — IOTA 5, Near 6 and 8, Monad 7 and 9 on a desktop. The hang
 now sits above the row (`position: relative; z-index: 1`). A note with an address in it ran out of its grey box (IOTA 3
 by 69px; step 2 of Agoric, Gravity Bridge, ixo, Lumera, Passage, Sommelier and Terra on a phone): `.enc-gd__note`
-breaks anywhere. Pressed through on every note of the 13 converted guides at 1440 and 390.
+breaks anywhere. Pressed through on every note of the 13 converted guides at 1440 and 390 — the press is now
+`scripts/guide_press.mjs`, and the conversion run ends with it.
 
 **An address copies on a press** (2026-10-14, v357–v358; the user: "make it such that clicking on the address copies it",
 agreed after "first discuss how"). **What can be copied is marked in Notion**: inline code (⌘E) in a step's Body or Watch,

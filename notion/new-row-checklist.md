@@ -269,8 +269,11 @@ step; the team names the steps, the words are mine.
       **Watch** — the one check that prevents a loss on that screen (the address bar, the validator's address, the
       amount and its unit, the message to approve, the unbonding wait) or nothing. Never a sentence the capture does
       not show. **An address the reader pastes is inline code** (⌘E, or `annotations.code` through the API) in Body
-      or Watch: the page makes it a press-to-copy (2026-10-14). Only the full address — never a short form the wallet
-      shows (`0xedd6…c9ab`) and never a site's address.
+      or Watch: the page makes it a press-to-copy — the address in mono with a copy mark, the house tooltip "Copy",
+      then "Copied" (2026-10-14; the two words are the copy toggle's `copy` and `copied` lines). Only the full address,
+      written whole — the page wraps it inside its box — never a short form the wallet shows (`0xedd6…c9ab`) and
+      never a site's address. Through the API, send the run as `{text: {content}, annotations: {code: true}}` and the
+      rest of the text plain, without the annotations read back (see "Editing Notion" in CLAUDE.md).
 - [ ] **Copy the model for its flow**, changing only the chain, the token, the address and the facts:
 
       | Flow | Steps | Model guides |
@@ -290,11 +293,16 @@ step; the team names the steps, the words are mine.
       Gravity's and ixo's six): **Step** = the number of steps; **Time** = half a minute a step, a half going to the
       even (7 → 4, 9 → 4, 8 → 4, 13 → 6); **Lede** "<N> steps across <the surfaces, plainly>, one per screen, each
       with the screen you should be looking at."; **meta:description** "<Name>. <Lede>".
-- [ ] **A wallet capture that is not 720 × 1576** (`sips -g pixelWidth -g pixelHeight` on the downloads) is cropped at the
-      sides by the 360:788 frame. Either the team retakes it with the `Extension` device (`notion/guide-screenshots.md`),
+- [ ] **A wallet capture that is not 720 × 1576** (`sips -g pixelWidth -g pixelHeight` on the downloads; a dashboard one
+      must be 2800 × 1576) is cropped at the sides by the 360:788 frame. The file name says which device took it —
+      IOTA's ended "(Slush unlock)", a 360 × 600 device, not `Extension`. Either the team retakes it with the
+      `Extension` device (`notion/guide-screenshots.md`),
       or that guide gets a frame of the capture's shape in guide.css, scoped to its page (`#page-guides-<slug>`) — the user
       wants it per guide, not for all (IOTA, 2026-10-13).
-- [ ] **A guide that was Soon** goes **Live** once its steps are in: the /guides view lists only Live.
+- [ ] **Anything over the screen** in a capture — a cookie banner, a toast — is a retake if it covers the ring or the
+      step's control, otherwise an optional retake to report (IOTA's explorer step, 2026-10-13).
+- [ ] **A guide that was Soon** goes **Live** once its steps are in: the /guides view lists only Live, and the picker's
+      counter ("28 chains · 13 guides" on 2026-10-14) counts the live guides by itself — nothing typed to change.
 - [ ] **Read it back**: every step has a Surface and a Link (`guide_steps.py` again shows them).
 - [ ] **Refresh** the guide and /guides in Super. If the Lede or Step changed, the card shows it: run the content job
       (`gh workflow run content.yml -R encapsulate-xyz/site-data`, its state PR merges itself), check the card, then
@@ -302,7 +310,11 @@ step; the team names the steps, the words are mine.
 - [ ] **Check live** in headless Chrome: the guide builds, the steps in order, every surface label a link —
       `W=1440 H=900 node --experimental-websocket scripts/livecheck.mjs https://encapsulate.xyz/guides/<slug> v0
       scripts/guide_check.js` must print `linked` equal to the step count and `missing: []`; then the description and
-      `og:image` (on assets.super.so) are the new ones.
+      `og:image` (on assets.super.so) are the new ones. Then **press everything**, at `W=1440 H=900` and at `W=390 H=844`:
+      `node --experimental-websocket scripts/livecheck.mjs https://encapsulate.xyz/guides/<slug> v0 --steps
+      scripts/guide_press.mjs` presses every Watch out (it must open on the first press, its text inside its box, clear
+      of the capture) and every address (it must copy exactly that address), and must end "ok". A Watch out that a
+      capture row took the press of (IOTA 5, Near 6 and 8, Monad 7 and 9 until v355) passed every other check.
 - [ ] **Record it**: add it to "Converted guides so far" in `docs/guides.md` with what was particular to it, and report a
       table (Step | Surface | What it says | Watch out) plus anything in the captures the team may want to retake.
 

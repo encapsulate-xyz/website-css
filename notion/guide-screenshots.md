@@ -1,6 +1,7 @@
 # Guide screenshots — the capture recipe
 
-Agreed 2026-09-18, **not yet applied to the existing guides**. The problem it solves: a staking
+Agreed 2026-09-18; every converted guide is shot this way (13 by 2026-10-14 — the run is "Converting a guide" in
+`notion/new-row-checklist.md`). The problem it solves: a staking
 guide mixes dashboards (wide) with wallet popups (small), so screenshots taken ad hoc come out at
 a different size, zoom and crop every time. The fix is to decide the frame once and compose every
 capture inside it, rather than cropping whatever each app happened to give.
@@ -33,8 +34,9 @@ about 6px.
 | Keplr and MetaMask | **360 × 788** | 2 | 720 × 1576 | 360:788 |
 | IOTA Wallet (2026-10-13) | 360 × 600, its popup | 2 | 720 × 1200 | 360:600, on the IOTA guide only (guide.css, `#page-guides-iota`) |
 
-IOTA's were shot at the popup's own size, and the 360:788 frame cut their sides off; rather than a retake, that guide got a
-frame of their shape. A retake at **360 × 788** with the `Extension` device (below) fits the standard frame and is sharper —
+IOTA's were shot at the popup's own size — their file names end "(Slush unlock)", a custom device of 360 × 600 rather
+than `Extension` — and the 360:788 frame cut their sides off; rather than a retake, that guide got a frame of their
+shape. A retake at **360 × 788** with the `Extension` device (below) fits the standard frame and is sharper —
 a 600px capture is shown at 110% in a 660px band, 130% in a 778px one — and is the way for the next wallet.
 
 The wallet is shot from **its own page in a second window with the `Extension` device** (below),
@@ -133,6 +135,11 @@ optional: at DPR 1 the captures are soft once scaled into the canvas.
 |---|---|---|---|
 | `Guide dashboard` | 1400 × 788 | 2 | dashboards, explorers, any web page — the capture *is* the slide |
 | `Extension` | 360 × 788 | 2 | the wallet's own screens, opened as a page in a second window |
+
+**These two and no others.** A device made for one wallet's popup gives that popup's shape, not the frame's: IOTA's
+captures came from one named "Slush unlock" at 360 × 600 (2026-10-13). Check the size before shooting (the one-liner
+below must read `360×788 @2`), and after: `sips -g pixelWidth -g pixelHeight` on the file must say 720 × 1576 or
+2800 × 1576.
 
 Why 1400: Keplr's dashboard changes layout at 1280px (then 1024, 768, 640), so anything narrower
 captures its tablet layout. Browser zoom stays at **100%** — zoom changes the app's layout.
@@ -308,15 +315,18 @@ picking a wrapper still follows the button's curve.
 - **Browser zoom 100%** for every capture. The page sets the display size, never the capture.
 - **The state**: same account, same network, same amounts, same light theme, bookmarks bar off,
   clean profile. Nothing breaks a set faster than the balance changing between step 3 and step 4.
-- **Step badges** drawn like the site's — `guides.js` reads the step count off the badge in each
-  guide's final slide, so the style is load-bearing, not decoration.
+- **Nothing over the screen**: decline a cookie banner (the most private choice) and close any toast or notice before
+  shooting. IOTA's explorer capture kept a cookie notice in its corner (2026-10-13) — clear of the ring, so it stayed,
+  but it is a retake the next time that step is shot.
+- **No step numbers in the capture**: the page draws them, and the step count is the guide row's Step property. (Until
+  2026-09-16 `guides.js` read it off a badge in the last slide; that is gone.)
 
 ## Where the files go
 
 Guide images are **content**: they live in Notion, not in this repo (see "Where each asset comes
 from" in CLAUDE.md). Two things that have bitten before:
 
-- `guides.js` takes Step and Time from each guide's final slide in **gallery order, not filename
-  order** — number the files `01…n` *and* check the order after upload.
+- **The steps run in the order of their Names' numbers** ("01 · Unlock Keplr"), whatever the file names or the
+  gallery's order: each capture is the Cover of its own step row, so put it on the right row.
 - The Guides gallery view must show Networks set, Wallet Set, Step and Time for the picker to read
   them; Notion's API cannot switch view properties on.

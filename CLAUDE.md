@@ -171,6 +171,7 @@ User rules that stand on every task:
 | `img/og/` | the one card that cannot live in Notion: the Mina hard-fork post, which is not a Blogs row (set as its image override in Super) | Super's page settings |
 | `scripts/guide_steps.py` | the first step of converting a guide: finds a guide by part of its Name, prints its row and every step (Name, Surface, Link, Body, the capture's file name — which is the step's Link), downloads the captures and writes `backups/<guide>-guide-<date>.json`. The whole run is "Converting a guide — the run" in `notion/new-row-checklist.md` (2026-10-08) | — |
 | `scripts/guide_check.js` | the live check of a converted guide, for `livecheck.mjs`: built, title, steps in order, how many carry their surface as a link and which do not (2026-10-08) | — |
+| `scripts/guide_press.mjs` | the steps file for `livecheck.mjs --steps` that presses, for real, every Watch out (opens on the first press, text inside its box, clear of the capture) and every address (copies exactly it, clipboard stubbed) on a guide, ending "ok" (2026-10-14) | — |
 | `scripts/shots.py`, `img/shots/` | panel captures of the live tools (Sui RGP, the Solana graph), 1100×750 at DPR 2 from headless Chrome — the extension's screenshots time out on those pages, and a WebGL graph needs swiftshader or it comes back blank. Not wired into any page yet (2026-09-23): the tools table that names their tiles arrived cut off | — |
 
 **Edit sources, run `python3 build.py`, commit source and `dist/` together. Never edit `dist/`.**
