@@ -120,7 +120,7 @@
      a web address, and the short forms the wallets show are not for pasting). parts() keeps a
      property's text as runs, the code ones marked; rich() writes them, each code run a control that
      copies it. A span with the button role, not a <button>, so a long address still wraps inside its
-     sentence. "Copy" and "Copied" are the copy toggle's. */
+     sentence. "Copy" and "Copied" are the copy toggle's; the tooltip carries them. */
   function parts(node) {
     var out = [];
     (function walk(n) {
@@ -145,12 +145,17 @@
     c.setAttribute("role", "button");
     c.setAttribute("tabindex", "0");
     c.setAttribute("aria-label", say("copy") + " " + text);
-    c.title = say("copy");
     c.appendChild(el("code", "enc-gd__addr", text));
-    var mark = el("span", "enc-gd__copymark");
-    mark.setAttribute("aria-hidden", "true");
-    c.appendChild(mark);
-    var said = el("span", "enc-gd__copied", say("copied"));
+    /* the mark, and over it the site's tooltip (the user, 2026-10-14: "use the same tooltip style we
+       have been using everywhere else"): "Copy" on hover, "Copied" for the two seconds after */
+    var end = el("span", "enc-gd__copyend");
+    end.setAttribute("aria-hidden", "true");
+    end.appendChild(el("span", "enc-gd__copymark"));
+    c.appendChild(end);
+    var tip = el("span", "enc-gd__tip", say("copy"));
+    tip.setAttribute("aria-hidden", "true");
+    c.appendChild(tip);
+    var said = el("span", "enc-gd__said");
     said.setAttribute("aria-live", "polite");
     c.appendChild(said);
     var timer = 0;
@@ -158,8 +163,13 @@
       e.preventDefault();
       copyText(text).then(function () {
         c.setAttribute("data-enc-copied", "");
+        tip.textContent = said.textContent = say("copied");
         clearTimeout(timer);
-        timer = setTimeout(function () { c.removeAttribute("data-enc-copied"); }, 2000);
+        timer = setTimeout(function () {
+          c.removeAttribute("data-enc-copied");
+          tip.textContent = say("copy");
+          said.textContent = "";
+        }, 2000);
       }, function () {
         /* no clipboard (an old browser, a denied permission): select it, for the reader's own copy */
         var r = document.createRange();

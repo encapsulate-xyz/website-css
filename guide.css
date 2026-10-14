@@ -372,16 +372,17 @@ html:has(.notion-root[data-enc-guide]) { scroll-padding-top: 0; }
 .enc-gd__note[hidden] { display: none; }
 
 /* an address to copy — inline code in a step's Body or Watch (guide.js, 2026-10-14): the mono of the
-   page's other figures in ink, the code block's copy mark after it; a press copies it, and for two
-   seconds the mark is the code block's tick with the copy toggle's "Copied" beside it */
+   page's other figures in ink, the code block's copy mark after it. Hover turns the address and the
+   mark green ink, the code block's string colour, on the note's own ground (the user: "dont change
+   ground color on hover maybe change the text color"); the tooltip is the house one (network.css,
+   "Reward rate"), over the address's start: "Copy", then "Copied" with the code block's tick for two seconds */
 .enc-gd__copy {
+  position: relative;   /* the tooltip's anchor: above where the address starts, so it never covers the address */
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 2px;
   overflow-wrap: anywhere;
-  transition: background-color 0.16s ease;
   -webkit-tap-highlight-color: transparent;
 }
-.enc-gd__copy:hover { background: rgba(42, 44, 40, 0.07); }
 .enc-gd__copy:focus-visible { outline: 2px solid var(--gd-ink); outline-offset: 2px; }
 .enc-gd__addr {
   font-family: "JetBrains Mono", monospace;
@@ -392,32 +393,65 @@ html:has(.notion-root[data-enc-guide]) { scroll-padding-top: 0; }
   border: 0;
   border-radius: 0;
   overflow-wrap: anywhere;
+  transition: color 0.16s ease;
 }
-.enc-gd__copymark {
+.enc-gd__copyend {
   display: inline-block;
   width: 13px;
   height: 13px;
   margin-left: 5px;
   vertical-align: -2px;
+}
+.enc-gd__copymark {
+  display: block;
+  width: 13px;
+  height: 13px;
   background: var(--gd-grey);
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='9' width='12' height='12' rx='2'/%3E%3Cpath d='M5 15V5a2 2 0 0 1 2-2h10'/%3E%3C/svg%3E") center / 13px 13px no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='9' width='12' height='12' rx='2'/%3E%3Cpath d='M5 15V5a2 2 0 0 1 2-2h10'/%3E%3C/svg%3E") center / 13px 13px no-repeat;
   transition: background-color 0.16s ease;
 }
-.enc-gd__copy:hover .enc-gd__copymark,
-.enc-gd__copy[data-enc-copied] .enc-gd__copymark { background: var(--gd-ink); }
+.enc-gd__copy[data-enc-copied] .enc-gd__addr { color: #3F6B27; }
 .enc-gd__copy[data-enc-copied] .enc-gd__copymark {
+  background: #3F6B27;
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E");
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E");
 }
-.enc-gd__copied {
-  display: none;
-  margin-left: 4px;
-  font-size: 0.86em;
-  font-weight: 500;
-  color: var(--gd-ink);
+.enc-gd__tip {
+  position: absolute;
+  left: 0;   /* from the address's first line, which starts inside the note: centred, it could pass a phone's edge */
+  bottom: calc(100% + 6px);
+  padding: 6px 9px;
+  border-radius: 4px;
+  background: #000000;
+  color: #FAFAF8;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease;
+  z-index: 30;
 }
-.enc-gd__copy[data-enc-copied] .enc-gd__copied { display: inline; }
+.enc-gd__copy:focus-visible .enc-gd__tip,
+.enc-gd__copy[data-enc-copied] .enc-gd__tip { opacity: 1; }
+@media (hover: hover) {
+  .enc-gd__copy:hover .enc-gd__addr { color: #3F6B27; }
+  .enc-gd__copy:hover .enc-gd__copymark { background: #3F6B27; }
+  .enc-gd__copy:hover .enc-gd__tip { opacity: 1; }
+}
+.enc-gd__said {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
 
 /* the capture — 4px, on paper, with the selected-state ink hairline: on this page the capture is
    the one thing to look at (handoff, 2026-09-23; it was 12px on ink with a #D9D9D2 ring) */

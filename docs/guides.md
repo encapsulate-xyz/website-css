@@ -92,13 +92,18 @@ now sits above the row (`position: relative; z-index: 1`). A note with an addres
 by 69px; step 2 of Agoric, Gravity Bridge, ixo, Lumera, Passage, Sommelier and Terra on a phone): `.enc-gd__note`
 breaks anywhere. Pressed through on every note of the 13 converted guides at 1440 and 390.
 
-**An address copies on a press** (2026-10-14, v357; the user: "make it such that clicking on the address copies it",
+**An address copies on a press** (2026-10-14, v357–v358; the user: "make it such that clicking on the address copies it",
 agreed after "first discuss how"). **What can be copied is marked in Notion**: inline code (⌘E) in a step's Body or Watch,
 which Super keeps as `<code class="code">` in the card's property; guide.js keeps a property's text as runs (`parts()`)
 and draws each code run as a span with the button role (`.enc-gd__copy`, so a long address wraps in its sentence):
 the address in JetBrains Mono, the code block's copy mark after it; a press or Enter/Space copies it
-(`navigator.clipboard`, else `execCommand("copy")`, else it is selected) and for two seconds the mark is the tick with
-"Copied" beside it. "Copy" (its label) and "Copied" are the copy toggle's `copy` and `copied` lines. A pattern was
+(`navigator.clipboard`, else `execCommand("copy")`, else it is selected) and for two seconds the mark is the tick.
+**Hover changes the text, never the ground** (v358, the user: "dont change ground color on hover maybe change the tetx
+color"): the address and the mark turn green ink `#3F6B27`, the code block's string colour. **The tooltip is the house
+one** (the user: "use the same tooltip style we have been using everywhere else") — network.css's "Reward rate": mono
+10px uppercase on a black pill, 4px corners — reading "Copy", then "Copied" for the two seconds (the native `title`
+went). It hangs above where the address starts, not over the mark: a wrapped address put the mark on its last line and
+the tip over its own first line. "Copy" and "Copied" are the copy toggle's `copy` and `copied` lines. A pattern was
 rejected: `encapsulate.pool.near` reads like `stake.espresso.network`, and the short forms are not for pasting. Marked
 on 2026-10-14, ten places: step 2's Watch of the seven Keplr guides that name a valoper (Agoric, Gravity Bridge, ixo,
 Lumera, Passage, Sommelier, Terra), IOTA 3's Watch, NEAR 5's Watch and 8's Body (old text in
