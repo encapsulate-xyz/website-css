@@ -882,82 +882,91 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 }
 
 /*********************************************/
-/* 07b. AUDIENCE SPLIT — 51l "HINGE · NODE" */
+/* 07b. AUDIENCE SPLIT — 51m "TWO GROUNDS" */
 /*********************************************/
 
-/* From design file "Audience Split", 51l. One shared claim, a single ink rule,
-   and the two audiences branching from it, each column opening with a pastel
-   disc sitting on the rule as the joint. Paper ground.
+/* From design file "Audience Split", 51m (2026-10-14, in place of 51l "Hinge · node"). Two
+   grounds as the diagram: the band splits paper and ink, one audience to a half, a giant word on
+   each (Launch. and Stake.), then one line and one button a side. "What you get" opens that
+   side's four points in place; it starts closed, and the band keeps its height (760).
 
-   NOTION STRUCTURE. The claim is a Heading 2 (block-23ff4256…) directly above the
-   fork, a two-column list (block-3dae800a…). Each column: kicker text, heading,
-   lead text, a 4-item numbered list, a button callout (green = primary on the
-   left, gray = secondary on the right). Replaced the earlier two-panel fork
-   (design 11a/11b), whose rules are gone.
+   NOTION STRUCTURE. A Heading 2 (block-23ff4256…, "For chain teams and delegators") names the
+   section for screen readers and is visually hidden: the design draws no heading (the shared
+   claim went with 51l). The fork is a two-column list (block-3dae800a…). Each column: kicker
+   text, a Heading 3 (the word), the line, a button callout (green = primary on paper, gray =
+   secondary on ink), and a toggle "What you get" holding the four points as a numbered list.
+   The toggle dissolves (display: contents), so its summary sits on the button's row and its
+   points open under both; Super shows and hides them (an inline display on the content), and
+   home.js makes the summary a button for the keyboard ("AUDIENCE SPLIT"). The 51l blocks are in
+   backups/audience-split-51l-2026-10-14.json.
 
-   Redesigned section: its text takes the design's type. */
+   FULL BLEED: the halves meet at the middle of the screen. Their outer padding is the bands'
+   gutter (Why Stake, Services); the seam side keeps the design's 44.
 
+   The section's toggle is drawn here, over main.css §12's article toggle, by id. */
+
+/* the section's name, for screen readers only */
 #block-23ff4256e17b41f0ae5bf647820c67c7 {
-  margin: 0 !important;
-  padding: 0 0 26px !important;
-  font-family: var(--type-display) !important;
-  font-weight: 600 !important;
-  font-size: clamp(34px, 3.4vw, 46px) !important;
-  line-height: 1 !important;
-  letter-spacing: -0.04em !important;
-  color: #000000 !important;
-  /* breaks as "Whichever side you are on, we were / there first." (the user's pick): wide
-     enough for the first line, in em so it holds at every size of the clamp; plain wrapping,
-     not main.css's balance, which would even the two lines out */
-  max-width: 16em !important;
-  text-wrap: wrap !important;
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
 }
 
-/* the rule, and the two columns hanging from it */
 #block-3dae800a51388006a57be06b8ebea78e {
+  --fork-gutter: max(48px, calc(50vw - 864px));
   display: grid !important;
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   gap: 0 !important;
-  margin: 0 !important;
+  box-sizing: border-box !important;
+  width: 100vw !important;
+  max-width: none !important;
+  margin: 0 0 0 calc(50% - 50vw) !important;
   padding: 0 !important;
-  border-top: 1px solid #000000 !important;
+  border: 0 !important;
 }
 
+/* a half: the kicker at the top, the word, line and buttons at the foot (the empty second row
+   takes the height between them), the points under the buttons when open */
 #block-3dae800a51388006a57be06b8ebea78e > .notion-column {
-  position: relative !important;
+  display: grid !important;
+  grid-template-columns: max-content minmax(0, 1fr) !important;
+  grid-template-rows: auto minmax(0, 1fr) auto auto auto auto !important;
+  box-sizing: border-box !important;
   width: auto !important;
+  min-width: 0 !important;
+  min-height: 760px !important;
   margin: 0 !important;
-  padding: 26px 36px 0 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 15px !important;
-  counter-reset: fork !important;
+  padding: 44px 44px 44px var(--fork-gutter) !important;
+  border: 0 !important;
+  background: #FAFAF8 !important;
 }
 
+/* the ink half: the Button System's ink tokens, so the secondary turns to the paper wash */
 #block-3dae800a51388006a57be06b8ebea78e > .notion-column + .notion-column {
-  padding: 26px 0 0 36px !important;
-  border-left: 1px solid #E2E2DB !important;
-}
-
-/* the joint: a 22px pastel disc on the rule, ringed in the page ground */
-#block-3dae800a51388006a57be06b8ebea78e > .notion-column::before {
-  content: "" !important;
-  position: absolute !important;
-  top: -11px !important;
-  left: 0 !important;
-  width: 22px !important;
-  height: 22px !important;
-  border-radius: 999px !important;
-  background: #DCEEC7 !important;
-  box-shadow: 0 0 0 4px var(--color-bg-default, #FFFEFC) !important;
-}
-
-#block-3dae800a51388006a57be06b8ebea78e > .notion-column + .notion-column::before {
-  left: 36px !important;
-  background: #D2E3F6 !important;
+  --btn-lift: 0 0 transparent;
+  --btn-lift-soft: 0 0 transparent;
+  --btn-focus: rgba(250, 250, 248, 0.5);
+  --btn-2-fill: rgba(250, 250, 248, 0.06);
+  --btn-2-fill-hover: rgba(250, 250, 248, 0.12);
+  --btn-2-fill-press: rgba(250, 250, 248, 0.16);
+  --btn-2-ring: rgba(250, 250, 248, 0.3);
+  --btn-2-ring-hover: rgba(250, 250, 248, 0.3);
+  --btn-2-text: #FAFAF8;
+  --btn-2-highlight: inset 0 1.5px 0 rgba(255, 255, 255, 0.26);
+  --btn-2-press: inset 0 1.5px 0 rgba(255, 255, 255, 0.26);
+  padding: 44px var(--fork-gutter) 44px 44px !important;
+  background: #2A2C28 !important;
 }
 
 #block-3dae800a51388006a57be06b8ebea78e > .notion-column > * {
+  grid-column: 1 / -1;
+  min-width: 0;
   margin: 0 !important;
 }
 
@@ -968,6 +977,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 
 /* kicker */
 #block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-text:first-of-type {
+  grid-row: 1;
   padding: 0 !important;
   min-height: 0 !important;
   font-family: var(--type-mono) !important;
@@ -978,39 +988,156 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   color: #6B6F68 !important;
 }
 
-/* heading */
-#block-3dae800a51388006a57be06b8ebea78e .notion-heading {
+/* the word: 12% of the band, 148 at most. Just above 760 a half is too narrow for that:
+   "Launch." is 3.22em wide and a half holds 50vw - 92px, so the third term keeps it on its line
+   (it trims the size by up to 4% between 760 and 950). Super's headings break words, which cut
+   "Launc|h." at 760; a word here never breaks. */
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-heading {
+  grid-row: 3;
+  margin-top: 22px !important;
+  padding: 0 !important;
   font-family: var(--type-display) !important;
   font-weight: 600 !important;
-  font-size: clamp(26px, 2.4vw, 32px) !important;
-  line-height: 1 !important;
-  letter-spacing: -0.04em !important;
+  font-size: min(148px, 12vw, calc((50vw - 92px) / 3.3)) !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  line-height: 0.92 !important;
+  letter-spacing: -0.05em !important;
   color: #000000 !important;
   max-width: none !important;
+  text-wrap: balance !important;
 }
 
-/* lead */
+/* the line */
 #block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-text:not(:first-of-type) {
+  grid-row: 4;
+  margin-top: 16px !important;
   padding: 0 !important;
   font-family: var(--type-body) !important;
-  font-size: 15.5px !important;
+  font-size: 17px !important;
   line-height: 1.58 !important;
   color: #3A3D38 !important;
-  max-width: none !important;
+  max-width: 30ch !important;
   text-wrap: pretty !important;
 }
 
-/* points: a rule-separated list numbered 01–04 (counters, not content) */
-#block-3dae800a51388006a57be06b8ebea78e .notion-numbered-list,
-#block-3dae800a51388006a57be06b8ebea78e .notion-bulleted-list {
+/* the button, and "What you get" 22px to its right on the same row */
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-callout {
+  grid-row: 5;
+  grid-column: 1;
+  align-self: center !important;
+  justify-self: start !important;
+  width: auto !important;
+  margin-top: 22px !important;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-callout > .notion-callout__content > span.notion-semantic-string > .notion-link {
+  width: auto !important;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-toggle {
+  display: contents !important;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-toggle > .notion-toggle__summary {
+  grid-row: 5;
+  grid-column: 2;
+  align-self: center;
+  justify-self: start;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+  min-height: 44px !important;
+  margin: 22px 0 0 22px !important;
+  padding: 0 !important;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: var(--type-body) !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  line-height: 1.3 !important;
+  letter-spacing: -0.006em !important;
+  color: #000000 !important;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-toggle > .notion-toggle__summary > .notion-semantic-string {
+  order: 1;
+  flex: none;
+  min-width: 0;
+  font: inherit !important;
+  letter-spacing: inherit !important;
+  color: inherit !important;
+}
+
+/* the badge: the design's 20px green disc, a plus while closed and a minus open */
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-toggle > .notion-toggle__summary > .notion-toggle__trigger {
+  order: 2;
+  flex: none;
+  display: inline-grid !important;
+  place-items: center;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+  background: #99CC66 !important;
+  color: #000000;
+  transform: none !important;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-toggle > .notion-toggle__summary > .notion-toggle__trigger > * {
+  display: none !important;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-toggle > .notion-toggle__summary > .notion-toggle__trigger::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 2v6'/%3E%3Cpath d='M2 5h6'/%3E%3C/svg%3E") center / 10px 10px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 2v6'/%3E%3Cpath d='M2 5h6'/%3E%3C/svg%3E") center / 10px 10px no-repeat;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-toggle.open > .notion-toggle__summary > .notion-toggle__trigger::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 5h6'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 5h6'/%3E%3C/svg%3E");
+}
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-toggle > .notion-toggle__summary:focus {
+  outline: none;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-toggle > .notion-toggle__summary:focus-visible {
+  outline: 3px solid rgba(0, 0, 0, 0.32);
+  outline-offset: 2px;
+}
+
+/* the points: a rule-separated list numbered 01–04 (counters, not content). No display here:
+   Super's inline display:none is what keeps them closed. */
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-toggle > .notion-toggle__content {
+  grid-row: 6;
+  grid-column: 1 / -1;
+  min-width: 0;
+  max-width: 520px;
+  margin: 14px 0 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  counter-reset: fork;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e .notion-toggle__content .notion-numbered-list {
   list-style: none !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 
-#block-3dae800a51388006a57be06b8ebea78e .notion-numbered-list > li,
-#block-3dae800a51388006a57be06b8ebea78e .notion-bulleted-list > li {
-  counter-increment: fork !important;
+#block-3dae800a51388006a57be06b8ebea78e .notion-toggle__content .notion-numbered-list > li {
+  counter-increment: fork;
   display: grid !important;
   grid-template-columns: 26px minmax(0, 1fr) !important;
   column-gap: 12px !important;
@@ -1024,13 +1151,11 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   color: #3A3D38 !important;
 }
 
-#block-3dae800a51388006a57be06b8ebea78e .notion-numbered-list > li::marker,
-#block-3dae800a51388006a57be06b8ebea78e .notion-bulleted-list > li::marker {
+#block-3dae800a51388006a57be06b8ebea78e .notion-toggle__content .notion-numbered-list > li::marker {
   content: none !important;
 }
 
-#block-3dae800a51388006a57be06b8ebea78e .notion-numbered-list > li::before,
-#block-3dae800a51388006a57be06b8ebea78e .notion-bulleted-list > li::before {
+#block-3dae800a51388006a57be06b8ebea78e .notion-toggle__content .notion-numbered-list > li::before {
   content: counter(fork, decimal-leading-zero) !important;
   font-family: var(--type-mono) !important;
   font-size: 9.5px !important;
@@ -1038,32 +1163,52 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   color: #575B55 !important;
 }
 
-/* the button, pinned to the column's foot */
-#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-callout {
-  margin-top: auto !important;
-  align-self: flex-start !important;
+/* on ink */
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column + .notion-column > .notion-text:first-of-type {
+  color: #B4B4B4 !important;
 }
 
-/* both buttons on one level: pushed to the foot of equal-height columns (a stray
-   margin-top: 0 rule with higher specificity had cancelled this) */
-#block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-callout {
-  margin-top: auto !important;
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column + .notion-column > .notion-heading {
+  color: #FAFAF8 !important;
 }
 
-@media (max-width: 800px) {
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column + .notion-column > .notion-text:not(:first-of-type) {
+  color: #C9C9C4 !important;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column + .notion-column > .notion-toggle > .notion-toggle__summary {
+  color: #FAFAF8 !important;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column + .notion-column > .notion-toggle > .notion-toggle__summary:focus-visible {
+  outline-color: rgba(250, 250, 248, 0.5);
+}
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column + .notion-column .notion-toggle__content .notion-numbered-list > li {
+  border-top-color: rgba(250, 250, 248, 0.18) !important;
+  color: #D6D6D2 !important;
+}
+
+#block-3dae800a51388006a57be06b8ebea78e > .notion-column + .notion-column .notion-toggle__content .notion-numbered-list > li::before {
+  color: #B4B4B4 !important;
+}
+
+/* under 760px the halves stack, paper over ink, and the words drop to 72px */
+@media (max-width: 759px) {
   #block-3dae800a51388006a57be06b8ebea78e {
     grid-template-columns: minmax(0, 1fr) !important;
   }
-  #block-3dae800a51388006a57be06b8ebea78e > .notion-column {
-    padding: 26px 0 32px !important;
-  }
+  #block-3dae800a51388006a57be06b8ebea78e > .notion-column,
   #block-3dae800a51388006a57be06b8ebea78e > .notion-column + .notion-column {
-    padding: 26px 0 0 !important;
-    border-left: 0 !important;
-    border-top: 1px solid #000000 !important;
+    min-height: 0 !important;
+    padding: 32px 20px 36px !important;
   }
-  #block-3dae800a51388006a57be06b8ebea78e > .notion-column + .notion-column::before {
-    left: 0 !important;
+  #block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-heading {
+    margin-top: 34px !important;
+    font-size: 72px !important;
+  }
+  #block-3dae800a51388006a57be06b8ebea78e > .notion-column > .notion-text:not(:first-of-type) {
+    font-size: 16px !important;
   }
 }
 

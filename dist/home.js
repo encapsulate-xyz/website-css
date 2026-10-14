@@ -1284,3 +1284,54 @@
   }).observe(document.body, { childList: true, subtree: true });
   soon();
 })();
+
+/* AUDIENCE SPLIT (51m, 2026-10-14): each half's "What you get" is a Notion toggle, and Super draws
+   its summary as a div that answers a click only. This makes it the button the design has: Tab
+   reaches it, Enter and Space press it, and aria-expanded (from Super's .open) with aria-controls
+   say what it opens. The opening itself stays Super's. Attributes are written only when they
+   differ, so the observer that re-arms a re-rendered section never wakes itself. */
+(function () {
+  var FORK = "block-3dae800a51388006a57be06b8ebea78e";
+  function arm() {
+    var fork = document.getElementById(FORK);
+    if (!fork) return;
+    Array.prototype.forEach.call(fork.querySelectorAll(":scope > .notion-column > .notion-toggle"), function (t) {
+      var s = t.querySelector(":scope > .notion-toggle__summary");
+      var c = t.querySelector(":scope > .notion-toggle__content");
+      if (!s) return;
+      if (s.getAttribute("role") !== "button") s.setAttribute("role", "button");
+      if (s.getAttribute("tabindex") !== "0") s.setAttribute("tabindex", "0");
+      var open = t.classList.contains("open") ? "true" : "false";
+      if (s.getAttribute("aria-expanded") !== open) s.setAttribute("aria-expanded", open);
+      if (c && t.id) {
+        var id = t.id + "-points";
+        if (c.id !== id) c.id = id;
+        if (s.getAttribute("aria-controls") !== id) s.setAttribute("aria-controls", id);
+      }
+    });
+  }
+  function summary(e) {
+    var s = e.target && e.target.closest && e.target.closest(".notion-toggle__summary");
+    return s && s.closest("#" + FORK) ? s : null;
+  }
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    var s = summary(e);
+    if (!s || e.target !== s) return;
+    e.preventDefault();
+    s.click();
+  });
+  // Super flips .open on the click; read it back once it has
+  document.addEventListener("click", function (e) {
+    if (summary(e)) setTimeout(arm, 0);
+  });
+  new MutationObserver(function (muts) {
+    var fork = document.getElementById(FORK);
+    if (!fork) return;
+    for (var i = 0; i < muts.length; i++) {
+      var t = muts[i].target;
+      if (t === fork || fork.contains(t) || (t.contains && t.contains(fork))) { arm(); return; }
+    }
+  }).observe(document.body, { childList: true, subtree: true });
+  arm();
+})();

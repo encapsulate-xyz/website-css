@@ -94,12 +94,29 @@ every URL in the sitemap for `notion-divider`, which is quicker than walking Not
 with a divider or an empty paragraph.**
 
 home.css starts with older page CSS, then "HOMEPAGE SECTIONS": stats band/figures/deck (00–00c),
-hero, Audience split 51l (07b), testimonials deck (09), Why Stake 49a, governance 37h, Services 42m
+hero, Audience split 51m (07b), testimonials deck (09), Why Stake 49a, governance 37h, Services 42m
 (09a), Who we are (09b), blog, networks 21b, Contact 48c (16).
 
 home.js is a set of IIFEs: the dial (institutional form), homepage decks (snapping), networks
 glyph columns, blog rail (Cover glyphs via CSS mask, dots), services
-selection (swaps covers to the original PNG), Why Stake graphics (derived figures), contact copy.
+selection (swaps covers to the original PNG), Why Stake graphics (derived figures), contact copy,
+and the audience split's "What you get" as a keyboard button.
+
+**The audience split is 51m "Two grounds"** (2026-10-14, the user: "implement 51m … in place of
+current Hinge · node"). A full-bleed band 760 tall, paper half and ink half (#2A2C28), a 148px word
+on each (Launch., Stake.), one line and one button a side; under 760px the halves stack and the
+words drop to 72. What changed in Notion: the claim H2 now reads "For chain teams and delegators"
+and is hidden (the design's screen-reader heading; the shared claim was dropped); the column
+headings became Heading 3s with the words; the leads became the file's two new lines; the
+chain side's kicker reads "For chain teams"; "View Networks" became "View networks"; and each
+side's four points moved, unchanged, into a toggle "What you get" under the button. The 51l
+blocks are in `backups/audience-split-51l-2026-10-14.json`. **The toggle dissolves**
+(`display: contents`), so its summary sits on the button's row and its points open under both —
+no script moves anything; Super's own inline `display: none` keeps them closed, so the content
+gets no display rule. Super draws the summary as a div that answers a click only; home.js gives it
+`role=button`, `tabindex`, Enter/Space and `aria-expanded`. **The word's size** is
+`min(148px, 12vw, (50vw - 92px) / 3.3)`: the file's 12% of the band, except just above 760, where
+a half cannot hold "Launch." (3.22em) and Super's headings split it mid-word.
 
 **Snapping — lessons.** Use native `scrollTo({behavior:"smooth"})` (scripted animation was choppy);
 cache stops, invalidate on resize/mutation; trackpad momentum lasts seconds — a new gesture is a

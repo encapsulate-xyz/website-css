@@ -161,7 +161,8 @@ already sits in a narrow column.** The caps below were dropped under the older, 
   - homepage governance 37h lead (the file's 50ch) and Services 42m lead (home.css, "user rule");
   - /services — every body and lead text (services.css head: "no `ch` caps on body or lead text";
     the ask's lead takes half the row instead);
-  - the homepage Audience split 51l, also named in the 2026-09-15 complaint.
+  - ~~the homepage Audience split 51l, also named in the 2026-09-15 complaint~~ — replaced by 51m on
+    2026-10-14, which keeps the file's 30ch on its two lines.
 - **Also check:** main.css §06 sets `text-wrap: balance !important` on every Notion heading, which
   the files mostly do not draw — it moves a heading's breaks on every page; and each heading whose
   break was set with an em max-width (the /services display sentence and ask heading, 10.56em)

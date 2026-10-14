@@ -88,6 +88,9 @@ drawn that block itself** — in practice the blog posts, and any future page. T
 not property by property: toggles skip `[data-enc-security]`, `[data-enc-invest]`, `[data-enc-fold]`
 and the hidden copy toggles; tables skip `[data-enc-chain]`; every family skips `[data-enc-source]`.
 **A page that styles one of these blocks itself adds its scope to that family's claims in §12.**
+The one exception: the homepage audience split's two "What you get" toggles are drawn by id in home.css
+(07b) over §12, because main.css carries no block ids and a scope set by a script would show §12's
+toggle until the script ran.
 Checked on 2026-09-25 by snapshotting 324 elements' computed styles on the eight pages with claims
 (/security, /contact-us, /investments, a chain page, /services, /blog, /guides, /networks) before
 and after: no differences.
