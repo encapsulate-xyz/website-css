@@ -43,7 +43,7 @@
 #block-8b802c7f592842d88f00ff5ca1499567{z-index: -1;position: absolute;width: 500px;transform: translate(200px,290px);@media (max-width: 1024px){display: none!important;}
 }
 .super-content{margin-top: 0px!important;padding-top: 0px!important;}
-.notion-root #block-3dae800a513880b493f9e17a6928281c{width: 100vw !important;margin-inline: calc(50% - 50vw) !important;padding: 28px max(48px,calc(50vw - 864px)) 32px !important;background-color: #3A3D38 !important;background-image: none !important;border: 0 !important;border-radius: 0 !important;color: #FAFAF8 !important;}
+.notion-root #block-3dae800a513880b493f9e17a6928281c{width: 100vw !important;margin-inline: calc(50% - 50vw) !important;margin-bottom: 0 !important;padding: 28px max(48px,calc(50vw - 864px)) 32px !important;background-color: #3A3D38 !important;background-image: none !important;border: 0 !important;border-radius: 0 !important;color: #FAFAF8 !important;}
 .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout__content{overflow: visible !important;}
 .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-column > .notion-callout{flex: 1 1 auto !important;}
 .notion-root #block-3dae800a513880b493f9e17a6928281c .notion-callout{color: var(--brand-ink,#000) !important;}

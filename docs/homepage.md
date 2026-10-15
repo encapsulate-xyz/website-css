@@ -122,6 +122,12 @@ min-height 100dvh and a stop in home.js's one-screen list, as Services and Who w
 the file's 760, and under 760 it stacks. **The band turns scroll anchoring off**
 (`overflow-anchor: none`): opening the points lifts the word inside a half that keeps its height,
 and Chrome took the word as its anchor and scrolled the page up with it, 204px at 1440 (v359 had it).
+**Nothing spaces it from its neighbours** (2026-10-15, the user: "why there is gap above and below
+this section?" … "yes remove it"): the three empty paragraphs above it and the four below — 116 and
+148px of paper, left from the old layout — were deleted from Notion
+(`backups/audience-split-spacers-2026-10-15.json`), and the stats band's bottom margin is 0, so the
+band meets the stats band and Why Stake flush. The design asked for paper above the ink half; with
+the page snapped a section at a time, the inks meet only mid-scroll.
 
 **Snapping — lessons.** Use native `scrollTo({behavior:"smooth"})` (scripted animation was choppy);
 cache stops, invalidate on resize/mutation; trackpad momentum lasts seconds — a new gesture is a
