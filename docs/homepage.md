@@ -103,7 +103,7 @@ selection (swaps covers to the original PNG), Why Stake graphics (derived figure
 and the audience split's "What you get" as a keyboard button.
 
 **The audience split is 51m "Two grounds"** (2026-10-14, the user: "implement 51m … in place of
-current Hinge · node"). A full-bleed band 760 tall, paper half and ink half (#2A2C28), a 148px word
+current Hinge · node"). A full-bleed band, paper half and ink half (#2A2C28), a 148px word
 on each (Launch., Stake.), one line and one button a side; under 760px the halves stack and the
 words drop to 72. What changed in Notion: the claim H2 now reads "For chain teams and delegators"
 and is hidden (the design's screen-reader heading; the shared claim was dropped); the column
@@ -116,13 +116,19 @@ no script moves anything; Super's own inline `display: none` keeps them closed, 
 gets no display rule. Super draws the summary as a div that answers a click only; home.js gives it
 `role=button`, `tabindex`, Enter/Space and `aria-expanded`. **The word's size** is
 `min(148px, 12vw, (50vw - 92px) / 3.3)`: the file's 12% of the band, except just above 760, where
-a half cannot hold "Launch." (3.22em) and Super's headings split it mid-word.
+a half cannot hold "Launch." (3.22em) and Super's headings split it mid-word. **One screen and
+snapped above 900px** (2026-10-15, the user: "make that section full screen height and snappy too"):
+min-height 100dvh and a stop in home.js's one-screen list, as Services and Who we are; 760–900 keeps
+the file's 760, and under 760 it stacks. **The band turns scroll anchoring off**
+(`overflow-anchor: none`): opening the points lifts the word inside a half that keeps its height,
+and Chrome took the word as its anchor and scrolled the page up with it, 204px at 1440 (v359 had it).
 
 **Snapping — lessons.** Use native `scrollTo({behavior:"smooth"})` (scripted animation was choppy);
 cache stops, invalidate on resize/mutation; trackpad momentum lasts seconds — a new gesture is a
 250ms gap, or after a 450ms MIN_LOCK and decay below half peak, a rise 4× the smallest delta (≥20);
-one-screen sections (Who we are, Services) are caught on the swipe within half a screen, and the
-settle retries. No CSS scroll-snap on html (fights the script). Gesture logic is testable in Node
+one-screen sections (the audience split, Services, Who we are) are caught on the swipe within half a
+screen, and so is a deck's first panel from above and its last from below (a swipe up out of the
+audience split came to rest 306px down the stats' last panel until 2026-10-15); the settle retries. No CSS scroll-snap on html (fights the script). Gesture logic is testable in Node
 with a stubbed window.
 
 **Notion forms (§13b)** render natively (no iframe): `div.notion-form__wrapper > form.notion-form >

@@ -888,7 +888,12 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 /* From design file "Audience Split", 51m (2026-10-14, in place of 51l "Hinge · node"). Two
    grounds as the diagram: the band splits paper and ink, one audience to a half, a giant word on
    each (Launch. and Stake.), then one line and one button a side. "What you get" opens that
-   side's four points in place; it starts closed, and the band keeps its height (760).
+   side's four points in place; it starts closed, and the band keeps its height.
+
+   ONE SCREEN (the user, 2026-10-15: "make that section full screen height and snappy too"). Above
+   900px the band is one full screen, as Services and Who we are, and home.js settles the page onto
+   its top ("Homepage decks"); between 760 and 900 it keeps the file's 760, and under 760 it
+   stacks — no full screen and no snap below 901px, as on the other one-screen sections.
 
    NOTION STRUCTURE. A Heading 2 (block-23ff4256…, "For chain teams and delegators") names the
    section for screen readers and is visually hidden: the design draws no heading (the shared
@@ -929,6 +934,9 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   margin: 0 0 0 calc(50% - 50vw) !important;
   padding: 0 !important;
   border: 0 !important;
+  /* opening the points lifts the word inside a half that keeps its height; the browser's scroll
+     anchoring took the word as its anchor and scrolled the page up with it, 204px at 1440 */
+  overflow-anchor: none;
 }
 
 /* a half: the kicker at the top, the word, line and buttons at the foot (the empty second row
@@ -1191,6 +1199,14 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 
 #block-3dae800a51388006a57be06b8ebea78e > .notion-column + .notion-column .notion-toggle__content .notion-numbered-list > li::before {
   color: #B4B4B4 !important;
+}
+
+/* one screen above 900px; the points open inside it while the screen can hold them */
+@media (min-width: 901px) {
+  #block-3dae800a51388006a57be06b8ebea78e > .notion-column {
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+  }
 }
 
 /* under 760px the halves stack, paper over ink, and the words drop to 72px */

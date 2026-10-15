@@ -323,7 +323,7 @@
 
 
 /* ─────────────────────────────────────────────────────────────────────────────────────────────
-   Homepage decks — exact snapping for the stats band, the testimonials and Who we are.
+   Homepage decks — exact snapping for the stats band, the testimonials and the one-screen sections.
 
    THE GEOMETRY STAYS CSS. home.css already lays the stats and the testimonials out as sticky,
    one-viewport panels (sections 00c and 09) and Who we are as one full screen (09b). That works
@@ -332,7 +332,8 @@
    stops.
 
    STOPS. Every panel contributes one stop: the scroll position at which it is pinned at the top
-   of the screen (its deck's top + index × panel height). Who we are contributes a single stop.
+   of the screen (its deck's top + index × panel height). Each one-screen section (the audience
+   split, Services, Who we are) contributes a single stop.
 
    INSIDE A DECK (between its first and last stop) scrolling is paged:
      - a wheel or trackpad gesture moves exactly one panel, animated, and the rest of that
@@ -355,16 +356,17 @@
    (data-enc-active) instead of every panel drawing a marker at its own row underneath — the
    CSS-only marker slid off the rail mid-scroll. Rows can be clicked to go to that quote.
 
-   Each deck is used only while its CSS geometry is active (panels computed sticky; Who we are
-   above 900px). Reduced motion jumps instead of animating. */
+   Each deck is used only while its CSS geometry is active (panels computed sticky; the
+   one-screen sections above 900px). Reduced motion jumps instead of animating. */
 (function () {
   var STATS = "block-3dae800a513880b493f9e17a6928281c";
   var QUOTES = "block-f853251f87b0400d9d5b7e3fe71e57e5";
   var QUOTE_SECTION = "block-3dae800a51388066b66ffeeb9bdb1550";
   var RAIL = "block-3dbe800a513880659b03efb665f21e12";
   var TEAM = "block-3dbe800a513880c5862ae676c8d06994";
-  // one-screen sections that settle to the top of the viewport (not paged): Who we are, Services
-  var SCREENS = [TEAM, "block-3dbe800a5138800d8a72c99cdde9bc3f"];
+  // one-screen sections that settle to the top of the viewport (not paged): Who we are, Services,
+  // the audience split
+  var SCREENS = [TEAM, "block-3dbe800a5138800d8a72c99cdde9bc3f", "block-3dae800a51388006a57be06b8ebea78e"];
 
   var NEAR = 0.33;       // of a screen: how close a resting page must be to a stop to settle on it
   var EPS = 2;           // px: "on" a stop
@@ -500,14 +502,16 @@
     var y = anim ? anim.target : window.scrollY; // mid-snap: page on from where it is heading
     var d = deckAt(y, list);
     if (!d) {
-      // CATCH A ONE-SCREEN SECTION (Who we are, Services). A swipe towards a section's top that
-      // starts within half a screen of it lands on it, as a deck's first panel would. Waiting for
-      // the scroll to rest did not work on a trackpad: momentum wheel events run right up to the
-      // end of the scroll, so the rest check always saw a gesture in progress and never settled.
+      // CATCH A ONE-SCREEN SECTION, OR A DECK FROM OUTSIDE. A swipe towards a one-screen section's
+      // top (the audience split, Services, Who we are), or towards a deck's first panel from above
+      // or its last from below, that starts within half a screen of it lands on it. Before the
+      // deck ends were caught, a swipe up out of the audience split came to rest 306px down the
+      // stats' last panel (2026-10-15). Waiting for the scroll to rest did not work on a trackpad:
+      // momentum wheel events run right up to the end of the scroll, so the rest check always saw
+      // a gesture in progress and never settled.
       var half = window.innerHeight / 2, catchAt = null;
       list.forEach(function (dk) {
-        if (dk.stops.length !== 1) return;
-        var s0 = dk.stops[0], gap = (s0 - y) * dir;
+        var s0 = dir > 0 ? dk.stops[0] : dk.stops[dk.stops.length - 1], gap = (s0 - y) * dir;
         if (gap > EPS && gap < half && (catchAt === null || gap < Math.abs(catchAt - y))) catchAt = s0;
       });
       if (catchAt !== null) {
