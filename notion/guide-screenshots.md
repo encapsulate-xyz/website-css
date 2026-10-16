@@ -52,7 +52,7 @@ This replaces the 1528 × 800 (1.91:1) canvas of 2026-09-18.
 | Dashboard file | **2800 × 1576** (1400 × 788 @2x) |
 | Wallet file | **720 × 1576** (360 × 788 @2x), nothing around it |
 | Surface treatment | 12px radius, 1px `#D9D9D2` border, **no drop shadow** (the site reserves depth for controls; a surface takes a border) |
-| Annotation | one ink ring, 3px outside the control, baked into the capture (see *Annotating*) |
+| Annotation | one ink ring hugging the control, baked into the capture (see *Annotating*) |
 | Redaction | one style for the whole set: same blur radius, or same solid box, never a mix |
 
 ## Capturing without the jump to the top (2026-09-30)
@@ -284,18 +284,72 @@ ring style means reshooting.
 | | Value |
 |---|---|
 | Ring | 2px ink `#000`, no separator |
-| Position | **3px outside** the control's box — a gap of the capture's own ground between them |
-| Corner | the control's own radius + 5px, so it follows the curve |
+| Position | **on the control's edge**, outside it: no gap (2026-10-16) |
+| Corner | the control's own radius, corner by corner (px or %, round or elliptical), + the ring's 2px, so the ring's inner edge is the control's curve |
 
 Drawn flush inside the control's edge (the first form) it read as the button's own border, and the
-.35 paper separator vanished on a light capture; the 3px gap is what makes it a mark.
+.35 paper separator vanished on a light capture. A 3px gap outside followed (2026-09-22); on
+2026-10-16 the user asked for the ring to hug the button ("hug the button tightly and with the same
+border radius and everything"): the gap left a loose ring with a rounder corner than the button's,
+since its radius came from the first rounded element inside the pick. **Captures shot before
+2026-10-16 carry the 3px ring.**
 
 **Per slide:** pick the control with DevTools' inspect arrow (the element's own line, not a
 `::after`), run the saved Snippet `ring` (Sources → Snippets, ⌘↵), check it, then Capture node
 screenshot on `<html>`.
 
 ```js
-(b => { const r = b.getBoundingClientRect(), g = 3, rad = [b, ...b.querySelectorAll("*")].map(e => parseFloat(getComputedStyle(e).borderRadius) || 0).find(x => x > 0) || 4, m = document.createElement("div"); document.getElementById("enc-mark")?.remove(); m.id = "enc-mark"; Object.assign(m.style, {position: "fixed", left: r.left - g - 2 + "px", top: r.top - g - 2 + "px", width: r.width + 2 * (g + 2) + "px", height: r.height + 2 * (g + 2) + "px", boxSizing: "border-box", border: "2px solid #000", borderRadius: rad + g + 2 + "px", pointerEvents: "none", zIndex: 2147483647}); document.body.append(m); })($0)
+(picked => {
+  const RING = 2, GAP = 0;
+  // The element that draws the button: the one picked, if it has a box of its own; else a child
+  // that fills it (a wrapper was picked); else the nearest parent with a box (its label was picked).
+  const boxed = e => {
+    const s = getComputedStyle(e);
+    return parseFloat(s.borderTopLeftRadius) > 0 || s.backgroundColor !== "rgba(0, 0, 0, 0)" ||
+      (parseFloat(s.borderTopWidth) > 0 && s.borderTopStyle !== "none") || s.boxShadow !== "none";
+  };
+  const p = picked.getBoundingClientRect();
+  const fills = e => { const q = e.getBoundingClientRect(); return q.width >= p.width - 2 && q.height >= p.height - 2; };
+  let b = boxed(picked) ? picked : [...picked.querySelectorAll("*")].find(e => boxed(e) && fills(e));
+  for (let e = picked.parentElement; !b && e && e !== document.body; e = e.parentElement) if (boxed(e)) b = e;
+  b = b || picked;
+
+  const r = b.getBoundingClientRect(), s = getComputedStyle(b), pad = GAP + RING;
+  // each corner is the button's own (px or %, round or elliptical) plus the ring, so the ring's
+  // inner edge runs along the button's curve
+  const corner = v => {
+    const [x, y = x] = v.split(" "), px = (t, d) => t.endsWith("%") ? parseFloat(t) * d / 100 : parseFloat(t) || 0;
+    return `${px(x, r.width) + pad}px ${px(y, r.height) + pad}px`;
+  };
+
+  document.getElementById("enc-mark")?.remove();
+  const m = document.createElement("div");
+  m.id = "enc-mark";
+  Object.assign(m.style, {
+    position: "fixed",
+    left: r.left - pad + "px",
+    top: r.top - pad + "px",
+    width: r.width + 2 * pad + "px",
+    height: r.height + 2 * pad + "px",
+    boxSizing: "border-box",
+    border: RING + "px solid #000",
+    borderTopLeftRadius: corner(s.borderTopLeftRadius),
+    borderTopRightRadius: corner(s.borderTopRightRadius),
+    borderBottomRightRadius: corner(s.borderBottomRightRadius),
+    borderBottomLeftRadius: corner(s.borderBottomLeftRadius),
+    pointerEvents: "none",
+    zIndex: "2147483647"
+  });
+
+  const popup = b.closest('dialog[open], [role="dialog"], [aria-modal="true"], [class*="modal" i], [class*="popup" i]');
+  (popup || b.ownerDocument.body).append(m);
+
+  // inside a transformed popup "fixed" is measured from the popup, not the window: move the ring
+  // by however far it landed from the button
+  const a = m.getBoundingClientRect();
+  m.style.left = parseFloat(m.style.left) + (r.left - pad - a.left) + "px";
+  m.style.top = parseFloat(m.style.top) + (r.top - pad - a.top) + "px";
+})($0);
 ```
 
 Running it again replaces the last ring. To clear it:
@@ -307,8 +361,12 @@ document.getElementById("enc-mark").remove()
 Redraw after any resize — the ring does not follow the button.
 
 It is a separate fixed layer, not a shadow on the control — Keplr's buttons sit in boxes that clip
-anything past their edge — and it takes the first rounded corner inside the picked element, so
-picking a wrapper still follows the button's curve.
+anything past their edge. It rings the element that draws the button: the one picked if it has a
+box of its own (a radius, a ground, a border or a shadow), else a child that fills it (a wrapper was
+picked), else the nearest parent with one (the label was picked). Inside a dialog or popup it is
+appended there, so a modal cannot cover it, and moved back onto the button if the popup's transform
+shifted it. Checked on six test buttons (round, pill, elliptical, a picked label, a picked wrapper, a
+button in a transformed popup): the inner edge lands on the button's edge to 0.0px.
 
 ## Everything else that has to stay constant
 
