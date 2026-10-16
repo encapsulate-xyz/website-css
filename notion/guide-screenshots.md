@@ -296,61 +296,15 @@ since its radius came from the first rounded element inside the pick. **Captures
 
 **Per slide:** pick the control with DevTools' inspect arrow (the element's own line, not a
 `::after`), run the saved Snippet `ring` (Sources → Snippets, ⌘↵), check it, then Capture node
-screenshot on `<html>`.
+screenshot on `<html>`. **The snippet is `scripts/guide_ring.js`**; put it on the clipboard with
 
-```js
-(picked => {
-  const RING = 2, GAP = 0;
-  // The element that draws the button: the one picked, if it has a box of its own; else a child
-  // that fills it (a wrapper was picked); else the nearest parent with a box (its label was picked).
-  const boxed = e => {
-    const s = getComputedStyle(e);
-    return parseFloat(s.borderTopLeftRadius) > 0 || s.backgroundColor !== "rgba(0, 0, 0, 0)" ||
-      (parseFloat(s.borderTopWidth) > 0 && s.borderTopStyle !== "none") || s.boxShadow !== "none";
-  };
-  const p = picked.getBoundingClientRect();
-  const fills = e => { const q = e.getBoundingClientRect(); return q.width >= p.width - 2 && q.height >= p.height - 2; };
-  let b = boxed(picked) ? picked : [...picked.querySelectorAll("*")].find(e => boxed(e) && fills(e));
-  for (let e = picked.parentElement; !b && e && e !== document.body; e = e.parentElement) if (boxed(e)) b = e;
-  b = b || picked;
-
-  const r = b.getBoundingClientRect(), s = getComputedStyle(b), pad = GAP + RING;
-  // each corner is the button's own (px or %, round or elliptical) plus the ring, so the ring's
-  // inner edge runs along the button's curve
-  const corner = v => {
-    const [x, y = x] = v.split(" "), px = (t, d) => t.endsWith("%") ? parseFloat(t) * d / 100 : parseFloat(t) || 0;
-    return `${px(x, r.width) + pad}px ${px(y, r.height) + pad}px`;
-  };
-
-  document.getElementById("enc-mark")?.remove();
-  const m = document.createElement("div");
-  m.id = "enc-mark";
-  Object.assign(m.style, {
-    position: "fixed",
-    left: r.left - pad + "px",
-    top: r.top - pad + "px",
-    width: r.width + 2 * pad + "px",
-    height: r.height + 2 * pad + "px",
-    boxSizing: "border-box",
-    border: RING + "px solid #000",
-    borderTopLeftRadius: corner(s.borderTopLeftRadius),
-    borderTopRightRadius: corner(s.borderTopRightRadius),
-    borderBottomRightRadius: corner(s.borderBottomRightRadius),
-    borderBottomLeftRadius: corner(s.borderBottomLeftRadius),
-    pointerEvents: "none",
-    zIndex: "2147483647"
-  });
-
-  const popup = b.closest('dialog[open], [role="dialog"], [aria-modal="true"], [class*="modal" i], [class*="popup" i]');
-  (popup || b.ownerDocument.body).append(m);
-
-  // inside a transformed popup "fixed" is measured from the popup, not the window: move the ring
-  // by however far it landed from the button
-  const a = m.getBoundingClientRect();
-  m.style.left = parseFloat(m.style.left) + (r.left - pad - a.left) + "px";
-  m.style.top = parseFloat(m.style.top) + (r.top - pad - a.top) + "px";
-})($0);
+```bash
+pbcopy < scripts/guide_ring.js
 ```
+
+and paste that into the Snippet or the console. Copied out of the terminal it broke (2026-10-16:
+"Uncaught SyntaxError: Invalid or unexpected token" — a long line lost its closing `px";`), so the
+file keeps every line short and is never retyped from a chat reply.
 
 Running it again replaces the last ring. To clear it:
 
