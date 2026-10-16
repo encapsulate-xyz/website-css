@@ -315,12 +315,19 @@ document.getElementById("enc-mark").remove()
 Redraw after any resize — the ring does not follow the button.
 
 It is a separate fixed layer, not a shadow on the control — Keplr's buttons sit in boxes that clip
-anything past their edge. It rings the element that draws the button: the one picked if it has a
-box of its own (a radius, a ground, a border or a shadow), else a child that fills it (a wrapper was
-picked), else the nearest parent with one (the label was picked). Inside a dialog or popup it is
-appended there, so a modal cannot cover it, and moved back onto the button if the popup's transform
-shifted it. Checked on six test buttons (round, pill, elliptical, a picked label, a picked wrapper, a
-button in a transformed popup): the inner edge lands on the button's edge to 0.0px.
+anything past their edge. **It rings the control the pick is in**: the button, link or tab
+around it, else the outermost of its clickable (`cursor: pointer`) parents, else the pick itself —
+never a plain container. The first form of the hugging ring climbed to the nearest parent with a
+ground or a radius, and on Auro's Send · Receive · Staking bar it ringed the whole bar for a pick
+of Staking (2026-10-16). **Each corner is the control's own curve**; a corner with none takes the
+curve of what draws it there — a child in that corner (a wrapper was picked), or a parent whose
+corner it sits in, so Staking at the end of the bar gets the bar's rounded right corners and square
+left ones. Radii are read as the browser draws them (px or %, elliptical, scaled down when they
+overflow). Inside a dialog or popup the ring is appended there, so a modal cannot cover it, and
+moved back onto the control if the popup's transform shifted it. Checked on ten test controls
+(round, pill, elliptical, a picked label, a picked wrapper, segments flush with a rounded bar and
+inset in one, a pill bar of buttons, a button in a transformed popup): the right control every time,
+its inner edge on the control's edge to 0.0px.
 
 ## Everything else that has to stay constant
 

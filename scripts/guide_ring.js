@@ -6,42 +6,67 @@
 // Clear the ring with: document.getElementById("enc-mark").remove()
 (picked => {
   const RING = 2, GAP = 0;
-  // The element that draws the button: the picked one if it has a
-  // box of its own; else a child that fills it (a wrapper was
-  // picked); else the nearest parent with a box (a label was picked).
-  const boxed = e => {
-    const s = getComputedStyle(e);
-    const clear = s.backgroundColor === "rgba(0, 0, 0, 0)";
-    const edge = parseFloat(s.borderTopWidth) > 0
-      && s.borderTopStyle !== "none";
-    return parseFloat(s.borderTopLeftRadius) > 0 || !clear || edge
-      || s.boxShadow !== "none";
-  };
-  const p = picked.getBoundingClientRect();
-  const fills = e => {
-    const q = e.getBoundingClientRect();
-    return q.width >= p.width - 2 && q.height >= p.height - 2;
-  };
-  let b = boxed(picked) ? picked : [...picked.querySelectorAll("*")]
-    .find(e => boxed(e) && fills(e));
-  for (let e = picked.parentElement; !b && e; e = e.parentElement) {
-    if (e === document.body) break;
-    if (boxed(e)) b = e;
-  }
-  b = b || picked;
+  const pad = GAP + RING, body = document.body;
 
-  const r = b.getBoundingClientRect();
-  const s = getComputedStyle(b);
-  const pad = GAP + RING;
-  // each corner is the button's own (px or %, round or elliptical)
-  // plus the ring, so the ring's inner edge follows the button's curve
-  const px = (t, d) =>
-    t.endsWith("%") ? parseFloat(t) * d / 100 : parseFloat(t) || 0;
-  const corner = v => {
-    const [x, y = x] = v.split(" ");
-    const rx = px(x, r.width) + pad, ry = px(y, r.height) + pad;
-    return rx + "px " + ry + "px";
+  // The control: the button or tab the pick sits in; else the
+  // outermost of its clickable (pointer) parents; else the pick. It
+  // never climbs to a plain container: a segment of a bar of buttons
+  // is ringed, not the bar (2026-10-16, Auro's Staking).
+  const CONTROL = [
+    "button", "a[href]", "summary", "input", "select", "textarea",
+    "[role='button']", "[role='tab']", "[role='link']",
+    "[role='menuitem']", "[role='option']", "[role='radio']",
+    "[role='checkbox']", "[role='switch']"
+  ].join(", ");
+  const pointer = e => getComputedStyle(e).cursor === "pointer";
+  let b = picked.closest(CONTROL);
+  if (!b) {
+    b = picked;
+    while (b.parentElement && b.parentElement !== body
+      && pointer(b.parentElement)) b = b.parentElement;
+  }
+
+  // The corners the browser draws: each one's radius (px or %, round
+  // or elliptical), scaled down together when they overflow the box.
+  const CORNERS = ["TopLeft", "TopRight", "BottomRight", "BottomLeft"];
+  const radii = e => {
+    const q = e.getBoundingClientRect(), s = getComputedStyle(e);
+    const px = (t, d) =>
+      t.endsWith("%") ? parseFloat(t) * d / 100 : parseFloat(t) || 0;
+    const c = CORNERS.map(k => {
+      const [x, y = x] = s["border" + k + "Radius"].split(" ");
+      return [px(x, q.width), px(y, q.height)];
+    });
+    const fit = (len, a, b) => (a + b > len ? len / (a + b) : 1);
+    const f = Math.min(
+      fit(q.width, c[0][0], c[1][0]), fit(q.width, c[3][0], c[2][0]),
+      fit(q.height, c[0][1], c[3][1]), fit(q.height, c[1][1], c[2][1]));
+    return c.map(([x, y]) => [x * f, y * f]);
   };
+
+  // A corner with no curve of its own takes the curve of what draws
+  // it there: a child in that corner (a wrapper was picked), or a
+  // parent whose corner it sits in (a segment at the end of a bar).
+  const r = b.getBoundingClientRect(), own = radii(b);
+  const point = (q, i) => [
+    i === 1 || i === 2 ? q.right : q.left, i >= 2 ? q.bottom : q.top];
+  const sits = (e, i) => {
+    const u = point(e.getBoundingClientRect(), i), v = point(r, i);
+    return Math.abs(u[0] - v[0]) < 1.5 && Math.abs(u[1] - v[1]) < 1.5;
+  };
+  const near = [...b.querySelectorAll("*")];
+  for (let e = b.parentElement; e && e !== body; e = e.parentElement) {
+    near.push(e);
+  }
+  const curve = CORNERS.map((k, i) => {
+    if (own[i][0] > 0) return own[i];
+    for (const e of near) {
+      if (!sits(e, i)) continue;
+      const c = radii(e)[i];
+      if (c[0] > 0) return c;
+    }
+    return [0, 0];
+  });
 
   document.getElementById("enc-mark")?.remove();
   const m = document.createElement("div");
@@ -54,12 +79,13 @@
     height: r.height + 2 * pad + "px",
     boxSizing: "border-box",
     border: RING + "px solid #000",
-    borderTopLeftRadius: corner(s.borderTopLeftRadius),
-    borderTopRightRadius: corner(s.borderTopRightRadius),
-    borderBottomRightRadius: corner(s.borderBottomRightRadius),
-    borderBottomLeftRadius: corner(s.borderBottomLeftRadius),
     pointerEvents: "none",
     zIndex: "2147483647"
+  });
+  // the ring's inner edge runs along the control's curve
+  CORNERS.forEach((k, i) => {
+    const [x, y] = curve[i], v = x + pad + "px " + (y + pad) + "px";
+    m.style["border" + k + "Radius"] = v;
   });
 
   const popup = b.closest([
