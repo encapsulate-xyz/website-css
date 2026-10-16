@@ -284,8 +284,8 @@ ring style means reshooting.
 | | Value |
 |---|---|
 | Ring | 2px ink `#000`, no separator |
-| Position | **on the control's edge**, outside it: no gap (2026-10-16) |
-| Corner | the control's own radius, corner by corner (px or %, round or elliptical), + the ring's 2px, so the ring's inner edge is the control's curve |
+| Position | **outside, on the control's edge** (no gap) for a control with room around it; **inside, on its own edge** for one flush with its bar's edge or a neighbour — a segment of a bar of buttons (2026-10-16). The snippet decides; `SIDE` forces either |
+| Corner | the control's own radius, corner by corner (px or %, round or elliptical): outside, + the ring's 2px, so the ring's inner edge is the control's curve; inside, the control's radius, so its outer edge is |
 
 Drawn flush inside the control's edge (the first form) it read as the button's own border, and the
 .35 paper separator vanished on a light capture. A 3px gap outside followed (2026-09-22); on
@@ -327,7 +327,12 @@ overflow). Inside a dialog or popup the ring is appended there, so a modal canno
 moved back onto the control if the popup's transform shifted it. Checked on ten test controls
 (round, pill, elliptical, a picked label, a picked wrapper, segments flush with a rounded bar and
 inset in one, a pill bar of buttons, a button in a transformed popup): the right control every time,
-its inner edge on the control's edge to 0.0px.
+its ring on the control's edge to 0.0px. **Inside or outside** (the user, 2026-10-16: "should i
+always add padding around the button? sometimes it looks odd"): an outside ring on Auro's Staking
+segment ran 2px past the bar's rounded corner onto the purple and 2px into Receive. A control flush
+with the edge of its bar (the nearest parent with a ground, border, shadow or radius) or with a
+neighbour gets the ring inside; one with room around it keeps it outside, where an inside ring reads
+as the button's own border.
 
 ## Everything else that has to stay constant
 

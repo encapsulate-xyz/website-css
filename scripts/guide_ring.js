@@ -5,8 +5,12 @@
 // "Invalid or unexpected token"), so every line here stays short.
 // Clear the ring with: document.getElementById("enc-mark").remove()
 (picked => {
-  const RING = 2, GAP = 0;
-  const pad = GAP + RING, body = document.body;
+  // SIDE: "out" hugs the control from outside, "in" draws the ring on
+  // the control's own edge, "auto" picks (see INSIDE OR OUTSIDE below).
+  // GAP: px between the control and an outside ring.
+  const SIDE = "auto", RING = 2, GAP = 0;
+  const body = document.body;
+  document.getElementById("enc-mark")?.remove();
 
   // The control: the button or tab the pick sits in; else the
   // outermost of its clickable (pointer) parents; else the pick. It
@@ -68,7 +72,41 @@
     return [0, 0];
   });
 
-  document.getElementById("enc-mark")?.remove();
+  // INSIDE OR OUTSIDE. Outside for a control with room around it; an
+  // inside ring there reads as the button's own border (2026-09-22).
+  // Inside for one flush with its bar's edge or with a neighbour (a
+  // segment of a bar of buttons), where an outside ring spills past
+  // the bar and cuts into the next segment (2026-10-16, Auro).
+  const boxed = e => {
+    const s = getComputedStyle(e);
+    return s.backgroundColor !== "rgba(0, 0, 0, 0)"
+      || parseFloat(s.borderTopWidth) > 0 || s.boxShadow !== "none"
+      || parseFloat(s.borderTopLeftRadius) > 0;
+  };
+  let group = b.parentElement;
+  while (group && group !== body && !boxed(group)) {
+    group = group.parentElement;
+  }
+  const touches = q => {
+    if (!q.width || !q.height) return false;
+    const gx = Math.max(q.left - r.right, r.left - q.right);
+    const gy = Math.max(q.top - r.bottom, r.top - q.bottom);
+    const side = (g, other) => Math.abs(g) <= 1 && other < 0;
+    return side(gx, gy) || side(gy, gx);
+  };
+  const flush = q => ["left", "right", "top", "bottom"]
+    .some(k => Math.abs(q[k] - r[k]) < 1.5);
+  let tight = !!group && group !== body
+    && flush(group.getBoundingClientRect());
+  for (let e = b; !tight && e !== group && e.parentElement;
+    e = e.parentElement) {
+    for (const s of e.parentElement.children) {
+      if (s !== e && touches(s.getBoundingClientRect())) tight = true;
+    }
+  }
+  const inside = SIDE === "in" || (SIDE === "auto" && tight);
+  const pad = inside ? 0 : GAP + RING;
+
   const m = document.createElement("div");
   m.id = "enc-mark";
   Object.assign(m.style, {
@@ -82,7 +120,8 @@
     pointerEvents: "none",
     zIndex: "2147483647"
   });
-  // the ring's inner edge runs along the control's curve
+  // outside, the ring's inner edge runs along the control's curve;
+  // inside, its outer edge does
   CORNERS.forEach((k, i) => {
     const [x, y] = curve[i], v = x + pad + "px " + (y + pad) + "px";
     m.style["border" + k + "Radius"] = v;
