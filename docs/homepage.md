@@ -137,6 +137,24 @@ screen, and so is a deck's first panel from above and its last from below (a swi
 audience split came to rest 306px down the stats' last panel until 2026-10-15); the settle retries. No CSS scroll-snap on html (fights the script). Gesture logic is testable in Node
 with a stubbed window.
 
+**A link to a homepage section lands (home.js, v362, 2026-10-18).** /#block-<id> is how the site links its sections — the
+footer's Team (`#block-3dbe…6994`, Who we are) and Institutional staking (`#block-3dbe…1975`), the navbar's institutional
+panel, and /team since the same day — and none of them landed: on a fresh load the browser never jumped (scrollY 0) while
+the page grew a thousand pixels as it built, and arriving in the app Super's router jumped early and left Who we are
+7,576px below the screen. home.js now puts the section's top at the screen's top (a one-screen section's stop; not Super's
+62px scroll-padding — the bar scrolls away), on a load, an in-app arrival (the observer sees the address change), a
+hashchange and a click on the section already in the address, retried over 4.5s as chain.js's landHash and dropped at the
+reader's first wheel, touch or key. The id is cut at `?`/`&` (livecheck adds `?lc=` after the hash). Measured fresh at
+1440, 390, 1920 and 1024, in the app from /services at 1440 and 390 (both sections), the footer link on the homepage, a
+wheel during the build (left where the reader went) and a load with no hash (stays at 0).
+
+**/team → Who we are.** /team was a 308 to / (2026-09-28), and a Super redirect only names a page — no address, no
+`#fragment` (`SitePage` has `redirectPageId` alone). So /team is a page again, the old Team page (`23cbd131…`, which holds
+the same Team database the homepage shows), and home.js forwards it to `/#block-3dbe…6994` (`MOVED`): home.js is in the site
+head, which Super serves in the HTML, where a page's own head script is only inserted once the app has started. Its page
+head (`head/team.html`) holds a `meta refresh` for a reader without JavaScript, `body { visibility: hidden }` and its
+canonical on /.
+
 **Notion forms (§13b)** render natively (no iframe): `div.notion-form__wrapper > form.notion-form >
 div.notion-form__field.<type>`; dropdown questions still render as radios (drawn as chips);
 "Invalid email" shows on empty fields (hidden while placeholder shows). The dial: a Number question

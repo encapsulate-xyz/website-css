@@ -236,9 +236,10 @@ Note: `git commit` also commits anything the user has staged — check `git stat
 | `head/services.html` | /services → Code → Head |
 | `head/privacy-policy.html` | /privacy-policy → Code → Head (legal.css) |
 | `head/terms-of-use.html` | /terms-of-use → Code → Head (legal.css) |
+| `head/team.html` | /team → Code → Head (a meta refresh to the homepage's Who we are; home.js forwards it — `docs/homepage.md`) |
 
-A page whose CSS moved to the repo has its Code → CSS box emptied. Pages not listed (team, etc.)
-have no repo file yet.
+A page whose CSS moved to the repo has its Code → CSS box emptied. Pages not listed have no repo
+file yet.
 
 **Each head file ends with the page's canonical line**, and every other page in Super (posts, guides, chain
 pages) has a head of that one line alone, `<link rel="canonical" href="https://encapsulate.xyz/<path>">`
