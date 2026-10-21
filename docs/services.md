@@ -14,7 +14,7 @@ an **inline database after four of them**, then a **"Services page copy" toggle*
 
 | Band callout | What it holds | Database after it |
 |---|---|---|
-| Dashboards `3e4e800a…81cf…` | H2, line (not drawn since 2026-10-21), the ask's H3 "Want one for your chain?", "Ask for a scoped view", "What we have built" | `Dashboards` — Name (the chain), **Tool** (Tidemark), **Kind** ("reference gas price"), Address, Status, Description, Link, Menu (the navbar's line), **Capture** (the 1400×788 @2x shot), **Glyph** (the disc's mark), Order |
+| Dashboards `3e4e800a…81cf…` | H2, line (not drawn since 2026-10-21), the ask's H3 "Want one for your chain?", "Ask for a scoped view" (→ /contact, the user, 2026-10-21: "should open contact us page"; it was the cal.com booking), "What we have built" | `Dashboards` — Name (the chain), **Tool** (Tidemark), **Kind** ("reference gas price"), Address, Status, Description, Link, Menu (the navbar's line), **Capture** (the 1400×788 @2x shot), **Glyph** (the disc's mark), Order |
 | Playbooks `3e4e800a…8171…` | H2, line, then the seven steps as **Heading 3 + text** pairs | — |
 | Repositories `3e4e800a…81f4…` | the mono label, the paragraph, "All repositories on GitHub" | `Playbooks` — Name, Repository, Visibility (Public/Private), Description, Link (public only), **Glyph**, Order |
 | Bots `3e4e800a…8159…` | H2, line, "Chain", "Discord", "Add one to your server" | `Bot events` — Name (the pill), Event, **Earlier** (two log lines, one per line), Headline, Detail, Glyph, Order |
