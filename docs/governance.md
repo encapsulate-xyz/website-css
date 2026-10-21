@@ -35,6 +35,10 @@ No breakpoint: the design's own measure fits the field to any stage (4 blocks to
   runs, the callout is one screen holding its paragraphs as the design's template does (the last beat).
 - The glyphs on the faces come from the page's galleries (`glyphs()`) through Super's optimizer at 384px; the six
   the first frames show are fetched as the band is built.
+- **Its classes are `enc-count__*`, never `enc-rec__*`.** v367 called the band's header `.enc-rec__head`, the name
+  governance.js already gives the pillars band's head (heading, lede, "Ask about a proposal"); the band's
+  `position: absolute` pinned that head over the cover until v368 (the user: "check the page there are many issues").
+  Before naming a class in this file, grep governance.js and governance.css for it.
 - The canvas draws in the scroll event itself (the design's note: a frame callback can be held back) and skips a
   draw while the band is off the screen. Measured idle at 1440: no mutations of ours in 3s.
 
