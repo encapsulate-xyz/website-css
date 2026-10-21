@@ -79,8 +79,10 @@ hosts rgp.sui and graph.solana redirect to the new ones.
 - **Words**: everything is Notion's — the band's H2 makes the eyebrow ("01 · Dashboards"), its H3 and buttons the
   ask, the rows the rest; "The chain", "The page", "Visit", "Open {tool}", "Choose a dashboard" and the aria lines
   are the copy toggle's.
-- **The captures are the team's own** (2800×1576, from the user's Downloads, the newest of each: Tidemark of
-  2026-10-21, Crux and Holdfast of 2026-10-19 — Holdfast's later file, whose "CROSSLINK EXPLORER" badge is not cut).
-  The glyphs are the design's `network-glyphs/03-sui`, `42-solana`, `45-crosslink` (the Shielded Labs shield).
-  `get_file` returns a binary inline as base64; a file too long to copy by hand is taken back out of the session's
-  transcript (`~/.claude/projects/…/<session>.jsonl`) and checked chunk by chunk against its PNG CRCs.
+- **Every image is the design's own, from the zip the user sent** (`~/Downloads/Encapsulate Website.zip`,
+  `handoff-dashboards-section/`, 2026-10-21 — the user: "you will find all the images and glyphs here, use these"):
+  `panels-hires/tidemark-sui`, `crux-solana`, `holdfast-crosslink` (2800×1576, 1400×788 at 2x, taken 2026-10-19,
+  shown whole in a 1400/788 frame) as each row's Capture, and `network-glyphs/03-sui`, `42-solana`, `45-crosslink`
+  (600×600, black on transparency, the Shielded Labs shield for Crosslink) as its Glyph. Tidemark first went up as a
+  newer capture of 2026-10-21 from the Downloads folder and was put back to the design's the same day. When the
+  design ships a zip, take the files from it: `get_file` cuts a binary at 256 KB.

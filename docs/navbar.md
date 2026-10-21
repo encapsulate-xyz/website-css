@@ -308,7 +308,9 @@ plain glass, so both are cancelled, or whatever the bar lies over is smeared.
 **The Dashboards round (handoff 2026-10-21).** The file's only changes were Dashboards': its line "Gas price, stake
 map, explorer", its note ("Public tools that make a chain readable, free to use." / "Tidemark for Sui's gas price,
 Crux for Solana's stake, Holdfast for Crosslink's blocks."), its three "Live now" rows (the table's Menu, rewritten
-in Notion) and its capture, which is now the new /services band on the Sui split. The design's
-`panel-thumbs-2x/dashboards.png` (1583×989) came back cut off at `get_file`'s 256 KB, so the capture was taken from
-the built band itself at the same 1583×989 (`livecheck.mjs`, the frame at .68 of 3.7) — the same composition as the
-part of the design's file that arrived. The old capture is in `backups/nav-dashboards-2026-09-24.*`.
+in Notion) and its capture, which is now the new /services band on the Sui split: the design's
+`panel-thumbs-2x/dashboards.png` (1583×989), from the zip the user sent (`docs/services.md`, the Dashboards band).
+`get_file` had cut it off at 256 KB, so a capture of the built band at the same size stood in for one release (v364;
+kept as `backups/nav-dashboards-2026-10-21-built.png`). The capture before this round is in
+`backups/nav-dashboards-2026-09-24.*`. **A new picture needs a new navbar.js pin**: navbar.js asks for
+`img/nav-panels/<name>.webp` beside its own tag, so the image changes only when site.html's navbar.js tag does.
