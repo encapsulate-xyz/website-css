@@ -37,25 +37,24 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
    The page is the homepage's 37h given the whole record. Four bands in Notion order: the ink count
    band (a callout after the cover), the pillars band (heading, lead, the secondary button and the
    four-track band), the controls (Super's view picker, restyled, plus our search field), and the
-   rows. governance.js draws the marks, names each row's chain from its group, and builds the
+   rows. governance.js draws the count band, names each row's chain from its group, and builds the
    search field; everything else is here. */
 
-/* ── 1 · THE COUNT BAND ── */
+/* ── 1 · THE COUNT BAND ── design "Governance Count Patterns" (W, 2026-10-21)
+   Until governance.js builds it, the callout is one screen of ink holding its own paragraphs: the
+   kicker, the figure, the last beat beside it (the design's template). Built, the callout is 420vh
+   and its paragraphs make way for the stage the script draws (.enc-rec__stage, below). */
 .notion-root #block-3dde800a513881b1b88dd0b73f874bfe {
   box-sizing: border-box !important;
   width: 100vw !important;
   max-width: none !important;
   margin: 0 calc(50% - 50vw) 44px !important;
-  padding: clamp(56px, 8vh, 92px) clamp(28px, 7vw, 110px) !important;
-  /* exactly one screen, padding included — a band even a few pixels taller shows a strip of the
-     next section under it once the page snaps to its top */
-  box-sizing: border-box !important;
+  padding: clamp(40px, 8vh, 88px) clamp(20px, 4vw, 64px) !important;
   height: 100svh !important;
   min-height: 100svh !important;
   display: flex !important;
   flex-direction: column !important;
-  justify-content: center !important;
-  gap: clamp(26px, 4vh, 44px) !important;
+  justify-content: flex-start !important;
   border: 0 !important;
   border-radius: 0 !important;
   background: #2A2C28 !important;
@@ -72,9 +71,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   grid-template-columns: minmax(0, 1fr) minmax(0, 34ch) !important;
   grid-template-areas:
     "kicker aside"
-    "figure asidebody"
-    "label  label"
-    "field  field" !important;
+    "figure asidebody" !important;
   align-items: end !important;
   column-gap: clamp(24px, 4vw, 56px) !important;
   row-gap: 10px !important;
@@ -89,19 +86,19 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   min-width: 0 !important;
 }
 
-/* the kicker, over the figure */
 .notion-root #block-3dde800a513881b1b88dd0b73f874bfe p.notion-text:nth-of-type(1) {
   grid-area: kicker !important;
   align-self: end !important;
   font-family: var(--type-mono), ui-monospace, monospace !important;
+  font-weight: 500 !important;
   font-size: 11px !important;
   line-height: 1.3 !important;
-  letter-spacing: 0.14em !important;
+  letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
+  white-space: nowrap !important;
   color: #B4B4B4 !important;
 }
 
-/* the figure — the number is Notion's text, the size is the design's */
 .notion-root #block-3dde800a513881b1b88dd0b73f874bfe p.notion-text:nth-of-type(2) {
   grid-area: figure !important;
   font-family: var(--type-display), system-ui, sans-serif !important;
@@ -109,11 +106,10 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   font-size: clamp(76px, 13vw, 208px) !important;
   line-height: 0.82 !important;
   letter-spacing: -0.058em !important;
-  color: #DCEEC7 !important;
+  color: #FAFAF8 !important;
   font-variant-numeric: tabular-nums !important;
 }
 
-/* the two lines beside it, sitting on the figure's baseline */
 .notion-root #block-3dde800a513881b1b88dd0b73f874bfe p.notion-text:nth-of-type(3) {
   grid-area: aside !important;
   align-self: end !important;
@@ -133,98 +129,157 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   font-size: 15.5px !important;
   line-height: 1.56 !important;
   color: #C9C9C4 !important;
+  text-wrap: pretty !important;
 }
 
+/* the scroll cue: there is nothing to pull back until the field is drawn */
 .notion-root #block-3dde800a513881b1b88dd0b73f874bfe p.notion-text:nth-of-type(5) {
-  grid-area: label !important;
-  margin-top: clamp(26px, 4vh, 44px) !important;
-  font-family: var(--type-mono), ui-monospace, monospace !important;
-  font-size: 9.5px !important;
-  line-height: 1.3 !important;
-  letter-spacing: 0.12em !important;
-  text-transform: uppercase !important;
-  color: #B4B4B4 !important;
+  display: none !important;
 }
 
-/* the field: one mark per vote, one block per hundred */
-.notion-root .enc-rec__field {
-  grid-area: field;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  align-content: flex-start;
+/* built: the band is the run, and the stage is sticky inside it — so the callout must not clip */
+.notion-root #block-3dde800a513881b1b88dd0b73f874bfe[data-enc-count] {
+  display: block !important;
+  height: 420vh !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
 }
 
-.notion-root .enc-rec__hundred {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  width: 126px;   /* ten 9px marks and nine 4px gaps — the design's block */
-  align-content: flex-start;
-  flex: none;
+.notion-root #block-3dde800a513881b1b88dd0b73f874bfe[data-enc-count] > .notion-callout__content {
+  display: none !important;
 }
 
-.notion-root .enc-rec__mark {
-  width: 9px;
-  height: 9px;
-  border-radius: 999px;
-  background: rgba(250, 250, 248, 0.44);
-  flex: none;
+.notion-root .enc-rec__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  font-family: "Hanken Grotesk", system-ui, sans-serif;
 }
 
-.notion-root .enc-rec__hundred[data-dim] .enc-rec__mark {
-  background: rgba(250, 250, 248, 0.26);
-}
-
-/* the block's count, drawn the way the homepage networks discs draw a network's name: a pill that
-   fades and rises under the cursor. Inverted here, because the band is ink. */
-.notion-root .enc-rec__hundred {
-  position: relative;
-}
-
-.notion-root .enc-rec__tip {
+.notion-root .enc-rec__canvas {
   position: absolute;
-  left: 50%;
-  bottom: calc(100% + 8px);
-  transform: translate(-50%, 6px);
-  padding: 6px 12px;
-  border-radius: 999px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* the opened vote's title and reason, for a screen reader: the canvas draws them */
+.notion-root .enc-rec__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.notion-root .enc-rec__head {
+  position: absolute;
+  left: clamp(20px, 4vw, 64px);
+  right: clamp(20px, 4vw, 64px);
+  top: clamp(40px, 8vh, 88px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(24px, 4vw, 56px);
+  flex-wrap: wrap;
+}
+
+.notion-root .enc-rec__headl {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.notion-root .enc-rec__headr {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 10px;
+  max-width: 34ch;
+}
+
+.notion-root .enc-rec__kicker {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: normal;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #B4B4B4;
+}
+
+.notion-root .enc-rec__fig {
+  font-family: "Outfit", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(76px, 13vw, 208px);
+  line-height: 0.82;
+  letter-spacing: -0.058em;
+  color: #FAFAF8;
+  font-variant-numeric: tabular-nums;
+}
+
+.notion-root .enc-rec__ht {
+  font-family: "Outfit", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: clamp(20px, 2.2vw, 32px);
+  line-height: 1.18;
+  letter-spacing: -0.026em;
+  color: #FAFAF8;
+}
+
+.notion-root .enc-rec__hl {
+  font-family: "Hanken Grotesk", system-ui, sans-serif;
+  font-size: 15.5px;
+  line-height: 1.56;
+  color: #C9C9C4;
+  text-wrap: pretty;
+}
+
+/* placed by the script, centred in the dark under the opened vote; shown in the first frame only */
+.notion-root .enc-rec__cue {
+  position: absolute;
+  left: clamp(20px, 4vw, 64px);
+  top: calc(clamp(40px, 8vh, 88px) + clamp(76px, 13vw, 208px) * 1.02 + 28px);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-weight: 500;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #B4B4B4;
+  white-space: nowrap;
+  line-height: 1.6;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* the block's count at rest, the house tooltip: paper on the ink */
+.notion-root .enc-rec__ctip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -100%);
+  padding: 6px 9px;
+  border-radius: 4px;
   background: #FAFAF8;
   color: #000000;
-  font-family: var(--type-body), system-ui, sans-serif;
-  font-size: 13px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
   font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -0.004em;
+  font-size: 10px;
+  line-height: normal;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  z-index: 2;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
-  transition: opacity 0.18s ease, transform 0.18s ease;
-}
-
-.notion-root .enc-rec__hundred:hover .enc-rec__tip {
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
-
-/* the hovered block takes the figure's own pastel, so the hundred being counted reads as part of
-   the 1,882 above it rather than as a brighter grey */
-.notion-root .enc-rec__hundred .enc-rec__mark {
-  transition: background-color 0.18s ease;
-}
-
-.notion-root .enc-rec__hundred:hover .enc-rec__mark,
-.notion-root .enc-rec__hundred[data-dim]:hover .enc-rec__mark {
-  background: #DCEEC7;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .notion-root .enc-rec__tip {
-    transition: opacity 0.01ms;
-    transform: translate(-50%, 0);
-  }
+  transition: opacity 0.16s ease;
+  z-index: 30;
 }
 
 /* ── 2 · THE PILLARS BAND ── */
@@ -625,30 +680,16 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
    and a touch has none (the row's link covers the row, so a tap opens the proof). On the count band
    where the field needs more rows than a screen holds (a phone, 720px) the one-screen band cut it
    off, and its grid, squeezed into the screen, set the figure over its kicker. */
-@media (min-width: 701px) and (max-width: 900px) {
-  /* the count band stays one screen where its field fits, and grows where it does not;
-     governance.js does not snap to a band whose content runs past the screen */
-  .notion-root #block-3dde800a513881b1b88dd0b73f874bfe {
-    height: auto !important;
-    min-height: 100svh !important;
-  }
-}
-
 @media (max-width: 700px) {
 
-  /* the count band: one column, and as tall as its field — the snap is off under 701px */
-  .notion-root #block-3dde800a513881b1b88dd0b73f874bfe {
-    height: auto !important;
-  }
+  /* the count band before it is built: one column */
   .notion-root #block-3dde800a513881b1b88dd0b73f874bfe > .notion-callout__content {
     grid-template-columns: minmax(0, 1fr) !important;
     grid-template-areas:
       "kicker"
       "figure"
       "aside"
-      "asidebody"
-      "label"
-      "field" !important;
+      "asidebody" !important;
     row-gap: 12px !important;
   }
   /* the figure's glyphs rise above its 0.82 line box, into the kicker */
@@ -680,11 +721,6 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 @media (max-width: 700px) {
-  /* the vote field on a phone: two design blocks a row made it 1,373px tall; at 6px marks three
-     blocks sit in a row (ten 6px marks and nine 3px gaps = 87px) */
-  .notion-root .enc-rec__hundred { width: 87px; gap: 3px; }
-  .notion-root .enc-rec__mark { width: 6px; height: 6px; }
-
   /* the pillar fields in one column: the 260px floor is the 2x2's; alone each field held ~150px of
      empty paper. The word and the question keep 40px between them. */
   .notion-root #block-10fb4619625b43cd82d572d6b806ead7 .notion-collection-card { min-height: 0 !important; }
@@ -698,3 +734,5 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
    empty state's only when a search comes up empty, so until then the toggle showed, drawn as an
    article toggle. A toggle recreated in Notion gets a new id — put it here. */
 #block-3e7e800a51388138beb3e938de50c9dd { display: none !important; }
+/* "Count band copy" (2026-10-21): the count band's beats, tooltip and label, read by governance.js */
+#block-400e800a513881f8b21cf9109860f95b { display: none !important; }

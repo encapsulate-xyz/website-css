@@ -4,8 +4,9 @@
    The page is the homepage's 37h given the whole record: an ink count band, the pillars band, the
    controls, and the rows. This file does the three things CSS cannot:
 
-     1. the count band's field — one 7px mark per vote, in blocks of a hundred, drawn from the
-        figure in the band's own Notion text (the number stays Notion's; only the marks are ours);
+     1. the count band (design "Governance Count Patterns", 2026-10-21) — the record opens on one
+        vote and pulls back to every vote, drawn on a canvas from the figure in the band's own
+        Notion text and the record's rows (the words stay Notion's; only the drawing is ours);
      2. each row's chain — copied from its Network cell onto the line as a tinted disc and the
         CHAIN · reference line under the title, one stable tint per chain — and the line's two
         targets (the record, handoff 2026-09-26): the left opens the rationale, the right is the
@@ -36,35 +37,489 @@
     return TINTS[h % TINTS.length];
   }
 
-  /* ── 1 · the count band ── */
+  /* ── 1 · the count band ──
+     Design "Governance Count Patterns" (W, 2026-10-21): the record opens on one vote and pulls back
+     to all of them. The band is 420vh with a sticky stage on ink, and the field is drawn on a canvas:
+     one mark per vote, ten to a row, a block per hundred, as many blocks to a row as fill the stage.
+     Four frames, each held for a moment: the record's second-newest vote alone, its face in full
+     (K0); it and the votes either side (K1); its block of a hundred (K2); the whole field at rest
+     (K3). MOVES are the three zooms between them, as fractions of the band's scroll. The figure
+     counts up with the scroll and never says more than the votes wholly on screen; the lines beside
+     it hold from their threshold (beats) to the next. At rest a hovered block shows its count, mouse
+     only. The design's script, ported with its arithmetic unchanged; it draws in the scroll event
+     itself, because a frame callback can be held back.
+
+     The words: the kicker, the figure, the last beat and the scroll cue are the band's own
+     paragraphs (the figure is site-data's: the votes from before the record plus its rows; the
+     number of years in the last beat is rewritten from the newest vote's year). The other beats,
+     the tooltip, a mark's place and the band's label are the "Count band copy" toggle; the facts in
+     them are the rows'. The newest marks are the record's rows, newest first, each in its network's
+     pastel (tintFor, the colour of its disc in the rows below). The votes from before the record
+     have no row and so no network: they are paper at a third (NONE). */
+  var COUNT = {   // the fallback if the "Count band copy" toggle goes missing
+    "one": "This is one vote.",
+    "one line": "{vote}, voted {answer} on {date}. Our reason is in the record.",
+    "many": "One of many, each judged on its merits.",
+    "many line": "{after} came after it and {before} before it. Each got the same scrutiny.",
+    "block": "A block is a hundred.",
+    "block line": "Each mark is one vote, the newest first. Not one was a formality.",
+    "first year": "2020",
+    "place": "Vote {n}",
+    "tip": "{n} votes",
+    "label": "The record: {total} votes, opening on one of them"
+  };
+  var NONE = "rgba(250, 250, 248, 0.32)";
+  var WORDS = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
+  var MOVES = [[0.06, 0.22], [0.34, 0.6], [0.7, 0.94]];
+  var HALF = 9 / 26;            // a mark's radius as a share of the mark pitch
+  var OPENED = [17.5, 4.5];     // the second mark, newest first: the opened vote
+  var BLOCK0 = [63, 63];        // the middle of the newest block
+  var MONO_F = "'JetBrains Mono', monospace", OUT_F = "Outfit, sans-serif", HAN_F = "'Hanken Grotesk', sans-serif";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var S = null;                 // the built band: its nodes, its rows and what it last drew
+
+  function fill(s, vals) {
+    return String(s).replace(/\{(\w+)\}/g, function (m, k) { return k in vals ? vals[k] : m; });
+  }
+  function clamp01(x) { return Math.max(0, Math.min(1, x)); }
+  function lerp(p, q, t) { return p + (q - p) * t; }
+  function voteName(r) { return r.chain + (r.ref ? " " + r.ref : ""); }
+  function quoted(why) { return "“" + why + (/[.!?]$/.test(why) ? "" : ".") + "”"; }
+
+  function countCopy() {
+    var out = {}, k;
+    for (k in COUNT) out[k] = COUNT[k];
+    Array.prototype.some.call(document.querySelectorAll(".notion-toggle"), function (t) {
+      var s = t.querySelector(".notion-toggle__summary");
+      if (!s || !/count band copy/i.test(s.textContent)) return false;
+      Array.prototype.forEach.call(t.querySelectorAll(".notion-toggle__content p, .notion-toggle__content .notion-text"), function (p) {
+        var line = p.textContent.trim(), i = line.indexOf("·");
+        if (i < 0) return;
+        var name = line.slice(0, i).trim().toLowerCase(), v = line.slice(i + 1).trim();
+        if (name && v) out[name] = v;
+      });
+      return true;
+    });
+    return out;
+  }
+
+  // the record's rows as the field reads them, newest first (the sort control may have reordered them)
+  function cellText(tr, sel) { var c = tr.querySelector(sel); return c ? c.textContent.trim() : ""; }
+  function countRows() {
+    var box = document.getElementById(TABLE);
+    if (!box) return [];
+    return Array.prototype.map.call(box.querySelectorAll("tbody tr[data-enc-row]"), function (tr, at) {
+      return {
+        chain: cellText(tr, 'td[data-enc-cell="chain"]'), ref: cellText(tr, '[data-enc-cell="id"]'),
+        vote: cellText(tr, 'td[data-enc-cell="vote"]'), date: cellText(tr, "td.date .date") || cellText(tr, "td.date"),
+        title: cellText(tr, "td.title .notion-property__title"), why: cellText(tr, 'td[data-enc-cell="rationale"]'),
+        t: +tr.getAttribute("data-enc-t") || 0, at: at
+      };
+    }).filter(function (r) { return r.chain; }).sort(function (a, b) { return b.t - a.t || a.at - b.at; });
+  }
+
   function count() {
     var band = document.getElementById(BAND);
     if (!band) return;
     var content = band.querySelector(":scope > .notion-callout__content");
-    if (!content) return;
-    var ps = content.querySelectorAll(":scope > p.notion-text");
+    var ps = content ? content.querySelectorAll(":scope > p.notion-text") : [];
     if (ps.length < 5) return;
-    var total = parseInt((ps[1].textContent || "").replace(/[^\d]/g, ""), 10);
-    if (!total) return;
-    if (band.getAttribute("data-enc-total") === String(total)) return;
-    band.setAttribute("data-enc-total", String(total));
-
-    var old = band.querySelector(".enc-rec__field");
+    var figure = parseInt((ps[1].textContent || "").replace(/[^\d]/g, ""), 10);
+    var rs = countRows();
+    if (!figure || rs.length < 3) return;
+    var sig = [figure, rs.length, rs[0].t, rs[1].title].join("|");
+    if (S && S.band === band && S.sig === sig && S.stage.isConnected) return;
+    var old = band.querySelector(":scope > .enc-rec__stage");
     if (old) old.remove();
-    var field = el("div", "enc-rec__field");
-    for (var at = 0; at < total; at += 100) {
-      var n = Math.min(100, total - at);
-      var block = el("div", "enc-rec__hundred");
-      if ((at / 100) % 2) block.setAttribute("data-dim", "");
-      for (var i = 0; i < n; i++) block.appendChild(el("span", "enc-rec__mark"));
-      // the count reads as the homepage networks label — a pill that fades and rises on hover —
-      // rather than the browser's own title tooltip (the user, 2026-09-17)
-      var tip = el("span", "enc-rec__tip", n === 100 ? "100 votes" : n + " votes");
-      tip.setAttribute("aria-hidden", "true");
-      block.appendChild(tip);
-      field.appendChild(block);
+
+    var c = countCopy(), total = Math.max(figure, rs.length), opened = rs[1];
+    var said = function (p) { return p.textContent.trim(); };
+    // the record's span in years runs from its first year to its newest vote's, so it moves with the record
+    var first = parseInt(c["first year"], 10) || 2020;
+    var span = (rs[0].t ? new Date(rs[0].t).getFullYear() : parseInt(rs[0].date.slice(-4), 10)) - first;
+    var w = String(WORDS[span] || span);
+    var years = span === 1 ? "One year" : w.charAt(0).toUpperCase() + w.slice(1) + " years";
+    var rest = said(ps[2]).replace(/^[A-Za-z-]+ years?\b/, years);
+    var beats = [
+      [1, c["one"], fill(c["one line"], { vote: voteName(opened), answer: opened.vote.toLowerCase(), date: opened.date })],
+      [2, c["many"], fill(c["many line"], { after: voteName(rs[0]), before: voteName(rs[2]) })],
+      [100, c["block"], c["block line"]],
+      [total, rest, said(ps[3])]
+    ];
+
+    var stage = el("div", "enc-rec__stage");
+    var cv = el("canvas", "enc-rec__canvas");
+    cv.setAttribute("aria-hidden", "true");
+    var sr = el("div", "enc-rec__sr");
+    sr.appendChild(el("span", null, opened.title));
+    if (opened.why) sr.appendChild(el("span", null, quoted(opened.why)));
+    var head = el("div", "enc-rec__head"), left = el("div", "enc-rec__headl"), right = el("div", "enc-rec__headr");
+    var fig = el("span", "enc-rec__fig", fmt(total));
+    var hT = el("span", "enc-rec__ht", beats[3][1]), hL = el("span", "enc-rec__hl", beats[3][2]);
+    left.appendChild(el("span", "enc-rec__kicker", said(ps[0])));
+    left.appendChild(fig);
+    right.setAttribute("aria-live", "polite");
+    right.appendChild(hT);
+    right.appendChild(hL);
+    head.appendChild(left);
+    head.appendChild(right);
+    var cap = el("div", "enc-rec__cue", said(ps[4]));
+    var tip = el("div", "enc-rec__ctip");
+    tip.setAttribute("role", "tooltip");
+    tip.setAttribute("aria-hidden", "true");
+    [cv, sr, head, cap, tip].forEach(function (n) { stage.appendChild(n); });
+    band.appendChild(stage);
+    band.setAttribute("role", "region");
+    band.setAttribute("aria-label", fill(c.label, { total: fmt(total) }));
+    band.setAttribute("data-enc-count", "");
+
+    // every mark in its network's pastel, by the row it stands for
+    var ti = [];
+    for (var j = 0; j < total; j++) ti.push(j < rs.length ? TINTS.indexOf(tintFor(rs[j].chain.toLowerCase())) : -1);
+    S = { band: band, sig: sig, stage: stage, cv: cv, head: head, fig: fig, hT: hT, hL: hL, cap: cap, tip: tip,
+      rows: rs, ti: ti, total: total, nb: Math.ceil(total / 100), beats: beats, frames: [1, 3, 100, total],
+      cue: said(ps[4]), copy: c, rm: reduce.matches, cols: 0, pos: null, mW: 0, mH: 0, L: null,
+      n: null, beat: null, view: null, ptr: null, tipB: -1, idle: false, glyphs: {} };
+    if (S.rm) tip.style.transition = "none";
+    // the glyphs of the faces the first frames show (the opened vote, either side, the row below)
+    [0, 1, 2, 10, 11, 12].forEach(function (j) { if (rs[j]) glyphImg(rs[j].chain); });
+    listen();
+    countDraw();
+    requestAnimationFrame(countDraw);
+    // a page loaded hidden has no frames and may have no size yet, so retry until the stage is measured
+    [0, 100, 300, 1000, 2500].forEach(function (ms) { setTimeout(function () { if (S && !S.L) countDraw(); }, ms); });
+    // the header sets the stage and the faces are set in these fonts, so measure and draw again once they load
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (S) { S.mW = 0; S.idle = false; countDraw(); } });
+  }
+
+  var listening = false;
+  function listen() {
+    if (listening) return;
+    listening = true;
+    window.addEventListener("scroll", countDraw, { passive: true });
+    window.addEventListener("resize", countDraw);
+    // the block tooltip answers a mouse only; every draw re-tests it, so it holds through a scroll
+    window.addEventListener("pointermove", function (e) {
+      if (!S || (e.pointerType && e.pointerType !== "mouse")) return;
+      S.ptr = [e.clientX, e.clientY];
+      countHover();
+    }, { passive: true });
+    var off = function (e) { if (S && (!e || !e.relatedTarget)) { S.ptr = null; countHover(); } };
+    document.addEventListener("mouseout", off);
+    window.addEventListener("blur", off);
+  }
+
+  // a glyph for a face: the chain's mark from the page's galleries, at Super's 384px
+  function glyphImg(chain) {
+    var k = key(chain);
+    if (S.glyphs[k]) return S.glyphs[k];
+    var url = glyphs()[k];
+    if (!url) return null;
+    var im = new Image();
+    im.onload = function () { if (S) { S.idle = false; countDraw(); } };
+    im.src = sized(url, 384);
+    S.glyphs[k] = im;
+    return im;
+  }
+
+  function fieldAt(c, total) {
+    var out = [];
+    for (var k = 0; k < total; k++) {
+      var b = Math.floor(k / 100), i = k % 100;
+      out.push([(b % c) * 140 + (i % 10) * 13 + 4.5, Math.floor(b / c) * 140 + Math.floor(i / 10) * 13 + 4.5]);
     }
-    ps[4].after(field);
+    return out;
+  }
+
+  // 0 at the top of the band, 1 once it has scrolled its extra screens
+  function countProgress() {
+    var rc = S.band.getBoundingClientRect(), max = rc.height - window.innerHeight;
+    return max > 0 ? clamp01(-rc.top / max) : 0;
+  }
+
+  function countMeasure(vw, vh) {
+    S.mW = vw; S.mH = vh;
+    // the header at its tallest beat, each with the widest figure, so the stage under it holds still while
+    // the story turns over; the figure keeps the total's width, so the count never moves the words beside it
+    var head = S.head, fig = S.fig, hh = head.offsetHeight, region = S.hT.parentNode;
+    region.setAttribute("aria-live", "off");
+    fig.style.minWidth = "";
+    fig.textContent = fmt(S.total);
+    fig.style.minWidth = (fig.offsetWidth + 1) + "px";
+    S.beats.forEach(function (b) { S.hT.textContent = b[1]; S.hL.textContent = b[2]; hh = Math.max(hh, head.offsetHeight); });
+    region.setAttribute("aria-live", "polite");
+    S.beat = null; S.n = null;
+    // under the header, clear of the comma's tail (it hangs below the figure's line box), is the stage;
+    // the field rests on the header's left edge
+    var fsz = parseFloat(getComputedStyle(fig).fontSize) || 120;
+    var clear = head.offsetTop + hh + 0.2 * fsz, top = clear + 8;
+    var bottom = vh - Math.max(20, Math.min(56, vh * 0.05)), room = Math.max(120, bottom - top);
+    var m = Math.max(20, Math.min(64, vw * 0.04)), wide = vw - 2 * m;
+    // the field at rest fills the stage: as many blocks to a row as give the largest marks (up to twice
+    // the record page's), fewer empty places in the last row breaking a near tie; centred in its height
+    var fit = null;
+    for (var c = 2; c <= 10; c++) {
+      var rows = Math.ceil(S.nb / c), fw = c * 140 - 14, fh = rows * 140 - 14, ff = Math.min(2, wide / fw, room / fh);
+      var score = ff * (1 - 0.03 * (c * rows - S.nb));
+      if (!fit || score > fit.score) fit = { c: c, fh: fh, ff: ff, score: score };
+    }
+    if (fit.c !== S.cols) { S.cols = fit.c; S.pos = fieldAt(fit.c, S.total); }
+    var f = fit.ff, ox = m, oy = top + (room - fit.fh * f) / 2, cx = vw / 2, cy = top + room / 2;
+    // K1, as a mark pitch: the opened mark and the one either side whole, the next one past the edge and
+    // the row below off the bottom (on a portrait screen the rows below show too, with their own faces)
+    var P1 = Math.min(vw / (2 * (1 + HALF)), Math.max(vw / (2 * (2 - HALF)), (vh - cy) / (1 - HALF)), room / (2 * HALF));
+    // K0: the opened mark big enough for its whole face (about 400px) and a clear step past K1
+    var room0 = bottom - clear, cy0 = clear + room0 / 2;
+    var D0 = Math.min(room0, wide, Math.max(400, 1.3 * 2 * HALF * P1));
+    var D1 = Math.min(2 * HALF * P1, D0 / 1.3), s0 = D0 / (9 * f);
+    // K2: the newest block filling most of the stage
+    var blk = 0.86 * Math.min(room, wide);
+    var capH = S.cap.offsetHeight || 12;
+    // the scroll cue is centred in the dark gap under the opened vote, clear of the row below as it peeks in
+    S.L = { f: f, cx: cx, cy: cy, m: m, clearY: clear,
+      cueX: cx, cueY: Math.min(cy0 + 0.722 * D0 - capH / 2, vh - capH - 12), K: [
+        // every frame is framed on the stage's centre; K0 is centred higher, so its point moves to match
+        [OPENED[0], OPENED[1] + (cy - cy0) / (f * s0), s0], [OPENED[0], OPENED[1], D1 / (9 * f)],
+        [BLOCK0[0], BLOCK0[1], blk / (126 * f)], [(cx - ox) / f, (cy - oy) / f, 1]] };
+  }
+
+  function countDraw() {
+    if (!S) return;
+    if (!S.stage.isConnected) { S = null; return; }
+    // nothing to draw while the band is off the screen, once it has been drawn there
+    var rc = S.band.getBoundingClientRect(), away = rc.bottom <= 0 || rc.top >= window.innerHeight;
+    if (away && S.idle) return;
+    S.idle = away;
+    var cv = S.cv, vw = cv.clientWidth, vh = cv.clientHeight;
+    if (!vw || !vh) return;
+    if (vw !== S.mW || vh !== S.mH) countMeasure(vw, vh);
+    var L = S.L, dpr = window.devicePixelRatio || 1, total = S.total, pos = S.pos, j;
+    if (cv.width !== Math.round(vw * dpr) || cv.height !== Math.round(vh * dpr)) { cv.width = Math.round(vw * dpr); cv.height = Math.round(vh * dpr); }
+    var ctx = cv.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, vw, vh);
+    var p = S.rm ? 1 : countProgress();
+    // held at frame i, or in the move out of it; eased, so each frame settles before the next
+    var i = 0, e = 0;
+    for (; i < MOVES.length; i++) {
+      if (p < MOVES[i][0]) break;
+      if (p <= MOVES[i][1]) { var u = (p - MOVES[i][0]) / (MOVES[i][1] - MOVES[i][0]); e = u * u * (3 - 2 * u); break; }
+    }
+    var A = L.K[i], B = L.K[Math.min(L.K.length - 1, i + 1)];
+    var s = Math.exp(Math.log(A[2]) + (Math.log(B[2]) - Math.log(A[2])) * e);
+    // a move is a zoom about the one point of the field that holds still between its two frames
+    var qx = A[0], qy = A[1], sx = L.cx, sy = L.cy;
+    if (Math.abs(A[2] - B[2]) > 1e-6) {
+      qx = (A[0] * A[2] - B[0] * B[2]) / (A[2] - B[2]); qy = (A[1] * A[2] - B[1] * B[2]) / (A[2] - B[2]);
+      sx = L.cx + (qx - A[0]) * L.f * A[2]; sy = L.cy + (qy - A[1]) * L.f * A[2];
+    }
+    var k = L.f * s, d = 9 * k, r = d / 2, xs = [], ys = [];
+    for (j = 0; j < total; j++) { xs.push(sx + (pos[j][0] - qx) * k); ys.push(sy + (pos[j][1] - qy) * k); }
+    S.view = { sx: sx, sy: sy, qx: qx, qy: qy, k: k, rest: S.rm || p >= MOVES[2][1] };
+    var seen = function (j) { return xs[j] + r >= 0 && xs[j] - r <= vw && ys[j] + r >= 0 && ys[j] - r <= vh; };
+    // every mark in its network's pastel, one path per pastel (NONE first: the votes with no row)
+    for (var c = -1; c < TINTS.length; c++) {
+      ctx.fillStyle = c < 0 ? NONE : TINTS[c];
+      ctx.beginPath();
+      for (j = 0; j < total; j++) {
+        if (S.ti[j] !== c || !seen(j)) continue;
+        ctx.moveTo(xs[j] + r, ys[j]);
+        ctx.arc(xs[j], ys[j], r, 0, 6.2832);
+      }
+      ctx.fill();
+    }
+    // from the first frame every mark big enough to read says what it is: the opened vote in full, the
+    // votes either side as far as they are on screen
+    var lab = S.rm ? 0 : clamp01((d - 96) / 20);
+    var k0 = S.rm ? 0 : 1 - clamp01((p - MOVES[0][0]) / (0.4 * (MOVES[0][1] - MOVES[0][0])));
+    if (lab > 0.01) {
+      for (j = 0; j < total; j++) if (seen(j)) face(ctx, xs[j], ys[j], d, j, lab, L.m, vw - L.m, k0);
+      ctx.globalAlpha = 1;
+    }
+    // the figure counts up with the scroll: each held frame reads its own number, a move climbs between
+    // them at the zoom's own rate, and it never says more than the votes wholly on screen
+    var vis = 0;
+    for (j = 0; j < total; j++) if (xs[j] - r >= -0.5 && xs[j] + r <= vw + 0.5 && ys[j] - r >= -0.5 && ys[j] + r <= vh + 0.5) vis++;
+    var F = S.frames, last = F.length - 1, at = Math.min(i, last);
+    var goal = e > 0 && i < last ? Math.exp(Math.log(F[i]) + (Math.log(F[i + 1]) - Math.log(F[i])) * e) : F[at];
+    var n = S.rm ? total : Math.max(1, Math.min(Math.floor(goal + 1e-6), vis));
+    if (n !== S.n) { S.n = n; S.fig.textContent = fmt(n); }
+    // each line holds from its threshold to the next
+    var beat = 0;
+    while (beat < S.beats.length - 1 && n >= S.beats[beat + 1][0]) beat++;
+    if (beat !== S.beat) { S.beat = beat; S.hT.textContent = S.beats[beat][1]; S.hL.textContent = S.beats[beat][2]; }
+    // the caption is the scroll cue, in the first frame only; the field at rest carries no legend
+    var cap = S.cap;
+    if (cap.textContent !== S.cue) cap.textContent = S.cue;
+    cap.style.left = L.cueX.toFixed(1) + "px";
+    cap.style.top = L.cueY.toFixed(1) + "px";
+    cap.style.transform = "translateX(-50%)";
+    cap.style.opacity = beat === 0 ? "1" : "0";
+    countHover();
+  }
+
+  /* A mark big enough to read carries a face, drawn to its own size and set inside its circle: the
+     chain's glyph, which vote it is (Outfit), its date (mono), the opened vote's title and our reason,
+     and our answer in an ink pill. Detail comes in by size, and every line is wrapped to the circle at
+     its height. A face is centred on its disc; one that would run past the page margin fades rather
+     than being cut by the screen edge. A mark with no row (a vote from before the record) gives only
+     its place. */
+  function spacing(ctx, px) { try { ctx.letterSpacing = px.toFixed(2) + "px"; } catch (e) {} }
+  function setF(ctx, wt, px, fam, tr) { ctx.font = wt + " " + px.toFixed(2) + "px " + fam; spacing(ctx, tr * px); }
+  function wrapTo(ctx, text, w) {
+    var out = [], cur = "";
+    text.split(" ").forEach(function (wd) {
+      var t = cur ? cur + " " + wd : wd;
+      if (cur && ctx.measureText(t).width > w) { out.push(cur); cur = wd; } else cur = t;
+    });
+    if (cur) out.push(cur);
+    return out;
+  }
+  function pillPath(ctx, x, y, w, h) {
+    var r = h / 2;
+    ctx.beginPath(); ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y);
+    ctx.arc(x + w - r, y + r, r, -Math.PI / 2, Math.PI / 2); ctx.lineTo(x + r, y + h);
+    ctx.arc(x + r, y + r, r, Math.PI / 2, 1.5 * Math.PI); ctx.closePath();
+  }
+  function face(ctx, x, y, d, j, a, bx0, bx1, k0) {
+    var r = d / 2, pad = 0.07 * d;
+    // room(yy) is the circle's width at height yy
+    var room = function (yy) { return Math.max(0, 2 * (Math.sqrt(Math.max(0, r * r - yy * yy)) - pad)); };
+    var row = j < S.rows.length ? S.rows[j] : null;
+    var name = row ? voteName(row) : fill(S.copy.place, { n: fmt(S.total - j) });
+    ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillStyle = "#000";
+    // the name at a share of the disc (smaller in the full setting, bolder in the compact one), shrunk to the room
+    var nameAt = function (full) {
+      var s = Math.min(46, d * lerp(0.115, 0.074, full));
+      setF(ctx, 600, s, OUT_F, -0.03);
+      var w = ctx.measureText(name).width, cap = 0.94 * room(0);
+      if (w > cap) { s *= cap / w; w = cap; }
+      return { s: s, w: w };
+    };
+    // k0 is 1 in the first frame and 0 a little into the first move. Over it one setting glides into the
+    // other: the opened vote's title and reason close like a blind as they fade, the date opens in their
+    // place, and the glyph and the name grow from the full setting to the compact one
+    var e = k0 * k0 * (3 - 2 * k0);
+    // the first frame is the opened vote's alone: the votes either side are plain discs until the pull-back
+    var onScreen = function (w) { return clamp01(1 + Math.min(x - w / 2 - bx0, bx1 - x - w / 2) / 24) * (j === 1 ? 1 : 1 - k0); };
+    if (!row) {
+      var n0 = nameAt(e);
+      setF(ctx, 600, n0.s, OUT_F, -0.03);
+      ctx.globalAlpha = a * onScreen(n0.w);
+      ctx.fillText(name, x, y);
+      spacing(ctx, 0);
+      return;
+    }
+    var ms = Math.max(9, Math.min(13, 0.031 * d)), ts = Math.max(15, Math.min(26, 0.052 * d)), rs = Math.max(12, Math.min(16, 0.035 * d)), ph = 2.2 * ms;
+    var vDate = clamp01((d - 190) / 30), vPill = clamp01((d - 120) / 30);
+    var date = row.date.toUpperCase(), ans = row.vote.toUpperCase(), why = quoted(row.why);
+    setF(ctx, 500, ms, MONO_F, 0.12);
+    var dw = ctx.measureText(date).width, pw = ctx.measureText(ans).width + 2.4 * ms;
+    var widest = function (ls) { return Math.max.apply(null, [1].concat(ls.map(function (l) { return ctx.measureText(l).width; }))); };
+    // a closing title or reason is clipped to its slot, so it is measured by the slot
+    var isText = function (o) { return o.k === "title" || o.k === "why"; };
+    var ext = function (o) { return Math.max(Math.abs(o.top), Math.abs(o.top + (isText(o) ? o.h : o.full))); };
+    // one setting of the face, and the largest scale at which every line fits the circle at its height; a
+    // closing setting keeps the full setting's line breaks, so nothing reflows as it closes
+    var layout = function (full, vT, vW, keep) {
+      var g = Math.min(92, d * lerp(0.2, 0.11, full)), n = nameAt(full);
+      var wT = Math.min(0.66 * d, room(0)), wR = Math.min(0.7 * d, room(0)), items = [], lT = [], lW = [];
+      // the date steps aside for the title: on the opened vote the header gives it
+      var vD = vDate * (1 - vT);
+      var add = function (k, h, v, gap, w, lines) { if (v > 0.001) items.push({ k: k, full: h, h: h * v, v: v, gap: gap * v, w: w, lines: lines }); };
+      for (var pass = 0; pass < (keep ? 1 : 2); pass++) {
+        items = [];
+        add("glyph", g, 1, 0.035 * d, g);
+        add("name", 0.96 * n.s, 1, lerp(0.03, 0.016, vD) * d, n.w);
+        add("date", 1.3 * ms, vD, 0.032 * d, dw);
+        if (vT > 0.001) { setF(ctx, 500, ts, OUT_F, -0.02); lT = keep ? keep.lT : wrapTo(ctx, row.title, wT); add("title", lT.length * 1.16 * ts, vT, 0.028 * d, widest(lT), lT); }
+        if (vW > 0.001) { setF(ctx, 400, rs, HAN_F, 0); lW = keep ? keep.lW : wrapTo(ctx, why, wR); add("why", lW.length * 1.45 * rs, vW, 0.038 * d, widest(lW), lW); }
+        add("pill", ph, vPill, 0, pw);
+        var H = 0;
+        items.forEach(function (o, i) { H += o.h + (i < items.length - 1 ? o.gap : 0); });
+        var t = -H / 2;
+        items.forEach(function (o, i) { o.top = t; t += o.h + (i < items.length - 1 ? o.gap : 0); });
+        // then rewrap the title and the reason to the circle's width at their own height
+        items.forEach(function (o) { if (o.k === "title") wT = Math.min(wT, room(ext(o))); if (o.k === "why") wR = Math.min(wR, room(ext(o))); });
+      }
+      var fits = function (s) { return items.every(function (o) { return o.w * s <= room(s * ext(o)) + 0.5; }); };
+      var sc = 1;
+      if (!fits(1)) {
+        var a0 = 0.3, a1 = 1;
+        for (var q = 0; q < 9; q++) { var mid = (a0 + a1) / 2; if (fits(mid)) a0 = mid; else a1 = mid; }
+        sc = a0;
+      }
+      return { items: items, sc: sc, g: g, ns: n.s, lT: lT, lW: lW };
+    };
+    // the title and the reason are the opened vote's, and come in only where the face still fits whole
+    // with them, so a tight disc keeps its name and answer at full size
+    var focus = j === 1;
+    var fT = focus && row.title && layout(1, 1, 0).sc >= 0.92 ? 1 : 0;
+    var fW = fT && row.why && layout(1, 1, 1).sc >= 0.92 ? 1 : 0;
+    var whole = layout(1, fT, fW), C = e >= 0.999 ? whole : layout(e, fT * e, fW * e, whole);
+    var items = C.items, sc = C.sc, g = C.g, ns = C.ns;
+    var fa = a * clamp01((sc - 0.45) / 0.15) * onScreen(sc * Math.max.apply(null, items.map(function (o) { return o.w; })));
+    if (fa < 0.01) { spacing(ctx, 0); return; }
+    ctx.save(); ctx.translate(x, y); ctx.scale(sc, sc);
+    items.forEach(function (o) {
+      // a fading line is gone by the time its slot is half closed (the date, a third), so it never sits on its neighbours
+      var al = fa * (o.k === "glyph" || o.k === "name" ? 1 : o.k === "date" ? clamp01(3 * o.v - 2) : clamp01(2 * o.v - 1));
+      if (al < 0.01) return;
+      ctx.globalAlpha = al; ctx.fillStyle = "#000";
+      var mid = o.top + o.h / 2;
+      if (o.k === "glyph") {
+        // a glyph file is a 600px frame with the mark's longest side at 288, so the frame is drawn at g / 0.48
+        var im = glyphImg(row.chain);
+        if (im && im.complete && im.naturalWidth) { var gb = g / 0.48; ctx.drawImage(im, -gb / 2, mid - gb / 2, gb, gb); }
+      } else if (o.k === "name") { setF(ctx, 600, ns, OUT_F, -0.03); ctx.fillText(name, 0, mid); }
+      else if (o.k === "pill") {
+        setF(ctx, 500, ms, MONO_F, 0.12); pillPath(ctx, -pw / 2, mid - ph / 2, pw, ph); ctx.fill();
+        ctx.fillStyle = "#FAFAF8"; ctx.fillText(ans, 0.06 * ms, mid);
+      } else {
+        ctx.save(); ctx.beginPath(); ctx.rect(-d, o.top, 2 * d, o.h); ctx.clip();
+        if (o.k === "date") { setF(ctx, 500, ms, MONO_F, 0.12); ctx.fillText(date, 0.06 * ms, mid); }
+        else {
+          var lh = o.k === "title" ? 1.16 * ts : 1.45 * rs;
+          if (o.k === "title") setF(ctx, 500, ts, OUT_F, -0.02); else { setF(ctx, 400, rs, HAN_F, 0); ctx.fillStyle = "#3A3D38"; }
+          o.lines.forEach(function (ln, i) { ctx.fillText(ln, 0, o.top + (i + 0.5) * lh); });
+        }
+        ctx.restore();
+      }
+    });
+    ctx.restore(); spacing(ctx, 0);
+  }
+
+  /* At rest the field answers a hover on a block with its count, in the house tooltip (paper on the
+     ink), 8px above the block, or under it where the header is in the way. Mouse only; the cursor
+     stays an arrow and nothing else changes (a recorded exception in the design). */
+  function countHover() {
+    if (!S) return;
+    var tip = S.tip, v = S.view, pt = S.ptr, cv = S.cv;
+    var b = -1, bx = 0, by = 0, bh = 0;
+    if (v && v.rest && pt && cv.clientWidth && S.cols) {
+      var rc = cv.getBoundingClientRect(), z = rc.width / cv.clientWidth;
+      var px = (pt[0] - rc.left) / z, py = (pt[1] - rc.top) / z;
+      if (px >= 0 && py >= 0 && px <= cv.clientWidth && py <= cv.clientHeight) {
+        // each block owns half the 14px gap around it, so moving between blocks never drops the tooltip
+        var u = v.qx + (px - v.sx) / v.k, w = v.qy + (py - v.sy) / v.k;
+        var col = Math.floor((u + 7) / 140), row = Math.floor((w + 7) / 140), i = row * S.cols + col;
+        if (u >= -7 && w >= -7 && col < S.cols && i < S.nb) {
+          var n = Math.min(100, S.total - i * 100);
+          bx = col * 140; by = row * 140; bh = Math.ceil(n / 10) * 13 - 4;
+          if (u <= bx + Math.min(n, 10) * 13 - 4 + 7 && w <= by + bh + 7) b = i;
+        }
+      }
+    }
+    if (b >= 0) {
+      if (b !== S.tipB) tip.textContent = fill(S.copy.tip, { n: Math.min(100, S.total - b * 100) });
+      var x = v.sx + (bx + 63 - v.qx) * v.k, top = v.sy + (by - v.qy) * v.k;
+      var above = top - 8 - tip.offsetHeight >= S.L.clearY;
+      tip.style.left = x.toFixed(1) + "px";
+      tip.style.top = (above ? top - 8 : v.sy + (by + bh - v.qy) * v.k + 8).toFixed(1) + "px";
+      tip.style.transform = above ? "translate(-50%, -100%)" : "translate(-50%, 0)";
+    }
+    S.tipB = b;
+    tip.style.opacity = b >= 0 ? "1" : "0";
   }
 
   /* ── 2 · the rows ──
@@ -138,10 +593,11 @@
   // the chain's disc; the glyph goes in as soon as the page has one (a gallery can render late)
   /* a glyph for a 30px disc or a 22px mark: Super's optimizer at 96px (646 bytes for Terra against
      the 21.8KB original the homepage's discs loaded since v304; sharp at 3x) */
-  function small(url) {
+  function sized(url, w) {
     if (!/^https:\/\/assets\.super\.so\//.test(url)) return url;
-    return "/_next/image?url=" + encodeURIComponent(url) + "&w=96&q=75";
+    return "/_next/image?url=" + encodeURIComponent(url) + "&w=" + w + "&q=75";
   }
+  function small(url) { return sized(url, 96); }
   function fillDisc(disc, name) {
     if (disc.querySelector("img")) return true;
     var url = glyphs()[key(name)];
@@ -589,7 +1045,8 @@
 
   var tries = 0;
   function build() {
-    count(); rows(); head(); controls(); pager(); apply(); hideSources(); pillars();
+    // the band reads the rows, so they are built first
+    rows(); count(); head(); controls(); pager(); apply(); hideSources(); pillars();
     // the glyphs come from galleries that can render after the table, and after Super has stopped
     // mutating, so nothing would wake the observer again (home.js did the same for 37h)
     if (bare && tries++ < 12) { clearTimeout(t); t = setTimeout(build, 300); }
@@ -597,122 +1054,10 @@
 
   var t = 0;
   new MutationObserver(function (muts) {
-    if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-rec__bar, .enc-rec__field"); })) return;
+    if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-rec__bar, .enc-rec__stage"); })) return;
     clearTimeout(t); tries = 0; t = setTimeout(build, 120);
   }).observe(document.body, { childList: true, subtree: true });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
   else build();
   window.addEventListener("load", build);
-})();
-
-/* ── the count band is one screen, and scrolling settles on it ──
-   The same rules as the homepage's one-screen sections (home.js: Who we are, Services) and the
-   Network Count panels, ported rather than re-invented:
-
-     - a wheel or trackpad gesture towards the band that starts within half a screen of its top
-       lands on it, as a deck's first panel would. Waiting for the scroll to rest does not work on
-       a trackpad: momentum wheel events run to the end of the scroll, so the rest check always
-       sees a gesture in progress;
-     - a new gesture is a 250ms gap, or — at least 450ms after the page turned and once deltas have
-       fallen below half their peak — a delta 4x the smallest since (>= 20). Momentum tails last
-       seconds and a swipe's own deltas wobble;
-     - coming to rest within a third of a screen of the band's top settles onto it, in whichever
-       direction it is nearer, and the settle retries while a gesture still looks live;
-     - the browser's own smooth scroll; the stop measured fresh, because the page above the band
-       settles late (images, the banner, Super's own renders).
-
-   Under 701px, and with reduced motion, nothing snaps. */
-(function () {
-  var BAND = "block-3dde800a513881b1b88dd0b73f874bfe";   // the count band
-  var NEAR = 0.33;       // of a screen: how close a resting page must be to settle on the stop
-  var EPS = 2;           // px: "on" the stop
-  var QUIET = 180;       // ms without wheel events before a resting page is settled
-  var NEW_GAP = 250, MIN_LOCK = 450;
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-  var docTop = function (el) { return el.getBoundingClientRect().top + window.scrollY; };
-
-  // measured fresh each time, as the homepage decks are
-  function stop() {
-    var box = document.getElementById(BAND);
-    if (!box || window.innerWidth < 701) return null;
-    if (box.offsetHeight < window.innerHeight - 4) return null;
-    /* under 900px the band grows past a screen when its field needs more rows (governance.css).
-       Snapping onto it would pull the reader back to its top before the field was seen, so it
-       snaps only while no more than its own bottom padding falls below the screen */
-    if (window.matchMedia("(max-width: 900px)").matches &&
-        box.offsetHeight > window.innerHeight + (parseFloat(getComputedStyle(box).paddingBottom) || 0)) return null;
-    return Math.round(docTop(box));
-  }
-
-  var anim = null, gestureUntil = 0, lastRest = window.scrollY;
-  function scrollToY(target) {
-    target = Math.max(0, Math.min(target, document.documentElement.scrollHeight - window.innerHeight));
-    if (Math.abs(target - window.scrollY) < 1) { lastRest = target; return; }
-    var smooth = !reduced.matches;
-    if (anim) clearTimeout(anim.timer);
-    anim = { target: target, timer: setTimeout(finish, smooth ? 900 : 50) };
-    window.scrollTo({ top: target, behavior: smooth ? "smooth" : "instant" });
-  }
-  function finish() {
-    if (!anim) return;
-    clearTimeout(anim.timer);
-    var target = anim.target;
-    anim = null;
-    lastRest = window.scrollY;
-    // the band is exactly one screen, so a landing a pixel or two out shows as a strip of the
-    // next section beneath it
-    var exact = stop();
-    if (exact !== null && Math.abs(target - exact) < 6 && Math.abs(window.scrollY - exact) > 1) {
-      window.scrollTo({ top: exact, behavior: "instant" });
-      lastRest = exact;
-    }
-  }
-  function arrived() { if (anim && Math.abs(window.scrollY - anim.target) <= 1) finish(); }
-
-  var lastWheel = 0, lockedAt = 0, peak = 0, tailMin = Infinity, decayed = false, locked = false;
-  window.addEventListener("wheel", function (e) {
-    if (e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
-    var now = performance.now(), abs = Math.abs(e.deltaY), gap = now - lastWheel;
-    lastWheel = now;
-    gestureUntil = now + QUIET;
-    if (locked && gap <= NEW_GAP) {
-      peak = Math.max(peak, abs);
-      if (abs < peak * 0.5) decayed = true;
-      var rise = decayed && now - lockedAt > MIN_LOCK && abs > Math.max(tailMin * 4, 20);
-      if (decayed) tailMin = Math.min(tailMin, abs);
-      if (!rise) { e.preventDefault(); return; }
-    }
-    locked = false;
-
-    var s = stop();
-    if (s === null) { if (anim) e.preventDefault(); return; }
-    var dir = e.deltaY > 0 ? 1 : -1;
-    var y = anim ? anim.target : window.scrollY;   // mid-snap: page on from where it is heading
-    var half = window.innerHeight / 2, towards = (s - y) * dir;
-    if (towards <= EPS || towards >= half) { if (anim) e.preventDefault(); return; }
-    e.preventDefault();
-    locked = true; lockedAt = now; peak = abs; tailMin = Infinity; decayed = false;
-    scrollToY(s);
-  }, { passive: false });
-
-  var touching = false, restTimer = 0, retry = 0;
-  function settle() {
-    if (anim || touching) return;
-    // a trackpad's momentum ends with the scroll: if a gesture still looks live, look again once
-    // it has been quiet rather than giving up
-    if (performance.now() < gestureUntil) { clearTimeout(retry); retry = setTimeout(settle, QUIET + 20); return; }
-    var s = stop(), y = window.scrollY;
-    if (s === null) { lastRest = y; return; }
-    if (Math.abs(s - y) <= window.innerHeight * NEAR && Math.abs(s - y) > EPS) scrollToY(s);
-    else lastRest = y;
-  }
-
-  var hasScrollEnd = "onscrollend" in window;
-  if (hasScrollEnd) window.addEventListener("scrollend", function () { arrived(); setTimeout(settle, 30); });
-  window.addEventListener("scroll", function () {
-    if (!hasScrollEnd) { clearTimeout(restTimer); restTimer = setTimeout(function () { arrived(); settle(); }, 140); }
-    arrived();
-  }, { passive: true });
-  window.addEventListener("touchstart", function () { touching = true; if (anim) finish(); }, { passive: true });
-  window.addEventListener("touchend", function () { touching = false; if (!hasScrollEnd) setTimeout(settle, 140); }, { passive: true });
 })();

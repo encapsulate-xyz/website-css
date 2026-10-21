@@ -53,8 +53,8 @@ design's 924×540 %-based geometry into divs, and:
   the Brand mark is `svg/mark-a.svg` via jsDelivr.
 Cover copy per page: `notion/page-covers.md`.
 
-**One-screen bands snap the same way** (guides picker, the governance record's count band,
-/networks' Network Count band since 2026-09-26): one
+**One-screen bands snap the same way** (guides picker, /networks' Network Count band since 2026-09-26;
+the governance record's count band did until 2026-10-21, when it became a 420vh run with no snap): one
 stop rather than a deck — a gesture heading at the panel from within half a screen lands on it, a
 rest within a third of a screen settles onto it, nothing snaps under 701px or with reduced motion.
 The catch rule is testable in Node (`scratchpad/snaptest.js`); the automation tab fires no scroll

@@ -3,6 +3,41 @@
 Part of the notes for website-css, moved out of `CLAUDE.md` on 2026-10-08 as they were. `CLAUDE.md` holds
 what every task needs and the index of these files.
 
+## The count band — one vote, pulled back to the record (2026-10-21, design *Governance Count Patterns*, W)
+
+The one-screen band with its grid of grey dots (and its snap) was replaced by the design's W: a **420vh run with a
+sticky stage on ink**, the field drawn on a canvas by `governance.js` (section 1), the design's script ported with its
+arithmetic unchanged. Four frames, each held a moment: the record's **second-newest** vote alone, its face in full
+(glyph, "Axelar 499", title, our reason in quotes, our answer in an ink pill); it and the votes either side; its block
+of a hundred; the whole field at rest, as many blocks to a row as fill the stage. The three zooms between them are at
+0.06–0.22, 0.34–0.6 and 0.7–0.94 of the band's scroll. The figure counts up with the scroll (1, 3, 100, the total) and
+never says more than the votes wholly on screen; the lines beside it change at 1, 2, 100 and the total. At rest a
+hovered block shows its count in the house tooltip (mouse only). Reduced motion shows the field at rest with no faces.
+No breakpoint: the design's own measure fits the field to any stage (4 blocks to a row at 390, 7 at 1440).
+
+- **Words.** The band's paragraphs, in order: "The record" (kicker), the figure (site-data's `count.mjs`, 729 + the
+  rows, by its block id — untouched), "Six years of votes." (the last beat; governance.js rewrites the number of years
+  from the newest vote's year minus "first year"), "Every one went through all four pillars below.", and "Scroll to
+  pull back" (the cue). Everything else is the **"Count band copy"** toggle after the callout
+  (`400e800a…81f8…`, hidden by id in governance.css): `one`, `one line`, `many`, `many line`, `block`, `block line`,
+  `first year`, `place`, `tip`, `label`, with `{vote}`, `{answer}`, `{date}`, `{after}`, `{before}`, `{n}`, `{total}`
+  filled from the rows. governance.js carries the same lines as its fallback. Removed on 2026-10-21 (backup
+  `backups/governance-count-band-2026-10-21.json`): "Encapsulate · " from the kicker, "Votes cast since 2020." (now the
+  years line), "Most validators never publish theirs." and the legend "One mark per vote · one block per hundred".
+- **Every mark is a vote, and the newest are the record's rows**, read off the table on the page (newest first by
+  Recorded, whatever the sort control has done), each in its network's pastel — `tintFor`, the colour of its disc in
+  the rows below. **Deviation:** the design fills every mark with a pastel, its mock drawing the networks at random;
+  the 729 votes from before the record have no row and so no network, and are drawn in paper at 32% (`NONE`), the
+  oldest marks, at the end of the field. A face reads its own row; a mark with no row would show its place
+  ("Vote 12"), which no frame comes close enough to show.
+- **Built, the callout is the run** (`[data-enc-count]`: 420vh, no padding, `overflow: visible` — a clipping callout
+  would stop the stage sticking) and its paragraphs are hidden; the stage is appended inside it. Before the script
+  runs, the callout is one screen holding its paragraphs as the design's template does (the last beat).
+- The glyphs on the faces come from the page's galleries (`glyphs()`) through Super's optimizer at 384px; the six
+  the first frames show are fetched as the band is built.
+- The canvas draws in the scroll event itself (the design's note: a frame callback can be held back) and skips a
+  draw while the band is off the screen. Measured idle at 1440: no mutations of ours in 3s.
+
 ## The governance page's last two sections (2026-09-19, design *Governance Record Wow*)
 
 **The pillars are a quadrant**: a 2×2 of pastel fields, each carrying one word at display scale
