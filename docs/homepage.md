@@ -129,6 +129,18 @@ this section?" … "yes remove it"): the three empty paragraphs above it and the
 band meets the stats band and Why Stake flush. The design asked for paper above the ink half; with
 the page snapped a section at a time, the inks meet only mid-scroll.
 
+**Services 42m's four covers are the file's own panels, rendered from the `.dc.html`** (2026-10-21, the handoff's
+revision: the dashboard panel became Tidemark, `tidemark.sui.encapsulate.xyz`, its right-hand controls left off for the
+bleed; the button reads "View all", which Notion had as "View All"). Each cover is the file's `[data-export=screen]` at
+824×562, taken at **4×** (3296×2248, what the gallery's Cover holds) with all four corners transparent. How: save the
+file and the project's `support.js` (the runtime; it loads React from unpkg) side by side, with any file it references
+(`logo/wordmark.svg`, `logo/mark-a.svg`, `network-glyphs/06-axelar.png`) under the same paths; render it with
+`scripts/og/render.mjs` at w 1500, dsf 4, CSS `.on-ink, div:has(> .on-ink) { overflow: visible !important }` so the
+64px bleed is not cut, a `js` step that clicks the n-th list button, and a clip of the screen's rect (measured first,
+568.67, 666.2, 824.33 × 562.31). Diff each against the cover in Notion: the other three differed only in antialiasing
+and the terminal caret's blink, so only the dashboard cover was replaced — put first on the row's Cover with the old
+files kept behind it, and the old cover's alpha copied onto the new one (`backups/home-services-2026-10-21.json`).
+
 **Snapping — lessons.** Use native `scrollTo({behavior:"smooth"})` (scripted animation was choppy);
 cache stops, invalidate on resize/mutation; trackpad momentum lasts seconds — a new gesture is a
 250ms gap, or after a 450ms MIN_LOCK and decay below half peak, a rise 4× the smallest delta (≥20);
