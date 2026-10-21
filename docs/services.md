@@ -67,7 +67,14 @@ hosts rgp.sui and graph.solana redirect to the new ones.
 - **It snaps** (the design's `useUSnap`, ported line for line as `uSnap()`): frames at 0, .68, 1.14, 1.68, 2.14,
   2.68, 3.7 of n + .7; one wheel turn, swipe or arrow key moves one frame in a 750ms sine glide; the swipe that
   carries the page in lands on the first or last frame; a new scroll at either end leaves. A pill goes to its
-  tool's split. Its window listeners are removed when the band leaves the page (`live.stop`).
+  tool's split. Its window listeners are removed when the band leaves the page (`live.stop`). **A swipe the page may not cancel freezes the page through
+  `<body>`, not `<html>`** (v366, 2026-10-21, the user: "when I scroll up after scrolling down across all the
+  dashboards, it just shows me an inked screen"): a Mac trackpad swipe that starts outside the band cannot be cancelled,
+  so the snap stops it with overflow hidden. Put on `<html>`, that left the body (`overflow-x: hidden`) an overflow of
+  its own, the body became a scroll box, the sticky stage stuck to it 5,000px up, and the screen showed bare ink until
+  the next wheel event. The freeze now goes on the element the viewport takes its overflow from, and lifts after
+  U_Q ms of quiet even when nothing more arrives. Headless wheel events are always cancelable, so test this path with
+  `window.dispatchEvent(new WheelEvent("wheel", { deltaY: -60, cancelable: false }))` from just below the band.
 - **The Visit pill**: over the board the mouse pointer becomes a "Visit" pill. **Deviation:** the design keys its
   colour by tool (Tidemark light, Crux dark, Holdfast split down the middle); here each capture's columns are
   measured once from a 128px same-origin copy (`/_next/image`) and the pill is paper over a dark column, ink over a

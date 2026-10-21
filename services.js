@@ -363,24 +363,29 @@
      coast included, is swallowed; a second swipe laid over the coast shows as deltas climbing
      over the fading tail. A browser stops letting the page cancel a swipe it did not cancel from
      its first event; when such a swipe reaches the band the page is frozen (overflow hidden,
-     gutter kept) until it ends. Anything else that scrolls is caught when it stops. */
+     gutter kept) until it ends. Anything else that scrolls is caught when it stops.
+     THE FREEZE GOES THROUGH THE ELEMENT THE VIEWPORT TAKES ITS OVERFLOW FROM: the root's, or the
+     body's while the root's is visible, as it is here. The site's body is overflow-x: hidden, so
+     hiding the root's overflow left the body an overflow of its own: the body became a scroll box,
+     the sticky stage stuck to it instead of the screen and sat at the band's top, 5,000px up, and
+     the screen showed the band's bare ink (2026-10-21, a trackpad swipe up into the band). */
   function uSnap(sec, n) {
     var TT = n + U_EA, SV = uStops(n), L = SV.length - 1, hist = [], win = [];
     var anim = 0, ti = -1, gliding = false, rest = window.scrollY, lastT = -1e9, lastDir = 0,
       lastStep = 0, pass = 0, spent = false, gy = 0, touch = false, tmr = 0, on = false;
-    var locked = false, ov = "", gut = "", ut = 0;
+    var locked = false, held = null, ov = "", gut = "", ut = 0;
     function lock() {
       if (locked) return;
-      var h = document.documentElement.style;
-      ov = h.overflowY; gut = h.scrollbarGutter;
-      h.scrollbarGutter = "stable"; h.overflowY = "hidden";
+      var root = document.documentElement, rs = getComputedStyle(root);
+      held = rs.overflowX === "visible" && rs.overflowY === "visible" && document.body ? document.body : root;
+      ov = held.style.overflowY; gut = root.style.scrollbarGutter;
+      root.style.scrollbarGutter = "stable"; held.style.overflowY = "hidden";
       locked = true;
     }
     function unlock() {
       clearTimeout(ut);
       if (!locked) return;
-      var h = document.documentElement.style;
-      h.overflowY = ov; h.scrollbarGutter = gut;
+      held.style.overflowY = ov; document.documentElement.style.scrollbarGutter = gut;
       locked = false;
     }
     function release() {
@@ -433,7 +438,8 @@
       if (!ys) return;
       var t = e.timeStamp > 0 ? e.timeStamp : performance.now(), dir = dy > 0 ? 1 : -1, ad = Math.abs(dy);
       var y = window.scrollY, a = ys[0], b = ys[L], inBand = y >= a - 2 && y <= b + 2;
-      var stop = function () { if (e.cancelable) e.preventDefault(); else lock(); };
+      /* the freeze lifts once the swipe has been quiet U_Q ms, even if it sends nothing more */
+      var stop = function () { if (e.cancelable) e.preventDefault(); else { lock(); release(); } };
       if (locked) release();
       var gap = t - lastT;
       /* a flicker against the swipe's direction is noise, not a new swipe */
