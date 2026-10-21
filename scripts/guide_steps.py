@@ -69,7 +69,7 @@ def main(argv):
         for i, f in enumerate(files):
             with open(os.path.join(out, f"step{row['Step']}-{i}.png"), "wb") as fh:
                 fh.write(urllib.request.urlopen(f[f["type"]]["url"]).read())
-        print(f"   {row['Step']:>2} {row['Name']} | {row.get('Surface')} | {row.get('Link') or '—'} | "
+        print(f"   {row['Step'] or '?':>2} {row['Name']} | {row.get('Surface')} | {row.get('Link') or '—'} | "
               f"{(row.get('Body') or '')[:40]!r} | {row['files']}")
     back = os.path.join(ROOT, "backups", f"{slug}-guide-{datetime.date.today()}.json")
     with open(back, "w") as fh:

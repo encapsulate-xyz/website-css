@@ -487,6 +487,11 @@ html:has(.notion-root[data-enc-guide]) { scroll-padding-top: 0; }
 #page-guides-iota .enc-gd__step[data-enc-shot="tall"] .enc-gd__shot {
   aspect-ratio: 360 / 600;
 }
+/* Auro Wallet's popup is 375 × 596; its captures came in at 750 × 1192 (the user, 2026-10-21: "the wallet was
+   weird so had to take at 375×596"). The Mina guide alone takes their shape, as IOTA's does. */
+#page-guides-mina .enc-gd__step[data-enc-shot="tall"] .enc-gd__shot {
+  aspect-ratio: 375 / 596;
+}
 .enc-gd__shot[data-enc-empty] { display: none; }
 
 /* ── the numeral: a paper glyph ringed in ink, filled green by progress ──────────────────── */
