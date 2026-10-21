@@ -1,8 +1,9 @@
 /* /services — design "Services Categories Chosen" (2026-09-23).
 
    Under the cover, four services and the ask, each in the form the design gave it:
-     01 Dashboards   on ink, a 260vh run in which each dashboard zooms up from a thumbnail, then
-                     dives out behind the next; pills jump to a board
+     01 Dashboards   two grounds (2026-10-21): each tool's disc on ink, then the paper slides in
+                     with the capture on the seam, the chain on the ink half and the tool on the
+                     paper half; the ask at the end. The run snaps frame to frame; pills jump
      02 Playbooks    seven pastel step cards that pin and pile, then the repositories as one big
                      count with the list as marginalia and a line under it for the one hovered
      03 Bots         two grounds — the chain's log on ink, Discord on paper — and the post on the
@@ -27,7 +28,7 @@
    a client-side navigation, so this builds off a MutationObserver. */
 (function () {
   var PATH = /^\/services\/?$/;
-  var VERSION = "1";
+  var VERSION = "2";
   var BANDS = {
     dash: "3e4e800a513881cf8a82c41c2f9f8c78",
     steps: "3e4e800a513881719a14e42a6532c579",
@@ -39,9 +40,15 @@
 
   /* the fallback if the "Services page copy" toggle goes missing */
   var CONTENT = {
-    "open dashboard": "Open the {name} dashboard",
-    "show dashboard": "Show the {name} dashboard",
-    "dashboard image": "The {name} dashboard, {address}",
+    "open dashboard": "Open {tool}",
+    "choose dashboard": "Choose a dashboard",
+    "dashboard image": "{tool}, the {name} dashboard",
+    "the chain": "The chain",
+    "the page": "The page",
+    "visit": "Visit",
+    "chain label": "{name}, read by {tool}",
+    "board label": "{tool}, opens {address} in a new tab",
+    "new tab": "{label} (opens in a new tab)",
     "private": "private",
     "events head": "Events on chain",
     "new": "new",
@@ -303,108 +310,556 @@
     return found;
   }
 
-  /* ── 01 · Dashboards: the zoom ────────────────────────────────────────────────────────────
-     p runs 0→1 over the first 70% of the band's scroll. Each board has a third of it: the first
-     70% of that third scales it up (from .56 for the first, .82 for the rest) and fades it in,
-     the rest holds; over the first 30% of the next third the board leaving keeps growing past
-     the frame and fades — a dive out, behind which the next arrives. Pure, so it can be tested. */
-  function zoom(p, n, calm) {
-    var k = Math.min(n - 1, Math.floor(p * n));
-    var q = Math.min(1, (p * n - k) / 0.7), e = 1 - Math.pow(1 - q, 3);
-    var s0 = k === 0 ? 0.56 : 0.82;
-    var out = { k: k, scale: calm ? 1 : s0 + (1 - s0) * e, opacity: calm ? 1 : 0.35 + 0.65 * e,
-      prev: -1, prevScale: 1, prevOpacity: 0 };
-    if (k > 0 && !calm) {
-      var x = Math.min(1, (p * n - k) / 0.3), xe = 1 - Math.pow(1 - x, 2);
-      out.prev = k - 1;
-      out.prevScale = 1 + 0.12 * xe;
-      out.prevOpacity = 1 - xe;
+  /* ── 01 · Dashboards: two grounds ─────────────────────────────────────────────────────────
+     Design U, "Two grounds" (2026-10-21). A sticky stage on ink, (100 + 150 × (n + .7))vh tall.
+     For each tool a third of the run: first its disc alone in the middle of the ink — the chain's
+     mark, "Sui · reference gas price", the tool's name, what it shows, its address — over a 64px
+     hairline grid; then the paper slides in from the right to the middle (the page we built), the
+     capture rises from the bottom on the seam, and the chain's name arrives on the ink half, the
+     tool's on the paper half, with Open in the paper's corner. After the last tool the ask, "Want
+     one for your chain?", over the grid. The band snaps: one wheel turn, swipe or arrow key moves
+     one frame (uStops), gliding there in 750ms on an even sine; a new scroll at either end leaves.
+     Under 760px, or with reduced motion, it is the design's reel instead: pills, the capture full
+     width, the credits, then the ask on its own ink. Both are built; CSS shows one (CINE).
+
+     Over the board the pointer becomes a Visit pill (mouse only): paper over a dark part of the
+     capture, ink over a light one. The design keys that by tool (Tidemark light, Crux dark,
+     Holdfast split down the middle); here each capture's columns are measured once from a 128px
+     copy, so a new tool needs no entry — the three come out as the design's table does. */
+  var U_EA = 0.7, U_MS = 750, U_Q = 200, U_TH = 10;
+  var CINE = "(min-width: 760px) and (prefers-reduced-motion: no-preference)";
+  function cineOn() { return !!(window.matchMedia && window.matchMedia(CINE).matches); }
+  function clamp01(v) { return Math.max(0, Math.min(1, v)); }
+  function easeIO(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+
+  /* where everything is at progress p (0–1 through the band), for n tools on a vw × vh stage —
+     the design's arithmetic, kept pure so it can be tested */
+  function uFrame(p, n, vw, vh) {
+    var TT = n + U_EA, v = Math.min(TT - 1e-4, p * TT), k = Math.min(n - 1, Math.floor(v));
+    var t = Math.min(1, v - k), last = k === n - 1, end = easeIO(clamp01((v - n - 0.05) / (U_EA * 0.6)));
+    var arrive = easeIO(clamp01((t - 0.3) / 0.16)), exit = last ? 0 : easeIO(clamp01((t - 0.88) / 0.1));
+    var op = arrive * (1 - exit) * (1 - end);
+    var nOp = clamp01((t - 0.4) / 0.08) * (1 - (last ? 0 : clamp01((t - 0.88) / 0.05))) * (1 - end);
+    var nextUp = !last && t > 0.95;
+    var dOp = nextUp ? easeIO(clamp01((t - 0.95) / 0.05)) : 1 - easeIO(clamp01((t - 0.28) / 0.08));
+    var cp = Math.min(44, Math.max(20, vw * 0.04)), F = Math.round(Math.min(vw * 0.1, vh * 0.16));
+    var Wb = Math.max(320, Math.min(vw - 2 * cp, (vh - (72 + F + 96)) * 1400 / 788)), Hb = Wb * 788 / 1400;
+    return { k: k, kd: nextUp ? k + 1 : k, op: op, seamX: vw * (1 - 0.5 * op), nOp: nOp, dOp: dOp,
+      end: end, gOp: Math.max(dOp, end), F: F, Wb: Wb, Hb: Hb, bLeft: (vw - Wb) / 2, bTop: vh - Hb * op,
+      Dc: Math.round(Math.min(168, vh * 0.2)) };
+  }
+  /* the frames the band comes to rest on, as fractions of n + .7: each tool's disc, then its
+     split, then the ask */
+  function uStops(n) {
+    var sv = [];
+    for (var k = 0; k < n; k++) sv.push(k === 0 ? 0 : k + 0.14, k + 0.68);
+    sv.push(n + U_EA);
+    return sv;
+  }
+
+  /* the snap (the design's useUSnap). A trackpad swipe is a stream of wheel events that coasts on
+     for a second after the fingers lift: it is one swipe until U_Q ms of quiet (timed on the
+     events), it moves a frame once it has travelled U_TH px inside 120ms, and the rest of it,
+     coast included, is swallowed; a second swipe laid over the coast shows as deltas climbing
+     over the fading tail. A browser stops letting the page cancel a swipe it did not cancel from
+     its first event; when such a swipe reaches the band the page is frozen (overflow hidden,
+     gutter kept) until it ends. Anything else that scrolls is caught when it stops. */
+  function uSnap(sec, n) {
+    var TT = n + U_EA, SV = uStops(n), L = SV.length - 1, hist = [], win = [];
+    var anim = 0, ti = -1, gliding = false, rest = window.scrollY, lastT = -1e9, lastDir = 0,
+      lastStep = 0, pass = 0, spent = false, gy = 0, touch = false, tmr = 0, on = false;
+    var locked = false, ov = "", gut = "", ut = 0;
+    function lock() {
+      if (locked) return;
+      var h = document.documentElement.style;
+      ov = h.overflowY; gut = h.scrollbarGutter;
+      h.scrollbarGutter = "stable"; h.overflowY = "hidden";
+      locked = true;
     }
-    return out;
+    function unlock() {
+      clearTimeout(ut);
+      if (!locked) return;
+      var h = document.documentElement.style;
+      h.overflowY = ov; h.scrollbarGutter = gut;
+      locked = false;
+    }
+    function release() {
+      clearTimeout(ut);
+      var chk = function () { if (anim) { ut = setTimeout(chk, 60); return; } unlock(); };
+      ut = setTimeout(chk, U_Q + 40);
+    }
+    function geo() {
+      if (!sec.isConnected) { off(); return null; }
+      var top = window.scrollY + sec.getBoundingClientRect().top, span = sec.offsetHeight - window.innerHeight;
+      return span > 0 ? SV.map(function (v) { return Math.round(top + span * v / TT); }) : null;
+    }
+    function near(ys, y) {
+      return ys.reduce(function (m, q, i) { return Math.abs(q - y) < Math.abs(ys[m] - y) ? i : m; }, 0);
+    }
+    function to(y) { window.scrollTo({ top: y, behavior: "instant" }); }
+    function halt() { if (anim) cancelAnimationFrame(anim); anim = 0; gliding = false; }
+    function glide(i, ys) {
+      halt();
+      ti = i;
+      lastStep = performance.now();
+      var y0 = window.scrollY, d = ys[i] - y0;
+      if (Math.abs(d) < 2) { if (d) to(ys[i]); rest = ys[i]; return; }
+      gliding = true;
+      var t0 = performance.now();
+      var f = function (now) {
+        var u = Math.min(1, (now - t0) / U_MS), e = (1 - Math.cos(Math.PI * u)) / 2;
+        to(y0 + d * e);
+        if (u < 1) anim = requestAnimationFrame(f);
+        else { anim = 0; rest = ys[i]; setTimeout(function () { if (!anim) gliding = false; }, 90); }
+      };
+      anim = requestAnimationFrame(f);
+    }
+    function nextFrom(ys, y, dir) {
+      var i = near(ys, y);
+      if (Math.abs(ys[i] - y) <= 4) return i + dir;
+      if (dir > 0) {
+        for (var x = 0; x < ys.length; x++) if (ys[x] > y) return x;
+        return L + 1;
+      }
+      var j = -1;
+      ys.forEach(function (q, x) { if (q < y) j = x; });
+      return j;
+    }
+    function onWheel(e) {
+      if (e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      var dy = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1);
+      if (Math.abs(dy) < 0.5) return;
+      var ys = geo();
+      if (!ys) return;
+      var t = e.timeStamp > 0 ? e.timeStamp : performance.now(), dir = dy > 0 ? 1 : -1, ad = Math.abs(dy);
+      var y = window.scrollY, a = ys[0], b = ys[L], inBand = y >= a - 2 && y <= b + 2;
+      var stop = function () { if (e.cancelable) e.preventDefault(); else lock(); };
+      if (locked) release();
+      var gap = t - lastT;
+      /* a flicker against the swipe's direction is noise, not a new swipe */
+      if (gap <= U_Q && dir !== lastDir && ad < 3) { lastT = t; if (inBand && !pass) stop(); return; }
+      var fresh = gap > U_Q || dir !== lastDir;
+      if (fresh) hist.length = 0;
+      hist.push(ad);
+      if (hist.length > 12) hist.shift();
+      if (!fresh && spent && !gliding && performance.now() - lastStep > U_MS + 120 && hist.length === 12) {
+        var o = 0, r = 0;
+        for (var x = 0; x < 6; x++) { o += hist[x]; r += hist[x + 6]; }
+        if (r > o * 1.5 && r > 36) { fresh = true; hist.splice(0, 6); }
+      }
+      lastT = t; lastDir = dir;
+      if (fresh) { spent = false; pass = 0; win.length = 0; gy = y; }
+      if (pass === dir) return;
+      win.push([t, ad]);
+      while (win.length > 1 && t - win[0][0] > 120) win.shift();
+      var sum = 0;
+      win.forEach(function (w) { sum += w[1]; });
+      var notch = e.deltaMode !== 0 || (e.wheelDelta && Math.abs(e.wheelDelta) >= 120 && e.wheelDelta % 120 === 0);
+      /* arriving from above or below: the swipe that carries the page in lands on the first or
+         last frame, and the rest of it is spent */
+      if (!inBand) {
+        if (!spent && (dir > 0 && y < a - 2 && y + ad >= a - 2 || dir < 0 && y > b + 2 && y - ad <= b + 2)) {
+          stop(); spent = true; glide(dir > 0 ? 0 : L, ys);
+        }
+        return;
+      }
+      if (!spent && (dir > 0 && gy < a - 2 || dir < 0 && gy > b + 2)) { stop(); spent = true; glide(dir > 0 ? 0 : L, ys); return; }
+      if (spent) { stop(); return; }
+      var at = Math.abs(ys[near(ys, y)] - y) <= 4, j = gliding ? ti + dir : nextFrom(ys, y, dir);
+      if ((j < 0 || j > L) && !gliding && at) { pass = dir; unlock(); return; }
+      stop();
+      if (!notch && sum < U_TH) return;
+      spent = true;
+      if (j < 0 || j > L) { if (!gliding) glide(Math.max(0, Math.min(L, j)), ys); return; }
+      glide(j, ys);
+    }
+    function onKey(e) {
+      if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+      var tg = e.target, k = e.key;
+      if (tg && (tg.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(tg.tagName))) return;
+      if (k === " " && tg && /^(A|BUTTON)$/.test(tg.tagName)) return;
+      var dir = k === "ArrowDown" || k === "PageDown" || (k === " " && !e.shiftKey) ? 1
+        : k === "ArrowUp" || k === "PageUp" || (k === " " && e.shiftKey) ? -1 : 0;
+      if (!dir) return;
+      var ys = geo();
+      if (!ys) return;
+      if (gliding) {
+        e.preventDefault();
+        if (!e.repeat) { var g = Math.max(0, Math.min(L, ti + dir)); if (g !== ti) glide(g, ys); }
+        return;
+      }
+      var y = window.scrollY;
+      if (y < ys[0] - 2 || y > ys[L] + 2) return;
+      var j = nextFrom(ys, y, dir);
+      if (j < 0 || j > L) return;
+      e.preventDefault();
+      glide(j, ys);
+    }
+    /* a swipe moves one frame, the scrollbar the nearest */
+    function settle() {
+      if (gliding) return;
+      var ys = geo();
+      if (!ys) return;
+      var y = window.scrollY, a = ys[0], b = ys[L];
+      if (y < a - 2 || y > b + 2) { rest = y; return; }
+      var i = near(ys, y);
+      if (Math.abs(ys[i] - y) <= 4) { rest = ys[i]; return; }
+      var d = y - rest, j = i;
+      if (touch) {
+        if (Math.abs(d) < 24) j = near(ys, rest);
+        else if (rest < a - 2) j = 0;
+        else if (rest > b + 2) j = L;
+        else j = Math.max(0, Math.min(L, nextFrom(ys, rest, d > 0 ? 1 : -1)));
+      }
+      glide(j, ys);
+    }
+    function onTouch() { touch = true; if (gliding) { halt(); rest = window.scrollY; } }
+    function onMouse() { touch = false; if (gliding) { halt(); rest = window.scrollY; } }
+    function onScroll() { if (gliding) return; clearTimeout(tmr); tmr = setTimeout(settle, 160); }
+    var hasEnd = "onscrollend" in window;
+    function onUp() {
+      if (on) return;
+      on = true;
+      rest = window.scrollY;
+      window.addEventListener("wheel", onWheel, { passive: false });
+      window.addEventListener("keydown", onKey);
+      window.addEventListener("touchstart", onTouch, { passive: true });
+      window.addEventListener("mousedown", onMouse, { passive: true });
+      if (hasEnd) window.addEventListener("scrollend", settle);
+      else window.addEventListener("scroll", onScroll, { passive: true });
+    }
+    function off() {
+      if (!on) return;
+      on = false;
+      halt(); unlock(); clearTimeout(tmr);
+      window.removeEventListener("wheel", onWheel, { passive: false });
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("touchstart", onTouch, { passive: true });
+      window.removeEventListener("mousedown", onMouse, { passive: true });
+      if (hasEnd) window.removeEventListener("scrollend", settle);
+      else window.removeEventListener("scroll", onScroll, { passive: true });
+    }
+    return {
+      on: onUp, off: off,
+      active: function () { return on; },
+      go: function (i) { var ys = geo(); if (ys) glide(Math.max(0, Math.min(L, i)), ys); }
+    };
+  }
+
+  /* which columns of a capture are dark, measured once from a same-origin 128px copy (Super's
+     image service), so the canvas can be read: -> Promise<number[]>, each column's mean luminance */
+  var columns = {};
+  function columnsOf(url) {
+    var m = /^https:\/\/assets\.super\.so\/[^?#]+\.(png|jpe?g|webp)(?:[?#]|$)/i.test(url || "");
+    if (!m) return Promise.resolve(null);
+    if (columns[url]) return columns[url];
+    columns[url] = new Promise(function (done) {
+      var im = new Image();
+      im.decoding = "async";
+      im.onload = function () {
+        try {
+          var w = im.naturalWidth, h = im.naturalHeight, c = document.createElement("canvas");
+          c.width = w; c.height = h;
+          var g = c.getContext("2d");
+          g.drawImage(im, 0, 0);
+          var d = g.getImageData(0, 0, w, h).data, out = [];
+          for (var x = 0; x < w; x++) {
+            var s = 0;
+            for (var y = 0; y < h; y++) {
+              var i = (y * w + x) * 4;
+              s += (0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2]) / 255;
+            }
+            out.push(s / h);
+          }
+          done(out);
+        } catch (e) { done(null); }
+      };
+      im.onerror = function () { done(null); };
+      im.src = "/_next/image?url=" + encodeURIComponent(url) + "&w=128&q=75";
+    });
+    return columns[url];
   }
 
   function dashBand(src, rows, num) {
-    var s = el("section", "enc-svc__band enc-svc__dash on-ink");
+    var n = rows.length, TT = n + U_EA;
+    var s = el("section", "enc-svc__band enc-svc__dash");
     s.setAttribute("data-enc-svc-band", "dashboards");
-    var sticky = el("div", "enc-svc__sticky");
-    s.appendChild(sticky);
-    var hd = el("div", "enc-svc__dashhead");
-    hd.appendChild(secHead(num, src.h2, src.p[0], true));
-    var right = el("div", "enc-svc__dashright");
-    var pills = el("div", "enc-svc__pills");
-    right.appendChild(pills);
-    var open = tert("", "#", true);
-    right.appendChild(open);
-    hd.appendChild(right);
-    sticky.appendChild(hd);
-    var stage = el("div", "enc-svc__stage");
-    sticky.appendChild(stage);
+    function tool(r) { return r.tool || r.name; }
+    function vars(r) { return { name: r.name, tool: tool(r), address: r.address }; }
+    function hrefOf(r) { return r["link href"] || r.link || (r.address ? "https://" + r.address : "#"); }
+    function put(node, text) { if (node.textContent !== text) node.textContent = text; }
 
-    var n = rows.length, state = { p: 0 };
-    var frames = rows.map(function (r, i) {
-      var f = el("span", "enc-svc__frame");
-      var shot = r["capture src"];
-      if (shot) {
-        var img = el("img");
-        img.alt = say("dashboard image", { name: r.name, address: r.address });
-        img.decoding = "async";
-        img.src = shot;
-        f.appendChild(img);
+    function eyebrow() { return mono(pad(num) + " · " + src.h2, "enc-svc__deb"); }
+    function pillRow(onPick) {
+      var g = el("div", "enc-svc__dpills");
+      g.setAttribute("role", "group");
+      g.setAttribute("aria-label", say("choose dashboard"));
+      rows.forEach(function (r, i) {
+        var b = el("button", "enc-svc__dpill", r.name);
+        b.type = "button";
+        b.addEventListener("click", function () { onPick(i); });
+        g.appendChild(b);
+      });
+      return g;
+    }
+    function press(g, i) {
+      Array.prototype.forEach.call(g.children, function (b, j) {
+        var v = j === i ? "true" : "false";
+        if (b.getAttribute("aria-pressed") !== v) b.setAttribute("aria-pressed", v);
+      });
+    }
+    /* "Open Tidemark" and its arrow badge */
+    function openLink(paper) {
+      var a = el("a", "enc-svc__dopen" + (paper ? " is-paper" : ""));
+      a.appendChild(el("span", "enc-svc__dopenl"));
+      var b = el("span", "enc-svc__badge");
+      b.setAttribute("aria-hidden", "true");
+      b.innerHTML = ARROW;
+      a.appendChild(b);
+      return a;
+    }
+    function aim(a, r) {
+      put(a.firstChild, say("open dashboard", vars(r)));
+      if (a.getAttribute("href") !== hrefOf(r)) external(a, hrefOf(r));
+    }
+    /* the capture at its own 1400:788, never cropped */
+    function shot(r, alt) {
+      var sp = el("span", "enc-svc__dshot");
+      if (r["capture src"]) {
+        var im = el("img");
+        im.alt = alt ? say("dashboard image", vars(r)) : "";
+        im.decoding = "async";
+        im.src = r["capture src"];
+        sp.appendChild(im);
       }
-      stage.appendChild(f);
-      var b = el("button", "enc-svc__pill", r.name);
-      b.type = "button";
-      b.setAttribute("aria-label", say("show dashboard", { name: r.name }));
-      b.addEventListener("click", function () { jump(i); });
-      pills.appendChild(b);
-      return f;
+      return sp;
+    }
+    /* the ask: the band's Heading 3 and its two buttons */
+    function ask(cls) {
+      var box = el("div", "enc-svc__dask on-ink " + cls);
+      if (src.h3[0]) box.appendChild(el("h3", "enc-svc__dasktitle", src.h3[0]));
+      var row = el("div", "enc-svc__daskrow");
+      src.buttons.forEach(function (b) {
+        if (b.tier === "primary") { row.appendChild(btn(b.text, b.href, true)); return; }
+        var t = tert(b.text, b.href, true);
+        if (offsite(b.href)) t.setAttribute("aria-label", say("new tab", { label: b.text }));
+        row.appendChild(t);
+      });
+      box.appendChild(row);
+      return box;
+    }
+
+    /* ── the run ── */
+    var cine = el("div", "enc-svc__cine");
+    cine.style.height = (100 + TT * 150) + "vh";
+    var stage = el("div", "enc-svc__dstage");
+    cine.appendChild(stage);
+    var grid = el("div", "enc-svc__dgrid");
+    grid.setAttribute("aria-hidden", "true");
+    stage.appendChild(grid);
+
+    var paper = el("div", "enc-svc__dpaper");
+    var pword = el("div", "enc-svc__dpword");
+    pword.setAttribute("aria-hidden", "true");
+    pword.appendChild(mono(say("the page")));
+    var pw = el("span", "enc-svc__dword");
+    pword.appendChild(pw);
+    paper.appendChild(pword);
+    var popen = el("div", "enc-svc__dpopen");
+    var openP = openLink(true);
+    popen.appendChild(openP);
+    paper.appendChild(popen);
+    stage.appendChild(paper);
+
+    var ink = el("div", "enc-svc__dink on-ink");
+    var top = el("div", "enc-svc__dtop");
+    top.appendChild(eyebrow());
+    var pillsC = pillRow(function (i) { pick(i); });
+    top.appendChild(pillsC);
+    ink.appendChild(top);
+    var chain = el("div", "enc-svc__dchain");
+    chain.appendChild(mono(say("the chain"), "enc-svc__dck"));
+    var cw = el("h3", "enc-svc__dword");
+    chain.appendChild(cw);
+    ink.appendChild(chain);
+    stage.appendChild(ink);
+
+    /* the board opens its tool; with a mouse the pointer becomes the Visit pill, and Open is the
+       keyboard's way there, so the board is out of the tab order */
+    var boards = rows.map(function (r) {
+      var a = external(el("a", "enc-svc__dboard"), hrefOf(r));
+      a.tabIndex = -1;
+      a.setAttribute("aria-label", say("board label", vars(r)));
+      var sh = shot(r, false);
+      sh.setAttribute("aria-hidden", "true");
+      a.appendChild(sh);
+      stage.appendChild(a);
+      return a;
     });
 
+    var disc = el("div", "enc-svc__ddisc");
+    var dk = el("span", "enc-svc__ddk");
+    dk.setAttribute("aria-hidden", "true");
+    var dimg = el("img");
+    dimg.alt = "";
+    dimg.decoding = "async";
+    dk.appendChild(dimg);
+    disc.appendChild(dk);
+    var tx = el("div", "enc-svc__dtx");
+    var dtag = mono("", "enc-svc__dtag"), dname = el("h3", "enc-svc__dname");
+    var ddesc = el("p", "enc-svc__ddesc"), dhost = mono("", "enc-svc__dhost");
+    [dtag, dname, ddesc, dhost].forEach(function (x) { tx.appendChild(x); });
+    disc.appendChild(tx);
+    stage.appendChild(disc);
+
+    var askC = ask("is-cine");
+    stage.appendChild(askC);
+
+    var pill = el("span", "enc-svc__visit");
+    pill.setAttribute("aria-hidden", "true");
+    pill.appendChild(document.createTextNode(say("visit")));
+    var pb = el("span", "enc-svc__badge");
+    pb.innerHTML = ARROW;
+    pill.appendChild(pb);
+    stage.appendChild(pill);
+    s.appendChild(cine);
+
+    /* ── the reel ── */
+    var sel = 0;
+    var reel = el("div", "enc-svc__reel on-ink");
+    var rtop = el("div", "enc-svc__rtop");
+    rtop.appendChild(eyebrow());
+    var pillsR = pillRow(function (i) { sel = i; paintReel(); });
+    rtop.appendChild(pillsR);
+    reel.appendChild(rtop);
+    var rshots = rows.map(function (r) {
+      var sh = shot(r, true);
+      sh.classList.add("enc-svc__rshot");
+      reel.appendChild(sh);
+      return sh;
+    });
+    var cred = el("div", "enc-svc__rcred");
+    var cn = el("div", "enc-svc__rcn");
+    var rname = el("h3", "enc-svc__rname"), rmeta = mono("", "enc-svc__rmeta");
+    cn.appendChild(rname);
+    cn.appendChild(rmeta);
+    cred.appendChild(cn);
+    var rdesc = el("p", "enc-svc__rdesc");
+    cred.appendChild(rdesc);
+    var openR = openLink(false);
+    cred.appendChild(openR);
+    reel.appendChild(cred);
+    s.appendChild(reel);
+    s.appendChild(ask("is-reel"));
+
+    function paintReel() {
+      var r = rows[sel];
+      press(pillsR, sel);
+      rshots.forEach(function (x, i) { x.hidden = i !== sel; });
+      put(rname, tool(r));
+      put(rmeta, r.name + " · " + r.address);
+      put(rdesc, r.description || "");
+      aim(openR, r);
+    }
+
+    /* ── painting the run ── */
+    var snap = uSnap(s, n), cur = null, f = null, dark = [];
+    var fine = !!(window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches);
+    rows.forEach(function (r, i) {
+      columnsOf(r["capture src"]).then(function (c) { dark[i] = c; });
+    });
     function paint() {
-      var z = zoom(state.p, n, reduced());
-      frames.forEach(function (f, i) {
-        if (i === z.k) {
-          f.style.transform = "scale(" + z.scale.toFixed(3) + ")";
-          f.style.opacity = z.opacity.toFixed(3);
-          f.style.zIndex = 1;
-          f.style.visibility = "visible";
-        } else if (i === z.prev && z.prevOpacity > 0) {
-          f.style.transform = "scale(" + z.prevScale.toFixed(3) + ")";
-          f.style.opacity = z.prevOpacity.toFixed(3);
-          f.style.zIndex = 2;
-          f.style.visibility = "visible";
-        } else {
-          f.style.visibility = "hidden";
-          f.style.opacity = 0;
-        }
+      var R = stage.getBoundingClientRect(), vw = R.width || window.innerWidth, vh = R.height || window.innerHeight;
+      var sr = s.getBoundingClientRect(), span = sr.height - window.innerHeight;
+      f = uFrame(span > 0 ? clamp01(-sr.top / span) : 0, n, vw, vh);
+      var r = rows[f.k], rd = rows[f.kd], nOp = f.nOp.toFixed(3), named = parseFloat(nOp) > 0.01;
+      stage.style.setProperty("--dash-f", f.F + "px");
+      grid.style.opacity = f.gOp.toFixed(3);
+      grid.style.visibility = f.gOp > 0.01 ? "visible" : "hidden";
+      grid.style.backgroundPosition = (Math.round(vw / 2) % 64) + "px " + (Math.round(vh / 2) % 64) + "px";
+      paper.style.left = f.seamX + "px";
+      pword.style.opacity = nOp;
+      put(pw, tool(r));
+      popen.style.opacity = nOp;
+      popen.style.visibility = named ? "visible" : "hidden";
+      aim(openP, r);
+      ink.style.maxWidth = Math.max(240, f.seamX - 64) + "px";
+      press(pillsC, f.kd);
+      chain.style.opacity = nOp;
+      put(cw, r.name);
+      cw.setAttribute("aria-label", say("chain label", vars(r)));
+      boards.forEach(function (b, i) {
+        var show = i === f.k && f.op > 0.01;
+        b.style.visibility = show ? "visible" : "hidden";
+        if (i !== f.k) return;
+        b.style.left = f.bLeft + "px";
+        b.style.top = f.bTop + "px";
+        b.style.width = f.Wb + "px";
+        b.style.height = f.Hb + "px";
       });
-      Array.prototype.forEach.call(pills.children, function (b, i) {
-        b.setAttribute("aria-pressed", i === z.k ? "true" : "false");
-      });
-      var d = rows[z.k];
-      open.querySelector(".enc-svc__tertl").textContent = say("open dashboard", { name: d.name });
-      external(open, d["link href"] || d.link || "#");
+      disc.style.opacity = f.dOp.toFixed(3);
+      disc.style.visibility = f.dOp > 0.01 ? "visible" : "hidden";
+      dk.style.width = dk.style.height = f.Dc + "px";
+      dk.style.backgroundColor = TINTS[f.kd % 5];
+      var g = rd["glyph src"] || "";
+      if (dimg.getAttribute("src") !== g) { if (g) dimg.src = g; else dimg.removeAttribute("src"); }
+      dimg.hidden = !g;
+      put(dtag, rd.kind ? rd.name + " · " + rd.kind : rd.name);
+      put(dname, tool(rd));
+      put(ddesc, rd.description || "");
+      put(dhost, rd.address || "");
+      askC.style.opacity = f.end.toFixed(3);
+      askC.style.visibility = f.end > 0.01 ? "visible" : "hidden";
+      paintPill();
+    }
+    function track(e) {
+      if (!fine || !cineOn() || (e.pointerType && e.pointerType !== "mouse")) return;
+      cur = { x: e.clientX, y: e.clientY };
+      paintPill();
+    }
+    function paintPill() {
+      if (!cur || !f || f.op <= 0.01 || !fine || !cineOn()) { pill.style.visibility = "hidden"; return; }
+      var R = stage.getBoundingClientRect(), x = cur.x - R.left, y = cur.y - R.top;
+      pill.style.left = x + "px";
+      pill.style.top = y + "px";
+      pill.style.visibility = "visible";
+      var c = dark[f.k], at = c ? c[Math.max(0, Math.min(c.length - 1, Math.floor((x - f.bLeft) / f.Wb * c.length)))] : 1;
+      pill.classList.toggle("is-paper", at < 0.5);
+    }
+    boards.forEach(function (b) {
+      b.style.cursor = fine ? "none" : "pointer";
+      b.addEventListener("pointerenter", track);
+      b.addEventListener("pointermove", track);
+      b.addEventListener("mouseleave", function () { cur = null; paintPill(); });
+    });
+
+    /* a pill goes to its tool's split; without the snap, straight there */
+    function pick(i) {
+      if (snap.active()) { snap.go(2 * i + 1); return; }
+      var r = s.getBoundingClientRect(), span = r.height - window.innerHeight;
+      window.scrollTo({ top: window.scrollY + r.top + (i + 0.68) / TT * span, behavior: "instant" });
+    }
+    function mode() {
+      if (cineOn()) snap.on(); else snap.off();
     }
     function measure() {
-      var r = s.getBoundingClientRect(), span = r.height - window.innerHeight;
-      if (span <= 0) return;
-      var p = Math.max(0, Math.min(1, -r.top / (span * 0.7)));
-      if (Math.abs(p - state.p) > 0.005 || p === 0 || p === 1) {
-        state.p = p;
-        paint();
+      if (!s.isConnected) { snap.off(); return; }
+      mode();
+      if (!cineOn()) return;
+      paint();
+      /* the board moves under a resting pointer as the page scrolls */
+      if (cur) {
+        var hit = document.elementFromPoint(cur.x, cur.y);
+        if (!(hit && hit.closest && hit.closest(".enc-svc__dboard"))) { cur = null; paintPill(); }
       }
     }
-    /* a pill jumps to its board's hold point, 85% into its third, with no scroll animation — the
-       board shows at rest, no zoom */
-    function jump(i) {
-      var r = s.getBoundingClientRect(), span = r.height - window.innerHeight;
-      var p = (i + 0.85) / n;
-      window.scrollTo({ top: window.scrollY + r.top + p * span * 0.7, behavior: "instant" });
-      state.p = p;
-      paint();
+    if (window.matchMedia) {
+      var mq = window.matchMedia(CINE);
+      var onChange = function () { measure(); };
+      if (mq.addEventListener) mq.addEventListener("change", onChange); else if (mq.addListener) mq.addListener(onChange);
     }
-    paint();
-    return { node: s, measure: measure };
+    paintReel();
+    return { node: s, measure: measure, stop: snap.off };
   }
 
   /* ── 02 · Playbooks: the steps pin and pile ──────────────────────────────────────────── */
@@ -832,7 +1287,7 @@
   }
 
   /* ── the build ──────────────────────────────────────────────────────────────────────── */
-  var live = { measure: [], layout: [], ro: null };
+  var live = { measure: [], layout: [], stop: [], ro: null };
 
   function unbuild(root) {
     Array.prototype.forEach.call(root.querySelectorAll(":scope > .enc-svc__band"), function (n) { n.remove(); });
@@ -841,7 +1296,8 @@
       n.removeAttribute("data-enc-anchor");
     });
     if (live.ro) live.ro.disconnect();
-    live = { measure: [], layout: [], ro: null };
+    live.stop.forEach(function (f) { f(); });
+    live = { measure: [], layout: [], stop: [], ro: null };
   }
 
   function build(root) {
@@ -888,6 +1344,7 @@
 
     built.forEach(function (b) {
       if (b.measure) { live.measure.push(b.measure); b.measure(); }
+      if (b.stop) live.stop.push(b.stop);
       if (b.layout) {
         live.layout.push(b.layout);
         b.layout();
@@ -925,6 +1382,6 @@
   new MutationObserver(function () { tick(); })
     .observe(document.documentElement, { childList: true, subtree: true });
 
-  window.encServices = { version: VERSION, zoom: zoom, pack: pack, table: table, parts: parts };
-  if (typeof module !== "undefined" && module.exports) module.exports = { zoom: zoom, pack: pack };
+  window.encServices = { version: VERSION, uFrame: uFrame, uStops: uStops, pack: pack, table: table, parts: parts };
+  if (typeof module !== "undefined" && module.exports) module.exports = { uFrame: uFrame, uStops: uStops, pack: pack };
 })();

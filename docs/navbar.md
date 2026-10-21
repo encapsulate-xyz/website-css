@@ -267,7 +267,7 @@ or if it yields nothing, the note stands in.
 |---|---|---|
 | /networks | chains, 3 across | the Networks set, first **twenty-one** cards of the Order-sorted view, with rates — seven rows fill the column |
 | /services | tiles, 2 across | no fetch — the group's own section links that have a panel capture, each tile drawn at 170% from its top-left |
-| Dashboards (`/services#block-…81cf…`) | list, "Live now" | the Dashboards table on /services, in Order: each row's **Menu** property ("Sui RGP dashboard"), linked to its Link. Menu was added to the table for this on 2026-09-23 |
+| Dashboards (`/services#block-…81cf…`) | list, "Live now" | the Dashboards table on /services, in Order: each row's **Menu** property ("Tidemark · Sui gas price" since 2026-10-21), linked to its Link. Menu was added to the table for this on 2026-09-23 |
 | /governance-record | votes, "The latest votes" | the record's own table, newest first, six rows: the chain's mark (the set's glyph from the counts, else covers.js), "Terra · 4851" (Network · Reference), the vote as a dot — green yes, ink no, hollow abstain — and the day (since 2026-09-24; it was the four pillars' questions) |
 | /security | list | the page's `h2` headings |
 | /guides | guides | Guides database, first **seven**: chain mark (from the set on the same page), the guide's **Title** ("Stake AVAX with Core", since v329 — it was the chain's name) and the wallet as the tag |
@@ -304,3 +304,11 @@ had reached Super's server. A second try with real key events and a real click c
 checked, because the hidden tab then stopped rendering the app at all (throttled timers). Menu
 edits are the user's to make. **minima frosts the navbar** (`backdrop-filter: blur(12px)` plus a white wash) — 4f's bar is
 plain glass, so both are cancelled, or whatever the bar lies over is smeared.
+
+**The Dashboards round (handoff 2026-10-21).** The file's only changes were Dashboards': its line "Gas price, stake
+map, explorer", its note ("Public tools that make a chain readable, free to use." / "Tidemark for Sui's gas price,
+Crux for Solana's stake, Holdfast for Crosslink's blocks."), its three "Live now" rows (the table's Menu, rewritten
+in Notion) and its capture, which is now the new /services band on the Sui split. The design's
+`panel-thumbs-2x/dashboards.png` (1583×989) came back cut off at `get_file`'s 256 KB, so the capture was taken from
+the built band itself at the same 1583×989 (`livecheck.mjs`, the frame at .68 of 3.7) — the same composition as the
+part of the design's file that arrived. The old capture is in `backups/nav-dashboards-2026-09-24.*`.

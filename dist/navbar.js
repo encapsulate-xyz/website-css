@@ -54,9 +54,9 @@
     "/#block-3dbe800a513880af9fe0c4bc175e1975": ["Terms for $200k and above",
       "For treasuries, funds and foundations delegating at size.",
       "Terms, reporting and a named contact, agreed before the first delegation."],
-    "/services#block-3e4e800a513881cf8a82c41c2f9f8c78": ["Live chain state, per network",
-      "Live state for every chain we run, one page each.",
-      "Height, peers, missed blocks and upgrade status, read from our own nodes."],
+    "/services#block-3e4e800a513881cf8a82c41c2f9f8c78": ["Gas price, stake map, explorer",
+      "Public tools that make a chain readable, free to use.",
+      "Tidemark for Sui\u2019s gas price, Crux for Solana\u2019s stake, Holdfast for Crosslink\u2019s blocks."],
     "/services#block-3e4e800a513881719a14e42a6532c579": ["Ansible for node deploys",
       "The Ansible we use to deploy and upgrade validators.",
       "Open, versioned, and the same playbooks that run our own set."],
@@ -478,7 +478,7 @@
     }
   };
   /* Dashboards — "Live now": one line per dashboard, from the Dashboards table on /services, in
-     its Order. The line is the row's Menu property ("Sui RGP dashboard"), the link its Link. */
+     its Order. The line is the row's Menu property ("Tidemark · Sui gas price"), the link its Link. */
   READ[DASH_LINK] = function (doc) {
     var t = doc.getElementById(DASHBOARDS);
     var table = t && t.querySelector("table");
