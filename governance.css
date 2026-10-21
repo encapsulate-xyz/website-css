@@ -41,9 +41,11 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
    search field; everything else is here. */
 
 /* ── 1 · THE COUNT BAND ── design "Governance Count Patterns" (W, 2026-10-21)
+   Its classes are enc-count__*: .enc-rec__head is the pillars band's head (section 2), and a rule
+   for the band's header under that name pinned the pillars' heading over the cover (v367).
    Until governance.js builds it, the callout is one screen of ink holding its own paragraphs: the
    kicker, the figure, the last beat beside it (the design's template). Built, the callout is 420vh
-   and its paragraphs make way for the stage the script draws (.enc-rec__stage, below). */
+   and its paragraphs make way for the stage the script draws (.enc-count__stage, below). */
 .notion-root #block-3dde800a513881b1b88dd0b73f874bfe {
   box-sizing: border-box !important;
   width: 100vw !important;
@@ -150,7 +152,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   display: none !important;
 }
 
-.notion-root .enc-rec__stage {
+.notion-root .enc-count__stage {
   position: sticky;
   top: 0;
   height: 100vh;
@@ -158,7 +160,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   font-family: "Hanken Grotesk", system-ui, sans-serif;
 }
 
-.notion-root .enc-rec__canvas {
+.notion-root .enc-count__canvas {
   position: absolute;
   left: 0;
   top: 0;
@@ -168,7 +170,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 /* the opened vote's title and reason, for a screen reader: the canvas draws them */
-.notion-root .enc-rec__sr {
+.notion-root .enc-count__sr {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -177,7 +179,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   white-space: nowrap;
 }
 
-.notion-root .enc-rec__head {
+.notion-root .enc-count__head {
   position: absolute;
   left: clamp(20px, 4vw, 64px);
   right: clamp(20px, 4vw, 64px);
@@ -189,14 +191,14 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   flex-wrap: wrap;
 }
 
-.notion-root .enc-rec__headl {
+.notion-root .enc-count__side {
   display: flex;
   flex-direction: column;
   gap: 10px;
   min-width: 0;
 }
 
-.notion-root .enc-rec__headr {
+.notion-root .enc-count__lines {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -204,7 +206,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   max-width: 34ch;
 }
 
-.notion-root .enc-rec__kicker {
+.notion-root .enc-count__kicker {
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-weight: 500;
   font-size: 11px;
@@ -215,7 +217,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #B4B4B4;
 }
 
-.notion-root .enc-rec__fig {
+.notion-root .enc-count__fig {
   font-family: "Outfit", system-ui, sans-serif;
   font-weight: 600;
   font-size: clamp(76px, 13vw, 208px);
@@ -225,7 +227,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   font-variant-numeric: tabular-nums;
 }
 
-.notion-root .enc-rec__ht {
+.notion-root .enc-count__title {
   font-family: "Outfit", system-ui, sans-serif;
   font-weight: 500;
   font-size: clamp(20px, 2.2vw, 32px);
@@ -234,7 +236,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
   color: #FAFAF8;
 }
 
-.notion-root .enc-rec__hl {
+.notion-root .enc-count__line {
   font-family: "Hanken Grotesk", system-ui, sans-serif;
   font-size: 15.5px;
   line-height: 1.56;
@@ -243,7 +245,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 /* placed by the script, centred in the dark under the opened vote; shown in the first frame only */
-.notion-root .enc-rec__cue {
+.notion-root .enc-count__cue {
   position: absolute;
   left: clamp(20px, 4vw, 64px);
   top: calc(clamp(40px, 8vh, 88px) + clamp(76px, 13vw, 208px) * 1.02 + 28px);
@@ -260,7 +262,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 }
 
 /* the block's count at rest, the house tooltip: paper on the ink */
-.notion-root .enc-rec__ctip {
+.notion-root .enc-count__tip {
   position: absolute;
   left: 0;
   top: 0;

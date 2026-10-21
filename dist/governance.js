@@ -129,7 +129,7 @@
     if (!figure || rs.length < 3) return;
     var sig = [figure, rs.length, rs[0].t, rs[1].title].join("|");
     if (S && S.band === band && S.sig === sig && S.stage.isConnected) return;
-    var old = band.querySelector(":scope > .enc-rec__stage");
+    var old = band.querySelector(":scope > .enc-count__stage");
     if (old) old.remove();
 
     var c = countCopy(), total = Math.max(figure, rs.length), opened = rs[1];
@@ -147,24 +147,24 @@
       [total, rest, said(ps[3])]
     ];
 
-    var stage = el("div", "enc-rec__stage");
-    var cv = el("canvas", "enc-rec__canvas");
+    var stage = el("div", "enc-count__stage");
+    var cv = el("canvas", "enc-count__canvas");
     cv.setAttribute("aria-hidden", "true");
-    var sr = el("div", "enc-rec__sr");
+    var sr = el("div", "enc-count__sr");
     sr.appendChild(el("span", null, opened.title));
     if (opened.why) sr.appendChild(el("span", null, quoted(opened.why)));
-    var head = el("div", "enc-rec__head"), left = el("div", "enc-rec__headl"), right = el("div", "enc-rec__headr");
-    var fig = el("span", "enc-rec__fig", fmt(total));
-    var hT = el("span", "enc-rec__ht", beats[3][1]), hL = el("span", "enc-rec__hl", beats[3][2]);
-    left.appendChild(el("span", "enc-rec__kicker", said(ps[0])));
+    var head = el("div", "enc-count__head"), left = el("div", "enc-count__side"), right = el("div", "enc-count__lines");
+    var fig = el("span", "enc-count__fig", fmt(total));
+    var hT = el("span", "enc-count__title", beats[3][1]), hL = el("span", "enc-count__line", beats[3][2]);
+    left.appendChild(el("span", "enc-count__kicker", said(ps[0])));
     left.appendChild(fig);
     right.setAttribute("aria-live", "polite");
     right.appendChild(hT);
     right.appendChild(hL);
     head.appendChild(left);
     head.appendChild(right);
-    var cap = el("div", "enc-rec__cue", said(ps[4]));
-    var tip = el("div", "enc-rec__ctip");
+    var cap = el("div", "enc-count__cue", said(ps[4]));
+    var tip = el("div", "enc-count__tip");
     tip.setAttribute("role", "tooltip");
     tip.setAttribute("aria-hidden", "true");
     [cv, sr, head, cap, tip].forEach(function (n) { stage.appendChild(n); });
@@ -1054,7 +1054,7 @@
 
   var t = 0;
   new MutationObserver(function (muts) {
-    if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-rec__bar, .enc-rec__stage"); })) return;
+    if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-rec__bar, .enc-count__stage"); })) return;
     clearTimeout(t); tries = 0; t = setTimeout(build, 120);
   }).observe(document.body, { childList: true, subtree: true });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);

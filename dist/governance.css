@@ -13,18 +13,18 @@
 .notion-root #block-3dde800a513881b1b88dd0b73f874bfe p.notion-text:nth-of-type(5){display: none !important;}
 .notion-root #block-3dde800a513881b1b88dd0b73f874bfe[data-enc-count]{display: block !important;height: 420vh !important;min-height: 0 !important;padding: 0 !important;overflow: visible !important;}
 .notion-root #block-3dde800a513881b1b88dd0b73f874bfe[data-enc-count] > .notion-callout__content{display: none !important;}
-.notion-root .enc-rec__stage{position: sticky;top: 0;height: 100vh;overflow: hidden;font-family: "Hanken Grotesk",system-ui,sans-serif;}
-.notion-root .enc-rec__canvas{position: absolute;left: 0;top: 0;width: 100%;height: 100%;display: block;}
-.notion-root .enc-rec__sr{position: absolute;width: 1px;height: 1px;overflow: hidden;clip-path: inset(50%);white-space: nowrap;}
-.notion-root .enc-rec__head{position: absolute;left: clamp(20px,4vw,64px);right: clamp(20px,4vw,64px);top: clamp(40px,8vh,88px);display: flex;align-items: flex-end;justify-content: space-between;gap: clamp(24px,4vw,56px);flex-wrap: wrap;}
-.notion-root .enc-rec__headl{display: flex;flex-direction: column;gap: 10px;min-width: 0;}
-.notion-root .enc-rec__headr{display: flex;flex-direction: column;gap: 8px;padding-bottom: 10px;max-width: 34ch;}
-.notion-root .enc-rec__kicker{font-family: "JetBrains Mono",ui-monospace,monospace;font-weight: 500;font-size: 11px;line-height: normal;letter-spacing: 0.12em;text-transform: uppercase;white-space: nowrap;color: #B4B4B4;}
-.notion-root .enc-rec__fig{font-family: "Outfit",system-ui,sans-serif;font-weight: 600;font-size: clamp(76px,13vw,208px);line-height: 0.82;letter-spacing: -0.058em;color: #FAFAF8;font-variant-numeric: tabular-nums;}
-.notion-root .enc-rec__ht{font-family: "Outfit",system-ui,sans-serif;font-weight: 500;font-size: clamp(20px,2.2vw,32px);line-height: 1.18;letter-spacing: -0.026em;color: #FAFAF8;}
-.notion-root .enc-rec__hl{font-family: "Hanken Grotesk",system-ui,sans-serif;font-size: 15.5px;line-height: 1.56;color: #C9C9C4;text-wrap: pretty;}
-.notion-root .enc-rec__cue{position: absolute;left: clamp(20px,4vw,64px);top: calc(clamp(40px,8vh,88px) + clamp(76px,13vw,208px) * 1.02 + 28px);font-family: "JetBrains Mono",ui-monospace,monospace;font-weight: 500;font-size: 9.5px;letter-spacing: 0.12em;text-transform: uppercase;color: #B4B4B4;white-space: nowrap;line-height: 1.6;opacity: 0;transition: opacity 0.2s ease;}
-.notion-root .enc-rec__ctip{position: absolute;left: 0;top: 0;transform: translate(-50%,-100%);padding: 6px 9px;border-radius: 4px;background: #FAFAF8;color: #000000;font-family: "JetBrains Mono",ui-monospace,monospace;font-weight: 500;font-size: 10px;line-height: normal;letter-spacing: 0.12em;text-transform: uppercase;white-space: nowrap;opacity: 0;pointer-events: none;transition: opacity 0.16s ease;z-index: 30;}
+.notion-root .enc-count__stage{position: sticky;top: 0;height: 100vh;overflow: hidden;font-family: "Hanken Grotesk",system-ui,sans-serif;}
+.notion-root .enc-count__canvas{position: absolute;left: 0;top: 0;width: 100%;height: 100%;display: block;}
+.notion-root .enc-count__sr{position: absolute;width: 1px;height: 1px;overflow: hidden;clip-path: inset(50%);white-space: nowrap;}
+.notion-root .enc-count__head{position: absolute;left: clamp(20px,4vw,64px);right: clamp(20px,4vw,64px);top: clamp(40px,8vh,88px);display: flex;align-items: flex-end;justify-content: space-between;gap: clamp(24px,4vw,56px);flex-wrap: wrap;}
+.notion-root .enc-count__side{display: flex;flex-direction: column;gap: 10px;min-width: 0;}
+.notion-root .enc-count__lines{display: flex;flex-direction: column;gap: 8px;padding-bottom: 10px;max-width: 34ch;}
+.notion-root .enc-count__kicker{font-family: "JetBrains Mono",ui-monospace,monospace;font-weight: 500;font-size: 11px;line-height: normal;letter-spacing: 0.12em;text-transform: uppercase;white-space: nowrap;color: #B4B4B4;}
+.notion-root .enc-count__fig{font-family: "Outfit",system-ui,sans-serif;font-weight: 600;font-size: clamp(76px,13vw,208px);line-height: 0.82;letter-spacing: -0.058em;color: #FAFAF8;font-variant-numeric: tabular-nums;}
+.notion-root .enc-count__title{font-family: "Outfit",system-ui,sans-serif;font-weight: 500;font-size: clamp(20px,2.2vw,32px);line-height: 1.18;letter-spacing: -0.026em;color: #FAFAF8;}
+.notion-root .enc-count__line{font-family: "Hanken Grotesk",system-ui,sans-serif;font-size: 15.5px;line-height: 1.56;color: #C9C9C4;text-wrap: pretty;}
+.notion-root .enc-count__cue{position: absolute;left: clamp(20px,4vw,64px);top: calc(clamp(40px,8vh,88px) + clamp(76px,13vw,208px) * 1.02 + 28px);font-family: "JetBrains Mono",ui-monospace,monospace;font-weight: 500;font-size: 9.5px;letter-spacing: 0.12em;text-transform: uppercase;color: #B4B4B4;white-space: nowrap;line-height: 1.6;opacity: 0;transition: opacity 0.2s ease;}
+.notion-root .enc-count__tip{position: absolute;left: 0;top: 0;transform: translate(-50%,-100%);padding: 6px 9px;border-radius: 4px;background: #FAFAF8;color: #000000;font-family: "JetBrains Mono",ui-monospace,monospace;font-weight: 500;font-size: 10px;line-height: normal;letter-spacing: 0.12em;text-transform: uppercase;white-space: nowrap;opacity: 0;pointer-events: none;transition: opacity 0.16s ease;z-index: 30;}
 .notion-root #block-3dde800a51388122a9f4df1b44f7ccbe{margin: 0 0 30px !important;padding: 0 !important;font-family: var(--type-body),system-ui,sans-serif !important;font-size: 16px !important;line-height: 1.56 !important;color: #3A3D38 !important;text-wrap: pretty !important;}
 .notion-root #block-3dde800a513881d6815ed26488091143{--btn-h: 48px;--btn-px: 20px;--btn-fs: 15.5px;float: right !important;margin: 0 0 20px 40px !important;}
 .notion-root #block-10fb4619625b43cd82d572d6b806ead7{display: block !important;margin: 0 0 44px !important;}
