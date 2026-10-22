@@ -330,8 +330,14 @@ html:has(.notion-root[data-enc-guide]) { scroll-padding-top: 0; }
   color: #000 !important;
   max-width: 28ch;
 }
-/* the body sits straight on the grid (the handoff of 2026-10-22): the paper box that stood behind it
-   cut a blank rectangle into the lines, and at 5% they leave the type its contrast */
+/* solid paper behind the body only — the smallest type is the only thing the lines muddy; the title
+   and Watch out sit on the lines (the handoff took the box away for an hour on 2026-10-22, v376, and
+   put it back) */
+.enc-gd__well {
+  background: var(--gd-paper);
+  border-radius: 4px;
+  box-shadow: 0 0 0 6px var(--gd-paper);
+}
 .enc-gd p.enc-gd__body {
   margin: 0;
   font-size: 17px;

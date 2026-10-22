@@ -156,8 +156,9 @@ the step and close titles at 500 35.2px), the numeral is the file's own formula 
 5% paper on the ink head and close (the head had no ground before, the close had paper dots), a line through the
 screen's centre each way (`calc(50% + 16px)`); it was a 22px dot grid. It went in at 64px and 7% (v375), the cover of
 /brand with it; the same afternoon the handoff drew the guide's tighter (the user: "made the grid more tighter", v376)
-and took away the paper box behind the step's body (`.enc-gd__well`, still built by guide.js, now unpainted), which cut
-a blank rectangle into the lines. /brand's handoff kept 64px at 7%.
+and took away the paper box behind the step's body (`.enc-gd__well`), which cut a blank rectangle into the lines — then
+put it back (v377): solid paper behind the body paragraph only, 4px corners and a 6px paper spread, the title and Watch
+out on the lines. /brand's handoff kept 64px at 7%.
 **The frame follows the capture**: a wallet shot is tall (360:788) and stands beside the note; a
 dashboard shot is wide (16:9) and runs under the header. `guide.js` reads the file's own
 proportions on load and sets `[data-enc-shot]`. The band is one grid, so opening a note never
