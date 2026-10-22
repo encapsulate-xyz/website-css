@@ -1132,8 +1132,12 @@
 
   var tries = 0;
   function build() {
-    // the band reads the rows, so they are built first
-    rows(); count(); head(); controls(); pager(); apply(); hideSources(); pillars();
+    // the band reads the rows, so they are built first; and it is built once the pager has hidden all but
+    // the first page of them, because it measures its header, and a measure lays out the whole page: with
+    // all 1,181 rows showing that took 0.7s on the first build and 1s on the rebuild after Super redraws
+    // the page, during which the band was bare ink (the user, 2026-10-22: "sometime i just see an inked
+    // page with no disc on it"); after the pager, 0.1s
+    rows(); head(); controls(); pager(); apply(); count(); hideSources(); pillars();
     // the glyphs come from galleries that can render after the table, and after Super has stopped
     // mutating, so nothing would wake the observer again (home.js did the same for 37h)
     if (bare && tries++ < 12) { clearTimeout(t); t = setTimeout(build, 300); }

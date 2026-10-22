@@ -78,6 +78,14 @@ test uses the opened gaps (`S.px`, `S.py`); each block owns half the gap around 
   first. Touch, keys and the scrollbar scroll freely; a flick started further than 1.5 screens away is not ours and
   can still run through. Checked with simulated trackpad swipes (a finger ramp and a momentum tail), flicks three
   times as hard, and mouse notches, down and up, at 1920×985.
+- **The band is built after the pager** (2026-10-22, the user: "it takes some time to load sometime i just see an inked
+  page with no disc on it"). `build()` ran `rows(); count(); …; apply()`, and `count()` measures its header — which
+  lays out the whole page, and with all 1,181 rows still showing that took 0.73s on the first build and 1.06s on the
+  rebuild after Super redraws the page (React's hydration swaps the band), the band bare ink meanwhile. Profiled with
+  long-animation-frame entries on a fresh load: governance.js 2.3s of main thread, Super's own scripts 0.25s. Now
+  `rows(); head(); controls(); pager(); apply(); count(); …`: count() 0.1s and 0.15s, governance.js 0.6s in all,
+  DOMContentLoaded at 1.3s instead of 2.5s (headless, 1920×985). The built page is the same element for element
+  (38,123, one signature). Any new measure in this file belongs after `apply()`.
 - The canvas draws in the scroll event itself (the design's note: a frame callback can be held back) and skips a
   draw while the band is off the screen. Measured idle at 1440: no mutations of ours in 3s.
 
