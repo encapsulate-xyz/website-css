@@ -9,7 +9,7 @@ The one-screen band with its grid of grey dots (and its snap) was replaced by th
 sticky stage on ink**, the field drawn on a canvas by `governance.js` (section 1), the design's script ported with its
 arithmetic unchanged. Four frames, each held a moment: the record's **second-newest** vote alone, its face in full
 (glyph, "Axelar 499", title, our reason in quotes, our answer in an ink pill); it and the votes either side; its block
-of a hundred; the whole field at rest, as many blocks to a row as fill the stage. The three zooms between them are at
+of a hundred, alone; the whole field at rest, as many blocks to a row as fill the stage. The three zooms between them are at
 0.06–0.22, 0.34–0.6 and 0.7–0.94 of the band's scroll. The figure counts up with the scroll (1, 3, 100, the total) and
 never says more than the votes wholly on screen; the lines beside it change at 1, 2, 100 and the total. At rest a
 hovered block shows its count in the house tooltip (mouse only). Reduced motion shows the field at rest with no faces.
@@ -24,6 +24,13 @@ No breakpoint: the design's own measure fits the field to any stage (4 blocks to
   filled from the rows. governance.js carries the same lines as its fallback. Removed on 2026-10-21 (backup
   `backups/governance-count-band-2026-10-21.json`): "Encapsulate · " from the kicker, "Votes cast since 2020." (now the
   years line), "Most validators never publish theirs." and the legend "One mark per vote · one block per hundred".
+- **"A block is a hundred." shows one block** (the user, 2026-10-22: "when we say a block is a 100 there is only a
+  block on the screen"). The design's frame shows the block with its neighbours: at 1728 the next block sat almost
+  whole beside it and the next row peeked in below, so the frame read as "blocks", not "a block". The rest of the
+  field now dims to 14% (`ALONE`) as the zoom to the block starts — none of it is on the screen yet, checked at 1728
+  and 390 — and comes back in the first third of the pull back to the record, before the figure counts it (a dimmed
+  mark is not counted). Faint rather than gone, so the pull back still reads as the camera moving out over a field
+  that was there; `ALONE = 0` would show the block on bare ink.
 - **Every mark is a vote, and the newest are the record's rows**, read off the table on the page (newest first by
   Recorded, whatever the sort control has done), each in its network's pastel — `tintFor`, the colour of its disc in
   the rows below. The 729 votes from before the record have no row and so **no network on file**; they are the
