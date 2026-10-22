@@ -101,15 +101,15 @@ html:has(.notion-root[data-enc-guide]) { scroll-padding-top: 0; }
 }
 
 /* ── 01 · the head ───────────────────────────────────────────────────────────────────────── */
-/* the ink bands carry the same grid in paper at 7% (the handoff of 2026-10-22; the head had none,
+/* the ink bands carry the same grid in paper at 5% (the handoff of 2026-10-22; the head had none,
    the close had paper dots) */
 .enc-gd__head {
   background-color: var(--gd-ink);
   background-image:
-    linear-gradient(to right, rgba(250, 250, 248, 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(250, 250, 248, 0.07) 1px, transparent 1px);
-  background-size: 64px 64px;
-  background-position: calc(50% + 32px) calc(50% + 32px);
+    linear-gradient(to right, rgba(250, 250, 248, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(250, 250, 248, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: calc(50% + 16px) calc(50% + 16px);
   padding: clamp(56px, 6vw, 88px) clamp(28px, 6vw, 96px);
   justify-content: space-between;
   gap: 26px;
@@ -213,15 +213,16 @@ html:has(.notion-root[data-enc-guide]) { scroll-padding-top: 0; }
    all the spare height and the capture sank to the bottom of the screen (the user's report).
    Now each part is the design's own box, and nothing between the header and the capture grows.
    The grid is the design's single ground, which stays put while the bands move over it
-   (a sticky layer there; a fixed background here): 64px lines at 7% ink, a line through the
-   screen's centre each way — the 22px dot grid until the handoff of 2026-10-22. */
+   (a sticky layer there; a fixed background here): 32px lines at 5% ink, a line through the
+   screen's centre each way — the 22px dot grid until the handoff of 2026-10-22, 64px at 7% that
+   afternoon until the handoff drew it tighter. */
 .enc-gd__step {
   background-color: var(--gd-paper);
   background-image:
-    linear-gradient(to right, rgba(0, 0, 0, 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.07) 1px, transparent 1px);
-  background-size: 64px 64px;
-  background-position: calc(50% + 32px) calc(50% + 32px);
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: calc(50% + 16px) calc(50% + 16px);
   background-attachment: fixed;
   height: 100vh;
   max-height: 100vh;
@@ -329,12 +330,8 @@ html:has(.notion-root[data-enc-guide]) { scroll-padding-top: 0; }
   color: #000 !important;
   max-width: 28ch;
 }
-/* solid paper behind the body only — the smallest type is the only thing the grid muddies */
-.enc-gd__well {
-  background: var(--gd-paper);
-  border-radius: 4px;
-  box-shadow: 0 0 0 6px var(--gd-paper);
-}
+/* the body sits straight on the grid (the handoff of 2026-10-22): the paper box that stood behind it
+   cut a blank rectangle into the lines, and at 5% they leave the type its contrast */
 .enc-gd p.enc-gd__body {
   margin: 0;
   font-size: 17px;
@@ -555,10 +552,10 @@ html:has(.notion-root[data-enc-guide]) { scroll-padding-top: 0; }
 .enc-gd__close {
   background-color: var(--gd-ink);
   background-image:
-    linear-gradient(to right, rgba(250, 250, 248, 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(250, 250, 248, 0.07) 1px, transparent 1px);
-  background-size: 64px 64px;
-  background-position: calc(50% + 32px) calc(50% + 32px);
+    linear-gradient(to right, rgba(250, 250, 248, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(250, 250, 248, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: calc(50% + 16px) calc(50% + 16px);
   padding: clamp(28px, 3.5vw, 48px) clamp(28px, 5vw, 80px);
   justify-content: center;
   align-items: flex-start;
