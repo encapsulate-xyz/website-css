@@ -26,13 +26,19 @@ No breakpoint: the design's own measure fits the field to any stage (4 blocks to
   years line), "Most validators never publish theirs." and the legend "One mark per vote · one block per hundred".
 - **Every mark is a vote, and the newest are the record's rows**, read off the table on the page (newest first by
   Recorded, whatever the sort control has done), each in its network's pastel — `tintFor`, the colour of its disc in
-  the rows below. **Deviation:** the design fills every mark with a pastel, its mock drawing the networks at random;
-  the 729 votes from before the record have no row and so no network, and are drawn in paper at 32% (`NONE`), the
-  oldest marks, at the end of the field. A face reads its own row; a mark with no row would show its place
-  ("Vote 12"), which no frame comes close enough to show.
-- **Built, the callout is the run** (`[data-enc-count]`: 420vh, no padding, `overflow: visible` — a clipping callout
-  would stop the stage sticking) and its paragraphs are hidden; the stage is appended inside it. Before the script
-  runs, the callout is one screen holding its paragraphs as the design's template does (the last beat).
+  the rows below. The 729 votes from before the record have no row and so **no network on file**; they are the
+  oldest marks, at the end of the field, and take the design's own seeded draw of the five pastels (seed 1882, its
+  generator, one draw per mark), so a colour there says "a network", never which. v367–v368 drew them in paper at 32%;
+  the user, 2026-10-22: "not all of the dots are colored". A face reads its own row; a mark with no row would show its
+  place ("Vote 12"), which no frame comes close enough to show.
+- **The callout is the run from the first paint** (420vh, no padding, `overflow: visible` — a clipping callout would
+  stop the stage sticking), so nothing below it moves when the script builds. Until then its content is a sticky
+  screen showing **the kicker alone**, where the stage puts it (measured equal at 1728, 1280 and 390); the figure and
+  the lines wait for the script. They used to show as the last beat, and on this page the script runs only once the
+  3.7 MB document is parsed (2–4s in a real Chrome), and again for a moment when React swaps the band out after load
+  — so a reader scrolling in met Notion's "1909" before the run's "1" (the user, 2026-10-22: "when i scrol from
+  cover to count page, i see 1909 first and then it changes into 1"). Built (`[data-enc-count]`), the content is
+  hidden and the stage is appended inside the callout. With no script the band is an ink run with its kicker.
 - The glyphs on the faces come from the page's galleries (`glyphs()`) through Super's optimizer at 384px; the six
   the first frames show are fetched as the band is built.
 - **Its classes are `enc-count__*`, never `enc-rec__*`.** v367 called the band's header `.enc-rec__head`, the name

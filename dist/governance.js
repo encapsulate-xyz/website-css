@@ -55,7 +55,9 @@
      the tooltip, a mark's place and the band's label are the "Count band copy" toggle; the facts in
      them are the rows'. The newest marks are the record's rows, newest first, each in its network's
      pastel (tintFor, the colour of its disc in the rows below). The votes from before the record
-     have no row and so no network: they are paper at a third (NONE). */
+     have no row and so no network on file; they take the design's own seeded draw of the five
+     pastels (the user, 2026-10-22: "not all of the dots are colored"), so a colour there says
+     "a network", never which. */
   var COUNT = {   // the fallback if the "Count band copy" toggle goes missing
     "one": "This is one vote.",
     "one line": "{vote}, voted {answer} on {date}. Our reason is in the record.",
@@ -68,7 +70,6 @@
     "tip": "{n} votes",
     "label": "The record: {total} votes, opening on one of them"
   };
-  var NONE = "rgba(250, 250, 248, 0.32)";
   var WORDS = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
   var MOVES = [[0.06, 0.22], [0.34, 0.6], [0.7, 0.94]];
   var HALF = 9 / 26;            // a mark's radius as a share of the mark pitch
@@ -173,9 +174,10 @@
     band.setAttribute("aria-label", fill(c.label, { total: fmt(total) }));
     band.setAttribute("data-enc-count", "");
 
-    // every mark in its network's pastel, by the row it stands for
-    var ti = [];
-    for (var j = 0; j < total; j++) ti.push(j < rs.length ? TINTS.indexOf(tintFor(rs[j].chain.toLowerCase())) : -1);
+    // every mark in its network's pastel, by the row it stands for; past the rows, the design's seeded draw
+    var ti = [], sd = 1882;
+    var rnd = function () { sd = (sd * 1664525 + 1013904223) >>> 0; return sd / 4294967296; };
+    for (var j = 0; j < total; j++) ti.push(j < rs.length ? TINTS.indexOf(tintFor(rs[j].chain.toLowerCase())) : Math.floor(rnd() * TINTS.length));
     S = { band: band, sig: sig, stage: stage, cv: cv, head: head, fig: fig, hT: hT, hL: hL, cap: cap, tip: tip,
       rows: rs, ti: ti, total: total, nb: Math.ceil(total / 100), beats: beats, frames: [1, 3, 100, total],
       cue: said(ps[4]), copy: c, rm: reduce.matches, cols: 0, pos: null, mW: 0, mH: 0, L: null,
@@ -317,9 +319,9 @@
     for (j = 0; j < total; j++) { xs.push(sx + (pos[j][0] - qx) * k); ys.push(sy + (pos[j][1] - qy) * k); }
     S.view = { sx: sx, sy: sy, qx: qx, qy: qy, k: k, rest: S.rm || p >= MOVES[2][1] };
     var seen = function (j) { return xs[j] + r >= 0 && xs[j] - r <= vw && ys[j] + r >= 0 && ys[j] - r <= vh; };
-    // every mark in its network's pastel, one path per pastel (NONE first: the votes with no row)
-    for (var c = -1; c < TINTS.length; c++) {
-      ctx.fillStyle = c < 0 ? NONE : TINTS[c];
+    // every mark in its network's pastel, one path per pastel
+    for (var c = 0; c < TINTS.length; c++) {
+      ctx.fillStyle = TINTS[c];
       ctx.beginPath();
       for (j = 0; j < total; j++) {
         if (S.ti[j] !== c || !seen(j)) continue;
