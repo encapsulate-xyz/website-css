@@ -42,8 +42,8 @@
      to all of them. The band is 420vh with a sticky stage on ink, and the field is drawn on a canvas:
      one mark per vote, ten to a row, a block per hundred, as many blocks to a row as fill the stage.
      Four frames, each held for a moment: the record's second-newest vote alone, its face in full
-     (K0); it and the votes either side (K1); its block of a hundred (K2), the rest of the field
-     dimmed to ALONE around it; the whole field at rest (K3). MOVES are the three zooms between them,
+     (K0); it and the votes either side (K1); its block of a hundred (K2); the whole field at rest
+     (K3). At K0 and K2 the rest of the field is dimmed to ALONE around the vote and the block. MOVES are the three zooms between them,
      as fractions of the band's scroll. The figure
      counts up with the scroll and never says more than the votes wholly on screen; the lines beside
      it hold from their threshold (beats) to the next. At rest a hovered block shows its count, mouse
@@ -76,7 +76,7 @@
   var HALF = 9 / 26;            // a mark's radius as a share of the mark pitch
   var OPENED = [17.5, 4.5];     // the second mark, newest first: the opened vote
   var BLOCK0 = [63, 63];        // the middle of the newest block
-  var ALONE = 0.14;             // the other blocks at K2, so the newest reads as the hundred (the user, 2026-10-22)
+  var ALONE = 0.14;             // the rest of the field at K0 and K2, so the one vote and the block read alone (the user, 2026-10-22)
   var MONO_F = "'JetBrains Mono', monospace", OUT_F = "Outfit, sans-serif", HAN_F = "'Hanken Grotesk', sans-serif";
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
   var S = null;                 // the built band: its nodes, its rows and what it last drew
@@ -321,19 +321,23 @@
     for (j = 0; j < total; j++) { xs.push(sx + (pos[j][0] - qx) * k); ys.push(sy + (pos[j][1] - qy) * k); }
     S.view = { sx: sx, sy: sy, qx: qx, qy: qy, k: k, rest: S.rm || p >= MOVES[2][1] };
     var seen = function (j) { return xs[j] + r >= 0 && xs[j] - r <= vw && ys[j] + r >= 0 && ys[j] - r <= vh; };
-    // at K2 the newest block stands alone: the rest of the field dims as the zoom to it starts (none of it
-    // is on the screen yet) and comes back early in the pull back to the record, before it is counted
-    var iso = S.rm ? 0 : Math.min(clamp01((p - MOVES[1][0]) / (0.1 * (MOVES[1][1] - MOVES[1][0]))),
+    // at K0 the opened vote stands alone, at K2 the newest block: the rest of the field is dimmed and comes
+    // back early in the move out of the frame, before the figure counts it. K2's dimming starts with the zoom
+    // to the block, while none of the rest is on the screen yet. lo..hi are the marks in focus.
+    var iso0 = S.rm ? 0 : 1 - clamp01((p - MOVES[0][0]) / (0.35 * (MOVES[0][1] - MOVES[0][0])));
+    var iso2 = S.rm ? 0 : Math.min(clamp01((p - MOVES[1][0]) / (0.1 * (MOVES[1][1] - MOVES[1][0]))),
       1 - clamp01((p - MOVES[2][0]) / (0.35 * (MOVES[2][1] - MOVES[2][0]))));
+    var iso = Math.max(iso0, iso2), lo = iso0 > 0 ? 1 : 0, hi = iso0 > 0 ? 2 : Math.min(100, total);
     var others = 1 - iso * iso * (3 - 2 * iso) * (1 - ALONE);
-    // every mark in its network's pastel, one path per pastel: the newest block, then the rest
+    var focus = function (j) { return j >= lo && j < hi; };
+    // every mark in its network's pastel, one path per pastel: the marks in focus, then the rest
     for (var g = 0; g < 2; g++) {
       ctx.globalAlpha = g ? others : 1;
       for (var c = 0; c < TINTS.length; c++) {
         ctx.fillStyle = TINTS[c];
         ctx.beginPath();
-        for (j = g ? 100 : 0; j < (g ? total : Math.min(100, total)); j++) {
-          if (S.ti[j] !== c || !seen(j)) continue;
+        for (j = 0; j < total; j++) {
+          if (S.ti[j] !== c || focus(j) === (g === 1) || !seen(j)) continue;
           ctx.moveTo(xs[j] + r, ys[j]);
           ctx.arc(xs[j], ys[j], r, 0, 6.2832);
         }
@@ -346,13 +350,13 @@
     var lab = S.rm ? 0 : clamp01((d - 96) / 20);
     var k0 = S.rm ? 0 : 1 - clamp01((p - MOVES[0][0]) / (0.4 * (MOVES[0][1] - MOVES[0][0])));
     if (lab > 0.01) {
-      for (j = 0; j < total; j++) if (seen(j)) face(ctx, xs[j], ys[j], d, j, lab, L.m, vw - L.m, k0);
+      for (j = 0; j < total; j++) if (seen(j)) face(ctx, xs[j], ys[j], d, j, lab * (focus(j) ? 1 : others), L.m, vw - L.m, k0);
       ctx.globalAlpha = 1;
     }
     // the figure counts up with the scroll: each held frame reads its own number, a move climbs between
     // them at the zoom's own rate, and it never says more than the votes wholly on screen
     var vis = 0;
-    for (j = 0; j < total; j++) if ((j < 100 || others > 0.5) && xs[j] - r >= -0.5 && xs[j] + r <= vw + 0.5 && ys[j] - r >= -0.5 && ys[j] + r <= vh + 0.5) vis++;
+    for (j = 0; j < total; j++) if ((focus(j) || others > 0.5) && xs[j] - r >= -0.5 && xs[j] + r <= vw + 0.5 && ys[j] - r >= -0.5 && ys[j] + r <= vh + 0.5) vis++;
     var F = S.frames, last = F.length - 1, at = Math.min(i, last);
     var goal = e > 0 && i < last ? Math.exp(Math.log(F[i]) + (Math.log(F[i + 1]) - Math.log(F[i])) * e) : F[at];
     var n = S.rm ? total : Math.max(1, Math.min(Math.floor(goal + 1e-6), vis));

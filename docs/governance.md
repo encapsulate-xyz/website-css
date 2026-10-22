@@ -8,8 +8,8 @@ what every task needs and the index of these files.
 The one-screen band with its grid of grey dots (and its snap) was replaced by the design's W: a **420vh run with a
 sticky stage on ink**, the field drawn on a canvas by `governance.js` (section 1), the design's script ported with its
 arithmetic unchanged. Four frames, each held a moment: the record's **second-newest** vote alone, its face in full
-(glyph, "Axelar 499", title, our reason in quotes, our answer in an ink pill); it and the votes either side; its block
-of a hundred, alone; the whole field at rest, as many blocks to a row as fill the stage. The three zooms between them are at
+(glyph, "Axelar 499", title, our reason in quotes, our answer in an ink pill), alone; it and the votes either side; its
+block of a hundred, alone; the whole field at rest, as many blocks to a row as fill the stage. The three zooms between them are at
 0.06–0.22, 0.34–0.6 and 0.7–0.94 of the band's scroll. The figure counts up with the scroll (1, 3, 100, the total) and
 never says more than the votes wholly on screen; the lines beside it change at 1, 2, 100 and the total. At rest a
 hovered block shows its count in the house tooltip (mouse only). Reduced motion shows the field at rest with no faces.
@@ -31,6 +31,10 @@ No breakpoint: the design's own measure fits the field to any stage (4 blocks to
   and 390 — and comes back in the first third of the pull back to the record, before the figure counts it (a dimmed
   mark is not counted). Faint rather than gone, so the pull back still reads as the camera moving out over a field
   that was there; `ALONE = 0` would show the block on bare ink.
+  **The first frame does the same for the one vote** (the user, same day: "can you do the same effect for this
+  screen, just focus on the one"): the votes either side of Axelar 499 are shadows at "This is one vote.", their
+  faces too, and come back in the first third of the move to the three votes, before the figure reaches 2. One
+  rule for both (`iso0`, `iso2`; `lo..hi` the marks in focus).
 - **Every mark is a vote, and the newest are the record's rows**, read off the table on the page (newest first by
   Recorded, whatever the sort control has done), each in its network's pastel — `tintFor`, the colour of its disc in
   the rows below. The 729 votes from before the record have no row and so **no network on file**; they are the
