@@ -274,6 +274,8 @@ def update_facts(pid, r):
 
 
 def main(argv):
+    if "-h" in argv or "--help" in argv:
+        sys.exit(__doc__)   # it once ran as a write of every chain, since --help names none
     dry = "--dry" in argv
     if "--facts" in argv:
         names = [a for a in argv if not a.startswith("--")]
