@@ -18,8 +18,9 @@
 /* ── THE COVER ─────────────────────────────────────────────────────────────────────────────────
    Paper, one screen, centred: the eyebrow above, the wordmark with the kit line and two CTAs in the
    middle, the foot below. No headline — the wordmark is the headline. It was ink until 2026-09-24,
-   when the handoff put its paper cover (`coverPaper`) first: the paper ground under a 22px dot
-   grid, the light wordmark, ink-7 type and the Button System's paper buttons. */
+   when the handoff put its paper cover (`coverPaper`) first: the paper ground under a grid, the
+   light wordmark, ink-7 type and the Button System's paper buttons. The grid is 64px lines at 7% ink,
+   a line through the cover's centre each way, since the handoff of 2026-10-22 (a 22px dot grid before). */
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 {
   position: relative !important;
   overflow: hidden !important;
@@ -31,9 +32,11 @@
   min-height: calc(100svh - var(--enc-cover-top, 56px)) !important;
   display: flex !important;
   background-color: #FAFAF8 !important;
-  background-image: radial-gradient(rgba(0, 0, 0, 0.22) 1px, transparent 1.2px) !important;
-  background-size: 22px 22px !important;
-  background-position: 11px 11px !important;
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.07) 1px, transparent 1px) !important;
+  background-size: 64px 64px !important;
+  background-position: calc(50% + 32px) calc(50% + 32px) !important;
   border: 0 !important;
   border-radius: 0 !important;
 }
@@ -144,18 +147,19 @@
   z-index: 0 !important;
 }
 
-/* a paper screen behind the kit line, so the dot grid does not run through the words */
+/* a paper screen behind the kit line, so the grid does not run through the words (the handoff of
+   2026-10-22 drew it tighter for the lines: -6% / -14%, solid to 52%, clear at 82%) */
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-mid > p.notion-text::before {
   content: "";
   position: absolute;
   z-index: -1;
-  left: -14%;
-  right: -14%;
-  top: -30%;
-  bottom: -30%;
+  left: -6%;
+  right: -6%;
+  top: -14%;
+  bottom: -14%;
   display: block;
   pointer-events: none;
-  background: radial-gradient(ellipse at center, #FAFAF8 0%, #FAFAF8 55%, transparent 100%);
+  background: radial-gradient(ellipse at center, #FAFAF8 0%, #FAFAF8 52%, transparent 82%);
 }
 
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-mid > .notion-column-list {

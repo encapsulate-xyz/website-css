@@ -19,7 +19,7 @@ fill rising with the reader's progress; an ink close with the next guide.
 | The crumb, "Watch out", "{N} screens", the close band, the Discord line | the **"Guide page copy" toggle on /guides**, `key · value` lines — one place for 33 guides. `{n}` is the step count, `{N}` the same spelled ("Eight screens"), `{next}` and `{chain}` the next guide |
 
 **Converted guides so far: Axelar, Sui (ten steps, SuiVision + Slush), Espresso, Monad (below), Terra, Agoric, NEAR, Lumera,
-Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina and Starknet** (2026-10-22: Starknet, eight steps on Voyager's
+Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina and Starknet** (2026-10-22: Starknet, nine steps on Voyager's
 Staking Dashboard (voyager.online) with the **Ready X** extension — Ready's browser wallet, once Argent X; "Ready X" is
 its name in the Chrome Web Store and in Voyager's wallet list, so the guide is "Stake STRK with Ready X" (the team had
 named it "Ready") and the Wallet Set has a Ready X row since that day, its glyph made with `make_glyph.py` from the
@@ -28,9 +28,10 @@ on "the Braavos extension and its dashboard", Step 9 for eight captures, and the
 Braavos" (`chain_pages.py --buttons Starknet`, now Ready X). Step 4's Watch gives our staker address as a press-to-copy:
 Voyager's search finds only us by it, and only us by "encap" (checked on the live dashboard). Step 5's Watch is the
 Reward address, which Voyager fills with the connected wallet; step 8 reads Rewards to Claim — every epoch, about an
-hour, Claim or Restake — and the 7-day withdrawal (`chain-pages.json`). **Missing capture:** after the unlock the
-team's wallet was already connected to voyager.online, so a first-time reader's connection request has no step. The
-captures are the house sizes (720 × 1576, 2800 × 1576). Old values `backups/stake-strk-with-ready-guide-2026-10-22.json`
+hour, Claim or Restake — and the 7-day withdrawal (`chain-pages.json`). The first set was eight captures: after the
+unlock the team's wallet was already connected to voyager.online, so a first-time reader's connection request had no
+step; the team added it the same day as step 4, Ready X's "Connect to Voyager" (the site, the account, what the site
+may do), and the row went to Step 9, Time 4, "Nine steps…". The captures are the house sizes (720 × 1576, 2800 × 1576). Old values `backups/stake-strk-with-ready-guide-2026-10-22.json`
 and `…-guide-row-2026-10-22.json`. 2026-10-21: Mina, nine steps, all in the Auro Wallet extension, each "In the Auro Wallet extension" linked to https://www.aurowallet.com/ — the team had linked step 1 to the Chrome Web Store, and the house link for an extension step is the wallet's site. No amount: Mina delegates the whole balance, which step 6 says. Step 5's Watch names our key `B62qjW…uFaRYY` in full, step 7's must match the Block Producer Address; step 9 says the stake counts after one to two epochs and that we pay the share, less our 5% fee, every two epochs (the chain page's own FAQ). Step 6 had no Step number and capture 8 was not used (8 and 9 are the captures named (9) and (10)). The row had come back Live with its old Step 12, Time 6 and a "Twelve steps … and its dashboard" Lede: now 9, 4, "Nine steps in the Auro Wallet extension", as NEAR's "Eight steps in Meteor's web wallet". **Auro Wallet's popup is 375 × 596** (the user: "the wallet was weird so had to take at 375×596"), captures 750 × 1192, so the Mina guide has a 375:596 frame of its own (`#page-guides-mina`, v363), as IOTA's. Old values `backups/stake-mina-with-auro-wallet-guide-2026-10-21.json`. 2026-10-13: IOTA, seven steps — six in the IOTA Wallet extension, "In
 the IOTA Wallet extension" linked to https://www.iota.org/products/wallet, and the last "On explorer.iota.org", linked to the
 team's own stake as the capture's file name gives it. There is no approval screen: the form's Stake sends at once, which
@@ -150,7 +151,10 @@ one-screen band that row took the spare height and the capture sank to the botto
 1440×900 against 196). Tall or wide is guessed from the surface ("extension") at build and settled
 by the capture on load. The headings carry `!important` (minima had the head at Outfit 800 48px and
 the step and close titles at 500 35.2px), the numeral is the file's own formula (488px at
-1440×900), and the dots are `background-attachment: fixed` — the file's single sticky ground.
+1440×900), and the ground is `background-attachment: fixed` — the file's single sticky ground. **That ground is a line grid**
+(the handoff of 2026-10-22, the user: "change the dot grid to line grid"): 64px lines at 7% ink on the paper, and at
+7% paper on the ink head and close (the head had no ground before, the close had paper dots), a line through the
+screen's centre each way (`calc(50% + 32px)`); it was a 22px dot grid. /brand's cover took the same grid that day.
 **The frame follows the capture**: a wallet shot is tall (360:788) and stands beside the note; a
 dashboard shot is wide (16:9) and runs under the header. `guide.js` reads the file's own
 proportions on load and sets `[data-enc-shot]`. The band is one grid, so opening a note never

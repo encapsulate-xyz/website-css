@@ -285,7 +285,7 @@ step; the team names the steps, the words are mine.
       | Espresso's dashboard + MetaMask | 9 | Espresso |
       | SuiVision + Slush | 10 | Sui |
       | the IOTA Wallet extension + the IOTA explorer | 7 | IOTA — its popup is 360 × 600, so its captures are 720 × 1200 and its guide has a 360:600 frame of its own (guide.css, `#page-guides-iota`) |
-      | Voyager's staking dashboard + the Ready X extension | 8 | Starknet — the Reward address is filled with the connected wallet; our staker address finds only us in the search |
+      | Voyager's staking dashboard + the Ready X extension | 9 | Starknet — the Reward address is filled with the connected wallet; our staker address finds only us in the search |
       | the Auro Wallet extension | 9 | Mina — its popup is 375 × 596, captures 750 × 1192, a 375:596 frame of its own (`#page-guides-mina`); no amount, Mina delegates the whole balance |
 
 - [ ] **The guide's wallet follows the captures**: its Name ("Stake <TOKEN> with <wallet>"), its Wallet Set and the
