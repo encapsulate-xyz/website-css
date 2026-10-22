@@ -64,6 +64,20 @@ test uses the opened gaps (`S.px`, `S.py`); each block owns half the gap around 
   governance.js already gives the pillars band's head (heading, lede, "Ask about a proposal"); the band's
   `position: absolute` pinned that head over the cover until v368 (the user: "check the page there are many issues").
   Before naming a class in this file, grep governance.js and governance.css for it.
+- **One gesture, one count** (the user, 2026-10-22: "when i scroll from 100 to total count after the total count is
+  reached it starts scrolling the page ... shouldnt it stop at the top count and then only scroll the page if the user
+  lift the finger and scroll again", and "same thing should happen at one"). The counts were only held stretches of
+  the run (6% at 1, 12% at 3, 10% at 100, 6% at the total before the band ends): a swipe a hold happened to swallow
+  seemed to stop, a longer one ran through, and at the total it ran into the page. `countWheel` now takes a wheel or
+  trackpad gesture that starts within 1.5 screens of the run from its first event, moves the page by its deltas
+  itself (the zoom still follows the finger; a mouse notch, 60px or more, is eased by the browser), and on reaching a
+  count stops a pixel inside the far end of that count's hold and swallows the rest of the gesture (home.js's
+  new-gesture test). A pixel inside, because on the hold's edge the scroll rounded short and the figure read 99 for
+  100. From above it stops at 1; after the total the next gesture leaves the band; going up it stops at the total,
+  100, 3 and 1. The first event matters: Chrome lets a page cancel the rest of a gesture only if it cancelled the
+  first. Touch, keys and the scrollbar scroll freely; a flick started further than 1.5 screens away is not ours and
+  can still run through. Checked with simulated trackpad swipes (a finger ramp and a momentum tail), flicks three
+  times as hard, and mouse notches, down and up, at 1920×985.
 - The canvas draws in the scroll event itself (the design's note: a frame callback can be held back) and skips a
   draw while the band is off the screen. Measured idle at 1440: no mutations of ours in 3s.
 
