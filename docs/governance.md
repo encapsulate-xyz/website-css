@@ -13,7 +13,15 @@ block of a hundred, alone; the whole field at rest, as many blocks to a row as f
 0.06–0.22, 0.34–0.6 and 0.7–0.94 of the band's scroll. The figure counts up with the scroll (1, 3, 100, the total) and
 never says more than the votes wholly on screen; the lines beside it change at 1, 2, 100 and the total. At rest a
 hovered block shows its count in the house tooltip (mouse only). Reduced motion shows the field at rest with no faces.
-No breakpoint: the design's own measure fits the field to any stage (4 blocks to a row at 390, 7 at 1440).
+No breakpoint: the field is fitted to any stage, and **at rest it always spans the stage, margin to margin** (the
+user, 2026-10-22: "dots always take the full width ... so that screen always looks full"). The design kept 14 between
+blocks and so stopped short wherever the height set the size: at 1920×985, seven blocks to a row ended at 1530 of
+1856. Now, for each number of blocks to a row, the marks are as large as the 14 allows, then the gaps between blocks
+open until the field meets both margins, and between rows (up to 28) to fill the height; the largest marks win, a gap
+past 28 counting against them (by the square root) and an empty place in the last row 3%. Measured: 8 to a row at
+1920×985, 1536, 1366 and 1280; 7 at 1728, 1440 and 1024; 10 at 2560×1080; 5 at 768; 4 at 390 — all full width. The
+design's cap (marks at most twice the record page's) is gone, so a large screen gets larger marks. The tooltip's hit
+test uses the opened gaps (`S.px`, `S.py`); each block owns half the gap around it.
 
 - **Words.** The band's paragraphs, in order: "The record" (kicker), the figure (site-data's `count.mjs`, 729 + the
   rows, by its block id — untouched), "Six years of votes." (the last beat; governance.js rewrites the number of years

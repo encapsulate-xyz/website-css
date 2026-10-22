@@ -40,7 +40,7 @@
   /* ── 1 · the count band ──
      Design "Governance Count Patterns" (W, 2026-10-21): the record opens on one vote and pulls back
      to all of them. The band is 420vh with a sticky stage on ink, and the field is drawn on a canvas:
-     one mark per vote, ten to a row, a block per hundred, as many blocks to a row as fill the stage.
+     one mark per vote, ten to a row, a block per hundred, the blocks spread to fill the stage at rest.
      Four frames, each held for a moment: the record's second-newest vote alone, its face in full
      (K0); it and the votes either side (K1); its block of a hundred (K2); the whole field at rest
      (K3). At K0 and K2 the rest of the field is dimmed to ALONE around the vote and the block. MOVES are the three zooms between them,
@@ -182,7 +182,7 @@
     for (var j = 0; j < total; j++) ti.push(j < rs.length ? TINTS.indexOf(tintFor(rs[j].chain.toLowerCase())) : Math.floor(rnd() * TINTS.length));
     S = { band: band, sig: sig, stage: stage, cv: cv, head: head, fig: fig, hT: hT, hL: hL, cap: cap, tip: tip,
       rows: rs, ti: ti, total: total, nb: Math.ceil(total / 100), beats: beats, frames: [1, 3, 100, total],
-      cue: said(ps[4]), copy: c, rm: reduce.matches, cols: 0, pos: null, mW: 0, mH: 0, L: null,
+      cue: said(ps[4]), copy: c, rm: reduce.matches, cols: 0, px: 140, py: 140, pos: null, mW: 0, mH: 0, L: null,
       n: null, beat: null, view: null, ptr: null, tipB: -1, idle: false, glyphs: {} };
     if (S.rm) tip.style.transition = "none";
     // the glyphs of the faces the first frames show (the opened vote, either side, the row below)
@@ -226,11 +226,12 @@
     return im;
   }
 
-  function fieldAt(c, total) {
+  // a block is 126 across (ten marks of 9 at a pitch of 13); px and py are the block pitch, gap included
+  function fieldAt(c, total, px, py) {
     var out = [];
     for (var k = 0; k < total; k++) {
       var b = Math.floor(k / 100), i = k % 100;
-      out.push([(b % c) * 140 + (i % 10) * 13 + 4.5, Math.floor(b / c) * 140 + Math.floor(i / 10) * 13 + 4.5]);
+      out.push([(b % c) * px + (i % 10) * 13 + 4.5, Math.floor(b / c) * py + Math.floor(i / 10) * 13 + 4.5]);
     }
     return out;
   }
@@ -259,15 +260,24 @@
     var clear = head.offsetTop + hh + 0.2 * fsz, top = clear + 8;
     var bottom = vh - Math.max(20, Math.min(56, vh * 0.05)), room = Math.max(120, bottom - top);
     var m = Math.max(20, Math.min(64, vw * 0.04)), wide = vw - 2 * m;
-    // the field at rest fills the stage: as many blocks to a row as give the largest marks (up to twice
-    // the record page's), fewer empty places in the last row breaking a near tie; centred in its height
+    // the field at rest always spans the stage, margin to margin (the user, 2026-10-22: "dots always take
+    // the full width ... so that screen always looks full"): for each number of blocks to a row, the
+    // largest marks that keep the design's 14 between blocks, then the gaps between blocks opened until the
+    // field meets both margins, and between rows (up to twice the 14) to fill the height. The largest
+    // marks win, a gap past twice the design's counting against them and fewer empty places in the last
+    // row breaking a near tie; what is left of the height is shared above and below
     var fit = null;
-    for (var c = 2; c <= 10; c++) {
-      var rows = Math.ceil(S.nb / c), fw = c * 140 - 14, fh = rows * 140 - 14, ff = Math.min(2, wide / fw, room / fh);
-      var score = ff * (1 - 0.03 * (c * rows - S.nb));
-      if (!fit || score > fit.score) fit = { c: c, fh: fh, ff: ff, score: score };
+    for (var c = 2; c <= Math.max(12, S.nb); c++) {
+      var rows = Math.ceil(S.nb / c);
+      var ff = Math.min(wide / (c * 126 + (c - 1) * 14), room / (rows * 126 + (rows - 1) * 14));
+      var gx = (wide / ff - c * 126) / (c - 1);
+      var gy = rows > 1 ? Math.min(28, (room / ff - rows * 126) / (rows - 1)) : 14;
+      var score = ff * Math.sqrt(Math.min(1, 28 / gx)) * (1 - 0.03 * (c * rows - S.nb));
+      if (!fit || score > fit.score) fit = { c: c, px: 126 + gx, py: 126 + gy, fh: rows * 126 + (rows - 1) * gy, ff: ff, score: score };
     }
-    if (fit.c !== S.cols) { S.cols = fit.c; S.pos = fieldAt(fit.c, S.total); }
+    if (fit.c !== S.cols || fit.px !== S.px || fit.py !== S.py) {
+      S.cols = fit.c; S.px = fit.px; S.py = fit.py; S.pos = fieldAt(fit.c, S.total, fit.px, fit.py);
+    }
     var f = fit.ff, ox = m, oy = top + (room - fit.fh * f) / 2, cx = vw / 2, cy = top + room / 2;
     // K1, as a mark pitch: the opened mark and the one either side whole, the next one past the edge and
     // the row below off the bottom (on a portrait screen the rows below show too, with their own faces)
@@ -517,13 +527,13 @@
       var rc = cv.getBoundingClientRect(), z = rc.width / cv.clientWidth;
       var px = (pt[0] - rc.left) / z, py = (pt[1] - rc.top) / z;
       if (px >= 0 && py >= 0 && px <= cv.clientWidth && py <= cv.clientHeight) {
-        // each block owns half the 14px gap around it, so moving between blocks never drops the tooltip
-        var u = v.qx + (px - v.sx) / v.k, w = v.qy + (py - v.sy) / v.k;
-        var col = Math.floor((u + 7) / 140), row = Math.floor((w + 7) / 140), i = row * S.cols + col;
-        if (u >= -7 && w >= -7 && col < S.cols && i < S.nb) {
+        // each block owns half the gap around it, so moving between blocks never drops the tooltip
+        var u = v.qx + (px - v.sx) / v.k, w = v.qy + (py - v.sy) / v.k, hx = (S.px - 126) / 2, hy = (S.py - 126) / 2;
+        var col = Math.floor((u + hx) / S.px), row = Math.floor((w + hy) / S.py), i = row * S.cols + col;
+        if (u >= -hx && w >= -hy && col < S.cols && i < S.nb) {
           var n = Math.min(100, S.total - i * 100);
-          bx = col * 140; by = row * 140; bh = Math.ceil(n / 10) * 13 - 4;
-          if (u <= bx + Math.min(n, 10) * 13 - 4 + 7 && w <= by + bh + 7) b = i;
+          bx = col * S.px; by = row * S.py; bh = Math.ceil(n / 10) * 13 - 4;
+          if (u <= bx + Math.min(n, 10) * 13 - 4 + hx && w <= by + bh + hy) b = i;
         }
       }
     }
