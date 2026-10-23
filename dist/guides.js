@@ -348,7 +348,9 @@
           Array.prototype.forEach.call(chainRow.children, function (x) { x.removeAttribute("data-active"); });
           if (state.chain) b.setAttribute("data-active", "");
           paint();
-          keepInView(answer.querySelector(".enc-guide__card"));
+          /* the card when the chain answers at once; when it has a guide per wallet, the wallets and the hint
+             under them (on a phone the row lands below the fold) */
+          keepInView(answer.querySelector(".enc-guide__card") || (state.chain && !hintWallet.hidden ? hintWallet : null));
         });
       }
       chainRow.appendChild(b);
