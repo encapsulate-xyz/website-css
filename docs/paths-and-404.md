@@ -104,7 +104,10 @@ screen (a heading in running text 40px below it), retried while the page builds,
 touch or key; on a load, an in-app arrival, a hash change and a click on a link to the section already in the
 address. The name stays in the address, in any case, a tracker's `?…` tail ignored. A hidden block (a source a
 script replaced) is left alone. **A new section gets its name when it is built, here and in anchors.js; a section
-renamed later keeps its old name as a second key** (CLAUDE.md, "How we work").
+renamed later keeps its old name as a second key** (CLAUDE.md, "How we work"). **A new page or guide gets its names in
+the same commit** (the user, 2026-10-23: "always add new ones whenever we add a new guide or new page"): a main page's
+sections go into `NAMES` and this table; a guide (#step-1 … #done), a chain page (chain.js) and a post (post.js) are
+named by pattern, so they need only the check that one lands (`notion/new-row-checklist.md`).
 
 | Page | Names |
 |---|---|
@@ -115,7 +118,7 @@ renamed later keeps its old name as a second key** (CLAUDE.md, "How we work").
 | /guides | `picker` — beside `#<chain>`, which guides.js reads (`docs/guides.md`) |
 | /services | `dashboards`, `playbooks`, `repositories`, `bots`, `monitoring`, `launch` (the ask band) |
 | /investments | `portfolio`, `questions` |
-| /brand | `logo`, `colours` (and `colors`), `type`, `clear-space` |
+| /brand | `logo`, `colours` (and `colors`), `type`, `usage` (clear space and minimums; `clear-space`, its first name, still lands) |
 | /security | `operations`, `access`, `keys`, `failover`, `upgrades`, `slashing` |
 | /contact | `call`, `elsewhere`, `write` |
 | /privacy-policy, /terms-of-use | each clause by its heading: `who-we-are`, `cookies`, `information-not-advice`… |

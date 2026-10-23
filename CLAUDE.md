@@ -126,12 +126,18 @@ User rules that stand on every task:
 - Commit, push and tag are allowed. Backups before editing any `.css` (below).
 - **When something on the site is visibly uneven, fix it and say so — do not report it as out of scope.**
   (2026-09-29, from the navbar's notes.)
-- **Every major section has a name a link can carry** (the user, 2026-10-23: "from now on if we add any new section you
-  add such name to it as well"): https://encapsulate.xyz/#testimonials, /security#keys, /guides/sui#step-4 — kept in
-  `anchors.js` (`NAMES`) and the table in `docs/paths-and-404.md`, "Section names". **A new section gets its name when it
-  is built**, from its own label, lower case, words joined by "-"; **when a section changes, rename its name to fit**
-  and keep the old one as a second key, so a link already out still lands. Name a Notion block by its id and a band a
-  script builds by the mark its builder sets, never by its words. Say the new names in the reply.
+- **Every major section has a name a link can carry, and every name is documented** (the user, 2026-10-23: "from now on
+  if we add any new section you add such name to it as well"; "always add new ones whenever we add a new guide or new
+  page"): https://encapsulate.xyz/#testimonials, /security#keys, /guides/sui#step-4 — kept in `anchors.js` (`NAMES`)
+  and the table in `docs/paths-and-404.md`, "Section names", always both, in the same commit.
+  - **A new page**: name each of its sections in `NAMES` and add its row to the table, with the page itself.
+  - **A new guide, chain page or post** is named by pattern (#step-1 … #done; #terms, #what-we-run…; #sec-…): check one
+    of its names lands on the live page (`scripts/livecheck.mjs`) as part of `notion/new-row-checklist.md`.
+  - **A new section on an existing page**: its name when it is built.
+  - A name comes from the section's own label: lower case, words joined by "-", short (`#usage` over `#clear-space`).
+    **When a section changes, rename its name to fit** and keep the old one as a second key, so a link already out
+    still lands. Name a Notion block by its id and a band a script builds by the mark its builder sets, never by its
+    words. List the new names in the reply.
 - **Make space with CSS, and pair things with Notion columns — never with a divider or an empty paragraph.**
   (2026-09-25, from the homepage's notes, "No divider makes space anywhere".)
 
@@ -183,7 +189,8 @@ User rules that stand on every task:
 | `scripts/shots.py`, `img/shots/` | panel captures of the live tools (Sui RGP, the Solana graph), 1100×750 at DPR 2 from headless Chrome — the extension's screenshots time out on those pages, and a WebGL graph needs swiftshader or it comes back blank. Not wired into any page yet (2026-09-23): the tools table that names their tiles arrived cut off | — |
 
 **Edit sources, run `python3 build.py`, commit source and `dist/` together. Never edit `dist/`.**
-When a new page CSS file is added, add it to build.py's default list and create `head/<page>.html`.
+When a new page CSS file is added, add it to build.py's default list and create `head/<page>.html`, and name its
+sections in `anchors.js` ("Every major section has a name", below).
 If the user drops a file into `dist/`, move it to the root as the source.
 
 ## Back up before every change

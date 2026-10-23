@@ -15,6 +15,10 @@ each box is something that has gone wrong, or would have, when it was skipped.
       a Notion edit until it refetches, and its own sync can take hours.
 - [ ] **Check it on the live site**: the page builds, it is in `sitemap.xml`, it has no `noindex`, and
       its `og:image`, title and description are the new ones.
+- [ ] **Its section names land** (CLAUDE.md, "Every major section has a name"): a guide's `#step-1` … `#done`, a chain
+      page's `#terms` … `#common-questions`, a post's `#sec-…` come by pattern — open one on the live page; a new
+      main page gets its sections into `anchors.js` `NAMES` and its row in `docs/paths-and-404.md`, "Section names".
+      List the new names in the reply.
 
 ## SEO — every new page, whatever it is
 

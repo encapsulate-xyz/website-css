@@ -85,7 +85,8 @@
       colours: '.enc-band[data-band="2"]',
       colors: '.enc-band[data-band="2"]',
       type: '.enc-band[data-band="3"]',
-      "clear-space": '.enc-band[data-band="4"]'
+      usage: '.enc-band[data-band="4"]',
+      "clear-space": '.enc-band[data-band="4"]'   // its first name, for a day (2026-10-23)
     },
     "/security": {
       operations: '[data-enc-sec="01"]',
