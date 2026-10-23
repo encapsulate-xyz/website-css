@@ -46,7 +46,13 @@ the Braavos page created with its canonical, and **/guides/starknet 308s to Read
 `meta:title`, "Starknet staking guide with <wallet> - Encapsulate" (the SEO job writes "<Chain> staking guide -
 Encapsulate" only where it is empty, so the two would have shared one). **The picker** (guides.js, v378) keeps a list
 per chain, as the Guides Set design does: one guide fills its wallet in, several show every wallet with none picked
-under "Pick the wallet you already have installed" — on a phone the pick scrolls that row into view (v379). **A guide's
+under "Pick the wallet you already have installed" — on a phone the pick scrolls that row into view (v379). **A chain in
+the address** (v380, the user: "make /guides#starknet open the picker with Starknet selected … for every chain"):
+/guides#<chain> — the chain's name or its chain page's slug, any case, a tracker's `?…` tail ignored — picks that chain
+on load and on a hash change, as a press would, and brings the panel to the top of the screen (on a phone, then the
+card or the wallets into view). A chain with no live guide is not picked; `#block-…` is left to the browser. A press
+of the reader's own takes over. Nothing links there yet; the chain page's button could, for a chain with several
+wallets. **A guide's
 "Next"** skips its own chain's other wallet (guide.js, v378): both Starknet guides go to Terra, Mina's to Ready X, the
 first Starknet card in the gallery. The chain page's button stays "Delegate with Ready X". Old values
 `backups/stake-strk-with-braavos-guide-2026-10-23.json`, `backups/starknet-guides-rows-2026-10-23.json`.

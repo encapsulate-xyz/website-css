@@ -103,7 +103,10 @@
     if (src.wallets) src.wallets.setAttribute("data-enc-source", "wallets");
 
     var chains = itemsOf(src.chains).map(function (c) {
-      return { name: titleOf(c), key: key(titleOf(c)), glyph: glyphOf(c) };
+      // the chain page's slug, the other name an address can give it (#humans-ai, #gravity-bridge)
+      var page = c.querySelector('a[href^="/networks/"]');
+      return { name: titleOf(c), key: key(titleOf(c)), glyph: glyphOf(c),
+        slug: page ? page.getAttribute("href").replace(/^\/networks\//, "").replace(/[/?#].*$/, "") : "" };
     }).filter(function (c) { return c.name; });
 
     var wallets = {};
@@ -338,24 +341,44 @@
       return a;
     }
 
+    function choose(c, b) {
+      state.chain = (state.chain && state.chain.key === c.key) ? null : c;
+      state.wallet = null;
+      Array.prototype.forEach.call(chainRow.children, function (x) { x.removeAttribute("data-active"); });
+      if (state.chain) b.setAttribute("data-active", "");
+      paint();
+      /* the card when the chain answers at once; when it has a guide per wallet, the wallets and the hint
+         under them (on a phone the row lands below the fold) */
+      keepInView(answer.querySelector(".enc-guide__card") || (state.chain && !hintWallet.hidden ? hintWallet : null));
+    }
+
+    var buttons = {};
     data.chains.forEach(function (c, i) {
       var guides = data.guides[c.key];
       var b = pill(c.name, c.glyph, TINTS[i % TINTS.length], !guides);
       if (guides) {
-        b.addEventListener("click", function () {
-          state.chain = (state.chain && state.chain.key === c.key) ? null : c;
-          state.wallet = null;
-          Array.prototype.forEach.call(chainRow.children, function (x) { x.removeAttribute("data-active"); });
-          if (state.chain) b.setAttribute("data-active", "");
-          paint();
-          /* the card when the chain answers at once; when it has a guide per wallet, the wallets and the hint
-             under them (on a phone the row lands below the fold) */
-          keepInView(answer.querySelector(".enc-guide__card") || (state.chain && !hintWallet.hidden ? hintWallet : null));
-        });
+        buttons[c.key] = b;
+        b.addEventListener("click", function () { deep = null; choose(c, b); });
       }
       chainRow.appendChild(b);
     });
     paint();
+
+    /* the address's chain, once: the panel is brought to the top of the screen (it is the page's one stop,
+       below the cover) and the chain picked as a press would pick it */
+    applyDeep = function () {
+      if (!deep) return;
+      var c = data.chains.filter(function (x) {
+        return buttons[x.key] && (x.key === deep || (x.slug && key(x.slug) === deep));
+      })[0];
+      if (!c) return;
+      if (!state.chain || state.chain.key !== c.key) choose(c, buttons[c.key]);
+      if (deepShown === deep) return;
+      deepShown = deep;
+      window.scrollTo({ top: Math.max(0, band.getBoundingClientRect().top + window.scrollY), behavior: "instant" });
+      keepInView(answer.querySelector(".enc-guide__card") || (!hintWallet.hidden ? hintWallet : null));
+    };
+    applyDeep();
   }
 
   /* the guide pages' own words live in a toggle on this page ("Guide page copy", read by
@@ -367,6 +390,23 @@
       if (/guide page copy/i.test(head)) tg.setAttribute("data-enc-source", "copy");
     });
   }
+
+  /* /guides#starknet — the chain's name or its chain page's slug — opens the picker on that chain: one guide
+     answers with its card, several show their wallets (the user, 2026-10-23: "make /guides#starknet open the
+     picker with Starknet selected … for every chain"). A chain the reader presses takes over; a #block-…
+     anchor is not a chain and is the browser's. */
+  var deep = null, deepShown = null, applyDeep = null;
+  function wanted() {
+    var h = "";
+    try { h = decodeURIComponent(location.hash.slice(1)); } catch (e) { h = location.hash.slice(1); }
+    h = h.replace(/[?&].*$/, "");   // a tracker's tail after the chain (#starknet?utm_source=…)
+    return h && !/^block-/i.test(h) ? key(h) : null;
+  }
+  deep = wanted();
+  window.addEventListener("hashchange", function () {
+    deep = wanted(); deepShown = null;
+    if (applyDeep && document.getElementById(BAND)) applyDeep();
+  });
 
   var t = 0;
   new MutationObserver(function () { clearTimeout(t); hideCopy(); t = setTimeout(build, 120); })
