@@ -4,8 +4,10 @@
    The page asks one sentence — "I want to stake <chain> with <wallet>." — and finishes it as the
    reader picks. Everything it knows comes from three galleries Super already renders on the page:
 
-     Guides Database  3dde…/1f6e800a…479e   one row per chain: title, its Chain and Wallet
-                                            relations, Step and Time, and the row's own page
+     Guides Database  3dde…/1f6e800a…479e   one row per guide: title, its Chain and Wallet
+                                            relations, Step and Time, and the row's own page —
+                                            a chain can have a guide per wallet (Starknet: Ready X
+                                            and Braavos, 2026-10-23)
      Networks set     block-3dde800a…33b7f1  every chain we run, and its glyph
      Wallet Set       block-3dde800a…97b664  every wallet, and its glyph
 
@@ -126,10 +128,12 @@
         if (/^\d+$/.test(t)) nums.push(parseInt(t, 10));
       });
       if (!chain) chain = key(title);
-      guides[chain] = {
+      /* a list per chain, in the gallery's order: the design's CHAINS give each chain its guides, one
+         per wallet */
+      (guides[chain] = guides[chain] || []).push({
         title: title, wallet: wallet, href: hrefOf(c),
         steps: nums.length ? nums[0] : null, minutes: nums.length > 1 ? nums[1] : null
-      };
+      });
     });
     /* every card in the gallery is a live guide (its view shows Live only), two on one chain included */
     var live = guideCards.filter(function (c) { return titleOf(c); }).length;
@@ -144,7 +148,7 @@
     var data = read();
     if (!data.chains.length) return;
 
-    var sig = data.chains.length + "/" + Object.keys(data.guides).length + "/" + Object.keys(data.wallets).length;
+    var sig = data.chains.length + "/" + data.live + "/" + Object.keys(data.wallets).length;
     if (band.getAttribute("data-enc-sig") === sig && band.querySelector(".enc-guide__chains")) return;
     band.setAttribute("data-enc-sig", sig);
 
@@ -221,7 +225,7 @@
     labelWallet.after(walletRow);
     hintWallet.after(answer);
 
-    var state = { chain: null };
+    var state = { chain: null, wallet: null };
 
     function pill(name, glyph, tint, pending) {
       var b = el("button", "enc-guide__pill");
@@ -244,27 +248,40 @@
       return b;
     }
 
+    /* the design's picker: a chain with one guide fills its wallet in and answers on the one click, the
+       wallet step still shown with its option selected; a chain with a guide per wallet shows every wallet,
+       none picked, under "Pick the wallet you already have installed", and answers once one is — a second
+       press on it takes the pick back */
     function paint() {
       walletRow.textContent = ""; answer.textContent = "";
-      var guide = state.chain ? data.guides[state.chain.key] : null;
+      var list = state.chain ? data.guides[state.chain.key] || [] : [];
+      var guide = list.length === 1 ? list[0] : list.filter(function (g) {
+        return g.wallet && state.wallet && g.wallet.name === state.wallet;
+      })[0] || null;
       slotChain.textContent = state.chain ? state.chain.name : slotChain.getAttribute("data-default");
       slotChain.toggleAttribute("data-filled", !!state.chain);
       var wallet = guide && guide.wallet;
       slotWallet.textContent = wallet ? wallet.name : slotWallet.getAttribute("data-default");
       slotWallet.toggleAttribute("data-filled", !!wallet);
 
-      var pending = !!state.chain && !guide;
+      var pending = !!state.chain && !list.length;
       labelWallet.hidden = !state.chain || pending;
       walletRow.hidden = labelWallet.hidden;
       hintChain.hidden = !!state.chain;
       hintWallet.hidden = !state.chain || !!guide;
 
-      if (guide && wallet) {
-        var w = pill(wallet.name, wallet.glyph, null, false);
-        w.setAttribute("data-active", "");
+      list.forEach(function (g) {
+        if (!g.wallet) return;
+        var w = pill(g.wallet.name, g.wallet.glyph, null, false);
+        if (g === guide) w.setAttribute("data-active", "");
+        if (list.length > 1) w.addEventListener("click", function () {
+          state.wallet = state.wallet === g.wallet.name ? null : g.wallet.name;
+          paint();
+          keepInView(answer.querySelector(".enc-guide__card"));
+        });
         walletRow.appendChild(w);
-        answer.appendChild(card(guide, state.chain));
-      }
+      });
+      if (guide && wallet) answer.appendChild(card(guide, state.chain));
     }
 
     /* the handoff (2026-09-26): once the card is on the page, if its foot is below the fold the
@@ -322,11 +339,12 @@
     }
 
     data.chains.forEach(function (c, i) {
-      var guide = data.guides[c.key];
-      var b = pill(c.name, c.glyph, TINTS[i % TINTS.length], !guide);
-      if (guide) {
+      var guides = data.guides[c.key];
+      var b = pill(c.name, c.glyph, TINTS[i % TINTS.length], !guides);
+      if (guides) {
         b.addEventListener("click", function () {
           state.chain = (state.chain && state.chain.key === c.key) ? null : c;
+          state.wallet = null;
           Array.prototype.forEach.call(chainRow.children, function (x) { x.removeAttribute("data-active"); });
           if (state.chain) b.setAttribute("data-active", "");
           paint();

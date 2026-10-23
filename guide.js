@@ -321,9 +321,15 @@
         cards.push(c);
         if (a.getAttribute("href").replace(/\/$/, "") === here) { mine = c; idx = cards.length - 1; }
       });
-      var next = idx >= 0 ? (cards[idx + 1] || cards[0]) : null;
-      if (next === mine) next = null;
-      return { me: read(mine), next: read(next), marks: marks(doc) };
+      /* the next chain's guide, not this chain's other wallet: the handoff's close band names "the row after
+         this chain", and from Ready X a "Next: Starknet" to Braavos would send the reader back to the start
+         of the same stake (Starknet has a guide per wallet since 2026-10-23) */
+      var me = read(mine), next = null;
+      for (var k = 1; idx >= 0 && k < cards.length && !next; k++) {
+        var c = cards[(idx + k) % cards.length], r = read(c);
+        if (!me.chain || r.chain !== me.chain) next = r;
+      }
+      return { me: me, next: next, marks: marks(doc) };
     });
   }
 
