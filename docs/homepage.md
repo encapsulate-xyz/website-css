@@ -149,7 +149,7 @@ screen, and so is a deck's first panel from above and its last from below (a swi
 audience split came to rest 306px down the stats' last panel until 2026-10-15); the settle retries. No CSS scroll-snap on html (fights the script). Gesture logic is testable in Node
 with a stubbed window.
 
-**A link to a homepage section lands (home.js, v362, 2026-10-18).** /#block-<id> is how the site links its sections — the
+**A link to a homepage section lands (home.js, v362, 2026-10-18; since 2026-10-23 anchors.js, on every page — `docs/paths-and-404.md`, "Section names").** /#block-<id> is how the site links its sections — the
 footer's Team (`#block-3dbe…6994`, Who we are) and Institutional staking (`#block-3dbe…1975`), the navbar's institutional
 panel, and /team since the same day — and none of them landed: on a fresh load the browser never jumped (scrollY 0) while
 the page grew a thousand pixels as it built, and arriving in the app Super's router jumped early and left Who we are
@@ -162,13 +162,14 @@ wheel during the build (left where the reader went) and a load with no hash (sta
 
 **/team → Who we are.** /team was a 308 to / (2026-09-28), and a Super redirect only names a page — no address, no
 `#fragment` (`SitePage` has `redirectPageId` alone). So /team is a page again, the old Team page (`23cbd131…`, which holds
-the same Team database the homepage shows), and home.js forwards it to `/#block-3dbe…6994` (`MOVED`): home.js is in the site
+the same Team database the homepage shows), and anchors.js (home.js until 2026-10-23) forwards it to `/#team` (`MOVED`; `/#block-3dbe…6994` before): it is in the site
 head, which Super serves in the HTML, where a page's own head script is only inserted once the app has started. Its page
 head (`head/team.html`) holds a `meta refresh` for a reader without JavaScript, `body { visibility: hidden }` and its
 canonical on /.
 
-**/#testimonials → the testimonials** (2026-10-23, v381; the user asked for the name, plural). Block ids cannot be
-renamed, so home.js's `NAMED` maps the name to the section's block, the callout holding its heading
+**/#testimonials → the testimonials** (2026-10-23, v381; the user asked for the name, plural; the next hour every major
+section of every page got one — anchors.js). Block ids cannot be
+renamed, so home.js's `NAMED` mapped the name to the section's block, the callout holding its heading
 (`#block-3dae800a51388066…`), and lands it like any `#block-…`; the name stays in the address. That block's top is the
 first quote's stop at a desktop width (8181 at 1440 × 900) and the heading just above the quotes on a phone (4649 at
 390). Any case, a tracker's `?…` tail ignored, on a hash change and on a click of a link to it on the homepage. No

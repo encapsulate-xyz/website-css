@@ -8,7 +8,8 @@ what every task needs and the index of these files.
 One step per screen. An ink head with the chain's disc and the wallet's mark, the Title and the
 Lede; a paper band per step carrying the number, the surface as a link, the title, the body, the
 "Watch out" note and the capture, with the step's numeral hollow at the bottom right and its green
-fill rising with the reader's progress; an ink close with the next guide.
+fill rising with the reader's progress; an ink close with the next guide. A link can open a step: /guides/<guide>#step-4, the
+close #done (anchors.js, 2026-10-23 — `docs/paths-and-404.md`, "Section names").
 
 **Every word is Notion's**, in three places:
 
@@ -240,7 +241,7 @@ arrow stays on the site, the up-right arrow leaves it (`badge("go")` / `badge("a
 the label is the copy toggle's new `terms · {chain}’s terms and common questions` line (fallback in `CONTENT`), and the
 target is the Networks set card on /guides that carries the chain's name — a mainnet row is a page and its card links
 to it (`marks()` keeps `__pages`), a testnet-only chain has no page and so no link, as the file says. chain.js gives
-every band its key as an `id` (`terms`, `estimate`, `s0`…) and **holds the `#terms` landing** (`landHash()`): the bands
+every band its key as an `id` (`terms`, `estimate`, and since 2026-10-23 a row page's section by its title, `what-we-run`, `common-questions`, in place of `s0`, `s1`; `validators`) and **holds the `#terms` landing** (`landHash()`): the bands
 do not exist when the browser tries the jump, and React's adoption puts the scroll back at the top, so the landing is
 retried over three seconds until a wheel, touch or key from the reader (v339: a check on scrollY had taken Super's
 router's own scroll, 300ms after the first landing, for the reader and stopped half a screen short — the user's

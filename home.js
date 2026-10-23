@@ -606,82 +606,8 @@
 })();
 
 
-/* ─────────────────────────────────────────────────────────────────────────────────────────────
-   Homepage sections by address — /#block-<id>.
-
-   The footer's Team and Institutional staking, the navbar's institutional panel and /team link
-   sections of the homepage, and none of them landed (measured 2026-10-18): on a
-   fresh load the browser never jumped (scrollY stayed 0) while the page grew by a thousand pixels
-   as it built; arriving inside the app, Super's router jumped early and the page moved under it,
-   leaving Who we are 7,576px below the screen. So the landing is taken here, as chain.js's
-   landHash takes a chain page's: the section's top at the top of the screen — where a one-screen
-   section's stop is; the bar scrolls away with the page, so Super's 62px scroll-padding is not
-   wanted — retried while the page builds, and given up the moment the reader wheels, touches or
-   presses a key, so nobody is pulled back.
-
-   MOVED: an old page that is now a section. A Super redirect names a page and cannot carry a
-   #fragment, so /team is a page again (the old Team page) and is forwarded from here — this file
-   is in the site head, served in the HTML, where a page's own head script is only inserted once
-   the app has started; head/team.html keeps a meta refresh for a reader without JavaScript.
-
-   NAMED: a section by a name of its own, which stays in the address — /#testimonials (the user,
-   2026-10-23). Notion's block ids cannot be renamed, so the name lands on the section's block: the
-   testimonials' heading, which at a desktop width is where the first quote pins and on a phone sits
-   just above the quotes. */
-(function () {
-  var GESTURE = ["wheel", "touchstart", "keydown"];
-  var WAITS = [0, 300, 400, 500, 800, 1000, 1500];   // ms between tries: 4.5s in all
-  var MOVED = { "/team": "block-3dbe800a513880c5862ae676c8d06994" };
-  var NAMED = { testimonials: "block-3dae800a51388066b66ffeeb9bdb1550" };
-  var at = "", run = 0;
-
-  function sectionOf(hash) {
-    var id = hash.slice(1).split(/[?&]/)[0];
-    id = NAMED[id.toLowerCase()] || id;
-    return /^block-[0-9a-f]{32}$/.test(id) ? id : "";
-  }
-
-  function land() {
-    var here = location.pathname + location.hash;
-    if (here === at) return;
-    at = here;
-    var section = MOVED[location.pathname.replace(/\/$/, "")];
-    if (section) return location.replace("/" + location.search + "#" + section);
-    var id = location.pathname === "/" ? sectionOf(location.hash) : "";
-    if (!id) return;
-    var me = ++run, tries = 0, moved = false;
-    function gesture() { moved = true; }
-    GESTURE.forEach(function (t) { window.addEventListener(t, gesture, { passive: true, capture: true }); });
-    function stop() { GESTURE.forEach(function (t) { window.removeEventListener(t, gesture, { capture: true }); }); }
-    function go() {
-      if (moved || me !== run) return stop();
-      var target = document.getElementById(id);
-      if (target) {
-        var top = target.getBoundingClientRect().top;
-        if (Math.abs(top) > 2) window.scrollTo({ top: top + window.scrollY, behavior: "instant" });
-      }
-      if (++tries < WAITS.length) setTimeout(go, WAITS[tries]); else stop();
-    }
-    go();
-  }
-
-  /* a fresh load; an arrival inside the app (Super swaps the page in: no event but the swap); a
-     link on the homepage to another of its sections (hashchange); and one to the section already
-     in the address, which changes nothing the page can see but the click */
-  land();
-  new MutationObserver(function () { if (location.pathname + location.hash !== at) land(); })
-    .observe(document.body, { childList: true, subtree: true });
-  window.addEventListener("hashchange", land);
-  document.addEventListener("click", function (e) {
-    var a = e.target.closest && e.target.closest("a[href*='#']");
-    if (!a || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    var u = new URL(a.href, location.href);
-    if (u.origin === location.origin && u.pathname === "/" && location.pathname === "/" && sectionOf(u.hash)) {
-      at = "";
-      setTimeout(land, 0);
-    }
-  });
-})();
+/* Homepage sections by address (/#testimonials, /#block-…, /team) — moved to anchors.js, which lands a
+   section by its name on every page (2026-10-23). */
 
 
 /* ─────────────────────────────────────────────────────────────────────────────────────────────

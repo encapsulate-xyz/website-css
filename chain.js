@@ -539,10 +539,13 @@
   };
 
   /* a band: the crumb and the band's name across the top, its content centred in the screen */
-  Page.prototype.band = function (key, label, kids) {
+  Page.prototype.band = function (key, label, kids, name) {
     var s = el("section", "enc-ch__bandsec");
     s.setAttribute("data-enc-band", key);
-    s.id = key;   /* /networks/<chain>#terms — where a guide's close band sends the reader (2026-09-30) */
+    /* /networks/<chain>#terms — where a guide's close band sends the reader (2026-09-30); a section
+       from the row page is named by its title, #what-we-run, #common-questions (2026-10-23, the site's
+       section names: anchors.js) */
+    s.id = name || key;
     var top = el("div", "enc-ch__top");
     top.appendChild(this.crumb());
     top.appendChild(this.mono(label, "enc-ch__label"));
@@ -837,6 +840,7 @@
     if (!(n > 0) || !(each > 0)) return null;
     var s = el("section", "enc-ch__vals");
     s.setAttribute("data-enc-band", "validators");
+    s.id = "validators";
     var frame = el("div", "enc-ch__vframe");
     var top = el("div", "enc-ch__top");
     top.appendChild(P.crumb());
@@ -1046,7 +1050,8 @@
         if (sec.faq.length) kids.push(P.list(sec.faq, "enc-ch__faq"));
         var last = i === src.sections.length - 1;
         if (last) kids.push(P.more());
-        var band = P.band("s" + i, sec.title, kids);
+        var band = P.band("s" + i, sec.title, kids,
+          String(sec.title).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || null);
         /* the dock is bound to the last band by this mark, not by position (handoff, 2026-09-24) */
         if (last) band.setAttribute("data-enc-last", "");
         wrap.appendChild(band);

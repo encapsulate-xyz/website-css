@@ -37,7 +37,7 @@ note goes into its subject's file, not here; only a rule for every task belongs 
 | `docs/legal.md` | /privacy-policy and /terms-of-use, legal.css | The legal pages |
 | `docs/brand.md` | the colour band's three sets | The brand colour band names three sets |
 | `docs/booking-and-contact.md` | booking.js, main.css §18, the dial in the contact fold | The booking drawer; The contact band's fold holds the dial |
-| `docs/paths-and-404.md` | the paths, the redirects, notfound.css + notfound.js | Paths — no /mainnet, and the 404 page |
+| `docs/paths-and-404.md` | the paths, the redirects, notfound.css + notfound.js, the section names (anchors.js) | Paths — no /mainnet, and the 404 page; Section names |
 | `docs/seo.md` | how Super sets it, what is set, the SEO job | SEO; The SEO job — every database row's card, title, description, and four content properties |
 | `docs/site-data.md` | the private repo whose scheduled jobs write Notion | site-data — the jobs |
 | `docs/audit.md` | the phone work and the full-width audit | Below 900px; The audit of 2026-09-26 — every page the navbar and footer reach, 320–2560 |
@@ -126,6 +126,12 @@ User rules that stand on every task:
 - Commit, push and tag are allowed. Backups before editing any `.css` (below).
 - **When something on the site is visibly uneven, fix it and say so — do not report it as out of scope.**
   (2026-09-29, from the navbar's notes.)
+- **Every major section has a name a link can carry** (the user, 2026-10-23: "from now on if we add any new section you
+  add such name to it as well"): https://encapsulate.xyz/#testimonials, /security#keys, /guides/sui#step-4 — kept in
+  `anchors.js` (`NAMES`) and the table in `docs/paths-and-404.md`, "Section names". **A new section gets its name when it
+  is built**, from its own label, lower case, words joined by "-"; **when a section changes, rename its name to fit**
+  and keep the old one as a second key, so a link already out still lands. Name a Notion block by its id and a band a
+  script builds by the mark its builder sets, never by its words. Say the new names in the reply.
 - **Make space with CSS, and pair things with Notion columns — never with a divider or an empty paragraph.**
   (2026-09-25, from the homepage's notes, "No divider makes space anywhere".)
 
@@ -139,6 +145,7 @@ User rules that stand on every task:
 | `footer.js` | footer 44b, built inside Super's footer | site Head |
 | `covers.js` | inner-page cover graphics ("fields") | site Head |
 | `filterbar.js` | the filter bar (design *Filter Bar Patterns*, G · the command field) — one component for /networks, /governance-record and /blog; styles main.css §13c | site Head, before the page scripts |
+| `anchors.js` | the site's section names — /#testimonials, /security#keys, /guides/&lt;guide&gt;#step-4 — and the landing of any `#name` or `#block-…` on every page; /team → /#team (`docs/paths-and-404.md`, "Section names") | site Head |
 | `notfound.css`, `notfound.js` | the 404 page (design *404 Page*, D · the finder) — see "The 404 page". notfound.js is linked **async**, the only one | site Head |
 | `blocks.js` | Notion's generic blocks (design *Blog Article Blocks*): the code block's line numbers, prompts, colours, kicker and copy tick — the rest of the four blocks is main.css §12–13. Also the site's one link rule: a link to another site opens in a new tab | site Head |
 | `home.css`, `home-dial.css`, `home.js` | homepage sections, JS-enhanced styles, homepage scripts | homepage Head |
@@ -236,7 +243,7 @@ Note: `git commit` also commits anything the user has staged — check `git stat
 | `head/services.html` | /services → Code → Head |
 | `head/privacy-policy.html` | /privacy-policy → Code → Head (legal.css) |
 | `head/terms-of-use.html` | /terms-of-use → Code → Head (legal.css) |
-| `head/team.html` | /team → Code → Head (a meta refresh to the homepage's Who we are; home.js forwards it — `docs/homepage.md`) |
+| `head/team.html` | /team → Code → Head (a meta refresh to the homepage's Who we are; anchors.js forwards it to /#team — `docs/homepage.md`) |
 
 A page whose CSS moved to the repo has its Code → CSS box emptied. Pages not listed have no repo
 file yet.

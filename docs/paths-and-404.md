@@ -94,3 +94,35 @@ focuses it; ↑↓, Enter, Escape).
   21 queries in Node: same results, same order.
 - Deviations: the design's "Book a call" went to /contact-us — ours opens the drawer, as every Book a
   call does; its Governance page is /governance, ours /governance-record.
+
+## Section names — /<page>#<name> (2026-10-23)
+
+Every major section of every page has a short name a link can carry: https://encapsulate.xyz/#testimonials,
+/security#keys, /guides/sui#step-4 (the user: "add such for all major sections on all pages"). **anchors.js** (site
+head) holds them, `NAMES` page by page, and lands one as it lands a `#block-…`: the section's top at the top of the
+screen (a heading in running text 40px below it), retried while the page builds, dropped on the reader's own wheel,
+touch or key; on a load, an in-app arrival, a hash change and a click on a link to the section already in the
+address. The name stays in the address, in any case, a tracker's `?…` tail ignored. A hidden block (a source a
+script replaced) is left alone. **A new section gets its name when it is built, here and in anchors.js; a section
+renamed later keeps its old name as a second key** (CLAUDE.md, "How we work").
+
+| Page | Names |
+|---|---|
+| / | `stats`, `audience`, `why-stake`, `networks`, `testimonials`, `governance` (its heading), `services`, `institutional`, `blog`, `team`, `contact`; /team forwards to /#team |
+| /networks | `count`, `list`, `chain-teams` |
+| /governance | `record`, `pillars`, `votes` (the heading "Every vote, on chain.") |
+| /blog | `posts` |
+| /guides | `picker` — beside `#<chain>`, which guides.js reads (`docs/guides.md`) |
+| /services | `dashboards`, `playbooks`, `repositories`, `bots`, `monitoring`, `launch` (the ask band) |
+| /investments | `portfolio`, `questions` |
+| /brand | `logo`, `colours` (and `colors`), `type`, `clear-space` |
+| /security | `operations`, `access`, `keys`, `failover`, `upgrades`, `slashing` |
+| /contact | `call`, `elsewhere`, `write` |
+| /privacy-policy, /terms-of-use | each clause by its heading: `who-we-are`, `cookies`, `information-not-advice`… |
+| /guides/&lt;guide&gt; | `step-1` … `step-N`, `done` (the close band) |
+| /networks/&lt;chain&gt; | `validators` (where the chain has the band), `terms`, `estimate`, `what-we-run`, `common-questions` — chain.js sets them as ids and lands them itself |
+| /blog/&lt;post&gt; | each heading, `sec-<its words>` — post.js, for the contents |
+
+A Notion block is named by its id, a band a script builds by the mark its builder sets (`data-enc-sec`,
+`data-enc-svc-band`, `data-band`, `data-enc-inv`, `.enc-ct__…`), which outlives a change to its words. The
+landing was home.js's, for the homepage only (v362, 2026-10-18; `docs/homepage.md`), until it moved here.
