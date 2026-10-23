@@ -42,7 +42,13 @@ test uses the opened gaps (`S.px`, `S.py`); each block owns half the gap around 
   **The first frame does the same for the one vote** (the user, same day: "can you do the same effect for this
   screen, just focus on the one"): the votes either side of Axelar 499 are shadows at "This is one vote.", their
   faces too, and come back in the first third of the move to the three votes, before the figure reaches 2. One
-  rule for both (`iso0`, `iso2`; `lo..hi` the marks in focus).
+  rule for both (`iso0`, `iso2`; `lo..hi` the marks in focus), with its own floor each: **the votes either side are
+  at 35% (`ALONE0`), the block's neighbours at 14% (`ALONE`)** (the user, 2026-10-23: "are the other two colored or
+  not?" — at 14% a pastel on ink reads as grey, `#414644` and `#43473e`; at 35% `#656c70` and `#687060`, a blue and
+  a green, the opened vote still the one in focus). The dimming follows the scroll, not the screen: measured the same
+  at 1000×566, 1440×900 and 1920×1080. It is full at the trackpad's stop on "1" and gone a fifth of a screen
+  further, so a reader who moves on a little sees the sides in full colour. The figure is unchanged: a mark under
+  half counts as dimmed (`others > 0.5`).
 - **Every mark is a vote, and the newest are the record's rows**, read off the table on the page (newest first by
   Recorded, whatever the sort control has done), each in its network's pastel — `tintFor`, the colour of its disc in
   the rows below. The 729 votes from before the record have no row and so **no network on file**; they are the

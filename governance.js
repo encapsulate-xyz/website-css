@@ -43,7 +43,7 @@
      one mark per vote, ten to a row, a block per hundred, the blocks spread to fill the stage at rest.
      Four frames, each held for a moment: the record's second-newest vote alone, its face in full
      (K0); it and the votes either side (K1); its block of a hundred (K2); the whole field at rest
-     (K3). At K0 and K2 the rest of the field is dimmed to ALONE around the vote and the block. MOVES are the three zooms between them,
+     (K3). At K0 and K2 the rest of the field is dimmed around the vote (ALONE0) and the block (ALONE). MOVES are the three zooms between them,
      as fractions of the band's scroll. The figure
      counts up with the scroll and never says more than the votes wholly on screen; the lines beside
      it hold from their threshold (beats) to the next. At rest a hovered block shows its count, mouse
@@ -76,7 +76,8 @@
   var HALF = 9 / 26;            // a mark's radius as a share of the mark pitch
   var OPENED = [17.5, 4.5];     // the second mark, newest first: the opened vote
   var BLOCK0 = [63, 63];        // the middle of the newest block
-  var ALONE = 0.14;             // the rest of the field at K0 and K2, so the one vote and the block read alone (the user, 2026-10-22)
+  var ALONE = 0.14;             // the rest of the field at K2, so the block reads alone (the user, 2026-10-22)
+  var ALONE0 = 0.35;            // the votes either side at K0: faint, but their pastels still read (the user, 2026-10-23)
   var MONO_F = "'JetBrains Mono', monospace", OUT_F = "Outfit, sans-serif", HAN_F = "'Hanken Grotesk', sans-serif";
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
   var S = null;                 // the built band: its nodes, its rows and what it last drew
@@ -398,7 +399,7 @@
     var iso2 = S.rm ? 0 : Math.min(clamp01((p - MOVES[1][0]) / (0.1 * (MOVES[1][1] - MOVES[1][0]))),
       1 - clamp01((p - MOVES[2][0]) / (0.35 * (MOVES[2][1] - MOVES[2][0]))));
     var iso = Math.max(iso0, iso2), lo = iso0 > 0 ? 1 : 0, hi = iso0 > 0 ? 2 : Math.min(100, total);
-    var others = 1 - iso * iso * (3 - 2 * iso) * (1 - ALONE);
+    var others = 1 - iso * iso * (3 - 2 * iso) * (1 - (iso0 > 0 ? ALONE0 : ALONE));
     var focus = function (j) { return j >= lo && j < hi; };
     // every mark in its network's pastel, one path per pastel: the marks in focus, then the rest
     for (var g = 0; g < 2; g++) {
