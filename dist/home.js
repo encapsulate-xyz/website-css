@@ -622,12 +622,24 @@
    MOVED: an old page that is now a section. A Super redirect names a page and cannot carry a
    #fragment, so /team is a page again (the old Team page) and is forwarded from here — this file
    is in the site head, served in the HTML, where a page's own head script is only inserted once
-   the app has started; head/team.html keeps a meta refresh for a reader without JavaScript. */
+   the app has started; head/team.html keeps a meta refresh for a reader without JavaScript.
+
+   NAMED: a section by a name of its own, which stays in the address — /#testimonials (the user,
+   2026-10-23). Notion's block ids cannot be renamed, so the name lands on the section's block: the
+   testimonials' heading, which at a desktop width is where the first quote pins and on a phone sits
+   just above the quotes. */
 (function () {
   var GESTURE = ["wheel", "touchstart", "keydown"];
   var WAITS = [0, 300, 400, 500, 800, 1000, 1500];   // ms between tries: 4.5s in all
   var MOVED = { "/team": "block-3dbe800a513880c5862ae676c8d06994" };
+  var NAMED = { testimonials: "block-3dae800a51388066b66ffeeb9bdb1550" };
   var at = "", run = 0;
+
+  function sectionOf(hash) {
+    var id = hash.slice(1).split(/[?&]/)[0];
+    id = NAMED[id.toLowerCase()] || id;
+    return /^block-[0-9a-f]{32}$/.test(id) ? id : "";
+  }
 
   function land() {
     var here = location.pathname + location.hash;
@@ -635,8 +647,8 @@
     at = here;
     var section = MOVED[location.pathname.replace(/\/$/, "")];
     if (section) return location.replace("/" + location.search + "#" + section);
-    var id = location.pathname === "/" ? location.hash.slice(1).split(/[?&]/)[0] : "";
-    if (!/^block-[0-9a-f]{32}$/.test(id)) return;
+    var id = location.pathname === "/" ? sectionOf(location.hash) : "";
+    if (!id) return;
     var me = ++run, tries = 0, moved = false;
     function gesture() { moved = true; }
     GESTURE.forEach(function (t) { window.addEventListener(t, gesture, { passive: true, capture: true }); });
@@ -661,10 +673,10 @@
     .observe(document.body, { childList: true, subtree: true });
   window.addEventListener("hashchange", land);
   document.addEventListener("click", function (e) {
-    var a = e.target.closest && e.target.closest("a[href*='#block-']");
+    var a = e.target.closest && e.target.closest("a[href*='#']");
     if (!a || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     var u = new URL(a.href, location.href);
-    if (u.origin === location.origin && u.pathname === "/" && location.pathname === "/") {
+    if (u.origin === location.origin && u.pathname === "/" && location.pathname === "/" && sectionOf(u.hash)) {
       at = "";
       setTimeout(land, 0);
     }

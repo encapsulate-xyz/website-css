@@ -167,6 +167,14 @@ head, which Super serves in the HTML, where a page's own head script is only ins
 head (`head/team.html`) holds a `meta refresh` for a reader without JavaScript, `body { visibility: hidden }` and its
 canonical on /.
 
+**/#testimonials → the testimonials** (2026-10-23, v381; the user asked for the name, plural). Block ids cannot be
+renamed, so home.js's `NAMED` maps the name to the section's block, the callout holding its heading
+(`#block-3dae800a51388066…`), and lands it like any `#block-…`; the name stays in the address. That block's top is the
+first quote's stop at a desktop width (8181 at 1440 × 900) and the heading just above the quotes on a phone (4649 at
+390). Any case, a tracker's `?…` tail ignored, on a hash change and on a click of a link to it on the homepage. No
+link on the site uses it yet. The bare id the section has always had is `/#block-6df87cb2d8994ba0b7fe797aa933840d`,
+the heading's own.
+
 **Notion forms (§13b)** render natively (no iframe): `div.notion-form__wrapper > form.notion-form >
 div.notion-form__field.<type>`; dropdown questions still render as radios (drawn as chips);
 "Invalid email" shows on empty fields (hidden while placeholder shows). The dial: a Number question
