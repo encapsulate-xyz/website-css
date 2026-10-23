@@ -17,6 +17,9 @@ one** (64 redirects: the 59 pages, /networks/mainnet → /networks, /guides/main
 added the same day, once the site went to **Super Pro** (the user upgraded for them; Personal refuses
 redirects) — through the API, `type: "permRedirect"` pages. The other 2024 chain URLs (solana, celestia,
 osmosis… chains we no longer run) and /networks/testnet/* stay 404: no page stands for them.
+**A chain with a guide per wallet** has a path per wallet, /guides/<chain>-<wallet>, and its old /guides/<chain>
+308s to the first: /guides/starknet → /guides/starknet-ready-x since 2026-10-23, beside /guides/starknet-braavos
+(`docs/guides.md`).
 A database page in Super also serves its rows by slug under its own path, so the old URLs kept
 answering until /networks/mainnet was removed; each removed URL is served stale once more, then 404s.
 The code accepts both shapes (v324): chain.css/chain.js know a chain page by `parent-page__networks`

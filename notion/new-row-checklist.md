@@ -224,7 +224,9 @@ these are what shows before that read lands, and what a crawler reads. Find them
 - [ ] **Properties:** **Name** — the guide's title, "Stake AXL with Keplr" (the head, the navbar, the picker, the card;
       there is no Title property since 2026-10-01), **Lede** (the head's
       line; also the description), **Networks set** relation (the mainnet row — the chain's mark; its
-      path in Super is /guides/<chain>), **Wallet Set** relation (the wallet must be a
+      path in Super is /guides/<chain>, or /guides/<chain>-<wallet> for every guide of a chain with more than one,
+      the old /guides/<chain> a 308 to the first — Starknet, 2026-10-23; each its own `meta:title`, "<Chain> staking
+      guide with <wallet> - Encapsulate"), **Wallet Set** relation (the wallet must be a
       Wallet Set row with its glyph in Files & media), Step, Time, Network (Mainnet / Testnet; Rough
       keeps it off the picker), Status. (Cover went on 2026-09-28 with the "View More Guides" sections it
       pictured; Ticker is read by nothing.)
@@ -247,7 +249,7 @@ these are what shows before that read lands, and what a crawler reads. Find them
 
 ## Converting a guide — the run (the team adds the captures, I write the words)
 
-Done this way for Axelar, Sui, Espresso, Monad, Terra, Agoric, NEAR, Lumera, Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina and Starknet; the
+Done this way for Axelar, Sui, Espresso, Monad, Terra, Agoric, NEAR, Lumera, Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina and Starknet (Ready X and Braavos); the
 user asked for it written down on 2026-10-08. A guide is converted once its step database holds one capture per
 step; the team names the steps, the words are mine.
 
@@ -286,6 +288,7 @@ step; the team names the steps, the words are mine.
       | SuiVision + Slush | 10 | Sui |
       | the IOTA Wallet extension + the IOTA explorer | 7 | IOTA — its popup is 360 × 600, so its captures are 720 × 1200 and its guide has a 360:600 frame of its own (guide.css, `#page-guides-iota`) |
       | Voyager's staking dashboard + the Ready X extension | 9 | Starknet — the Reward address is filled with the connected wallet; our staker address finds only us in the search |
+      | Voyager's staking dashboard + the Braavos extension | 9 | Starknet's second guide — the side panel's own Approve, Sign and Transaction completed screens |
       | the Auro Wallet extension | 9 | Mina — its popup is 375 × 596, captures 750 × 1192, a 375:596 frame of its own (`#page-guides-mina`); no amount, Mina delegates the whole balance |
 
 - [ ] **The guide's wallet follows the captures**: its Name ("Stake <TOKEN> with <wallet>"), its Wallet Set and the
