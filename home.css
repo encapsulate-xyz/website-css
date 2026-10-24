@@ -1434,6 +1434,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   display: block !important;
   width: 100vw !important;
   margin-inline: calc(50% - 50vw) !important;
+  margin-block: 0 !important; /* Super's 5px left a line of paper under the networks band's discs */
   padding: 0 var(--t-side) !important;
   box-sizing: border-box !important;
   border: 0 !important;
