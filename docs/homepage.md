@@ -112,9 +112,12 @@ Uptime** (220vh) draws the rule to 99.96% under "Almost always on.", then the tw
 - **Notion** (`backups/home-figures-band-2026-10-24.json` holds the band before): the band is still the one callout with
   the old two column lists — Staked and Mainnets in the first, Delegators and Uptime in the second — which dissolve, and
   `order` puts the screens in the file's order; the four ids, the two headings site-data writes and the networks count
-  home.js sets all kept. Each callout's text became its eyebrow, verbatim ("01 / 04 · Staked · typed in, then signed"…).
-  Added: "Under management by **Encapsulate**" (the bold word is drawn as `svg/wordmark-reversed.svg`, 160px) and "The
-  scroll types the sum in, a rule draws under it, and we sign it."; "delegators", the caption, and the hidden paragraph
+  home.js sets all kept. Each callout's text became its eyebrow, "01 / 04 · Staked" … "04 / 04 · Uptime" (the file's
+  read "01 / 04 · Staked · typed in, then signed", "· one building per network", "· the wheel turns", "· the rule draws",
+  and its line under the stake "The scroll types the sum in, a rule draws under it, and we sign it."; both described the
+  move rather than the figure and were cut the same day, the user: "yes do that"). Added: "Under management by
+  **Encapsulate**" (the bold word is drawn as `svg/wordmark-reversed.svg`, 160px) and "Staked with our validators across
+  every mainnet we run."; "delegators", the caption, and the hidden paragraph
   of building heights; "Mainnet validator, in the active set."; and the uptime screen's H3 "Almost **always on.**", "Uptime",
   the figure "99.96%" (recreated after the H3; it was "99.96 %"), "uptime", "Measured across all validators, all
   networks.", "99.96% up", "0.04% down · too thin to draw at this width" and the two buttons, made through the API.
@@ -140,8 +143,8 @@ Uptime** (220vh) draws the rule to 99.96% under "Almost always on.", then the tw
   two button callouts are `.notion-column > .notion-callout` too. The uptime headline spans an `auto` filler row and the
   figure block's three `min-content` rows, which keeps the middle centred (spanning the 1fr space above sat it 50px
   high).
-- **Where it departs from the file**, each for a visible fault: the eyebrows wrap under 760px ("02 / 04 · Delegators · one
-  building per network" ran off a 390 screen); the mainnets words take the phone's 20px gutter (the file's column had
+- **Where it departs from the file**, each for a visible fault: the eyebrows wrap under 760px (the file's "02 / 04 ·
+  Delegators · one building per network" ran off a 390 screen); the mainnets words take the phone's 20px gutter (the file's column had
   none on its left); wider than 1856px the content keeps 1728px; the two buttons stack under 520px, as every button pair
   on the site does (the file keeps them side by side).
 - Reduced motion shows every screen settled (checked with `REDUCED=1 scripts/livecheck.mjs`, new). The deck snapping no
