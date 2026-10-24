@@ -111,7 +111,7 @@ named by pattern, so they need only the check that one lands (`notion/new-row-ch
 
 | Page | Names |
 |---|---|
-| / | `stats` (its four screens: `staked`, `delegators`, `mainnets`, `uptime`), `audience`, `why-stake`, `networks`, `testimonials`, `governance` (its heading), `services`, `institutional`, `blog`, `team`, `contact`; /team forwards to /#team |
+| / | `stats` (its four screens: `staked`, `delegators`, `mainnets`, `uptime`), `audience`, `why-stake`, `networks`, `testimonials`, `governance` (its heading), `services`, `institutional`, `deep-dives` (the blog band; `blog` before 2026-10-24, still kept), `team`, `contact`; /team forwards to /#team |
 | /networks | `count`, `list`, `chain-teams` |
 | /governance | `record`, `pillars`, `votes` (the heading "Every vote, on chain.") |
 | /blog | `posts` |

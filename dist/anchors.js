@@ -53,6 +53,8 @@
       governance: heading(b("8596efbf83c94c59ac8278879b8be3bc")),
       services: b("3dbe800a5138800d8a72c99cdde9bc3f"),
       institutional: b("3dbe800a513880af9fe0c4bc175e1975"),
+      // the blog band, "Deep dives." since 2026-10-24; #blog was its name before and still lands
+      "deep-dives": b("3dbe800a51388024a26be29fcf678e86"),
       blog: b("3dbe800a51388024a26be29fcf678e86"),
       team: b("3dbe800a513880c5862ae676c8d06994"),
       contact: b("3dce800a5138803a82f7d45863d6049c")

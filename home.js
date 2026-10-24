@@ -638,9 +638,9 @@
 (function () {
   var TEAM = "block-3dbe800a513880c5862ae676c8d06994";
   // one-screen sections that settle to the top of the viewport (not paged): Who we are, Services,
-  // the audience split, the networks (2026-10-24)
+  // the audience split, the networks and Why Stake (2026-10-24)
   var SCREENS = [TEAM, "block-3dbe800a5138800d8a72c99cdde9bc3f", "block-3dae800a51388006a57be06b8ebea78e",
-    "block-3dbe800a513880c09163d3ed4ab436fd"];
+    "block-3dbe800a513880c09163d3ed4ab436fd", "block-3dce800a513880349091dbe0cd0650a7"];
 
   var NEAR = 0.33;       // of a screen: how close a resting page must be to a stop to settle on it
   var EPS = 2;           // px: "on" a stop
@@ -658,7 +658,9 @@
     if (window.matchMedia("(min-width: 901px)").matches) {
       SCREENS.forEach(function (id) {
         var el = document.getElementById(id);
-        if (el) out.push({ id: id, stops: [Math.round(docTop(el))], h: window.innerHeight });
+        // a section well over a screen tall is no stop: settling would pull a reader out of the
+        // middle of it back to its top (Why Stake, its cards stacked, between 901 and 1024)
+        if (el && el.offsetHeight <= window.innerHeight * 1.25) out.push({ id: id, stops: [Math.round(docTop(el))], h: window.innerHeight });
       });
     }
     return out;
@@ -1161,24 +1163,23 @@
 
 
 /* ─────────────────────────────────────────────────────────────────────────────────────────────
-   Homepage blog — design "Blog Highlights".
+   Homepage blog — design "Blog Highlights" (its second pass, 2026-10-24: "Deep dives." and no
+   dot pager; the pager this file drew from the first one is gone).
 
    The blog gallery's first three posts become a horizontal rail of large ink cards that snap to
-   the centre, with a dot pager on the heading's row. (A script-made "Read every post" link was removed: buttons
-   and text come from Notion, never from this file — the section's own button is left as it is.)
+   the centre. (A script-made "Read every post" link was removed: buttons and text come from
+   Notion, never from this file — the section's own button is left as it is.)
 
-     card    ink cover (#3A3D38) at 1.91:1, 12px corners; the post's Cover glyph bleeding off the
-             bottom-right corner in a pastel tint picked per post; the category in that tint and the date
-             in mono along the top; the title in Outfit; the Encapsulate wordmark at the foot
+     card    ink (#2A2C28) at 1.91:1, 12px corners; the post's Cover glyph bleeding off the
+             bottom-right corner in a pastel tint picked per post; the category and the date in grey
+             mono along the top; the title in Outfit; the Encapsulate wordmark at the foot
      rail    scroll-snap x mandatory, cards clamp(300px, 72vw, 840px), 22px apart, full width
-     dots    one per post in a paper-2 pill; the active one stretches to a 44px ink bar. Click a
-             dot to bring its post to the centre; scrolling the rail moves the active dot
 
    BUILT FROM NOTION: title, link, date and tags are read from the gallery cards. The category is
    the post's first tag other than "Informative" (or "Informative" when that is all it has). The
    glyph is the post's Cover image; its tint is a stable pseudo-random pick from the pastels. The gallery stays in the
-   page, hidden, as the no-JavaScript fallback. Styles: home-dial.css, "BLOG RAIL". The
-   heading and the paragraph keep the site's own type. */
+   page, hidden, as the no-JavaScript fallback. The intro row above it (heading, paragraph, link)
+   is Notion's; this only marks it [data-enc-blog-intro]. Styles: home-dial.css, "BLOG RAIL". */
 (function () {
   var GALLERY = "block-67d891d07f914f4699b81d1765e1f04f";
   var COUNT = 3;
@@ -1242,9 +1243,7 @@
     }
     var body = el("div", "enc-blog__body");
     var top = el("div", "enc-blog__top");
-    var cat = el("span", "enc-blog__cat", p.tag.name);
-    cat.style.color = p.tint; // one tint per post, as in the design: category and glyph match
-    top.appendChild(cat);
+    top.appendChild(el("span", "enc-blog__cat", p.tag.name));
     top.appendChild(el("span", "enc-blog__date", p.date));
     body.appendChild(top);
     body.appendChild(el("h3", "enc-blog__title", p.title));
@@ -1266,71 +1265,29 @@
     if (!list.length) return;
     var sig = list.map(function (p) { return p.title; }).join("|");
     var rail = gallery.previousElementSibling && gallery.previousElementSibling.classList.contains("enc-blog") ? gallery.previousElementSibling : null;
-    if (rail && rail.getAttribute("data-sig") === sig && document.querySelector(".enc-blog__controls")) return;
-    if (rail) rail.remove();
 
     // The section's intro is the Notion column row just above the gallery: heading and paragraph
-    // on the left, the Read every post button (a Notion callout) on the right. The dot pager goes
-    // into that right column, in front of the button.
+    // on the left, the Read every post link (a Notion callout) on the right.
     var intro = null, n = gallery.previousElementSibling;
     while (n) {
       if (n.classList.contains("notion-column-list")) { if (n.querySelector(".notion-heading")) intro = n; break; }
       if (!(n.classList.contains("enc-blog") || n.classList.contains("notion-text"))) break;
       n = n.previousElementSibling;
     }
-    var slot = intro ? intro.querySelector(":scope > .notion-column:last-child") : null;
+    if (intro && !intro.hasAttribute("data-enc-blog-intro")) intro.setAttribute("data-enc-blog-intro", "");
+    if (rail && rail.getAttribute("data-sig") === sig) return;
+    if (rail) rail.remove();
 
     rail = el("div", "enc-blog");
     rail.setAttribute("data-sig", sig);
     list.forEach(function (p, i) { rail.appendChild(card(p, i)); });
     gallery.parentElement.insertBefore(rail, gallery);
     gallery.setAttribute("data-enc-hidden", "");
-    if (intro) intro.setAttribute("data-enc-blog-intro", "");
-
-    var old = document.querySelector(".enc-blog__controls");
-    if (old) old.remove();
-    var controls = el("div", "enc-blog__controls");
-    var dots = el("div", "enc-blog__dots");
-    list.forEach(function (p, i) {
-      var b = el("button", "enc-blog__dot");
-      b.type = "button";
-      b.setAttribute("aria-label", "Show post " + (i + 1));
-      b.addEventListener("click", function () { goTo(rail, i); });
-      dots.appendChild(b);
-    });
-    controls.appendChild(dots);
-    if (slot) slot.insertBefore(controls, slot.firstChild);
-    else rail.parentElement.insertBefore(controls, rail);
-
-    rail.__dots = dots;
-    rail.addEventListener("scroll", function () { mark(rail, dots); }, { passive: true });
-    mark(rail, dots);
-  }
-
-  function goTo(rail, i) {
-    var c = rail.querySelector('[data-card="' + i + '"]');
-    // scroll-snap mandatory cancels smooth scrolling, so the offset is set directly
-    if (c) rail.scrollLeft = c.offsetLeft - (rail.clientWidth - c.clientWidth) / 2;
-    mark(rail, rail.__dots);
-  }
-
-  // The active post is the one whose snap position is nearest the current scroll. Snap positions
-  // are clamped to the scrollable range, so the first card (which cannot be centred) owns 0.
-  function mark(rail, dots) {
-    var max = rail.scrollWidth - rail.clientWidth, best = 0, bestD = Infinity;
-    Array.prototype.forEach.call(rail.children, function (c, i) {
-      var snap = Math.max(0, Math.min(max, c.offsetLeft - (rail.clientWidth - c.clientWidth) / 2));
-      var d = Math.abs(snap - rail.scrollLeft);
-      if (d < bestD) { bestD = d; best = i; }
-    });
-    Array.prototype.forEach.call(dots.children, function (b, i) {
-      if (i === best) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current");
-    });
   }
 
   var t = 0;
   new MutationObserver(function (muts) {
-    if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-blog, .enc-blog__controls"); })) return;
+    if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-blog"); })) return;
     clearTimeout(t); t = setTimeout(build, 60);
   }).observe(document.body, { childList: true, subtree: true });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);

@@ -98,7 +98,7 @@ hero, Audience split 51m (07b), testimonials I (09), Why Stake 49a, governance 3
 (09a), Who we are (09b), blog, networks 21b, Contact 48c (16).
 
 home.js is a set of IIFEs: the dial (institutional form), the figures (Z), homepage decks (snapping), the testimonials (I), networks
-glyph columns, blog rail (Cover glyphs via CSS mask, dots), services
+glyph columns, blog rail (Cover glyphs via CSS mask), services
 selection (swaps covers to the original PNG), Why Stake graphics (derived figures), contact copy,
 and the audience split's "What you get" as a keyboard button.
 
@@ -174,6 +174,26 @@ field, as the other one-screen sections do not fill a phone, with 28px under the
 **Found the same day: the row had been wrapping** at every desktop width, the copy on top and the discs 234px wide under
 it (measured at 1440 on the release before, so not the day's work): Super's notion.css wraps every column list, and the
 disc column's basis was its content's width. `flex-wrap: nowrap` and a basis of 0.
+
+**Why Stake is one screen above 1024px** (2026-10-24, the user: "make this full height page too Three things worth
+checking."): where its three cards sit in a row the band is `min-height: 100vh` with its content centred, as Services, and
+home.js settles on its top. Narrower, the cards stack and it runs 1.8 screens (1024×768), so **home.js's one-screen list
+now skips any section over 1.25 screens tall**: settling a reader back to the top of a section they are halfway down is a
+trap. Measured at 1024×768, 1280×720, 1366×768, 1440×900 and 1920×1080, the other four stay at 1.00–1.08.
+
+**The blog band is "Blog Highlights", its second pass** (2026-10-24, home-dial.css "BLOG RAIL", home.js "Homepage
+blog"). What the file changed: the heading "Latest Blog Posts" became **"Deep dives."** (Notion), the dot pager is gone
+(the first file had one; this file has none, so the rail is moved by a swipe, a trackpad or Tab), Read every post sits on
+the heading's line at its foot, and the paragraph runs under both at 58ch. The heading and paragraph now take the file's
+type (Outfit 62 / Hanken Grotesk 17, #3A3D38), the cards its #2A2C28 and grey mono (the category was the post's tint). The
+intro is still Notion's column row: its columns dissolve (`display: contents`) into one wrapping flex row; the paragraph
+takes a whole line with its 58ch kept by padding, since a max-width let it climb onto the heading's line when wide. **The
+first card starts under the words at every width** (phones had centred it, 21px in at 390) and snaps to that edge.
+**Removed: 13 empty paragraphs** — 4 above the institutional form, 6 between it and the blog, 3 between the blog and Who
+we are (`backups/blog-spacers-2026-10-24.json`). The space is CSS now, the file's section padding: the form's top margin
+and the intro's top padding `clamp(56px, 8vh, 96px)`, the rail's bottom margin `clamp(48px, 7vh, 80px)`, and Who we are
+lost Super's 5px top margin. The design's three kickers ("New network", "Analysis", "Informative") are not Notion values:
+the cards show each post's Tag, as before. Section name `#deep-dives`, `#blog` kept.
 
 **The audience split is 51m "Two grounds"** (2026-10-14, the user: "implement 51m … in place of
 current Hinge · node"). A full-bleed band, paper half and ink half (#2A2C28), a 148px word

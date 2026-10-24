@@ -1896,6 +1896,20 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   color: #FAFAF8 !important;
 }
 
+/* One screen where the three cards sit in a row (the user, 2026-10-24: "make this full height page
+   too"): the content is centred in it, as Services', and home.js settles on its top. Narrower, the
+   cards stack and the band runs taller than a screen. */
+@media (min-width: 1025px) {
+  #block-3dce800a513880349091dbe0cd0650a7 {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+  }
+}
+
 #block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__icon {
   display: none !important;
 }
@@ -3165,6 +3179,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   display: block !important;
   width: 100vw !important;
   margin-inline: calc(50% - 50vw) !important;
+  margin-top: 0 !important; /* Super's 5px added to the blog band's foot */
   /* The file's min-height: one screen, growing only when a short window cannot hold it (the type
      and portrait are the file's own sizes; they were capped by the screen's height until
      2026-09-27, which drew the names at 64.8px where the file has 74.9 at 1440×900). home.js
