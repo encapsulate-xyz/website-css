@@ -15,7 +15,7 @@ rows are left empty — there are no testnet chain pages.
 | Compounding | now also **End** — paid in one sum when a fixed period ends (Avalanche) |
 | Address | what a staker delegates to: valoper / stash / pool / node id / operator |
 | Reward rate | what a staker earns **with us, after our commission**, as text ("7.3%", a range where the chain's own rules give one). Measured or computed from on-chain data — never a marketing figure. Blank where no honest single figure exists |
-| Rate updated | the day the rate was read; blank with the rate |
+| Rate updated | the day the rate was last checked and still held (site-data moves it daily; the figure itself moves only when the reading does — the user, 2026-10-24); blank with the rate |
 | Commission | our fee as a fraction, shown as a percentage (Notion's percent format) |
 | Compounding | Auto = rewards join the stake with no action (Sui-style pools, NEAR pools, stETH, liquid pools); Manual = claimed or paid out |
 | Unbonding | how long until unstaked tokens are liquid, in words, because the chains do not share a unit |
@@ -118,11 +118,18 @@ the same page read 28.08% at 17:00 UTC, so the morning's figure was a dip in sta
 the chain, and the row went to **25.3%** (28.08% × 0.9). Since then a rate is written only when two consecutive runs
 read it within 0.5 points of each other (`state/rates.json`), and only for a move of 0.5 points or more.
 
-## Refreshing (by hand — the job above does this now)
+**Since 2026-10-24 the other mainnets too** (`config/chains.json` `rates`): each chain's `rate()` in site-data's
+`sources/` measures what a staker on us earned the way the table below was researched — Sui, IOTA and Ika from the
+pools' exchange rates, NEAR from the reward per epoch, Avalanche from the reward formula (a range that falls daily
+until Helicon's ramp ends on 2026-12-21), Monad, Zilliqa, Lido, Espresso and Starknet from their contracts and APIs,
+Supra from its configured rate, Avail and Vara from ten eras of payouts, and EigenCloud from EigenLayer's hosted
+Sidecar (the typed 5.7% read 6.37% there). A reading within 0.5 points of the row moves only **Rate updated**. The
+first dry run (2026-10-24) confirmed every row but four, which change once a second run agrees: Avail 8.7 → 7.5%,
+Avalanche 5.1–5.7 → 4.6–5.4%, Vara 17.5 → 16.9%, EigenCloud 5.7 → 6.4%.
 
-Rates drift; re-read them and set **Rate updated** in the same edit. The planned scheduled job
-(`docs/todo.md`, "a GitHub Action to fill the APY property") should write Reward rate and Rate updated
-together and leave the hand-set properties alone.
+## Refreshing by hand
+
+No longer needed; a value set by hand is kept until the chain reads it differently.
 
 ## Open (2026-09-24)
 

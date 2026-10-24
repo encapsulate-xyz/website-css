@@ -10,11 +10,15 @@ below asked for: plain Node, no dependencies, `DRY=1` writes nothing, one line o
 run (`bin/issue.mjs`), exit 1 = GitHub's failure mail. Its README has the rules and the layout. Running on a schedule
 since 2026-09-30: `governance.yml` (daily: votes — **our** votes, asked chain by chain; upgrades — a row only where
 running the release is the vote or it carries a proposal; rationales — fills only empty or boilerplate ones, never
-rewrites a written one), `networks.yml` (daily: Reward rate + Rate updated, Commission, Unbonding on the Cosmos rows,
-then the chain page's facts paragraph and `meta:description`; the rate from the source the row was researched with —
-staking-explorer's measured APR, `terra2` not `terra`, cosmos.directory for Gravity Bridge, Chain4Energy's minter —
-**written only when two consecutive runs read it within 0.5 points of each other** and it moves the row by 0.5 points
-(state/rates.json; staking-explorer's ixo figure read 13.77% at 08:00 and 28.08% at 17:00 on 2026-09-30, and the first
+rewrites a written one), `networks.yml` (daily: Reward rate + Rate updated and Commission on every mainnet row since 2026-10-24 — Mina
+excepted, blank on purpose — and Unbonding on the Cosmos rows, then the chain page's facts paragraph and
+`meta:description`; on the Cosmos rows the rate from the source the row was researched with — staking-explorer's
+measured APR, `terra2` not `terra`, cosmos.directory for Gravity Bridge, Chain4Energy's minter — and on the 14 others
+each chain's own `rate()` in site-data's `sources/`, EigenCloud's from EigenLayer's hosted Sidecar. **Rate updated is
+the day the rate was last checked and still held** (the user, 2026-10-24): a reading within 0.5 points of the row
+moves only the date; a figure is **written only when two consecutive runs read it within 0.5 points of each other**
+and it moves the row by 0.5 points, or after a month for a smaller drift (`jobs/networks/rate.mjs`;
+state/rates.json; staking-explorer's ixo figure read 13.77% at 08:00 and 28.08% at 17:00 on 2026-09-30, and the first
 had been written at the user's word — a one-off reading never moves a row again), held for a hand when it moves by more
 than a third; `ACCEPT=<chain>` writes it once past both) and `homepage.yml`
 (every six hours: the stats band's two headings from every mainnet's stake, priced on CoinGecko; a chain that fails to

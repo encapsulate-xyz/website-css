@@ -19,27 +19,12 @@ Both scripts above are written to be run unattended; nothing about them needs a 
 - the same Action is the natural home for the APY job below — one scheduled job that writes Notion,
   rather than two.
 
-## TODO — a GitHub Action to fill the APY property (agreed 2026-09-16, not built)
+## Done — the APY property is filled by site-data (2026-09-30 Cosmos, 2026-10-24 every mainnet)
 
-Part of the GitHub Actions plan (2026-09-26): see "TODO — the GitHub Actions" and
-`notion/github-actions-plan.md`.
-
-APY values in the Networks database are **updated by hand for now**. When it is worth automating,
-the shape is a scheduled Action in this repo — not client-side fetching, which would mean CORS, a
-flash of empty values and a key in the page.
-
-- **Cosmos chains are free and verified working:** `https://chains.cosmos.directory/<chain>` returns
-  `params.calculated_apr` (Agoric read 7.05% on 2026-09-16) and answers with
-  `access-control-allow-origin: https://encapsulate.xyz`. Covers Agoric, Althea, Gravity Bridge,
-  Passage, Sommelier, Terra, Lumera, Gitopia, Chain4Energy and others — about a third of the set.
-- **Everything else is one API per chain** (Sui, NEAR, Monad, Avalanche, Starknet, Mina, IOTA,
-  Zilliqa, Axelar, Supra, Vara…), with different maths and no shared format. Aggregators that cover
-  them all are paid and key-based, so the key would have to be a repo secret — another reason the
-  job runs in CI rather than the browser.
-- **The job writes to Notion** through the integration (the API can set a property), so the site
-  keeps rendering an ordinary property and any value can still be overridden by hand. Add a
-  `Last updated` property so the page can say when, and have the job skip rows marked manual.
-- Publish network APR, not the delegator's figure, unless commission is subtracted — and date it.
+The TODO of 2026-09-16 is built: site-data's networks job (daily) reads every mainnet row's rate from its chain —
+the Cosmos rows from staking-explorer and the rest from each chain's own reader, EigenCloud from EigenLayer's hosted
+Sidecar — and keeps **Rate updated** as the day the rate was last checked and still held. Mina is blank on purpose
+(below). How and when a figure moves: `docs/site-data.md` and site-data's README.
 
 ## TODO — the Networks set's open values (2026-09-24)
 
