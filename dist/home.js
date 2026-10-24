@@ -323,10 +323,283 @@
 
 
 /* ─────────────────────────────────────────────────────────────────────────────────────────────
-   Homepage decks — exact snapping for the stats band, the testimonials and the one-screen sections.
+   The figures — design "Metrics Patterns", Z: "Each figure, its own move" (2026-10-24).
 
-   THE GEOMETRY STAYS CSS. home.css already lays the stats and the testimonials out as sticky,
-   one-viewport panels (sections 00c and 09) and Who we are as one full screen (09b). That works
+   Four pinned screens (home.css 00), each driven by its own run of scroll: 0 as the screen's top
+   meets the top of the window, 1 as its pinned stage lets go. The move plays over the first 0.8
+   and holds for the rest.
+     Staked      the sum typed in behind a caret, a rule drawn under it, then the byline. A reveal,
+                 not a split: --z-x is the typed width, measured per character with a Range, so
+                 the heading keeps its one text node
+     Delegators  the windows of a skyline light, one building a mainnet, and the count runs with
+                 them. The heights are the hidden paragraph site-data writes, largest first and
+                 with no names (Terra's building is its endorsed validator's own delegators, the
+                 others' count spread over the rest — site-data, jobs/homepage/skyline.mjs)
+     Mainnets    the wheel of the mainnets' glyphs turns, the current one ringed and named, with
+                 its testnet row's Role after the note — from the Networks set (window.encCounts)
+     Uptime      the bar draws to the figure, the figure runs with it, "Almost" lights and the
+                 down line shows once it is done
+   The running figures are the headings' own text, rewritten as they run and Notion's again at the
+   end. The one text this writes from elsewhere is the mainnet's name and role under the wheel,
+   which neither Notion nor CSS can turn with the scroll. Reduced motion: every screen settled. */
+(function () {
+  var BAND = "block-3dae800a513880b493f9e17a6928281c";
+  var STAKED = "block-07ef8a96f4f046bbb64c085e90cf8387", SUM = "block-7c60fb1ac5db40e5b728673e64c2c369";
+  var DELEGATORS = "block-48456287c6fc416bb4ed4663ed95d8f9", COUNT = "block-d037b468382b4576b931199899b3e0e4";
+  var HEIGHTS = "block-403e800a513881fe9bfeca039a9b2d95";   /* "Building heights …: 3613 1946 …" */
+  var MAINNETS = "block-f763a6014900434ebcfb57466446ac5b", INDEX = "block-5a0aab755b8e46faa72c1be176e0eb9f";
+  var NOTE = "block-403e800a5138810f8280d9ce87ef331b";      /* "Mainnet validator, in the active set." */
+  var UPTIME = "block-979cee822a0342cb8745a2eaa128411a", PCT = "block-403e800a51388197a723f1b39e7e7b87";
+  var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function $(id) { return document.getElementById(id); }
+  function clamp01(x) { return Math.max(0, Math.min(1, x)); }
+  function ease3(u) { return u * u * (3 - 2 * u); }
+  function fmt(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+  function el(tag, cls) { var e = document.createElement(tag); e.className = cls; return e; }
+  /* a glyph from Super's image service at twice its drawn size or more (CLAUDE.md, "Glyphs are drawn
+     from Super's image service") */
+  function sized(url, w) {
+    var m = /[?&]url=([^&]+)/.exec(url || ""), orig = m ? decodeURIComponent(m[1]) : (url || "");
+    if (!/^https:\/\/assets\.super\.so\/[^?#]+\.(png|jpe?g|webp)(?:[?#]|$)/i.test(orig)) return url;
+    return "/_next/image?url=" + encodeURIComponent(orig) + "&w=" + w + "&q=75";
+  }
+
+  /* 0 → 1 through a screen; reduced motion is always at the end */
+  function progress(sec) {
+    if (reduced.matches) return 1;
+    var r = sec.getBoundingClientRect(), max = r.height - window.innerHeight;
+    return max > 0 ? clamp01(-r.top / max) : 0;
+  }
+  function onScreen(sec) {
+    var r = sec.getBoundingClientRect();
+    return r.height > 0 && r.bottom > -50 && r.top < window.innerHeight + 50;
+  }
+
+  /* write only what differs: a builder that rewrites its own page wakes every observer on it */
+  function setVar(e, name, v) { if (e.style.getPropertyValue(name) !== v) e.style.setProperty(name, v); }
+  function setAttr(e, name, v) { if (e.getAttribute(name) !== v) e.setAttribute(name, v); }
+  function textNode(e) {
+    var w = document.createTreeWalker(e, NodeFilter.SHOW_TEXT), n;
+    while ((n = w.nextNode())) if (n.nodeValue.trim()) return n;
+    return null;
+  }
+  /* a running figure: Notion's text, kept the first time it is seen (and again whenever Super
+     renders a new one), and rewritten in place as it runs */
+  function original(e) {
+    var now = e.textContent.trim();
+    if (!e.encZ || (now !== e.encZ.wrote && now !== e.encZ.orig)) e.encZ = { orig: now, wrote: now };
+    return e.encZ.orig;
+  }
+  function setFigure(e, v) {
+    var n = textNode(e);
+    if (n && n.nodeValue !== v) n.nodeValue = v;
+    if (e.encZ) e.encZ.wrote = v;
+  }
+
+  /* ── 01 · the sum typed in ── */
+  var edges = null, edgesKey = "";
+  function measure(h) {
+    var n = textNode(h);
+    if (!n) return null;
+    var box = h.getBoundingClientRect(), key = n.nodeValue + "|" + box.width + "|" + getComputedStyle(h).fontSize;
+    if (edges && key === edgesKey) return edges;
+    var rg = document.createRange(), out = [0];
+    for (var i = 1; i <= n.nodeValue.length; i++) {
+      rg.setStart(n, 0); rg.setEnd(n, i);
+      out.push(rg.getBoundingClientRect().right - box.left);
+    }
+    edgesKey = key; edges = out;
+    return out;
+  }
+  function stake(sec, p) {
+    var h = $(SUM), e = h && measure(h);
+    if (!e) return;
+    var q = Math.min(1, p / 0.8), n = e.length - 1, k = Math.round(clamp01(q / 0.6) * n);
+    setAttr(sec, "data-enc-z-typed", k === 0 ? "0" : k < n ? "typing" : "done");
+    setVar(sec, "--z-x", (k < n ? e[k] : e[n] + 40).toFixed(1) + "px");
+    setVar(sec, "--z-ul", ease3(clamp01((q - 0.6) / 0.22)).toFixed(4));
+    setVar(sec, "--z-by", q >= 0.85 ? "1" : "0");
+  }
+
+  /* ── 02 · the skyline: every building on one window grid, so a window is a delegator anywhere;
+     the pitch is the largest at which every building fits (the file's search, its floor taken from
+     1px to a quarter, or a phone's buildings ran off the top of the screen) ── */
+  var sky = null;
+  function heights() {
+    var p = $(HEIGHTS), m = p ? p.textContent.split(":").pop().match(/\d+/g) : null;
+    return (m || []).map(Number).filter(function (n) { return n > 0; });
+  }
+  function layout(W, H, hs) {
+    var N = 0, nB = hs.length, gap = 6, bw = (W - gap * (nB - 1)) / nB, i, k;
+    for (i = 0; i < nB; i++) N += hs[i];
+    function fit(wp) {
+      var t = 0, cols = Math.max(1, Math.floor((bw - 6) / wp)), rows = Math.max(0, Math.floor((H - 26) / wp));
+      for (var j = 0; j < nB; j++) t += Math.min(hs[j], cols * rows);
+      return t;
+    }
+    var lo = 0.25, hi = 60;
+    for (i = 0; i < 40; i++) { var m = (lo + hi) / 2; if (fit(m) >= N) lo = m; else hi = m; }
+    var wp = lo, cols = Math.max(1, Math.floor((bw - 6) / wp)), B = [], win = [];
+    for (i = 0; i < nB; i++) {
+      var h = Math.ceil(hs[i] / cols) * wp + 6, x = i * (bw + gap);
+      B.push([x, H - h, bw, h]);
+      for (k = 0; k < hs[i]; k++) win.push([x + 3 + (k % cols) * wp, H - 3 - (Math.floor(k / cols) + 1) * wp]);
+    }
+    return { B: B, win: win, ws: wp * 0.62, N: N };
+  }
+  function skyline(sec, p) {
+    var cv = sec.querySelector(".enc-z-sky canvas"), hs = heights();
+    if (!cv || !hs.length) return;
+    var W = cv.clientWidth, H = cv.clientHeight;
+    if (!W || !H) return;
+    var e = ease3(Math.min(1, p / 0.8)), key = W + "x" + H + "|" + hs.join(" ");
+    if (!sky || sky.key !== key) { sky = layout(W, H, hs); sky.key = key; sky.k = -1; }
+    var k = Math.round(e * sky.N);
+    var count = $(COUNT), total = count ? parseInt(original(count).replace(/\D/g, ""), 10) : NaN;
+    if (total >= 0) setFigure(count, k === sky.N ? original(count) : fmt(e * total));
+    if (k === sky.k) return;
+    sky.k = k;
+    var dpr = window.devicePixelRatio || 1;
+    if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
+    var ctx = cv.getContext("2d"), i, w;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = "rgba(250,250,248,.22)"; ctx.lineWidth = 1;
+    sky.B.forEach(function (b) { ctx.strokeRect(b[0] + 0.5, b[1] + 0.5, b[2] - 1, b[3]); });
+    ctx.fillStyle = "rgba(250,250,248,.07)"; ctx.beginPath();
+    for (i = k; i < sky.win.length; i++) { w = sky.win[i]; ctx.rect(w[0], w[1], sky.ws, sky.ws); }
+    ctx.fill();
+    ctx.fillStyle = "rgba(250,250,248,.85)"; ctx.beginPath();
+    for (i = 0; i < k; i++) { w = sky.win[i]; ctx.rect(w[0], w[1], sky.ws, sky.ws); }
+    ctx.fill();
+  }
+
+  /* ── 03 · the wheel: well k sits k steps of 360/n round, counter-rotated to stay upright ── */
+  var mains = null, asked = false, current = -1;
+  function wheel(sec, p) {
+    var wh = sec.querySelector(".enc-z-wheel"), idx = $(INDEX), name = sec.querySelector(".enc-z-name"), role = sec.querySelector(".enc-z-role");
+    if (!wh || !mains || !mains.length) return;
+    var n = mains.length, T = 360 / n, x = p * (n - 1), ci = Math.max(0, Math.min(n - 1, Math.round(x)));
+    if (!reduced.matches) {
+      var r = "rotate(" + (-x * T).toFixed(2) + "deg)";
+      if (wh.style.transform !== r) wh.style.transform = r;
+      setVar(wh, "--zq", (x * T).toFixed(2) + "deg");
+    }
+    if (ci === current && name && name.firstChild.nodeValue) return;
+    current = ci;
+    Array.prototype.forEach.call(wh.children, function (w, k) { if (k === ci) setAttr(w, "data-on", ""); else w.removeAttribute("data-on"); });
+    if (idx) setAttr(idx, "data-enc-z-at", (ci < 9 ? "0" : "") + (ci + 1));
+    var m = mains[ci];
+    if (name && name.firstChild.nodeValue !== m.name) name.firstChild.nodeValue = m.name;
+    var said = m.role ? " " + m.role.replace(/\.$/, "") + "." : "";
+    if (role && role.firstChild.nodeValue !== said) role.firstChild.nodeValue = said;
+  }
+
+  /* ── 04 · the uptime rule ── */
+  function uptime(sec, p) {
+    var f = $(PCT);
+    if (!f) return;
+    var orig = original(f), U = parseFloat(orig);
+    if (!(U > 0)) return;
+    var q = Math.min(1, p / 0.8), share = q * U / 100, done = q >= 1;
+    var dec = ((orig.split(".")[1] || "").match(/^\d*/) || [""])[0].length;
+    setVar(sec, "--z-up", share.toFixed(5));
+    setFigure(f, done ? orig : (share * 100).toFixed(dec) + "%");
+    setVar(sec, "--z-alm", done ? "#FAFAF8" : "#93978F");
+    setVar(sec, "--z-down", done ? "1" : "0");
+  }
+
+  var raf = 0;
+  function frame() {
+    raf = 0;
+    if (!$(BAND)) return;
+    [[STAKED, stake], [DELEGATORS, skyline], [MAINNETS, wheel], [UPTIME, uptime]].forEach(function (s) {
+      var sec = $(s[0]);
+      if (sec && onScreen(sec)) s[1](sec, progress(sec));
+    });
+  }
+  function schedule() { if (!raf) raf = window.requestAnimationFrame(frame); }
+
+  /* the decoration each screen needs, added once and again if Super renders the band anew */
+  function build() {
+    if (!$(BAND)) return;
+    var d = $(DELEGATORS), u = $(UPTIME), m = $(MAINNETS), c;
+    if (d && !d.querySelector(".enc-z-sky") && (c = d.querySelector(":scope > .notion-callout__content"))) {
+      var s = el("div", "enc-z-sky");
+      s.setAttribute("aria-hidden", "true");
+      s.appendChild(document.createElement("canvas"));
+      c.appendChild(s);
+      sky = null;
+    }
+    if (u && !u.querySelector(".enc-z-bar") && (c = u.querySelector(":scope > .notion-callout__content"))) {
+      var b = el("div", "enc-z-bar");
+      b.setAttribute("aria-hidden", "true");
+      b.appendChild(document.createElement("i"));
+      c.appendChild(b);
+    }
+    if (!asked && typeof window.encCounts === "function") {
+      asked = true;
+      window.encCounts().then(function (counts) {
+        mains = counts && counts.list ? counts.list.filter(function (x) { return x.mainnet; }) : [];
+        build();
+      });
+    }
+    if (m && mains && mains.length && !m.querySelector(".enc-z-wheel") && (c = m.querySelector(":scope > .notion-callout__content"))) {
+      var box = el("div", "enc-z-wheelbox"), wh = el("div", "enc-z-wheel"), T = 360 / mains.length;
+      box.setAttribute("aria-hidden", "true");
+      mains.forEach(function (x, k) {
+        var a = k * T * Math.PI / 180, w = el("span", "enc-z-well");
+        w.style.left = (50 + 46 * Math.cos(a)).toFixed(3) + "%";
+        w.style.top = (50 + 46 * Math.sin(a)).toFixed(3) + "%";
+        w.style.background = TINTS[k % TINTS.length];
+        if (x.glyph) { var img = new Image(); img.alt = ""; img.decoding = "async"; img.src = sized(x.glyph, 128); w.appendChild(img); }
+        wh.appendChild(w);
+      });
+      box.appendChild(wh);
+      c.appendChild(box);
+      var idx = $(INDEX), note = $(NOTE);
+      if (idx && !m.querySelector(".enc-z-name")) {
+        var nm = el("span", "enc-z-name");
+        nm.setAttribute("aria-live", "polite");
+        nm.appendChild(document.createTextNode(""));
+        idx.parentNode.insertBefore(nm, idx.nextSibling);
+      }
+      if (note && !note.querySelector(".enc-z-role")) {
+        var rl = el("span", "enc-z-role");
+        rl.appendChild(document.createTextNode(""));
+        note.appendChild(rl);
+      }
+      current = -1;
+    }
+    schedule();
+  }
+
+  window.addEventListener("scroll", schedule, { passive: true });
+  window.addEventListener("resize", function () { sky = null; edges = null; schedule(); });
+  if (reduced.addEventListener) reduced.addEventListener("change", schedule);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { edges = null; schedule(); });
+  var t = 0;
+  new MutationObserver(function (muts) {
+    if (muts.every(function (x) {
+      var e = x.target.nodeType === 1 ? x.target : x.target.parentElement;
+      return e && e.closest && e.closest(".enc-z-sky, .enc-z-bar, .enc-z-wheelbox, .enc-z-name, .enc-z-role");
+    })) return;
+    clearTimeout(t); t = setTimeout(build, 60);
+  }).observe(document.body, { childList: true, subtree: true });
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
+  else build();
+})();
+
+
+/* ─────────────────────────────────────────────────────────────────────────────────────────────
+   Homepage decks — exact snapping for the testimonials and the one-screen sections.
+
+   THE GEOMETRY STAYS CSS. home.css already lays the testimonials out as sticky, one-viewport
+   panels (section 09) and Who we are as one full screen (09b). The stats band was a deck here too
+   until 2026-10-24; its four screens (Z, "The figures" above) are driven by their scroll, so
+   nothing pages them. That works
    without JavaScript — but ordinary scrolling can come to rest anywhere, including half-way
    through a panel sliding over the one before it. This script only decides where scrolling
    stops.
@@ -347,7 +620,8 @@
    coming to rest within a third of a screen of a stop settles onto it. Further away is left
    alone, so the rest of the page scrolls the way it always did.
 
-   WHY NOT CSS SCROLL SNAP. Recorded in home.css 00c: on the document it either never engages
+   WHY NOT CSS SCROLL SNAP. Recorded in home.css 00c until it went with the stat deck (git show
+   v384:home.css): on the document it either never engages
    (proximity) or captures the whole page (mandatory), and a nested snap container aligns to its
    own edge rather than the screen. The proximity snap Who we are used is removed in favour of
    this, because a CSS snap on html also fights a scripted scroll.
@@ -359,7 +633,6 @@
    Each deck is used only while its CSS geometry is active (panels computed sticky; the
    one-screen sections above 900px). Reduced motion jumps instead of animating. */
 (function () {
-  var STATS = "block-3dae800a513880b493f9e17a6928281c";
   var QUOTES = "block-f853251f87b0400d9d5b7e3fe71e57e5";
   var QUOTE_SECTION = "block-3dae800a51388066b66ffeeb9bdb1550";
   var RAIL = "block-3dbe800a513880659b03efb665f21e12";
@@ -379,7 +652,7 @@
   /* Decks, measured fresh each time: layout changes with the viewport and with Super re-renders. */
   function decks() {
     var out = [];
-    [[STATS, "#" + STATS + " .notion-callout"], [QUOTES, "#" + QUOTES + " .notion-collection-card"]]
+    [[QUOTES, "#" + QUOTES + " .notion-collection-card"]]
       .forEach(function (d) {
         var box = document.getElementById(d[0]);
         if (!box) return;
@@ -992,9 +1265,9 @@
 
    THE NETWORK COUNT is the Networks set's own: its mainnet rows, read once per visit from the
    all-stages view on /services (navbar.js, window.encCounts). It drives the first card's dots
-   and caption and the stats band's "Number of Networks Supported" figure, whose digits are
-   replaced and nothing else. Until it arrives, or if it cannot be read, the homepage gallery's
-   card count is used, and the stats figure keeps Notion's number. */
+   and caption and the count of the figures' mainnets screen (the "28" of "01 / 28"), whose digits
+   are replaced and nothing else. Until it arrives, or if it cannot be read, the homepage gallery's
+   card count is used, and the screen keeps Notion's number. */
 (function () {
   var GALLERY = "block-bd1e4d485a0d424394add746d8e3cd35";
   var NETWORKS = "block-d07ab52b60ba4788bd8df0c9e74c5ad4";
@@ -1003,7 +1276,7 @@
   var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
   var BARS = [58, 74, 46, 88, 62, 70, 52, 80, 66, 44, 76, 60];
   var FIGURE = ".property-70594a51", CAPTION_RIGHT = ".property-6f505657";
-  var STAT = "block-5a0aab755b8e46faa72c1be176e0eb9f";   /* "Number of Networks Supported" */
+  var STAT = "block-5a0aab755b8e46faa72c1be176e0eb9f";   /* the mainnets screen's count (was "Number of Networks Supported") */
   var fromSet = 0, asked = false;
 
   function span(cls) { var e = document.createElement("span"); e.className = cls; return e; }
@@ -1099,7 +1372,9 @@
   new MutationObserver(function (muts) {
     if (muts.every(function (m) {
       var el = m.target.nodeType === 1 ? m.target : m.target.parentElement;
-      return el && el.closest && el.closest(".enc-why__graphic, " + FIGURE + ", " + CAPTION_RIGHT + ", #" + STAT);
+      // and the figures' running headings (the delegators and the uptime), rewritten as they scroll
+      return el && el.closest && el.closest(".enc-why__graphic, " + FIGURE + ", " + CAPTION_RIGHT + ", #" + STAT +
+        ", #block-d037b468382b4576b931199899b3e0e4, #block-403e800a51388197a723f1b39e7e7b87");
     })) return;
     clearTimeout(t); t = setTimeout(apply, 60);
   }).observe(document.body, { childList: true, subtree: true, characterData: true });

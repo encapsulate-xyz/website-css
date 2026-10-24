@@ -117,7 +117,7 @@ Mainnet and Testnet, sorted by Order — so the first twelve cards are the god a
   | navbar, Networks group | "27 mainnets, 20 testnets" (item line and preview), "See all 27" | navbar.js `applyCounts()` |
   | /networks count band | the two figures (27, 20) | network.js `figures()` |
   | /networks 5m band | "Thirty-five teams said yes.", "+23 more" | network.js `figures()` |
-  | homepage stats band | "Number of Networks Supported" (27) | home.js, Why Stake IIFE |
+  | homepage stats band | the mainnets screen's count, "01 / 28" (was "Number of Networks Supported") | home.js, Why Stake IIFE |
   | homepage Why Stake | "27 secured" and the dots | home.js — falls back to the homepage gallery's cards |
   | /services ask | "Thirty-five chain teams…" | services.js — counts its own view of the set |
 

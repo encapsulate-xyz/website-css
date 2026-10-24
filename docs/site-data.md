@@ -21,7 +21,10 @@ and it moves the row by 0.5 points, or after a month for a smaller drift (`jobs/
 state/rates.json; staking-explorer's ixo figure read 13.77% at 08:00 and 28.08% at 17:00 on 2026-09-30, and the first
 had been written at the user's word — a one-off reading never moves a row again), held for a hand when it moves by more
 than a third; `ACCEPT=<chain>` writes it once past both) and `homepage.yml`
-(every six hours: the stats band's two headings from every mainnet's stake, priced on CoinGecko; a chain that fails to
+(every six hours: the stats band's two headings from every mainnet's stake, priced on CoinGecko — the stake as
+`$71,482,083` since 2026-10-24 — and the building heights of its skyline, a hidden paragraph under the delegators
+heading, largest first and with no names, Terra's building its endorsed validator's own delegators and the other three's
+spread over the rest, `jobs/homepage/skyline.mjs`; a chain that fails to
 read keeps its last good reading in `state/stake.json`; the customers heading is written only when every chain that
 can count did — **Sui's ~10,000 stakers have no open source yet**, so it is held; Mina is a typed reading until a
 Blockberry key exists). **Every exception to a plain reading of a number — which validators are ours (Terra's four: the endorsed

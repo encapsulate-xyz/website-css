@@ -93,14 +93,59 @@ visible lines (the hero's 7, then 321 on 117 pages; ids in
 every URL in the sitemap for `notion-divider`, which is quicker than walking Notion. **Make space with CSS, and pair things with Notion columns — never
 with a divider or an empty paragraph.**
 
-home.css starts with older page CSS, then "HOMEPAGE SECTIONS": stats band/figures/deck (00–00c),
+home.css starts with older page CSS, then "HOMEPAGE SECTIONS": the figures, Z (00),
 hero, Audience split 51m (07b), testimonials deck (09), Why Stake 49a, governance 37h, Services 42m
 (09a), Who we are (09b), blog, networks 21b, Contact 48c (16).
 
-home.js is a set of IIFEs: the dial (institutional form), homepage decks (snapping), networks
+home.js is a set of IIFEs: the dial (institutional form), the figures (Z), homepage decks (snapping), networks
 glyph columns, blog rail (Cover glyphs via CSS mask, dots), services
 selection (swaps covers to the original PNG), Why Stake graphics (derived figures), contact copy,
 and the audience split's "What you get" as a keyboard button.
+
+**The figures are Z, "Each figure, its own move"** (design *Metrics Patterns*, 2026-10-24, in place of the stat deck).
+Four pinned screens on ink `#2A2C28`, each driven by its own run of scroll (home.css 00, home.js "The figures"): **01
+Staked** (240vh) types the sum in behind a caret, draws a rule under it and signs it, "Under management by" and the
+wordmark; **02 Delegators** (220vh) lights the windows of a skyline, one building a mainnet, the count running with
+them; **03 Mainnets** (240vh) turns a wheel of the 28 mainnets' glyphs past, the current one ringed and named; **04
+Uptime** (220vh) draws the rule to 99.96% under "Almost always on.", then the two buttons. Names: `#stats` (the band),
+`#staked`, `#delegators`, `#mainnets`, `#uptime`, each landing where its move begins.
+- **Notion** (`backups/home-figures-band-2026-10-24.json` holds the band before): the band is still the one callout with
+  the old two column lists — Staked and Mainnets in the first, Delegators and Uptime in the second — which dissolve, and
+  `order` puts the screens in the file's order; the four ids, the two headings site-data writes and the networks count
+  home.js sets all kept. Each callout's text became its eyebrow, verbatim ("01 / 04 · Staked · typed in, then signed"…).
+  Added: "Under management by **Encapsulate**" (the bold word is drawn as `svg/wordmark-reversed.svg`, 160px) and "The
+  scroll types the sum in, a rule draws under it, and we sign it."; "delegators", the caption, and the hidden paragraph
+  of building heights; "Mainnet validator, in the active set."; and the uptime screen's H3 "Almost **always on.**", "Uptime",
+  the figure "99.96%" (recreated after the H3; it was "99.96 %"), "uptime", "Measured across all validators, all
+  networks.", "99.96% up", "0.04% down · too thin to draw at this width" and the two buttons, made through the API.
+  **Removed: the fifth figure, "Soft Slashing Protection 100 %"**, which Z drops (its column and callout). The stake
+  heading lost its space (`$71,482,083`; site-data writes it so since PR #149).
+- **The skyline's heights are a hidden paragraph site-data writes** every six hours (`403e800a…2d95`, hidden by id;
+  `jobs/homepage/skyline.mjs`): largest first, no names — **Terra's building is the endorsed validator's own delegators
+  (3,613 on 24 Oct); the other three Terra validators' delegators are spread over the other buildings in proportion to
+  each one's count**, so the buildings still add up to the delegators heading and no figure on the page is theirs (the
+  user: "use one actually terra and then distribute the count from other three terra to other networks"; "you dont show
+  the other three Terra validators"). Lido DVT, whose stakers cannot be counted, has no building: 27. The pitch search's
+  floor is 0.25px, not the file's 1, or a phone's buildings ran off the top of the screen (they did in the file's own
+  render at 390).
+- **The wheel** is `window.encCounts()` (navbar.js), which now carries each chain's `mainnet` and its testnet row's
+  `role` (property-585f6e6c): the mainnets in the set's Order, glyphs at `w=128`. The note's second sentence is that Role
+  ("Part of early testnets, still operating.") — **it shows only once Role is switched on for the every-stage view on
+  /services** (`3e4e800a…0aa5`, hidden), which the API cannot do. Until then the note is the first sentence alone.
+- **The typing is a reveal, not a split**: the heading keeps its one text node; its ink is a gradient clipped to the
+  text that ends at `--z-x`, the typed width measured per character with a Range. The delegators and uptime figures are
+  their headings' own text rewritten as they run (Notion's again at the end; Why Stake's observer ignores them).
+- **Traps**: the band callout's own `overflow: hidden` (Super's) stopped the stages sticking. The shared screen rules are
+  `:where()`-scoped to two classes so each screen's id rules win, and pathed to the band's columns — the uptime screen's
+  two button callouts are `.notion-column > .notion-callout` too. The uptime headline spans an `auto` filler row and the
+  figure block's three `min-content` rows, which keeps the middle centred (spanning the 1fr space above sat it 50px
+  high).
+- **Where it departs from the file**, each for a visible fault: the eyebrows wrap under 760px ("02 / 04 · Delegators · one
+  building per network" ran off a 390 screen); the mainnets words take the phone's 20px gutter (the file's column had
+  none on its left); wider than 1856px the content keeps 1728px; the two buttons stack under 520px, as every button pair
+  on the site does (the file keeps them side by side).
+- Reduced motion shows every screen settled (checked with `REDUCED=1 scripts/livecheck.mjs`, new). The deck snapping no
+  longer pages the band. `svg/stat-field-*.svg` are unused now.
 
 **The audience split is 51m "Two grounds"** (2026-10-14, the user: "implement 51m … in place of
 current Hinge · node"). A full-bleed band, paper half and ink half (#2A2C28), a 148px word

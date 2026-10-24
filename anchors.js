@@ -40,6 +40,11 @@
   var NAMES = {
     "/": {
       stats: b("3dae800a513880b493f9e17a6928281c"),
+      // the figures' four screens (Z, 2026-10-24): each lands where its move begins
+      staked: b("07ef8a96f4f046bbb64c085e90cf8387"),
+      delegators: b("48456287c6fc416bb4ed4663ed95d8f9"),
+      mainnets: b("f763a6014900434ebcfb57466446ac5b"),
+      uptime: b("979cee822a0342cb8745a2eaa128411a"),
       audience: b("3dae800a51388006a57be06b8ebea78e"),
       "why-stake": b("3dce800a513880349091dbe0cd0650a7"),
       networks: b("3dbe800a513880c09163d3ed4ab436fd"),

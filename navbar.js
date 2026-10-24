@@ -278,17 +278,23 @@
         if (n) names[n.textContent.trim()] = 1;
         var f = it.querySelector("[data-full-size]");
         if (n && f && !glyphs[keyOfName(n.textContent)]) glyphs[keyOfName(n.textContent)] = f.getAttribute("data-full-size");
-        /* every chain once, in the view's Order, with its glyph, its tier and the page a mainnet row
-           links to — /networks' 5m strip is drawn from this (network.js), its two rows split by tier */
+        /* every chain once, in the view's Order, with its glyph, its tier, the page a mainnet row
+           links to, whether it has a mainnet row, and its testnet row's Role where the view shows
+           Role (property-585f6e6c, Super's class from the property's id "X_nl") — /networks' 5m
+           strip is drawn from this (network.js), its two rows split by tier, and the homepage's
+           wheel of mainnets (home.js, "The figures") */
         if (n) {
           var nm = n.textContent.trim(), a = it.querySelector("a.notion-collection-card__anchor[href], a[href^='/networks/']");
           var href = a ? a.getAttribute("href") : "";
+          var r = it.querySelector(".property-585f6e6c"), role = r ? r.textContent.trim() : "";
           if (at[nm] == null) {
             at[nm] = list.length;
-            list.push({ name: nm, glyph: f ? f.getAttribute("data-full-size") : "", href: href, tier: tier });
+            list.push({ name: nm, glyph: f ? f.getAttribute("data-full-size") : "", href: href, tier: tier, mainnet: stage === "Mainnet", role: role });
           } else {
             if (href && !list[at[nm]].href) list[at[nm]].href = href;
             if (tier && !list[at[nm]].tier) list[at[nm]].tier = tier;
+            if (stage === "Mainnet") list[at[nm]].mainnet = true;
+            if (role && !list[at[nm]].role) list[at[nm]].role = role;
           }
         }
       });
@@ -302,9 +308,9 @@
     if (countsOnce) return countsOnce;
     try {
       var kept = JSON.parse(sessionStorage.getItem("enc-counts") || "null");
-      /* a count kept before the glyphs (v7), the list of chains (v12) or their tiers were collected
-         is read again */
-      if (kept && kept.glyphs && kept.list && kept.list.length && "tier" in kept.list[0] &&
+      /* a count kept before the glyphs (v7), the list of chains (v12), their tiers or their stage
+         and role (v385) were collected is read again */
+      if (kept && kept.glyphs && kept.list && kept.list.length && "tier" in kept.list[0] && "role" in kept.list[0] &&
           Date.now() - kept.at < 1800000) return (countsOnce = Promise.resolve(kept));
     } catch (e) { /* storage blocked: read the page */ }
     countsOnce = pageOf(COUNTS_PAGE).then(function (doc) {
