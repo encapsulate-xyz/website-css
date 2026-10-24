@@ -418,18 +418,24 @@
    list [data-enc-net]; everything here is scoped to that, so without the
    script the gallery (home.css §15) shows as before.
 
-   Section: 800px tall (the design's 600px, raised on request). Left, the copy as Notion has it (heading, sentence,
-   buttons), vertically centred in a 400px column; the text itself is not
+   Section: one screen above 900px (the design's 600px, then 800px; the user, 2026-10-24: "make network section
+   fullscreen too and not faded"), settled on like the other one-screen sections (home.js, SCREENS). Left, the copy
+   as Notion has it (heading, sentence, buttons), vertically centred in a 400px column; the text itself is not
    restyled. Right, 36px away, five columns that share the rest of the width
    equally, 14px apart; the discs are as wide as their column (so they grow
-   with the screen), 16px apart, glyph at 52%, each column faded out over its
-   top and bottom 12%. The revision replaced fixed 126px discs in a 470px band
-   with this fluid version. --net-cols-max caps the columns' total width if the
-   discs ever read too large on very wide screens. */
+   with the screen), 16px apart, glyph at 52%, running the full height with no fade, so they pass under the ink
+   bands either side (the empty paragraphs that left paper between were deleted the same day). The revision
+   replaced fixed 126px discs in a 470px band with this fluid version. --net-cols-max caps the columns' total
+   width if the discs ever read too large on very wide screens.
+
+   NO WRAP: Super's notion.css wraps every column list, and the disc column's basis was its content's width, so
+   from some date before 2026-10-24 it fell under the copy at every desktop width (1228px wide at 1440, the
+   discs 234px). Its basis is 0 now. */
 
 [data-enc-net] {
-  --net-h: 800px; /* design 600px; taller at the user's request (2026-09-15) */
+  --net-h: 100vh;
   --net-cols-max: none;
+  flex-wrap: nowrap !important;
   align-items: stretch !important;
   gap: 36px !important;
   min-height: var(--net-h) !important;
@@ -452,7 +458,7 @@
 }
 
 [data-enc-net] > .notion-column:last-child {
-  flex: 1 1 auto !important;
+  flex: 1 1 0 !important;
   width: auto !important;
   min-width: 0 !important;
   display: flex !important;
@@ -483,8 +489,6 @@
   height: 100%;
   min-height: 0;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
 }
 
 .enc-net__track {
@@ -582,11 +586,15 @@
   [data-enc-net] {
     --net-h: 380px;
     flex-direction: column !important;
-    gap: 8px !important;
+    gap: 28px !important; /* 8 while the field faded in; unfaded, its edge needs air under the buttons */
   }
   [data-enc-net] > .notion-column:first-child {
     flex: none !important;
     padding: 40px 0 0 !important;
+  }
+  /* stacked, the band keeps its own height: a basis of 0 would share out the row's instead */
+  [data-enc-net] > .notion-column:last-child {
+    flex: none !important;
   }
   .enc-net { gap: 10px; }
 }

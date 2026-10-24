@@ -106,8 +106,8 @@ and the audience split's "What you get" as a keyboard button.
 Four pinned screens on ink `#2A2C28`, each driven by its own run of scroll (home.css 00, home.js "The figures"): **01
 Staked** (240vh) types the sum in behind a caret, draws a rule under it and signs it, "Under management by" and the
 wordmark; **02 Delegators** (220vh) lights the windows of a skyline, one building a mainnet, the count running with
-them; **03 Mainnets** (240vh) turns a wheel of the 28 mainnets' glyphs round the count, "28 / mainnets" fixed at its hub,
-the current one ringed and named; **04
+them; **03 Mainnets** (240vh) turns a wheel of the 28 mainnets' glyphs round the count at its hub, "28 / mainnets", which
+runs 1 … 28 with the names, the current one ringed and named; **04
 Uptime** (220vh) draws the rule to 99.96% under "Almost always on.", then the two buttons. Names: `#stats` (the band),
 `#staked`, `#delegators`, `#mainnets`, `#uptime`, each landing where its move begins.
 - **Notion** (`backups/home-figures-band-2026-10-24.json` holds the band before): the band is still the one callout with
@@ -141,8 +141,11 @@ Uptime** (220vh) draws the rule to 99.96% under "Almost always on.", then the tw
   "mainnets" (`403e800a…cbdd3`, added through the API), the pair centred on the wheel's centre from the screen's own
   gutter, `clamp(20px, 5vw, 64px)` — not the band's, which grows past 1856 while the wheel stays on the screen's edge — to
   0.72 of the radius, inside the wells (their inner edge is 0.84). The "01 / 28" index it replaces is gone, and so is the
-  `data-enc-z-at` home.js wrote. **The file's script still writes the index into the hub** (`String(ci + 1)`, so it
-  would count 1 … 28 under "mainnets"); that is the old counter's line left behind, and the note's "fixed" was followed.
+  `data-enc-z-at` home.js wrote. **The count runs with the wheel**, 1 at the first name and the set's count at the last,
+  as the file's script writes it (`String(ci + 1)`); it was built fixed at first, after the file's note ("the figure, 28,
+  fixed at its hub"), and the user asked the same evening: "28 mainnets count should increase as we scroll". Why Stake's
+  script, which sets the heading's digits from the set, leaves a heading the wheel has run (`.encZ`) and no longer wakes
+  on the wheel's name and role; it had put 28 back 60ms after every name.
   The note is four lines high (`6em`, overflow hidden), so a long Role does not move the name; all 28 fit at 320–2560.
   **Under 760px the wheel's radius is `min(26vh, 58vw)`**, not the file's `min(36vh, 30vw)`: that was 117px on a 390
   screen and "mainnets" ran under the wells; 26vh keeps it in its row on a 568 screen.
@@ -160,6 +163,17 @@ Uptime** (220vh) draws the rule to 99.96% under "Almost always on.", then the tw
   on the site does (the file keeps them side by side).
 - Reduced motion shows every screen settled (checked with `REDUCED=1 scripts/livecheck.mjs`, new). The deck snapping no
   longer pages the band. `svg/stat-field-*.svg` are unused now.
+
+**The networks band is one screen** (2026-10-24, the user: "make network section fullscreen too and not faded"; design
+21b, home-dial.css "NETWORKS COLUMNS", home.js "Homepage networks"): above 900px the row is `100vh` (it was the file's
+600px, then 800px) and home.js settles on it like the other one-screen sections; the five columns run its full height
+with no fade (the 12% mask at each end is gone), so the discs pass under the ink bands either side. **Removed: the two
+empty paragraphs** that sat between the row and those bands (`3dce800a…1b1b` above, `7ebeabfa…60c6` below;
+`backups/networks-spacers-2026-10-24.json`), which left 37px of paper each way. Under 900px it keeps its stacked 380px
+field, as the other one-screen sections do not fill a phone, with 28px under the buttons (8 while it faded in).
+**Found the same day: the row had been wrapping** at every desktop width, the copy on top and the discs 234px wide under
+it (measured at 1440 on the release before, so not the day's work): Super's notion.css wraps every column list, and the
+disc column's basis was its content's width. `flex-wrap: nowrap` and a basis of 0.
 
 **The audience split is 51m "Two grounds"** (2026-10-14, the user: "implement 51m … in place of
 current Hinge · node"). A full-bleed band, paper half and ink half (#2A2C28), a 148px word

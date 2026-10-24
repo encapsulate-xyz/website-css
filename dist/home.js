@@ -335,9 +335,10 @@
                  them. The heights are the hidden paragraph site-data writes, largest first and
                  with no names (Terra's building is its endorsed validator's own delegators, the
                  others' count spread over the rest — site-data, jobs/homepage/skyline.mjs)
-     Mainnets    the wheel of the mainnets' glyphs turns round the count, fixed at its hub, the
-                 current one ringed and named, with its testnet row's Role after the note — from
-                 the Networks set (window.encCounts)
+     Mainnets    the wheel of the mainnets' glyphs turns round the count at its hub, which runs
+                 with it, 1 at the first name and the set's count at the last; the current one
+                 ringed and named, with its testnet row's Role after the note — from the Networks
+                 set (window.encCounts)
      Uptime      the bar draws to the figure, the figure runs with it, "Almost" lights and the
                  down line shows once it is done
    The running figures are the headings' own text, rewritten as they run and Notion's again at the
@@ -348,7 +349,7 @@
   var STAKED = "block-07ef8a96f4f046bbb64c085e90cf8387", SUM = "block-7c60fb1ac5db40e5b728673e64c2c369";
   var DELEGATORS = "block-48456287c6fc416bb4ed4663ed95d8f9", COUNT = "block-d037b468382b4576b931199899b3e0e4";
   var HEIGHTS = "block-403e800a513881fe9bfeca039a9b2d95";   /* "Building heights …: 3613 1946 …" */
-  var MAINNETS = "block-f763a6014900434ebcfb57466446ac5b";
+  var MAINNETS = "block-f763a6014900434ebcfb57466446ac5b", HUB = "block-5a0aab755b8e46faa72c1be176e0eb9f";
   var NOTE = "block-403e800a5138810f8280d9ce87ef331b";      /* "Mainnet validator, in the active set." */
   var UPTIME = "block-979cee822a0342cb8745a2eaa128411a", PCT = "block-403e800a51388197a723f1b39e7e7b87";
   var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
@@ -483,6 +484,12 @@
     var wh = sec.querySelector(".enc-z-wheel"), name = sec.querySelector(".enc-z-name"), role = sec.querySelector(".enc-z-role");
     if (!wh || !mains || !mains.length) return;
     var n = mains.length, T = 360 / n, x = p * (n - 1), ci = Math.max(0, Math.min(n - 1, Math.round(x)));
+    /* the count runs with the names (the user, 2026-10-24: "28 mainnets count should increase as we
+       scroll"; the file's own script does the same). Marked as a running figure, Why Stake's script,
+       which sets the heading to the set's count, leaves it to this; a heading Super renders anew is
+       its again until the wheel next turns */
+    var hub = $(HUB);
+    if (hub) { original(hub); setFigure(hub, String(ci + 1)); }
     if (!reduced.matches) {
       var r = "rotate(" + (-x * T).toFixed(2) + "deg)";
       if (wh.style.transform !== r) wh.style.transform = r;
@@ -606,7 +613,7 @@
 
    STOPS. Every panel contributes one stop: the scroll position at which it is pinned at the top
    of the screen (its deck's top + index × panel height). Each one-screen section (the audience
-   split, Services, Who we are) contributes a single stop.
+   split, Services, Who we are, the networks) contributes a single stop.
 
    INSIDE A DECK (between its first and last stop) scrolling is paged:
      - a wheel or trackpad gesture moves exactly one panel, animated, and the rest of that
@@ -631,8 +638,9 @@
 (function () {
   var TEAM = "block-3dbe800a513880c5862ae676c8d06994";
   // one-screen sections that settle to the top of the viewport (not paged): Who we are, Services,
-  // the audience split
-  var SCREENS = [TEAM, "block-3dbe800a5138800d8a72c99cdde9bc3f", "block-3dae800a51388006a57be06b8ebea78e"];
+  // the audience split, the networks (2026-10-24)
+  var SCREENS = [TEAM, "block-3dbe800a5138800d8a72c99cdde9bc3f", "block-3dae800a51388006a57be06b8ebea78e",
+    "block-3dbe800a513880c09163d3ed4ab436fd"];
 
   var NEAR = 0.33;       // of a screen: how close a resting page must be to a stop to settle on it
   var EPS = 2;           // px: "on" a stop
@@ -1411,8 +1419,8 @@
    THE NETWORK COUNT is the Networks set's own: its mainnet rows, read once per visit from the
    all-stages view on /services (navbar.js, window.encCounts). It drives the first card's dots
    and caption and the count of the figures' mainnets screen (the "28" at the wheel's hub), whose digits
-   are replaced and nothing else. Until it arrives, or if it cannot be read, the homepage gallery's
-   card count is used, and the screen keeps Notion's number. */
+   are replaced and nothing else, until the wheel runs the count itself. Until it arrives, or if it
+   cannot be read, the homepage gallery's card count is used, and the screen keeps Notion's number. */
 (function () {
   var GALLERY = "block-bd1e4d485a0d424394add746d8e3cd35";
   var NETWORKS = "block-d07ab52b60ba4788bd8df0c9e74c5ad4";
@@ -1482,7 +1490,8 @@
         if (c && c.mainnet) { fromSet = c.mainnet; apply(); }
       });
     }
-    if (fromSet) setNumber(document.getElementById(STAT), fromSet);
+    var stat = document.getElementById(STAT);
+    if (fromSet && stat && !stat.encZ) setNumber(stat, fromSet);   /* .encZ: the figures' wheel runs it */
     var block = document.getElementById(GALLERY);
     if (!block) return;
     var cards = block.querySelectorAll(".notion-collection-card");
@@ -1519,7 +1528,7 @@
       var el = m.target.nodeType === 1 ? m.target : m.target.parentElement;
       // and the figures' running headings (the delegators and the uptime), rewritten as they scroll
       return el && el.closest && el.closest(".enc-why__graphic, " + FIGURE + ", " + CAPTION_RIGHT + ", #" + STAT +
-        ", #block-d037b468382b4576b931199899b3e0e4, #block-403e800a51388197a723f1b39e7e7b87");
+        ", #block-d037b468382b4576b931199899b3e0e4, #block-403e800a51388197a723f1b39e7e7b87, .enc-z-name, .enc-z-role");
     })) return;
     clearTimeout(t); t = setTimeout(apply, 60);
   }).observe(document.body, { childList: true, subtree: true, characterData: true });
