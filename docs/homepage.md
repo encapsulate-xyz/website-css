@@ -94,10 +94,10 @@ every URL in the sitemap for `notion-divider`, which is quicker than walking Not
 with a divider or an empty paragraph.**
 
 home.css starts with older page CSS, then "HOMEPAGE SECTIONS": the figures, Z (00),
-hero, Audience split 51m (07b), testimonials deck (09), Why Stake 49a, governance 37h, Services 42m
+hero, Audience split 51m (07b), testimonials I (09), Why Stake 49a, governance 37h, Services 42m
 (09a), Who we are (09b), blog, networks 21b, Contact 48c (16).
 
-home.js is a set of IIFEs: the dial (institutional form), the figures (Z), homepage decks (snapping), networks
+home.js is a set of IIFEs: the dial (institutional form), the figures (Z), homepage decks (snapping), the testimonials (I), networks
 glyph columns, blog rail (Cover glyphs via CSS mask, dots), services
 selection (swaps covers to the original PNG), Why Stake graphics (derived figures), contact copy,
 and the audience split's "What you get" as a keyboard button.
@@ -106,7 +106,8 @@ and the audience split's "What you get" as a keyboard button.
 Four pinned screens on ink `#2A2C28`, each driven by its own run of scroll (home.css 00, home.js "The figures"): **01
 Staked** (240vh) types the sum in behind a caret, draws a rule under it and signs it, "Under management by" and the
 wordmark; **02 Delegators** (220vh) lights the windows of a skyline, one building a mainnet, the count running with
-them; **03 Mainnets** (240vh) turns a wheel of the 28 mainnets' glyphs past, the current one ringed and named; **04
+them; **03 Mainnets** (240vh) turns a wheel of the 28 mainnets' glyphs round the count, "28 / mainnets" fixed at its hub,
+the current one ringed and named; **04
 Uptime** (220vh) draws the rule to 99.96% under "Almost always on.", then the two buttons. Names: `#stats` (the band),
 `#staked`, `#delegators`, `#mainnets`, `#uptime`, each landing where its move begins.
 - **Notion** (`backups/home-figures-band-2026-10-24.json` holds the band before): the band is still the one callout with
@@ -135,6 +136,16 @@ Uptime** (220vh) draws the rule to 99.96% under "Almost always on.", then the tw
   `role` (property-585f6e6c): the mainnets in the set's Order, glyphs at `w=128`. The note's second sentence is that Role
   ("Part of early testnets, still operating.") — **it shows only once Role is switched on for the every-stage view on
   /services** (`3e4e800a…0aa5`, hidden), which the API cannot do. Until then the note is the first sentence alone.
+- **The hub** (the file's second pass, the same evening: "the figure, 28, fixed at its hub, so the count is the still
+  centre the names turn around"): the heading "28" (Why Stake's script sets its digits from the set) over a new paragraph
+  "mainnets" (`403e800a…cbdd3`, added through the API), the pair centred on the wheel's centre from the screen's own
+  gutter, `clamp(20px, 5vw, 64px)` — not the band's, which grows past 1856 while the wheel stays on the screen's edge — to
+  0.72 of the radius, inside the wells (their inner edge is 0.84). The "01 / 28" index it replaces is gone, and so is the
+  `data-enc-z-at` home.js wrote. **The file's script still writes the index into the hub** (`String(ci + 1)`, so it
+  would count 1 … 28 under "mainnets"); that is the old counter's line left behind, and the note's "fixed" was followed.
+  The note is four lines high (`6em`, overflow hidden), so a long Role does not move the name; all 28 fit at 320–2560.
+  **Under 760px the wheel's radius is `min(26vh, 58vw)`**, not the file's `min(36vh, 30vw)`: that was 117px on a 390
+  screen and "mainnets" ran under the wells; 26vh keeps it in its row on a 568 screen.
 - **The typing is a reveal, not a split**: the heading keeps its one text node; its ink is a gradient clipped to the
   text that ends at `--z-x`, the typed width measured per character with a Range. The delegators and uptime figures are
   their headings' own text rewritten as they run (Notion's again at the end; Why Stake's observer ignores them).
@@ -215,12 +226,43 @@ head, which Super serves in the HTML, where a page's own head script is only ins
 head (`head/team.html`) holds a `meta refresh` for a reader without JavaScript, `body { visibility: hidden }` and its
 canonical on /.
 
+**The testimonials are I, "Portrait and the pile"** (design *Testimonials Patterns*, 2026-10-24, in place of the
+deck and its names rail; home.css 09, home.js "Homepage testimonials"). One band on ink, two columns
+(`0.9fr 1.1fr`): the current speaker pinned at portrait scale on the left — "Testimonials · 01 / 05", the 200px face, name,
+role, the network's well and org — and the gallery's five cards as a sticky pile on the right, step i pinned at
+`56 + i·G` (`G = clamp(56px, (100vh − 320px)/4, 96px)`), then a 70vh tail. A step shows its quote whole; as the next
+climbs over it, the words fade (`--t-w`, the first 0.4 of the cover) and the highlight slides and scales into the title
+row (0.3–0.9), where the title's own copy takes over at 0.92; the last folds on the tail, so the band ends on five lines.
+Reduced motion crossfades the phrase. Under 760px the stage sits above and the steps read as a list; nothing folds there
+(the file folds the last step on phones too, which would leave its quote faded for good) and the phrase runs inline with
+its sentence.
+- **Built from Notion**: each Testimonials row's Name, Title (split at its last ", " into role and org), quote and its
+  highlight, Photo's first file and Glyph's first file. home.js writes three things Notion has but cannot place: the stage
+  (a layer per speaker, the current one shown, `aria-live`), each step's title (a copy of the highlight, trailing
+  punctuation dropped; CSS adds the capital and the full stop) and the count after the heading (`data-enc-t-at`). The
+  heading "Testimonials" is the stage's eyebrow: a sticky 100vh column whose padding home.js sets (`--t-eye`) to the
+  stage's empty first line, so it moves with the speaker's height.
+- **Notion, 2026-10-24** (rows before: `backups/testimonial-rows-2026-10-24.json`; log
+  `backups/testimonial-edit-log-2026-10-24.json`): each row's Photo and Glyph got the file's face crop and black glyph
+  as their **first** file, every older file kept after it; the highlights are now the file's phrases (Stargaze's "an
+  excellent validator and contributor", no longer "Highly recommend!"), three of them carrying the stop or comma after
+  them, or the inline-block phrase left it to start the next line; full stops before ” on four quotes; "CoFounder" →
+  "Cofounder" twice. **Removed: the paragraph "What the teams say."** (`3dae800a…d748`, in
+  `backups/testimonials-paragraph-2026-10-24.json`), which I does not have. The names table
+  (`3dbe800a…e12`) stays in Notion, hidden by id: deleting a linked view risks its source. Stargaze keeps Notion's
+  "They've" where the file has "They have".
+- **Traps**: the card content is Super's `flex: 1`, stretched to the step's foot, which began every step a tenth folded
+  (`flex: none`); Super's 4px flex gap put a space before the by-line's comma (`display: block` on the name). The phrase's
+  move is measured once per layout with the transform off (not per frame), every read before every write.
+- Removed with the deck: home.css's old 09 (the sticky panels, the rail), home-dial.css's "TESTIMONIAL RAIL", home.js's
+  rail painter and the testimonials' entry in the deck snapping (no section is paged now but Who we are), and the audit's
+  two quote rules (the 700px card rule and the 1100px quote width).
+
 **/#testimonials → the testimonials** (2026-10-23, v381; the user asked for the name, plural; the next hour every major
 section of every page got one — anchors.js). Block ids cannot be
 renamed, so home.js's `NAMED` mapped the name to the section's block, the callout holding its heading
-(`#block-3dae800a51388066…`), and lands it like any `#block-…`; the name stays in the address. That block's top is the
-first quote's stop at a desktop width (8181 at 1440 × 900) and the heading just above the quotes on a phone (4649 at
-390). Any case, a tracker's `?…` tail ignored, on a hash change and on a click of a link to it on the homepage. No
+(`#block-3dae800a51388066…`), and lands it like any `#block-…`; the name stays in the address. Since I (2026-10-24) that
+block's top is the band's: the first speaker and the first quote whole, on a phone the heading. Any case, a tracker's `?…` tail ignored, on a hash change and on a click of a link to it on the homepage. No
 link on the site uses it yet. The bare id the section has always had is `/#block-6df87cb2d8994ba0b7fe797aa933840d`,
 the heading's own.
 

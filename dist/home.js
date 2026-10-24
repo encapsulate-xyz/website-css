@@ -335,8 +335,9 @@
                  them. The heights are the hidden paragraph site-data writes, largest first and
                  with no names (Terra's building is its endorsed validator's own delegators, the
                  others' count spread over the rest — site-data, jobs/homepage/skyline.mjs)
-     Mainnets    the wheel of the mainnets' glyphs turns, the current one ringed and named, with
-                 its testnet row's Role after the note — from the Networks set (window.encCounts)
+     Mainnets    the wheel of the mainnets' glyphs turns round the count, fixed at its hub, the
+                 current one ringed and named, with its testnet row's Role after the note — from
+                 the Networks set (window.encCounts)
      Uptime      the bar draws to the figure, the figure runs with it, "Almost" lights and the
                  down line shows once it is done
    The running figures are the headings' own text, rewritten as they run and Notion's again at the
@@ -347,7 +348,7 @@
   var STAKED = "block-07ef8a96f4f046bbb64c085e90cf8387", SUM = "block-7c60fb1ac5db40e5b728673e64c2c369";
   var DELEGATORS = "block-48456287c6fc416bb4ed4663ed95d8f9", COUNT = "block-d037b468382b4576b931199899b3e0e4";
   var HEIGHTS = "block-403e800a513881fe9bfeca039a9b2d95";   /* "Building heights …: 3613 1946 …" */
-  var MAINNETS = "block-f763a6014900434ebcfb57466446ac5b", INDEX = "block-5a0aab755b8e46faa72c1be176e0eb9f";
+  var MAINNETS = "block-f763a6014900434ebcfb57466446ac5b";
   var NOTE = "block-403e800a5138810f8280d9ce87ef331b";      /* "Mainnet validator, in the active set." */
   var UPTIME = "block-979cee822a0342cb8745a2eaa128411a", PCT = "block-403e800a51388197a723f1b39e7e7b87";
   var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
@@ -479,7 +480,7 @@
   /* ── 03 · the wheel: well k sits k steps of 360/n round, counter-rotated to stay upright ── */
   var mains = null, asked = false, current = -1;
   function wheel(sec, p) {
-    var wh = sec.querySelector(".enc-z-wheel"), idx = $(INDEX), name = sec.querySelector(".enc-z-name"), role = sec.querySelector(".enc-z-role");
+    var wh = sec.querySelector(".enc-z-wheel"), name = sec.querySelector(".enc-z-name"), role = sec.querySelector(".enc-z-role");
     if (!wh || !mains || !mains.length) return;
     var n = mains.length, T = 360 / n, x = p * (n - 1), ci = Math.max(0, Math.min(n - 1, Math.round(x)));
     if (!reduced.matches) {
@@ -490,7 +491,6 @@
     if (ci === current && name && name.firstChild.nodeValue) return;
     current = ci;
     Array.prototype.forEach.call(wh.children, function (w, k) { if (k === ci) setAttr(w, "data-on", ""); else w.removeAttribute("data-on"); });
-    if (idx) setAttr(idx, "data-enc-z-at", (ci < 9 ? "0" : "") + (ci + 1));
     var m = mains[ci];
     if (name && name.firstChild.nodeValue !== m.name) name.firstChild.nodeValue = m.name;
     var said = m.role ? " " + m.role.replace(/\.$/, "") + "." : "";
@@ -559,12 +559,12 @@
       });
       box.appendChild(wh);
       c.appendChild(box);
-      var idx = $(INDEX), note = $(NOTE);
-      if (idx && !m.querySelector(".enc-z-name")) {
+      var note = $(NOTE);
+      if (note && !m.querySelector(".enc-z-name")) {
         var nm = el("span", "enc-z-name");
         nm.setAttribute("aria-live", "polite");
         nm.appendChild(document.createTextNode(""));
-        idx.parentNode.insertBefore(nm, idx.nextSibling);
+        note.parentNode.insertBefore(nm, note);
       }
       if (note && !note.querySelector(".enc-z-role")) {
         var rl = el("span", "enc-z-role");
@@ -594,12 +594,12 @@
 
 
 /* ─────────────────────────────────────────────────────────────────────────────────────────────
-   Homepage decks — exact snapping for the testimonials and the one-screen sections.
+   Homepage decks — exact snapping for the one-screen sections.
 
-   THE GEOMETRY STAYS CSS. home.css already lays the testimonials out as sticky, one-viewport
-   panels (section 09) and Who we are as one full screen (09b). The stats band was a deck here too
-   until 2026-10-24; its four screens (Z, "The figures" above) are driven by their scroll, so
-   nothing pages them. That works
+   THE GEOMETRY STAYS CSS. home.css lays Who we are out as one full screen (09b). The stats band and
+   the testimonials were decks here too until 2026-10-24; the figures' four screens (Z, "The
+   figures" above) and the testimonials' pile (I, "Homepage testimonials" below) are driven by their
+   scroll, so nothing pages them, and no deck is registered now. That works
    without JavaScript — but ordinary scrolling can come to rest anywhere, including half-way
    through a panel sliding over the one before it. This script only decides where scrolling
    stops.
@@ -626,16 +626,9 @@
    own edge rather than the screen. The proximity snap Who we are used is removed in favour of
    this, because a CSS snap on html also fights a scripted scroll.
 
-   THE TESTIMONIAL RAIL. With the scroll position known, the rail marks its active row itself
-   (data-enc-active) instead of every panel drawing a marker at its own row underneath — the
-   CSS-only marker slid off the rail mid-scroll. Rows can be clicked to go to that quote.
-
    Each deck is used only while its CSS geometry is active (panels computed sticky; the
    one-screen sections above 900px). Reduced motion jumps instead of animating. */
 (function () {
-  var QUOTES = "block-f853251f87b0400d9d5b7e3fe71e57e5";
-  var QUOTE_SECTION = "block-3dae800a51388066b66ffeeb9bdb1550";
-  var RAIL = "block-3dbe800a513880659b03efb665f21e12";
   var TEAM = "block-3dbe800a513880c5862ae676c8d06994";
   // one-screen sections that settle to the top of the viewport (not paged): Who we are, Services,
   // the audience split
@@ -649,23 +642,11 @@
 
   var docTop = function (el) { return el.getBoundingClientRect().top + window.scrollY; };
 
-  /* Decks, measured fresh each time: layout changes with the viewport and with Super re-renders. */
+  /* Decks, measured fresh each time: layout changes with the viewport and with Super re-renders.
+     A deck of sticky panels would be measured here as the testimonials were (git show v385:home.js):
+     from its box's bottom, since sticky panels report their stuck position. */
   function decks() {
     var out = [];
-    [[QUOTES, "#" + QUOTES + " .notion-collection-card"]]
-      .forEach(function (d) {
-        var box = document.getElementById(d[0]);
-        if (!box) return;
-        var panels = box.querySelectorAll(d[1]);
-        if (panels.length < 2 || getComputedStyle(panels[0]).position !== "sticky") return;
-        // Sticky elements report their stuck position, so the run is measured from the box's
-        // bottom, which never moves: the panels are the last thing in it, one height each.
-        var h = panels[0].offsetHeight;
-        var bottom = docTop(box) + box.offsetHeight - (parseFloat(getComputedStyle(box).paddingBottom) || 0);
-        var stops = [];
-        for (var i = 0; i < panels.length; i++) stops.push(Math.round(bottom - (panels.length - i) * h));
-        out.push({ id: d[0], stops: stops, h: h });
-      });
     if (window.matchMedia("(min-width: 901px)").matches) {
       SCREENS.forEach(function (id) {
         var el = document.getElementById(id);
@@ -688,7 +669,7 @@
   var anim = null;
   function scrollToY(target) {
     target = Math.max(0, Math.min(target, document.documentElement.scrollHeight - window.innerHeight));
-    if (Math.abs(target - window.scrollY) < 1) { lastRest = target; paintRail(); return; }
+    if (Math.abs(target - window.scrollY) < 1) { lastRest = target; return; }
     var smooth = !reduced.matches;
     if (anim) clearTimeout(anim.timer);
     anim = { target: target };
@@ -701,7 +682,6 @@
     clearTimeout(anim.timer);
     lastRest = window.scrollY;
     anim = null;
-    paintRail();
   }
   function arrived() {
     if (anim && Math.abs(window.scrollY - anim.target) <= 1) finish();
@@ -835,49 +815,214 @@
   window.addEventListener("scroll", function () {
     if (!hasScrollEnd) { clearTimeout(restTimer); restTimer = setTimeout(function () { arrived(); settle(); }, 140); }
     arrived();
-    paintRail();
   }, { passive: true });
   window.addEventListener("touchstart", function () { touching = true; if (anim) finish(); }, { passive: true });
   window.addEventListener("touchend", function () { touching = false; if (!hasScrollEnd) setTimeout(settle, 140); }, { passive: true });
 
-  /* ── the testimonial rail ── */
-  var railQueued = false;
-  function paintRail() {
-    if (railQueued) return;
-    railQueued = true;
-    requestAnimationFrame(function () {
-      railQueued = false;
-      var rail = document.getElementById(RAIL), section = document.getElementById(QUOTE_SECTION);
-      if (!rail || !section) return;
-      var d = stops().filter(function (x) { return x.id === QUOTES; })[0];
-      var rows = rail.querySelectorAll("tbody tr");
-      if (!d || !rows.length) { section.removeAttribute("data-enc-deck"); return; }
-      section.setAttribute("data-enc-deck", "");
-      var i = Math.round((window.scrollY - d.stops[0]) / d.h);
-      i = Math.max(0, Math.min(rows.length - 1, i));
-      rows.forEach(function (r, n) {
-        if (n === i) { if (!r.hasAttribute("data-enc-active")) r.setAttribute("data-enc-active", ""); }
-        else if (r.hasAttribute("data-enc-active")) r.removeAttribute("data-enc-active");
-        if (!r.hasAttribute("data-enc-go")) {
-          r.setAttribute("data-enc-go", "");
-          r.addEventListener("click", function () {
-            var dd = stops().filter(function (x) { return x.id === QUOTES; })[0];
-            if (dd && dd.stops[n] !== undefined) scrollToY(dd.stops[n]);
-          });
-        }
-      });
-    });
-  }
-
-  /* Super re-renders after load and on in-app navigation; repaint the rail when it does. */
-  var t = 0;
-  new MutationObserver(function () { invalidate(); clearTimeout(t); t = setTimeout(paintRail, 80); })
-    .observe(document.body, { childList: true, subtree: true });
-  window.addEventListener("resize", function () { invalidate(); paintRail(); });
+  /* Super re-renders after load and on in-app navigation; measure again when it does. */
+  new MutationObserver(invalidate).observe(document.body, { childList: true, subtree: true });
+  window.addEventListener("resize", invalidate);
   window.addEventListener("load", invalidate);
-  paintRail();
 })();
 
+
+/* ─────────────────────────────────────────────────────────────────────────────────────────────
+   Homepage testimonials — design "Testimonials Patterns", I: "Portrait and the pile" (2026-10-24).
+
+   The testimonials callout (#testimonials, home.css 09) is two columns on ink: the current speaker
+   pinned at portrait scale on the left, the gallery's cards as a sticky pile on the right, step i
+   pinned at 56 + i·G. A step shows its quote whole; as the next one climbs over it, p runs 0 → 1
+   (how much of the body the next step covers; the last step's from the band's tail). The words
+   fade over the first 0.4, the highlighted phrase slides and scales from its place in the sentence
+   into the step's title row over 0.3–0.9, and at 0.92 the title's own copy takes over. Reduced
+   motion crossfades the phrase instead. Below 760px the steps read as a list and nothing folds.
+
+   BUILT FROM NOTION: each Testimonial row's Name, Title ("Role, Org"), quote and its highlight,
+   Photo's first file (the face, cropped square in the upload) and Glyph's first file. This writes
+   three things Notion has but cannot place: the stage (each speaker's face, name, role, org and
+   network well, one layer each, the current one shown), each step's title (a copy of its
+   highlight; CSS adds the capital and the full stop) and the count after the heading ("01 / 05"). */
+(function () {
+  var SECTION = "block-3dae800a51388066b66ffeeb9bdb1550", HEADING = "block-6df87cb2d8994ba0b7fe797aa933840d";
+  var GALLERY = "block-f853251f87b0400d9d5b7e3fe71e57e5";
+  var QUOTE = ".property-3f46544e", TITLE = ".property-463b4979", GLYPH = ".property-7b4e4a59";
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var list = window.matchMedia("(max-width: 760px)");
+
+  function $(id) { return document.getElementById(id); }
+  function clamp01(x) { return Math.max(0, Math.min(1, x)); }
+  function el(tag, cls) { var e = document.createElement(tag); e.className = cls; return e; }
+  function num(x, d) { return String(+x.toFixed(d)); }
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  /* an image from Super's image service at twice its drawn size or more (CLAUDE.md, "Glyphs are
+     drawn from Super's image service"); Notion's own signed URLs, served until Super copies a new
+     file, pass through */
+  function sized(url, w) {
+    var m = /[?&]url=([^&]+)/.exec(url || ""), orig = m ? decodeURIComponent(m[1]) : (url || "");
+    if (!/^https:\/\/assets\.super\.so\/[^?#]+\.(png|jpe?g|webp)(?:[?#]|$)/i.test(orig)) return url;
+    return "/_next/image?url=" + encodeURIComponent(orig) + "&w=" + w + "&q=75";
+  }
+  function original(img) {
+    var f = img.closest("[data-full-size]");
+    return (f && f.getAttribute("data-full-size")) || img.currentSrc || img.src || "";
+  }
+  /* write only what differs: a builder that rewrites its own page wakes every observer on it */
+  function setVar(e, name, v) { if (e.style.getPropertyValue(name) !== v) e.style.setProperty(name, v); }
+  function setStyle(e, prop, v) { if (e.style[prop] !== v) e.style[prop] = v; }
+  function setAttr(e, name, v) { if (e.getAttribute(name) !== v) e.setAttribute(name, v); }
+  /* G: the height each pinned step keeps, smaller on short screens so five titles and a body fit */
+  function gap() { return Math.max(56, Math.min(96, (window.innerHeight - 320) / 4)); }
+
+  function read(card) {
+    var cover = card.querySelector(".notion-collection-card__cover"), glyph = card.querySelector(GLYPH + " img");
+    var name = card.querySelector(".notion-property__title"), title = card.querySelector(TITLE);
+    var hl = card.querySelector(QUOTE + " .highlighted-background");
+    var t = title ? title.textContent.trim() : "", k = t.lastIndexOf(", ");
+    /* a highlight takes the stop or comma after it in Notion, so the sentence cannot break before
+       it once the phrase is a block of its own; the title ends on CSS's full stop instead */
+    return { id: card.id, name: name ? name.textContent.trim() : "", role: k > 0 ? t.slice(0, k) : t, org: k > 0 ? t.slice(k + 2) : "",
+             face: cover ? original(cover) : "", glyph: glyph ? original(glyph) : "",
+             phrase: hl ? hl.textContent.trim().replace(/[.,;:!?]+$/, "") : "" };
+  }
+
+  var key = "", steps = [], stage = null, layers = [], offsets = null, tail = 0, current = -1;
+
+  function build() {
+    var sec = $(SECTION), c = sec && sec.querySelector(":scope > .notion-callout__content");
+    var g = $(GALLERY), cards = g ? [].slice.call(g.querySelectorAll(".notion-collection-card")) : [];
+    if (!c || !cards.length) return;
+    var data = cards.map(read), k = JSON.stringify(data);
+    var fresh = c.querySelector(":scope > .enc-t-stage") === stage && stage &&
+      cards.every(function (x) { return x.querySelector(":scope > .enc-t-head"); });
+    if (k === key && fresh) { schedule(); return; }
+    key = k;
+
+    if (stage && stage.parentNode) stage.parentNode.removeChild(stage);
+    stage = el("div", "enc-t-stage");
+    var eye = el("span", "enc-t-eye"), box = el("div", "enc-t-layers");
+    eye.setAttribute("aria-hidden", "true");
+    box.setAttribute("aria-live", "polite");
+    layers = data.map(function (d) {
+      var who = el("div", "enc-t-who"), names = el("div", "enc-t-names"), nm = el("span", "enc-t-name"), rl = el("span", "enc-t-role");
+      var row = el("div", "enc-t-org"), well = el("span", "enc-t-well"), org = el("span", "enc-t-orgname");
+      var face = new Image();
+      face.className = "enc-t-face"; face.alt = ""; face.loading = "lazy"; face.decoding = "async";
+      if (d.face) face.src = sized(d.face, 640);
+      if (d.glyph) { var gl = new Image(); gl.alt = ""; gl.loading = "lazy"; gl.decoding = "async"; gl.src = sized(d.glyph, 128); well.appendChild(gl); }
+      nm.textContent = d.name; rl.textContent = d.role; org.textContent = d.org;
+      names.appendChild(nm); names.appendChild(rl);
+      row.appendChild(well); row.appendChild(org);
+      who.appendChild(face); who.appendChild(names); who.appendChild(row);
+      box.appendChild(who);
+      return who;
+    });
+    stage.appendChild(eye); stage.appendChild(box);
+    c.appendChild(stage);
+    if (window.ResizeObserver) new ResizeObserver(place).observe(box);
+
+    steps = cards.map(function (card, i) {
+      var head = card.querySelector(":scope > .enc-t-head");
+      if (!head) {
+        head = el("div", "enc-t-head");
+        head.setAttribute("aria-hidden", "true"); /* the quote below says it */
+        head.appendChild(el("span", "enc-t-n"));
+        head.appendChild(el("span", "enc-t-phrase"));
+        card.insertBefore(head, card.firstChild);
+      }
+      var ph = head.querySelector(".enc-t-phrase");
+      if (ph.textContent !== data[i].phrase) ph.textContent = data[i].phrase;
+      return { card: card, body: card.querySelector(".notion-collection-card__content"),
+               st: card.querySelector(QUOTE + " .highlighted-background"), ph: ph };
+    });
+    offsets = null; current = -1;
+    place();
+    schedule();
+  }
+
+  /* the heading sits in the stage's empty first line: the stage's content is centred, so the line
+     moves with the speaker's height */
+  function place() {
+    var sec = $(SECTION), eye = stage && stage.firstChild;
+    if (!sec || !eye || list.matches || !stage.isConnected) return;
+    setVar(sec, "--t-eye", Math.round(eye.getBoundingClientRect().top - stage.getBoundingClientRect().top) + "px");
+  }
+
+  /* where each phrase goes, from where it rests: the move is within its own step, so it does not
+     change with the scroll, only with the layout */
+  function measure() {
+    steps.forEach(function (s) { if (s.st) s.st.style.transform = "none"; });
+    offsets = steps.map(function (s) {
+      if (!s.st) return null;
+      var a = s.st.getBoundingClientRect(), b = s.ph.getBoundingClientRect();
+      return { x: b.left - a.left, y: b.top - a.top,
+               k: (parseFloat(getComputedStyle(s.ph).fontSize) || 1) / (parseFloat(getComputedStyle(s.st).fontSize) || 1) };
+    });
+    var g = $(GALLERY), gal = g && g.querySelector(".notion-collection-gallery");
+    tail = gal ? parseFloat(getComputedStyle(gal, "::after").height) || 0 : 0;
+  }
+
+  var queued = false;
+  function schedule() { if (!queued) { queued = true; requestAnimationFrame(update); } }
+  function update() {
+    queued = false;
+    var sec = $(SECTION);
+    if (!sec || !steps.length || !steps[0].card.isConnected) return;
+    var r = sec.getBoundingClientRect(), vh = window.innerHeight;
+    if (!r.height || r.bottom < -50 || r.top > vh + 50) return;
+    if (!offsets) measure();
+    /* every read first, then every write: a write between reads makes the browser lay out again */
+    var G = gap(), act = 0, fold = !list.matches;
+    var ps = steps.map(function (s, i) {
+      if (s.card.getBoundingClientRect().top <= 56 + i * G + 2) act = i;
+      if (!fold || !s.body) return 0;
+      var b = s.body.getBoundingClientRect(), next = steps[i + 1];
+      if (next) return clamp01((b.bottom - next.card.getBoundingClientRect().top) / Math.max(1, b.height));
+      return tail ? clamp01((vh - (r.bottom - tail)) / tail) : 0;
+    });
+    steps.forEach(function (s, i) {
+      var p = ps[i];
+      if (s.body) setVar(s.body, "--t-w", num(1 - clamp01(p / 0.4), 3));
+      if (!s.st) return;
+      if (reduced.matches) {
+        var x = clamp01((p - 0.4) / 0.4);
+        setStyle(s.st, "transform", "none");
+        setStyle(s.st, "opacity", num(1 - x, 3));
+        setStyle(s.ph, "opacity", num(x, 3));
+        return;
+      }
+      var u = clamp01((p - 0.3) / 0.6), e = u * u * (3 - 2 * u), o = offsets[i], done = p >= 0.92;
+      setStyle(s.st, "transform", u > 0 && o
+        ? "translate(" + num(o.x * e, 1) + "px, " + num(o.y * e, 1) + "px) scale(" + num(1 + (o.k - 1) * e, 4) + ")" : "none");
+      setStyle(s.st, "opacity", done ? "0" : "1");
+      setStyle(s.ph, "opacity", done ? "1" : "0");
+    });
+    if (act !== current) {
+      current = act;
+      layers.forEach(function (l, k) {
+        if (k === act) setAttr(l, "data-on", "");
+        else if (l.hasAttribute("data-on")) l.removeAttribute("data-on");
+      });
+      var h = $(HEADING);
+      if (h) setAttr(h, "data-enc-t-at", pad(act + 1) + " / " + pad(steps.length));
+    }
+  }
+
+  function relayout() { offsets = null; place(); schedule(); }
+  window.addEventListener("scroll", schedule, { passive: true });
+  window.addEventListener("resize", relayout);
+  [reduced, list].forEach(function (m) { if (m.addEventListener) m.addEventListener("change", relayout); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
+  var t = 0;
+  new MutationObserver(function (muts) {
+    if (muts.every(function (x) {
+      var e = x.target.nodeType === 1 ? x.target : x.target.parentElement;
+      return e && e.closest && e.closest(".enc-t-stage, .enc-t-head");
+    })) return;
+    clearTimeout(t); t = setTimeout(build, 60);
+  }).observe(document.body, { childList: true, subtree: true });
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
+  else build();
+})();
 
 /* Homepage sections by address (/#testimonials, /#block-…, /team) — moved to anchors.js, which lands a
    section by its name on every page (2026-10-23). */
@@ -1265,7 +1410,7 @@
 
    THE NETWORK COUNT is the Networks set's own: its mainnet rows, read once per visit from the
    all-stages view on /services (navbar.js, window.encCounts). It drives the first card's dots
-   and caption and the count of the figures' mainnets screen (the "28" of "01 / 28"), whose digits
+   and caption and the count of the figures' mainnets screen (the "28" at the wheel's hub), whose digits
    are replaced and nothing else. Until it arrives, or if it cannot be read, the homepage gallery's
    card count is used, and the screen keeps Notion's number. */
 (function () {

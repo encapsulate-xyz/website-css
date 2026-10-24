@@ -616,12 +616,21 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 }
 
 /* ── 03 · MAINNETS — the wheel turns ───────────────────────────────────────────────────────────
-   the wheel in the left 0.9fr, its centre on the screen's edge; the words in the right 1.1fr,
-   centred: eyebrow, the index (home.js puts the current number before the heading's count), the
-   name, the note with the row's role after it. */
+   the wheel in the left 0.9fr, its centre on the screen's edge, and the count fixed at its hub:
+   the heading's figure over "mainnets", the pair centred on the wheel's centre, from the
+   screen's own gutter (not the band's, which grows past 1856 while the wheel stays on the edge)
+   to 0.72 of the radius, inside the ring of wells (their inner edge is 0.84). The words in the
+   right 1.1fr, centred: eyebrow, the name, the note with the row's role after it, four lines
+   high so a long role does not move the name. */
+#block-f763a6014900434ebcfb57466446ac5b {
+  --z-r: min(36vh, 30vw);
+  --z-hub-l: clamp(20px, 5vw, 64px);
+  --z-hub-f: clamp(48px, 9vh, 120px);
+  --z-hub-w: clamp(18px, 2.6vh, 30px);
+}
 #block-f763a6014900434ebcfb57466446ac5b > .notion-callout__content {
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) !important;
-  grid-template-rows: minmax(0, 1fr) auto auto auto auto minmax(0, 1fr) !important;
+  grid-template-rows: minmax(0, 1fr) auto auto auto minmax(0, 1fr) !important;
   row-gap: 18px;
   padding: 0 !important;
 }
@@ -632,21 +641,41 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 #block-f763a6014900434ebcfb57466446ac5b > .notion-callout__content > span.notion-semantic-string {
   grid-row: 2;
 }
-#block-5a0aab755b8e46faa72c1be176e0eb9f {
-  grid-row: 3;
-  font-family: var(--z-mono) !important;
-  font-weight: 500 !important;
-  font-size: 11px !important;
-  line-height: 1.3 !important;
-  letter-spacing: 0.14em !important;
-  color: #B4B4B4 !important;
-  font-variant-numeric: normal;
+/* the hub: two blocks in the wheel's column, each centred on the screen and moved half the
+   other's height (and the 2px between them) apart; over the wheel, which comes after them */
+#block-f763a6014900434ebcfb57466446ac5b > .notion-callout__content > #block-5a0aab755b8e46faa72c1be176e0eb9f,
+#block-f763a6014900434ebcfb57466446ac5b > .notion-callout__content > #block-403e800a51388131ae53fda9d22cbdd3 {
+  grid-column: 1;
+  grid-row: 1 / -1;
+  align-self: center;
+  position: relative;
+  z-index: 1;
+  max-width: calc(var(--z-r) * 0.72);
+  margin: 0 !important;
+  padding: 0 0 0 var(--z-hub-l) !important;
+  pointer-events: none;
 }
-#block-5a0aab755b8e46faa72c1be176e0eb9f[data-enc-z-at]::before {
-  content: attr(data-enc-z-at) " / ";
+#block-5a0aab755b8e46faa72c1be176e0eb9f {
+  transform: translateY(calc(-0.5 * (1.1 * var(--z-hub-w) + 2px)));
+  font-family: var(--z-display) !important;
+  font-weight: 600 !important;
+  font-size: var(--z-hub-f) !important;
+  line-height: 0.9 !important;
+  letter-spacing: -0.055em !important;
+  color: #FAFAF8 !important;
+  font-variant-numeric: tabular-nums;
+}
+#block-403e800a51388131ae53fda9d22cbdd3 {
+  transform: translateY(calc(0.5 * (0.9 * var(--z-hub-f) + 2px)));
+  font-family: var(--z-display) !important;
+  font-weight: 500 !important;
+  font-size: var(--z-hub-w) !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.025em !important;
+  color: #B4B4B4 !important;
 }
 #block-f763a6014900434ebcfb57466446ac5b .enc-z-name {
-  grid-row: 4;
+  grid-row: 3;
   font-family: var(--z-display);
   font-weight: 600;
   font-size: clamp(48px, 6.4vw, 112px);
@@ -655,9 +684,10 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   color: #FAFAF8;
 }
 #block-403e800a5138810f8280d9ce87ef331b {
-  grid-row: 5;
+  grid-row: 4;
   max-width: calc(40ch + var(--z-pad-x)) !important;
-  min-height: 3em;
+  height: 6em;
+  overflow: hidden;
   font-size: 18px !important;
   line-height: 1.5 !important;
   color: #C9C9C4 !important;
@@ -670,7 +700,6 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   height: 100%;
 }
 #block-f763a6014900434ebcfb57466446ac5b .enc-z-wheel {
-  --z-r: min(36vh, 30vw);
   position: absolute;
   left: calc(-1 * var(--z-r));
   top: calc(50% - var(--z-r));
@@ -852,9 +881,12 @@ The last block identifies the heading callout which says: Others Trust, We Valid
     grid-row: 4;
   }
 
+  /* the wheel takes the room above its words: at the file's min(36vh, 30vw) it was 117px round on
+     a 390 screen and "mainnets" ran under the wells; 26vh keeps it inside its row on a 568 screen */
+  #block-f763a6014900434ebcfb57466446ac5b { --z-r: min(26vh, 58vw); }
   #block-f763a6014900434ebcfb57466446ac5b > .notion-callout__content {
     grid-template-columns: minmax(0, 1fr) !important;
-    grid-template-rows: minmax(0, 1fr) auto auto auto auto !important;
+    grid-template-rows: minmax(0, 1fr) auto auto auto !important;
     padding-bottom: var(--z-pad-y) !important;
   }
   #block-f763a6014900434ebcfb57466446ac5b > .notion-callout__content > :not(.enc-z-wheelbox) {
@@ -862,9 +894,13 @@ The last block identifies the heading callout which says: Others Trust, We Valid
     padding-left: var(--z-pad-x) !important;
   }
   #block-f763a6014900434ebcfb57466446ac5b > .notion-callout__content > span.notion-semantic-string { grid-row: 2; }
-  #block-5a0aab755b8e46faa72c1be176e0eb9f { grid-row: 3; }
-  #block-f763a6014900434ebcfb57466446ac5b .enc-z-name { grid-row: 4; }
-  #block-403e800a5138810f8280d9ce87ef331b { grid-row: 5; }
+  #block-f763a6014900434ebcfb57466446ac5b > .notion-callout__content > #block-5a0aab755b8e46faa72c1be176e0eb9f,
+  #block-f763a6014900434ebcfb57466446ac5b > .notion-callout__content > #block-403e800a51388131ae53fda9d22cbdd3 {
+    grid-row: 1;
+    padding-left: var(--z-hub-l) !important;
+  }
+  #block-f763a6014900434ebcfb57466446ac5b .enc-z-name { grid-row: 3; }
+  #block-403e800a5138810f8280d9ce87ef331b { grid-row: 4; }
   #block-f763a6014900434ebcfb57466446ac5b .enc-z-wheelbox {
     grid-column: 1;
     grid-row: 1;
@@ -1374,97 +1410,36 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 }
 
 /*********************************************/
-/* 09. TESTIMONIALS — SCROLL DECK (was part of main.css section 09) */
+/* 09. TESTIMONIALS — I "PORTRAIT AND THE PILE" */
 /*********************************************/
 
-/* 40px under each quote, on top of its 34px margin — the spacing between the
-   quote and the name that the deck was measured and approved with.
-   CARRIED OVER in the 2026-09-14 move: this came from the older home.css
-   rule for the same block, which was deleted when this section replaced it.
-   The before/after computed-style comparison showed it was still visible on
-   the live page, so it is kept, stated here once. */
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .property-3f46544e {
-  padding-bottom: 40px !important;
-}
-/* --- TESTIMONIALS — SCROLL DECK ------------------------------------------ */
+/* Design "Testimonials Patterns", I (2026-10-24), replacing the scroll deck of Testimonials Rotate.
+   An ink band in two columns. Left, the current speaker at portrait scale, pinned (home.js builds
+   the stage from the cards); right, the gallery's cards as the steps of a sticky pile, step i pinned
+   at 56 + i·G. Each step shows its quote whole; as the next one climbs over it the quote fades and
+   its highlighted phrase slides into the step's title row (home.js, "Homepage testimonials"), so the
+   band ends on five titles. The last step folds on the band's own tail.
 
-/* Rebuilt from artifact a00dedc3: the testimonials stop being a grid of cards
-   and become full-viewport panels on an ink ground, one voice at a time, with
-   a progress rail down the right. Same sticky mechanism as the old stat deck
-   (section 00c, replaced by Z on 2026-10-24; its long note on why sticky rather than
-   scroll-snap is in git, `git show v384:home.css`)
-   (short version: a nested snap container snaps panels to its OWN top edge,
-   and nothing aligns that edge to the viewport).
+   FROM NOTION: the callout #block-3dae800a51388066… holds the heading "Testimonials" (the stage's
+   eyebrow, with home.js's count after it) and the Testimonial gallery: Name, Title ("Role, Org"),
+   the quote with its phrase highlighted, Photo's first file (the face, cropped square in the upload)
+   and Glyph's first file. The table view after it (the old rail's source) is hidden.
 
-   NOTION GIVES US EXACTLY THE PIECES THE ARTIFACT USES:
-
-     cover image           -> the portrait, pre-composed with its logo badge
-     notion-property__title-> the name
-     property-463b4979     -> the byline, "Role, Org" as one text field
-     property-3f46544e     -> the quote
-
-   The property hashes are Super's stable per-property class names — the only
-   way to tell the quote from the byline, since both are notion-property__text.
-   They change if a property is deleted and recreated, or switched between
-   select and text; when that happens these selectors go quiet rather than
-   erroring, so check the live DOM after any change to the database schema.
-
-   LAYOUT. The card becomes a grid and its content wrapper is dissolved with
-   `display: contents`, so the cover — a SIBLING of the properties, not a child
-   — can be placed in the same grid as them. That is what puts the face beside
-   the name rather than above the quote:
-
-     "quote quote"
-     "face  name"
-     "face  byline"
-
-   WHAT IS NOT HERE, and why. Things in the artifact that need something
-   Notion cannot express:
-
-     - (No longer applies.) The org logo badge overlapping the face was listed
-       here as needing a second image. It was solved in the content instead:
-       the uploaded portraits are pre-composed with the badge, so the cover
-       just has to be shown whole — see the cover rule.
-     - (No longer applies.) The highlighted phrases inside each quote were
-       listed here as missing. Notion does emit them — see HIGHLIGHTED PHRASES
-       below — they only took a while to appear after being added.
-     - The rail carrying each org's NAME. Rendering five names per panel in
-       pure CSS would mean baking text into five SVGs, which cannot use the
-       page's webfonts. The rail here is the old stat deck's dot form, which
-       is the same idea without the labels.
-
-   Architects Daughter must be added to the Head link — it is the quote face
-   and there is no reasonable fallback for a handwriting style. */
-
-/* THE CONTAINER. The eyebrow, the heading and this gallery live together in
-   one Notion callout (#block-3dae800a51388066…), added so the heading can be
-   pinned for the length of the deck — sticky only holds an element within its
-   parent, and on the bare page that parent would be the whole article.
-
-   The callout is the full-bleed ink band now, so the gallery inside it is just
-   100% of that.
-
-   overflow: visible IS LOAD-BEARING. Notion callouts and their content wrapper
-   both carry overflow: hidden. A clipping ancestor turns every sticky element
-   inside it — the pinned header AND the five panels — into ordinary scrolling
-   content. Measured: with the clip in place nothing stuck at all, the panels
-   and the header simply scrolled past. */
+   overflow: visible IS LOAD-BEARING. Notion callouts and their content wrapper both clip, and a
+   clipping ancestor turns every sticky element inside it into ordinary scrolling content. */
 .notion-root #block-3dae800a51388066b66ffeeb9bdb1550 {
-  /* Where every quote starts. Panels used to centre their content vertically,
-     so the quote's top moved from panel to panel (measured 290, 360, 383, 360px)
-     and a single pinned "Testimonials" label could not sit above all of them.
-     One fixed start line fixes that: at least clear of the heading bar, and on
-     taller screens roughly where the longest testimonial would have centred. */
-  --deck-top: max(clamp(130px, 17vh, 160px), calc(50vh - 240px));
+  --t-g: clamp(56px, (100vh - 320px) / 4, 96px); /* G: the height each pinned step keeps */
+  --t-side: max(clamp(20px, 5vw, 64px), calc(50vw - 864px)); /* over 1856, the bands' 1728 column */
 
-  display: block !important; /* the callout is a flex row */
+  display: block !important;
   width: 100vw !important;
   margin-inline: calc(50% - 50vw) !important;
-  padding: 0 !important;
+  padding: 0 var(--t-side) !important;
+  box-sizing: border-box !important;
   border: 0 !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-  background: #3A3D38 !important;
+  background: #2A2C28 !important;
 }
 
 .notion-root #block-3dae800a51388066b66ffeeb9bdb1550,
@@ -1473,602 +1448,399 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   contain: none !important;
 }
 
-/* ONE GRID CELL FOR EVERYTHING. The eyebrow, the heading and the gallery all
-   occupy the same cell, so they overlap instead of stacking. That is how the
-   header takes no room in the layout while still being full height — see
-   THE PINNED HEADER for why it needs to be full height. */
 .notion-root #block-3dae800a51388066b66ffeeb9bdb1550 > .notion-callout__content {
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) !important;
   grid-template-rows: auto !important;
+  gap: 0 clamp(32px, 5vw, 80px) !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 
+/* the heading, the stage and Notion's two empty spans share the left cell; the gallery is the right */
 .notion-root #block-3dae800a51388066b66ffeeb9bdb1550 > .notion-callout__content > * {
-  grid-area: 1 / 1 !important;
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  min-width: 0 !important;
 }
 
-/* The rail's source — a second view of the testimonials database, a table
-   with Name and Title — sits in this callout after the gallery. Hidden by
-   default and shown as the labelled rail only on wide screens; see THE RAIL,
-   WITH LABELS. Left visible as a normal block it added 285px to the section,
-   and the pinned header floated over that empty strip after the last quote. */
+.notion-root #block-3dae800a51388066b66ffeeb9bdb1550 > .notion-callout__content > #block-f853251f87b0400d9d5b7e3fe71e57e5 {
+  grid-column: 2 !important;
+}
+
+/* the old rail's source, a table view of the same rows */
 .notion-root #block-3dbe800a513880659b03efb665f21e12 {
   display: none !important;
 }
 
-/* The gallery's collapsed title wrapper still carried an 8px margin, which
-   dropped the FIRST testimonial 8px below the rest and broke its alignment
-   with the pinned eyebrow. */
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection__header-wrapper {
-  display: none !important;
-}
-
-#block-f853251f87b0400d9d5b7e3fe71e57e5 {
-  width: 100% !important;
-  margin-inline: 0 !important;
-  background: #3A3D38 !important;
-  padding: 0 !important;
-}
-
-/* THE PINNED HEADER — "Testimonials" and "What the teams say.", written once
-   in Notion as a heading and a text block above the gallery.
-
-   Both are sticky and take NO height (height: 0, content allowed to
-   overflow), so they float over the panels instead of pushing the deck down.
-   The heading is a bar at the top right in Outfit 500 at the artifact's
-   clamp(23px, 2.2vw, 32px), with its hairline drawn by ::after; the eyebrow
-   pins just above the quote. z-index lifts them over the panels, which are
-   later in the DOM and would otherwise paint on top.
-
-   The side padding matches the panels', so the bar and the quote share edges. */
-/* FULL HEIGHT, NOT ZERO HEIGHT. This used to be height: 0 with an offset
-   `top`, which had two faults, both visible:
-     - While the section scrolled in, the header sat at its natural position —
-       jammed against the section's top edge — and only reached its offset once
-       it stuck.
-     - A sticky element is held inside its parent by its own box. A zero-height
-       box is only released at the parent's very last pixel, so the header
-       lingered after the last testimonial had gone.
-   Each is now a full-viewport box stuck at top: 0, transparent and
-   click-through, with its text placed by padding. Natural position and stuck
-   position are the same, so nothing moves on entry; and a 100dvh box releases
-   exactly when the last panel starts to leave, so the header exits with it.
-   The shared grid cell above is what stops the height pushing the deck down.
-   (A negative margin to cancel the height was tried first and does not work:
-   the stickiness constraint uses the margin box, which it collapses to zero.) */
-.notion-root #block-6df87cb2d8994ba0b7fe797aa933840d,
-.notion-root #block-3dae800a513880aaa3cff5a842b1d748 {
+/* THE EYEBROW — "Testimonials · 01 / 05". The heading is a full-height box pinned beside the stage
+   and transparent to the pointer, its text placed by padding where the stage keeps an empty slot
+   for it (--t-eye, measured by home.js: the stage's content is centred, so the slot moves with the
+   speaker's height). The count is home.js's, in data-enc-t-at. */
+.notion-root #block-6df87cb2d8994ba0b7fe797aa933840d {
   position: sticky !important;
   top: 0 !important;
-  z-index: 3 !important;
+  z-index: 1 !important;
   align-self: start !important;
   height: 100vh !important;
-  height: 100dvh !important;
   min-height: 0 !important;
   box-sizing: border-box !important;
-  overflow: visible !important;
-  pointer-events: none !important;
   margin: 0 !important;
-  padding: 0 max(clamp(28px, 6vw, 88px), calc(50vw - 430px)) !important;
-  /* Full-viewport boxes with the text placed by padding, so the Type System's
-     heading measure (h2: max-width 22ch, main.css §06) must not apply: 22ch of
-     11px mono inside 530px padding left no content width and stacked the
-     label one letter per line. */
+  padding: var(--t-eye, calc(50vh - 195px)) 0 0 !important;
   max-width: none !important;
-}
-
-/* "Testimonials" — directly above the quote, as in the artifact, not on the
-   bar. It pins 18px (the artifact's gap) above --deck-top, which is where every
-   quote now starts. Measured: 20–21px from the label's text to the quote's
-   text on every panel, left edges identical. */
-.notion-root #block-6df87cb2d8994ba0b7fe797aa933840d {
-  padding-top: calc(var(--deck-top) - 18px - 1.4em) !important;
+  pointer-events: none !important;
   font-family: "JetBrains Mono", ui-monospace, monospace !important;
-  font-weight: 400 !important;
+  font-weight: 500 !important;
   font-size: 11px !important;
   line-height: 1.4 !important;
   letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
-  text-align: left !important;
+  text-wrap: nowrap !important;
+  white-space: nowrap !important;
   color: #B4B4B4 !important;
 }
 
-/* "What the teams say." — the pinned bar, top right. */
-.notion-root #block-3dae800a513880aaa3cff5a842b1d748 {
-  padding-top: clamp(26px, 4vh, 46px) !important;
-  font-family: "Outfit", sans-serif !important;
-  font-weight: 500 !important;
-  font-size: clamp(23px, 2.2vw, 32px) !important;
-  line-height: 1 !important;
-  letter-spacing: -0.032em !important;
-  text-align: right !important;
-  color: #FAFAF8 !important;
+.notion-root #block-6df87cb2d8994ba0b7fe797aa933840d[data-enc-t-at]::after {
+  content: " · " attr(data-enc-t-at);
 }
 
-.notion-root #block-3dae800a513880aaa3cff5a842b1d748::after {
-  content: "" !important;
-  position: absolute !important;
-  left: max(clamp(28px, 6vw, 88px), calc(50vw - 430px)) !important;
-  right: max(clamp(28px, 6vw, 88px), calc(50vw - 430px)) !important;
-  top: calc(clamp(26px, 4vh, 46px) + 1em + 16px) !important; /* below the padded text */
-  height: 1px !important;
-  background: rgba(250, 250, 248, 0.16) !important;
+/* THE STAGE — built by home.js: the eyebrow's slot, then one layer per speaker in a single cell
+   (so the stage is as tall as its tallest speaker and nothing jumps), the current one shown. */
+.enc-t-stage {
+  grid-column: 1;
+  grid-row: 1;
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+  padding: 56px 0;
 }
 
-/* Undo the grid: the panels stack in normal flow so they can stick. */
+.enc-t-eye {
+  flex: none;
+  height: 15.4px; /* the heading's 11px at 1.4 */
+}
+
+.enc-t-layers {
+  display: grid;
+}
+
+.enc-t-who {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  visibility: hidden;
+}
+
+.enc-t-who[data-on] {
+  visibility: visible;
+}
+
+.enc-t-face {
+  display: block;
+  flex: none;
+  width: 200px;
+  height: 200px;
+  border-radius: 999px;
+  object-fit: cover;
+  background: #F2F2ED;
+}
+
+.enc-t-names {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.enc-t-name {
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
+  font-size: clamp(28px, 3vw, 44px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: #FAFAF8;
+}
+
+.enc-t-role {
+  font-family: "Hanken Grotesk", sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #C9C9C4;
+}
+
+.enc-t-org {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.enc-t-well {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+}
+
+.enc-t-well img {
+  display: block;
+  width: 86%;
+  height: 86%;
+}
+
+/* the wells' tints by place, as the design: green, yellow, blue, orange, pink */
+.enc-t-who:nth-child(5n+1) .enc-t-well { background: #DCEEC7; }
+.enc-t-who:nth-child(5n+2) .enc-t-well { background: #F8E8B3; }
+.enc-t-who:nth-child(5n+3) .enc-t-well { background: #D2E3F6; }
+.enc-t-who:nth-child(5n+4) .enc-t-well { background: #F8DDC6; }
+.enc-t-who:nth-child(5n+5) .enc-t-well { background: #F7DCE7; }
+
+.enc-t-orgname {
+  font-family: "Outfit", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  color: #FAFAF8;
+}
+
+/* THE PILE */
+#block-f853251f87b0400d9d5b7e3fe71e57e5 {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection__header-wrapper {
+  display: none !important;
+}
+
 #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-gallery {
   display: block !important;
   grid-template-columns: none !important;
   gap: 0 !important;
-  padding: 0 !important; /* Super's 10px would leave a sliver after the last panel */
+  padding: 0 !important;
+  counter-reset: enc-t;
 }
 
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card {
+/* the band's tail: the last step folds on it, so the band ends on five titles */
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-gallery::after {
+  content: "";
+  display: block;
+  height: 70vh;
+}
+
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card,
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card:hover {
   position: sticky !important;
-  top: 0 !important;
-  height: 100vh !important;
-  height: 100dvh !important;
+  top: calc(56px + var(--t-k, 0) * var(--t-g)) !important;
+  height: calc(100vh - 56px - var(--t-k, 0) * var(--t-g)) !important;
+  min-height: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  margin: 0 !important;
+  padding: 12px 0 32px !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  border-top: 1px solid rgba(250, 250, 248, 0.18) !important;
+  border-radius: 0 !important;
+  background: #2A2C28 !important; /* opaque: a step covers the one before it */
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+  counter-increment: enc-t;
+}
+
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card:nth-child(2) { --t-k: 1; }
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card:nth-child(3) { --t-k: 2; }
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card:nth-child(4) { --t-k: 3; }
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card:nth-child(5) { --t-k: 4; }
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card:nth-child(6) { --t-k: 5; }
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card:nth-child(7) { --t-k: 6; }
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card:nth-child(8) { --t-k: 7; }
+
+/* the face and the glyph go to the stage */
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card__cover,
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__file.property-7b4e4a59 {
+  display: none !important;
+}
+
+/* the title row: the step's number (a counter) and its phrase (home.js's copy of the highlight) */
+.enc-t-head {
+  flex: none;
+  height: calc(var(--t-g) - 12px);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.enc-t-n::before {
+  content: counter(enc-t, decimal-leading-zero);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: #B4B4B4;
+  white-space: nowrap;
+}
+
+.enc-t-phrase {
+  min-width: 0;
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
+  font-size: clamp(20px, 2vw, 30px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #FAFAF8;
+  text-wrap: balance;
+  opacity: 0;
+  transition: opacity 0.16s ease;
+}
+
+.enc-t-phrase::first-letter {
+  text-transform: uppercase;
+}
+
+.enc-t-phrase::after {
+  content: ".";
+}
+
+/* the body: the quote, then "Name, Role, Org". --t-w is the words' alpha as the step folds (home.js);
+   the phrase keeps the paper and weight 600, the rest steps back to the secondary grey. The break
+   (::after, order 1) puts the byline on its own line under a quote shorter than the column. Its
+   own height, not Super's flex: 1: the fold is measured from the body's bottom, and a body
+   stretched to the step's foot began each step a tenth folded. */
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card__content {
+  flex: none !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: baseline !important;
+  justify-content: flex-start !important;
+  align-content: flex-start !important;
+  gap: 0 !important;
   width: 100% !important;
   margin: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  box-shadow: none !important; /* a deck panel, not a card: no Card System ring */
-  background: #3A3D38 !important; /* opaque: sticky panels stack, not replace */
-  /* Caps the content at ~860px, centred, with the quote and attribution sharing
-     one left edge. */
-  padding: var(--deck-top) max(clamp(28px, 6vw, 88px), calc(50vw - 430px)) 0 !important;
-
-  display: grid !important;
-  align-content: start !important; /* top-aligned to --deck-top, see container */
-  justify-content: stretch !important;
-
-  /* 104px = the 84px face + a 20px gap. A margin on the face cannot make that
-     gap — a margin does not widen a fixed track, it just overflows it, and the
-     name sat flush against the image. */
-  grid-template-columns: 104px minmax(0, 1fr) !important;
-  grid-template-areas:
-    "quote quote"
-    "face  name"
-    "face  byline" !important;
-  column-gap: 0 !important;
-  row-gap: 4px !important;
+  padding: 10px 0 0 !important;
+  overflow: visible !important;
 }
 
-/* Dissolve the wrapper so the properties join the card's grid alongside the
-   cover. */
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card__content {
-  display: contents !important;
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card__content::after {
+  content: "";
+  order: 1;
+  flex: 0 0 100%;
+  height: 0;
 }
 
-/* The face. `min-height: 0` is required — Super floors covers at 200px. */
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card__cover {
-  /* home.css positions this cover ABSOLUTELY (`position: absolute; left: 880px`
-     — a hard-coded offset from the old card layout). Left in place it ignores
-     the grid entirely: measured at left 1826 in a 1920 card, i.e. pinned to the
-     far right, no matter what grid-column it was given. Resetting to static is
-     what lets it take a grid cell at all. */
-  position: static !important;
-  inset: auto !important;
-
-  grid-area: face !important;
-  align-self: center !important;
-  justify-self: start !important;
-  width: 84px !important;
-  height: 84px !important;
-  min-height: 0 !important;
-  max-width: none !important;
-  margin: 0 !important;
-  border: 0 !important;
-
-  /* NO CIRCLE MASK. The uploaded portraits are already composed — a round face
-     with the org's logo badge overlapping its lower edge. Masking them to a
-     circle cropped the badge off; `contain` shows the whole artwork. */
-  border-radius: 0 !important;
-  object-fit: contain !important;
-  object-position: center !important;
-  background: transparent !important;
-}
-
-/* The quote. Two class names on the selector, not one: the card rules further
-   up this file reach it at (1,2,0) and a (1,1,0) rule loses to them. */
 #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__text.property-3f46544e {
-  grid-area: quote !important;
-  margin: 0 0 34px !important;
-  flex: none !important;
-  font-family: "Architects Daughter", cursive !important;
-  font-size: clamp(19px, 2.3vw, 30px) !important;
-  line-height: 1.54 !important;
-  color: #F4F4F0 !important;
+  order: 0;
+  flex: 0 1 auto !important;
   max-width: 40ch !important;
+  min-height: 0 !important;
+  margin: 0 0 18px !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  z-index: auto !important;
+  white-space: normal !important;
+  font-family: "Outfit", sans-serif !important;
+  font-weight: 500 !important;
+  font-size: clamp(17px, 1.9vw, 30px) !important;
+  line-height: 1.3 !important;
+  letter-spacing: -0.025em !important;
+  color: rgba(201, 201, 196, var(--t-w, 1)) !important;
   text-wrap: pretty !important;
 }
 
-/* HIGHLIGHTED PHRASES INSIDE THE QUOTE.
-
-   Highlight words in the quote in Notion and Super emits
-   `span.highlighted-background.bg-<colour>` inside the property — so the
-   artifact's tinted phrases are reproducible from the database after all. It
-   does not appear instantly: the markup showed as plain text for a while after
-   the edit and only came through on a later build, so check the live DOM
-   before concluding a highlight did not take.
-
-   The default is unreadable and has to be overridden: Super paints its own
-   pale tint but leaves `color` inherited, which here is the quote's paper
-   #F4F4F0 — near-white text on a near-white ground. The artifact sets
-   #14160F, and that is what makes the phrase legible.
-
-   `box-decoration-break: clone` is what gives every wrapped line of a
-   highlight its own padding and rounded ends, instead of one long box with
-   corners only at the very start and very end.
-
-   The five tints are keyed to Notion's colour classes rather than to
-   nth-child, so a highlight keeps its colour if the testimonials are
-   reordered. They happen to match the artifact's per-quote tints one for one:
-   pink, green, blue, yellow, orange. */
-
 #block-f853251f87b0400d9d5b7e3fe71e57e5 .property-3f46544e .highlighted-background {
-  color: #14160F !important;
-  padding: 0.04em 0.2em !important;
-  border-radius: 3px !important;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
-
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .property-3f46544e .highlighted-background.bg-pink   { background-color: #F7DCE7 !important; }
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .property-3f46544e .highlighted-background.bg-green  { background-color: #DCEEC7 !important; }
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .property-3f46544e .highlighted-background.bg-blue   { background-color: #D2E3F6 !important; }
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .property-3f46544e .highlighted-background.bg-yellow { background-color: #F8E8B3 !important; }
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .property-3f46544e .highlighted-background.bg-orange { background-color: #F8DDC6 !important; }
-
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__title {
-  grid-area: name !important;
-  align-self: end !important;
+  display: inline-block !important;
+  transform-origin: 0 0;
   margin: 0 !important;
-  /* Super floors properties at min-height: 24px. Around a 17px name that is
-     invisible padding, and it was a large part of why the attribution read as
-     spread out. */
-  min-height: 0 !important;
-  line-height: 1.2 !important;
-  font-family: "Outfit", sans-serif !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
   font-weight: 600 !important;
-  font-size: 17px !important;
-  letter-spacing: -0.018em !important;
   color: #FAFAF8 !important;
 }
 
-/* THE BYLINE — one line under the name, e.g.
-   "Head of Node Operator Mechanisms, Lido".
-
-   HOW IT IS WRITTEN IN NOTION: role and organisation together in ONE text
-   property, comma included, with the other text property deleted. The CSS
-   adds no punctuation of its own.
-
-   History, because this went through three shapes on 2026-09-13:
-     1. Role was a SELECT (a coloured pill) and org a separate line in mono
-        caps — three rows with visible air between each.
-     2. Role became plain text; CSS joined role and org with a comma drawn in
-        ::after, across two max-content grid columns. That worked, but only
-        after finding that Super caps text properties at `max-width: 95%`,
-        which opened a gap after the comma that grew with the text (11px after
-        the longest role, 2px after "CEO").
-     3. Both moved into one Notion field. Simpler, and the punctuation now
-        lives in the content, where it belongs.
-
-   The merged field is property-463b4979 (the old role field). The old org
-   field, property-6a4f7163, was deleted from the database on 2026-09-13 and no
-   longer appears on the page, so nothing here targets it. */
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__title,
 #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__text.property-463b4979 {
-  grid-area: byline !important;
-  align-self: start !important;
-  margin: 0 !important;
-  min-height: 0 !important; /* same 24px floor as the name */
-  max-width: none !important; /* Super's 95% cap would clip a long byline */
+  flex: 0 1 auto !important;
   width: auto !important;
-  font-family: "Hanken Grotesk", sans-serif !important;
-  font-size: 13.5px !important;
-  line-height: 1.4 !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
-  color: #C9C9C4 !important;
-}
-
-/* THE GLYPH — the speaker's network mark, oversized and ghosted in the
-   bottom-right corner, from design file "Testimonials Rotate".
-
-   It comes from Notion: a Files & media property ("Glyph") on each
-   testimonial, visible on the gallery view. Super renders it as a real image,
-     .notion-property__file.property-7b4e4a59 > a.notion-link > div > span > img
-   serving the uploaded SVG directly rather than a scaled raster, so it stays
-   sharp at 440px. Adding or reordering a testimonial needs no CSS change.
-
-   The files are in testimonial-glyphs/: single-colour #FAFAF8 marks on
-   transparency. Stargaze keeps its shape when re-inked, because the gaps
-   between its strips are real transparency rather than dark paint.
-
-   Geometry is the design's: a min(42vh, 440px) square pinned right -5% and
-   bottom -10%, so it runs off both edges and the card clips it. 30% opacity,
-   z-index -1 so it sits above the card's ink ground (the ::before, also -1 but
-   earlier in the tree) and below the quote. Measured on all five panels: no
-   overlap with the quote or byline. pointer-events: none, because Super wraps
-   the image in a link to the file.
-
-   The image's wrapper and the image carry inline positioning from Super, hence
-   the !important on width and position. */
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card {
-  overflow: hidden !important; /* clips the bleed; the card itself still sticks */
-}
-
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__file.property-7b4e4a59 {
-  position: absolute !important;
-  right: -5% !important;
-  bottom: -10% !important;
-  width: min(42vh, 440px) !important;
-  height: min(42vh, 440px) !important;
-  min-height: 0 !important;
   max-width: none !important;
+  min-height: 0 !important;
   margin: 0 !important;
   padding: 0 !important;
-  display: block !important;
-  z-index: -1 !important;
-  opacity: 0.3 !important;
-  pointer-events: none !important;
+  overflow: visible !important;
+  white-space: normal !important;
+  text-overflow: clip !important;
+  font-family: "Hanken Grotesk", sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  line-height: 1.45 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  color: rgba(180, 180, 180, var(--t-w, 1)) !important;
 }
 
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__file.property-7b4e4a59 a,
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__file.property-7b4e4a59 a > div {
-  display: block !important;
-  position: relative !important;
-  width: 100% !important;
-  height: 100% !important;
+/* block, not Super's flex: its 4px gap opened a space before the comma */
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__title { order: 2; display: block !important; }
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__text.property-463b4979 { order: 3; }
+
+#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__title::after {
+  content: ",\00a0";
 }
 
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__file.property-7b4e4a59 img {
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  max-width: none !important;
-  object-fit: contain !important;
-  object-position: center !important;
-}
-
-/* THE RAIL — DOTS, NOT LABELS.
-
-   A labelled rail (org name over person, per row, with the active row marked)
-   was built and REVERTED. It worked, but the only way to get five rows of
-   two-size text out of pure CSS is to put the strings in `content:`, which
-   hard-codes all ten names in the stylesheet. That is the one thing here that
-   would not follow the Notion database: reorder or rename a testimonial and
-   the rail silently disagrees with the panels.
-
-   CAN IT BE DATA-DRIVEN INSTEAD? Not in CSS. The rail has to show all five
-   entries on every panel, and each card carries only its own row's text. CSS
-   cannot copy one element's content into another place, so building the rail
-   from the collection needs JavaScript reading the cards — and even a second
-   Notion block listing the same five rows would still need JavaScript to know
-   which one is current.
-
-   So: dots. Position without labels, and nothing that can fall out of sync.
-   Same construction as the old stat deck — every panel draws the whole rail with its
-   own dot active, and the topmost opaque panel is the one you see, so the
-   stacking order does the work an IntersectionObserver would otherwise do.
-   The dots ride as a background layer (a 307-byte inline SVG); the active
-   marker is ::after, because a background layer cannot have rounded ends. */
-
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: -1 !important;
-  pointer-events: none !important;
-  background: #3A3D38 url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%229%22 height=%2285%22 viewBox=%220 0 9 85%22%3E%3Cg fill=%22%23FAFAF8%22 fill-opacity=%220.4%22%3E%3Ccircle cx=%224.5%22 cy=%224.5%22 r=%224.5%22/%3E%3Ccircle cx=%224.5%22 cy=%2223.5%22 r=%224.5%22/%3E%3Ccircle cx=%224.5%22 cy=%2242.5%22 r=%224.5%22/%3E%3Ccircle cx=%224.5%22 cy=%2261.5%22 r=%224.5%22/%3E%3Ccircle cx=%224.5%22 cy=%2280.5%22 r=%224.5%22/%3E%3C/g%3E%3C/svg%3E") no-repeat right 40px center !important;
-  background-size: 9px 85px !important;
-}
-
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card::after {
-  content: "" !important;
-  position: absolute !important;
-  right: 31.5px !important;
-  top: calc(50% - 42.5px + var(--t-i, 0) * 19px) !important;
-  width: 26px !important;
-  height: 9px !important;
-  border-radius: 999px !important;
-  background: #FAFAF8 !important;
-  pointer-events: none !important;
-}
-
-/* Which dot is active. These five were lost in an earlier edit of this
-   section, which left every panel on the default --t-i: 0 — the marker sat on
-   the first dot for the whole deck and never moved. */
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card:nth-child(1) { --t-i: 0; }
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card:nth-child(2) { --t-i: 1; }
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card:nth-child(3) { --t-i: 2; }
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card:nth-child(4) { --t-i: 3; }
-#block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card:nth-child(5) { --t-i: 4; }
-
-/* THE RAIL, WITH LABELS — built from Notion, not hard-coded.
-
-   The rows come from the table view above: each row's Name and Title, so a
-   rename or a new testimonial reaches the rail without touching this file.
-
-   HOW THE ACTIVE ROW IS MARKED. The rail is one element pinned over all five
-   panels, so it cannot know which quote is showing. Each PANEL draws the marker
-   instead — a 2px bar and a faint tint — at its own row, beneath the rail; the
-   topmost opaque panel is the one you see, so the visible marker is always the
-   current one. Measured: on every panel the marker lands on its row to within
-   1px. The limit of doing it this way: the marker is under the rail, so the
-   active row's TEXT cannot be brightened the way the design does — that needs
-   JavaScript that knows the scroll position.
-
-   TWO THINGS MUST HOLD FOR IT TO BE RIGHT:
-     - The table view's sort order must match the gallery's. The marker goes to
-       the row at the panel's position, not to a matching name. With the orders
-       different, the wrong person is highlighted.
-     - Every row is a fixed 78px (the Title clamps at two lines), because the
-       marker's position is computed as index x row height.
-
-   The rail and its marker share one geometry, set as custom properties on the
-   container: width, right inset, row height, and a height of five rows — the
-   five is the one number that must change if a testimonial is added.
-
-   Wide screens only. Below 1100px the rail would crowd the quote, so the panels
-   keep the dot rail from earlier in this section instead. */
-@media (min-width: 1100px) {
-  .notion-root #block-3dae800a51388066b66ffeeb9bdb1550 {
-    --rail-w: clamp(180px, 20vw, 260px);
-    --rail-right: clamp(28px, 6vw, 88px);
-    --rail-row: 78px;
-    --rail-h: calc(var(--rail-row) * 5); /* five testimonials */
-  }
-
-  /* The rail: pinned like the header, full height, rows centred, in the same
-     grid cell as the gallery so it adds no height. */
-  .notion-root #block-3dbe800a513880659b03efb665f21e12 {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: flex-end !important;
-    position: sticky !important;
-    top: 0 !important;
-    height: 100vh !important;
-    height: 100dvh !important;
-    align-self: start !important;
-    z-index: 3 !important;
-    pointer-events: none !important;
-    box-sizing: border-box !important;
-    margin: 0 !important;
-    padding: 0 var(--rail-right) 0 0 !important;
-    background: transparent !important;
-  }
-
-  .notion-root #block-3dbe800a513880659b03efb665f21e12 .notion-collection__header-wrapper,
-  .notion-root #block-3dbe800a513880659b03efb665f21e12 thead {
-    display: none !important;
-  }
-
-  .notion-root #block-3dbe800a513880659b03efb665f21e12 .notion-collection-table__wrapper,
-  .notion-root #block-3dbe800a513880659b03efb665f21e12 table,
-  .notion-root #block-3dbe800a513880659b03efb665f21e12 tbody {
-    display: block !important;
-    width: var(--rail-w) !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    overflow: visible !important;
-    background: transparent !important;
-  }
-
-  .notion-root #block-3dbe800a513880659b03efb665f21e12 tr {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    gap: 4px !important;
-    height: var(--rail-row) !important;
-    box-sizing: border-box !important;
-    padding: 0 12px 0 16px !important;
-    border: 0 !important;
-    border-top: 1px solid rgba(250, 250, 248, 0.18) !important;
-    background: transparent !important;
-  }
-
-  .notion-root #block-3dbe800a513880659b03efb665f21e12 td {
-    display: block !important;
-    width: auto !important;
-    min-width: 0 !important;
-    max-width: none !important;
-    height: auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    overflow: visible !important;
-    background: transparent !important;
-  }
-
-  .notion-root #block-3dbe800a513880659b03efb665f21e12 td .notion-property__title {
-    font-family: "Outfit", sans-serif !important;
-    font-weight: 600 !important;
-    font-size: 15px !important;
-    line-height: 1.2 !important;
-    letter-spacing: -0.018em !important;
-    color: #E4E4DF !important;
-    white-space: nowrap !important;
-  }
-
-  .notion-root #block-3dbe800a513880659b03efb665f21e12 td .property-463b4979 {
-    display: -webkit-box !important;
-    -webkit-box-orient: vertical !important;
-    -webkit-line-clamp: 2 !important; /* keeps every row at --rail-row */
-    overflow: hidden !important;
-    max-width: none !important;
-    white-space: normal !important;
-    font-family: "Hanken Grotesk", sans-serif !important;
-    font-size: 12.5px !important;
-    line-height: 1.3 !important;
-    color: #A8A8A3 !important;
-  }
-
-  /* The panels hand the right-hand side over to the rail: plain ink ground, no
-     dots, and the marker becomes a row highlight. */
-  #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card::before {
-    background-image: none !important;
-  }
-
-  #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card::after {
-    right: var(--rail-right) !important;
-    top: calc(50% - var(--rail-h) / 2 + var(--t-i, 0) * var(--rail-row)) !important;
-    width: var(--rail-w) !important;
-    height: var(--rail-row) !important;
-    border-radius: 0 !important;
-    border-left: 2px solid #FAFAF8 !important;
-    background: rgba(250, 250, 248, 0.06) !important;
-  }
-}
-
-/* NARROW SCREENS FALL BACK TO CARDS — five viewport-tall panels is a lot of
-   thumb, and the two-column grid has nowhere to go under about 700px. */
-@media (max-width: 700px) {
-  /* Panels are cards here, so there is nothing to pin over: the eyebrow and
-     heading become an ordinary intro above them. */
+/* BELOW 760px — the stage unpins and sits above; the steps unpin and read as a list (home.js folds
+   nothing here). The heading is the stage's first line, 56px down, the speaker 22px under it. */
+@media (max-width: 760px) {
   .notion-root #block-3dae800a51388066b66ffeeb9bdb1550 > .notion-callout__content {
-    display: block !important;
-  }
-  .notion-root #block-6df87cb2d8994ba0b7fe797aa933840d,
-  .notion-root #block-3dae800a513880aaa3cff5a842b1d748 {
-    position: static !important;
-    height: auto !important;
-    text-align: left !important;
-    padding: 0 24px !important;
-  }
-  .notion-root #block-6df87cb2d8994ba0b7fe797aa933840d { padding-top: 40px !important; line-height: 1.4 !important; }
-  .notion-root #block-3dae800a513880aaa3cff5a842b1d748 { padding-bottom: 20px !important; }
-  .notion-root #block-3dae800a513880aaa3cff5a842b1d748::after { display: none !important; }
-
-  /* On a stacked card the mark would sit behind the text at any size that
-     reads, so it is dropped rather than shrunk into a smudge. */
-  #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__file.property-7b4e4a59 {
-    display: none !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
 
-  #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card {
-    position: static !important;
+  .notion-root #block-3dae800a51388066b66ffeeb9bdb1550 > .notion-callout__content > .enc-t-stage { order: 1; }
+  .notion-root #block-3dae800a51388066b66ffeeb9bdb1550 > .notion-callout__content > #block-f853251f87b0400d9d5b7e3fe71e57e5 { order: 2; }
+
+  .notion-root #block-6df87cb2d8994ba0b7fe797aa933840d {
+    position: relative !important;
     height: auto !important;
-    padding: 32px 24px !important;
-    grid-template-columns: 80px minmax(0, 1fr) !important;
-    border-bottom: 1px solid rgba(250, 250, 248, 0.14) !important;
+    padding: 56px 0 0 !important;
   }
-  /* No rail: with the panels stacked as cards there is nothing to track. */
-  #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card::after {
-    display: none !important;
+
+  .enc-t-stage {
+    position: relative;
+    height: auto;
+    padding: 22px 0 0;
   }
-  #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card::before {
-    background-image: none !important;
+
+  .enc-t-eye {
+    display: none;
   }
-  #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card__cover {
-    width: 64px !important;
-    height: 64px !important;
-    margin-top: 20px !important;
+
+  #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card,
+  #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card:hover {
+    position: relative !important;
+    top: 0 !important;
+    height: auto !important;
+  }
+
+  #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-gallery::after {
+    display: none;
+  }
+
+  /* nothing moves here, so the phrase runs with its sentence: a block of its own broke the line
+     before and after it */
+  #block-f853251f87b0400d9d5b7e3fe71e57e5 .property-3f46544e .highlighted-background {
+    display: inline !important;
   }
 }
 
@@ -4674,13 +4446,6 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 }
 
 @media (max-width: 700px) {
-  /* THE TESTIMONIAL CARDS CONTAIN THEIR OWN GROUND: the 09 fallback sets them static and their ink
-     ::before took the page (the five quote cards, 14,600px each). Relative keeps them in the flow
-     and gives the pseudo its card back. (The stat cards had the same rule until Z replaced them.) */
-  #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-collection-card {
-    position: relative !important;
-  }
-
   /* THE PHONE'S GUTTER, 20px. The hero and the ink bands carry the desktop's 48px sides (the bands
      through their own variables); at 390 wide that left a 294px measure. */
   .notion-root #block-11a2eeaf43d94c23aeaa3d347ec2d749 {
@@ -4693,16 +4458,6 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 
 /* ── THE RESPONSIVE AUDIT (2026-09-26) ────────────────────────────────────────────────────────
    Each rule is scoped to the widths where the audit measured the fault; nothing outside them moves. */
-
-/* the testimonial quote is 40ch from a centred column, and the names rail is pinned at the right:
-   at 1180–1440 the two shared the same x range and "testnet" ran under the rail at 1280. The quote
-   keeps 40ch wherever it clears the rail (from ~1500 nothing changes). */
-@media (min-width: 1100px) {
-  #block-f853251f87b0400d9d5b7e3fe71e57e5 .notion-property__text.property-3f46544e {
-    max-width: min(40ch, calc(100vw - var(--rail-w) - var(--rail-right) - 48px
-      - max(clamp(28px, 6vw, 88px), calc(50vw - 430px)))) !important;
-  }
-}
 
 /* above 1920 the paper sections ran from 96 to 2464 while the hero and the ink bands sit in the
    centred 1728 column: the same formula the bands use, so at 1920 nothing changes */
