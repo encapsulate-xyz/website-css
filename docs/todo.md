@@ -175,6 +175,22 @@ When /services is redesigned, give it a tools gallery (name, link, capture) and 
 id in `READ["/services"]`, the way every other row is read, so the column cannot drift from the
 page. The four `img/nav-panels` captures would then come from that gallery too.
 
+## TODO — connect Super's own MCP (found 2026-10-24, the user: "add it in todo")
+
+Super has an MCP server, `https://mcp.super.so/mcp` (dashboard → "MCP (AI)", app.super.so/mcp): stateless, OAuth with
+the scopes `sites:read sites:write design:write`. Its page lists custom code with rollback, resyncing pages from Notion,
+SEO titles and descriptions, redirects, the navigation menu, files, analytics and phone screenshots — what is done today
+through Super's dashboard GraphQL API from a visible Chrome tab (memory, `reference-super-dashboard`), which needs that
+tab open and its token fresh.
+
+- **The user's step:** claude.ai → Customize → Connectors → + Add → Add custom connector, named "Super", the address
+  above, the suggested sign-in, then sign in and pick the workspace (or, for this project alone,
+  `claude mcp add --transport http super https://mcp.super.so/mcp` and `/mcp` to sign in). Super's own step 4,
+  connecting Notion's connector, is not needed: Notion is written through the integration token.
+- **Then:** list its tools, move the head pastes (whole `head/*.html` files, checked by SHA-1 as now) and the page
+  refreshes onto it, and keep the GraphQL route as the fallback. Never its colour, font or restyle tools: the design
+  lives in this repo.
+
 ## Open items
 
 - /services, /investments, /brand, /blog, /guides were still served with site Head v55 at the last

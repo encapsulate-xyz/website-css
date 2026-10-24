@@ -264,7 +264,7 @@ its sentence.
   "Cofounder" twice. **Removed: the paragraph "What the teams say."** (`3dae800a…d748`, in
   `backups/testimonials-paragraph-2026-10-24.json`), which I does not have. The names table
   (`3dbe800a…e12`) stays in Notion, hidden by id: deleting a linked view risks its source. Stargaze keeps Notion's
-  "They've" where the file has "They have".
+  "They've" where the file has "They have" (the user, 2026-10-24: "no dont change it").
 - **Traps**: the card content is Super's `flex: 1`, stretched to the step's foot, which began every step a tenth folded
   (`flex: none`); Super's 4px flex gap put a space before the by-line's comma (`display: block` on the name). The phrase's
   move is measured once per layout with the transform off (not per frame), every read before every write.
