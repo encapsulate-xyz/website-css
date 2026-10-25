@@ -38,10 +38,10 @@ note goes into its subject's file, not here; only a rule for every task belongs 
 | `docs/brand.md` | the colour band's three sets | The brand colour band names three sets |
 | `docs/booking-and-contact.md` | booking.js, main.css §18, the dial in the contact fold | The booking drawer; The contact band's fold holds the dial |
 | `docs/paths-and-404.md` | the paths, the redirects, notfound.css + notfound.js, the section names (anchors.js) | Paths — no /mainnet, and the 404 page; Section names |
-| `docs/seo.md` | how Super sets it, what is set, the SEO job | SEO; The SEO job — every database row's card, title, description, and four content properties |
+| `docs/seo.md` | how Super sets it, what is set, what Google holds and the Search Console routine, the SEO job | SEO; What Google holds, and the Search Console routine; The SEO job — every database row's card, title, description, and four content properties |
 | `docs/site-data.md` | the private repo whose scheduled jobs write Notion | site-data — the jobs |
 | `docs/audit.md` | the phone work, the full-width audit and the raw-Notion audit | Below 900px; The audit of 2026-09-26 — every page the navbar and footer reach, 320–2560; The raw-Notion audit of 2026-10-25 |
-| `docs/todo.md` | every TODO and the open items | TODO — run both governance jobs from a GitHub Action; Done — the APY property is filled by site-data; TODO — the Networks set's open values; TODO — three chain pages still point outside the site; TODO — the Sui guide moves to Slush; TODO — the GitHub Actions; TODO — check every line break against its handoff; TODO — the newsletter; TODO — the Services tiles come from the menu, not the page; TODO — connect Super's own MCP; Open items |
+| `docs/todo.md` | every TODO and the open items | TODO — Search Console; TODO — run both governance jobs from a GitHub Action; Done — the APY property is filled by site-data; TODO — the Networks set's open values; TODO — three chain pages still point outside the site; TODO — the Sui guide moves to Slush; TODO — the GitHub Actions; TODO — check every line break against its handoff; TODO — the newsletter; TODO — the Services tiles come from the menu, not the page; TODO — connect Super's own MCP; Open items |
 
 **On "what's left to do", read `docs/todo.md`.** **React #418 on every page is settled: leave it and do not
 raise it again** (`docs/audit.md`).
@@ -138,6 +138,17 @@ User rules that stand on every task:
     **When a section changes, rename its name to fit** and keep the old one as a second key, so a link already out
     still lands. Name a Notion block by its id and a band a script builds by the mark its builder sets, never by its
     words. List the new names in the reply.
+- **After every task, Search Console** (the user, 2026-10-25: "add it in your regular work … open google search console
+  and update the pages to add to search or exclude anything if we have to"; "always check if we need to add a new page to
+  search console or not after any task"). At the end of any task that added, moved, renamed or removed a page, or changed
+  what a page serves, open Search Console myself (the user's account, signed in in Chrome; `docs/seo.md`, "What Google
+  holds, and the Search Console routine") and:
+  - **a new or moved page**: URL inspection → if it is not on Google, REQUEST INDEXING (about ten a day; the rest go
+    in `docs/todo.md`, "TODO — Search Console", and are requested on the next days);
+  - **a removed or hidden page** still on Google: Removals → New request, or leave it to the 404/redirect and say so;
+  - **the sitemap** reads Success (Sitemaps), and nothing in Pages → Indexed is a page we do not publish — a bare
+    `/<32 hex>` id is one (Super serves every Notion page under Home at its id; hide old ones in Super, see the doc).
+  Say in the reply what was requested, removed or left, or that nothing was needed. Never tell the user to do it.
 - **Make space with CSS, and pair things with Notion columns — never with a divider or an empty paragraph.**
   (2026-09-25, from the homepage's notes, "No divider makes space anywhere".)
 

@@ -53,12 +53,15 @@ the steps of the SEO audit of 2026-09-26/28, for Google and for AI search. Keep 
       link to the old path in Notion is updated. A removed page with a clear successor redirects to it;
       one without simply goes (404).
 - [ ] **Check the live HTML** after the refresh: status 200, one canonical and it is its own, the title, the
-      description, `og:image` on assets.super.so, no noindex, in `sitemap.xml`. For an important page, ask
-      Google to index it (Search Console → URL inspection → Request indexing — the user's account).
+      description, `og:image` on assets.super.so, no noindex, in `sitemap.xml`.
+- [ ] **Search Console, every new page** (CLAUDE.md, "After every task, Search Console"; I do it, in the user's signed-in
+      Chrome): URL inspection → not on Google → REQUEST INDEXING; past the day's quota, add it to `docs/todo.md`,
+      "TODO — Search Console". A moved page: inspect the new path. Say in the reply which were requested.
 
 ## Removing a row
 
 - [ ] Back it up first (the row and its blocks, as `backups/<what>-<date>.json`).
+- [ ] Search Console: if the removed page is on Google, Removals → New request (or leave it to the 404 or redirect, and say so).
 - [ ] Remove its page in Super (`removeSitePage`), then put it in Notion's trash — a refetch of a trashed
       page makes it 404, but Super keeps serving its cached copy until then.
 - [ ] A successor exists (a guide for a guide post)? Add a 308 at the old path to it.
@@ -212,7 +215,7 @@ these are what shows before that read lands, and what a crawler reads. Find them
 - [ ] Every sitemap URL serves the new site head; the chain page is in the sitemap, 200, its own canonical,
       title, description, `og:image` on assets.super.so, robots "index, follow", the facts paragraph in the HTML,
       `script#enc-ld-chain`.
-- [ ] Optional, the user's: Search Console → URL inspection → Request indexing for the new page.
+- [ ] Search Console → URL inspection → REQUEST INDEXING for the new page (mine, not optional — see "SEO — every new page").
 - [ ] Update the chain page list in `docs/chain-pages.md` and `notion/networks-set-values.md`.
 
 ## Guides Database — a new guide (`1f6e800a…8181…`)

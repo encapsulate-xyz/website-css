@@ -191,6 +191,28 @@ tab open and its token fresh.
   refreshes onto it, and keep the GraphQL route as the fallback. Never its colour, font or restyle tools: the design
   lives in this repo.
 
+## TODO — Search Console (from 2026-10-25; the routine is CLAUDE.md, "After every task, Search Console")
+
+Google had not read the sitemap since it was submitted on 2026-09-29 ("Couldn't fetch"), so pages added since were
+unknown to it. Resubmitted 2026-10-25; indexing requested until the day's quota ran out (`docs/seo.md`, "What Google
+holds, and the Search Console routine").
+
+- **On Google, checked 2026-10-25:** /networks — cosmos-hub, avalanche, mina, monad, terra, althea; /guides — sui,
+  starknet-braavos, axelar, terra, althea, monad, passage, humans-ai; /terms-of-use.
+- **Requested 2026-10-25, not yet seen on Google:** /guides/starknet-ready-x, /guides/mina (and up to five more of the
+  list below, from a first run whose results could not be told apart).
+- **Still to inspect, and request if not on Google** (about ten a day): /guides/avalanche, /guides/iota, /guides/zilliqa,
+  /guides/supra, /guides/ika, /guides/agoric, /guides/espresso, /guides/lumera, /guides/gitopia, /guides/gravity-bridge,
+  /guides/ixo, /guides/juno, /guides/mellow, /guides/namada, /guides/omniflix, /guides/quicksilver, /guides/sommelier,
+  /guides/stargaze, /guides/ux, /guides/eigen-layer-steth, /blog/monad-l1-scaling, /blog/is-aptos-decentralized,
+  /blog/berachain-research, /blog/agoric-testnet-17-analysis.
+- **Check:** Sitemaps reads Success (if still "Couldn't fetch" by 2026-10-28, add `https://encapsulate.xyz/sitemap.xml?v=2`
+  as a second entry); the 24 removals read "Removed"; Pages → Indexed holds no bare `/<32 hex>` id that answers 200 (the
+  Forms page and the three governance rows carry noindex since v406, and are in Removals).
+- **New form responses** are still served at their ids (noindex, linked from nowhere). Hide them in Super with the rest
+  (`backups/super-hidden-2026-10-25.json` says how), or ask the user whether the old Newsletters and Contact Us
+  databases, which no form writes to any more, can be emptied.
+
 ## Open items
 
 - /services, /investments, /brand, /blog, /guides were still served with site Head v55 at the last

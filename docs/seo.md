@@ -90,7 +90,7 @@ was added by hand (the Search Console import brought only king.super.site) and v
 `36b290c4f7ac57fd3ecf97ffb2452be3` → `verify.bing.com.` (keep it); its sitemap is submitted. **Search Console showed the sitemap as "Couldn't
 fetch" on 2026-09-29** ("Sitemap could not be read", nothing more): the file answers 200 as application/xml, parses, lists 111
 URLs that all answer 200, robots.txt names it, and Google's own live test of the URL said "URL is available to Google" — the
-status of a sitemap Google has queued and not read yet, on a property one day old. Two listed URLs are noindex on purpose
+status of a sitemap Google has queued and not read yet, on a property one day old. **That reading was wrong:** on 2026-10-25 it still said "Couldn't fetch", 0 discovered, and 35 sitemap pages were unknown to Google; it was resubmitted (see "What Google holds" below). A "Couldn't fetch" that lasts more than a few days is a fault. Two listed URLs are noindex on purpose
 (/governance/votes, /page-not-found); Super writes the sitemap, so they will show as a warning in the Pages report. The homepage's
 `google-site-verification` meta (`hMGL…`), which verified king.super.site, was removed from head/home.html (the user,
 2026-09-29), and the king.super.site property was removed from Search Console; Bing's site list has only encapsulate.xyz.
@@ -124,6 +124,66 @@ linked from nowhere, yet in the sitemap and indexable. Removed from Super only �
 record's tables are untouched; their addresses are in `backups/governance-vote-pages-2026-09-28.json`.
 /governance-record and its database page /governance-record/governance-record stay; the database page has a
 noindex head (2026-09-28). /investments/gravity-bridge (a 404 listed in the sitemap) was removed from Super.
+
+## What Google holds, and the Search Console routine (2026-10-25)
+
+The user, on Google listing "Encapsulate Test Home" at /encapsulate-home: "why is this getting indexed ?", then
+"make sure google indexing records are updated", and "add it in your regular work … to open google search console and
+update the pages to add to search or exclude anything if we have to" — the routine is in CLAUDE.md ("After every task,
+Search Console") and in `notion/new-row-checklist.md`.
+
+**Super serves every Notion page under the Home page at its bare id, `/<32 hex>`, with "index, follow"** — the
+child pages, the pages under them, and every database row. A page with a path in Super redirects its id there (307);
+one without answers 200 at the id. Removing a page's path in Super (2026-09-28: /snapshots, /rewards-calculator,
+/eigen-layer…) leaves it at its id. The homepage's HTML lists the Home page's children as links, so Google followed
+them: it held the old test copy of the site (/encapsulate-home's page "Encapsulate Test Home", at its id
+`5e0e4755…`), Test Home New, Grants, Testnet Management, Coming Soon, the Lido and SSV/Obol cluster pages, Snapshots,
+Rewards Calculator, Website Form Databases, the "Forms" page and three governance rows. Measured: 38 of the tree's 52
+child pages and 2,641 of its 2,741 database rows answered 200 at their ids — **among them 22 form responses
+(Newsletters, the old Contact Us, New form, Get in touch), 13 showing the sender's email address.**
+
+**What was done:**
+- **61 pages hidden in Super** — `createSitePage(input: {siteId, type: "hidden", notionPage: <id>, path: <id>})`; each
+  answers 404 with noindex within a minute (a plain request may get the edge's cached 200 once more). The 38 old pages
+  the user confirmed are not in use ("these were old pages not in use"), Coming Soon (`bb0a7445…`, linked from the
+  homepage but outside the tree's child pages), and the 22 form responses. **Hidden covers that page only, not its
+  children** (measured on Encapsulate Test Home). The list and how to undo one: `backups/super-hidden-2026-10-25.json`.
+- **blocks.js marks a bare-id page noindex** (v406): a page the site publishes has a path, so a bare id never is one.
+  That covers the rows left visible — the record's 2,140 rows, the Forms page (it holds the live "Get in touch" and
+  "New form", so it is not hidden), the sets' rows — and **every new form response**, which is still served at its id
+  (unlinked, noindex) until it is hidden too. Content rows are not hidden: Super might drop a hidden row from its
+  database's views.
+- **The sitemap was never read.** Search Console had shown "Couldn't fetch, 0 discovered" since it was submitted on
+  2026-09-29 (taken then for Google's queue); four weeks on, 35 of the sitemap's pages were "URL is unknown to Google" —
+  four chain pages (Monad, Mina, Terra, Althea), 27 guides, four posts. The file is fine (200, valid XML, 114 URLs, the
+  same to Googlebot). **Resubmitted 2026-10-25** with the full address — the box refuses a bare `sitemap.xml` on a
+  domain property ("Invalid sitemap address"). Check it reads "Success" in a few days; if it still cannot fetch,
+  submit `https://encapsulate.xyz/sitemap.xml?v=2` as a second entry.
+- **Indexing requested** for the unknown pages, chain pages first, until Google's daily quota ran out ("Quota
+  Exceeded … try submitting this again tomorrow", after about ten requests); then the URL-inspection quota ran out too,
+  after about a hundred inspections. A requested page was on Google within half an hour (/networks/mina, Monad, Terra,
+  Althea, /guides/sui…). /networks/cosmos-hub — the request the user remembered from 2026-10-05 — was already indexed.
+  What is left is in `docs/todo.md`, "TODO — Search Console", for the next days.
+- **24 temporary removals filed** (Removals → New request → Remove this URL only; hidden for about six months, each can be
+  cancelled): /encapsulate-home, the old test pages' ids (Encapsulate Test Home `5e0e4755…` and eight more), Coming
+  Soon, the Forms page and the three governance rows Google held, /test-home-new, /grants, /coming-soon,
+  /testnet-management, /snapshots, /rewards-calculator, /services/celestia, /blog/celestia-staking-guide,
+  /blog/mina-hard-fork. Each answers 404 or carries noindex, so it stays out when the removal lapses.
+- **Left to Google:** the 34 old addresses that now redirect (/networks/mainnet/…, /guides/mainnet/…, /contact-us,
+  /governance-record, /lido-dvt-staking…) move to their targets as Google recrawls; the 19 old chains'
+  /networks/mainnet/… pages, which 404, drop out on recrawl.
+
+**Driving Search Console from here** (beside "Driving these consoles" above): screenshots work now. The inspect box
+is the page's `input[aria-label*="Inspect any URL"]` (native value setter, `input`, an Enter keydown); the verdict is the
+text after `<url>\nURL Inspection` ("URL is on Google" / "URL is not on Google" + "URL is unknown to Google"); then
+REQUEST INDEXING (pointer and mouse events at its centre) runs a live test of a minute or two and ends "Indexing
+requested" (GOT IT) or a "Quota Exceeded" box (capital E). **The result boxes stay in the DOM** after GOT IT, so a
+check for the text "Indexing requested" is true from the second request on: count the visible boxes before the press
+and wait for one more (a first run took 35 "successes" of which 7 were real). A `navigate` reloads the page and wipes
+`window` helpers — define them again — and a tab left in the background is throttled (a request timed out while another
+Search Console tab was in front). The Pages report's indexed list lags by days, so inspect a page before requesting it.
+Removals: NEW REQUEST, the URL into the New Request box's own text input (the side drawer is a `role="dialog"` too),
+NEXT, SUBMIT REQUEST; the list's "1–10 of N" is the count to watch, not the rows on the page.
 
 ## The SEO job — every database row's card, title, description, and four content properties (built 2026-09-30)
 
