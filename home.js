@@ -1123,7 +1123,9 @@
     var box = document.createElement("div");
     box.className = "enc-net";
     box.setAttribute("data-sig", sig);
-    box.setAttribute("role", "list");
+    // a group of links, not a list: role="listitem" on a link replaces its link role, and the discs sit two
+    // wrappers below the box (Lighthouse's Agentic Browsing audit failed the page on it, 2026-10-25)
+    box.setAttribute("role", "group");
     box.setAttribute("aria-label", "Networks we run");
     for (var c = 0; c < COLS; c++) {
       var items = list.slice(c * PER_COL, c * PER_COL + PER_COL);
@@ -1136,9 +1138,7 @@
       track.style.animationDuration = (SPEEDS[c] || 11) + "s";
       [false, true].forEach(function (copy) {
         items.forEach(function (n, i) {
-          var d = disc(n, c * PER_COL + i, copy);
-          if (!copy) d.setAttribute("role", "listitem");
-          track.appendChild(d);
+          track.appendChild(disc(n, c * PER_COL + i, copy));
         });
       });
       col.appendChild(track);
