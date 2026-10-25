@@ -213,6 +213,14 @@ holds, and the Search Console routine").
   (`backups/super-hidden-2026-10-25.json` says how), or ask the user whether the old Newsletters and Contact Us
   databases, which no form writes to any more, can be emptied.
 
+## TODO — the chain and guide pages' layout shift (found 2026-10-25)
+
+Lighthouse's phone run on Linux (`scripts/linux/lhab.mjs`, `docs/audit.md`, "The phone's layout shift") puts
+**/networks/sui at CLS 0.101 and /guides/sui at 0.099**: the page's article moves, root cause "Unsized image element".
+That is on the 0.1 line Agentic Browsing and Core Web Vitals pass or fail on. Find the image (`lhab.mjs` with the
+`cls-culprits-insight` sub-items, or `fbdebug.mjs` pointed at the page), give it its size, and check every chain and
+guide page. **/networks/sui also fails colour contrast** (Accessibility): find the element and its pair.
+
 ## TODO — rebuild llms.txt on a schedule (2026-10-25)
 
 The six llms files (`docs/seo.md`, "llms.txt") are a snapshot of the day they were built: the rates, the stake and the

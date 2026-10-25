@@ -181,9 +181,9 @@ TBT 670 ms, CLS 0.197, SI 6.5 s). Accessibility 100, Best Practices 96, SEO 100 
   cache, its stylesheets — cannot be changed from here.
 - **The loop itself, 1.3 MB**, is the largest download on a phone. Listed twice in the report; a real Chrome load fetches
   it once (one 206 range response). Loaded as soon as the page is, on purpose (home.js sets `preload="auto"`).
-- **The phone's CLS 0.197** is the loop's block moving. Not reproduced here: a 412×823 load with Lighthouse's throttling
-  (150 ms, 1.6 Mbps, CPU ×4, a phone's user agent) measured 0.004, and so did Lighthouse 13.5 itself, run here twice —
-  every shift the navbar's 3 px button. It shows only on Google's own run (0.199 again after v407).
+- **The phone's CLS 0.197** is the loop's block moving. Not reproduced on a Mac (0.004, every shift the navbar's 3 px
+  button) — **found and fixed later the same night, v409: a fallback font on Linux** (below, "The phone's layout
+  shift").
 - **The phone's LCP (9.8 s) is a simulation.** Observed, the hero's still paints at 1.45 s; Lighthouse's slow-4G model
   counts the bytes of every request that started before it — Super's chunks and images, its font preloads, our scripts.
   **Blocking the loop's 1.3 MB entirely changed nothing** (Lighthouse run here: LCP 9.8 s and the same score with and
@@ -216,3 +216,55 @@ JetBrains Mono, as before. Where: Super → Design → Edit this theme → Typog
 choice is saved with "Save changes"); then refresh every page. A missing address Super has answered before keeps its
 cached HTML (with the old font lines) for a while; a new one gets the new. **All 21 of our scripts now carry a valid
 source map** (Lighthouse: each listed with its map, no error); the one large script without a map is Super's own chunk.
+
+## The phone's layout shift — a fallback font on Linux (2026-10-25, v409)
+
+PageSpeed's phone run of the homepage failed Agentic Browsing (2/3 — the user: "why on mobile its 2/3") on **Cumulative
+Layout Shift 0.197–0.199**, all of it the hero's loop (`#block-3e6e800a…`), and its scores moved from run to run ("the
+score keps changing why is that ?"). A Mac never showed it: Lighthouse 13.5 there, and sixteen instrumented phone loads
+with each of our files, Google's fonts, Super's chunks or the loop held back up to 6 s on a 4× slower CPU, all measured
+0.002–0.004.
+
+**The cause is the fallback font, and PageSpeed runs on Linux.** Until Outfit and Hanken Grotesk arrive, Chrome draws the
+text in the next family of the stack, `system-ui` / `sans-serif`: San Francisco on a Mac, which happens to set the hero as
+Outfit does, but **DejaVu Sans on Linux** (fontconfig's `sans-serif`), 28% wider than Outfit 600 on the site's headings
+in bold, so at 412 px the headline took three lines instead of two and the lede three instead of two: the loop sat 62 px
+lower (543 against 481) until the fonts came, then jumped. Whether the fonts beat the first paint decides each run, which
+is why the score moves. **Reproduced** with Lighthouse 13.5 in a Debian container with Chromium 156 (`scripts/linux/`):
+0.197, 0.214, 0.195, 0.197, 0.195, culprit the loop, root cause "Web font". Android's Roboto is within 1–3% of Outfit and
+Liberation Sans/Arial 7% wider, so a real phone saw the same shift whenever its fonts were late, by less.
+
+**The fix, main.css §01:** fallback faces sized to the web fonts, so the swap moves nothing — `"Outfit fb"`, `"fb2"`,
+`"fb3"` and the same for Hanken Grotesk: local Arial and its metric twins (Liberation Sans, Arimo, Helvetica), then
+Roboto, then DejaVu Sans, each with `size-adjust` and the web font's ascent and descent, named in the stacks after the
+web font (`--type-display`, `--type-body`, `--primary-font`, `--secondary-font`). The widths were measured in Chromium:
+Outfit 400 and Hanken Grotesk 400 against the regular faces on the homepage's prose; Outfit 600 against the bold faces
+on fourteen of the site's headings one by one, at the **narrowest** ratio (91.5%, 97.5%, 77.5%), because a heading must
+never take a line more in the fallback — at the prose ratio (93.5%) "blockchains online." still wrapped. **Each face
+covers exactly its web font's characters** (the Latin subset's cmap, read with fontTools), so once the web font is in,
+the fallback has nothing left to draw.
+
+**Checked:** at 360, 390, 412, 430, 600, 768 and 900, with the web fonts blocked, the hero's headline, lede and loop sit
+where they do once the fonts are in, on all three fallbacks (Liberation, Roboto alone, DejaVu alone; the old CSS: the loop
+62 px low). Lighthouse on Linux, four runs with the new main.css: **CLS 0.0032** each (the navbar's button), Agentic
+Browsing 3/3, Performance 44–48 against 38–42. **Nothing changes once the fonts are in:** every font Chromium draws on
+/, /security and /networks/sui at 412 and 1440, glyph counts summed over every element, is the same with the old and new
+CSS (Hanken Grotesk, Outfit, JetBrains Mono, and DejaVu Sans Mono for four glyphs JetBrains Mono lacks on /security).
+
+**The other pages, the same night** (Lighthouse phone on Linux, live, after v409): /security 0.004, /blog/zk-snarks
+0.007, /investments 0.005, /services 0.021 — but **/services and /investments failed Agentic Browsing's accessibility
+tree** (2/3): an `aria-label` on a plain div (services.js's networks tiles, investments.js's position marks), the same
+fault as the homepage's columns. Both are named pictures now (`role="img"`, v410), 3/3 on both, nothing else changed.
+**/networks/sui 0.101 and /guides/sui 0.099** — the article moving, root cause "Unsized image element", not a font; and
+/networks/sui fails colour contrast. Both are in `docs/todo.md`, "TODO — the chain and guide pages' layout shift".
+
+**Not covered yet:** the page CSS files that name the fonts directly (`"Outfit", sans-serif` in guide.css, services.css,
+chain.css and others) still fall back to the system font; only the stacks built from the tokens have the faces.
+Measure a page with `scripts/linux/lhab.mjs` before widening it.
+
+**Running it** (the VM is the user's Colima): `colima start`, `docker build -t enc-lh scripts/linux` once, then from the
+repo `docker run --rm --shm-size=1g -v "$PWD":/repo:ro enc-lh node /repo/scripts/linux/lhab.mjs live|swap` — `swap`
+serves this repo's `dist/main.css` for the pinned one. `fbdebug.mjs` (VW=, MODES=`live:1,swap:0`, 1 = web fonts
+blocked) prints the hero's heights and the font each line is drawn in; `fontsused.mjs` (PAGES=) compares every font
+drawn on loaded pages. Remove fonts inside the container (`rm -rf /usr/share/fonts/truetype/liberation*; fc-cache -f`)
+to test another fallback. **Re-measure the faces when the fonts, their weights or the headings change.**
