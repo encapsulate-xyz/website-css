@@ -61,6 +61,30 @@ for name in sys.argv[1:] or ['main.css', 'home.css', 'network.css', 'governance.
     print(f'{name:14} {len(src):>7,} -> {len(dst):>7,} bytes  '
           f'({100 - 100*len(dst)//len(src)}% smaller)')
 
+# dist/site.css — the site head's one stylesheet (2026-10-26): Super's theme (minima), main.css, the page sheets every
+# page carries and the web fonts, in the order the head used to link them one by one. Eight stylesheets from three
+# servers held every page's first paint; one from the server the scripts already come from holds it for less
+# (docs/audit.md, "The first paint"). Super's minima is fetched again at every build, so the copy in vendor/ follows
+# Super's own; offline, the copy is used as it is.
+SITE = ['vendor/minima.min.css', 'main.css', 'post.css', 'blog.css', 'guide.css', 'chain.css', 'notfound.css', 'fonts.css']
+if not sys.argv[1:]:
+    import urllib.request
+    MINIMA = 'https://sites.super.so/builder/themes/minima/minima.min.css'
+    try:
+        live = urllib.request.urlopen(MINIMA, timeout=5).read().decode('utf-8')
+        if live != open(SITE[0], encoding='utf-8').read():
+            open(SITE[0], 'w', encoding='utf-8').write(live)
+            print('vendor/minima.min.css: Super changed its theme stylesheet — the copy is updated (see git diff)')
+    except OSError as e:
+        print(f'vendor/minima.min.css: Super could not be reached ({e}) — the copy is used as it is')
+    parts = []
+    for name in SITE:
+        src = open(name, encoding='utf-8').read()
+        parts.append(src.strip() + '\n' if name.startswith('vendor/') else squeeze(strip(src)))
+    site = ''.join(parts)
+    open(os.path.join('dist', 'site.css'), 'w', encoding='utf-8').write(site)
+    print(f"{'site.css':14} {len(site):>7,} bytes ({' + '.join(os.path.basename(n) for n in SITE)})")
+
 # The homepage dial: home.js and its styles home-dial.css. Both are served from the repo via
 # jsDelivr and linked from the homepage's Code -> Head (see "Serving from GitHub" in CLAUDE.md),
 # so they are written to dist/ like the stylesheets.
