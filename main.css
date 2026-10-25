@@ -92,6 +92,16 @@
 
 :root {
   /* --- Super tokens ------------------------------------------------------ */
+  /* Super's site font is Inter (its Typography setting writes it into both variables, and minima
+     sets the second with !important), and Inter is not in the design system: Outfit, Hanken Grotesk
+     and JetBrains Mono are. Wherever our rules name no font, the text fell back to these — the
+     homepage's three stat captions and one paragraph, the /blog card links, a post's note, the guides'
+     link previews, the /security rail's lines and the whole /governance/votes table (swept on all 114
+     pages, 2026-10-25). The design's body font takes their place (the user, the same day: "why not use
+     what's in our design system", "i dont think we have inter in it"), and Inter's 500 weight is no
+     longer fetched; the 400 and 600 Super preloads in every page's HTML until its font setting changes. */
+  --primary-font: "Hanken Grotesk", system-ui, sans-serif !important;
+  --secondary-font: "Hanken Grotesk", system-ui, sans-serif !important;
   --callout-border-radii: 20px !important;
   --callout-padding: 20px !important;
   --callout-icon-display: none !important; /* replaces hiding .notion-callout__icon by hand */
