@@ -15,6 +15,9 @@ moved or rewritten (notion/new-row-checklist.md):
 
   python3 scripts/llms.py            # reads every page (about 5 minutes), writes llms/
   python3 scripts/llms.py --cached   # lays out again from the pages read last time (backups/llms-pages/)
+
+It ends by naming the files to upload: those whose words changed. A file the same as its copy in llms/ but for the
+date keeps that copy, date and all, so the live file and the repo stay the same.
 """
 import concurrent.futures, datetime, json, os, re, subprocess, sys, urllib.request
 
@@ -133,6 +136,15 @@ def main():
             files[name] = (head(i, len(parts)) + "\n\n" + body).strip() + "\n"
             about[name] = what + (f", part {i} of {len(parts)}" if len(parts) > 1 else "")
 
+    # a part whose text is the same as the copy in llms/ but for its date keeps that copy, so the files to upload are
+    # only the ones whose words changed
+    def same(name, body):
+        try: was = open(os.path.join(OUT, name)).read()
+        except OSError: return None
+        return was if re.sub(r"\d{4}-\d{2}-\d{2}", "", was) == re.sub(r"\d{4}-\d{2}-\d{2}", "", body) else None
+    for name in files: files[name] = same(name, files[name]) or files[name]
+    dated = lambda body: (re.search(r"as it reads on (\d{4}-\d{2}-\d{2})", body) or [None, today])[1]
+
     # ---- llms.txt
     lines = [f"# Encapsulate", "", f"> {home['description']}", ""]
     lede = [b for b in home["md"].split("\n\n") if b.strip()][:2]  # the hero's heading and line, as the site says them
@@ -145,15 +157,22 @@ def main():
         lines.append(f"- [{title(pg)}]({pg['url']})" + (f": {pg['description']}" if pg["description"] else ""))
     lines += ["", "## Full text", ""]
     for name, body in files.items():
-        lines.append(f"- [{name}]({SITE}/{name}): {about[name]}, as Markdown ({len(body.encode()) // 1000} kB, {today})")
+        lines.append(f"- [{name}]({SITE}/{name}): {about[name]}, as Markdown ({len(body.encode()) // 1000} kB, {dated(body)})")
     files = {"llms.txt": "\n".join(lines).replace("\n\n\n", "\n\n").strip() + "\n", **files}
 
+    changed = []
     for name, body in files.items():
         size = len(body.encode())
         if size > LIMIT: raise SystemExit(f"{name} is {size} bytes, over Super's {LIMIT}")
+        try: was = open(os.path.join(OUT, name)).read()
+        except OSError: was = None
+        if was != body: changed.append(name)
         with open(os.path.join(OUT, name), "w") as f: f.write(body)
-        print(f"{name}: {size:,} bytes")
-    print(f"{len(pages)} pages")
+        print(f"{name}: {size:,} bytes" + ("  CHANGED" if was != body else ""))
+    gone = [f for f in os.listdir(OUT) if f.endswith(".txt") and f not in files]
+    for f in gone: os.remove(os.path.join(OUT, f))
+    print(f"{len(pages)} pages. Upload to Super → Files: {', '.join(changed) or 'nothing, no words changed'}"
+          + (f". Remove from Super → Files: {', '.join(gone)}" if gone else ""))
 
 
 if __name__ == "__main__":

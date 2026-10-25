@@ -216,10 +216,14 @@ holds, and the Search Console routine").
 ## TODO — rebuild llms.txt on a schedule (2026-10-25)
 
 The six llms files (`docs/seo.md`, "llms.txt") are a snapshot of the day they were built: the rates, the stake and the
-vote record move every day. A weekly site-data job could run `scripts/llms.py` and replace the files in Super. That
-needs the upload done without the dashboard tab (Super's own MCP lists files, see the TODO above, or the presigned
-upload the Files page uses, not yet traced). Until then, rebuild by hand with each page change
-(`notion/new-row-checklist.md`).
+vote record move every day. **Not after every job run** (the user asked, 2026-10-25, "should we also run it after the
+github action or that is too much?"): governance and networks run daily and the homepage every six hours. Each rebuild
+reads all 112 pages (about 5 minutes of headless Chrome) to replace files whose changes are a few tenths of a point. And
+language models don't read llms.txt daily anyway. **Weekly is enough**: a site-data workflow that runs `scripts/llms.py`
+and replaces only the files it names. That is blocked on the upload: it needs the dashboard tab's signed-in session,
+which must not go into a repository secret. It would need Super's own MCP (the TODO above) or a Super API key, if Super
+offers one. Until then the CLAUDE.md rule covers it: rebuild with every change to what the site says, and whenever the
+files are more than a week old at the end of a task.
 
 ## Open items
 

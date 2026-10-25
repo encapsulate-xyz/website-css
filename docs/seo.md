@@ -214,8 +214,10 @@ index, and the record is the one page with every vote and its reason. Checked on
 are in the index, no copy toggle's keys leaked in, and none of the Terra per-validator names appear.
 
 **It is a snapshot.** The live figures (the stake, delegators, every rate and commission) and the record are as they
-read on the day it was built; each file says that day. **Run it again whenever a page is added, moved, removed or
-rewritten** (`notion/new-row-checklist.md`), and upload the changed files:
+read on the day it was built; each file says that day. **When to rebuild is a CLAUDE.md rule** ("After every task that
+changed what the site says"): with every change to a page's words, and whenever the files are more than a week old,
+not after every job run. A file whose words did not change keeps its copy and its date, so the script ends by naming
+only the files to upload:
 
 ```bash
 python3 scripts/llms.py           # reads every sitemap page, about 5 minutes, four at a time

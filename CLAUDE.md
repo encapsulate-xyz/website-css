@@ -149,6 +149,21 @@ User rules that stand on every task:
   - **the sitemap** reads Success (Sitemaps), and nothing in Pages → Indexed is a page we do not publish — a bare
     `/<32 hex>` id is one (Super serves every Notion page under Home at its id; hide old ones in Super, see the doc).
   Say in the reply what was requested, removed or left, or that nothing was needed. Never tell the user to do it.
+- **After every task that changed what the site says, rebuild llms.txt** (the user, 2026-10-25: "add in your steps to
+  update llms files too if anything gets changed, anything significant"). The six files (`llms/`, served from Super →
+  Files) are the site's words for language models (`docs/seo.md`, "llms.txt").
+  - **Rebuild** at the end of any task that added, moved, renamed or removed a page, or changed what a page says: a
+    new post, chain or guide, a guide converted, a Notion edit to a page's words, a section added or removed, a
+    commission or rate set by hand, a chain started or dropped.
+  - **Not** for a change to how a page looks alone (CSS, a script that only draws), and not for the daily jobs'
+    drift (rates, the stake, the delegators, new votes) on its own: that is caught by rebuilding whenever the files
+    are **more than a week old** at the end of any task.
+  - `python3 scripts/llms.py` (about 5 minutes) prints the files whose words changed. Commit `llms/`, replace those
+    files in Super → Files (remove the old one, then upload; the doc says how), and curl each one back
+    (200, byte-identical).
+  - Say in the reply which files were replaced, or that none changed.
+  - **Not after every GitHub Action run** (decided 2026-10-25): the jobs run daily and every six hours, and the
+    upload needs the dashboard tab. A weekly job is `docs/todo.md`, "TODO — rebuild llms.txt on a schedule".
 - **Make space with CSS, and pair things with Notion columns — never with a divider or an empty paragraph.**
   (2026-09-25, from the homepage's notes, "No divider makes space anywhere".)
 
