@@ -157,3 +157,14 @@ The design's invented rates were replaced on 2026-09-24 with rates read from eac
 commission, dated in **Rate updated**) for the 28 mainnet rows. Mina, EigenCloud and SSV.network
 are blank on purpose — see `notion/networks-set-values.md`. They drift: refresh them by hand or
 with the Action below, always with the date.
+
+**Zilliqa's staking portal shows a different rate, and ours is the true one** (checked 2026-10-25). stake.zilliqa.com
+shows the same APR on every pool (10.61% that day) because it is a formula, not a reading: its bundle computes
+446.76M ZIL a year (51,000 an hour) × the pool's share of all stake × (1 − commission) ÷ the pool's stake, which
+cancels to the network's yearly rewards over all staked ZIL (3.23B; 13.8% gross, 12.7% after 8%), divided by a further
+factor of about 1.2 in its code. Our Reward rate is site-data's reading of encapZIL's price over 30 days, what a holder
+earned: 8.2%, and 8.0–8.4% in every 30-day window of the last 90 days. The pools differ for real: measured the same
+way, PlunderSwap, TorchWallet and Amazing Pool (56–315M ZIL each) earned 11–12.6%, Lithium Digital (12.3M, our size)
+8.3–10.2%, StakeShark 5.3–5.7%. Half of Zilliqa's rewards go to the fastest two-thirds of cosigners by stake, which
+may be where a small pool loses out; the cause was not established. The script is `scratchpad/zilwin.mjs` of that
+session (getPrice on each liquid pool at four windows).
