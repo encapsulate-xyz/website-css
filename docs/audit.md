@@ -182,11 +182,18 @@ TBT 670 ms, CLS 0.197, SI 6.5 s). Accessibility 100, Best Practices 96, SEO 100 
 - **The loop itself, 1.3 MB**, is the largest download on a phone. Listed twice in the report; a real Chrome load fetches
   it once (one 206 range response). Loaded as soon as the page is, on purpose (home.js sets `preload="auto"`).
 - **The phone's CLS 0.197** is the loop's block moving. Not reproduced here: a 412×823 load with Lighthouse's throttling
-  (150 ms, 1.6 Mbps, CPU ×4) measured 0.004, every shift the navbar's 3 px button. Run the report again before chasing it.
+  (150 ms, 1.6 Mbps, CPU ×4, a phone's user agent) measured 0.004, and so did Lighthouse 13.5 itself, run here twice —
+  every shift the navbar's 3 px button. It shows only on Google's own run (0.199 again after v407).
+- **The phone's LCP (9.8 s) is a simulation.** Observed, the hero's still paints at 1.45 s; Lighthouse's slow-4G model
+  counts the bytes of every request that started before it — Super's chunks and images, its Inter preloads, our scripts.
+  **Blocking the loop's 1.3 MB entirely changed nothing** (Lighthouse run here: LCP 9.8 s and the same score with and
+  without it), so the loop is not the cause and is not deferred. Fewer bytes is the lever, and most of what is left is
+  Super's.
+
+**After v407** (PageSpeed, the same evening): desktop **90** (LCP 1.6 s, TBT 150 ms, SI 1.1 s, CLS 0.002); phone **45**
+(LCP 9.8 s, TBT 270 ms, CLS 0.199). "Minify JavaScript" passes, and the still is "discoverable in the initial document".
 
 **Held back, because they change how the page looks or behaves:**
-- Start the loop's download after the page has loaded: the still is the same frame, but the motion would start later
-  (a moment on a fast line, seconds on a slow phone). The largest gain on a phone.
 - Load each page's CSS and script only on its own page ("unused CSS" 33 KiB, most of the scripts): every page's files are
   in the site head because Super runs no page script on an in-app navigation — taking them out brings the raw-Notion
   flashes back.
