@@ -523,23 +523,27 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   align-items: center;
   gap: 8px 14px;
   margin-top: 39px !important;   /* 18 + the rule's 3 + 18 */
+  --by-fs: clamp(22px, 2.4vw, 36px);
   font-family: var(--z-display) !important;
   font-weight: 500 !important;
-  font-size: clamp(22px, 2.4vw, 36px) !important;
+  font-size: var(--by-fs) !important;
   line-height: 1.25 !important;
   letter-spacing: -0.025em !important;
   color: #C9C9C4 !important;
   opacity: var(--z-by, 1);
   transition: opacity 0.2s ease;
 }
+/* sized with the words (2026-10-25, the user: "under management looks bigger than encapsulate"): the
+   wordmark's lowercase is 0.07125 of its width and Outfit's x-height 0.48em, so 6.74em wide sets its
+   letters at the words' x-height at every width; a fixed 160px set them 30% short at 1440 */
 #block-403e800a513881ffbe6ad9d9a860ae8c strong {
   display: block;
-  width: 160px;
-  height: 27px;   /* the wordmark's 5376.7 × 906.31 at 160 wide */
+  width: calc(var(--by-fs) * 6.74);
+  height: calc(var(--by-fs) * 1.136);   /* the wordmark's 5376.7 × 906.31 at that width */
   overflow: hidden;
   font-size: 0;
   color: transparent;
-  background: url("../svg/wordmark-reversed.svg") no-repeat 0 50% / 160px auto;
+  background: url("../svg/wordmark-reversed.svg") no-repeat 0 50% / 100% auto;
 }
 
 #block-403e800a513881b9b58bfd5ffdb1e732 {
