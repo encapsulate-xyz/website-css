@@ -51,6 +51,8 @@
       // the section's heading callout: where the first quote pins at a desktop width
       testimonials: b("3dae800a51388066b66ffeeb9bdb1550"),
       governance: heading(b("8596efbf83c94c59ac8278879b8be3bc")),
+      // the vote split: its kicker, so the line names what follows
+      "by-outcome": heading(b("404e800a5138816ab84adfcc33e9bb44")),
       services: b("3dbe800a5138800d8a72c99cdde9bc3f"),
       institutional: b("3dbe800a513880af9fe0c4bc175e1975"),
       // the blog band, "Deep dives." since 2026-10-24; #blog was its name before and still lands
@@ -67,8 +69,7 @@
     "/governance": {
       record: b("3dde800a513881b1b88dd0b73f874bfe"),
       pillars: [".enc-rec__head", b("a9ed1443a36c4f6da5ac9cbae489c031")],
-      votes: heading(b("3e0e800a5138810c96e4f79c865ec3bc")),
-      "by-outcome": "[data-enc-split]"
+      votes: heading(b("3e0e800a5138810c96e4f79c865ec3bc"))
     },
     "/blog": {
       posts: b("a148eb7f8ea94b95b7725809fef9e0dc")

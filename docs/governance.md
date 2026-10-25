@@ -95,29 +95,9 @@ test uses the opened gaps (`S.px`, `S.py`); each block owns half the gap around 
 - The canvas draws in the scroll event itself (the design's note: a frame callback can be held back) and skips a
   draw while the band is off the screen. Measured idle at 1440: no mutations of ours in 3s.
 
-## The vote split — the record, by outcome (2026-10-25, design *Vote Split Patterns*, G3 "Pastel ribbons")
+## A row that names no proposal
 
-Between the filter bar and the rows (governance.js 3b, governance.css "THE SPLIT"): the record as one trunk that
-parts into a pastel ribbon per outcome and straightens to the right edge, each figure inside its ribbon, its digits
-two-thirds as tall as the ribbon is thick and centred on it by the digits' measured ink (never sized up; made smaller
-only to stay inside the right edge), the total upright beside the trunk with a rule exactly as long as the trunk is
-thick. Colours: Yes `#DCEEC7`, No `#F8E8B3`, No with veto `#F7DCE7` (the veto dot's pink), Abstain `#D2E3F6`. It
-counts the rows the bar leaves, so a chain, a vote or a search redraws it; an outcome with none has no ribbon.
-**The 729 votes from before the record** are added only with no filter, exactly as the pager's "of 1,911" does: the
-user froze their split on 2026-10-25 in the record's proportions of that day — 474 Yes, 212 No, 43 Abstain, the 212
-being 30 No and 182 No with veto by the same proportions (`BEFORE` in governance.js) — so only votes added to the
-record move it, and unfiltered it reads 1,911 = 1,242 Yes · 78 No · 478 No with veto · 113 Abstain, the count band's
-total. The page counts its own rows, so no job writes the split. Under 760px the flow runs down the screen, the total in
-a row above it with its measure under it, and each figure under its ribbon at 30px (smaller, to 18, if the row would
-not fit; a long word wraps at 9ch). It pours in once (clip-path, 1.6s), the first time the box is on the screen — the
-observer watches the box, not the clipped body, which a target's own clip-path hides from it. Reduced motion, a hidden
-tab or no IntersectionObserver: whole at once. Idle: no mutations of its own. Words: the **"Vote split copy"** toggle
-after "Empty state copy" (`404e800a…8176…`, hidden by id in governance.css): `kicker · The record, by outcome`,
-`total · votes`; the outcome names are in governance.js (`OUTCOMES`), any other outcome by the rows' own word. The
-G3 drawing's kicker adds "· each figure two-thirds as tall as its ribbon", the design's description of itself, left out.
-Section name `#by-outcome`.
-
-**A row that names no proposal is not a vote to show** (`isVote`, the same day): one Sui row (no proposal, no date,
+**A row that names no proposal is not a vote to show** (`isVote`, 2026-10-25): one Sui row (no proposal, no date,
 Reference "1", NO, created 2025-05-29, `202e800a…8786`) drew as a blank line and made the page count 1,183 where the
 count band's job counts 1,182. It is hidden like a row with no chain, and left out of the bar's counts.
 

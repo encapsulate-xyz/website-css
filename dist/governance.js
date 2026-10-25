@@ -90,14 +90,12 @@
   function voteName(r) { return r.chain + (r.ref ? " " + r.ref : ""); }
   function quoted(why) { return "“" + why + (/[.!?]$/.test(why) ? "" : ".") + "”"; }
 
-  function countCopy() { return toggleCopy(/count band copy/i, COUNT); }
-  // a copy toggle's "name · words" lines over its fallback
-  function toggleCopy(re, base) {
+  function countCopy() {
     var out = {}, k;
-    for (k in base) out[k] = base[k];
+    for (k in COUNT) out[k] = COUNT[k];
     Array.prototype.some.call(document.querySelectorAll(".notion-toggle"), function (t) {
       var s = t.querySelector(".notion-toggle__summary");
-      if (!s || !re.test(s.textContent)) return false;
+      if (!s || !/count band copy/i.test(s.textContent)) return false;
       Array.prototype.forEach.call(t.querySelectorAll(".notion-toggle__content p, .notion-toggle__content .notion-text"), function (p) {
         var line = p.textContent.trim(), i = line.indexOf("·");
         if (i < 0) return;
@@ -918,39 +916,35 @@
       empty.el.hidden = true;
       bar.el.after(empty.el);
     }
-    (empty ? empty.el : bar.el).after(splitBox());
   }
 
-  /* ── 3b · the split (design Vote Split Patterns, G3 "Pastel ribbons", 2026-10-25) ──
-     Above the rows, the record as one trunk that parts into a pastel ribbon per outcome and straightens to
-     the right edge; each ribbon carries its own figure, its digits two-thirds as tall as the ribbon is thick
-     (never sized up: a thin ribbon has a small figure), the total set upright beside the trunk with a rule
-     exactly as long as the trunk is thick. It counts the rows the bar leaves, so a chain, a vote or a search
-     redraws it, and an outcome with no votes has no ribbon (No with veto joins whenever it is not zero).
-     With no filter it adds the 729 votes from before the record, which have no row: the user froze their
-     split on 2026-10-25 in the record's proportions of that day ("474 Yes, 212 No and 43 Abstain"; the 212
-     is 30 No and 182 No with veto, by the same proportions), so only votes added to the record move it and
-     its total is the count band's. Filtered, they are left out, as the pager's count leaves them out: they
-     have no chain on file and no words to search. Under 760px the flow runs down the screen, the total
-     above it and the figures under the ribbons at a size that reads. It pours in once, left to right (down,
-     on a phone), the first time it is on the screen; reduced motion, a hidden tab or no
-     IntersectionObserver show it whole. Words: the "Vote split copy" toggle (kicker, total); the outcomes
-     are named here, an outcome not named here by the rows' own word. */
-  var BEFORE = { "yes": 474, "no": 30, "no-with-veto": 182, "abstain": 43 };   // the 729, frozen 2026-10-25
-  var OUTCOMES = [["yes", "Yes", "#DCEEC7"], ["no", "No", "#F8E8B3"], ["no-with-veto", "No with veto", "#F7DCE7"],
-    ["abstain", "Abstain", "#D2E3F6"]];
-  var SPLIT = { kicker: "The record, by outcome", total: "votes" };   // the fallback if the toggle goes missing
+  /* ── 3b · the homepage's vote split (design Vote Split Patterns, G3 "Pastel ribbons", 2026-10-25) ──
+     In the homepage's governance section, between the lede and the six rows, where the pillar strip was: the
+     record as one trunk that parts into a pastel ribbon per outcome and straightens to the right edge; each
+     ribbon carries its own figure, its digits two-thirds as tall as the ribbon is thick (never sized up: a
+     thin ribbon has a small figure), the total set upright beside the trunk with a rule exactly as long as the
+     trunk is thick. It draws one line in Notion, "1,911 votes · 1,242 Yes · 78 No · 478 No with veto · 113
+     Abstain", which site-data's count job writes after every governance run with the count band's figure: the
+     record's rows plus the 729 votes from before it, frozen by outcome on 2026-10-25 (the user: "474 Yes, 212
+     No and 43 Abstain"; the 212 is 30 No and 182 No with veto, by the same proportions), so only votes added
+     to the record move it. The homepage carries only the past month's rows, so it cannot count the record
+     itself. The line is the source: hidden once drawn, its figures and words are the drawing's, and an outcome
+     the line leaves out has no ribbon (No with veto joins whenever it is not zero). The kicker above it is its
+     own paragraph. Under 760px the flow runs down the screen, the total above it and the figures under the
+     ribbons at a size that reads. It pours in once, left to right (down, on a phone), the first time it is on
+     the screen; reduced motion, a hidden tab or no IntersectionObserver show it whole. */
+  var LINE = "block-404e800a51388128ba49e43d1ce92374";   // the line, written by site-data's count job
+  var FILLS = { "yes": "#DCEEC7", "no": "#F8E8B3", "no with veto": "#F7DCE7", "abstain": "#D2E3F6" };
   var G3 = { W: 1146, T: 300, g: 40, x1: 300, x3: 620, ratio: 0.66, side: 94 };   // the design's 1240: 84 + 10 + 1146
   var DOWN = { g: 14, L: 220, fs: 30 };   // under 760px: the gap at the foot, the flow's length, the figures
   var INK_FB = { top: 0.17, bottom: 0.87 };   // Outfit 600's digits, as fractions of the size, until measured
   var SVGNS = "http://www.w3.org/2000/svg";
   var NARROW = window.matchMedia("(max-width: 759px)");
-  var SP = null;   // the built split: its nodes, what it counts, the digits' ink and what it last drew
+  var SP = null;   // the built split: its nodes, what it draws, the digits' ink and what it last drew
 
   function splitBox() {
     var box = el("div", "enc-split");
     box.setAttribute("data-enc-split", "");
-    var kick = el("span", "enc-split__kicker");
     var body = el("div", "enc-split__body");
     var tot = el("div", "enc-split__total");
     var tlab = el("div", "enc-split__tlab");
@@ -966,49 +960,45 @@
     flow.appendChild(svg);
     body.appendChild(tot);
     body.appendChild(flow);
-    box.appendChild(kick);
     box.appendChild(body);
-    SP = { box: box, kick: kick, body: body, tot: tot, tfig: tfig, tword: tword, rule: rule, flow: flow, svg: svg,
-      paths: {}, labels: {}, last: null, sig: "", ink: SP && SP.ink };
+    SP = { box: box, body: body, tot: tot, tfig: tfig, tword: tword, rule: rule, flow: flow, svg: svg,
+      paths: {}, labels: {}, text: null, last: null, sig: "", ink: SP && SP.ink };
     pourWhenSeen(SP);
     if (!SP.ink) inkWhenReady();
     return box;
   }
 
-  function outcome(k) {
-    for (var i = 0; i < OUTCOMES.length; i++) if (OUTCOMES[i][0] === k) return OUTCOMES[i];
-    return null;
+  // "1,911 votes · 1,242 Yes · …": the total and its word, then a band per outcome with votes
+  function parseSplit(text) {
+    var num = function (v) { return parseInt(v.replace(/[^\d]/g, ""), 10) || 0; }, re = /^([\d,]+)\s+(.+)$/;
+    var parts = text.split("\u00b7").map(function (p) { return p.trim(); }), head = re.exec(parts[0] || "");
+    var bands = parts.slice(1).map(function (p, i) {
+      var m = re.exec(p), w = m && m[2].trim();
+      return m && { k: w.toLowerCase(), n: num(m[1]), word: w, fill: FILLS[w.toLowerCase()] || TINTS[3 + i % 2] };
+    }).filter(function (b2) { return b2 && b2.n > 0; });
+    if (!head || !bands.length) return null;
+    return { bands: bands, total: num(head[1]), word: head[2].trim(), sum: bands.reduce(function (a2, b2) { return a2 + b2.n; }, 0) };
   }
 
-  // the outcomes of the rows that matched (all of them, not only the page the pager shows)
-  function drawSplit(matched, filtered) {
-    if (!SP) return;
-    var n = {}, words = {}, k;
-    matched.forEach(function (tr) {
-      var c = tr.querySelector('td[data-enc-cell="vote"]');
-      var v = c && c.getAttribute("data-vote");
-      if (!v) return;
-      n[v] = (n[v] || 0) + 1;
-      if (!words[v]) words[v] = c.textContent.trim();
-    });
-    if (!filtered) for (k in BEFORE) n[k] = (n[k] || 0) + BEFORE[k];
-    var order = OUTCOMES.map(function (o) { return o[0]; });
-    Object.keys(n).sort().forEach(function (v) { if (!outcome(v)) order.push(v); });
-    var bands = order.filter(function (v) { return n[v] > 0; }).map(function (v) {
-      var o = outcome(v);
-      return { k: v, n: n[v], word: o ? o[1] : words[v], fill: o ? o[2] : TINTS[3] };
-    });
-    SP.last = { bands: bands, total: bands.reduce(function (a, b) { return a + b.n; }, 0) };
+  function split() {
+    var src = document.getElementById(LINE);
+    if (!src) return;
+    var text = src.textContent.trim(), at = src.nextElementSibling;
+    if (!SP || SP.box !== at) {
+      if (at && at.hasAttribute("data-enc-split")) at.remove();
+      src.after(splitBox());
+    }
+    if (SP.text !== text) { SP.text = text; SP.last = parseSplit(text); SP.sig = ""; }
+    // a line it cannot read stays on the page as Notion wrote it
+    if (SP.last) src.setAttribute("data-enc-split-src", ""); else src.removeAttribute("data-enc-split-src");
     layoutSplit();
   }
 
   function layoutSplit() {
     var L = SP && SP.last;
     if (!L || !document.contains(SP.box)) return;
-    var copy = toggleCopy(/vote split copy/i, SPLIT);
-    setText(SP.kick, copy.kicker);
     setText(SP.tfig, fmt(L.total));
-    setText(SP.tword, copy.total);
+    setText(SP.tword, L.word);
     var down = NARROW.matches, width = SP.box.clientWidth, ink = SP.ink || INK_FB;
     if (!width) return;
     var sig = [down, width, ink.top, ink.bottom, L.total].concat(L.bands.map(function (b) { return b.k + ":" + b.n; })).join(",");
@@ -1024,7 +1014,7 @@
       H = T + (nb - 1) * g;
       trunk = (nb - 1) * g / 2;
       var yl = trunk, yr = 0;
-      L.bands.forEach(function (b) { var t = b.n * T / L.total; b.a = yl; b.b = yl + t; b.c = yr; b.d = yr + t; yl += t; yr += t + g; });
+      L.bands.forEach(function (b) { var t = b.n * T / L.sum; b.a = yl; b.b = yl + t; b.c = yr; b.d = yr + t; yl += t; yr += t + g; });
       path = function (b) {
         return "M0 " + f(b.a) + " L" + f(x1) + " " + f(b.a) + " C" + f(xc) + " " + f(b.a) + " " + f(xc) + " " + f(b.c) + " " + f(x3) + " " + f(b.c) +
           " L" + f(W) + " " + f(b.c) + " L" + f(W) + " " + f(b.d) + " L" + f(x3) + " " + f(b.d) +
@@ -1040,7 +1030,7 @@
       H = DOWN.L;
       trunk = (nb - 1) * gd / 2;
       var xl = trunk, xr = 0;
-      L.bands.forEach(function (b) { var t = b.n * T / L.total; b.a = xl; b.b = xl + t; b.c = xr; b.d = xr + t; xl += t; xr += t + gd; });
+      L.bands.forEach(function (b) { var t = b.n * T / L.sum; b.a = xl; b.b = xl + t; b.c = xr; b.d = xr + t; xl += t; xr += t + gd; });
       path = function (b) {
         return "M" + f(b.a) + " 0 L" + f(b.a) + " " + f(y1) + " C" + f(b.a) + " " + f(yc) + " " + f(b.c) + " " + f(yc) + " " + f(b.c) + " " + f(y3) +
           " L" + f(b.c) + " " + f(H) + " L" + f(b.d) + " " + f(H) + " L" + f(b.d) + " " + f(y3) +
@@ -1327,8 +1317,6 @@
     var matched = rows.filter(function (tr) { return !tr.hidden; });
     var filtered = state.chain || state.vote || needle;
     matched.forEach(function (tr, i) { if (i >= shown) tr.hidden = true; });
-    // the split counts all of what matched; it measures, which is cheap now the pager has hidden the rest
-    drawSplit(matched, filtered);
     var onShow = Math.min(shown, matched.length);
     // nothing matches: Notion's own line after the table says so, in place of the header and foot
     if (rows.length && !matched.length) {
@@ -1403,7 +1391,7 @@
     // all 1,181 rows showing that took 0.7s on the first build and 1s on the rebuild after Super redraws
     // the page, during which the band was bare ink (the user, 2026-10-22: "sometime i just see an inked
     // page with no disc on it"); after the pager, 0.1s
-    rows(); head(); controls(); pager(); apply(); count(); hideSources(); pillars();
+    rows(); head(); controls(); pager(); apply(); count(); hideSources(); pillars(); split();
     // the glyphs come from galleries that can render after the table, and after Super has stopped
     // mutating, so nothing would wake the observer again (home.js did the same for 37h)
     if (bare && tries++ < 12) { clearTimeout(t); t = setTimeout(build, 300); }

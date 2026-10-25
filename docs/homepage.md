@@ -314,5 +314,26 @@ four as its quadrant (Read. Weigh. Listen. Step back.). The lede names them in o
 back: the same four questions before every vote. The six below are the most recent." (it was "The pillars are not a
 separate claim from the record — every vote we have cast went through all four. The six below are the most recent.").
 The heading, the button and the six rows are as they were; the old blocks are in
-`backups/home-governance-pillars-2026-10-25.json`. The user is designing a vote split (Yes / No / Abstain over the
-whole record) for where the strip was.
+`backups/home-governance-pillars-2026-10-25.json`.
+
+**The vote split fills the strip's place** (2026-10-25, design *Vote Split Patterns*, G3 "Pastel ribbons"; built on
+/governance first by mistake — v396 — and moved here the same day, the user: "g3 isnt for /governance, it was the
+homepage governance section"). Two paragraphs in the lede's column, after the lede: the kicker "The record, by
+outcome" (`404e800a…816a…`, area `skick`) and the line `404e800a…8128…`, "1,911 votes · 1,242 Yes · 78 No · 478 No
+with veto · 113 Abstain" (area `split`), which **site-data's count job writes** after every governance run with the
+count band's figure. The homepage carries only the past month's rows, so it cannot count the record itself.
+governance.js (3b) draws the line and hides it: the record as one trunk that parts into a pastel ribbon per outcome
+and straightens to the right edge, each figure inside its ribbon, its digits two-thirds as tall as the ribbon is thick
+and centred on it by the digits' measured ink (never sized up; smaller only to stay inside the right edge), the total
+upright beside the trunk with a rule exactly as long as the trunk is thick. Colours by the line's words: Yes
+`#DCEEC7`, No `#F8E8B3`, No with veto `#F7DCE7` (the veto dot's pink), Abstain `#D2E3F6`. **The 729 votes from before
+the record are frozen by outcome** (the user chose "474 Yes, 212 No and 43 Abstain", the record's proportions of the
+day; the 212 is 30 No and 182 No with veto by the same proportions — site-data `BEFORE_SPLIT`), so only votes added to
+the record move it. An outcome the line leaves out has no ribbon (No with veto joins whenever it is not zero). Under
+760px the flow runs down the screen, the total in a row above it with its measure under it, each figure under its
+ribbon at 30px (smaller, to 18, if the row would not fit; a long word wraps at 9ch). It pours in once (clip-path, 1.6s)
+the first time the box is on the screen — the observer watches the box, not the clipped body, which a target's own
+clip-path hides from it. Reduced motion, a hidden tab or no IntersectionObserver: whole. A line it cannot read stays
+as Notion wrote it. The G3 drawing's kicker adds "· each figure two-thirds as tall as its ribbon", the design describing
+itself, left out. Section name `#by-outcome`. Between 760 and about 1100px the whole drawing scales down, so the thin
+ribbons' figures get small (78 No is about 6px at 800): the design's "never clamped up", raised with the user.
