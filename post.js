@@ -19,7 +19,7 @@
    navigation, so this builds off a MutationObserver like the other page scripts. */
 (function () {
   var PATH = /^\/blog\/.+/;
-  var VERSION = "10";
+  var VERSION = "11";
   var LD = "enc-ld-post";
 
   /* ── structured data (2026-09-27) ── for search engines: built from what the page shows, as a
@@ -103,6 +103,22 @@
   function original(src) {
     var m = /[?&]url=([^&]+)/.exec(src || "");
     return m ? decodeURIComponent(m[1]) : src;
+  }
+  /* the head's mark is drawn from Super's image service, as every glyph on the site is (CLAUDE.md, "Glyphs are drawn
+     from Super's image service"): a glyph is 600px and the service never enlarges, so this is the same 600px mark at a
+     sixteenth of the bytes (47KB PNG, 3KB AVIF), from the site's own host. 828 is the width Super's own card asks for. */
+  function markSrc(glyph) {
+    return /^https:\/\/assets\.super\.so\/[^?#]+\.(png|jpe?g|webp)(?:[?#]|$)/i.test(glyph || "")
+      ? "/_next/image?url=" + encodeURIComponent(glyph) + "&w=828&q=75" : glyph;
+  }
+  /* a file of the post's own row, as Super's page data names it ("imgSrc":"…", escaped inside the data's strings). A card
+     in a post's "More Blog Posts" view shows the row's Cover on most posts, but the page's own cover on four of the
+     oldest (an old picture, not the glyph), and only a property's file is named in the data. After an in-app
+     navigation the data is the first page's (see "Things that bite" in CLAUDE.md), so this answers no, and the mark
+     waits for the index as before. */
+  function rowFile(url) {
+    var key = 'imgSrc\\":\\"' + url;
+    return Array.prototype.some.call(document.scripts, function (s) { return !s.src && s.textContent.indexOf(key) >= 0; });
   }
 
   /* ── the facts the post page does not carry ───────────────────────────────────────────────
@@ -512,6 +528,16 @@
     tail.forEach(function (n) {
       if (!related && n.classList.contains("notion-collection")) related = n;
     });
+    /* the post's own card is in that collection, cover and all, so the mark goes in with the head instead of once the
+       index has answered: it is the page's largest paint, and waiting for the index (a 500KB page) held it 1.2s on
+       PageSpeed (docs/audit.md, "The first paint"). Only a file the page's data names as the row's own is taken
+       (rowFile); the index still gives the rest, and names the same file. */
+    var own = related && Array.prototype.filter.call(related.querySelectorAll(".notion-collection-card"), function (c) {
+      var a = c.querySelector("a[href]");
+      return a && a.getAttribute("href").replace(/\/$/, "") === location.pathname.replace(/\/$/, "");
+    })[0];
+    var glyph = own && read(own).glyph;
+    if (glyph && rowFile(glyph)) mark.setAttribute("src", markSrc(glyph));
 
     var wrap = el("div", "enc-po__wrap");
     var bodyWrap = el("div", "enc-po__body");
@@ -588,8 +614,9 @@
           first.setAttribute("data-enc-source", "");
         } else led.remove();
       }
-      if (info.me && info.me.glyph) mark.src = info.me.glyph;
-      else mark.remove();
+      if (info.me && info.me.glyph) {
+        if (mark.getAttribute("src") !== markSrc(info.me.glyph)) mark.setAttribute("src", markSrc(info.me.glyph));
+      } else if (!mark.getAttribute("src")) mark.remove();   // the page's own card gave none either
       // the post as an article, and its place under the blog: the title, the lede, the date and the
       // author the page shows; the date is read in local time so it stays the day it says
       var me = info.me || {}, here = location.pathname.replace(/\/$/, "");
