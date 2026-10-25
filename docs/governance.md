@@ -99,7 +99,8 @@ test uses the opened gaps (`S.px`, `S.py`); each block owns half the gap around 
 
 **A row that names no proposal is not a vote to show** (`isVote`, 2026-10-25): one Sui row (no proposal, no date,
 Reference "1", NO, created 2025-05-29, `202e800a…8786`) drew as a blank line and made the page count 1,183 where the
-count band's job counts 1,182. It is hidden like a row with no chain, and left out of the bar's counts.
+count band's job counts 1,182. It is hidden like a row with no chain, and left out of the bar's counts. The row itself went to Notion's trash the same day (the user said yes; backup
+`backups/governance-stray-row-and-home-heading-2026-10-25.json`); `isVote` stays for the next one.
 
 ## The governance page's last two sections (2026-09-19, design *Governance Record Wow*)
 

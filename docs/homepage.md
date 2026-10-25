@@ -316,6 +316,11 @@ separate claim from the record — every vote we have cast went through all four
 The heading, the button and the six rows are as they were; the old blocks are in
 `backups/home-governance-pillars-2026-10-25.json`.
 
+**The heading is "Every vote, on the record."** (2026-10-25, the user said yes): it was "Every vote, four pillars
+behind it.", which named pillars the section no longer shows; the new one pairs with the split's kicker "The record,
+by outcome". Old text in `backups/governance-stray-row-and-home-heading-2026-10-25.json`; the block (and `#governance`)
+is the same.
+
 **The vote split fills the strip's place** (2026-10-25, design *Vote Split Patterns*, G3 "Pastel ribbons"; built on
 /governance first by mistake — v396 — and moved here the same day, the user: "g3 isnt for /governance, it was the
 homepage governance section"). Two paragraphs in the lede's column, after the lede: the kicker "The record, by
@@ -324,7 +329,7 @@ with veto · 113 Abstain" (area `split`), which **site-data's count job writes**
 count band's figure. The homepage carries only the past month's rows, so it cannot count the record itself.
 governance.js (3b) draws the line and hides it: the record as one trunk that parts into a pastel ribbon per outcome
 and straightens to the right edge, each figure inside its ribbon, its digits two-thirds as tall as the ribbon is thick
-and centred on it by the digits' measured ink (never sized up; smaller only to stay inside the right edge), the total
+and centred on it by the digits' measured ink (never under 11px, its size at 1440; smaller only to stay inside the right edge), the total
 upright beside the trunk with a rule exactly as long as the trunk is thick. Colours by the line's words: Yes
 `#DCEEC7`, No `#F8E8B3`, No with veto `#F7DCE7` (the veto dot's pink), Abstain `#D2E3F6`. **The 729 votes from before
 the record are frozen by outcome** (the user chose "474 Yes, 212 No and 43 Abstain", the record's proportions of the
@@ -335,5 +340,6 @@ ribbon at 30px (smaller, to 18, if the row would not fit; a long word wraps at 9
 the first time the box is on the screen — the observer watches the box, not the clipped body, which a target's own
 clip-path hides from it. Reduced motion, a hidden tab or no IntersectionObserver: whole. A line it cannot read stays
 as Notion wrote it. The G3 drawing's kicker adds "· each figure two-thirds as tall as its ribbon", the design describing
-itself, left out. Section name `#by-outcome`. Between 760 and about 1100px the whole drawing scales down, so the thin
-ribbons' figures get small (78 No is about 6px at 800): the design's "never clamped up", raised with the user.
+itself, left out. Section name `#by-outcome`. **The figures have an 11px floor** (the user, the same day): the drawing scales
+down between 760 and 1100px, and with the design's "never clamped up" 78 No came out at about 6px at 800; 11px is
+its size at 1440, so a desktop is unchanged, and a floored figure overhangs its thin ribbon by a pixel or two.

@@ -21,7 +21,7 @@
   var BAND = "block-3dde800a513881b1b88dd0b73f874bfe";
   var TABLE = "block-c458e5dd671d4ecb8fc07a15915e4f42";
   var TINTS = ["#DCEEC7", "#F8E8B3", "#D2E3F6", "#F8DDC6", "#F7DCE7"];
-  var HEAD = "block-a9ed1443a36c4f6da5ac9cbae489c031";   // "Every vote, four pillars behind it."
+  var HEAD = "block-a9ed1443a36c4f6da5ac9cbae489c031";   // "Four questions before every vote."
   var ASK = "block-3dde800a513881d6815ed26488091143";    // "Ask about a proposal"
 
   function el(tag, cls, text) {
@@ -921,8 +921,9 @@
   /* ── 3b · the homepage's vote split (design Vote Split Patterns, G3 "Pastel ribbons", 2026-10-25) ──
      In the homepage's governance section, between the lede and the six rows, where the pillar strip was: the
      record as one trunk that parts into a pastel ribbon per outcome and straightens to the right edge; each
-     ribbon carries its own figure, its digits two-thirds as tall as the ribbon is thick (never sized up: a
-     thin ribbon has a small figure), the total set upright beside the trunk with a rule exactly as long as the
+     ribbon carries its own figure, its digits two-thirds as tall as the ribbon is thick, never under 11px (the
+     design never sized one up; between 760 and 1100px that left 78 No at 6px, and the user asked for the floor,
+     2026-10-25 — 11px is the size it has at 1440, so a desktop is unchanged), the total set upright beside the trunk with a rule exactly as long as the
      trunk is thick. It draws one line in Notion, "1,911 votes · 1,242 Yes · 78 No · 478 No with veto · 113
      Abstain", which site-data's count job writes after every governance run with the count band's figure: the
      record's rows plus the 729 votes from before it, frozen by outcome on 2026-10-25 (the user: "474 Yes, 212
@@ -937,6 +938,7 @@
   var FILLS = { "yes": "#DCEEC7", "no": "#F8E8B3", "no with veto": "#F7DCE7", "abstain": "#D2E3F6" };
   var G3 = { W: 1146, T: 300, g: 40, x1: 300, x3: 620, ratio: 0.66, side: 94 };   // the design's 1240: 84 + 10 + 1146
   var DOWN = { g: 14, L: 220, fs: 30 };   // under 760px: the gap at the foot, the flow's length, the figures
+  var MIN_FS = 11;   // the smallest figure beside a ribbon, px
   var INK_FB = { top: 0.17, bottom: 0.87 };   // Outfit 600's digits, as fractions of the size, until measured
   var SVGNS = "http://www.w3.org/2000/svg";
   var NARROW = window.matchMedia("(max-width: 759px)");
@@ -1074,11 +1076,11 @@
     else under(L.bands, W, H);
   }
 
-  // beside its ribbon: the figure's digits centred on the ribbon, two-thirds as tall as it is thick, the word
-  // on the digits' middle; made smaller only if it would run past the right edge
+  // beside its ribbon: the figure's digits centred on the ribbon, two-thirds as tall as it is thick and never
+  // under MIN_FS, the word on the digits' middle; made smaller only if it would run past the right edge
   function across(b, lab, x, W, ink) {
     var th = b.d - b.c, cap = ink.bottom - ink.top, mid = (b.c + b.d) / 2;
-    var fs = th > 0 ? G3.ratio * th / cap : 0, fig = lab.firstChild, word = lab.lastChild;
+    var fs = th > 0 ? Math.max(MIN_FS, G3.ratio * th / cap) : 0, fig = lab.firstChild, word = lab.lastChild;
     lab.className = "enc-split__label";
     setStyle(lab, { left: x.toFixed(2) + "px", gap: (th > 40 ? 12 : 8) + "px", opacity: th > 0.5 ? "1" : "0", width: "" });
     word.style.fontSize = (th > 40 ? 11 : 8.5) + "px";
