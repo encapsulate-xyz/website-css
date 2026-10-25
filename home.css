@@ -2903,6 +2903,14 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 { grid-row: 5 !important; }
 }
 
+/* THE INSTITUTIONAL FORM — HIDDEN (2026-10-25, the user: "hide the form on homepage, keep its css
+   for now but hide the form"). The form (block-3dbe800a…1975, the dial: home.js, home-dial.css) stays
+   in Notion and its styles stay; every link to it goes to /contact#institutional, the same form in
+   the booking band's fold (anchors.js, GONE). */
+#block-3dbe800a513880af9fe0c4bc175e1975 {
+  display: none !important;
+}
+
 /*********************************************/
 /* 16. CONTACT — 48c "GROUND · HALFTONE" */
 /*********************************************/

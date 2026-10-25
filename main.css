@@ -1824,6 +1824,9 @@ h4.notion-heading {
   width: auto !important;
   margin: 0 !important;
   padding: 0 !important;
+  /* Super clips a callout's content, and it is exactly the link's size: the lift under every
+     button was cut off flat (the user, 2026-10-25: "why buttons looks like cropped") */
+  overflow: visible !important;
 }
 
 .notion-callout:has(> .notion-callout__content > span.notion-semantic-string > .notion-link) > .notion-callout__content > .notion-semantic-string {

@@ -12,6 +12,11 @@ what every task needs and the index of these files.
 `--btn-1-fill/ring/fill-hover/ring-hover/fill-press/ring-press/highlight/highlight-hover/press` —
 and every primary hover on the site reads them, including the ones page CSS draws (the contact
 band's two submits, the guide card, the post foot) and the cal.com embed's `cal-brand-emphasis`.
+**The label box does not clip** (2026-10-25, the user: "why buttons looks like cropped in the service section?"): the
+link draws the fill, the ring and the lift, and Super's `.notion-callout__content` around it is exactly its size with
+`overflow: hidden`, so the 1px-down, 2px-blur lift was cut flat along the bottom of every button on the site. §07 sets it
+`overflow: visible`.
+
 **The old darker pair `#8CBF56` / `#6F9E41` is retired**; if it turns up again outside `backups/`,
 it is a mistake. Selection states that happen to be green (the institutional toggle, the guide
 chain pills, the contact Copy button's "Copied") keep the `.78` highlight — they are not hovers.

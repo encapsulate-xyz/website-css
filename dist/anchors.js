@@ -28,12 +28,25 @@
    MOVED: an old page that is now a section. A Super redirect names a page and cannot carry a
    #fragment, so /team is a page again (the old Team page) and is forwarded from here — this file
    is in the site head, served in the HTML, where a page's own head script is only inserted once
-   the app has started; head/team.html keeps a meta refresh for a reader without JavaScript. */
+   the app has started; head/team.html keeps a meta refresh for a reader without JavaScript.
+   GONE: a section taken off its page, its links sent where it lives now. The homepage's
+   institutional form was hidden on 2026-10-25 (the user: "hide the form on homepage … repoint it
+   to the form on contact us page"), so /#institutional and /#block-…1975 go to /contact#institutional.
+
+   OPEN: a name that lands on a closed Notion toggle opens it (/contact#institutional is the fold at
+   the booking band's foot, which holds the form) — pressed on each try until it is seen open, so
+   a press made before Super's app answers is made again, and never once it has opened. */
 (function () {
   var GESTURE = ["wheel", "touchstart", "keydown"];
   var WAITS = [0, 300, 400, 500, 800, 1000, 1500];   // ms between tries: 4.5s in all
   var GAP = 40;   // px left above a heading in running text
   var MOVED = { "/team": "/#team" };
+  var GONE = {
+    "/": {
+      institutional: "/contact#institutional",
+      "block-3dbe800a513880af9fe0c4bc175e1975": "/contact#institutional"
+    }
+  };
 
   function b(id) { return "#block-" + id; }
   function heading(sel) { return { sel: sel, gap: GAP }; }
@@ -54,7 +67,7 @@
       // the vote split: its kicker, so the line names what follows
       "by-outcome": heading(b("404e800a5138816ab84adfcc33e9bb44")),
       services: b("3dbe800a5138800d8a72c99cdde9bc3f"),
-      institutional: b("3dbe800a513880af9fe0c4bc175e1975"),
+      // institutional: hidden on 2026-10-25, sent to /contact (GONE)
       // the blog band, "Deep dives." since 2026-10-24; #blog was its name before and still lands
       "deep-dives": b("3dbe800a51388024a26be29fcf678e86"),
       blog: b("3dbe800a51388024a26be29fcf678e86"),
@@ -107,6 +120,8 @@
     },
     "/contact": {
       call: ".enc-ct__call",
+      // the fold "Staking a treasury or a fund?", opened on arrival: the institutional form
+      institutional: { sel: b("3dee800a513881b58eaedff6e0135806"), open: true },
       elsewhere: ".enc-ct__where",
       write: ".enc-ct__write"
     }
@@ -139,7 +154,7 @@
       return function () {
         for (var i = 0; i < at.length; i++) {
           var el = document.querySelector(at[i]);
-          if (shown(el)) return { el: el, gap: gap };
+          if (shown(el)) return { el: el, gap: gap, open: !!spec.open };
         }
         return null;
       };
@@ -152,6 +167,11 @@
   }
 
   function pathOf(u) { return u.pathname.replace(/\/+$/, "") || "/"; }
+  function nameOf(hash) {
+    var h = hash.slice(1).split(/[?&]/)[0];
+    try { h = decodeURIComponent(h); } catch (e) { /* keep it as it is */ }
+    return h.toLowerCase();
+  }
 
   var at = "", run = 0;
   function land(hash) {
@@ -163,9 +183,11 @@
       var to = MOVED[path].split("#");
       return location.replace(to[0] + location.search + "#" + to[1]);
     }
+    var gone = GONE[path] && GONE[path][nameOf(hash)];
+    if (gone) return location.replace(gone);
     var find = wanted(path, hash);
     if (!find) return;
-    var me = ++run, tries = 0, moved = false;
+    var me = ++run, tries = 0, moved = false, opened = false;
     function gesture() { moved = true; }
     GESTURE.forEach(function (t) { window.addEventListener(t, gesture, { passive: true, capture: true }); });
     function stop() { GESTURE.forEach(function (t) { window.removeEventListener(t, gesture, { capture: true }); }); }
@@ -173,6 +195,10 @@
       if (moved || me !== run) return stop();
       var t = find();
       if (t && shown(t.el)) {
+        if (t.open && !opened) {
+          if (!t.el.classList.contains("closed")) opened = true;
+          else { var sum = t.el.querySelector(".notion-toggle__summary"); if (sum) sum.click(); }
+        }
         var top = t.el.getBoundingClientRect().top - t.gap;
         if (Math.abs(top) > 2) window.scrollTo({ top: top + window.scrollY, behavior: "instant" });
       }

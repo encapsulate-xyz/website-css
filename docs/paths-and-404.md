@@ -111,7 +111,7 @@ named by pattern, so they need only the check that one lands (`notion/new-row-ch
 
 | Page | Names |
 |---|---|
-| / | `stats` (its four screens: `staked`, `delegators`, `mainnets`, `uptime`), `audience`, `why-stake`, `networks`, `testimonials`, `governance` (its heading), `by-outcome` (the vote split's kicker, "The record, by outcome"), `services`, `institutional`, `deep-dives` (the blog band; `blog` before 2026-10-24, still kept), `team`, `contact`; /team forwards to /#team |
+| / | `stats` (its four screens: `staked`, `delegators`, `mainnets`, `uptime`), `audience`, `why-stake`, `networks`, `testimonials`, `governance` (its heading), `by-outcome` (the vote split's kicker, "The record, by outcome"), `services`, `institutional` (the form, hidden since 2026-10-25: it and `#block-…1975` forward to /contact#institutional), `deep-dives` (the blog band; `blog` before 2026-10-24, still kept), `team`, `contact`; /team forwards to /#team |
 | /networks | `count`, `list`, `chain-teams` |
 | /governance | `record`, `pillars`, `votes` (the heading "Every vote, on chain.") |
 | /blog | `posts` |
@@ -120,7 +120,7 @@ named by pattern, so they need only the check that one lands (`notion/new-row-ch
 | /investments | `portfolio`, `questions` |
 | /brand | `logo`, `colours` (and `colors`), `type`, `usage` (clear space and minimums; `clear-space`, its first name, still lands) |
 | /security | `operations`, `access`, `keys`, `failover`, `upgrades`, `slashing` |
-| /contact | `call`, `elsewhere`, `write` |
+| /contact | `call`, `elsewhere`, `write`, `institutional` (the fold "Staking a treasury or a fund?", opened on arrival: the institutional form; 2026-10-25) |
 | /privacy-policy, /terms-of-use | each clause by its heading: `who-we-are`, `cookies`, `information-not-advice`… |
 | /guides/&lt;guide&gt; | `step-1` … `step-N`, `done` (the close band) |
 | /networks/&lt;chain&gt; | `validators` (where the chain has the band), `terms`, `estimate`, `what-we-run`, `common-questions` — chain.js sets them as ids and lands them itself |

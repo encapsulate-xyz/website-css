@@ -43,6 +43,9 @@ opens on every page, and main.css is the only stylesheet that is on every page.
 
 ## The contact band's fold holds the dial (2026-09-18)
 
+**It is the site's only institutional form since 2026-10-25**: the homepage's is hidden and every link to it goes to
+`/contact#institutional`, a section name that lands on the fold and opens it (anchors.js, `open: true`; `docs/homepage.md`).
+
 The toggle at the foot of /contact-us ("Staking a treasury or a fund?") is a Notion **form block**,
 and that form is the institutional one — so `home.js` claims it as the Institutional Dial exactly as
 it does on the homepage. Consequences, all of them learned the hard way:

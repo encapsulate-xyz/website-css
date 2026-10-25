@@ -51,7 +51,7 @@
     "/contact": ["The fastest route to us",
       "Book a call, or write.",
       "A founder answers within a working day."],
-    "/#block-3dbe800a513880af9fe0c4bc175e1975": ["Terms for $200k and above",
+    "/contact#institutional": ["Terms for $200k and above",
       "For treasuries, funds and foundations delegating at size.",
       "Terms, reporting and a named contact, agreed before the first delegation."],
     "/services#block-3e4e800a513881cf8a82c41c2f9f8c78": ["Gas price, stake map, explorer",
@@ -134,7 +134,7 @@
     "/investments": "investments", "/contact": "contact"
   };
   var PANELS = {
-    "/#block-3dbe800a513880af9fe0c4bc175e1975": "institutional",
+    "/contact#institutional": "institutional",
     "/services#block-3e4e800a513881cf8a82c41c2f9f8c78": "dashboards",
     "/services#block-3e4e800a513881719a14e42a6532c579": "playbooks",
     "/services#block-3e4e800a513881598024c57e15cbd370": "bots",
@@ -1536,8 +1536,9 @@
       var key = (t.getAttribute("aria-controls") || "").replace(/^.*-content-/, "");
       var links = key ? linksOf(text, key) : null;
       if (!links || !links.length) return;
-      /* a section link is not its page: "Institutional staking" is /#block-… on the homepage,
-         which marked Networks as the page you are on when you were on the homepage */
+      /* a section link is not its page: "Institutional staking" was /#block-… on the homepage
+         (/contact#institutional since 2026-10-25), which marked Networks as the page you are on
+         when you were on the homepage */
       groups[keyOf(t)] = links.filter(function (h) {
         return h.charAt(0) === "/" && h.indexOf("#") < 0;
       }).map(path);

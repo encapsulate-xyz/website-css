@@ -250,7 +250,17 @@ cover is first served as Notion's signed file URL** (it expires); a second refre
 471px wide), flat it takes the original. **Flat, the screen keeps the panel's 860:543** where the design re-lays each
 panel natively at the column's width × 480; on a phone the screen is short and its text small.
 
-**Three paper sections run in a row now**: governance, Services and the institutional form, with no ink between them.
+**The institutional form is hidden on the homepage** (2026-10-25, the user: "hide the form on homepage, keep its css for now
+but hide the form and if we were pointing to that form from anywhere else repoint it to the form on contact us page").
+home.css hides block-3dbe…1975; the block stays in Notion and its styles (home-dial.css, home.js's dial) stay. Its links
+now go to `/contact#institutional`, the same form in the booking band's fold, which anchors.js opens on arrival: Super's
+navbar entry (Networks → Institutional staking) and footer link ("Networks: Institutional staking"), the homepage
+contact band's "Institutional intake" button (Notion, `backups/institutional-intake-button-2026-10-25.json`), and
+navbar.js's copy and panel for it, re-keyed; an old `/#institutional` or `/#block-…1975` is forwarded (anchors.js,
+GONE). Found by sweeping every sitemap page for the id and the name: those were the only links. Services now meets the
+blog band directly, which keeps its own space above.
+
+**Governance and Services run on paper one after the other**, with no ink between them.
 
 **Snapping — lessons.** Use native `scrollTo({behavior:"smooth"})` (scripted animation was choppy);
 cache stops, invalidate on resize/mutation; trackpad momentum lasts seconds — a new gesture is a
