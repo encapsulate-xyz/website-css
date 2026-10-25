@@ -291,9 +291,10 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
 ### Site Head notes (audited 2026-09-14)
 
 - **minima.min.css is required** — Super does not load its theme itself on this site.
-- Fonts rendered: Inter (Super, /fonts), Outfit, Hanken Grotesk, JetBrains Mono, Architects
-  Daughter. Manrope went with the old slide-out menu (2026-09-22). Arial Black, Georgia, Verdana,
-  Monaco are system fonts.
+- Fonts rendered: Outfit, Hanken Grotesk, JetBrains Mono, Architects Daughter. Manrope went with the old slide-out
+  menu (2026-09-22). Arial Black, Georgia, Verdana, Monaco are system fonts. **Inter is not in the design**: Super's
+  font variables are Hanken Grotesk (main.css §02), and Super's theme font — which it preloads on every page but
+  nothing draws — is Geist, the smallest of its 68 (69 KB against Inter's 205; `docs/audit.md`, "Super's theme font").
 - Headings use `sans-serif` where "Archivo" was once asked for but never loaded — do not add an
   Archivo link.
 - `@import` is stripped from Super's Custom CSS box; use `<link>` in a Head.

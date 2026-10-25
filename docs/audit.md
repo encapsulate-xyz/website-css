@@ -175,8 +175,8 @@ TBT 670 ms, CLS 0.197, SI 6.5 s). Accessibility 100, Best Practices 96, SEO 100 
   `--primary-font` and `--secondary-font` to Hanken Grotesk; a sweep of all 114 pages at 1440 (and 8 at 390) finds no
   visible Inter left. What changed on screen: the homepage's three stat captions and one paragraph, the /blog card links,
   one post's note, the guides' link previews, the /security rail's lines (now one line each, the rail 19 px shorter) and
-  the /governance/votes table. **Super still preloads Inter 400 and 600 in every page's HTML** (its Typography setting);
-  only the 500 is gone.
+  the /governance/votes table. Super still preloaded Inter 400 and 600 in every page's HTML (205 KB), from its theme's
+  Typography setting — **since 2026-10-25 that setting is Geist** (below, "Super's theme font").
 - **Super's own** — its Next.js chunks ("unused JavaScript" 281 KiB, "legacy JavaScript"), its fonts' and logo's 1-day
   cache, its stylesheets — cannot be changed from here.
 - **The loop itself, 1.3 MB**, is the largest download on a phone. Listed twice in the report; a real Chrome load fetches
@@ -185,7 +185,7 @@ TBT 670 ms, CLS 0.197, SI 6.5 s). Accessibility 100, Best Practices 96, SEO 100 
   (150 ms, 1.6 Mbps, CPU ×4, a phone's user agent) measured 0.004, and so did Lighthouse 13.5 itself, run here twice —
   every shift the navbar's 3 px button. It shows only on Google's own run (0.199 again after v407).
 - **The phone's LCP (9.8 s) is a simulation.** Observed, the hero's still paints at 1.45 s; Lighthouse's slow-4G model
-  counts the bytes of every request that started before it — Super's chunks and images, its Inter preloads, our scripts.
+  counts the bytes of every request that started before it — Super's chunks and images, its font preloads, our scripts.
   **Blocking the loop's 1.3 MB entirely changed nothing** (Lighthouse run here: LCP 9.8 s and the same score with and
   without it), so the loop is not the cause and is not deferred. Fewer bytes is the lever, and most of what is left is
   Super's.
@@ -201,5 +201,18 @@ TBT 670 ms, CLS 0.197, SI 6.5 s). Accessibility 100, Best Practices 96, SEO 100 
   read layout while Super is still drawing; moving the reads to the next frame risks a frame of the wrong bar colour over
   an ink cover, which was reported before.
 - The 10 "non-composited" animations: making them composited means animating other properties.
-- Removing Super's two Inter preloads means changing Super's Typography setting — Super's theme, which this site keeps out
-  of the design (the design is the repo's).
+
+**Super's theme font is Geist (2026-10-25, the user: "do it but verify nothing changes because of it visibly").** Super
+preloads two files of its theme's font on every page — regular and 600, from `assets-v2.super.so/global/fonts/` — and
+declares its @font-face rules; there is no "none" among its 68 fonts. The site's theme ("Funky", applied to this site
+only) had Inter on both Primary and Secondary: 98 + 107 KB. Geist's two files are Latin only, 33 + 35 KB, so every first
+visit fetches 136 KB less. **Nothing draws it**: Super's font variables are main.css §02's Hanken Grotesk, and no
+stylesheet the site loads names Geist. Checked with a capture of all 114 pages at 1440 (and 16 at 390) before and after —
+every visible text run's font, size, weight, spacing and position, every element's font family, the fonts drawn —
+and screenshots of 16 pages at 1440 and 390, then the same 16 loaded at one moment from the HTML Super served before and
+after: 121 of 128 screenshots identical, the 7 others the homepage's live figures in the older HTML and one antialiased
+row of a glyph disc. Of ~216,000 elements none names Geist or Inter; the fonts drawn are Hanken Grotesk, Outfit and
+JetBrains Mono, as before. Where: Super → Design → Edit this theme → Typography → Primary Font / Secondary Font (each
+choice is saved with "Save changes"); then refresh every page. A missing address Super has answered before keeps its
+cached HTML (with the old font lines) for a while; a new one gets the new. **All 21 of our scripts now carry a valid
+source map** (Lighthouse: each listed with its map, no error); the one large script without a map is Super's own chunk.
