@@ -919,6 +919,12 @@
   align-items: center;
   flex-wrap: wrap;
 }
+/* a button and a link side by side share a middle: both carry align-self: flex-start (for a column), and the
+   link's -6px margins then lifted it 6px above the button (the user, 2026-10-25: "not aligned with the button") */
+.enc-svc__band .enc-svc__daskrow > a,
+.enc-svc__band .enc-svc__askrow > a {
+  align-self: center;
+}
 
 /* ── the ask: your chain beside the set ─────────────────────────────────────────────────── */
 .enc-svc__askhead {
