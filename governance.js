@@ -90,12 +90,14 @@
   function voteName(r) { return r.chain + (r.ref ? " " + r.ref : ""); }
   function quoted(why) { return "“" + why + (/[.!?]$/.test(why) ? "" : ".") + "”"; }
 
-  function countCopy() {
+  function countCopy() { return toggleCopy(/count band copy/i, COUNT); }
+  // a copy toggle's "name · words" lines over its fallback
+  function toggleCopy(re, base) {
     var out = {}, k;
-    for (k in COUNT) out[k] = COUNT[k];
+    for (k in base) out[k] = base[k];
     Array.prototype.some.call(document.querySelectorAll(".notion-toggle"), function (t) {
       var s = t.querySelector(".notion-toggle__summary");
-      if (!s || !/count band copy/i.test(s.textContent)) return false;
+      if (!s || !re.test(s.textContent)) return false;
       Array.prototype.forEach.call(t.querySelectorAll(".notion-toggle__content p, .notion-toggle__content .notion-text"), function (p) {
         var line = p.textContent.trim(), i = line.indexOf("·");
         if (i < 0) return;
@@ -841,6 +843,13 @@
     var box = document.getElementById(TABLE);
     return box ? Array.prototype.slice.call(box.querySelectorAll("tbody tr")) : [];
   }
+  // a vote to show: a row that was built (it has a chain) and names its proposal — the count band's
+  // job counts the same rows (a Sui row with no proposal, no date and Reference "1" drew as a blank line)
+  function isVote(tr) {
+    if (!tr.hasAttribute("data-enc-row")) return false;
+    var t = tr.querySelector("td.title .notion-property__title");
+    return !!(t && t.textContent.trim());
+  }
   function chainOf(tr) {
     var c = tr.querySelector(".enc-rec__chain");
     return c ? c.textContent.trim() : "";
@@ -863,7 +872,7 @@
   function controls() {
     var box = document.getElementById(TABLE);
     if (!box || box.querySelector(".enc-rec__bar")) return;
-    var rows = rowsOf();
+    var rows = rowsOf().filter(isVote);
     if (!rows.length) return;
 
     var chains = {}, votes = {};
@@ -909,7 +918,261 @@
       empty.el.hidden = true;
       bar.el.after(empty.el);
     }
+    (empty ? empty.el : bar.el).after(splitBox());
   }
+
+  /* ── 3b · the split (design Vote Split Patterns, G3 "Pastel ribbons", 2026-10-25) ──
+     Above the rows, the record as one trunk that parts into a pastel ribbon per outcome and straightens to
+     the right edge; each ribbon carries its own figure, its digits two-thirds as tall as the ribbon is thick
+     (never sized up: a thin ribbon has a small figure), the total set upright beside the trunk with a rule
+     exactly as long as the trunk is thick. It counts the rows the bar leaves, so a chain, a vote or a search
+     redraws it, and an outcome with no votes has no ribbon (No with veto joins whenever it is not zero).
+     With no filter it adds the 729 votes from before the record, which have no row: the user froze their
+     split on 2026-10-25 in the record's proportions of that day ("474 Yes, 212 No and 43 Abstain"; the 212
+     is 30 No and 182 No with veto, by the same proportions), so only votes added to the record move it and
+     its total is the count band's. Filtered, they are left out, as the pager's count leaves them out: they
+     have no chain on file and no words to search. Under 760px the flow runs down the screen, the total
+     above it and the figures under the ribbons at a size that reads. It pours in once, left to right (down,
+     on a phone), the first time it is on the screen; reduced motion, a hidden tab or no
+     IntersectionObserver show it whole. Words: the "Vote split copy" toggle (kicker, total); the outcomes
+     are named here, an outcome not named here by the rows' own word. */
+  var BEFORE = { "yes": 474, "no": 30, "no-with-veto": 182, "abstain": 43 };   // the 729, frozen 2026-10-25
+  var OUTCOMES = [["yes", "Yes", "#DCEEC7"], ["no", "No", "#F8E8B3"], ["no-with-veto", "No with veto", "#F7DCE7"],
+    ["abstain", "Abstain", "#D2E3F6"]];
+  var SPLIT = { kicker: "The record, by outcome", total: "votes" };   // the fallback if the toggle goes missing
+  var G3 = { W: 1146, T: 300, g: 40, x1: 300, x3: 620, ratio: 0.66, side: 94 };   // the design's 1240: 84 + 10 + 1146
+  var DOWN = { g: 14, L: 220, fs: 30 };   // under 760px: the gap at the foot, the flow's length, the figures
+  var INK_FB = { top: 0.17, bottom: 0.87 };   // Outfit 600's digits, as fractions of the size, until measured
+  var SVGNS = "http://www.w3.org/2000/svg";
+  var NARROW = window.matchMedia("(max-width: 759px)");
+  var SP = null;   // the built split: its nodes, what it counts, the digits' ink and what it last drew
+
+  function splitBox() {
+    var box = el("div", "enc-split");
+    box.setAttribute("data-enc-split", "");
+    var kick = el("span", "enc-split__kicker");
+    var body = el("div", "enc-split__body");
+    var tot = el("div", "enc-split__total");
+    var tlab = el("div", "enc-split__tlab");
+    var tfig = el("span", "enc-split__tfig"), tword = el("span", "enc-split__tword");
+    tlab.appendChild(tfig);
+    tlab.appendChild(tword);
+    var rule = el("span", "enc-split__rule");
+    tot.appendChild(tlab);
+    tot.appendChild(rule);
+    var flow = el("div", "enc-split__flow");
+    var svg = document.createElementNS(SVGNS, "svg");
+    svg.setAttribute("aria-hidden", "true");
+    flow.appendChild(svg);
+    body.appendChild(tot);
+    body.appendChild(flow);
+    box.appendChild(kick);
+    box.appendChild(body);
+    SP = { box: box, kick: kick, body: body, tot: tot, tfig: tfig, tword: tword, rule: rule, flow: flow, svg: svg,
+      paths: {}, labels: {}, last: null, sig: "", ink: SP && SP.ink };
+    pourWhenSeen(SP);
+    if (!SP.ink) inkWhenReady();
+    return box;
+  }
+
+  function outcome(k) {
+    for (var i = 0; i < OUTCOMES.length; i++) if (OUTCOMES[i][0] === k) return OUTCOMES[i];
+    return null;
+  }
+
+  // the outcomes of the rows that matched (all of them, not only the page the pager shows)
+  function drawSplit(matched, filtered) {
+    if (!SP) return;
+    var n = {}, words = {}, k;
+    matched.forEach(function (tr) {
+      var c = tr.querySelector('td[data-enc-cell="vote"]');
+      var v = c && c.getAttribute("data-vote");
+      if (!v) return;
+      n[v] = (n[v] || 0) + 1;
+      if (!words[v]) words[v] = c.textContent.trim();
+    });
+    if (!filtered) for (k in BEFORE) n[k] = (n[k] || 0) + BEFORE[k];
+    var order = OUTCOMES.map(function (o) { return o[0]; });
+    Object.keys(n).sort().forEach(function (v) { if (!outcome(v)) order.push(v); });
+    var bands = order.filter(function (v) { return n[v] > 0; }).map(function (v) {
+      var o = outcome(v);
+      return { k: v, n: n[v], word: o ? o[1] : words[v], fill: o ? o[2] : TINTS[3] };
+    });
+    SP.last = { bands: bands, total: bands.reduce(function (a, b) { return a + b.n; }, 0) };
+    layoutSplit();
+  }
+
+  function layoutSplit() {
+    var L = SP && SP.last;
+    if (!L || !document.contains(SP.box)) return;
+    var copy = toggleCopy(/vote split copy/i, SPLIT);
+    setText(SP.kick, copy.kicker);
+    setText(SP.tfig, fmt(L.total));
+    setText(SP.tword, copy.total);
+    var down = NARROW.matches, width = SP.box.clientWidth, ink = SP.ink || INK_FB;
+    if (!width) return;
+    var sig = [down, width, ink.top, ink.bottom, L.total].concat(L.bands.map(function (b) { return b.k + ":" + b.n; })).join(",");
+    if (sig === SP.sig) return;
+    SP.sig = sig;
+    SP.box.classList.toggle("is-down", down);
+
+    var nb = L.bands.length, f = function (v) { return v.toFixed(2); }, W, H, T, path, trunk;
+    if (!down) {
+      W = width - G3.side;
+      var k = Math.min(1, W / G3.W), g = G3.g * k, x1 = G3.x1 * k, x3 = G3.x3 * k, xc = (x1 + x3) / 2;
+      T = G3.T * k;
+      H = T + (nb - 1) * g;
+      trunk = (nb - 1) * g / 2;
+      var yl = trunk, yr = 0;
+      L.bands.forEach(function (b) { var t = b.n * T / L.total; b.a = yl; b.b = yl + t; b.c = yr; b.d = yr + t; yl += t; yr += t + g; });
+      path = function (b) {
+        return "M0 " + f(b.a) + " L" + f(x1) + " " + f(b.a) + " C" + f(xc) + " " + f(b.a) + " " + f(xc) + " " + f(b.c) + " " + f(x3) + " " + f(b.c) +
+          " L" + f(W) + " " + f(b.c) + " L" + f(W) + " " + f(b.d) + " L" + f(x3) + " " + f(b.d) +
+          " C" + f(xc) + " " + f(b.d) + " " + f(xc) + " " + f(b.b) + " " + f(x1) + " " + f(b.b) + " L0 " + f(b.b) + " Z";
+      };
+      SP.tot.style.height = H + "px";
+      SP.tfig.style.fontSize = (56 * Math.max(0.7, k)).toFixed(2) + "px";
+      setStyle(SP.rule, { top: f(trunk) + "px", height: f(T) + "px", left: "", width: "" });
+    } else {
+      W = width;
+      var y1 = DOWN.L * 0.262, y3 = DOWN.L * 0.541, yc = (y1 + y3) / 2, gd = DOWN.g;
+      T = W - (nb - 1) * gd;
+      H = DOWN.L;
+      trunk = (nb - 1) * gd / 2;
+      var xl = trunk, xr = 0;
+      L.bands.forEach(function (b) { var t = b.n * T / L.total; b.a = xl; b.b = xl + t; b.c = xr; b.d = xr + t; xl += t; xr += t + gd; });
+      path = function (b) {
+        return "M" + f(b.a) + " 0 L" + f(b.a) + " " + f(y1) + " C" + f(b.a) + " " + f(yc) + " " + f(b.c) + " " + f(yc) + " " + f(b.c) + " " + f(y3) +
+          " L" + f(b.c) + " " + f(H) + " L" + f(b.d) + " " + f(H) + " L" + f(b.d) + " " + f(y3) +
+          " C" + f(b.d) + " " + f(yc) + " " + f(b.b) + " " + f(yc) + " " + f(b.b) + " " + f(y1) + " L" + f(b.b) + " 0 Z";
+      };
+      SP.tot.style.height = "";
+      SP.tfig.style.fontSize = "";
+      setStyle(SP.rule, { top: "", height: "", left: f(trunk) + "px", width: f(T) + "px" });
+    }
+    SP.svg.setAttribute("width", f(W));
+    SP.svg.setAttribute("height", f(H));
+    SP.svg.setAttribute("viewBox", "0 0 " + f(W) + " " + f(H));
+    SP.flow.style.width = f(W) + "px";
+    SP.flow.style.height = f(H) + "px";
+
+    // a path and a label per outcome, kept while the outcome is in the split
+    var keep = {};
+    L.bands.forEach(function (b) {
+      keep[b.k] = true;
+      var p = SP.paths[b.k];
+      if (!p) { p = SP.paths[b.k] = document.createElementNS(SVGNS, "path"); }
+      p.setAttribute("d", path(b));
+      p.setAttribute("fill", b.fill);
+      SP.svg.appendChild(p);
+      var lab = SP.labels[b.k];
+      if (!lab) {
+        lab = SP.labels[b.k] = el("div", "enc-split__label");
+        lab.appendChild(el("span", "enc-split__fig"));
+        lab.appendChild(el("span", "enc-split__word"));
+      }
+      setText(lab.firstChild, fmt(b.n));
+      setText(lab.lastChild, b.word);
+      SP.flow.appendChild(lab);
+    });
+    Object.keys(SP.paths).forEach(function (v) {
+      if (keep[v]) return;
+      SP.paths[v].remove(); SP.labels[v].remove();
+      delete SP.paths[v]; delete SP.labels[v];
+    });
+    if (!down) L.bands.forEach(function (b) { across(b, SP.labels[b.k], G3.x3 * Math.min(1, W / G3.W) + 24, W, ink); });
+    else under(L.bands, W, H);
+  }
+
+  // beside its ribbon: the figure's digits centred on the ribbon, two-thirds as tall as it is thick, the word
+  // on the digits' middle; made smaller only if it would run past the right edge
+  function across(b, lab, x, W, ink) {
+    var th = b.d - b.c, cap = ink.bottom - ink.top, mid = (b.c + b.d) / 2;
+    var fs = th > 0 ? G3.ratio * th / cap : 0, fig = lab.firstChild, word = lab.lastChild;
+    lab.className = "enc-split__label";
+    setStyle(lab, { left: x.toFixed(2) + "px", gap: (th > 40 ? 12 : 8) + "px", opacity: th > 0.5 ? "1" : "0", width: "" });
+    word.style.fontSize = (th > 40 ? 11 : 8.5) + "px";
+    var place = function () {
+      lab.style.top = (mid - fs * (ink.top + ink.bottom) / 2).toFixed(2) + "px";
+      lab.style.height = fs.toFixed(2) + "px";
+      fig.style.fontSize = fs.toFixed(2) + "px";
+      word.style.transform = "translateY(" + (fs * ((ink.top + ink.bottom) / 2 - 0.5)).toFixed(2) + "px)";
+    };
+    place();
+    var room = W - x - 2, over = lab.scrollWidth - room;
+    if (over > 0 && fig.offsetWidth > 0) {
+      fs *= Math.max(0.1, (fig.offsetWidth - over) / fig.offsetWidth);
+      place();
+    }
+  }
+
+  // under the ribbons, a phone: each label at its ribbon's left edge, moved right to clear the one before it
+  // and back from the right edge, and the figures made smaller until the row fits
+  function under(bands, W, H) {
+    var labs = bands.map(function (b) { return SP.labels[b.k]; }), fs = DOWN.fs, gap = 12, xs, ws;
+    labs.forEach(function (lab) {
+      lab.className = "enc-split__label is-under";
+      setStyle(lab, { top: (H + 12) + "px", height: "", gap: "", opacity: "1", width: "" });
+      lab.lastChild.style.fontSize = "";
+      lab.lastChild.style.transform = "";
+    });
+    for (var tries = 0; tries < 6; tries++) {
+      labs.forEach(function (lab) { lab.firstChild.style.fontSize = fs + "px"; });
+      ws = labs.map(function (lab) { return lab.offsetWidth; });
+      if (ws.reduce(function (a, w) { return a + w; }, 0) + gap * (labs.length - 1) <= W || fs <= 18) break;
+      fs -= 3;
+    }
+    xs = bands.map(function (b) { return b.c; });
+    for (var i = 1; i < xs.length; i++) xs[i] = Math.max(xs[i], xs[i - 1] + ws[i - 1] + gap);
+    for (var j = xs.length - 1; j >= 0; j--) {
+      var right = j === xs.length - 1 ? W : xs[j + 1] - gap;
+      xs[j] = Math.max(0, Math.min(xs[j], right - ws[j]));
+    }
+    labs.forEach(function (lab, i2) { lab.style.left = xs[i2].toFixed(2) + "px"; });
+    SP.flow.style.marginBottom = (12 + Math.max.apply(null, labs.map(function (lab) { return lab.offsetHeight; }))) + "px";
+  }
+
+  function setStyle(node, s) {
+    for (var k in s) if (node.style[k] !== s[k]) node.style[k] = s[k];
+  }
+
+  // the digits' ink, measured once Outfit is in: the figures are centred on it, not on the line box
+  function inkWhenReady() {
+    var measure = function () {
+      try {
+        var x = document.createElement("canvas").getContext("2d");
+        x.font = "600 200px Outfit";
+        var m = x.measureText("0123456789");
+        if (!m.fontBoundingBoxAscent) return;
+        var base = (200 - (m.fontBoundingBoxAscent + m.fontBoundingBoxDescent)) / 2 + m.fontBoundingBoxAscent;
+        if (SP) {
+          SP.ink = { top: (base - m.actualBoundingBoxAscent) / 200, bottom: (base + Math.max(0, m.actualBoundingBoxDescent)) / 200 };
+          layoutSplit();
+        }
+      } catch (e) { /* the fallback stands */ }
+    };
+    if (document.fonts && document.fonts.load) document.fonts.load("600 200px Outfit").then(measure, measure);
+    else measure();
+  }
+
+  // the pour: the flow is wiped in once, the first time it is on the screen
+  function pourWhenSeen(sp) {
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced || document.visibilityState !== "visible" || typeof IntersectionObserver !== "function") return;
+    sp.body.classList.add("is-dry");
+    var io = new IntersectionObserver(function (es) {
+      if (!es.some(function (e) { return e.isIntersecting; })) return;
+      io.disconnect();
+      sp.body.classList.add("is-pour");
+      var open = function () { sp.body.classList.remove("is-dry"); };
+      requestAnimationFrame(function () { requestAnimationFrame(open); });
+      setTimeout(open, 400);
+      setTimeout(function () { sp.body.classList.remove("is-pour"); }, 2100);
+    }, { threshold: 0.3 });
+    io.observe(sp.box);   // the box, not the clipped body: a target's own clip-path counts, and a wiped body is never seen
+  }
+  window.addEventListener("resize", function () { if (SP) layoutSplit(); });
+  if (NARROW.addEventListener) NARROW.addEventListener("change", function () { if (SP) layoutSplit(); });
 
   /* ── nothing matches (design Governance Record Wow, 2026-09-26) ── the record's chains as marks,
      the count, the line and "How we vote" beside "Clear filters". The words are the "Empty state
@@ -1031,7 +1294,7 @@
     rows.forEach(function (tr) {
       // a row with no chain is never built (three blank rows in the database): it is not a vote to
       // show — "By chain" put the three at the top of the record (audit, 2026-09-26)
-      var hide = !tr.hasAttribute("data-enc-row");
+      var hide = !isVote(tr);
       if (state.chain && chainOf(tr) !== state.chain) hide = true;
       if (state.vote && voteOf(tr) !== state.vote) hide = true;
       if (needle && tr.textContent.toLowerCase().indexOf(needle) < 0) hide = true;
@@ -1062,7 +1325,10 @@
     }
     // then the pager: only the first `shown` of what matched stays on the page
     var matched = rows.filter(function (tr) { return !tr.hidden; });
+    var filtered = state.chain || state.vote || needle;
     matched.forEach(function (tr, i) { if (i >= shown) tr.hidden = true; });
+    // the split counts all of what matched; it measures, which is cheap now the pager has hidden the rest
+    drawSplit(matched, filtered);
     var onShow = Math.min(shown, matched.length);
     // nothing matches: Notion's own line after the table says so, in place of the header and foot
     if (rows.length && !matched.length) {
@@ -1078,7 +1344,6 @@
       var left = matched.length - onShow;
       var more = foot.querySelector(".enc-rec__more");
       more.hidden = left <= 0;
-      var filtered = state.chain || state.vote || needle;
       // written only when it changes: a text write is a mutation, and the observer rebuilt on it
       // for as long as the page was open (48 writes in 3s, measured on the live page)
       setText(more, "Show " + Math.min(PAGE, left) + " more");
@@ -1146,7 +1411,7 @@
 
   var t = 0;
   new MutationObserver(function (muts) {
-    if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-rec__bar, .enc-count__stage"); })) return;
+    if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-rec__bar, .enc-count__stage, .enc-split"); })) return;
     clearTimeout(t); tries = 0; t = setTimeout(build, 120);
   }).observe(document.body, { childList: true, subtree: true });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);

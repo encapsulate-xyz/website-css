@@ -67,7 +67,8 @@
     "/governance": {
       record: b("3dde800a513881b1b88dd0b73f874bfe"),
       pillars: [".enc-rec__head", b("a9ed1443a36c4f6da5ac9cbae489c031")],
-      votes: heading(b("3e0e800a5138810c96e4f79c865ec3bc"))
+      votes: heading(b("3e0e800a5138810c96e4f79c865ec3bc")),
+      "by-outcome": "[data-enc-split]"
     },
     "/blog": {
       posts: b("a148eb7f8ea94b95b7725809fef9e0dc")
