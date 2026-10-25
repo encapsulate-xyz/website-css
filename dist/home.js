@@ -638,7 +638,9 @@
 (function () {
   var TEAM = "block-3dbe800a513880c5862ae676c8d06994";
   // one-screen sections that settle to the top of the viewport (not paged): Who we are, Services,
-  // the audience split, the networks and Why Stake (2026-10-24)
+  // the audience split, the networks and Why Stake (2026-10-24). Services is 280vh from 1200px since
+  // 42w (2026-10-25) and flat and taller than a screen under it, so the height check below leaves it
+  // out; it is a stop only with reduced motion, where it is one screen.
   var SCREENS = [TEAM, "block-3dbe800a5138800d8a72c99cdde9bc3f", "block-3dae800a51388006a57be06b8ebea78e",
     "block-3dbe800a513880c09163d3ed4ab436fd", "block-3dce800a513880349091dbe0cd0650a7"];
 
@@ -1296,59 +1298,73 @@
 
 
 /* ─────────────────────────────────────────────────────────────────────────────────────────────
-   Homepage services — design "Services Section", 42m: SERVICES SELECTION.
+   Homepage services — design "Services Section", 42w "Exploded" (2026-10-25; it replaced 42m's
+   list and screen).
 
-   Behaviour only; every word and image is in Notion. Pointing at, focusing or clicking a service
-   in the list marks its card [data-active], which home.css (§09a) uses to light the list item and
-   show that service's cover in the screen. The mark stays when the pointer leaves, so the screen
-   keeps the last service picked instead of snapping back to the first. List items are made
-   focusable so the keyboard can pick too. */
+   Behaviour only; every word and every screen is in Notion (home.css 09a has the structure). From
+   1200px the section is 280vh with a sticky stage, and this turns its scroll into the design's
+   numbers, set on the section for the CSS: p, how far the stage has run (0 → 1); e, the explode,
+   smoothstep((p − 0.08) / 0.62); --k, the scale, (screen height − 120) / 1300 held to 0.36–0.62;
+   --gz, the gap between planes, k × (36 + 210e); --cx, the stack's centre, 60% across (the 1728
+   column's same place above 1920); --oy, its centre down, half the screen + 2 gaps up the slope + 40k;
+   --lop, the labels, fading in over e 0.4–0.75. The caption turns at e = 0.5 (data-enc-svc-near
+   while it is under). Reduced motion: e = 1, the stack apart and the labels shown.
+
+   THE SCREENS. Each plane is drawn at most 760k = 471px wide, so above 1200px it takes Super's
+   image service at 1080 (WebP; CLAUDE.md, "Glyphs are drawn from Super's image service"). Flat, the
+   screen is the column wide, up to 1100px, and takes the original upload (a 3x PNG): Super's own
+   srcset is sized for a 780px card and came out soft. */
 (function () {
-  var GALLERY = "block-3dbe800a5138804d8ee8c6d84679cc63";
+  var SECTION = "block-3dbe800a5138800d8a72c99cdde9bc3f", GALLERY = "block-3dbe800a5138804d8ee8c6d84679cc63";
+  var SIN = Math.sin(56 * Math.PI / 180);
+  var wide = window.matchMedia("(min-width: 1200px)");
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  function select(card) {
-    var gallery = card.closest(".notion-collection-gallery");
-    if (!gallery) return;
-    gallery.querySelectorAll(".notion-collection-card[data-active]").forEach(function (c) {
-      if (c !== card) c.removeAttribute("data-active");
-    });
-    if (!card.hasAttribute("data-active")) card.setAttribute("data-active", "");
-  }
+  function clamp01(x) { return Math.max(0, Math.min(1, x)); }
+  function num(x, d) { return String(+x.toFixed(d)); }
+  function ease(t) { return t <= 0 ? 0 : t >= 1 ? 1 : t * t * (3 - 2 * t); }
+  /* write only what differs: a builder that rewrites its own page wakes every observer on it */
+  function setVar(e, name, v) { if (e.style.getPropertyValue(name) !== v) e.style.setProperty(name, v); }
+  function sized(url, w) { return "/_next/image?url=" + encodeURIComponent(url) + "&w=" + w + "&q=75"; }
 
-  function wire() {
-    var block = document.getElementById(GALLERY);
-    if (!block) return;
-    var cards = block.querySelectorAll(".notion-collection-card");
-    if (!cards.length) return;
-    if (!block.querySelector(".notion-collection-card[data-active]")) cards[0].setAttribute("data-active", "");
-
-    // SHARP COVERS. Super serves covers through its image optimizer as WebP at quality 75 (the only
-    // quality it accepts), sized for a 780px card: 828px on 1x screens, 1920px on 2x. The screen
-    // shows them near 955px, so UI screenshots came out soft — upscaled on 1x, compression-smeared
-    // everywhere. The original upload (a 2x PNG on assets.super.so) is used instead.
-    block.querySelectorAll("img.notion-collection-card__cover").forEach(function (img) {
-      if (img.hasAttribute("data-enc-original")) return;
-      var m = (img.getAttribute("src") || "").match(/[?&]url=([^&]+)/);
-      if (!m) return;
-      var original = decodeURIComponent(m[1]);
-      if (!/^https:\/\/assets\.super\.so\//.test(original)) return;
-      img.setAttribute("data-enc-original", "");
+  function screens() {
+    var g = document.getElementById(GALLERY);
+    if (!g) return;
+    g.querySelectorAll("img.notion-collection-card__cover").forEach(function (img) {
+      var f = img.closest("[data-full-size]"), orig = f && f.getAttribute("data-full-size");
+      if (!orig || !/^https:\/\/assets\.super\.so\//.test(orig)) return;
+      var want = wide.matches ? sized(orig, 1080) : orig;
+      if (img.getAttribute("src") === want) return;
       img.removeAttribute("srcset");
       img.removeAttribute("sizes");
-      img.src = original;
-    });
-    cards.forEach(function (card) {
-      var item = card.querySelector(".notion-collection-card__content");
-      if (!item || item.hasAttribute("data-enc-svc")) return;
-      item.setAttribute("data-enc-svc", "");
-      item.setAttribute("tabindex", "0");
-      item.setAttribute("role", "button");
-      ["mouseenter", "focus", "click"].forEach(function (ev) {
-        item.addEventListener(ev, function () { select(card); });
-      });
+      img.setAttribute("src", want);
     });
   }
 
+  var queued = false;
+  function schedule() { if (!queued) { queued = true; requestAnimationFrame(update); } }
+  function update() {
+    queued = false;
+    var sec = document.getElementById(SECTION);
+    if (!sec || !wide.matches) return;
+    var r = sec.getBoundingClientRect(), vh = window.innerHeight, vw = window.innerWidth;
+    if (r.bottom < -50 || r.top > vh + 50) return;
+    var run = r.height - vh, p = run > 0 ? clamp01(-r.top / run) : 0;
+    var e = reduced.matches ? 1 : ease((p - 0.08) / 0.62);
+    var k = Math.max(0.36, Math.min(0.62, (vh - 120) / 1300)), gz = k * (36 + 210 * e);
+    setVar(sec, "--k", num(k, 4));
+    setVar(sec, "--gz", num(gz, 2) + "px");
+    setVar(sec, "--cx", Math.round(0.6 * Math.min(vw, 1920) + Math.max(0, (vw - 1920) / 2)) + "px");
+    setVar(sec, "--oy", num(vh / 2 + 2 * gz * SIN + 40 * k, 2) + "px");
+    setVar(sec, "--lop", num(reduced.matches ? 1 : clamp01((e - 0.4) / 0.35), 3));
+    if (e < 0.5) { if (!sec.hasAttribute("data-enc-svc-near")) sec.setAttribute("data-enc-svc-near", ""); }
+    else if (sec.hasAttribute("data-enc-svc-near")) sec.removeAttribute("data-enc-svc-near");
+  }
+
+  function wire() { screens(); schedule(); }
+  window.addEventListener("scroll", schedule, { passive: true });
+  window.addEventListener("resize", schedule);
+  [wide, reduced].forEach(function (m) { if (m.addEventListener) m.addEventListener("change", wire); });
   var t = 0;
   new MutationObserver(function (muts) {
     if (muts.every(function (m) { return m.type === "attributes"; })) return;

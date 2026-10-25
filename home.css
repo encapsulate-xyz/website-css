@@ -2389,399 +2389,518 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 }
 
 /*********************************************/
-/* 09a. SERVICES AND TOOLS — 42m "IT DEMONSTRATES ITSELF" */
+/* 09a. SERVICES AND TOOLS — 42w "EXPLODED" */
 /*********************************************/
 
-/* From design file "Services Section", 42m. An ink band: the header (kicker,
-   title, lead) with its two buttons at the right; below it a list of the four
-   services on the left and a paper "screen" on the right that bleeds off the
-   page's right edge and shows the selected service's artifact.
+/* From design file "Services Section", 42w (2026-10-25, the user: "implement 42w"; it replaced
+   42m). The tooling around the node as an exploded stack, on paper: our node at the bottom and
+   one plane per tool above it — Monitoring stack, Ansible repository, Bots, Dashboards, "from your
+   team up to anyone". The section is 280vh with a sticky 100vh stage; scrolling through it pulls
+   the stack apart and each plane's name comes in at its corner. Reduced motion shows it apart in
+   one screen, with no pin. Under 1200px there is no 3D: the tools run top to bottom, each with its
+   name, medium, description, link and screen.
 
-   NOTION STRUCTURE. One callout (block-3dbe800a…) holding: text "What we do",
-   Heading 2 "Services and tools", the lead text, a two-column list of button
-   callouts (View All, Book a call), and the "Services Section" gallery
-   (block-3dbe800a…) — Name, Description, Medium, and the Cover files property as
-   the card preview (the artifact image). Page links are off.
+   NOTION STRUCTURE. One callout (block-3dbe800a…): "What we do", Heading 2 "Services and tools",
+   the lead, a two-column list of button callouts (View all, Book a call), the "Services Section"
+   gallery (block-3dbe800a…: Name, Description, Medium, Link, and Cover — the tool's screen, the
+   design's panel rendered at 860 × 543, 3x), then the node's label as a callout ("The machine",
+   with "Our node" inside it) and the two captions ("Four tools around every node", "From your team
+   up to anyone"). Page links are off.
 
-   HOW THE GALLERY BECOMES LIST + SCREEN. The gallery is one grid with the
-   list column and the screen column. Each card dissolves (display: contents):
-   its text block is placed in the list column, one row per service; its cover
-   is placed in the screen column, all four stacked in the same cell and
-   cross-faded. Which service is shown is [data-active] on the card, set by
-   home.js on hover, focus or click and kept when the pointer leaves ("SERVICES
-   SELECTION"); with no script the first service shows.
-
-   This is an entirely new section, so its text takes the design's type. */
+   THE STACK. home.js ("Homepage services") reads the scroll and sets the design's numbers on the
+   section: --k (the scale, from the screen's height), --gz (the gap between planes), --cx and --oy
+   (the stack's centre). Each plane is one element with the design's whole transform — rotateX(56)
+   rotateZ(-42) translateZ(j × gz) about the stack's centre — so no 3D context is shared; with no
+   perspective the projection is the same, and the planes are painted in their order (z-index = j).
+   Each tool's j is set by its row's id, the order being the design's reading. The labels are the
+   cards' own Name and Medium, placed at the plane's right-hand corner; the node's plane is the
+   gallery's ::before. Without the script the stack shows apart, at the defaults below. */
 
 #block-3dbe800a5138800d8a72c99cdde9bc3f {
-  --btn-lift: 0 0 transparent;
-  --btn-lift-soft: 0 0 transparent;
-  --btn-focus: rgba(250, 250, 248, 0.5);
-  --btn-2-fill: rgba(250, 250, 248, 0.06);
-  --btn-2-fill-hover: rgba(250, 250, 248, 0.12);
-  --btn-2-fill-press: rgba(250, 250, 248, 0.16);
-  --btn-2-ring: rgba(250, 250, 248, 0.3);
-  --btn-2-ring-hover: rgba(250, 250, 248, 0.3);
-  --btn-2-text: #FAFAF8;
-  --btn-2-highlight: inset 0 1.5px 0 rgba(255, 255, 255, 0.26);
-  --btn-2-press: inset 0 1.5px 0 rgba(255, 255, 255, 0.26);
-  --btn-3-text: #FAFAF8;
-  --svc-gutter: max(48px, calc(50vw - 864px));
-  /* The section never exceeds one screen: the band's padding (54 + 48), the
-     header (~190) and the gap to the list (36) come to ~330px, so the screen
-     image may be at most the rest of the viewport. */
-  --svc-screen-max: calc(100vh - 340px);
-  --svc-screen-max: calc(100dvh - 340px);
-  /* The covers' proportions (1648 × 1124). The screen is as wide as the column
-     (plus the 64px bleed) or as wide as the height cap allows, whichever is
-     smaller, and the image fills it exactly. Upload all four at this ratio. */
-  --svc-ratio: 1.4662;
-
-  /* One full screen, content centred, like the stats, testimonials and Who we
-     are; home.js settles the page onto its top ("Homepage decks"). The screen
-     cap above already keeps the content inside this height. */
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
+  /* the design's CPAD; above 1824 the homepage's centred 1728 column, as every band */
+  --svc-pad: max(clamp(20px, 4vw, 48px), calc(50vw - 864px));
+  --k: 0.6;
+  --gz: 147.6px;
+  --cx: 60vw;
+  --oy: calc(50vh + 2 * var(--gz) * 0.829 + 40px * var(--k));
+  --lop: 1;
   box-sizing: border-box !important;
-  min-height: 100vh !important;
-  min-height: 100dvh !important;
+  display: block !important;
   width: 100vw !important;
   max-width: none !important;
   margin: 0 0 0 calc(50% - 50vw) !important;
-  padding: 54px 0 48px var(--svc-gutter) !important;
+  padding: 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-  background: #2A2C28 !important;
-  color: #FAFAF8 !important;
-  overflow: hidden !important;
+  background: #FAFAF8 !important;
+  color: #000000 !important;
 }
 
-#block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__icon {
+#block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__icon,
+#block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content > .notion-semantic-string:empty,
+#block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content > .notion-text:empty,
+#block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content > .notion-heading__anchor,
+#block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection__header-wrapper,
+#block-3dbe800a5138800d8a72c99cdde9bc3f #block-404e800a513881699d0dcecf7d78ff23 > .notion-callout__icon {
   display: none !important;
 }
 
-/* the header: kicker, title and lead in the list column; buttons at the right */
 #block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content {
-  display: grid !important;
-  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr) !important;
-  column-gap: 44px !important;
-  align-items: start !important;
+  box-sizing: border-box !important;
   width: 100% !important;
   margin: 0 !important;
-  padding: 0 !important;
-  overflow: visible !important;
 }
 
 #block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content > * {
-  grid-column: 1 !important;
   margin: 0 !important;
 }
 
-#block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content > .notion-semantic-string:empty,
-#block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content > .notion-text:empty,
-#block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content > .notion-heading__anchor {
-  display: none !important;
-}
-
-#block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content > .notion-text:first-of-type {
-  grid-row: 1 !important;
+/* THE HEAD — the design's headBlock and ctaPair */
+#block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a513880899b86d78a3be1d069 {
   padding: 0 !important;
   min-height: 0 !important;
-  margin-bottom: 16px !important;
-  font-family: var(--type-mono) !important;
+  font-family: var(--type-mono), monospace !important;
   font-size: 11px !important;
-  line-height: 1.3 !important;
-  letter-spacing: 0.14em !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
-  color: #B4B4B4 !important;
+  white-space: nowrap !important;
+  color: #575B55 !important;
 }
 
-#block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content > .notion-heading {
-  grid-row: 2 !important;
-  margin-bottom: 16px !important;
+#block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a513880449809f887beee5fc8 {
+  max-width: 14ch !important;
   font-family: var(--type-display) !important;
   font-weight: 600 !important;
-  font-size: clamp(34px, 3.4vw, 46px) !important;
+  font-size: clamp(36px, 4.2vw, 56px) !important;
   line-height: 1 !important;
   letter-spacing: -0.042em !important;
-  color: #FAFAF8 !important;
-  max-width: 18ch !important;
+  color: #000000 !important;
 }
 
-#block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content > .notion-text:not(:first-of-type) {
-  grid-row: 3 !important;
+#block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a513880b9935ccdfb5e7fe78b {
+  max-width: 44ch !important;
   padding: 0 !important;
   font-family: var(--type-body) !important;
-  font-size: 16.5px !important;
+  font-size: clamp(16px, 1.25vw, 18px) !important;
   line-height: 1.56 !important;
-  color: #C9C9C4 !important;
-  max-width: none !important; /* texts run the full width (user rule) */
+  letter-spacing: normal !important;
+  color: #3A3D38 !important;
   text-wrap: pretty !important;
 }
 
-/* the two buttons: bottom-right of the header, clear of the bleed */
-#block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content > .notion-column-list {
-  grid-column: 2 !important;
-  grid-row: 1 / 4 !important;
-  align-self: end !important;
-  justify-self: end !important;
-  margin-right: var(--svc-gutter) !important;
+/* the design's Btn at its 48px size */
+#block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a513880fa9035d6561fb2ef43 {
+  --btn-h: 48px;
+  --btn-px: 20px;
+  --btn-fs: 15.5px;
 }
 
-/* the list and the screen */
-#block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content > #block-3dbe800a5138804d8ee8c6d84679cc63 {
-  grid-column: 1 / -1 !important;
-  grid-row: 4 !important;
-  margin: 36px 0 0 !important;
+/* the node's label and the captions belong to the stack: not shown flat */
+#block-3dbe800a5138800d8a72c99cdde9bc3f #block-404e800a513881699d0dcecf7d78ff23,
+#block-3dbe800a5138800d8a72c99cdde9bc3f #block-404e800a5138811c95c3c46296a6bc0f,
+#block-3dbe800a5138800d8a72c99cdde9bc3f #block-404e800a513881fcb284e3440db66695 {
+  display: none !important;
+}
+
+/* the cards: Super's card chrome off; every property may grow past its line */
+#block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card,
+#block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:hover {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  overflow: visible !important;
+  cursor: default !important;
+}
+
+#block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card__content {
+  margin: 0 !important;
   padding: 0 !important;
   overflow: visible !important;
 }
 
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection__header-wrapper {
-  display: none !important;
-}
-
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-gallery {
-  counter-reset: svc !important;
-  display: grid !important;
-  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr) !important;
-  /* The screen takes its height from the cover image (the whole artifact shows, at any width);
-     the list sits centred beside it between two flexible spacer rows. */
-  grid-template-rows: 1fr repeat(4, auto) 1fr !important;
-  align-items: center !important;
-  column-gap: 44px !important;
-  row-gap: 4px !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  min-height: 452px !important;
-}
-
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card {
-  display: contents !important;
-}
-
-/* THE ARCS behind the list (design revision): nine concentric half-circles
-   centred 60px in from the list column's bottom-left, radius 120px stepping by
-   76px, in paper at 20% fading by 1.7 points a ring, every third ring 1.5px.
-   Drawn as the gallery grid's own ::before in the list column (the SVG's
-   xMinYMax slice = anchored bottom-left, covering), under the items. */
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-gallery::before {
-  content: "" !important;
-  grid-column: 1 !important;
-  grid-row: 1 / -1 !important;
-  align-self: stretch !important;
-  z-index: 0 !important;
-  pointer-events: none !important;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 620 470' preserveAspectRatio='xMinYMax slice'%3E%3Cpath d='M-60 470 A 120 120 0 0 1 180 470' fill='none' stroke='%23FAFAF8' stroke-opacity='0.2' stroke-width='1.5'/%3E%3Cpath d='M-136 470 A 196 196 0 0 1 256 470' fill='none' stroke='%23FAFAF8' stroke-opacity='0.183' stroke-width='1'/%3E%3Cpath d='M-212 470 A 272 272 0 0 1 332 470' fill='none' stroke='%23FAFAF8' stroke-opacity='0.166' stroke-width='1'/%3E%3Cpath d='M-288 470 A 348 348 0 0 1 408 470' fill='none' stroke='%23FAFAF8' stroke-opacity='0.149' stroke-width='1.5'/%3E%3Cpath d='M-364 470 A 424 424 0 0 1 484 470' fill='none' stroke='%23FAFAF8' stroke-opacity='0.132' stroke-width='1'/%3E%3Cpath d='M-440 470 A 500 500 0 0 1 560 470' fill='none' stroke='%23FAFAF8' stroke-opacity='0.115' stroke-width='1'/%3E%3Cpath d='M-516 470 A 576 576 0 0 1 636 470' fill='none' stroke='%23FAFAF8' stroke-opacity='0.098' stroke-width='1.5'/%3E%3Cpath d='M-592 470 A 652 652 0 0 1 712 470' fill='none' stroke='%23FAFAF8' stroke-opacity='0.081' stroke-width='1'/%3E%3Cpath d='M-668 470 A 728 728 0 0 1 788 470' fill='none' stroke='%23FAFAF8' stroke-opacity='0.064' stroke-width='1'/%3E%3C/svg%3E") left bottom / cover no-repeat !important;
-}
-
-/* list item */
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card__content {
-  position: relative !important;
-  z-index: 1 !important; /* above the arcs */
-  counter-increment: svc !important;
-  grid-column: 1 !important;
-  display: grid !important;
-  grid-template-columns: 26px minmax(0, 1fr) auto !important;
-  grid-template-areas: "num name medium" "desc desc desc" !important;
-  column-gap: 12px !important;
-  row-gap: 8px !important;
-  align-items: center !important;
-  margin: 0 !important;
-  padding: 18px !important;
-  border: 1px solid transparent !important;
-  border-radius: 12px !important;
-  background: transparent !important;
-  cursor: pointer !important;
-  pointer-events: auto !important; /* Super's card content is pointer-events: none */
-  transition: background-color 0.18s ease, border-color 0.18s ease !important;
-}
-
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(1) .notion-collection-card__content { grid-row: 2 !important; --svc-tint: #DCEEC7; }
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(2) .notion-collection-card__content { grid-row: 3 !important; --svc-tint: #F8E8B3; }
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(3) .notion-collection-card__content { grid-row: 4 !important; --svc-tint: #D2E3F6; }
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(4) .notion-collection-card__content { grid-row: 5 !important; --svc-tint: #F8DDC6; }
-
-/* the numbered well: 01–04 from a counter, not content */
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card__content::before {
-  content: counter(svc, decimal-leading-zero);
-  grid-area: num;
-  display: grid;
-  place-items: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 999px;
-  background: rgba(250, 250, 248, 0.1);
-  font-family: var(--type-mono), monospace;
-  font-size: 10px;
-  color: #B4B4B4;
-  transition: background-color 0.18s ease, color 0.18s ease;
-}
-
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-property {
+#block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-property {
   margin: 0 !important;
   padding: 0 !important;
   min-height: 0 !important;
+  overflow: visible !important;
 }
 
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-property__title {
-  grid-area: name !important;
+#block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-property__title {
   font-family: var(--type-display) !important;
   font-weight: 600 !important;
-  font-size: 21px !important;
+  color: #000000 !important;
+  white-space: nowrap !important;
+}
+
+/* Medium: the design's lab(); Super's text properties are pre-wrap at 95% width */
+#block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .property-59644372 {
+  max-width: none !important;
+  font-family: var(--type-mono), monospace !important;
   line-height: 1.2 !important;
-  letter-spacing: -0.024em !important;
-  color: #C9C9C4 !important;
-  transition: color 0.18s ease !important;
-}
-
-#block-3dbe800a5138804d8ee8c6d84679cc63 .property-717b4848 {
-  grid-area: desc !important;
-  font-family: var(--type-body) !important;
-  font-size: 13.5px !important;
-  line-height: 1.5 !important;
-  color: #9FA39B !important;
-  max-width: 48ch !important; /* the design's 32ch, 1.5x wider at the user's request */
-  white-space: normal !important;
-  transition: color 0.18s ease !important;
-}
-
-#block-3dbe800a5138804d8ee8c6d84679cc63 .property-59644372 {
-  grid-area: medium !important;
-  /* Super's text properties are pre-wrap / break-word at 95% width, which broke
-     BROWSER onto two lines in its auto-width track */
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
   white-space: nowrap !important;
   word-break: normal !important;
   overflow-wrap: normal !important;
-  max-width: none !important;
-  font-family: var(--type-mono) !important;
-  font-size: 9px !important;
-  letter-spacing: 0.1em !important;
-  text-transform: uppercase !important;
-  color: transparent !important;
-  transition: color 0.18s ease !important;
+  color: #575B55 !important;
 }
 
-/* the screen: every cover in the same cell, bleeding off the right */
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card > span {
-  grid-column: 2 !important;
-  grid-row: 1 / -1 !important;
-  align-self: start !important;
-  justify-self: end !important; /* when the height cap narrows it, it stays against the bleed */
-  width: min(calc(100% + 64px), calc(var(--svc-screen-max) * var(--svc-ratio))) !important;
-  max-width: none !important;
-  aspect-ratio: var(--svc-ratio) !important;
-  min-height: 0 !important;
+#block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card__cover {
   display: block !important;
-  position: relative !important;
-  margin-right: -64px !important;
-  border: 1px solid rgba(250, 250, 248, 0.22) !important;
-  border-right: 0 !important;
-  border-radius: 12px 0 0 12px !important;
-  background: #FAFAF8 !important;
-  overflow: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-  transition: opacity 0.26s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card__cover {
-  position: static !important;
-  display: block !important;
-  width: 100% !important;
   max-width: none !important;
-  height: 100% !important;
   max-height: none !important;
   min-height: 0 !important;
-  max-width: none !important;
   margin: 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
-  object-fit: cover !important;
-  object-position: left top !important; /* keep the left: the bleed cuts the right */
+  object-fit: fill !important;   /* the cover is the plane's own proportions, 860 × 543 */
 }
 
-/* ACTIVE — [data-active] from home.js; the first service when there is no script */
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card[data-active] .notion-collection-card__content,
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-gallery:not(:has([data-active])) .notion-collection-card:first-child .notion-collection-card__content {
-  background: rgba(250, 250, 248, 0.06) !important;
-  border-color: rgba(250, 250, 248, 0.22) !important;
-}
+/* each tool's place in the stack (j), counted up from the node, and its place in the flat list */
+#block-3dbe800a51388042bbf4e8bd05864907 { --j: 1; order: 4; }   /* Monitoring stack */
+#block-3dbe800a5138808ebb07d767988a6209 { --j: 2; order: 3; }   /* Ansible repository */
+#block-3dbe800a513880e3bdeff6fd9c1c02df   { --j: 3; order: 2; }   /* Bots */
+#block-3dbe800a51388085b8f7c88222350eb3 { --j: 4; order: 1; }   /* Dashboards */
 
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card[data-active] .notion-collection-card__content::before,
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-gallery:not(:has([data-active])) .notion-collection-card:first-child .notion-collection-card__content::before {
-  background: var(--svc-tint);
-  color: #000000;
-}
-
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card[data-active] .notion-property__title,
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-gallery:not(:has([data-active])) .notion-collection-card:first-child .notion-property__title {
-  color: #FAFAF8 !important;
-}
-
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card[data-active] .property-717b4848,
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-gallery:not(:has([data-active])) .notion-collection-card:first-child .property-717b4848 {
-  color: #D6D6D2 !important;
-}
-
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card[data-active] .property-59644372,
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-gallery:not(:has([data-active])) .notion-collection-card:first-child .property-59644372 {
-  color: var(--svc-tint) !important;
-}
-
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card[data-active] > span,
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-gallery:not(:has([data-active])) .notion-collection-card:first-child > span {
-  opacity: 1 !important;
-  pointer-events: auto !important;
-}
-
-#block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card__content:focus-visible {
-  outline: 3px solid rgba(250, 250, 248, 0.5) !important;
-  outline-offset: 2px !important;
-}
-
-/* Narrow: header stacks, list then a contained screen (no bleed). */
-@media (max-width: 900px) {
+/* ── THE STACK, 1200px and wider ── */
+@media (min-width: 1200px) {
   #block-3dbe800a5138800d8a72c99cdde9bc3f {
-    min-height: 0 !important; /* no full screen, no snap, below 901px */
-    padding: 44px var(--svc-gutter) 40px !important;
+    height: 280vh !important;
+    overflow: visible !important;   /* the stage is sticky inside it */
+  }
+
+  #block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content {
+    position: sticky !important;
+    top: 0 !important;
+    display: block !important;
+    height: 100vh !important;
+    padding: 88px 0 0 var(--svc-pad) !important;
+    overflow: hidden !important;
+  }
+
+  /* the head, the design's side column: min(400px, 30vw), 16 between its lines, 28 to the buttons */
+  #block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content > :is(.notion-text, .notion-heading, .notion-column-list) {
+    position: relative !important;
+    z-index: 20 !important;
+    width: min(400px, 30vw) !important;
+  }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a513880899b86d78a3be1d069,
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a513880449809f887beee5fc8 { margin-bottom: 16px !important; }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a513880b9935ccdfb5e7fe78b { margin-bottom: 28px !important; }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a513880449809f887beee5fc8 { font-size: clamp(36px, 3.4vw, 52px) !important; }
+
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 {
+    position: absolute !important;
+    inset: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    pointer-events: none !important;
+  }
+
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-gallery {
+    display: block !important;
+    position: static !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card {
+    display: contents !important;
+  }
+
+  /* a plane: 760 × 480 at the scale, centred on the stack and lifted j gaps */
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-gallery::before,
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card__cover {
+    position: absolute !important;
+    left: calc(var(--cx) - 380px * var(--k)) !important;
+    top: calc(var(--oy) - 240px * var(--k)) !important;
+    width: calc(760px * var(--k)) !important;
+    height: calc(480px * var(--k)) !important;
+    transform-origin: 50% 50% !important;
+    transform: rotateX(56deg) rotateZ(-42deg) translateZ(calc(var(--j) * var(--gz))) !important;
+    z-index: var(--j) !important;
+  }
+
+  /* the node: ink, the reversed mark at 22% of its width */
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-gallery::before {
+    --j: 0;
+    content: "" !important;
+    border-radius: 12px !important;
+    background: #2A2C28 url("../svg/mark-reversed.svg") center / 22% auto no-repeat !important;
+  }
+
+  /* a label: a 28px ink rule, then the medium over the name, centred on the plane's right-hand
+     corner (443k right of the centre, 42.6k up, and j gaps higher) */
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card__content,
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-404e800a513881699d0dcecf7d78ff23 {
+    position: absolute !important;
+    z-index: 10 !important;
+    left: calc(var(--cx) + 443px * var(--k) + 8px) !important;
+    top: calc(var(--oy) - var(--j) * var(--gz) * 0.829 - 42.6px * var(--k)) !important;
+    transform: translateY(-50%) !important;
+    width: max-content !important;
+    opacity: var(--lop) !important;
+    pointer-events: none !important;
+  }
+
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card__content,
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-404e800a513881699d0dcecf7d78ff23 > .notion-callout__content {
+    display: grid !important;
+    grid-template-columns: 28px auto !important;
+    grid-template-areas: "rule medium" "rule name" !important;
+    column-gap: 12px !important;
+    row-gap: 3px !important;
+    align-items: center !important;
+  }
+
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card__content::before,
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-404e800a513881699d0dcecf7d78ff23 > .notion-callout__content::before {
+    content: "" !important;
+    grid-area: rule !important;
+    width: 28px !important;
+    height: 1px !important;
+    background: #000000 !important;
+  }
+
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .property-59644372,
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-404e800a513881699d0dcecf7d78ff23 > .notion-callout__content > span.notion-semantic-string {
+    grid-area: medium !important;
+    align-self: end !important;
+    font-size: 9.5px !important;
+  }
+
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-property__title,
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-404e800a51388116ac0bd270f514fccb {
+    grid-area: name !important;
+    align-self: start !important;
+    font-size: 19px !important;
+    line-height: normal !important;
+    letter-spacing: -0.022em !important;
+  }
+
+  /* the description and the link are the flat list's */
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-property:not(.notion-property__title, .property-59644372) {
+    display: none !important;
+  }
+
+  /* the node's label, drawn as the cards' */
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-404e800a513881699d0dcecf7d78ff23 {
+    --j: 0;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-404e800a513881699d0dcecf7d78ff23 > .notion-callout__content {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-404e800a513881699d0dcecf7d78ff23 > .notion-callout__content > span.notion-semantic-string {
+    font-family: var(--type-mono), monospace !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    color: #575B55 !important;
+  }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-404e800a51388116ac0bd270f514fccb {
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+    font-family: var(--type-display) !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    color: #000000 !important;
+  }
+
+  /* the caption, bottom left: the first until the stack is half apart (home.js), then the second */
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-404e800a5138811c95c3c46296a6bc0f,
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-404e800a513881fcb284e3440db66695 {
+    display: block !important;
+    position: absolute !important;
+    left: var(--svc-pad) !important;
+    bottom: 40px !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+    font-family: var(--type-mono), monospace !important;
+    font-size: 10.5px !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    white-space: nowrap !important;
+    color: #575B55 !important;
+  }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f:not([data-enc-svc-near]) #block-404e800a5138811c95c3c46296a6bc0f,
+  #block-3dbe800a5138800d8a72c99cdde9bc3f[data-enc-svc-near] #block-404e800a513881fcb284e3440db66695 {
+    display: none !important;
+  }
+}
+
+/* reduced motion: apart, in one screen, nothing pinned */
+@media (min-width: 1200px) and (prefers-reduced-motion: reduce) {
+  #block-3dbe800a5138800d8a72c99cdde9bc3f { height: 100vh !important; }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content { position: relative !important; }
+}
+
+/* ── FLAT, under 1200px: the head, then each tool's name, medium, description, link and screen ── */
+@media (max-width: 1199px) {
+  #block-3dbe800a5138800d8a72c99cdde9bc3f {
+    padding: 72px var(--svc-pad) !important;
+  }
+
+  /* the design's topRow: the head on the left, the buttons at its foot on the right */
+  #block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    column-gap: 28px !important;
+    align-items: start !important;
+    padding: 0 !important;
+  }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content > * { grid-column: 1 / -1 !important; }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a513880899b86d78a3be1d069 { grid-column: 1 !important; grid-row: 1 !important; margin-bottom: 16px !important; }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a513880449809f887beee5fc8 { grid-column: 1 !important; grid-row: 2 !important; margin-bottom: 16px !important; }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a513880b9935ccdfb5e7fe78b { grid-column: 1 !important; grid-row: 3 !important; }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a513880fa9035d6561fb2ef43 {
+    grid-column: 2 !important;
+    grid-row: 1 / 4 !important;
+    align-self: end !important;
+  }
+
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 {
+    grid-row: 4 !important;
+    margin: 32px 0 0 !important;
+    padding: 0 !important;
+  }
+
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-gallery {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 32px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+  }
+
+  /* the design's toolCap: the name and its medium on one line, the description, the link */
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card__content {
+    order: 1 !important;
+    display: flex !important;
+    flex-direction: row !important;   /* Super's card content is a column */
+    flex-wrap: wrap !important;
+    align-items: baseline !important;
+    column-gap: 12px !important;
+    row-gap: 0 !important;
+    pointer-events: auto !important;   /* Super's card content takes no clicks; the link needs them */
+  }
+  /* the line ends after the name and its medium (the description's 42ch would fit beside them) */
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card__content::after {
+    content: "" !important;
+    order: 1 !important;
+    flex: 0 0 100% !important;
+    height: 0 !important;
+  }
+
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-property__title {
+    font-size: 26px !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.028em !important;
+  }
+
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .property-59644372 {
+    font-size: 10px !important;
+  }
+
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .property-717b4848 {
+    order: 2 !important;
+    flex: 0 0 100% !important;
+    max-width: 42ch !important;
+    margin-top: 10px !important;
+    font-family: var(--type-body) !important;
+    font-size: 15.5px !important;
+    line-height: 1.5 !important;
+    letter-spacing: normal !important;
+    color: #3A3D38 !important;
+    white-space: normal !important;
+    text-wrap: pretty !important;
+  }
+
+  /* Link: the design's Tert, the label and a green badge with its arrow (up and out for another site;
+     Super writes a link to our own site as a path) */
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-property:not(.notion-property__title, .property-59644372, .property-717b4848) {
+    order: 3 !important;
+    flex: 0 0 100% !important;
+    margin-top: 14px !important;   /* the caption's gap of 10, and the design's 4 */
+  }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-property:not(.notion-property__title, .property-59644372, .property-717b4848) a {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    font-family: var(--type-body) !important;
+    font-size: 15.5px !important;
+    font-weight: 500 !important;
+    color: #000000 !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    opacity: 1 !important;
+  }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-property:not(.notion-property__title, .property-59644372, .property-717b4848) a::after {
+    content: "" !important;
+    flex: none !important;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 999px !important;
+    background: #99CC66 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6h7'/%3E%3Cpath d='M6.5 3l3 3-3 3'/%3E%3C/svg%3E") center / 11px no-repeat !important;
+    transition: transform 0.16s ease !important;
+  }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-property:not(.notion-property__title, .property-59644372, .property-717b4848) a[href^="http"]::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 8 8 4'/%3E%3Cpath d='M4.6 4H8v3.4'/%3E%3C/svg%3E") !important;
+  }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-property:not(.notion-property__title, .property-59644372, .property-717b4848) a:hover::after {
+    transform: translateX(3px) !important;
+  }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-property:not(.notion-property__title, .property-59644372, .property-717b4848) a[href^="http"]:hover::after {
+    transform: translate(3px, -3px) !important;
+  }
+
+  /* the screen, the whole column wide */
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card__cover {
+    order: 2 !important;
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 860 / 543 !important;
+  }
+}
+
+/* under 760px: the buttons under the head, 56px above and below */
+@media (max-width: 759px) {
+  #block-3dbe800a5138800d8a72c99cdde9bc3f {
+    padding-top: 56px !important;
+    padding-bottom: 56px !important;
   }
   #block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content {
     grid-template-columns: minmax(0, 1fr) !important;
   }
-  #block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content > .notion-column-list {
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a513880fa9035d6561fb2ef43 {
     grid-column: 1 !important;
     grid-row: 4 !important;
-    justify-self: start !important;
-    margin: 22px 0 0 !important;
+    align-self: start !important;
+    margin-top: 28px !important;
   }
-  #block-3dbe800a5138800d8a72c99cdde9bc3f > .notion-callout__content > #block-3dbe800a5138804d8ee8c6d84679cc63 {
-    grid-row: 5 !important;
-  }
-  #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-gallery {
-    grid-template-columns: minmax(0, 1fr) !important;
-    grid-template-rows: auto auto auto auto auto !important;
-    min-height: 0 !important;
-  }
-  #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card > span {
-    grid-column: 1 !important;
-    grid-row: 5 !important;
-    min-height: 0 !important;
-    width: 100% !important;
-    justify-self: stretch !important;
-    margin: 16px 0 0 !important;
-    border-right: 1px solid rgba(250, 250, 248, 0.22) !important;
-    border-radius: 12px !important;
-  }
-  #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-gallery::before {
-    grid-row: 1 / 5 !important; /* behind the list only, not the stacked screen */
-  }
-  #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(1) .notion-collection-card__content { grid-row: 1 !important; }
-  #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(2) .notion-collection-card__content { grid-row: 2 !important; }
-  #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(3) .notion-collection-card__content { grid-row: 3 !important; }
-  #block-3dbe800a5138804d8ee8c6d84679cc63 .notion-collection-card:nth-child(4) .notion-collection-card__content { grid-row: 4 !important; }
+  #block-3dbe800a5138800d8a72c99cdde9bc3f #block-3dbe800a5138804d8ee8c6d84679cc63 { grid-row: 5 !important; }
 }
 
 /*********************************************/
@@ -4445,7 +4564,6 @@ The last block identifies the heading callout which says: Others Trust, We Valid
     padding-right: 20px !important;
   }
   #block-3dce800a513880349091dbe0cd0650a7 { --why-gutter: 20px; }
-  #block-3dbe800a5138800d8a72c99cdde9bc3f { --svc-gutter: 20px; }
 }
 
 /* ── THE RESPONSIVE AUDIT (2026-09-26) ────────────────────────────────────────────────────────

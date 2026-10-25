@@ -94,7 +94,7 @@ every URL in the sitemap for `notion-divider`, which is quicker than walking Not
 with a divider or an empty paragraph.**
 
 home.css starts with older page CSS, then "HOMEPAGE SECTIONS": the figures, Z (00),
-hero, Audience split 51m (07b), testimonials I (09), Why Stake 49a, governance 37h, Services 42m
+hero, Audience split 51m (07b), testimonials I (09), Why Stake 49a, governance 37h, Services 42w
 (09a), Who we are (09b), blog, networks 21b, Contact 48c (16).
 
 home.js is a set of IIFEs: the dial (institutional form), the figures (Z), homepage decks (snapping), the testimonials (I), networks
@@ -176,7 +176,7 @@ it (measured at 1440 on the release before, so not the day's work): Super's noti
 disc column's basis was its content's width. `flex-wrap: nowrap` and a basis of 0.
 
 **Why Stake is one screen above 1024px** (2026-10-24, the user: "make this full height page too Three things worth
-checking."): where its three cards sit in a row the band is `min-height: 100vh` with its content centred, as Services, and
+checking."): where its three cards sit in a row the band is `min-height: 100vh` with its content centred, as Services was until 42w, and
 home.js settles on its top. Narrower, the cards stack and it runs 1.8 screens (1024×768), so **home.js's one-screen list
 now skips any section over 1.25 screens tall**: settling a reader back to the top of a section they are halfway down is a
 trap. Measured at 1024×768, 1280×720, 1366×768, 1440×900 and 1920×1080, the other four stay at 1.00–1.08.
@@ -211,7 +211,7 @@ gets no display rule. Super draws the summary as a div that answers a click only
 `min(148px, 12vw, (50vw - 92px) / 3.3)`: the file's 12% of the band, except just above 760, where
 a half cannot hold "Launch." (3.22em) and Super's headings split it mid-word. **One screen and
 snapped above 900px** (2026-10-15, the user: "make that section full screen height and snappy too"):
-min-height 100dvh and a stop in home.js's one-screen list, as Services and Who we are; 760–900 keeps
+min-height 100dvh and a stop in home.js's one-screen list, as Who we are; 760–900 keeps
 the file's 760, and under 760 it stacks. **The band turns scroll anchoring off**
 (`overflow-anchor: none`): opening the points lifts the word inside a half that keeps its height,
 and Chrome took the word as its anchor and scrolled the page up with it, 204px at 1440 (v359 had it).
@@ -222,22 +222,40 @@ this section?" … "yes remove it"): the three empty paragraphs above it and the
 band meets the stats band and Why Stake flush. The design asked for paper above the ink half; with
 the page snapped a section at a time, the inks meet only mid-scroll.
 
-**Services 42m's four covers are the file's own panels, rendered from the `.dc.html`** (2026-10-21, the handoff's
-revision: the dashboard panel became Tidemark, `tidemark.sui.encapsulate.xyz`, its right-hand controls left off for the
-bleed; the button reads "View all", which Notion had as "View All"). Each cover is the file's `[data-export=screen]` at
-824×562, taken at **4×** (3296×2248, what the gallery's Cover holds) with all four corners transparent. How: save the
-file and the project's `support.js` (the runtime; it loads React from unpkg) side by side, with any file it references
-(`logo/wordmark.svg`, `logo/mark-a.svg`, `network-glyphs/06-axelar.png`) under the same paths; render it with
-`scripts/og/render.mjs` at w 1500, dsf 4, CSS `.on-ink, div:has(> .on-ink) { overflow: visible !important }` so the
-64px bleed is not cut, a `js` step that clicks the n-th list button, and a clip of the screen's rect (measured first,
-568.67, 666.2, 824.33 × 562.31). Diff each against the cover in Notion: the other three differed only in antialiasing
-and the terminal caret's blink, so only the dashboard cover was replaced — put first on the row's Cover with the old
-files kept behind it, and the old cover's alpha copied onto the new one (`backups/home-services-2026-10-21.json`).
+**Services is 42w "Exploded"** (2026-10-25, the user: "implement 42w", design file "Services Section"; it replaced 42m's
+list beside one screen, whose rings, frosted list and ink tokens went with it). From 1200px: the section is 280vh on
+paper with a sticky 100vh stage; the head and buttons sit top left, and on the right an exploded stack — our node at the
+bottom (the gallery's `::before`: #2A2C28, `svg/mark-reversed.svg` at 22%), then Monitoring stack, Ansible repository,
+Bots, Dashboards — pulls apart as the stage runs, each plane's medium and name coming in at its right-hand corner. Each
+plane is one element carrying the design's whole transform (rotateX 56, rotateZ −42, translateZ j × gap, about the
+stack's centre), so no 3D context is shared and the planes paint in their order. home.js ("Homepage services") sets
+`--k`, `--gz`, `--cx`, `--oy`, `--lop` and `data-enc-svc-near` (the caption's first half) on scroll frames, writing
+only what differs; the stack's numbers are the design's (comment in home.js). Under 1200px it is the design's flat
+list: the head with its buttons on the right (under them below 760), then each tool's name and medium on one baseline,
+the description (42ch), the link, and the screen the column wide. Reduced motion: one screen, apart, no pin.
+
+What Notion holds for it (backup `backups/home-services-42w-2026-10-25.json`): the Services Section gallery gained a
+**`Link`** text property (Dashboards "Open Tidemark" → tidemark.sui.encapsulate.xyz; the other three → /services#playbooks,
+#bots, #monitoring), drawn flat as the design's Tert link — the badge's arrow is ↗ for another site, → for ours, read off
+the link's `target`. **It shows only once the property is switched on in the gallery view** (the API cannot). After the
+gallery: a callout "The machine" with "Our node" inside it (the node's label; its icon is hidden), and the two captions
+"Four tools around every node" and "From your team up to anyone". The node's label and both captions are hidden flat.
+
+**The covers are the design's panels, re-rendered for 42w**: each tool's 860×543 panel from the file, taken at 4× and
+saved at 3× (2580×1629) with transparent 12px corners (36 at 3×), put first on each row's Cover with the older files
+kept behind. The method is 42m's: save the file and the project's `support.js` side by side with what it references
+(`logo/*.svg`, `network-glyphs/06-axelar.png`), render with `scripts/og/render.mjs` and clip each panel's rect. **A new
+cover is first served as Notion's signed file URL** (it expires); a second refresh of / served Super's
+`assets.super.so` copy, which home.js needs: from 1200px it asks Super's image service at w 1080 (a plane is at most
+471px wide), flat it takes the original. **Flat, the screen keeps the panel's 860:543** where the design re-lays each
+panel natively at the column's width × 480; on a phone the screen is short and its text small.
+
+**Three paper sections run in a row now**: governance, Services and the institutional form, with no ink between them.
 
 **Snapping — lessons.** Use native `scrollTo({behavior:"smooth"})` (scripted animation was choppy);
 cache stops, invalidate on resize/mutation; trackpad momentum lasts seconds — a new gesture is a
 250ms gap, or after a 450ms MIN_LOCK and decay below half peak, a rise 4× the smallest delta (≥20);
-one-screen sections (the audience split, Services, Who we are) are caught on the swipe within half a
+one-screen sections (the audience split, Who we are; Services only with reduced motion since 42w) are caught on the swipe within half a
 screen, and so is a deck's first panel from above and its last from below (a swipe up out of the
 audience split came to rest 306px down the stats' last panel until 2026-10-15); the settle retries. No CSS scroll-snap on html (fights the script). Gesture logic is testable in Node
 with a stubbed window.
