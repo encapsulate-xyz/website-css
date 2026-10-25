@@ -151,3 +151,48 @@ after:** every page builds, the wait mark always clears, an idle page makes 4–
 **The rule for a builder** (also in CLAUDE.md, "Things that bite"): hide what it replaces by Super's page class from
 the first paint (visibility and a 3s reveal), rebuild in the observer's own microtask when Super's second draw drops
 the build, and record the page with `flashcheck.mjs`, fresh and in-app, at 1440 and 390.
+
+## PageSpeed, 2026-10-25 — the homepage, and what was done without changing the look (v407)
+
+The user shared the homepage's PageSpeed Insights report (Lighthouse 13.5) and asked for everything that could be fixed
+"without changing anything functionally for a user and design wise", and a list of the rest. Before: desktop
+**Performance 79** (FCP 0.7 s, LCP 2.1 s, TBT 230 ms, CLS 0.002, SI 1.7 s); phone **35** (FCP 3.8 s, LCP 10.9 s,
+TBT 670 ms, CLS 0.197, SI 6.5 s). Accessibility 100, Best Practices 96, SEO 100 on both.
+
+**What the report pointed at, and whose it is:**
+- **The largest element is the hero's loop** — on both, the `<video>`, painted first as its still, the CSS background
+  `../img/home-loop-poster.webp` on home.css's own tag. **The preload in head/home.html was on v334 while home.css was on
+  v401**, so it fetched a file nothing drew, and the real still was found only once home.css had arrived ("fetchpriority
+  high" and "discoverable in the initial document" both failed; desktop load delay 820 ms). Fixed: the preload is on
+  home.css's tag, and build.py warns when the two differ.
+- **Our scripts went out with every comment** — 21 files, 758 KB, 243 KB gzipped ("Minify JavaScript", 91 KiB).
+  build.py now minifies them with esbuild, whitespace and comments only, with a source map beside each: 444 KB, 148 KB
+  gzipped. Checked on 16 pages, each loaded with the old and the new scripts: the same `data-enc-*` marks, element counts
+  and errors (React #418 only), and 63 of 64 screenshots identical to the pixel (the 64th a reading bar at 17% against
+  18%, a scroll timing).
+- **Inter, 3 weights of ~100 KB from Super** — Super's site font, which our CSS never named, so it showed wherever no rule
+  set a font. Not in the design system (the user: "i dont think we have inter in it"), so main.css §02 sets Super's
+  `--primary-font` and `--secondary-font` to Hanken Grotesk; a sweep of all 114 pages at 1440 (and 8 at 390) finds no
+  visible Inter left. What changed on screen: the homepage's three stat captions and one paragraph, the /blog card links,
+  one post's note, the guides' link previews, the /security rail's lines (now one line each, the rail 19 px shorter) and
+  the /governance/votes table. **Super still preloads Inter 400 and 600 in every page's HTML** (its Typography setting);
+  only the 500 is gone.
+- **Super's own** — its Next.js chunks ("unused JavaScript" 281 KiB, "legacy JavaScript"), its fonts' and logo's 1-day
+  cache, its stylesheets — cannot be changed from here.
+- **The loop itself, 1.3 MB**, is the largest download on a phone. Listed twice in the report; a real Chrome load fetches
+  it once (one 206 range response). Loaded as soon as the page is, on purpose (home.js sets `preload="auto"`).
+- **The phone's CLS 0.197** is the loop's block moving. Not reproduced here: a 412×823 load with Lighthouse's throttling
+  (150 ms, 1.6 Mbps, CPU ×4) measured 0.004, every shift the navbar's 3 px button. Run the report again before chasing it.
+
+**Held back, because they change how the page looks or behaves:**
+- Start the loop's download after the page has loaded: the still is the same frame, but the motion would start later
+  (a moment on a fast line, seconds on a slow phone). The largest gain on a phone.
+- Load each page's CSS and script only on its own page ("unused CSS" 33 KiB, most of the scripts): every page's files are
+  in the site head because Super runs no page script on an in-app navigation — taking them out brings the raw-Notion
+  flashes back.
+- The navbar's ground check (`navbar.js` `ground()`, 489 ms of forced layout on the phone run) and home.js's band frame
+  read layout while Super is still drawing; moving the reads to the next frame risks a frame of the wrong bar colour over
+  an ink cover, which was reported before.
+- The 10 "non-composited" animations: making them composited means animating other properties.
+- Removing Super's two Inter preloads means changing Super's Typography setting — Super's theme, which this site keeps out
+  of the design (the design is the repo's).

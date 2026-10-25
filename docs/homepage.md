@@ -50,7 +50,7 @@ Super serves the new structure.
 **The loop's still** (2026-09-29, v334): `img/home-loop-poster.webp`, the video's own first frame (37KB), is the
 video's CSS background — it paints before the video has a frame (the loop was the page's largest element, 12.4s on
 a phone), and the box takes the file's ratio (`aspect-ratio: 1920 / 916`) so it is the right size before the
-metadata arrives; under 900px it crops as the video does (cover, 72% 100%). head/home.html preloads it. Re-cut it
+metadata arrives; under 900px it crops as the video does (cover, 72% 100%). head/home.html preloads it — **on home.css's own tag**, since home.css draws it from `../img/` on that tag: the preload sat on v334 while home.css moved to v401, a wasted download and a late still (PageSpeed, 2026-10-25, `docs/audit.md`); build.py warns when the two differ. Re-cut it
 (`ffmpeg -ss 0 -frames:v 1`, `cwebp -q 88 -m 6 -sharp_yuv`) whenever the loop changes.
 
 **Who we are (09b) was checked against its file on 2026-09-27** (the user: is it verbatim?) and brought

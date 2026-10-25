@@ -40,7 +40,7 @@ note goes into its subject's file, not here; only a rule for every task belongs 
 | `docs/paths-and-404.md` | the paths, the redirects, notfound.css + notfound.js, the section names (anchors.js) | Paths — no /mainnet, and the 404 page; Section names |
 | `docs/seo.md` | how Super sets it, what is set, what Google holds and the Search Console routine, the SEO job | SEO; What Google holds, and the Search Console routine; The SEO job — every database row's card, title, description, and four content properties |
 | `docs/site-data.md` | the private repo whose scheduled jobs write Notion | site-data — the jobs |
-| `docs/audit.md` | the phone work, the full-width audit and the raw-Notion audit | Below 900px; The audit of 2026-09-26 — every page the navbar and footer reach, 320–2560; The raw-Notion audit of 2026-10-25 |
+| `docs/audit.md` | the phone work, the full-width audit, the raw-Notion audit and the PageSpeed pass | Below 900px; The audit of 2026-09-26 — every page the navbar and footer reach, 320–2560; The raw-Notion audit of 2026-10-25; PageSpeed, 2026-10-25 |
 | `docs/todo.md` | every TODO and the open items | TODO — Search Console; TODO — run both governance jobs from a GitHub Action; Done — the APY property is filled by site-data; TODO — the Networks set's open values; TODO — three chain pages still point outside the site; TODO — the Sui guide moves to Slush; TODO — the GitHub Actions; TODO — check every line break against its handoff; TODO — the newsletter; TODO — the Services tiles come from the menu, not the page; TODO — connect Super's own MCP; Open items |
 
 **On "what's left to do", read `docs/todo.md`.** **React #418 on every page is settled: leave it and do not
