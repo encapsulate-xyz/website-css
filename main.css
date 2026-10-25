@@ -4596,10 +4596,50 @@ body:has(.notion-root > .notion-callout:first-child > .notion-callout__content >
   color: #FAFAF8 !important;
 }
 
-/* the wordmark, cropped by the bottom edge (the design's 46px of 1280) */
+/* the wordmark, cropped by the bottom edge (the design's 46px of 1280). It links home, and over it a
+   mouse pointer is the Home pill (footer.js), /services' Visit pill on the footer's ink: paper on the
+   ground, ink over a letter (the user, 2026-10-25) */
 .enc-foot__mark {
+  display: block;
+  position: relative;
   margin-bottom: -3.6%;
-  overflow: hidden;
+  text-decoration: none !important;
+}
+@media (hover: hover) and (pointer: fine) {
+  .enc-foot__mark { cursor: none; }
+}
+.enc-foot__home {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  pointer-events: none;
+  visibility: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 36px;
+  padding: 0 8px 0 16px;
+  border-radius: 999px;
+  background: #FAFAF8;
+  color: #000;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.enc-foot__home.is-ink { background: #000; color: #FAFAF8; }
+.enc-foot__badge {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: #99CC66;
+  color: #000;
+  flex: none;
 }
 
 .enc-foot__mark img {

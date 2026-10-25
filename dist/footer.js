@@ -13,7 +13,10 @@
    Written here, because Super has no field for them (the user's explicit choice, 2026-09-15):
      - the call to action: kicker, heading, sentence, the two buttons and their links
      - the disc band's chain glyphs (the homepage gallery is not on other pages)
-   The wordmark is the repo's svg/wordmark-reversed.svg.
+     - the wordmark's link home and its pill's label
+   The wordmark is the repo's svg/wordmark-reversed.svg. It links home (the user, 2026-10-25: "add a button home
+   just like we have for visit on services"): over it a mouse pointer is a pill, as /services' Visit is — paper
+   on the ground, ink where it covers more letter than ground.
 
    The disc band: eight fixed positions; each dissolves out and a different chain fades in at the
    same spot on its own period, never more than two changing at once. Reduced motion: still. */
@@ -25,6 +28,8 @@
     primary: { label: "Book a call", href: "https://cal.com/aditya-encapsulate/30min", external: true },
     secondary: { label: "View networks", href: "/networks" }
   };
+  var HOME = { label: "Home", href: "/" };
+  var ARROW = '<svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9L9 3"/><path d="M4.5 3H9v4.5"/></svg>';
   /* a network glyph at the size it is drawn (2026-09-29): the set's covers are 600px PNGs of 25-69KB, drawn at
      26-286px. Super's image service (/_next/image, same origin, AVIF or WebP at its one quality, 75) makes a copy
      at least twice the drawn size, so it stays sharp on a retina screen - checked side by side at 2x against the
@@ -158,6 +163,66 @@
     }, 480);
   }
 
+  /* the Home pill: it follows a mouse over the wordmark, and on a scroll stays under the pointer */
+  var fine = window.matchMedia("(hover: hover) and (pointer: fine)");
+  var home = { mark: null, img: null, pill: null, cur: null, alpha: null, w: 0, h: 0, asked: false };
+  function track(e) {
+    if (e.pointerType && e.pointerType !== "mouse") return;
+    home.cur = { x: e.clientX, y: e.clientY };
+    paintHome();
+  }
+  function paintHome() {
+    var p = home.pill, c = home.cur;
+    if (!p) return;
+    var r = home.img.getBoundingClientRect();
+    if (!c || !fine.matches || !document.contains(p) || c.x < r.left || c.x > r.right || c.y < r.top || c.y > r.bottom) {
+      p.style.visibility = "hidden";
+      return;
+    }
+    var x = c.x - r.left, y = c.y - r.top;
+    p.style.left = x + "px";
+    p.style.top = y + "px";
+    p.style.visibility = "visible";
+    p.classList.toggle("is-ink", covered(x, y, r) > 0.5);
+  }
+  window.addEventListener("scroll", function () { if (home.cur) paintHome(); }, { passive: true });
+  /* how much of the pill's box is letter: the wordmark's alpha, drawn once at 480px wide */
+  function covered(x, y, r) {
+    var a = home.alpha;
+    if (!a) return 0;
+    var pr = home.pill.getBoundingClientRect(), sx = home.w / r.width, sy = home.h / r.height;
+    var x0 = Math.max(0, Math.floor((x - pr.width / 2) * sx)), x1 = Math.min(home.w, Math.ceil((x + pr.width / 2) * sx));
+    var y0 = Math.max(0, Math.floor((y - pr.height / 2) * sy)), y1 = Math.min(home.h, Math.ceil((y + pr.height / 2) * sy));
+    var n = 0, on = 0;
+    for (var j = y0; j < y1; j++) {
+      for (var i = x0; i < x1; i++) { n++; if (a[(j * home.w + i) * 4 + 3] > 127) on++; }
+    }
+    return n ? on / n : 0;
+  }
+  /* the file has a viewBox and no size, which a canvas will not draw everywhere, so it is given its size */
+  function letters(src) {
+    if (home.asked) return;
+    home.asked = true;
+    fetch(src).then(function (res) { return res.text(); }).then(function (t) {
+      var vb = /viewBox="0 0 ([\d.]+) ([\d.]+)"/.exec(t);
+      if (!vb) return;
+      var W = 480, H = Math.round(W * vb[2] / vb[1]);
+      var url = URL.createObjectURL(new Blob([t.replace("<svg ", '<svg width="' + vb[1] + '" height="' + vb[2] + '" ')], { type: "image/svg+xml" }));
+      var im = new Image();
+      im.onload = function () {
+        var cv = document.createElement("canvas");
+        cv.width = W;
+        cv.height = H;
+        var g = cv.getContext("2d");
+        g.drawImage(im, 0, 0, W, H);
+        try { home.alpha = g.getImageData(0, 0, W, H).data; home.w = W; home.h = H; } catch (e) { /* a tainted canvas: paper only */ }
+        URL.revokeObjectURL(url);
+        paintHome();
+      };
+      im.src = url;
+    }).catch(function () { home.asked = false; });
+  }
+
   function build(footer) {
     var data = read(footer);
     var sig = JSON.stringify(data);
@@ -205,11 +270,25 @@
     root.appendChild(body);
 
     if (BASE) {
-      var mark = el("div", "enc-foot__mark");
+      var mark = link("enc-foot__mark", null, HOME.href);
+      mark.setAttribute("aria-label", HOME.label);
       var img = el("img");
       img.src = BASE + "svg/wordmark-reversed.svg";
       img.alt = "Encapsulate";
       mark.appendChild(img);
+      var pill = el("span", "enc-foot__home", HOME.label);
+      pill.setAttribute("aria-hidden", "true");
+      var pb = el("span", "enc-foot__badge");
+      pb.innerHTML = ARROW;
+      pill.appendChild(pb);
+      mark.appendChild(pill);
+      mark.addEventListener("pointerenter", track);
+      mark.addEventListener("pointermove", track);
+      mark.addEventListener("mouseleave", function () { home.cur = null; paintHome(); });
+      home.mark = mark;
+      home.img = img;
+      home.pill = pill;
+      if (fine.matches) letters(img.src);
       root.appendChild(mark);
     }
 

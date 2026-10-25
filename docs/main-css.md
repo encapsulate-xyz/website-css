@@ -72,6 +72,11 @@ items named `Group: Label` become columns ("Legal" group → bottom right, no co
 Socials → "Social" column, Footnote → bottom left. CTA copy, calendar URL and the rotating disc
 glyphs are in footer.js by the user's choice; wordmark `svg/wordmark-reversed.svg`.
 
+The wordmark links home (2026-10-25, the user: "add a button home just like we have for visit on services"):
+over it a mouse pointer is a HOME pill, /services' Visit pill on the footer's ink — paper on the ground, ink where
+its box covers more letter than ground (footer.js reads the wordmark's alpha once, drawn at 480px). A touch screen
+gets no pill; the wordmark is a plain link there. Its label is in footer.js with the CTA copy.
+
 ## Article blocks — the four generic Notion blocks (2026-09-25, design *Blog Article Blocks*)
 
 main.css §12–13 and `blocks.js` give four Notion blocks their house form **wherever a page has not
