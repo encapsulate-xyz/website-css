@@ -21,7 +21,7 @@ focus in a timeout. `paint()` writes only what changed — the pages' observers 
 |---|---|---|---|
 | /networks | Mainnet / Testnet (Super's picker, hidden, clicked; counts from `encCounts`) | — | Default, Name A–Z, Highest rate (mainnet only) |
 | /governance-record | — | Chain (the rows' chains, glyph discs), Vote (dots) | Recent votes, Oldest first, By chain |
-| /blog (on ink) | — | Tag (the index's tags, a square mark) | Newest first, Oldest first, Shortest read |
+| /blog (on ink) | — | Tag (the index's tags, a 9px dot) | Newest first, Oldest first, Shortest read |
 
 **Nothing matches — the empty set** (handoffs Governance Record Wow, Networks Index, Blog Index
 Layouts, 2026-09-26; the design's `FilterBar.emptySet`, "B · the whole set, quietly"). Where the list

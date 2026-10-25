@@ -1,5 +1,5 @@
-/* /blog — design "Blog Index Layouts", block J "An alternating rhythm". Linked from the SITE head,
-   because Super never executes a page's own script on a client-side navigation.
+/* /blog — design "Blog Index Layouts", block J "A stated rhythm, then rows of three". Linked from
+   the SITE head, because Super never executes a page's own script on a client-side navigation.
 
    The index states its rhythm once and then settles: a row of three whose first card is merged into
    one spanning two columns and two rows, then a pair at half width, then rows of three for as long
@@ -13,7 +13,7 @@
 
    Each card is the Blog Highlights construction, built inside Super's own card so the link, the
    hover and the ordering stay Notion's: an ink cover with the post's Cover glyph masked into one of
-   the five pastels, the category in that same pastel and the date beside it, the title, and the
+   the five pastels, the category in grey and the date beside it, the title, and the
    wordmark at the foot (a card too narrow for the wordmark's 120px minimum carries the mark
    instead). Everything it prints — title, category, date, link, glyph — is read off the card Super
    rendered; this file writes no copy. Styles: blog.css, "THE INDEX". */
@@ -61,7 +61,7 @@
     };
   }
 
-  function cover(post, tint) {
+  function cover(post, tint) {      // tint: the glyph's pastel
     var box = el("span", "enc-post__cover");
     var glyph = el("span", "enc-post__glyph");
     glyph.style.background = tint;
@@ -77,9 +77,7 @@
 
     var body = el("span", "enc-post__body");
     var top = el("span", "enc-post__top");
-    var cat = el("span", "enc-post__cat", post.tag);
-    cat.style.color = tint;                 // category and glyph are the same value, per the design
-    top.appendChild(cat);
+    top.appendChild(el("span", "enc-post__cat", post.tag));   // grey, as the date (J, 2026-10-25)
     top.appendChild(el("span", "enc-post__date", post.date));
     body.appendChild(top);
     body.appendChild(el("span", "enc-post__title", post.title));
@@ -254,8 +252,10 @@
       card.style.gridColumn = "span " + s[0];
       card.style.gridRow = s[1] > 1 ? "span " + s[1] : "";
       card.toggleAttribute("data-enc-tall", s[1] > 1);
+      // every row after the merged three is a band of its own, 26 from the last (blog.css)
+      card.toggleAttribute("data-enc-later", shown.length >= 3 && i >= 3);
     });
-    // 701–900 is two columns with the lead across both: an odd number of the rest leaves the last
+    // 701–1024 is two columns with the lead across both: an odd number of the rest leaves the last
     // one alone in its row, so it is marked to take the row (blog.css; audit 2026-09-26)
     var singles = shown.filter(function (c) { return !c.hasAttribute("data-enc-tall"); });
     shown.forEach(function (c) {

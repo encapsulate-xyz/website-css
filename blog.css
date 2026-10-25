@@ -2,7 +2,9 @@
    Moved from the page's Code panel 2026-09-15. The old cover rules (page-covers/blog.avif behind the
    first callout, .direct-parent, .super-content) were removed: the cover is main.css §14 + covers.js. */
 
-/* ── THE INDEX — design "Blog Index Layouts", J "An alternating rhythm" ─────────────────────────
+/* ── THE INDEX — design "Blog Index Layouts", J "A stated rhythm, then rows of three" ──────────
+   (2026-10-25 pass: the covers on #2A2C28, the category grey beside the date, the ring inside the
+   card, the bar solid ink, the Tag mark a dot, 26 between bands)
 
    Six tracks, so a row of two and a row of three share one grid: the first post spans four of them
    and two rows, the next two take the sixth and seventh cells, then a pair at half width, then rows
@@ -30,11 +32,20 @@
   margin: 0 !important;
   padding: 0 !important;
   border: 0 !important;
-  border-radius: 0 !important;
+  border-radius: 12px !important;
   background: transparent !important;
   box-shadow: none !important;
   overflow: visible !important;
   transition: opacity 0.16s ease !important;
+}
+
+/* the rows of the rhythm are bands: 18 between the cards of one, 26 from one band to the next (the
+   design's frame) — blog.js marks every card after the first band */
+@media (min-width: 1025px) {
+  .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post][data-enc-later] {
+    margin-top: 8px !important;
+    height: auto !important;   /* Super's card is its area's full height, which the margin pushed 8 over */
+  }
 }
 
 .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post]:hover {
@@ -53,6 +64,17 @@
   position: absolute !important;
   inset: 0 !important;
   z-index: 2 !important;
+  border-radius: 12px !important;
+}
+
+/* focus (J, 2026-10-25): the ring is drawn inside the cover, paper at .5 on its ink, and on the link
+   itself, which lies over the cover — not main.css's ink ring outside the card */
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post]:has(> .notion-collection-card__anchor:focus-visible) {
+  outline: 0 !important;
+}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post] > .notion-collection-card__anchor:focus-visible {
+  outline: 3px solid rgba(250, 250, 248, 0.5) !important;
+  outline-offset: -3px !important;
 }
 
 /* THE COVER */
@@ -63,7 +85,7 @@
   aspect-ratio: 1.91 / 1;
   border-radius: 12px;
   overflow: hidden;
-  background: #3A3D38;
+  background: #2A2C28;
 }
 
 /* the merged card is stretched by the two rows it spans, so it takes its height from the grid */
@@ -118,10 +140,12 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   white-space: nowrap;
+  color: #B4B4B4;
 }
 
-.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__date {
-  color: #B4B4B4;
+/* the merged card's labels follow its title's step, not its width: 0.31 of 3.3% */
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-tall] :is(.enc-post__cat, .enc-post__date) {
+  font-size: max(9px, 1.023cqw);
 }
 
 .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__title {
@@ -151,6 +175,14 @@
     -webkit-line-clamp: 3;
   }
 }
+/* the merged card's title reaches 24px at 727px wide (where it is merged: from 1025) */
+@media (min-width: 1025px) {
+  @container (max-width: 726px) {
+    .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-tall] .enc-post__title {
+      -webkit-line-clamp: 2;
+    }
+  }
+}
 
 .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__foot {
   display: block;
@@ -176,21 +208,35 @@
 }
 
 /* ── THE FILTER BAR ── the design's command field, on ink (main.css §13c, filterbar.js); here only
-   its place and its ground. The index stands on paper, so the bar carries the ink the design draws
-   it on (Filter Bar Patterns, G, 2026-09-26). */
+   its place and its ground. The index stands on paper, so the bar is the ink object: solid #2A2C28,
+   its ring the same ink and no highlight in any state (J's "fb-solid"), its focus ring the page's
+   ink one, at 0 offset. */
 .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__bar {
   width: 100%;
   margin: 0 0 26px;
   z-index: 5;   /* its panels open over the cards */
-  background: linear-gradient(rgba(250, 250, 248, 0.06), rgba(250, 250, 248, 0.06)), #2A2C28;
+  background: #2A2C28;
+  border-color: #2A2C28 !important;
+  box-shadow: none;
 }
-/* the Tag cell's mark: a small square in the type's colour */
+html:not([data-enc-mouse]) .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__bar:has(:focus-visible) {
+  outline-color: rgba(0, 0, 0, 0.32);
+  outline-offset: 0;
+}
+/* the Tag cell's mark: a 9px dot in the type's colour, centred in the 22px well the rest ring takes */
 .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__mark {
-  display: block;
+  display: grid;
+  place-items: center;
   flex: none;
-  width: 10px;
-  height: 10px;
-  border-radius: 2px;
+  width: 22px;
+  height: 22px;
+}
+.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-index__mark::before {
+  content: "";
+  display: block;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
   background: currentColor;
 }
 
@@ -247,19 +293,11 @@
   color: #575B55;
 }
 
-/* Under 1024px the six tracks become three, and under 700px one: blog.js's spans are written in
-   sixths, so halving the tracks keeps every band legible without re-running the script. */
-@media (max-width: 1024px) {
-  .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc[data-enc-index] .notion-collection-gallery {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  }
-}
-
-/* 701–900px (2026-09-25): three tracks cannot take blog.js's spans, which are written in sixths
-   (4, 2, 3) — they opened a zero-width fourth track and squeezed every other card to a one-line
-   stub. Two columns here: the lead post across both, every other post one column. 901–1024 is
-   left as it was. */
-@media (min-width: 701px) and (max-width: 900px) {
+/* 701–1024px: two columns, the lead post across both, every other post one column. Three tracks
+   cannot take blog.js's spans, which are written in sixths (4, 2, 3): they opened a zero-width fourth
+   track (2026-09-25, at 701–900) — and at 901–1024, where three tracks were left, a 277px card sat
+   beside a 537px one and the pairs came out 18px short of the lead (2026-10-25). */
+@media (min-width: 701px) and (max-width: 1024px) {
   .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc[data-enc-index] .notion-collection-gallery {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
@@ -400,13 +438,13 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 
 /* ── THE RESPONSIVE AUDIT (2026-09-26) ────────────────────────────────────────────────────────── */
 
-/* under 900 a title keeps three lines: at 834 all 14 titles were cut at two in a card with room */
-@media (max-width: 900px) {
+/* under 1024 a title keeps three lines: at 834 all 14 titles were cut at two in a card with room */
+@media (max-width: 1024px) {
   .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__title { -webkit-line-clamp: 3; }
 }
-/* 701–900: the lead spans both columns, so an odd number of the rest left the last one alone in
+/* 701–1024: the lead spans both columns, so an odd number of the rest left the last one alone in
    its row; blog.js marks it, and it takes the row */
-@media (min-width: 701px) and (max-width: 900px) {
+@media (min-width: 701px) and (max-width: 1024px) {
   .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post][data-enc-fill] {
     grid-column: span 2 !important;
   }

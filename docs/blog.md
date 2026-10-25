@@ -1,7 +1,23 @@
-# The blog post page
+# The blog post page, and the index
 
 Part of the notes for website-css, moved out of `CLAUDE.md` on 2026-10-08 as they were. `CLAUDE.md` holds
 what every task needs and the index of these files.
+
+## The index (/blog) — design *Blog Index Layouts*, J (blog.css "THE INDEX", blog.js)
+
+J is "A stated rhythm, then rows of three": the merged three, a pair, then threes; M (the newsletter band
+after it) is not built (the user, 2026-10-25: "some changes in J, ignore M"). **The 2026-10-25 pass** took
+J's changes: the covers on `#2A2C28` (were `#3A3D38`) and the category grey `#B4B4B4` beside the date (was
+the glyph's tint) — the homepage's Blog Highlights cards did the same on 2026-10-24 — and the focus ring
+inside the card (paper at .5, 3px, offset −3, radius 12, on Super's anchor, which lies over the cover). Three
+values J already had and the page did not: the bar is solid ink (`#2A2C28` fill and ring, no highlight, its
+focus ring the page's ink one at 0 offset); the Tag mark is a 9px dot in a 22px well (was a 10px square);
+and the bands are 26 apart, 18 inside one (blog.js marks every card after the merged three
+`data-enc-later`, which takes 8px of top margin from 1025px). The merged card's labels follow its title's
+step (`max(9px, 1.023cqw)`, were 1.364cqw, 11px against the design's 9) and it keeps two title lines
+below 727px wide (its title is under 24px there). **701–1024 is two columns** with the lead across both:
+901–1024 had kept three tracks, which blog.js's spans in sixths cannot fill — a hidden fourth track put a
+277px card beside a 537px one and left the pairs 18px short of the lead.
 
 ## The blog post page (2026-09-21, design *Blog Post Page*)
 

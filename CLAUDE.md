@@ -29,7 +29,7 @@ note goes into its subject's file, not here; only a rule for every task belongs 
 | `docs/filter-bar.md` | filterbar.js, main.css §13c, the recipe it follows | The filter bar — one component on three pages; Search and sort on a Notion gallery — the working recipe |
 | `docs/chain-pages.md` | /networks/<chain>, chain.css + chain.js | The chain pages |
 | `docs/guides.md` | the guide page, its link to the chain page, the /guides picker | The guide page; A guide links its chain page; The guides picker |
-| `docs/blog.md` | /blog/<post>, post.css + post.js | The blog post page |
+| `docs/blog.md` | /blog/<post>, post.css + post.js, and the /blog index (blog.css + blog.js) | The index (/blog); The blog post page |
 | `docs/governance.md` | the record page's last two sections, how the record is filled | The governance page's last two sections; The governance record — how it is filled |
 | `docs/services.md` | services.css + services.js | /services |
 | `docs/security.md` | what the page's claims rest on | /security — what its claims rest on |
