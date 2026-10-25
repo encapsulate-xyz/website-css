@@ -48,6 +48,9 @@ def squeeze(css: str) -> str:
     flush()
     return ''.join(out).replace('}', '}\n').strip() + '\n'
 
+# the scripts every head links (each is copied to dist/ minified, below)
+JS = ['anchors.js', 'blocks.js', 'blog.js', 'booking.js', 'brand.js', 'chain.js', 'contact.js', 'covers.js', 'filterbar.js', 'footer.js', 'governance.js', 'guide.js', 'guides.js', 'home.js', 'investments.js', 'navbar.js', 'network.js', 'notfound.js', 'post.js', 'security.js', 'services.js']
+
 os.makedirs('dist', exist_ok=True)
 for name in sys.argv[1:] or ['main.css', 'home.css', 'network.css', 'governance.css', 'blog.css', 'brand.css', 'contact-us.css', 'guides.css', 'investments.css', 'post.css', 'guide.css', 'security.css', 'services.css', 'guides.css', 'chain.css', 'legal.css', 'notfound.css']:
     if not os.path.exists(name):
@@ -67,34 +70,6 @@ if not sys.argv[1:]:
         dst = squeeze(strip(src))
         open(os.path.join('dist', 'home-dial.css'), 'w', encoding='utf-8').write(dst)
         print(f"{'home-dial.css':14} {len(src):>7,} -> {len(dst):>7,} bytes")
-    if os.path.exists('home.js'):
-        js = open('home.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'home.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'home.js':14} {len(js):>7,} -> dist/home.js (copied)")
-    if os.path.exists('guide.js'):
-        js = open('guide.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'guide.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'guide.js':14} {len(js):>7,} -> dist/guide.js (copied)")
-    if os.path.exists('navbar.js'):
-        js = open('navbar.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'navbar.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'navbar.js':14} {len(js):>7,} -> dist/navbar.js (copied)")
-    if os.path.exists('footer.js'):
-        js = open('footer.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'footer.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'footer.js':14} {len(js):>7,} -> dist/footer.js (copied)")
-    if os.path.exists('anchors.js'):
-        js = open('anchors.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'anchors.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'anchors.js':14} {len(js):>7,} -> dist/anchors.js (copied)")
-    if os.path.exists('guides.js'):
-        js = open('guides.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'guides.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'guides.js':14} {len(js):>7,} -> dist/guides.js (copied)")
-    if os.path.exists('brand.js'):
-        js = open('brand.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'brand.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'brand.js':14} {len(js):>7,} -> dist/brand.js (copied)")
     # the homepage's loop, regrounded to paper: copied as-is, like the JS
     if os.path.exists(os.path.join('video', 'home-loop-paper.mp4')):
         import shutil
@@ -103,62 +78,28 @@ if not sys.argv[1:]:
                     os.path.join('dist', 'video', 'home-loop-paper.mp4'))
         n = os.path.getsize(os.path.join('dist', 'video', 'home-loop-paper.mp4'))
         print(f"{'home-loop.mp4':14} {n:>7,} -> dist/video/home-loop-paper.mp4 (copied)")
-    if os.path.exists('post.js'):
-        js = open('post.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'post.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'post.js':14} {len(js):>7,} -> dist/post.js (copied)")
-    if os.path.exists('investments.js'):
-        js = open('investments.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'investments.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'investments.js':14} {len(js):>7,} -> dist/investments.js (copied)")
-    if os.path.exists('security.js'):
-        js = open('security.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'security.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'security.js':14} {len(js):>7,} -> dist/security.js (copied)")
-    if os.path.exists('booking.js'):
-        js = open('booking.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'booking.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'booking.js':14} {len(js):>7,} -> dist/booking.js (copied)")
-    if os.path.exists('contact.js'):
-        js = open('contact.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'contact.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'contact.js':14} {len(js):>7,} -> dist/contact.js (copied)")
-    if os.path.exists('governance.js'):
-        js = open('governance.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'governance.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'governance.js':14} {len(js):>7,} -> dist/governance.js (copied)")
-    if os.path.exists('blog.js'):
-        js = open('blog.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'blog.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'blog.js':14} {len(js):>7,} -> dist/blog.js (copied)")
-    if os.path.exists('network.js'):
-        js = open('network.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'network.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'network.js':14} {len(js):>7,} -> dist/network.js (copied)")
-    if os.path.exists('services.js'):
-        js = open('services.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'services.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'services.js':14} {len(js):>7,} -> dist/services.js (copied)")
-    if os.path.exists('chain.js'):
-        js = open('chain.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'chain.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'chain.js':14} {len(js):>7,} -> dist/chain.js (copied)")
-    if os.path.exists('filterbar.js'):
-        js = open('filterbar.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'filterbar.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'filterbar.js':14} {len(js):>7,} -> dist/filterbar.js (copied)")
-    if os.path.exists('blocks.js'):
-        js = open('blocks.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'blocks.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'blocks.js':14} {len(js):>7,} -> dist/blocks.js (copied)")
-    if os.path.exists('covers.js'):
-        js = open('covers.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'covers.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'covers.js':14} {len(js):>7,} -> dist/covers.js (copied)")
-    if os.path.exists('notfound.js'):
-        js = open('notfound.js', encoding='utf-8').read()
-        open(os.path.join('dist', 'notfound.js'), 'w', encoding='utf-8').write(js)
-        print(f"{'notfound.js':14} {len(js):>7,} -> dist/notfound.js (copied)")
+    # Every script, minified (2026-10-25, PageSpeed: "Minify JavaScript — est. savings of 91 KiB"). Whitespace and
+    # comments only: no variable is renamed and no statement rewritten, so dist/ runs exactly as the source does —
+    # esbuild parses each file and prints it back without the spaces. The source keeps its comments, which are the
+    # record of why each part exists; a source map beside each file (x.js.map) gives DevTools the real lines.
+    # esbuild is pinned in package.json: `npm ci` once on a new machine.
+    ESBUILD = os.path.join('node_modules', '.bin', 'esbuild')
+    if not os.path.exists(ESBUILD):
+        sys.exit("build.py: esbuild is missing — run `npm ci` in the repo first (package.json pins it)")
+    import subprocess
+    for js in JS:
+        if not os.path.exists(js):
+            continue
+        subprocess.run([ESBUILD, js, '--minify-whitespace', '--legal-comments=none', '--charset=utf8',
+                        '--sourcemap', '--sources-content=true', '--log-level=warning',
+                        '--outfile=' + os.path.join('dist', js)], check=True)
+        print(f"{js:14} {os.path.getsize(js):>7,} -> {os.path.getsize(os.path.join('dist', js)):>7,} bytes (minified)")
+    # the hero's still is preloaded from the tag home.css draws it from, or the preload is a wasted download
+    head = open(os.path.join('head', 'home.html'), encoding='utf-8').read()
+    pre = re.search(r'website-css@(v\d+)/img/home-loop-poster', head)
+    css = re.search(r'website-css@(v\d+)/dist/home\.css', head)
+    if pre and css and pre.group(1) != css.group(1):
+        print(f"WARNING head/home.html: the poster preload is on {pre.group(1)} but home.css on {css.group(1)} — give them the same tag")
     stale = os.path.join('dist', 'home-head.html')
     if os.path.exists(stale):
         os.remove(stale)

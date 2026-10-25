@@ -186,7 +186,7 @@ User rules that stand on every task:
 | `notion/sui-guide-review-2026-09-29.md` | the review of the Sui guide: the 12 findings still open (where, what it says, what is wrong, a suggested fix), the two fixed, the eight the user set aside | — |
 | `notion/guide-screenshots.md`, `scripts/guide_shot.mjs` | how guide screenshots are captured and composed (agreed 2026-09-18; 2026-09-30: a device-mode capture zeroes the scroll of a page whose document scrolls (MonadVision) because Chromium grows the viewport to the page's height for it — two lines of CSS in the console make `body` a 788px scroller and the position survives; a popup window at the frame's size with device mode off, or `guide_shot.mjs hold <tab> dashboard\|wallet`, are the other two routes) | — |
 | `docs/*.md` | the notes by subject — each page's and system's handoffs, decisions and traps (see "The notes, by subject" above) | — |
-| `build.py` | strips comments into `dist/`, copies the JS | — |
+| `build.py`, `package.json` | strips comments into `dist/` (CSS) and minifies every script with esbuild — whitespace and comments only, nothing renamed, a source map beside each (`x.js.map`); esbuild is pinned in package.json, so `npm ci` once on a new machine (2026-10-25) | — |
 | `scripts/paste_table.py` | prints the paste table from head/*.html vs what the live pages serve | — |
 | `scripts/livecheck.mjs` | loads a live page in headless Chrome with pinned tags' files served from this repo (or a pushed commit) — pass every tag the page pins, comma-separated (`v263,v227,v220`), runs a check in the page, optional real mouse, wheel and key steps (`move`, `click` — a real press and release — `wheel(x, y, dy)` and `press(key)`) and a screenshot; `REDUCED=1` loads it as a reader who asked for reduced motion, `PRELOAD=file.js` runs a file before the page's own scripts. The scratchpad copies it replaced were lost on 2026-09-24 | — |
 | `scripts/flashcheck.mjs`, `scripts/flashsheet.py` | record every frame Chrome paints while a page arrives — `cold <url>` or `nav <from> <to>` through Super's router — with pinned tags served from this repo, and lay the distinct frames out on a sheet (Pillow). Built for the raw-Notion audit of 2026-10-25 | — |
@@ -200,7 +200,7 @@ User rules that stand on every task:
 | `scripts/guide_press.mjs` | the steps file for `livecheck.mjs --steps` that presses, for real, every Watch out (opens on the first press, text inside its box, clear of the capture) and every address (copies exactly it, clipboard stubbed) on a guide, ending "ok" (2026-10-14) | — |
 | `scripts/shots.py`, `img/shots/` | panel captures of the live tools (Sui RGP, the Solana graph), 1100×750 at DPR 2 from headless Chrome — the extension's screenshots time out on those pages, and a WebGL graph needs swiftshader or it comes back blank. Not wired into any page yet (2026-09-23): the tools table that names their tiles arrived cut off | — |
 
-**Edit sources, run `python3 build.py`, commit source and `dist/` together. Never edit `dist/`.**
+**Edit sources, run `python3 build.py`, commit source and `dist/` (with the `.js.map` files) together. Never edit `dist/`.**
 When a new page CSS file is added, add it to build.py's default list and create `head/<page>.html`, and name its
 sections in `anchors.js` ("Every major section has a name", below).
 If the user drops a file into `dist/`, move it to the root as the source.

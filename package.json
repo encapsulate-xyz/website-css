@@ -1,0 +1,8 @@
+{
+  "name": "website-css",
+  "private": true,
+  "description": "Build tools only: build.py minifies dist/*.js with esbuild (whitespace and comments only).",
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}
