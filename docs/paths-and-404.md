@@ -95,6 +95,13 @@ focuses it; ↑↓, Enter, Escape).
 - Deviations: the design's "Book a call" went to /contact-us — ours opens the drawer, as every Book a
   call does; its Governance page is /governance, ours /governance-record.
 
+**A 404 answer is cached per address and lags a head paste** (2026-10-25). An unknown address is answered with
+Super's 404 response, which carries the site head as it was when that address was first asked for; refreshing every
+`sitePages` path does not reach it, since it is not a page. After v405 went out, /no-such-page still pinned chain.js
+v404, and the first live recording after v404 showed Super's raw footer for 420ms in the frame, which three later
+recordings did not. So test a head change on the 404 with a fresh address (`/no-such-page-<n>`), and do not read an
+old address's lag as a fault in the files.
+
 ## Section names — /<page>#<name> (2026-10-23)
 
 Every major section of every page has a short name a link can carry: https://encapsulate.xyz/#testimonials,
