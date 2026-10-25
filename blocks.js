@@ -318,3 +318,26 @@
   tick();
   window.addEventListener("load", tick);
 })();
+
+/* A Notion page with no path of its own in Super is still served at its bare id, /<32 hex> — every page
+   under the Notion Home page and every database row — with Super's own "index, follow". Google found old
+   test copies of the site, a "Forms" page and governance rows that way, and form responses were reachable
+   with their email addresses (2026-10-25, docs/seo.md). A page the site publishes has a path, and Super
+   redirects its id to it, so a bare id is never a page of the site: it is marked noindex. Super's own
+   robots tag stays; Google takes the stricter of the two. Kept in step with in-app navigation. */
+(function () {
+  var BARE = /^\/[0-9a-f]{32}\/?$/i;
+  function mark() {
+    var m = document.querySelector('meta[name="robots"][data-enc-bare]');
+    if (BARE.test(location.pathname)) {
+      if (m) return;
+      m = document.createElement("meta");
+      m.name = "robots";
+      m.content = "noindex";
+      m.setAttribute("data-enc-bare", "");
+      document.head.appendChild(m);
+    } else if (m) m.remove();
+  }
+  mark();
+  new MutationObserver(mark).observe(document.head, { childList: true, subtree: true, characterData: true });
+})();
