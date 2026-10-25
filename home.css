@@ -2237,7 +2237,8 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   padding: 0 !important;
   border-top: 1px solid #000000 !important;
   border-bottom: 1px solid #E2E2DB !important;
-  margin: 0 -14px !important;   /* the band bleeds with the rows below it */
+  /* no bleed: the rows below it sit on the column now (main.css §13d), so the band's old 14px
+     bleed left its rules sticking out past the heading and the table (2026-10-25) */
 }
 
 #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card {
@@ -2256,12 +2257,8 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 }
 
 #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:first-child {
-  padding-left: 14px !important;   /* back onto the measure, as the rows are */
+  padding-left: 0 !important;   /* on the measure, as the rows are */
   border-left: 0 !important;
-}
-
-#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:last-child {
-  padding-right: 34px !important;
 }
 
 /* Hover: the track becomes a pastel field — green ground, its divider a step
@@ -4452,12 +4449,6 @@ The last block identifies the heading callout which says: Others Trust, We Valid
     border-radius: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
-  }
-
-  /* the pillars' third cell sat 14px outside the column its neighbours use (the gallery bleeds
-     14px and the ≤900 rule took the cell's own padding to 0); it gets the first cell's 14px back */
-  #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:nth-child(3) {
-    padding-left: 14px !important;
   }
 }
 
