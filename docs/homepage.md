@@ -94,7 +94,7 @@ every URL in the sitemap for `notion-divider`, which is quicker than walking Not
 with a divider or an empty paragraph.**
 
 home.css starts with older page CSS, then "HOMEPAGE SECTIONS": the figures, Z (00),
-hero, Audience split 51m (07b), testimonials I (09), Why Stake 49a, governance 37h, Services 42w
+hero, Audience split 51m (07b), testimonials I (09), Why Stake 49b, governance 37h, Services 42w
 (09a), Who we are (09b), blog, networks 21b, Contact 48c (16).
 
 home.js is a set of IIFEs: the dial (institutional form), the figures (Z), homepage decks (snapping), the testimonials (I), networks
@@ -175,8 +175,19 @@ field, as the other one-screen sections do not fill a phone, with 28px under the
 it (measured at 1440 on the release before, so not the day's work): Super's notion.css wraps every column list, and the
 disc column's basis was its content's width. `flex-wrap: nowrap` and a basis of 0.
 
+**Why Stake is 49b, "No boxes, one layer less"** (2026-10-25, the user: "implement 49b"): 49a's cards and body paragraph
+went (the rows' Body emptied in Notion, `backups/why-stake-49b-2026-10-25.json`); the claims are three columns split by
+hairlines under one rule, the figure at 92px, on five rows the columns share — the gallery is one grid and each card's
+content a subgrid of it — so the figures, names, leads, graphics and caption lines align across them. Each graphic
+stretches to its row (the meter and the bars to the dots' height, or the dots' row to the bars' as the columns narrow);
+the open year fills a twelfth per month (home.js). The space under the head is 22vh, 40–220px. Stacked under 960, each
+column capped at 520; under 760 the heading is 34px. Our head keeps the lead full width (the user's rule), so the band
+fits 1440×900 where the design's runs to 989px; it is 845px at 1280×720 and 847 at 1024×768, still a stop. A rule outside
+home.css zeroes the graphic's margin and holds it at its own height (cross-origin, not readable from the page), so
+home.css sets both by id.
+
 **Why Stake is one screen above 1024px** (2026-10-24, the user: "make this full height page too Three things worth
-checking."): where its three cards sit in a row the band is `min-height: 100vh` with its content centred, as Services was until 42w, and
+checking."; since 49b at every width, `min-height: 100svh`): the band is one screen with its content centred, as Services was until 42w, and
 home.js settles on its top. Narrower, the cards stack and it runs 1.8 screens (1024×768), so **home.js's one-screen list
 now skips any section over 1.25 screens tall**: settling a reader back to the top of a section they are halfway down is a
 trap. Measured at 1024×768, 1280×720, 1366×768, 1440×900 and 1920×1080, the other four stay at 1.00–1.08.

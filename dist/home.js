@@ -1376,12 +1376,13 @@
 
 
 /* ─────────────────────────────────────────────────────────────────────────────────────────────
-   Homepage Why Stake — design "Why Stake", 49a: WHY STAKE GRAPHICS.
+   Homepage Why Stake — design "Why Stake", 49b (49a's graphics): WHY STAKE GRAPHICS.
 
-   Each claim card gets a small data graphic, by position in the Notion gallery:
+   Each claim's column gets a small data graphic, by position in the Notion gallery:
      1  one dot per network — the count of cards in the homepage Networks gallery, filled in the
         pastels, on a 10-wide grid with the rest of the row left as open rings
-     2  a year meter — one segment per year from 2020 to now, the current year left open
+     2  a year meter — one segment per year from 2020 to now, the current year open and filled a
+        twelfth for each month of it so far (49b)
      3  one bar per chain — twelve bars of varying height (commission differs by chain)
 
    DERIVED FIGURES (the user's explicit choice, so they never go stale): the first card's
@@ -1419,12 +1420,18 @@
     return g;
   }
 
-  function meter(now) {
+  function meter(now, month) {
     var g = span("enc-why__meter");
     for (var y = START; y <= now; y++) {
       var s = span("enc-why__year");
       s.title = String(y);
-      if (y === now) s.setAttribute("data-open", "");
+      if (y === now) {
+        s.setAttribute("data-open", "");
+        var f = span("enc-why__fill");
+        f.style.width = (100 * (month + 1) / 12).toFixed(2) + "%";
+        f.style.background = TINTS[(y - START) % TINTS.length];
+        s.appendChild(f);
+      }
       else s.style.background = TINTS[(y - START) % TINTS.length];
       g.appendChild(s);
     }
@@ -1472,8 +1479,8 @@
     // count from the new "Networks set" where it is on the page, the old gallery otherwise
     var netBox = document.getElementById(SET_DB) || document.getElementById(NETWORKS);
     var nets = fromSet || (netBox ? netBox.querySelectorAll(".notion-collection-card").length : 0);
-    var now = new Date().getFullYear();
-    var sig = nets + "|" + now;
+    var date = new Date(), now = date.getFullYear(), month = date.getMonth();
+    var sig = nets + "|" + now + "|" + month;
 
     Array.prototype.forEach.call(cards, function (card, i) {
       var content = card.querySelector(".notion-collection-card__content");
@@ -1484,7 +1491,7 @@
         var wrap = span("enc-why__graphic");
         wrap.setAttribute("data-sig", sig);
         wrap.setAttribute("aria-hidden", "true");
-        wrap.appendChild(i === 0 ? tally(nets) : i === 1 ? meter(now) : bars());
+        wrap.appendChild(i === 0 ? tally(nets) : i === 1 ? meter(now, month) : bars());
         content.appendChild(wrap);
       }
       if (i === 0 && nets) setText(card.querySelector(CAPTION_RIGHT), nets + " secured");
