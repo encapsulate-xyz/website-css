@@ -171,7 +171,8 @@ User rules that stand on every task:
 
 | File | What | Loaded from |
 |---|---|---|
-| `main.css` | site-wide styles, no `#block-…` ids | site Head |
+| `main.css` | site-wide styles, no `#block-…` ids | site Head, inside `dist/site.css` |
+| `dist/site.css` (built), `fonts.css`, `fonts/`, `vendor/minima.min.css` | the site head's one stylesheet, made by build.py: Super's theme, main.css, post.css, blog.css, guide.css, chain.css, notfound.css and the fonts, in that order. `fonts.css` is Google Fonts' stylesheet for the site's four families as Google serves it to a current browser, every subset, pointing at `fonts/` (the same files, renamed; OFL licences beside them). A new weight or family: fetch Google's stylesheet again with a current Chrome's user agent and redo `fonts.css` and `fonts/` (2026-10-26) | site Head |
 | `navbar.js` | the bar's panels — design *Navbar 4f Page*; Super still owns the menu — and, under 960px, the compact bar's Menu button and sheet | site Head |
 | `booking.js` | the booking drawer — every "Book a call" on the site, except /contact-us | site Head |
 | `footer.js` | footer 44b, built inside Super's footer | site Head |
@@ -265,7 +266,7 @@ Note: `git commit` also commits anything the user has staged — check `git stat
 
 | File | Paste into (replace everything) |
 |---|---|
-| `head/site.html` | Super → Settings → Code → Head (minima, main.css, navbar.js, footer.js, covers.js, fonts) |
+| `head/site.html` | Super → Settings → Code → Head (site.css — minima, main.css, the page sheets and the fonts in one file — and every script) |
 | `head/site-body.html` | Super → Settings → Code → Body (temporary "under reconstruction" banner) |
 | `head/home.html` | Homepage → Code → Head (CSS only — home.js is in the site head) |
 | `head/networks.html` | /networks → Code → Head (view-picker + network.css; network.js is in the site head) |
@@ -307,8 +308,12 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
 
 ### Site Head notes (audited 2026-09-14)
 
-- **minima.min.css is required** — Super does not load its theme itself on this site.
-- Fonts rendered: Outfit, Hanken Grotesk, JetBrains Mono, Architects Daughter. Manrope went with the old slide-out
+- **minima.min.css is required** — Super does not load its theme itself on this site. Since 2026-10-26 it is inside
+  `dist/site.css`, first, as it was first in the head: build.py fetches Super's copy at every build into
+  `vendor/minima.min.css` (it says when Super changed it) and bundles it with main.css, post, blog, guide, chain,
+  notfound and `fonts.css`, in the order the head linked them (`docs/audit.md`, "The first paint").
+- Fonts rendered: Outfit, Hanken Grotesk, JetBrains Mono, Architects Daughter — **served from this repo since
+  2026-10-26** (`fonts.css` + `fonts/`, inside site.css; no Google Fonts link any more, so none goes back in a head). Manrope went with the old slide-out
   menu (2026-09-22). Arial Black, Georgia, Verdana, Monaco are system fonts. **Inter is not in the design**: Super's
   font variables are Hanken Grotesk (main.css §02), and Super's theme font — which it preloads on every page but
   nothing draws — is Geist, the smallest of its 68 (69 KB against Inter's 205; `docs/audit.md`, "Super's theme font").
