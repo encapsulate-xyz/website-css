@@ -1235,6 +1235,9 @@
     }
     rest();
     if (list.length) {
+      // one picture of the networks, named: a label on a plain div is not allowed (Lighthouse's Agentic Browsing
+      // failed /services on it, 2026-10-25); the glyphs inside carry no alt of their own
+      tiles.setAttribute("role", "img");
       tiles.setAttribute("aria-label", list.map(function (x) { return x.name; }).join(", "));
       box.appendChild(tiles);
       box.appendChild(foot);

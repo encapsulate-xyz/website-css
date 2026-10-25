@@ -70,7 +70,9 @@
       var a = el("div", "enc-inv__mark");
       a.setAttribute("data-enc-i", String(i % 5));
       if (clone) a.setAttribute("aria-hidden", "true");
-      else { a.setAttribute("tabindex", "0"); a.setAttribute("aria-label", m.name); }
+      // a mark is a named picture you can focus for its details: a label on a plain div is not allowed (Lighthouse's
+      // Agentic Browsing failed /investments on it, 2026-10-25)
+      else { a.setAttribute("tabindex", "0"); a.setAttribute("role", "img"); a.setAttribute("aria-label", m.name); }
       if (m.src) {
         var img = el("img");
         img.src = m.src;
