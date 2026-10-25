@@ -253,7 +253,7 @@ these are what shows before that read lands, and what a crawler reads. Find them
 
 ## Converting a guide — the run (the team adds the captures, I write the words)
 
-Done this way for Axelar, Sui, Espresso, Monad, Terra, Agoric, NEAR, Lumera, Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina and Starknet (Ready X and Braavos); the
+Done this way for Axelar, Sui, Espresso, Monad, Terra, Agoric, NEAR, Lumera, Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina, Starknet (Ready X and Braavos) and Zilliqa; the
 user asked for it written down on 2026-10-08. A guide is converted once its step database holds one capture per
 step; the team names the steps, the words are mine.
 
@@ -293,6 +293,7 @@ step; the team names the steps, the words are mine.
       | the IOTA Wallet extension + the IOTA explorer | 7 | IOTA — its popup is 360 × 600, so its captures are 720 × 1200 and its guide has a 360:600 frame of its own (guide.css, `#page-guides-iota`) |
       | Voyager's staking dashboard + the Ready X extension | 9 | Starknet — the Reward address is filled with the connected wallet; our staker address finds only us in the search |
       | Voyager's staking dashboard + the Braavos extension | 9 | Starknet's second guide — the side panel's own Approve, Sign and Transaction completed screens |
+      | Zilliqa's staking portal + the Bearby extension | 8 | Zilliqa — our pool is on the Liquid tab (encapZIL); Bearby labels our delegation contract Unknown |
       | the Auro Wallet extension | 9 | Mina — its popup is 375 × 596, captures 750 × 1192, a 375:596 frame of its own (`#page-guides-mina`); no amount, Mina delegates the whole balance |
 
 - [ ] **The guide's wallet follows the captures**: its Name ("Stake <TOKEN> with <wallet>"), its Wallet Set and the

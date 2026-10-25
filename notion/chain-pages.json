@@ -1757,7 +1757,7 @@
    "compounding": "Auto",
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block, about a second.",
    "wallet": {
-    "label": "Delegate with MetaMask",
+    "label": "Delegate with Bearby",
     "url": "https://www.notion.so/222e800a51388005afc7c0a055a60839",
     "guide": "/guides (ZILLIQA)"
    },

@@ -20,7 +20,7 @@ close #done (anchors.js, 2026-10-23 — `docs/paths-and-404.md`, "Section names"
 | The crumb, "Watch out", "{N} screens", the close band, the Discord line | the **"Guide page copy" toggle on /guides**, `key · value` lines — one place for 33 guides. `{n}` is the step count, `{N}` the same spelled ("Eight screens"), `{next}` and `{chain}` the next guide |
 
 **Converted guides so far: Axelar, Sui (ten steps, SuiVision + Slush), Espresso, Monad (below), Terra, Agoric, NEAR, Lumera,
-Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina and Starknet twice** (2026-10-22: Starknet, nine steps on Voyager's
+Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina, Starknet twice and Zilliqa** (2026-10-22: Starknet, nine steps on Voyager's
 Staking Dashboard (voyager.online) with the **Ready X** extension — Ready's browser wallet, once Argent X; "Ready X" is
 its name in the Chrome Web Store and in Voyager's wallet list, so the guide is "Stake STRK with Ready X" (the team had
 named it "Ready") and the Wallet Set has a Ready X row since that day, its glyph made with `make_glyph.py` from the
@@ -33,6 +33,18 @@ hour, Claim or Restake — and the 7-day withdrawal (`chain-pages.json`). The fi
 unlock the team's wallet was already connected to voyager.online, so a first-time reader's connection request had no
 step; the team added it the same day as step 4, Ready X's "Connect to Voyager" (the site, the account, what the site
 may do), and the row went to Step 9, Time 4, "Nine steps…". The captures are the house sizes (720 × 1576, 2800 × 1576). Old values `backups/stake-strk-with-ready-guide-2026-10-22.json`
+
+**Zilliqa (2026-10-25): "Stake ZIL with Bearby", eight steps on Zilliqa's staking portal (stake.zilliqa.com) with the
+Bearby extension** (bearby.io). Our pool is on the portal's Liquid tab, as Encapsulate with its token encapZIL; steps 6
+and 8 link `https://stake.zilliqa.com/?poolId=MHgxMzEx`, which opens our panel (the pool id is base64 of 0x1311). Step
+7's Watch is the delegation contract as a press-to-copy, `0x1311059DD836D7000Dc673eA4Cc834fe04e9933C` (the Networks
+set's Address): Bearby's confirm sends the ZIL there and labels it Unknown. Step 8: rewards compound into encapZIL
+every block, nothing to claim, and the unstake is claimed about 6 days later (the chain page's figure; the portal says
+~7 days). The row came with "Enght steps across the Bearby extension and its dashboard" and Time 3; the chain page's
+button said "Delegate with MetaMask" (now Bearby, `chain_pages.py --buttons Zilliqa`). Bearby was the one Wallet Set row
+without a glyph: made with `make_glyph.py` from bearby.io's `favicon.svg` (a white paw on a gradient disc, rasterised
+with ImageMagick, badge mode, 10.1%). The script needs numpy and Pillow, which the system Python lacks: a venv in the
+scratchpad. Captures at the house sizes. Old values `backups/stake-zil-with-bearby-guide-2026-10-25.json`
 
 **Starknet has a guide per wallet since 2026-10-23: Ready X and Braavos.** The team made "Stake STRK with Braavos" by
 duplicating the Ready X row, with its own nine captures (the Braavos side panel at 720 × 1576: Login, "dApp Connection"
