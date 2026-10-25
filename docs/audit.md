@@ -268,3 +268,74 @@ serves this repo's `dist/main.css` for the pinned one. `fbdebug.mjs` (VW=, MODES
 blocked) prints the hero's heights and the font each line is drawn in; `fontsused.mjs` (PAGES=) compares every font
 drawn on loaded pages. Remove fonts inside the container (`rm -rf /usr/share/fonts/truetype/liberation*; fc-cache -f`)
 to test another fallback. **Re-measure the faces when the fonts, their weights or the headings change.**
+
+## The first paint (2026-10-26, v411–v412)
+
+The user: "audit if you can make any other peformance improvement to make the website score better o both, but make
+sure there is no noticable change as a user no layput change no change in how it works for user, i need it to score
+above 90 in both". Before (PageSpeed, the homepage, v410): phone **51**; desktop **90** at v407 (above), 75 in
+Lighthouse 13.5 on the Mac.
+
+**What held the first paint.** Eight stylesheets from three servers, each render-blocking: Super's theme
+(`minima.min.css`, sites.super.so), main.css and the five page sheets the site head carries (post, blog, guide, chain,
+notfound; jsDelivr), and Google Fonts' stylesheet (fonts.googleapis.com) with its fonts on a fourth (fonts.gstatic.com).
+PageSpeed put minima at 1.2 s and Google's stylesheet at 1.05 s of the phone's render-blocking time; in Lighthouse's model
+each server costs a connection and its own latency (gstatic 1.4 s on one phone run). And the homepage's largest paint was
+the hero's `<video>`, which Lighthouse timed by the whole 1.3 MB file.
+
+**What the floor is.** Lighthouse on the Mac with things blocked one set at a time (phone / desktop): today 57 / 75; our
+scripts blocked 62 / 84; the loop blocked 57 / 87; Super's scripts blocked 67 / 97; all three 71 / 96; **everything but
+Super's HTML and CSS** (our files, the fonts, minima, Geist, every image, Super's scripts and the loop) **79** / 97, with
+the phone's FCP still 3.2 s and LCP 4.3 s. Super's own page cannot score 90 on the phone.
+
+**Done, v411 — nothing on screen changes:**
+- **`dist/site.css`, one stylesheet** from the server the scripts already come from: Super's minima (vendored in
+  `vendor/minima.min.css`, fetched again at every build — build.py says so when Super has changed it, and uses the copy
+  offline), main.css, the five page sheets and fonts.css, in the order the head linked them. 262 KB, 25 KB brotli.
+  head/site.html links it in place of the eight, with no Google preconnects.
+- **The fonts are served from the repo** (`fonts.css`, `fonts/`): the 24 @font-face rules Google serves a current Chrome,
+  every subset and unicode-range, `font-display: swap`, the same 14 woff2 files under names that say what they are, and
+  their OFL licences. No Google Fonts link goes back in a head.
+- **The loop's still is its poster too, and the file is asked for after the first paint** (home.js `loop()`): the poster
+  is home.css's own still by the stylesheet's address, and `autoplay`, `preload=auto` and `play()` wait for a frame.
+  Lighthouse now times the still (37 KB).
+
+**Checked:** 14 pages (/, /networks, /networks/sui, /guides, /guides/sui, /blog, /blog/monad-l1-scaling, /governance,
+/security, /services, /investments, /contact, /brand, /privacy-policy) at 390 and 1440, each loaded twice with the old
+head and once with the bundle (the page's own HTML rewritten, `perf/xform.py`), full-page with reduced motion: every
+base/base pair 0 px apart, and every base/bundle pair 0 px but one — the post's Menu button border at 390, 160 px, a
+0.16 s border transition caught mid-way by the capture's resize, 0 px with transitions off. The same fonts drawn. Live:
+all 114 sitemap pages 200, on site.css v411, with no minima, main.css, page-sheet or Google Fonts link.
+
+**After (PageSpeed):** homepage phone **60, 62** (FCP 4.2 / 2.7 s, LCP 8.7 / 8.5 s, TBT 160 / 340 ms, CLS 0.003, SI
+6.0 / 4.2 s); homepage desktop **95, 83, 94** (FCP 0.6 s, LCP 1.0–1.1 s, TBT 150 / 340 / 160 ms, CLS 0, SI 0.9–1.0 s);
+/networks desktop **96**; /blog/monad-l1-scaling desktop 82, then v412.
+
+**v412, a post's head mark** (`docs/blog.md`, "The mark goes in with the head"): the post's largest paint waited for
+post.js to fetch /blog (500 KB) before it was given its file, then loaded a 47 KB PNG from Super's asset host (desktop:
+load delay 1,230 ms, load 750 ms). It now takes the file from the post's own card when Super's page data names it as the
+row's, and draws it from Super's image service (3 KB AVIF, the same 600 px glyph; within 3/255 on screen). After: delay
+560 ms, load 60 ms, **desktop 90** (LCP 1.7 s).
+
+**Why the phone stays near 60.** Lighthouse's phone LCP is every request that **finished before the paint it saw**,
+replayed at 1.6 Mbps with a 4× slower CPU. On PageSpeed's own fast load the hero's still is in by 0.3 s but painted at
+2.4 s, once the CPU is free — by then Super's ~600 KB of script chunks have arrived, and the model replays them all:
+8.5–8.7 s whatever we do. (The still paints within 30 ms of arriving in every throttled run here, with home.js early,
+late or blocked — the poster attribute was never the wait.) FCP counts only the render-blocking requests (2.7–4.2 s: the
+document, the stylesheets, and parsing an 889 KB page). With LCP at ~8.5 s the phone's ceiling is about 65.
+
+**The desktop's swing is Total Blocking Time**, and most of it is Super's: its main chunk hydrating (two tasks of 222
+and 178 ms on the 83 run) and the full relayout after its second draw of the page. Ours, on that run: home.js 131 ms,
+governance.js 60, footer.js 60 — and most of their time is that same relayout (1,300–1,500 boxes, 90–110 ms at 4× CPU),
+which a read in our frame only moves earlier: without the read it lands in the same frame. **Held back:**
+- the 30 page-wide `:has()` rules in site.css (`body:has(` ×14, `html:has(` ×6, `.super-content:has(` ×4…), which make
+  nearly every style pass re-match ~1,100 elements, even for one attribute on the navbar — the same rules as before the
+  bundle; rewriting them so they match exactly what they match now is a refactor, not a speed fix;
+- reordering the head's scripts, or holding them until after the first paint: sections the scripts build would come a
+  frame later (the navbar's Menu button among them, a layout shift);
+- the navbar's `ground()` and home.js's frame reads (the v407 list above).
+
+**Measuring:** judge by PageSpeed, not by Lighthouse on the Mac: there the model's per-server latency swung from 0.2 s to
+4.3 s (jsDelivr) and 0.25 s to 1.7 s (Super) between consecutive runs, and the phone score from 54 to 71. To see what
+holds a paint, record the paint entries from the first moment of the page (`livecheck.mjs` with `PRELOAD=`), and read
+Lighthouse's own model (`@paulirish/trace_engine/models/trace/lantern/metrics`) before guessing what it counts.

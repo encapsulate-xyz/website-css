@@ -419,7 +419,9 @@ PNGs (25–69KB); network.js, covers.js, footer.js and navbar.js each ask `/_nex
 or WebP; 75 is the only quality it accepts) through a `sized(url, w)` helper, at least twice the drawn size: the
 closing band's rows and the footer 256, the cover field 384, the stage 640, the navbar 128; the lens already used 128.
 Checked side by side at 2× against the originals (mean difference under 0.6/255, the finest stripes identical).
-/networks went from 39 originals (~960KB) to none. SVGs and anything off Super's asset host pass through. **The
+/networks went from 39 originals (~960KB) to none. SVGs and anything off Super's asset host pass through. A post's
+head mark too since v412 (post.js `markSrc`, w=828: drawn up to 760px from a 600px glyph, and the service never
+enlarges, so it is the same 600px mark, 47KB PNG → 3KB AVIF; on screen within 3/255). **The
 favicon is `img/favicon-512.png`** (39KB, uploaded in Super → Settings → Site favicon on 2026-09-29; it was a 4097px,
 202KB PNG loaded on every page). The homepage's Organization logo still points at the old 4097px file, which Super keeps.
 

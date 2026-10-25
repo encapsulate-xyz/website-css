@@ -78,6 +78,15 @@ no contents block.
 item page.** They are read from `/blog`, which does render them on its cards — one fetch, cached,
 and the page still builds without it. The same fetch gives the next post.
 
+**The mark goes in with the head when the page itself can name it (2026-10-26, v412).** It is the post's largest paint,
+and waiting for /blog (a 500 KB page) held it 1.2 s on PageSpeed (desktop 82). The post's own card is in its "More Blog
+Posts" collection, but that view shows the row's Cover on 34 of 38 posts and the **page's own cover** (an old picture)
+on four of the oldest — celestia-testnet-log-analysis, governance-bot-improvements, zexe, zk-snarks. So the card's file
+is taken only when Super's page data names it as one of the row's files (`rowFile`: `imgSrc":"<url>`, which a page cover
+never is); otherwise, and after an in-app navigation (the data is the first page's), the mark waits for /blog as before.
+Checked: the four old posts behave exactly as before (no file until /blog answers, then the glyph, never a swap); four
+hops post → post through the router at 1440 and 390, and /blog → an old and a new post, each end on their own mark.
+
 **Every word is in Notion.** The page's own copy — the rail's ask, the foot's three variants, the
 labels — is a **"Post page copy" toggle on the /blog page**, as `key · value` lines; post.js reads
 them from the index it already fetches, so forty posts share one source, and blog.js marks the
