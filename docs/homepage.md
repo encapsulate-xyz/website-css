@@ -306,3 +306,13 @@ div.notion-form__field.<type>`; dropdown questions still render as radios (drawn
 "Amount" is driven by the slider; choice questions with >6 options become a glyph listbox. React
 inputs: click labels, use the native value setter + `input` event; mark with attributes
 (`[data-enc-…]`), not classes — React resets className.
+
+**The governance section has no pillars since 2026-10-25** (the user: "do we even need the pillar strip on homepage?").
+The four pillars were a strip above the votes (37h's header band, a linked view of the Governance Mechanism database,
+block `3b97079…`); the strip was deleted from the page with its 173 lines of home.css, because /governance draws the same
+four as its quadrant (Read. Weigh. Listen. Step back.). The lede names them in one line instead: "Read, weigh, listen, step
+back: the same four questions before every vote. The six below are the most recent." (it was "The pillars are not a
+separate claim from the record — every vote we have cast went through all four. The six below are the most recent.").
+The heading, the button and the six rows are as they were; the old blocks are in
+`backups/home-governance-pillars-2026-10-25.json`. The user is designing a vote split (Yes / No / Abstain over the
+whole record) for where the strip was.

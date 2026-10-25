@@ -2147,22 +2147,21 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 
 /* --- GOVERNANCE — 37h "ONE OBJECT · PAPER" -------------------------------
 
-   From design file "Governance", 37h. The pillars stop being four pastel cards
-   beside the table and become the table's own header band: four equal tracks
-   with hairline dividers, numbered like column headers, directly above the
-   votes they governed. The table loses its pill-per-cell look: hairline rows,
+   From design file "Governance", 37h. The pillars were the table's header band
+   here until 2026-10-25, when the user took them off the homepage: /governance
+   draws the same four as its quadrant, and the lede names them in one line
+   ("Read, weigh, listen, step back"). The table loses its pill-per-cell look: hairline rows,
    the chain as its glyph in a tinted well (added by home.js), the vote as a
    word with one green dot, dates at full contrast.
 
    THE NOTION STRUCTURE IS KEPT. Heading above; then a two-column list — left
-   the sentence, the pillars gallery and the temple image; right the table and
-   the View Voting History button. Both columns dissolve (display: contents)
-   and their blocks are placed on one grid:
+   the sentence and the temple image; right the table and the View Voting
+   History button. Both columns dissolve (display: contents) and their blocks
+   are placed on one grid:
        sentence  | button
-       pillars (band, full width)
        table (full width)
-   The heading and the sentence keep the site's own type — only the new band
-   and table are drawn to the design.
+   The heading and the sentence keep the site's own type — only the table is
+   drawn to the design.
 
    Removed with this: the old pastel cards with outlined Arial Black numerals,
    the temple line art, the table-to-cards mobile layout and the pill rules. */
@@ -2170,7 +2169,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 #block-e99ac68f4a5848d091bc204578c1ec55 {
   display: grid !important;
   grid-template-columns: minmax(0, 1fr) auto !important;
-  grid-template-areas: "lead cta" "band band" "table table" !important;
+  grid-template-areas: "lead cta" "table table" !important;
   column-gap: 40px !important;
   row-gap: 30px !important;
   align-items: end !important;
@@ -2220,161 +2219,11 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 }
 
 #block-4efab8b5f9e246679a4d719fe3dcd31e { grid-area: cta !important; justify-self: end !important; align-self: end !important; margin: 0 !important; } /* align-self: main.css §07 sets flex-start on every button callout */
-#block-3b97079327e74e15848fb366e3adcbea { grid-area: band !important; margin: 0 !important; }
 #block-4529386b39be4a9aa44d2dbac56537bd { grid-area: table !important; margin: 0 !important; }
 
 #block-f983f663c3e542d3a3f859f6eec33532,
 #block-e99ac68f4a5848d091bc204578c1ec55 .notion-text:empty {
   display: none !important;
-}
-
-/* The band */
-#block-3b97079327e74e15848fb366e3adcbea .notion-collection-gallery {
-  display: grid !important;
-  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  gap: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border-top: 1px solid #000000 !important;
-  border-bottom: 1px solid #E2E2DB !important;
-  /* no bleed: the rows below it sit on the column now (main.css §13d), so the band's old 14px
-     bleed left its rules sticking out past the heading and the table (2026-10-25) */
-}
-
-#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card {
-  display: flex !important;
-  flex-direction: column !important;
-  margin: 0 0 -1px !important; /* the 2px hover rule sits over the band's bottom hairline */
-  padding: 20px 20px 18px !important;
-  border: 0 !important;
-  border-left: 1px solid #E2E2DB !important;
-  border-bottom: 2px solid transparent !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  overflow: visible !important;
-  transition: background-color 0.16s ease, border-color 0.16s ease !important;
-}
-
-#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:first-child {
-  padding-left: 0 !important;   /* on the measure, as the rows are */
-  border-left: 0 !important;
-}
-
-/* Hover: the track becomes a pastel field — green ground, its divider a step
-   of the green, and a 2px green rule along its foot. */
-/* No hover on a pillar: the handoff's pillarBand has none — the four are a statement, not four
-   controls, and nothing in them is clickable. The green wash and its foot rule went on
-   2026-09-19 with the pastel wells. */
-
-#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card__content {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 9px !important;
-  padding: 0 !important;
-}
-
-/* The number: "1" in Notion, drawn as 01 in a 20px well, with a PILLAR label
-   beside it. Hovering the track lights the well green. */
-#block-3b97079327e74e15848fb366e3adcbea .notion-property__title {
-  position: relative !important;
-  display: flex !important; /* not grid: the "0" and the digit are two items and grid stacked them */
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 0 !important; /* Super gives .notion-property a 4px gap, which split "0" from the digit */
-  width: 20px !important;
-  height: 20px !important;
-  min-height: 0 !important; /* Super floors properties at 24px */
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 999px !important;
-  background: #E2E2DB !important;
-  transform: none !important;
-  font-family: var(--type-mono) !important;
-  font-size: 9.5px !important;
-  font-weight: 400 !important;
-  line-height: 1 !important;
-  letter-spacing: 0 !important;
-  color: #3A3D38 !important;
-  -webkit-text-stroke: 0 !important;
-  text-shadow: none !important;
-  transition: background-color 0.16s ease, color 0.16s ease !important;
-}
-
-#block-3b97079327e74e15848fb366e3adcbea .notion-property__title::before {
-  content: "0";
-}
-
-#block-3b97079327e74e15848fb366e3adcbea .notion-property__title::after {
-  content: "Pillar";
-  position: absolute;
-  left: calc(100% + 9px);
-  top: 50%;
-  transform: translateY(-50%);
-  white-space: nowrap;
-  font-size: 9.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #6B6F68;
-}
-
-#block-3b97079327e74e15848fb366e3adcbea .notion-property__title > * {
-  display: contents !important;
-}
-
-/* The number's well takes the pastel cycle, one tint per pillar (handoff "Governance Record",
-   pillarBand: `backgroundColor: P[i % 5]`) — it was a single grey well before. On hover the track
-   washes green, so the well inverts to paper rather than keeping a tint that would disappear
-   into the wash. */
-
-#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:nth-child(1) .notion-property__title {
-  background: #DCEEC7 !important;
-  color: #000000 !important;
-}
-
-#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:nth-child(2) .notion-property__title {
-  background: #F8E8B3 !important;
-  color: #000000 !important;
-}
-
-#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:nth-child(3) .notion-property__title {
-  background: #D2E3F6 !important;
-  color: #000000 !important;
-}
-
-#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:nth-child(4) .notion-property__title {
-  background: #F8DDC6 !important;
-  color: #000000 !important;
-}
-
-#block-3b97079327e74e15848fb366e3adcbea .notion-property__text.property-747e7c6c {
-  margin: 0 !important;
-  padding: 0 !important;
-  font-family: var(--type-display) !important;
-  font-weight: 600 !important;
-  font-size: 16.5px !important;
-  line-height: 1.16 !important;
-  letter-spacing: -0.018em !important;
-  color: #000000 !important;
-}
-
-/* The pillar's description (the second text property): body, pinned to the
-   foot of the track so the four read level. */
-#block-3b97079327e74e15848fb366e3adcbea .notion-property__text.property-62485b44 {
-  margin: auto 0 0 !important;
-  padding: 0 !important;
-  font-family: var(--type-body) !important;
-  font-weight: 400 !important;
-  font-size: 13px !important;
-  line-height: 1.46 !important;
-  letter-spacing: 0 !important;
-  color: #3A3D38 !important;
-  white-space: normal !important;
-}
-
-#block-3b97079327e74e15848fb366e3adcbea .notion-collection-card__content {
-  flex: 1 1 auto !important;
 }
 
 /* The table is the record's rows since 2026-09-26: governance.js builds it and main.css §13d draws
@@ -2383,24 +2232,14 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   display: none !important;
 }
 
-/* Narrow: everything stacks, the band goes two by two, the table scrolls. */
+/* Narrow: everything stacks, the table scrolls. */
 @media (max-width: 900px) {
   #block-e99ac68f4a5848d091bc204578c1ec55 {
     grid-template-columns: minmax(0, 1fr) !important;
-    grid-template-areas: "lead" "cta" "band" "table" !important;
+    grid-template-areas: "lead" "cta" "table" !important;
     row-gap: 22px !important;
   }
   #block-4efab8b5f9e246679a4d719fe3dcd31e { justify-self: start !important; }
-  #block-3b97079327e74e15848fb366e3adcbea .notion-collection-gallery {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  }
-  #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:nth-child(3) {
-    padding-left: 0 !important;
-    border-left: 0 !important;
-  }
-  #block-3b97079327e74e15848fb366e3adcbea .notion-collection-card:nth-child(n+3) {
-    border-top: 1px solid #E2E2DB !important;
-  }
 }
 
 /*********************************************/
