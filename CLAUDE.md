@@ -156,7 +156,7 @@ User rules that stand on every task:
 | `blocks.js` | Notion's generic blocks (design *Blog Article Blocks*): the code block's line numbers, prompts, colours, kicker and copy tick — the rest of the four blocks is main.css §12–13. Also the site's one link rule: a link to another site opens in a new tab | site Head |
 | `home.css`, `home-dial.css`, `home.js` | homepage sections, JS-enhanced styles, homepage scripts | homepage Head |
 | `brand.css`, `brand.js` | /brand — four spreads with a sticky rail, the marks slab, the colour band (design *Brand Page*) | page Head + site Head |
-| `blog.css`, `blog.js` | /blog — the index (design J); blog.js builds each card's cover and its band span, and is loaded from the site head | page Head + site Head |
+| `blog.css`, `blog.js` | /blog — the index (design J); blog.js builds each card's cover and its band span. Both in the site head since 2026-10-25, so the index is styled from the frame Super swaps it in (`docs/blog.md`) | site Head |
 | `post.css`, `post.js` | /blog/&lt;post&gt; — every post page (design *Blog Post Page*, variant J). A post has no page head of its own, so both are in the site head and scoped by path | site Head |
 | `chain.css`, `chain.js` | /networks/&lt;chain&gt; — the 28 chain pages (design *Chain Page Combined*), built from each Networks set row page. Site head, scoped by `[data-enc-chain]` | site Head |
 | `notion/chain-pages.json`, `scripts/chain_pages.py` | each chain page's words and facts, researched per chain (sources, notes, how "since" was found), and the writer that puts them into the row pages | — |
@@ -241,7 +241,7 @@ Note: `git commit` also commits anything the user has staged — check `git stat
 | `head/home.html` | Homepage → Code → Head (CSS only — home.js is in the site head) |
 | `head/networks.html` | /networks → Code → Head (view-picker + network.css; network.js is in the site head) |
 | `head/governance.html` | /governance → Code → Head (the page was /governance-record until 2026-09-28) |
-| `head/blog.html` | /blog → Code → Head (blog.css; blog.js is in the site head) |
+| `head/blog.html` | /blog → Code → Head (its canonical line; blog.css and blog.js are in the site head since 2026-10-25) |
 | `head/brand.html` | /brand → Code → Head (brand.css; brand.js is in the site head) |
 | `head/contact-us.html` | /contact → Code → Head (the page was /contact-us until 2026-09-28) |
 | `head/guides.html` | /guides → Code → Head (view-picker + guides.css) |

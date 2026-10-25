@@ -309,10 +309,15 @@
     gallery.setAttribute("data-enc-index", "");
   }
 
-  var t = 0;
+  /* an index not built yet is built on the next frame, not once the page goes quiet: that left
+     Super's own cards up for 270–280ms after a client-side navigation back to /blog (blog.css
+     hides them until the build, 2026-10-25). A later change to the cards still rebuilds. */
+  var t = 0, f = 0;
   new MutationObserver(function (muts) {
     if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-post__cover"); })) return;
     clearTimeout(t); t = setTimeout(build, 120);
+    var g = !f && document.getElementById(GALLERY);
+    if (g && !g.hasAttribute("data-enc-index")) f = requestAnimationFrame(function () { f = 0; build(); });
   }).observe(document.body, { childList: true, subtree: true });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
   else build();

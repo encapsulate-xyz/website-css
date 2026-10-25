@@ -1,6 +1,19 @@
-/* /blog — page-level CSS, linked from that page's Code → Head (head/blog.html).
+/* /blog — linked from the SITE head since 2026-10-25 (it was the page's own head, head/blog.html),
+   so its rules are on the page before Super swaps /blog in: arriving from a post, the index's
+   first frame had none of them. So nothing here may reach another page — every rule is scoped to
+   the index's gallery, a block id of its own, or the page's class (`page__blog`).
    Moved from the page's Code panel 2026-09-15. The old cover rules (page-covers/blog.avif behind the
    first callout, .direct-parent, .super-content) were removed: the cover is main.css §14 + covers.js. */
+
+/* ── no raw Notion before the build (2026-10-25) ── Super's own cards came up for 270–280ms after a
+   client-side navigation to /blog, until blog.js had built the index. The gallery is hidden from
+   the first frame by the class Super renders on the index, and shown again after 3s if the build
+   never comes, so a failed script cannot leave the page empty. blog.js builds on the next frame. */
+.super-content.page__blog #block-a148eb7f8ea94b95b7725809fef9e0dc:not([data-enc-index]) {
+  visibility: hidden;
+  animation: enc-bl-reveal 0s linear 3s forwards;
+}
+@keyframes enc-bl-reveal { to { visibility: visible; } }
 
 /* ── THE INDEX — design "Blog Index Layouts", J "A stated rhythm, then rows of three" ──────────
    (2026-10-25 pass: the covers on #2A2C28, the category grey beside the date, the ring inside the
@@ -333,12 +346,12 @@ Other styles
 *********************************************/
 
 /* Hiding the icon wrapper of the title property. */
-.notion-property__title__icon-wrapper {
+:where(.super-content.page__blog) .notion-property__title__icon-wrapper {
   display: none!important;
 }
 
 /* Adjusting the font-size, border-radius, padding and border of the notion pill. */
-.notion-pill {
+:where(.super-content.page__blog) .notion-pill {
   margin-top: 8px!important;
   padding-top: 2px!important;
    padding-bottom: 2px!important;
@@ -400,15 +413,15 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 3. For images within elements with class .notion-column, it ensures they are fully visible within their parent container. It sets their maximum width to 100%, their height to auto (maintaining aspect ratio), makes them block elements, and centers them horizontally.
 */
 @media (max-width: 1024px) {
-  .notion-column-list:first-of-type {
+  :where(.super-content.page__blog) .notion-column-list:first-of-type {
     flex-direction: initial !important;
   }
-  .notion-column {
+  :where(.super-content.page__blog) .notion-column {
     width: 100% !important;
     -webkit-margin-start: 0 !important;
     margin-inline-start: 0 !important;
   }
-  .notion-column .notion-image {
+  :where(.super-content.page__blog) .notion-column .notion-image {
     max-width: 100%;
     height: auto;
     display: block;
@@ -418,7 +431,7 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 
 }
 @media (max-width: 1240px) {
-.notion-embed__container__wrapper {
+:where(.super-content.page__blog) .notion-embed__container__wrapper {
     height: 320px!important;
 }
 }
@@ -427,14 +440,14 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
 /********************************************/
 /* ENABLE POINTER EVENTS FOR BLOG DATABASE */
 /********************************************/
-.notion-collection-card.gallery a {
+:where(.super-content.page__blog) .notion-collection-card.gallery a {
   pointer-events: auto!important;
 }
 /********************************************/
 
 /* the post pages read their words from a "Post page copy" toggle on this page; blog.js marks it
    and it is data, not a section to read (post.css + post.js, 2026-09-21) */
-.notion-root .notion-toggle[data-enc-copy] { display: none !important; }
+:where(.super-content.page__blog) .notion-root .notion-toggle[data-enc-copy] { display: none !important; }
 
 /* ── THE RESPONSIVE AUDIT (2026-09-26) ────────────────────────────────────────────────────────── */
 

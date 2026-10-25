@@ -6,6 +6,19 @@
 
    Super's own page header is hidden: the post's title is the head. */
 
+/* ── no raw Notion before the build (2026-10-25) ── a post came in as Super's raw blocks for
+   200–280ms after a client-side navigation, until post.js had built it. It is hidden from the
+   first frame by the class Super renders on every post (its parent, parent-page__blog — server
+   side too), and shown again after 3s if the build never comes, so a failed script cannot leave a
+   blank page. post.js builds on the next frame; on a cold load, at the scripts, 50–90ms after the
+   first paint. */
+.super-content.parent-page__blog .notion-root:not([data-enc-post]),
+.super-content.parent-page__blog:not(:has(.notion-root[data-enc-post])) .notion-header {
+  visibility: hidden;
+  animation: enc-po-reveal 0s linear 3s forwards;
+}
+@keyframes enc-po-reveal { to { visibility: visible; } }
+
 /* ── what the design does not draw ── */
 .notion-root[data-enc-post] [data-enc-source] { display: none !important; }
 body:has(.notion-root[data-enc-post]) .notion-header { display: none !important; }

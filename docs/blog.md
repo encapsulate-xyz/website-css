@@ -3,6 +3,27 @@
 Part of the notes for website-css, moved out of `CLAUDE.md` on 2026-10-08 as they were. `CLAUDE.md` holds
 what every task needs and the index of these files.
 
+## No raw Notion between pages (2026-10-25, the user: "fix it")
+
+Going between /blog and a post showed Super's raw blocks for 200–280ms: post.css and blog.css style only what
+post.js and blog.js have marked (`data-enc-post`, `data-enc-index`), and both built 120ms after the page went
+quiet. Three changes, measured with real clicks at 1440 and 390 (live before: raw for 200–266ms on every
+navigation; after: hidden one frame, 10–20ms, then built):
+
+- **Hidden until built, by Super's own page class**, which is in the first frame and in the served HTML:
+  `parent-page__blog` on every post (post.css hides `.notion-root` and the header), `page__blog` on the index
+  only (blog.css hides the gallery block). A 3s CSS reveal shows the raw page if a script never comes; a cold
+  load builds 50–90ms after the first paint, so it only matters on a failure. The chain pages do the same at 5s.
+- **Built on the next frame** while the page is unbuilt — every post is whole in the first frame Super swaps in
+  (five posts recorded frame by frame: same block count, contents and collection in every frame before the
+  build). The 120ms quiet rebuild stays for later changes.
+- **The links post.js builds go through Super's router** — All posts, the next post, the chain's page — as
+  navbar.js does; they reloaded the whole site.
+- **blog.css is in the site head** (it was /blog's own head, which Super only fetches when /blog swaps in, so
+  arriving from a post the index's first frame had none of it). Everything in it is scoped to the index: its
+  gallery's id, a block id, or `:where(.super-content.page__blog)` on the old Code-panel rules (`.notion-pill`,
+  the columns, the embeds), which kept their specificity. head/blog.html is now its canonical line alone.
+
 ## The index (/blog) — design *Blog Index Layouts*, J (blog.css "THE INDEX", blog.js)
 
 J is "A stated rhythm, then rows of three": the merged three, a pair, then threes; M (the newsletter band

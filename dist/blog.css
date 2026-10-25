@@ -1,3 +1,6 @@
+.super-content.page__blog #block-a148eb7f8ea94b95b7725809fef9e0dc:not([data-enc-index]){visibility: hidden;animation: enc-bl-reveal 0s linear 3s forwards;}
+@keyframes enc-bl-reveal{to{visibility: visible;}
+}
 .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc[data-enc-index] .notion-collection-gallery{display: grid !important;grid-template-columns: repeat(6,minmax(0,1fr)) !important;grid-auto-rows: auto !important;align-items: stretch !important;gap: 18px !important;margin: 0 !important;padding: 0 !important;}
 .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post]{container-type: inline-size;display: block !important;min-width: 0 !important;margin: 0 !important;padding: 0 !important;border: 0 !important;border-radius: 12px !important;background: transparent !important;box-shadow: none !important;overflow: visible !important;transition: opacity 0.16s ease !important;}
 @media (min-width: 1025px){.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post][data-enc-later]{margin-top: 8px !important;height: auto !important;}
@@ -47,21 +50,21 @@ html:not([data-enc-mouse]) .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc 
 .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post]{grid-column: span 1 !important;grid-row: span 1 !important;}
 .notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-tall] .enc-post__cover{aspect-ratio: 1.91 / 1;height: auto;}
 }
-.notion-property__title__icon-wrapper{display: none!important;}
-.notion-pill{margin-top: 8px!important;padding-top: 2px!important;padding-bottom: 2px!important;font-size: 14px!important;}
+:where(.super-content.page__blog) .notion-property__title__icon-wrapper{display: none!important;}
+:where(.super-content.page__blog) .notion-pill{margin-top: 8px!important;padding-top: 2px!important;padding-bottom: 2px!important;font-size: 14px!important;}
 #block-80a8aedbbe0d4f6d923eedd13a28b82c strong{color: var(--color-bg-purple)!important;line-height: 1;margin-top: 0 !important;padding-top: 0 !important;font-size: calc(1px + 9vw) !important;font-weight: 200 !important;font-family: Arial Black,sans-serif;text-shadow: 4px 4px 0px rgba(0,0,0,1) !important;display: flex;-webkit-text-stroke: 2px black;text-stroke: 2px black !important;}
 #block-80a8aedbbe0d4f6d923eedd13a28b82c:after{margin-top: 40px!important;content: "";display: block;height: 2px!important;margin: 4px 0;width: calc(100% + 40px);transform: translateX(-20px);}
 #block-80a8aedbbe0d4f6d923eedd13a28b82c:before{background: none!important}
 #block-6eb3c6e77ac24f3c95ad5b565e194a59{font-size: 22px!important;font-family: Georgia;@media (max-width: 800px){font-size: 18px!important;}
 }
-@media (max-width: 1024px){.notion-column-list:first-of-type{flex-direction: initial !important;}
-.notion-column{width: 100% !important;-webkit-margin-start: 0 !important;margin-inline-start: 0 !important;}
-.notion-column .notion-image{max-width: 100%;height: auto;display: block;margin: 0 auto;text-align: center !important;}
+@media (max-width: 1024px){:where(.super-content.page__blog) .notion-column-list:first-of-type{flex-direction: initial !important;}
+:where(.super-content.page__blog) .notion-column{width: 100% !important;-webkit-margin-start: 0 !important;margin-inline-start: 0 !important;}
+:where(.super-content.page__blog) .notion-column .notion-image{max-width: 100%;height: auto;display: block;margin: 0 auto;text-align: center !important;}
 }
-@media (max-width: 1240px){.notion-embed__container__wrapper{height: 320px!important;}
+@media (max-width: 1240px){:where(.super-content.page__blog) .notion-embed__container__wrapper{height: 320px!important;}
 }
-.notion-collection-card.gallery a{pointer-events: auto!important;}
-.notion-root .notion-toggle[data-enc-copy]{display: none !important;}
+:where(.super-content.page__blog) .notion-collection-card.gallery a{pointer-events: auto!important;}
+:where(.super-content.page__blog) .notion-root .notion-toggle[data-enc-copy]{display: none !important;}
 @media (max-width: 1024px){.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc .enc-post__title{-webkit-line-clamp: 3;}
 }
 @media (min-width: 701px) and (max-width: 1024px){.notion-root #block-a148eb7f8ea94b95b7725809fef9e0dc [data-enc-post][data-enc-fill]{grid-column: span 2 !important;}

@@ -613,8 +613,29 @@
     });
   }
 
-  var t = 0;
-  new MutationObserver(function () { clearTimeout(t); t = setTimeout(build, 120); })
-    .observe(document.body, { childList: true, subtree: true });
+  /* a post not built yet is built on the next frame: the post is whole in the first frame Super
+     swaps in (five posts measured frame by frame, 2026-10-25), and waiting for the page to go quiet
+     left raw Notion up for 200–280ms (post.css now hides it until the build). The quiet rebuild
+     stays for whatever changes later. */
+  var t = 0, f = 0;
+  new MutationObserver(function () {
+    clearTimeout(t); t = setTimeout(build, 120);
+    if (!f && PATH.test(location.pathname)) f = requestAnimationFrame(function () { f = 0; build(); });
+  }).observe(document.body, { childList: true, subtree: true });
   build();
+
+  /* the links this file builds — All posts, the next post, the chain's page — open as Super's own
+     do, through the app's router (navbar.js does the same), not as a reload of the whole site
+     (2026-10-25) */
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest(".enc-po__wrap a.enc-po__btn[href], .enc-po__wrap a.enc-po__next[href]");
+    if (!a || e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (a.target && a.target !== "_self") return;
+    var u = new URL(a.getAttribute("href"), location.href);
+    if (u.origin !== location.origin) return;
+    var router = window.next && window.next.router;
+    if (!router || typeof router.push !== "function") return;
+    e.preventDefault();
+    router.push(u.pathname + u.search + u.hash);
+  });
 })();
