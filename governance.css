@@ -281,7 +281,9 @@ This block defines styles to be applied when the viewport's width is 920 pixels 
      in a Notion collection and gave four tracks, so the 2x2 is stated outright */
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   gap: 10px !important;
-  max-width: 1180px !important;
+  /* the full column, as the lead's button above and the record below: the design's 1180 cap left
+     the 2x2 68px short of both at 1440 (2026-10-25) */
+  max-width: none !important;
   margin: 0 !important;
   padding: 0 !important;
   border: 0 !important;
