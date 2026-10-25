@@ -1,0 +1,9001 @@
+# Encapsulate — every page of encapsulate.xyz but the blog posts and the vote record
+
+> We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
+
+As Markdown, as it reads on 2026-10-25. The index of the site is https://encapsulate.xyz/llms.txt.
+
+## Encapsulate - Validators for networks we believe in
+
+URL: https://encapsulate.xyz/
+
+We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
+
+### We keep blockchains online.
+
+Validator infrastructure for new chains, from the first testnet through mainnet.
+
+[Book a call](https://cal.com/aditya-encapsulate/30min)
+
+[View networks](https://encapsulate.xyz/networks)
+
+01 / 04 · Staked
+
+#### $70,189,202
+
+Under management by
+
+Encapsulate
+
+Staked with our validators across every mainnet we run.
+
+03 / 04 · Mainnets
+
+#### 28
+
+mainnets
+
+Mainnet validator, in the active set.
+
+02 / 04 · Delegators
+
+#### 14,169
+
+delegators
+
+One building per network, every lit window one of them.
+
+04 / 04 · Uptime
+
+##### Almost always on.
+
+Uptime
+
+#### 99.96%
+
+uptime
+
+Measured across all validators, all networks.
+
+99.96% up
+
+0.04% down · too thin to draw at this width
+
+[Book a call](https://cal.com/aditya-encapsulate/30min)
+
+[View networks](https://encapsulate.xyz/networks)
+
+#### For chain teams and delegators
+
+For chain teams
+
+##### Launch.
+
+Add us to your genesis set, from your first testnet onward.
+
+[Book a call](https://cal.com/aditya-encapsulate/30min)
+
+What you get
+
+1. Upgrades run within minutes of notice, not days
+2. On call around the clock, in your Discord, not a ticket queue
+3. We find the breakages on testnet so mainnet does not
+4. Dashboards and tooling built for your community, not ours
+
+For delegators
+
+##### Stake.
+
+Delegate to a validator that is already running.
+
+[View networks](https://encapsulate.xyz/networks)
+
+What you get
+
+1. Zero slashes, across every validator we have run
+2. Your keys never leave your wallet
+3. Low commission, so more of the reward stays yours
+4. Redundant nodes in two regions, so downtime never costs you rewards
+
+Why stake with us
+
+#### Three things worth checking.
+
+Everything else on this page is shown rather than claimed. These three are not, so here they are plainly.
+
+[See the networks](https://encapsulate.xyz/networks)
+
+No slashing
+
+One mark per network
+
+28 secured
+
+0
+
+slashes
+
+Across every validator we have ever run.
+
+Six years
+
+2020
+
+2026 in progress
+
+6
+
+years
+
+Validating since 2020, through every upgrade since.
+
+Commission
+
+One bar per chain
+
+Rates differ
+
+Set
+
+per chain
+
+Published on every network page, never changed quietly.
+
+#### Networks
+
+We run nodes for projects whose values we share — and keep refining performance so they stay up.
+
+[Book a call](https://cal.com/aditya-encapsulate/30min)
+
+[See All](https://encapsulate.xyz/networks)
+
+#### Testimonials
+
+Will Shannon
+
+Head of Node Operator Mechanisms, Lido
+
+“The Encapsulate team has participated in both testnet and mainnet DVT clusters via the Lido Simple DVT Module, and through that time has demonstrated strong performance and reliability as a Node Operator within the Simple DVT Operator set. I look forward to seeing the continued expansion of Encapsulate as an Ethereum Node Operator.”
+
+Sergey Gorbunov
+
+Cofounder, Axelar
+
+“The Encapsulate team is one of the most engaged and knowledgeable in the space. They helped to participate, build, and educate the community around Axelar network.”
+
+Dean Tribble
+
+CEO, Agoric
+
+“Encapsulate have been there since the beginning, consistently and reliably helping with testnets, upgrades, and community support.”
+
+Justin Kilpatrick
+
+Cofounder, Gravity Bridge
+
+“Encapsulate is a professional and responsive validator. Actually involved in the community and unafraid to do what needs to be done. Any community should be glad to have them.”
+
+Shane Vitarana
+
+Founder, Stargaze
+
+“Encapsulate has been an excellent validator and contributor to Stargaze. They have built Discord bots that are widely used and loved by the community. They've also been really proactive about fixing issues and maintaining everything. Highly recommend!”
+
+Governance
+
+#### Every vote, on the record.
+
+Read, weigh, listen, step back: the same four questions before every vote. The six below are the most recent.
+
+The record, by outcome
+
+1,912
+
+votes
+
+1,243
+
+Yes
+
+78
+
+No
+
+478
+
+No with veto
+
+113
+
+Abstain
+
+| Proposal | Our vote | Recorded |  |  |
+| --- | --- | --- | --- | --- |
+| Instantiate and register arc with reward pools Axelar · 501 | YES | Oct 24, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/BB7A56F88567371F90452E3E7933E8C5D30E71AD92BEBC179820DEB7ACC729FC) | The code and the addresses were published with the proposal, and the change is contained. Yes. |
+| Interchain Token Service Batch Migration Axelar · 500 | YES | Oct 22, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/691E5D4C442DB91E15D3E2A358BDFD4C2381F7A5D419D9AC092BA29F1D4514DB) | Deployment work the chain's connections depend on; supporting it keeps them working. |
+| Protocol upgrade to version 139 Sui · 139 | YES | Oct 21, 2026 | [View Release](https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.82.3) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. |
+| Gaia v29.0.0 upgrade Cosmos Hub · 1059 | YES | Oct 21, 2026 | [View Tx Hash](https://www.mintscan.io/cosmos/tx/218B5EBDCEBF3516F2F2D1225DA0CCFFFC9726814FB551A5B9EC313786998258) | A scheduled upgrade on a published release. We support it so the validator set moves together and the chain stays live. |
+| Interchain Governance Proposal Axelar · 499 | YES | Oct 14, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/D474032B96A0AC849F523BF7F53A78EB4F47FEEB6C0B0BDD12BD31089E0BED26) | We read it in full and see nothing that works against the chain or its delegators. |
+| Authorize Coordinator to instantiate VotingVerifier code 64 Axelar · 498 | YES | Oct 9, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/24EF6C4921F8DB0BA8B731805156ACA5B32092DC5387C505D3BAE8D0F0D94E2C) | Routine contract housekeeping that keeps existing integrations running. No change to protocol risk. |
+
+[View voting history](https://encapsulate.xyz/governance)
+
+What we do
+
+#### Services and tools
+
+The tooling around the nodes — dashboards, deployment playbooks, bots and a monitoring stack. All of it public, and all of it yours to keep.
+
+[View all](https://encapsulate.xyz/services)
+
+[Book a call](https://cal.com/aditya-encapsulate/30min)
+
+Dashboards
+
+Browser
+
+Ansible repository
+
+Terminal
+
+Bots
+
+Discord
+
+Monitoring stack
+
+Console
+
+The machine
+
+Our node
+
+From your team up to anyone
+
+#### Deep dives.
+
+The networks we validate on — what they are building, what is new, and what it means if you hold the token.
+
+[Read every post](https://encapsulate.xyz/blog)
+
+Networks
+
+September 9, 2026
+
+##### Gno.land: Where Communities Control Their Apps
+
+Security
+
+August 4, 2026
+
+##### What Broke Coldcard's Bitcoin Security?
+
+July 8, 2026
+
+##### Can Quantum Computing Crack Bitcoin?
+
+Encapsulate · Who we are
+
+Since 2020
+
+“Decentralization is where power meets people.”
+
+Aditya Verma
+
+Founder
+
+Validator
+
+[LinkedIn](https://www.linkedin.com/in/adityaverma1999/)
+
+“Automating progress, ensuring uptime.”
+
+Kowshik Vajrala
+
+DevOps Engineer
+
+[LinkedIn](https://www.linkedin.com/in/kowshik-vajrala/)
+
+“Communities create value beyond technology.”
+
+S Maheswaran
+
+Content & Socials Manager
+
+[LinkedIn](https://www.linkedin.com/in/masent/)
+
+“The ones who keep the nodes up and stay off the website.”
+
+And others.
+
+Engineers & operators
+
+Former software engineers running validation services since early 2020 — a team that watches the nodes, ships the upgrades, and answers when something breaks.
+
+Core team
+
+Pick a name
+
+[Book a call](https://cal.com/aditya-encapsulate/30min)
+
+Contact
+
+#### One line reaches us.
+
+No form, no queue. The same inbox the people running your nodes read.
+
+[hello@encapsulate.xyz](mailto:hello@encapsulate.xyz)
+
+Copy
+
+[Book a call](https://cal.com/aditya-encapsulate/30min)
+
+[Institutional intake](https://encapsulate.xyz/contact#institutional)
+
+Discord
+
+discord.gg/PQJX5JVS8h
+
+X
+
+@encapHQ
+
+Linkedin
+
+encapsulate-xyz
+
+## Services and tooling
+
+URL: https://encapsulate.xyz/services
+
+Dashboards, Ansible playbooks, governance bots and monitoring we build for the chains we run. Open and free to use.
+
+Encapsulate · Services
+
+What we do
+
+### We ship tools, not promises.
+
+Public dashboards, open-source playbooks, alert bots and monitoring — every one running right now.
+
+[Book a call](https://cal.com/aditya-encapsulate/30min)
+
+[See services](https://encapsulate.xyz/services#block-3e4e800a513881cf8a82c41c2f9f8c78)
+
+Dashboards · Playbooks · Bots · Monitoring
+
+Scroll ↓
+
+01 · Dashboards
+
+##### Tidemark
+
+Sui · tidemark.sui.encapsulate.xyz
+
+The Sui reference gas price, live: every validator’s quote, the projected next RGP, what sets it and what would move it.
+
+Open Tidemark
+
+##### Want one for your chain?
+
+Ask for a scoped view
+
+What we have built
+
+02
+
+#### Playbooks
+
+A playbook for every network. What each one does to a machine.
+
+01
+
+Prepare the server
+
+Environment and dependencies, the same on every host.
+
+02
+
+Firewall
+
+Opens only the ports the node needs, and closes the rest.
+
+03
+
+User and directories
+
+The node runs as its own user, in its own directories.
+
+04
+
+Configuration
+
+Config files and genesis, templated for the network and node type.
+
+05
+
+Keys from Vault
+
+Validator keys come from HashiCorp Vault at deploy time, so they are never kept in the repository.
+
+06
+
+Binaries
+
+Fetches the pinned release of the node and its tools.
+
+07
+
+Service
+
+A systemd unit, restarted only when something changed.
+
+repositories · every network covered
+
+Every network on /networks has a playbook. Most repositories cover one chain; Cosmos SDK, Substrate and Ethereum cover several.
+
+Avalanche
+
+Ethereum · SSV · Lido
+
+Monad
+
+Near
+
+Sui
+
+Axelar
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Cosmos SDK
+
+Zilliqa
+
+Avail · Vara
+
+Espresso
+
+Ika
+
+Supra
+
+GenLayer
+
+Pharos
+
+XMTP
+
+private
+
+Aztec
+
+Canton
+
+Spicenet
+
+Gno.land
+
+All repositories on GitHub
+
+03
+
+#### Never miss what your chain is telling you.
+
+A validator slipping, a proposal to vote on, a release to ship — it lands in your Discord before you go looking. Three bots, one channel.
+
+Events on chain
+
+validator · reported · Parasol
+
+epoch · advance · 42
+
+metric · 0xfcb6…8e66 · current_round
+
+new
+
+Validator alerts
+
+Proposals
+
+Releases
+
+Contact us for a bot
+
+Simulation · not live data
+
+Validator alerts
+
+posted by the bot
+
+Performance degradation · 0xfcb6…8e66 · current_round 46036 vs 46863
+
+04
+
+#### Monitoring
+
+Whatever your chain is missing, we build it to scope.
+
+We build the your chain is missing.
+
+exporter
+
+rules
+
+dashboard
+
+scripts
+
+Pick one to see where we have built it before.
+
+Ask for a scoped view
+
+What we have built
+
+#### Launching a chain?
+
+Thirty-six chain teams trusted us with a validator. Tell us what it takes to run yours.
+
+Your chain
+
+Book a call
+
+36 networks
+
+All networks
+
+## Security
+
+URL: https://encapsulate.xyz/security
+
+How we hold keys, run machines and handle upgrades: the rules we hold ourselves to.
+
+Encapsulate · Security
+
+Keys & isolation
+
+### The part that only shows when it fails.
+
+Key management, slashing protection and host isolation — the work you never see until the day you need it.
+
+[Book a call](https://cal.com/aditya-encapsulate/30min)
+
+[How we secure it](https://encapsulate.xyz/security#block-3e0e800a5138816a82dbd9653ac6e94c)
+
+Defence in depth
+
+Scroll ↓
+
+Security and operations · 01
+
+#### How we run a validator.
+
+Nine commitments, the same on every chain we join. Each is a practice we can show you, not a figure we would have to keep proving.
+
+1h
+
+for an emergency release
+
+2×2
+
+regions and providers
+
+0
+
+slashing events since 2020
+
+[Book a call](https://cal.com/aditya-encapsulate/30min)
+
+Uptime
+
+Alerting pages a person, not a dashboard. A hot standby takes over automatically, and the switch is a signing handoff — blocks, not minutes.
+
+Upgrades
+
+Every release runs on our testnet node first, then mainnet. Routine releases inside 24 hours of the announcement; emergency releases inside one hour.
+
+Responsiveness
+
+A named engineer and a shared channel with your team from day one, plus a security address that reaches the on-call rotation. Outreach is answered the same day.
+
+Testnet
+
+We join at testnet and keep the testnet node for as long as we hold the mainnet seat, so the chain's early weeks are ours too.
+
+Incidents
+
+If something on our side affects your chain, we publish a post-mortem in your validator channel: what happened, when we knew, and what we changed.
+
+Diversity
+
+Bare metal across two regions and two providers, chosen per chain against the validator set's current map so we never add to a concentration you are trying to reduce. We are based in India, where few validators are — a seat with us is geography most sets do not have.
+
+Metrics
+
+Prometheus endpoints scoped to your team, so you watch the same numbers we do. A bridge or archive node where the chain wants one. Nothing on trust.
+
+Conduct
+
+Stock binaries, no MEV side-channels, a separate full node for anything public, KYB documents ready, and commission set per chain under that chain's cap.
+
+Contribution
+
+Dashboards, an Ansible repository, alert rules and guides, published for the chains we run — so the next operator starts further along than we did.
+
+Access · 02
+
+#### Two ways to reach a validator. One door for each.
+
+Blocks reach it through sentries we run. People reach it through a private network with no public route. Nothing else reaches it at all.
+
+01
+
+A block
+
+Arrives at both regions' sentries on one port and reaches both validators over private peering; the standby stays in sync. Only the live one asks the cosigners, who agree two of three, and the signed vote leaves the way it came.
+
+Private tailnet · firewall on every host, inbound denied by default
+
+p2p
+
+rpc
+
+peers
+
+ssh
+
+logs
+
+out · dials both · 2 of 3
+
+Outside
+
+The internet
+
+Peers, RPC clients, everything inbound
+
+Region 1
+
+Sentries
+
+Replaceable, re-addressable
+
+Region 2
+
+Public reads
+
+Full nodes
+
+RPC, indexing. Hold nothing.
+
+Outside
+
+An engineer
+
+Tagged laptop, hardware key
+
+Primary · signing
+
+Validator A
+
+Bare metal. Nothing else on it.
+
+Standby · in sync
+
+Validator B
+
+Bare metal. Waiting for the cosigners.
+
+Shard 1
+
+Cosigner
+
+Own host. No inbound.
+
+Shard 2
+
+Shard 3
+
+Every host
+
+Monitoring
+
+auditd, Wazuh, Loki, alerts to a person
+
+How it is run · 9 rules
+
+pick one
+
+01
+
+Sentry layer
+
+The validator peers only with nodes we run. Public traffic lands on sentries that can be replaced or re-addressed under attack, so a block proposal always reaches the network.
+
+Keys · 03
+
+The key is three shards, 2 of 3, and is never assembled. Each shard sits with a cosigner on its own host with no inbound ports. Every cosigner keeps the high-water mark, so the same height is never signed twice. The keys that move stake are split across people — no one alone can act. And there is no hardware: lose a cosigner and the other two keep signing.
+
+hover a highlighted word
+
+Hover a highlighted word for the full commitment.
+
+Failover · 04
+
+#### Built to lose a data centre and keep signing.
+
+Bare metal, nothing on the host but the validator. Two of everything, in two places, on two providers. Failover is a signing decision measured in blocks.
+
+01
+
+signer → host A
+
+Normal
+
+The signing layer is connected to both hosts and signs on A. B is in sync and idle, on a different provider in a different region.
+
+02
+
+host A unreachable
+
+Region A lost
+
+Provider outage, fibre cut, fire. The cosigners see A stop answering. Nothing else on the network notices yet.
+
+03
+
+signer → host B
+
+Signing from B
+
+Signing moves to B. The high-water mark rules out signing the same height twice, which is what makes the switch safe.
+
+04
+
+host A rejoins · standby
+
+A comes back
+
+It rejoins as the standby. No one touched a key; the ceremony stays where it belongs.
+
+Upgrades and response · 05
+
+#### Routine inside a day. Emergency inside an hour.
+
+Emergency releases are where a validator earns or loses its seat. Our path is the same every time and on every chain, so it is fast when it matters.
+
+Routine release
+
+Inside 24 h
+
+Emergency release
+
+Inside 1 h
+
+Reply to outreach
+
+Same day
+
+On call
+
+24/7 rotation
+
+Channel
+
+Shared with your team
+
+Announcement
+
+We acknowledge in your channel the same day and confirm when we will move — the scheduled point if the chain sets one, otherwise our own window.
+
+Testnet
+
+The new release runs on our testnet validator first. Anything that breaks, breaks there.
+
+Mainnet
+
+Applied by the on-call engineer with a second engineer watching the standby; the standby moves first, so a bad release never takes the live host down.
+
+Confirmation
+
+Signed blocks on the new version, reported back to you. Routine releases inside 24 hours of the announcement; emergency releases inside one.
+
+Slashing and the record · 06
+
+0
+
+Slashing events since 2020, across every validator we have run. On chain and checkable.
+
+What slashing costs a validator
+
+The seat.
+
+Downtime
+
+Missing blocks is a monitoring failure. Small and recoverable on most chains, but delegators see it and foundations count it — which is why alerting pages a person, not a dashboard.
+
+Double-signing
+
+Signing two blocks at one height is almost never an attack; it is a failover done wrong. The penalty is severe and on many chains permanent. The 2-of-3 signature and every cosigner's high-water mark are what rule it out.
+
+## Governance
+
+URL: https://encapsulate.xyz/governance
+
+How we decide every on-chain vote, and the public record of each one we have cast.
+
+Encapsulate · Governance
+
+Votes & rationale
+
+### Every vote, on the record.
+
+How we vote in the networks we validate, and why — published as it happens, not summarised afterwards.
+
+[Book a call](https://cal.com/aditya-encapsulate/30min)
+
+[Read the record](https://encapsulate.xyz/governance#block-c458e5dd671d4ecb8fc07a15915e4f42)
+
+Published as cast
+
+Scroll ↓
+
+Interchain Token Service Batch Migration“Deployment work the chain's connections depend on; supporting it keeps them working.”
+
+The record
+
+1,912
+
+Six years of votes.
+
+Every one went through all four pillars below.
+
+Scroll to pull back
+
+#### Four questions before every vote.
+
+The same four, in the same order, for every proposal, however small.
+
+[Ask about a proposal](https://encapsulate.xyz/contact)
+
+The record · newest first
+
+#### Every vote, on chain.
+
+| Proposal | Our vote | Recorded |  |  |
+| --- | --- | --- | --- | --- |
+| Instantiate and register arc with reward pools Axelar · 501 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/BB7A56F88567371F90452E3E7933E8C5D30E71AD92BEBC179820DEB7ACC729FC) | The code and the addresses were published with the proposal, and the change is contained. Yes. | Oct 24, 2026 |
+| Interchain Token Service Batch Migration Axelar · 500 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/691E5D4C442DB91E15D3E2A358BDFD4C2381F7A5D419D9AC092BA29F1D4514DB) | Deployment work the chain's connections depend on; supporting it keeps them working. | Oct 22, 2026 |
+| Protocol upgrade to version 139 Sui · 139 | YES | [View Release](https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.82.3) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | Oct 21, 2026 |
+| Gaia v29.0.0 upgrade Cosmos Hub · 1059 | YES | [View Tx Hash](https://www.mintscan.io/cosmos/tx/218B5EBDCEBF3516F2F2D1225DA0CCFFFC9726814FB551A5B9EC313786998258) | A scheduled upgrade on a published release. We support it so the validator set moves together and the chain stays live. | Oct 21, 2026 |
+| Interchain Governance Proposal Axelar · 499 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/D474032B96A0AC849F523BF7F53A78EB4F47FEEB6C0B0BDD12BD31089E0BED26) | We read it in full and see nothing that works against the chain or its delegators. | Oct 14, 2026 |
+| Authorize Coordinator to instantiate VotingVerifier code 64 Axelar · 498 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/24EF6C4921F8DB0BA8B731805156ACA5B32092DC5387C505D3BAE8D0F0D94E2C) | Routine contract housekeeping that keeps existing integrations running. No change to protocol risk. | Oct 9, 2026 |
+| Protocol upgrade to version 138 Sui · 138 | YES | [View Release](https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.81.1) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | Oct 7, 2026 |
+| Protocol upgrade to version 37 IOTA · 37 | YES | [View Release](https://github.com/iotaledger/iota/releases/tag/v1.33.1) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | Oct 7, 2026 |
+| Move the 1,227,121 ATOM recovered after the Neutron exploit to the Neutron recovery multisig Cosmos Hub · 1058 | YES | [View Tx Hash](https://www.mintscan.io/cosmos/tx/2AA2B6A70FE601F38CFDAF327496F14E0704A545CF45A64D720DB853F3BB65CD) | Repair work on an existing route rather than a new commitment, so we support it. | Oct 5, 2026 |
+| Upgrade Terra to v2.22.0 Terra · 4852 | YES | [View Tx Hash](https://www.mintscan.io/terra/tx/7607AE3F31BBB454EF1F684326C5DBBDB76743E63BED6FCF869C873E5445EE4F) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. | Oct 5, 2026 |
+
+10 of 1,912 shown
+
+## Investments
+
+URL: https://encapsulate.xyz/investments
+
+The networks and teams we have backed, usually before mainnet, usually as an operator first.
+
+Encapsulate · Investments
+
+Where we back
+
+### We back what we run.
+
+Positions in the networks we validate. We hold the token before we ask anyone else to trust the chain.
+
+[Book a call](https://cal.com/aditya-encapsulate/30min)
+
+[See the portfolio](https://encapsulate.xyz/investments#block-3e1e800a513881f997b4f4bf97f0bbda)
+
+Skin in the game
+
+Scroll ↓
+
+Encapsulate · Investments
+
+We invest in the chains we operate.
+
+Nodes first, then the cheque. Hover a mark to see when we entered and whether we run a validator there.
+
+8 positions. Hover a mark to see one.
+
+Straight answers · 02
+
+#### The questions a founder actually asks.
+
+Two are answered no, and saying so is the point.
+
+Yes
+
+Do you invest?
+
+Yes — small and early, in chains we intend to operate on. It is not a fund and there is no committee.
+
+Send the spec before the deck.
+
+If we would run it, we will say so in a week, and say what it would take.
+
+[Book a call](https://cal.com/aditya-encapsulate/30min)
+
+[Send the spec](https://encapsulate.xyz/contact#block-3dee800a51388006bd4aeba0fb2a72c7)
+
+## Contact
+
+URL: https://encapsulate.xyz/contact
+
+Book a call, or write to hello@encapsulate.xyz. A person replies.
+
+Encapsulate · Contact
+
+Start a conversation
+
+### Talk to a human.
+
+Whether you are launching a chain or deciding where to delegate, you reach the people who run the nodes.
+
+[Book a call](https://cal.com/aditya-encapsulate/30min)
+
+[Email us](mailto:hello@encapsulate.xyz)
+
+Founders, delegators, press
+
+Scroll ↓
+
+#### Did your validator answer the last emergency upgrade?
+
+Ours did. Pick a slot below and you get a founder, not a salesperson.
+
+Length
+
+30 minutes
+
+With
+
+A founder
+
+Prep
+
+None
+
+Calendar not loading? [Open it in a new tab](https://cal.com/aditya-encapsulate/30min?layout=column_view&theme=light&brandColor=%2399CC66&overlayCalendar=true)
+
+Staking a treasury or a fund?
+
+The commission is negotiable at size
+
+### Institutional staking
+
+$500,000
+
+Above the $200k minimum
+
+$50k
+
+$25M
+
+Set what you are planning to stake, tell us where, and we will come back with terms for that size.
+
+#### Network
+
+#### Duration
+
+3–6 months
+
+6–12 months
+
+1–2 years
+
+Over 2 years
+
+#### Email
+
+Elsewhere
+
+X
+
+@encapHQ
+
+Discord
+
+Join the server
+
+GitHub
+
+encapsulate-xyz
+
+LinkedIn
+
+Or write to us
+
+#### Same inbox, either way.
+
+Two fields if you want us to have it in writing, or the address if you would rather attach something.
+
+The form
+
+#### Email address*
+
+#### Message*
+
+An email and a line about what you need
+
+The address
+
+[hello@encapsulate.xyz](mailto:hello@encapsulate.xyz)
+
+For anything that wants an attachment, a colleague cc'd, or a thread you keep.
+
+[Copy the address](mailto:hello@encapsulate.xyz)
+
+## Networks
+
+URL: https://encapsulate.xyz/networks
+
+Every chain we validate, mainnet and testnet, with the reward rate where the chain publishes one.
+
+Encapsulate · Networks
+
+Mainnet & testnet
+
+### Every chain we keep online.
+
+Validators for networks we believe in — from the first testnet through mainnet and every upgrade after it.
+
+[Book a call](https://cal.com/aditya-encapsulate/30min)
+
+[See the set](https://encapsulate.xyz/networks#block-3dde800a51388133b7f1d1ccdda08038)
+
+Genesis onward
+
+Scroll ↓
+
+Encapsulate · where we run
+
+28 mainnets · 21 testnets
+
+### 28
+
+Mainnets secured
+
+A validator of ours in the active set on every one of them.
+
+### 21
+
+testnets we help
+
+Every network we validate
+
+Scroll ↓
+
+#### Every network we validate
+
+Avalanche
+
+4.6–5.4%
+
+Lido DVT
+
+2.3%
+
+Monad
+
+9.8%
+
+NEAR
+
+4.7%
+
+Sui
+
+1.3%
+
+Axelar
+
+14.1%
+
+Cosmos Hub
+
+17.7%
+
+EigenCloud
+
+6.4%
+
+IOTA
+
+11.3%
+
+Mina
+
+Starknet
+
+7.5%
+
+Terra
+
+35.9%
+
+Zilliqa
+
+8.2%
+
+Avail
+
+7.5%
+
+Espresso
+
+3.3%
+
+Ika
+
+13.1%
+
+Supra
+
+8.0%
+
+Vara
+
+16.9%
+
+Agoric
+
+6.4%
+
+Althea
+
+24.5%
+
+Gitopia
+
+41.6%
+
+Gravity Bridge
+
+16.4%
+
+humans.ai
+
+31.7%
+
+ixo
+
+17.9%
+
+Lumera
+
+47.3%
+
+Passage
+
+6.7%
+
+Sommelier
+
+0%
+
+Chain4Energy
+
+7.8%
+
+4.6–5.4%
+
+Avalanche
+
+Encapsulate · Networks
+
+For chain teams
+
+#### Thirty-six teams chose us.
+
+Most of them before mainnet, when the set was still being assembled. If yours is next, the conversation is worth having early.
+
+[Book a call](https://cal.com/aditya-encapsulate/30min)
+
+[What we run](https://encapsulate.xyz/services)
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+Aztec
+
+Canton Network
+
+Gno.land
+
+Agoric
+
+Althea
+
+Gitopia
+
+Gravity Bridge
+
+humans.ai
+
+ixo
+
+Lumera
+
+Passage
+
+Sommelier
+
+Chain4Energy
+
+GenLayer
+
+Pharos
+
+XMTP
+
+Pell
+
+Spicenet
+
+## Agoric staking
+
+URL: https://encapsulate.xyz/networks/agoric
+
+Stake BLD with Encapsulate on Agoric: 10% commission, 6.4% a year after commission, 21 days unbonding. Non-custodial.
+
+### Agoric
+
+Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.
+
+[Delegate with Keplr](https://encapsulate.xyz/guides/agoric)
+
+[Our validator](https://www.mintscan.io/agoric/validators/agoricvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtg25ldj)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+6.4%
+
+Set by the chain, not by us
+
+Of every 100 BLD staked
+
+6.4 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+10%
+
+Our cut of the rewards
+
+Yours · 90
+
+Ours · 10
+
+Of every 100 BLD in rewards
+
+Unbonding
+
+21 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 15 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+7 months
+
+Today
+
+No slash since we joined. A slash would break this line
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+BLD · type to change
+
+Horizon
+
+5 years
+
+Not compounded — Agoric pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
+
+1,064
+
+Year 1
+
+1,128
+
+Year 2
+
+1,192
+
+Year 3
+
+1,256
+
+Year 4
+
+1,320
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Delegate any amount the chain itself allows.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Every block, about 6 seconds, to a balance you claim.
+
+What happens if you go offline?
+
+A standby node takes over. Past 95% missed of 5,000 blocks, the chain jails it — rewards stop; stake is not cut.
+
+Can I unstake at any time?
+
+Yes. Unbonding takes 21 days; rewards stop the moment you ask.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Althea staking
+
+URL: https://encapsulate.xyz/networks/althea
+
+Stake ALTHEA with Encapsulate on Althea: 10% commission, 24.5% a year after commission, 21 days unbonding. Non-custodial.
+
+### Althea
+
+Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.
+
+[Delegate with MetaMask](https://encapsulate.xyz/guides/althea)
+
+[Our validator](https://www.mintscan.io/althea/validators/altheavaloper1d2x0t42a6anth3lt38ld5997m6e5ya5fw72axt)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+24.5%
+
+Set by the chain, not by us
+
+Of every 100 ALTHEA staked
+
+24.5 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+10%
+
+Our cut of the rewards
+
+Yours · 90
+
+Ours · 10
+
+Of every 100 ALTHEA in rewards
+
+Unbonding
+
+21 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 15 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+30 months
+
+Today
+
+No slash since we joined. A slash would break this line
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+ALTHEA · type to change
+
+Horizon
+
+5 years
+
+Not compounded — Althea pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
+
+1,245
+
+Year 1
+
+1,490
+
+Year 2
+
+1,735
+
+Year 3
+
+1,980
+
+Year 4
+
+2,225
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Delegate any amount the chain itself allows.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Every block, about 6 seconds, to a balance you claim.
+
+What happens if you go offline?
+
+A standby node takes over. Past half of 10,000 blocks missed, the chain jails it for at least 24 hours; stake is not cut.
+
+Can I unstake at any time?
+
+Yes. Unbonding takes 21 days; rewards stop the moment you ask.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Avail staking
+
+URL: https://encapsulate.xyz/networks/avail
+
+Stake AVAIL with Encapsulate on Avail: 20% commission, 7.5% a year after commission, 28 days unbonding. Non-custodial.
+
+### Avail
+
+Delegate in two minutes. Your keys never leave your wallet; rewards accrue every era, about 24 hours.
+
+[Delegate with SubWallet](https://encapsulate.xyz/guides/avail)
+
+[Our validator](https://avail.subscan.io/validator/5FqQ3hKubNnejLwquQXjouX1ogwdzcL3xCU2ZqFcZs9NKSTN)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+7.5%
+
+Set by the chain, not by us
+
+Of every 100 AVAIL staked
+
+7.5 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+20%
+
+Our cut of the rewards
+
+Yours · 80
+
+Ours · 20
+
+Of every 100 AVAIL in rewards
+
+Unbonding
+
+28 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 22 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+21 months
+
+Today
+
+No slash since we joined. A slash would break this line
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+AVAIL · type to change
+
+Horizon
+
+5 years
+
+Not compounded — Avail pays rewards to a claimable balance. After our 20% commission. An estimate at today’s rate, which the chain can change.
+
+1,075
+
+Year 1
+
+1,150
+
+Year 2
+
+1,225
+
+Year 3
+
+1,300
+
+Year 4
+
+1,375
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our blocks and era points are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+Yes — 1,000 AVAIL to nominate us directly. Nomination pools take 100 AVAIL, but the pool chooses its validators.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Every era — about 24 hours — once anyone claims the era’s payout; it goes to your stake or your balance, as you chose.
+
+What happens if you go offline?
+
+A standby node takes over. A whole 4-hour session offline drops a validator from the next election; if over 10% are down, stake is slashed up to 7%.
+
+Can I unstake at any time?
+
+Yes. Unbonding takes 28 days (28 eras); the amount earns nothing meanwhile, then you withdraw it.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Avalanche staking
+
+URL: https://encapsulate.xyz/networks/avalanche
+
+Stake AVAX with Encapsulate on Avalanche: 2% commission, 4.6–5.4% a year after commission, locked 2 weeks–1 year. Non-custodial.
+
+### Avalanche
+
+Delegate in two minutes. Your keys never leave your wallet; rewards arrive in one sum when your staking period ends.
+
+[Delegate with Core](https://encapsulate.xyz/guides/avalanche)
+
+[Our validator](https://avascan.info/staking/validator/NodeID-N3e9W3EngjabGnTZVqyZwunVcbCdrY5Qy)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+4.6–5.4%
+
+Set by the chain, not by us
+
+Of every 100 AVAX staked
+
+4.6 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+2%
+
+Our cut of the rewards
+
+Yours · 98
+
+Ours · 2
+
+Of every 100 AVAX in rewards
+
+Staking period
+
+2 weeks–1 year
+
+Locked for the period you choose
+
+Withdraw today · 25 Oct
+
+The shortest period ends · 8 Nov
+
+Live dates · the shortest period, 2 weeks
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+38 months
+
+Today
+
+Avalanche does not slash stake. The line cannot break
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+AVAX · type to change
+
+Horizon
+
+5 years
+
+Paid in one sum when the period ends. After our 2% commission. An estimate at today’s rate, which the chain can change.
+
+1,046
+
+Year 1
+
+1,092
+
+Year 2
+
+1,138
+
+Year 3
+
+1,184
+
+Year 4
+
+1,230
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our uptime is on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+25 AVAX — the smallest delegation the chain accepts.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+In one sum when your staking period ends, sent to your P-Chain address with your stake.
+
+What happens if you go offline?
+
+A standby node takes over. If the node is up under 80% of its staking period, the chain pays no rewards; stake is never cut.
+
+Can I unstake at any time?
+
+No. Your AVAX is locked for the period you choose — 2 weeks to 1 year — then returns with its rewards.
+
+Also stake with us on
+
+See all networks
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Axelar staking
+
+URL: https://encapsulate.xyz/networks/axelar
+
+Stake AXL with Encapsulate on Axelar: 10% commission, 14.1% a year after commission, 7 days unbonding. Non-custodial.
+
+### Axelar
+
+Delegate in two minutes. Your keys never leave your wallet; rewards land each time we vote on a cross-chain poll.
+
+[Delegate with Keplr](https://encapsulate.xyz/guides/axelar)
+
+[Our validator](https://www.mintscan.io/axelar/validators/axelarvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtwq9yct)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+14.1%
+
+Set by the chain, not by us
+
+Of every 100 AXL staked
+
+14.1 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+10%
+
+Our cut of the rewards
+
+Yours · 90
+
+Ours · 10
+
+Of every 100 AXL in rewards
+
+Unbonding
+
+7 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 1 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+8 months
+
+Today
+
+No slash since we joined. A slash would break this line
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+AXL · type to change
+
+Horizon
+
+5 years
+
+Not compounded — Axelar pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
+
+1,141
+
+Year 1
+
+1,282
+
+Year 2
+
+1,423
+
+Year 3
+
+1,564
+
+Year 4
+
+1,705
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Delegate any amount the chain itself allows.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Each time we vote on a cross-chain poll — many times an hour — to a balance you claim.
+
+What happens if you go offline?
+
+A standby node takes over. Missed cross-chain polls forfeit their rewards; past half of 94,426 blocks missed, the chain jails it and slashes 0.01%.
+
+Can I unstake at any time?
+
+Yes. Unbonding takes 7 days; rewards stop the moment you ask.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Chain4Energy staking
+
+URL: https://encapsulate.xyz/networks/chain4energy
+
+Stake C4E with Encapsulate on Chain4Energy: 10% commission, 7.8% a year after commission, 21 days unbonding. Non-custodial.
+
+### Chain4Energy
+
+Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.
+
+[Delegate with Keplr](https://explorer.mainnet.dteam.tech/chain4energy/staking/c4evaloper1s0lankh33kprer2l22nank5rvsuh9ksad20r7x)
+
+[Our validator](https://explorer.stavr.tech/c4e/staking/c4evaloper1s0lankh33kprer2l22nank5rvsuh9ksad20r7x)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+7.8%
+
+Set by the chain, not by us
+
+Of every 100 C4E staked
+
+7.8 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+10%
+
+Our cut of the rewards
+
+Yours · 90
+
+Ours · 10
+
+Of every 100 C4E in rewards
+
+Unbonding
+
+21 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 15 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+46 months
+
+Today
+
+No slash since we joined. A slash would break this line
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+C4E · type to change
+
+Horizon
+
+5 years
+
+Not compounded — Chain4Energy pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
+
+1,078
+
+Year 1
+
+1,156
+
+Year 2
+
+1,234
+
+Year 3
+
+1,312
+
+Year 4
+
+1,390
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Delegate any amount the chain itself allows.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Every block, about 6 seconds, to a balance you claim.
+
+What happens if you go offline?
+
+A standby node takes over. Past 95% missed of 10,000 blocks — about 16 hours — the chain jails it and slashes 0.1% of stake.
+
+Can I unstake at any time?
+
+Yes. Unbonding takes 21 days, with no rewards in that time; then the tokens are free to move.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Cosmos Hub staking
+
+URL: https://encapsulate.xyz/networks/cosmos-hub
+
+Stake ATOM with Encapsulate on Cosmos Hub: 10% commission, 17.7% a year after commission, 21 days unbonding. Non-custodial.
+
+### Cosmos Hub
+
+Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.
+
+[Delegate with Keplr](https://wallet.keplr.app/chains/cosmos-hub?modal=staking&chain=cosmoshub-4&validator_address=cosmosvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwt0m3udk&step_id=2)
+
+[Our validator](https://www.mintscan.io/cosmos/validators/cosmosvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwt0m3udk)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+17.7%
+
+Set by the chain, not by us
+
+Of every 100 ATOM staked
+
+17.7 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+10%
+
+Our cut of the rewards
+
+Yours · 90
+
+Ours · 10
+
+Of every 100 ATOM in rewards
+
+Unbonding
+
+21 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 15 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+Today
+
+No slash since we joined. A slash would break this line
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+ATOM · type to change
+
+Horizon
+
+5 years
+
+Not compounded — Cosmos Hub pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
+
+1,177
+
+Year 1
+
+1,354
+
+Year 2
+
+1,531
+
+Year 3
+
+1,708
+
+Year 4
+
+1,885
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Delegate any amount the chain itself allows.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Every block, about 6 seconds, to a balance you claim.
+
+What happens if you go offline?
+
+A standby node takes over. Past 95% missed of 10,000 blocks, the chain jails it and slashes 0.01%.
+
+Can I unstake at any time?
+
+Yes. Unbonding takes 21 days; rewards stop the moment you ask.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## EigenCloud staking
+
+URL: https://encapsulate.xyz/networks/eigencloud
+
+Stake EIGEN with Encapsulate on EigenCloud: 10% commission, 6.4% a year after commission, 14 days unbonding. Non-custodial.
+
+### EigenCloud
+
+Delegate in two minutes. Your keys never leave your wallet; rewards are posted weekly, for you to claim.
+
+[Delegate with MetaMask](https://encapsulate.xyz/guides/eigen-layer)
+
+[Our validator](https://app.eigenlayer.xyz/operator/0xA6c3F159242855ba09D9f445679eD0b244C22062)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+6.4%
+
+Set by the chain, not by us
+
+Of every 100 EIGEN staked
+
+6.4 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+10%
+
+Our cut of the rewards
+
+Yours · 90
+
+Ours · 10
+
+Of every 100 EIGEN in rewards
+
+Unbonding
+
+14 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 8 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+30 months
+
+Today
+
+No slash since we joined. A slash would break this line
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+EIGEN · type to change
+
+Horizon
+
+5 years
+
+Not compounded — EigenCloud pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
+
+1,064
+
+Year 1
+
+1,128
+
+Year 2
+
+1,192
+
+Year 3
+
+1,256
+
+Year 4
+
+1,320
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed attestation wakes someone up, at any hour.
+
+Public record
+
+Our AVS registrations and delegated stake are on-chain for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Restake any amount of EIGEN and delegate it to us.
+
+Do you hold my tokens?
+
+No. Your tokens are restaked in EigenLayer’s contracts, and only you can withdraw them.
+
+How often are rewards paid?
+
+Weekly, to a balance you claim in the EigenLayer app — each week becomes claimable about ten days after it ends.
+
+What happens if you go offline?
+
+A standby node takes over. Nothing delegated to us is slashable today; an AVS can eject an operator that misses work, and its rewards stop.
+
+Can I unstake at any time?
+
+Yes. A withdrawal waits 14 days in escrow, earning nothing, then you complete it in the EigenLayer app.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Espresso staking
+
+URL: https://encapsulate.xyz/networks/espresso
+
+Stake ESP with Encapsulate on Espresso: 10% commission, 3.3% a year after commission, 7 days unbonding. Non-custodial.
+
+### Espresso
+
+Delegate in two minutes. Your keys never leave your wallet; rewards accrue with every block we propose.
+
+[Delegate with MetaMask](https://encapsulate.xyz/guides/espresso)
+
+[Our validator](https://espressonodes.com/operator/0xea452aed0ea405e2d9b4038a6e1433028ad8991b?network=mainnet)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+3.3%
+
+Set by the chain, not by us
+
+Of every 100 ESP staked
+
+3.3 earned in a year
+
+After our commission · as of 24 Oct 2026
+
+Commission
+
+10%
+
+Our cut of the rewards
+
+Yours · 90
+
+Ours · 10
+
+Of every 100 ESP in rewards
+
+Unbonding
+
+7 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 1 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+4 months
+
+Today
+
+Espresso does not slash stake. The line cannot break
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+ESP · type to change
+
+Horizon
+
+5 years
+
+Not compounded — Espresso pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
+
+1,033
+
+Year 1
+
+1,066
+
+Year 2
+
+1,099
+
+Year 3
+
+1,132
+
+Year 4
+
+1,165
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+Yes — 1 ESP, the stake table’s minimum delegation.
+
+Do you hold my tokens?
+
+No. Your ESP sits in Espresso’s stake table contract on Ethereum; only your address can withdraw it.
+
+How often are rewards paid?
+
+With each block we propose, into a balance you claim on Ethereum.
+
+What happens if you go offline?
+
+A standby node takes over. The chain pays nothing for blocks we miss; there is no slashing.
+
+Can I unstake at any time?
+
+Yes. Undelegated ESP can be withdrawn after the 7-day exit escrow, with one undelegation pending per validator at a time.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Ika
+
+Supra
+
+Vara
+
+## Gitopia staking
+
+URL: https://encapsulate.xyz/networks/gitopia
+
+Stake LORE with Encapsulate on Gitopia: 10% commission, 41.6% a year after commission, 21 days unbonding. Non-custodial.
+
+### Gitopia
+
+Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.
+
+[Delegate with Keplr](https://encapsulate.xyz/guides/gitopia)
+
+[Our validator](https://ping.pub/gitopia/staking/gitopiavaloper1s0lankh33kprer2l22nank5rvsuh9ksag3grfh)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+41.6%
+
+Set by the chain, not by us
+
+Of every 100 LORE staked
+
+41.6 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+10%
+
+Our cut of the rewards
+
+Yours · 90
+
+Ours · 10
+
+Of every 100 LORE in rewards
+
+Unbonding
+
+21 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 15 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+41 months
+
+Today
+
+No slash since we joined. A slash would break this line
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+LORE · type to change
+
+Horizon
+
+5 years
+
+Not compounded — Gitopia pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
+
+1,416
+
+Year 1
+
+1,832
+
+Year 2
+
+2,248
+
+Year 3
+
+2,664
+
+Year 4
+
+3,080
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Delegate any amount the chain itself allows.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Every block, about 2 seconds, to a balance you claim.
+
+What happens if you go offline?
+
+A standby node takes over. Past 95% missed of 50,000 blocks, the chain jails it and slashes 0.01%.
+
+Can I unstake at any time?
+
+Yes. Unbonding takes 21 days; rewards stop the moment you ask.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Gravity Bridge staking
+
+URL: https://encapsulate.xyz/networks/gravity-bridge
+
+Stake GRAV with Encapsulate on Gravity Bridge: 10% commission, 16.4% a year after commission, 21 days unbonding. Non-custodial.
+
+### Gravity Bridge
+
+Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.
+
+[Delegate with Keplr](https://encapsulate.xyz/guides/gravity-bridge)
+
+[Our validator](https://www.mintscan.io/gravity-bridge/validators/gravityvaloper1s0lankh33kprer2l22nank5rvsuh9ksatgqzfn)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+16.4%
+
+Set by the chain, not by us
+
+Of every 100 GRAV staked
+
+16.4 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+10%
+
+Our cut of the rewards
+
+Yours · 90
+
+Ours · 10
+
+Of every 100 GRAV in rewards
+
+Unbonding
+
+21 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 15 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+58 months
+
+Today
+
+No slash since we joined. A slash would break this line
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+GRAV · type to change
+
+Horizon
+
+5 years
+
+Not compounded — Gravity Bridge pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
+
+1,164
+
+Year 1
+
+1,328
+
+Year 2
+
+1,492
+
+Year 3
+
+1,656
+
+Year 4
+
+1,820
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Delegate any amount the chain itself allows.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Every block, about 6 seconds, to a balance you claim.
+
+What happens if you go offline?
+
+A standby node takes over. Past half of 10,000 blocks missed, the chain jails it; an Ethereum-side signature missing for 10,000 blocks slashes 0.1%.
+
+Can I unstake at any time?
+
+Yes. Unbonding takes 21 days; rewards stop the moment you ask.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## humans.ai staking
+
+URL: https://encapsulate.xyz/networks/humans-ai
+
+Stake HEART with Encapsulate on humans.ai: 10% commission, 31.7% a year after commission, 14 days unbonding. Non-custodial.
+
+### humans.ai
+
+Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.
+
+[Delegate with Keplr](https://encapsulate.xyz/guides/humans-ai)
+
+[Our validator](https://www.mintscan.io/humans/validators/humanvaloper1d2x0t42a6anth3lt38ld5997m6e5ya5fsqguy3)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+31.7%
+
+Set by the chain, not by us
+
+Of every 100 HEART staked
+
+31.7 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+10%
+
+Our cut of the rewards
+
+Yours · 90
+
+Ours · 10
+
+Of every 100 HEART in rewards
+
+Unbonding
+
+14 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 8 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+40 months
+
+Today
+
+No slash since we joined. A slash would break this line
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+HEART · type to change
+
+Horizon
+
+5 years
+
+Not compounded — humans.ai pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
+
+1,317
+
+Year 1
+
+1,634
+
+Year 2
+
+1,951
+
+Year 3
+
+2,268
+
+Year 4
+
+2,585
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Delegate any amount the chain itself allows.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Every block, about 6 seconds, to a balance you claim.
+
+What happens if you go offline?
+
+A standby node takes over. Past 95% missed of 5,000 blocks — about 7.5 hours — the chain jails it; stake is not cut, but rewards stop.
+
+Can I unstake at any time?
+
+Yes. Unbonding takes 14 days, with no rewards in that time; then the tokens are free to move.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Ika staking
+
+URL: https://encapsulate.xyz/networks/ika
+
+Stake IKA with Encapsulate on Ika: 10% commission, 13.1% a year after commission, 12–36 hours unbonding. Non-custodial.
+
+### Ika
+
+Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 24 hours.
+
+[Delegate with Suiet](https://encapsulate.xyz/guides/ika)
+
+[Our validator](https://ikascan.io/mainnet/operator/0x351f2db45c0aa849265b2605535ac84f2bed663c819044045953d579a74312f1)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+13.1%
+
+Set by the chain, not by us
+
+Of every 100 IKA staked
+
+13.1 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+10%
+
+Our cut of the rewards
+
+Yours · 90
+
+Ours · 10
+
+Of every 100 IKA in rewards
+
+Unbonding
+
+12–36 hours
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 27 Oct
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+15 months
+
+Today
+
+Ika does not slash stake. The line cannot break
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+IKA · type to change
+
+Horizon
+
+5 years
+
+Compounded every epoch — Ika adds rewards to your stake. After our 10% commission. An estimate at today’s rate, which the chain can change.
+
+1,131
+
+Year 1
+
+1,262
+
+Year 2
+
+1,393
+
+Year 3
+
+1,524
+
+Year 4
+
+1,655
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+1 IKA — the smallest stake the network accepts.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Every epoch — about 24 hours — added to your stake.
+
+What happens if you go offline?
+
+A standby node takes over. If two-thirds of the committee report a validator, the network withholds that epoch’s rewards; stake is never cut.
+
+Can I unstake at any time?
+
+Yes. After you request it, your IKA can be withdrawn in 12–36 hours, depending on when in the epoch you ask.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Supra
+
+Vara
+
+## IOTA staking
+
+URL: https://encapsulate.xyz/networks/iota
+
+Stake IOTA with Encapsulate on IOTA: 8% commission, 11.3% a year after commission, no unbonding. Non-custodial.
+
+### IOTA
+
+Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 24 hours.
+
+[Delegate with IOTA Wallet](https://encapsulate.xyz/guides/iota)
+
+[Our validator](https://iotascan.com/mainnet/validator/0xedd654b226cbfbdfd2f7329928ba1b8784493354f92326e9d368494a9227c9ab)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+11.3%
+
+Set by the chain, not by us
+
+Of every 100 IOTA staked
+
+11.3 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+8%
+
+Our cut of the rewards
+
+Yours · 92
+
+Ours · 8
+
+Of every 100 IOTA in rewards
+
+Unbonding
+
+None
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 25 Oct
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+17 months
+
+Today
+
+IOTA does not slash stake. The line cannot break
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+IOTA · type to change
+
+Horizon
+
+5 years
+
+Compounded every epoch — IOTA adds rewards to your stake. After our 8% commission. An estimate at today’s rate, which the chain can change.
+
+1,113
+
+Year 1
+
+1,226
+
+Year 2
+
+1,339
+
+Year 3
+
+1,452
+
+Year 4
+
+1,565
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+1 IOTA — the smallest stake the chain accepts.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Every epoch — about 24 hours — added to your stake.
+
+What happens if you go offline?
+
+A standby node takes over. If two-thirds of stake report a validator, the chain withholds that epoch’s rewards; stake is never cut.
+
+Can I unstake at any time?
+
+Yes. Withdrawn IOTA is back in your wallet at once; only the current epoch’s rewards are given up.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## ixo staking
+
+URL: https://encapsulate.xyz/networks/ixo
+
+Stake IXO with Encapsulate on ixo: 10% commission, 17.9% a year after commission, 21 days unbonding. Non-custodial.
+
+### ixo
+
+Delegate in two minutes. Your keys never leave your wallet; rewards land once a day.
+
+[Delegate with Keplr](https://encapsulate.xyz/guides/ixo)
+
+[Our validator](https://ping.pub/ixo/staking/ixovaloper1p8uxq4ska2psv2k8wknljh568k5qfnwtlmt2an)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+17.9%
+
+Set by the chain, not by us
+
+Of every 100 IXO staked
+
+17.9 earned in a year
+
+After our commission · as of 24 Oct 2026
+
+Commission
+
+10%
+
+Our cut of the rewards
+
+Yours · 90
+
+Ours · 10
+
+Of every 100 IXO in rewards
+
+Unbonding
+
+21 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 15 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+8 months
+
+Today
+
+No slash since we joined. A slash would break this line
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+IXO · type to change
+
+Horizon
+
+5 years
+
+Not compounded — ixo pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
+
+1,179
+
+Year 1
+
+1,358
+
+Year 2
+
+1,537
+
+Year 3
+
+1,716
+
+Year 4
+
+1,895
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Delegate any amount the chain itself allows.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Once a day, when the chain mints at its daily epoch, to a balance you claim.
+
+What happens if you go offline?
+
+A standby node takes over. Past 95% missed of 10,000 blocks — about 15 hours — the chain jails it and slashes 0.01% of stake.
+
+Can I unstake at any time?
+
+Yes. Unbonding takes 21 days, with no rewards in that time; then the tokens are free to move.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Lido DVT staking
+
+URL: https://encapsulate.xyz/networks/lido-dvt
+
+Stake ETH through Lido DVT with Encapsulate: 500 validators, 10% fee in all, 2.3% a year after fees, 1–5 days to unstake.
+
+### Lido DVT
+
+Stake in two minutes. Your keys never leave your wallet; your stETH grows once a day.
+
+[Stake with Lido](https://stake.lido.fi/)
+
+[Our validator](https://operators.lido.fi/module/2/43)
+
+Validators · Lido
+
+Validators
+
+500
+
+×
+
+ETH each
+
+32
+
+=
+
+ETH at stake
+
+16,000
+
+Ethereum validators we operate for Lido. The protocol fixes 32 ETH behind each, so together they hold 16,000 ETH at stake.
+
+The terms
+
+#### The terms
+
+Reward rate
+
+2.3%
+
+Set by the chain, not by us
+
+Of every 100 ETH staked
+
+2.3 earned in a year
+
+After Lido’s fee · as of 25 Oct 2026
+
+Lido’s fee
+
+10%
+
+Ours is inside it, not on top
+
+Yours · 90
+
+Lido · 10
+
+Of every 100 ETH in rewards
+
+Unbonding
+
+1–5 days
+
+Lido’s withdrawal queue
+
+Withdraw today · 25 Oct
+
+In your wallet · 30 Oct
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+25 months
+
+Today
+
+No slash since we joined. A slash would break this line
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+ETH · type to change
+
+Horizon
+
+5 years
+
+Compounded daily — your stETH balance grows as Lido adds rewards. After Lido’s 10% fee. An estimate at today’s rate, which the chain can change.
+
+1,023
+
+Year 1
+
+1,046
+
+Year 2
+
+1,069
+
+Year 3
+
+1,092
+
+Year 4
+
+1,115
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing is on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Lido pools deposits, so you can stake any amount of ETH.
+
+Do you hold my tokens?
+
+No. Your ETH goes into Lido’s contracts, and you hold stETH, a liquid token, in your own wallet.
+
+How often are rewards paid?
+
+Once a day, around 12:30 UTC — your stETH balance grows, after Lido’s 10% fee.
+
+What happens if you go offline?
+
+Any five of the cluster’s seven operators keep it signing. Downtime is never slashed; a missed attestation costs about what it would have paid.
+
+Can I unstake at any time?
+
+Yes. Lido’s withdrawal queue usually takes 1–5 days, without rewards meanwhile — or swap stETH for ETH at market price.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Lumera staking
+
+URL: https://encapsulate.xyz/networks/lumera
+
+Stake LUME with Encapsulate on Lumera: 10% commission, 47.3% a year after commission, 21 days unbonding. Non-custodial.
+
+### Lumera
+
+Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.
+
+[Delegate with Keplr](https://encapsulate.xyz/guides/lumera)
+
+[Our validator](https://portal.lumera.io/lumera-mainnet-1/staking/lumeravaloper18qpd0yrk0gkcvah0zpyq89uqzd2y6q25dlmcux)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+47.3%
+
+Set by the chain, not by us
+
+Of every 100 LUME staked
+
+47.3 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+10%
+
+Our cut of the rewards
+
+Yours · 90
+
+Ours · 10
+
+Of every 100 LUME in rewards
+
+Unbonding
+
+21 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 15 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+14 months
+
+Today
+
+No slash since we joined. A slash would break this line
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+LUME · type to change
+
+Horizon
+
+5 years
+
+Not compounded — Lumera pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
+
+1,473
+
+Year 1
+
+1,946
+
+Year 2
+
+2,419
+
+Year 3
+
+2,892
+
+Year 4
+
+3,365
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Delegate any amount the chain itself allows.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Every block, about 6 seconds, to a balance you claim.
+
+What happens if you go offline?
+
+A standby node takes over. Past 90% missed of 10,000 blocks — about 14 hours — the chain jails it and slashes 0.1% of stake.
+
+Can I unstake at any time?
+
+Yes. Unbonding takes 21 days, with no rewards in that time; then the tokens are free to move.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Mina staking
+
+URL: https://encapsulate.xyz/networks/mina
+
+Stake MINA with Encapsulate on Mina: 5% commission, no unbonding. Non-custodial.
+
+### Mina
+
+Delegate in two minutes. Your keys never leave your wallet; we pay your share of block rewards every two epochs.
+
+[Delegate with Auro Wallet](https://encapsulate.xyz/guides/mina)
+
+[Our validator](https://minascan.io/mainnet/validator/B62qjWmFMiYUiWGvisVof9mbiKi2sB1FhZdwiDyXi8nMCoLDJuFaRYY/delegations)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+—
+
+Set by the chain, not by us
+
+Commission
+
+5%
+
+Our cut of the rewards
+
+Yours · 95
+
+Ours · 5
+
+Of every 100 MINA in rewards
+
+Unbonding
+
+None
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 25 Oct
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+25 months
+
+Today
+
+Mina does not slash stake. The line cannot break
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our blocks and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Mina delegates your whole balance, whatever its size; there is no partial delegation.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Mina pays each block’s reward to us, not to you. We pay delegators their share, less our 5% fee, every two epochs — about 15 days.
+
+What happens if you go offline?
+
+A standby node takes over. Mina has no slashing — a missed slot costs only that block’s reward; stake is never cut.
+
+Can I unstake at any time?
+
+Yes. Nothing is locked and your MINA stays spendable; a change of delegation takes effect after one to two epochs, 7–15 days.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Monad staking
+
+URL: https://encapsulate.xyz/networks/monad
+
+Stake MON with Encapsulate on Monad: 15% commission, 9.8% a year after commission, 4.5–9 hours unbonding. Non-custodial.
+
+### Monad
+
+Delegate in two minutes. Your keys never leave your wallet; rewards accrue with every block we propose.
+
+[Delegate with MetaMask](https://encapsulate.xyz/guides/monad)
+
+[Our validator](https://monadvision.com/validator/0x79129e1306dc1e81F3a2cC5e3B5171fb92FFd99d)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+9.8%
+
+Set by the chain, not by us
+
+Of every 100 MON staked
+
+9.8 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+15%
+
+Our cut of the rewards
+
+Yours · 85
+
+Ours · 15
+
+Of every 100 MON in rewards
+
+Unbonding
+
+4.5–9 hours
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 26 Oct
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+11 months
+
+Today
+
+Monad does not slash stake. The line cannot break
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+MON · type to change
+
+Horizon
+
+5 years
+
+Not compounded — Monad pays rewards to a claimable balance. After our 15% commission. An estimate at today’s rate, which the chain can change.
+
+1,098
+
+Year 1
+
+1,196
+
+Year 2
+
+1,294
+
+Year 3
+
+1,392
+
+Year 4
+
+1,490
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our blocks are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Delegate any amount the chain itself allows.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+With each block we propose — many times an hour — into a balance you claim or compound.
+
+What happens if you go offline?
+
+A standby node takes over. The chain pays nothing for blocks we fail to propose; there is no slashing.
+
+Can I unstake at any time?
+
+Yes. Undelegated MON can be withdrawn one epoch after it leaves the set — about 4.5 to 9 hours.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## NEAR staking
+
+URL: https://encapsulate.xyz/networks/near
+
+Stake NEAR with Encapsulate on NEAR: 5% commission, 4.7% a year after commission, 22–30 hours unbonding. Non-custodial.
+
+### NEAR
+
+Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 7 hours.
+
+[Delegate with Meteor](https://encapsulate.xyz/guides/near)
+
+[Our validator](https://nearblocks.io/node-explorer/encapsulate.pool.near)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+4.7%
+
+Set by the chain, not by us
+
+Of every 100 NEAR staked
+
+4.7 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+5%
+
+Our cut of the rewards
+
+Yours · 95
+
+Ours · 5
+
+Of every 100 NEAR in rewards
+
+Unbonding
+
+22–30 hours
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 27 Oct
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+12 months
+
+Today
+
+NEAR does not slash stake. The line cannot break
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+NEAR · type to change
+
+Horizon
+
+5 years
+
+Compounded every epoch — NEAR adds rewards to your stake. After our 5% commission. An estimate at today’s rate, which the chain can change.
+
+1,047
+
+Year 1
+
+1,094
+
+Year 2
+
+1,141
+
+Year 3
+
+1,188
+
+Year 4
+
+1,235
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed endorsement wakes someone up, at any hour.
+
+Public record
+
+Our endorsements and uptime are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Delegate any amount the chain itself allows.
+
+Do you hold my tokens?
+
+No. Your NEAR sits in the pool’s contract as your stake shares; only your account can unstake or withdraw it.
+
+How often are rewards paid?
+
+Every epoch — about 7 hours — added to your stake.
+
+What happens if you go offline?
+
+A standby node takes over. Below 90% uptime an epoch earns no rewards, and further down the chain removes the validator; stake is never cut.
+
+Can I unstake at any time?
+
+Yes. Unstaked NEAR unlocks at the fourth epoch change — 22 to 30 hours — and earns nothing while it waits.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Passage staking
+
+URL: https://encapsulate.xyz/networks/passage
+
+Stake PASG with Encapsulate on Passage: 10% commission, 6.7% a year after commission, 21 days unbonding. Non-custodial.
+
+### Passage
+
+Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.
+
+[Delegate with Keplr](https://encapsulate.xyz/guides/passage)
+
+[Our validator](https://wallet.keplr.app/chains/passage?modal=validator&chain=passage-2&validator_address=pasgvaloper1s0lankh33kprer2l22nank5rvsuh9ksawhck2v)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+6.7%
+
+Set by the chain, not by us
+
+Of every 100 PASG staked
+
+6.7 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+10%
+
+Our cut of the rewards
+
+Yours · 90
+
+Ours · 10
+
+Of every 100 PASG in rewards
+
+Unbonding
+
+21 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 15 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+50 months
+
+Today
+
+No slash since we joined. A slash would break this line
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+PASG · type to change
+
+Horizon
+
+5 years
+
+Not compounded — Passage pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
+
+1,067
+
+Year 1
+
+1,134
+
+Year 2
+
+1,201
+
+Year 3
+
+1,268
+
+Year 4
+
+1,335
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Delegate any amount the chain itself allows.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Every block, about 6 seconds, to a balance you claim.
+
+What happens if you go offline?
+
+A standby node takes over. Past 50% missed of 10,000 blocks — about 8 hours — the chain jails it and slashes 0.5% of stake.
+
+Can I unstake at any time?
+
+Yes. Unbonding takes 21 days, with no rewards in that time; then the tokens are free to move.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Sommelier staking
+
+URL: https://encapsulate.xyz/networks/sommelier
+
+Stake SOMM with Encapsulate on Sommelier: 10% commission, 0% a year after commission, 28 days unbonding. Non-custodial.
+
+### Sommelier
+
+Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block, though today they are close to zero.
+
+[Delegate with Keplr](https://encapsulate.xyz/guides/sommelier)
+
+[Our validator](https://wallet.keplr.app/chains/sommelier?modal=validator&chain=sommelier-3&validator_address=sommvaloper1s0lankh33kprer2l22nank5rvsuh9ksa8324s2)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+0%
+
+Set by the chain, not by us
+
+Of every 100 SOMM staked
+
+0 earned in a year
+
+After our commission · as of 29 Sep 2026
+
+Commission
+
+10%
+
+Our cut of the rewards
+
+Yours · 90
+
+Ours · 10
+
+Of every 100 SOMM in rewards
+
+Unbonding
+
+28 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 22 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+Today
+
+Sommelier does not slash stake. The line cannot break
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+SOMM · type to change
+
+Horizon
+
+5 years
+
+Not compounded — Sommelier pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
+
+1,000
+
+Year 1
+
+Year 2
+
+Year 3
+
+Year 4
+
+1,000
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Delegate any amount the chain itself allows.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Every block, about 5 seconds, to a balance you claim. Inflation and incentives have ended, so today that is close to 0%.
+
+What happens if you go offline?
+
+A standby node takes over. Past 95% missed of 5,000 blocks the chain jails it, but Sommelier cannot slash: stake is not cut.
+
+Can I unstake at any time?
+
+Yes. Unbonding takes 28 days, with no rewards in that time; then the tokens are free to move.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Starknet staking
+
+URL: https://encapsulate.xyz/networks/starknet
+
+Stake STRK with Encapsulate on Starknet: 5% commission, 7.5% a year after commission, 7 days unbonding. Non-custodial.
+
+### Starknet
+
+Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about an hour.
+
+[Delegate with Ready X](https://encapsulate.xyz/guides/starknet-ready-x)
+
+[Our validator](https://voyager.online/staking?validator=0x0359e252e663765989b04c266a4daec77662b506ce5f026994cb8ad53628df2a)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+7.5%
+
+Set by the chain, not by us
+
+Of every 100 STRK staked
+
+7.5 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+5%
+
+Our cut of the rewards
+
+Yours · 95
+
+Ours · 5
+
+Of every 100 STRK in rewards
+
+Unbonding
+
+7 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 1 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+15 months
+
+Today
+
+Starknet does not slash stake. The line cannot break
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+STRK · type to change
+
+Horizon
+
+5 years
+
+Not compounded — Starknet pays rewards to a claimable balance. After our 5% commission. An estimate at today’s rate, which the chain can change.
+
+1,075
+
+Year 1
+
+1,150
+
+Year 2
+
+1,225
+
+Year 3
+
+1,300
+
+Year 4
+
+1,375
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed attestation wakes someone up, at any hour.
+
+Public record
+
+Our attestations are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Delegate any amount the chain itself allows.
+
+Do you hold my tokens?
+
+No. Your STRK sits in our delegation pool contract, and only your address can withdraw it.
+
+How often are rewards paid?
+
+Every epoch — about an hour — once we attest; rewards wait in the pool until you claim them.
+
+What happens if you go offline?
+
+A standby node takes over. The chain pays nothing for an epoch without our attestation; there is no slashing.
+
+Can I unstake at any time?
+
+Yes. Rewards stop the moment you ask; your STRK can be withdrawn 7 days later.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Sui staking
+
+URL: https://encapsulate.xyz/networks/sui
+
+Stake SUI with Encapsulate on Sui: 8% commission, 1.3% a year after commission, no unbonding. Non-custodial.
+
+### Sui
+
+Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 24 hours.
+
+[Delegate with Slush](https://encapsulate.xyz/guides/sui)
+
+[Our validator](https://suiscan.xyz/mainnet/validator/0x01d03daf1dc3540b62014b0a6837f21ba72bf9218d6c4b3a2ee65465dde26ff7)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+1.3%
+
+Set by the chain, not by us
+
+Of every 100 SUI staked
+
+1.3 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+8%
+
+Our cut of the rewards
+
+Yours · 92
+
+Ours · 8
+
+Of every 100 SUI in rewards
+
+Unbonding
+
+None
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 25 Oct
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+14 months
+
+Today
+
+Sui does not slash stake. The line cannot break
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+SUI · type to change
+
+Horizon
+
+5 years
+
+Compounded every epoch — Sui adds rewards to your stake. After our 8% commission. An estimate at today’s rate, which the chain can change.
+
+1,013
+
+Year 1
+
+1,026
+
+Year 2
+
+1,039
+
+Year 3
+
+1,052
+
+Year 4
+
+1,065
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+1 SUI — the smallest stake the chain accepts.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Every epoch — about 24 hours — added to your stake.
+
+What happens if you go offline?
+
+A standby node takes over. If two-thirds of stake report a validator, the chain withholds that epoch’s rewards; stake is never cut.
+
+Can I unstake at any time?
+
+Yes. Withdrawn SUI is back in your wallet at once; only the current epoch’s rewards are given up.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Supra staking
+
+URL: https://encapsulate.xyz/networks/supra
+
+Stake SUPRA with Encapsulate on Supra: 38.72% commission, 8.0% a year after commission, up to 48 hours unbonding. Non-custodial.
+
+### Supra
+
+Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 2 hours.
+
+[Delegate with StarKey](https://encapsulate.xyz/guides/supra)
+
+[Our validator](https://suprascan.io/address/0x15ac9afcd6a042bd61239305ad13663f2423663d6ea83ce5293561b77766cd3a/f)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+8.0%
+
+Set by the chain, not by us
+
+Of every 100 SUPRA staked
+
+8 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+38.72%
+
+Our cut of the rewards
+
+Yours · 61.28
+
+Ours · 38.72
+
+Of every 100 SUPRA in rewards
+
+Unbonding
+
+Up to 48 hours
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 27 Oct
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+22 months
+
+Today
+
+Supra does not slash stake. The line cannot break
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+SUPRA · type to change
+
+Horizon
+
+5 years
+
+Compounded every epoch — Supra adds rewards to your stake. After our 38.72% commission. An estimate at today’s rate, which the chain can change.
+
+1,080
+
+Year 1
+
+1,160
+
+Year 2
+
+1,240
+
+Year 3
+
+1,320
+
+Year 4
+
+1,400
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+Yes — 1 SUPRA, the smallest stake a delegation pool accepts.
+
+Do you hold my tokens?
+
+No. Your SUPRA sits in our delegation pool as shares in your name; we cannot move it.
+
+How often are rewards paid?
+
+Every epoch — about 2 hours — added to your stake.
+
+What happens if you go offline?
+
+A standby node takes over. Each epoch’s reward shrinks by the share of proposals we miss; there is no slashing.
+
+Can I unstake at any time?
+
+Yes. Unlocked SUPRA becomes withdrawable when the pool’s 48-hour lockup cycle ends — at most 48 hours.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Vara
+
+## Terra staking
+
+URL: https://encapsulate.xyz/networks/terra
+
+Stake LUNA with Encapsulate on Terra: 10% commission, 35.9% a year after commission, 21 days unbonding. Non-custodial.
+
+### Terra
+
+Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.
+
+[Delegate with Keplr](https://encapsulate.xyz/guides/terra)
+
+[Our validator](https://www.mintscan.io/terra/validators/terravaloper1yh4u76y405t3ff9lyrzhhe8legjx9k3as5mujs)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+35.9%
+
+Set by the chain, not by us
+
+Of every 100 LUNA staked
+
+35.9 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+10%
+
+Our cut of the rewards
+
+Yours · 90
+
+Ours · 10
+
+Of every 100 LUNA in rewards
+
+Unbonding
+
+21 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 15 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+52 months
+
+Today
+
+No slash since we joined. A slash would break this line
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+LUNA · type to change
+
+Horizon
+
+5 years
+
+Not compounded — Terra pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
+
+1,359
+
+Year 1
+
+1,718
+
+Year 2
+
+2,077
+
+Year 3
+
+2,436
+
+Year 4
+
+2,795
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+No. Delegate any amount the chain itself allows.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Every block, about 6 seconds, to a balance you claim.
+
+What happens if you go offline?
+
+A standby node takes over. Past 95% missed of 10,000 blocks, the chain jails it and slashes 0.01%.
+
+Can I unstake at any time?
+
+Yes. Unbonding takes 21 days; rewards stop the moment you ask.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Vara staking
+
+URL: https://encapsulate.xyz/networks/vara
+
+Stake VARA with Encapsulate on Vara: 5% commission, 16.9% a year after commission, 7 days unbonding. Non-custodial.
+
+### Vara
+
+Delegate in two minutes. Your keys never leave your wallet; rewards accrue every era, about 12 hours.
+
+[Delegate with Vara Staking](https://staking.vara.network/#/nominate)
+
+[Our validator](https://vara.subscan.io/validator/kGjJgbAji2v1NXHCApCJ9VTTAKfhE8XBeUK6u4a3txuuH6Qq6)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+16.9%
+
+Set by the chain, not by us
+
+Of every 100 VARA staked
+
+16.9 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+5%
+
+Our cut of the rewards
+
+Yours · 95
+
+Ours · 5
+
+Of every 100 VARA in rewards
+
+Unbonding
+
+7 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 1 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+38 months
+
+Today
+
+No slash since we joined. A slash would break this line
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+VARA · type to change
+
+Horizon
+
+5 years
+
+Not compounded — Vara pays rewards to a claimable balance. After our 5% commission. An estimate at today’s rate, which the chain can change.
+
+1,169
+
+Year 1
+
+1,338
+
+Year 2
+
+1,507
+
+Year 3
+
+1,676
+
+Year 4
+
+1,845
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our blocks and era points are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+Yes — 50 VARA to nominate us directly. Nomination pools take 1 VARA, but the pool chooses its validators.
+
+Do you hold my tokens?
+
+No. They stay in your wallet — delegation is non-custodial.
+
+How often are rewards paid?
+
+Every era — about 12 hours — once anyone claims the era’s payout; it goes to your stake or your balance, as you chose.
+
+What happens if you go offline?
+
+A standby node takes over. Missed blocks earn nothing; if over 10% of validators are offline in a session, stake is slashed up to 7%.
+
+Can I unstake at any time?
+
+Yes. Unbonding takes 7 days (14 eras); the amount earns nothing meanwhile, then you withdraw it.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+## Zilliqa staking
+
+URL: https://encapsulate.xyz/networks/zilliqa
+
+Stake ZIL with Encapsulate on Zilliqa: 8% commission, 8.2% a year after commission, about 6 days unbonding. Non-custodial.
+
+### Zilliqa
+
+Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block, about a second.
+
+[Delegate with Bearby](https://encapsulate.xyz/guides/zilliqa)
+
+[Our validator](https://otterscan.zilliqa.com/address/0x1311059DD836D7000Dc673eA4Cc834fe04e9933C)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+8.2%
+
+Set by the chain, not by us
+
+Of every 100 ZIL staked
+
+8.2 earned in a year
+
+After our commission · as of 25 Oct 2026
+
+Commission
+
+8%
+
+Our cut of the rewards
+
+Yours · 92
+
+Ours · 8
+
+Of every 100 ZIL in rewards
+
+Unbonding
+
+About 6 days
+
+How long to withdraw
+
+Withdraw today · 25 Oct
+
+In your wallet · 31 Oct
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+15 months
+
+Today
+
+Zilliqa does not slash stake. The line cannot break
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+ZIL · type to change
+
+Horizon
+
+5 years
+
+Compounded every block — each encapZIL is worth more ZIL as rewards land. After our 8% commission. An estimate at today’s rate, which the chain can change.
+
+1,082
+
+Year 1
+
+1,164
+
+Year 2
+
+1,246
+
+Year 3
+
+1,328
+
+Year 4
+
+1,410
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Bare metal, two regions, with a hot standby.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our signing and votes are on the explorer for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+Yes — 100 ZIL, our delegation contract’s minimum.
+
+Do you hold my tokens?
+
+No. You hold encapZIL, a liquid token worth a rising amount of ZIL; the ZIL itself sits in our delegation contract.
+
+How often are rewards paid?
+
+Every block, about a second — each encapZIL is worth more ZIL as they land.
+
+What happens if you go offline?
+
+A standby node takes over. Missed blocks earn nothing; 3 misses in 600 views bench a validator from proposing. There is no slashing.
+
+Can I unstake at any time?
+
+Yes. Unstaking fixes your ZIL at that moment’s price; you claim it after 461,680 blocks — about 6 days.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Avail
+
+Espresso
+
+Ika
+
+Supra
+
+Vara
+
+## Staking guides
+
+URL: https://encapsulate.xyz/guides
+
+Step-by-step staking guides for every chain we run, per wallet, with a screen for each step.
+
+Encapsulate · Guides
+
+How to stake
+
+### How to stake, step by step.
+
+Wallet-by-wallet walkthroughs for delegating on every chain we run — what to copy, what to keep for fees, and how long until rewards start.
+
+[Book a call](https://cal.com/aditya-encapsulate/30min)
+
+[Browse guides](https://encapsulate.xyz/guides#block-3dde800a5138811e906fc383bd7a0789)
+
+Delegation walkthroughs
+
+Scroll ↓
+
+I want to stake a chain with a wallet.
+
+Chain
+
+Pick a chain to start.
+
+Encapsulate · Staking guides
+
+28 chains · 17 guides
+
+## Agoric staking guide
+
+URL: https://encapsulate.xyz/guides/agoric
+
+Delegate BLD with Keplr. Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+Agoric
+
+### Delegate BLD with Keplr
+
+Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+Seven screens
+
+Scroll ↓
+
+01
+
+of 7
+
+On wallet.keplr.app
+
+#### Press Start Staking
+
+Open Agoric in the Keplr Dashboard with your wallet connected. The Staking tab shows your BLD, how much is staked and the rewards you can claim. Press Start Staking under Your Validators.
+
+02
+
+of 7
+
+On wallet.keplr.app
+
+#### Find Encapsulate
+
+Stake to opens on Agoric's validators, with the APR and the 21-day unstaking period at the top. Type encapsulate in the search and pick Encapsulate.
+
+03
+
+of 7
+
+On wallet.keplr.app
+
+#### Check our numbers
+
+Encapsulate's panel shows its APR, our 9% commission, its share of voting power and the 21-day unstaking period. Press Stake.
+
+04
+
+of 7
+
+On wallet.keplr.app
+
+#### Enter an amount
+
+Type how much BLD to stake; Max fills in your whole available balance. Press Stake.
+
+05
+
+of 7
+
+In the Keplr extension
+
+#### Unlock Keplr
+
+The Keplr extension opens. Type your password and press Unlock.
+
+06
+
+of 7
+
+In the Keplr extension
+
+#### Approve in Keplr
+
+Keplr shows one message, the amount of BLD to stake to Encapsulate, and a fee of a fraction of a cent. The memo is optional. Press Approve.
+
+07
+
+of 7
+
+On wallet.keplr.app
+
+#### Check the dashboard
+
+Back on the dashboard, Staking Amount shows your stake and Your Validators lists Encapsulate with our 9% commission. Rewards build up with every block and do not compound: Claim sends them to your wallet, and Stake adds more.
+
+Done · 7 of 7
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Delegate LUME with Keplr.
+
+Next: Lumera
+
+All guides
+
+Agoric’s terms and common questions
+
+Need help? Ask on Discord
+
+## Althea staking guide
+
+URL: https://encapsulate.xyz/guides/althea
+
+Stake ALTHEA with MetaMask. Nine steps across the MetaMask extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+#### 📍Useful Links
+
+[althea.link](https://althea.link/)
+
+[MetaMask - Chrome Web Store](https://chromewebstore.google.com/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn)
+
+#### 🌱 Need Help?
+
+[Ask us on X](https://x.com/encapHQ)
+
+[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
+
+## Avail staking guide
+
+URL: https://encapsulate.xyz/guides/avail
+
+Stake AVAIL with SubWallet. Thirteen steps across the SubWallet extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+#### 📍Useful Links
+
+[Avail Staking Dashboard | Avail Staking (AVAIL)](https://staking.availproject.org/#/nominate)
+
+[SubWallet - Polkadot Wallet - Chrome Web Store](https://chromewebstore.google.com/detail/subwallet-polkadot-wallet/onhogfjeacnfoofkfgppdlbmlmnplgbn?hl=en)
+
+#### 🌱 Need Help?
+
+[Ask us on X](https://x.com/encapHQ)
+
+[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
+
+## Avalanche staking guide
+
+URL: https://encapsulate.xyz/guides/avalanche
+
+Stake AVAX with Core. Twelve steps across the Core extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+#### 📍Useful Links
+
+[Ava Labs Core | The Best Way to Connect to Web3](https://core.app/stake/)
+
+```
+NodeID-N3e9W3EngjabGnTZVqyZwunVcbCdrY5Qy
+```
+
+_Encapsulate Node Id_
+
+#### 🌱 Need Help?
+
+[Ask us on X](https://x.com/encapHQ)
+
+[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
+
+## Axelar staking guide
+
+URL: https://encapsulate.xyz/guides/axelar
+
+Delegate AXL with Keplr. Seven steps across the extension and the Keplr dashboard, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+Axelar
+
+### Delegate AXL with Keplr
+
+Seven steps across the extension and the Keplr dashboard, one per screen, each with the screen you should be looking at.
+
+Seven screens
+
+Scroll ↓
+
+01
+
+of 7
+
+On wallet.keplr.app
+
+#### Open Keplr’s Axelar staking dashboard
+
+The Axelar dashboard shows your balance, your staking amount and your claimable rewards. Click on Start Staking.
+
+02
+
+of 7
+
+On wallet.keplr.app
+
+#### Find us in the list
+
+Search the validator list for Encapsulate and open our row.
+
+03
+
+of 7
+
+On wallet.keplr.app
+
+#### Check our numbers
+
+Our row states the commission, the voting power, the unstaking period and the APR after our cut. Read them, then click on Stake.
+
+04
+
+of 7
+
+On wallet.keplr.app
+
+#### Enter an amount
+
+Type the amount, or use Max and leave a little back for fees. The dollar value updates as you type.
+
+05
+
+of 7
+
+In the extension
+
+#### Unlock the Keplr wallet
+
+Enter your password and click on Unlock to open your wallet.
+
+06
+
+of 7
+
+In the extension
+
+#### Approve in Keplr
+
+The extension asks you to confirm, and shows exactly what you are signing — amount, validator and fee — before anything moves.
+
+07
+
+of 7
+
+On wallet.keplr.app
+
+#### Check it worked
+
+Your Validators now lists Encapsulate with the staked amount and our commission. Rewards accrue from the next block.
+
+Done · 7 of 7
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Stake IOTA with IOTA Wallet.
+
+Next: IOTA
+
+All guides
+
+Axelar’s terms and common questions
+
+Need help? Ask on Discord
+
+## EigenCloud staking guide
+
+URL: https://encapsulate.xyz/guides/eigen-layer
+
+Stake EIGEN with MetaMask. Eleven steps across the MetaMask extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+#### 📍Useful Links
+
+[MetaMask - Chrome Web Store](https://chromewebstore.google.com/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en)
+
+[lidofinance Stake with Lido | Lido](https://stake.lido.fi/)
+
+[Eigenlayer App](https://app.eigenlayer.xyz/)
+
+#### 🌱 Need Help?
+
+[Ask us on X](https://x.com/encapHQ)
+
+[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
+
+## EigenCloud stETH restaking guide
+
+URL: https://encapsulate.xyz/guides/eigen-layer-steth
+
+Restake stETH with MetaMask. Eighteen steps across the MetaMask extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+#### 📍Useful Links
+
+[MetaMask - Chrome Web Store](https://chromewebstore.google.com/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en)
+
+[lidofinance Stake with Lido | Lido](https://stake.lido.fi/)
+
+[Eigenlayer App](https://app.eigenlayer.xyz/)
+
+#### 🌱 Need Help?
+
+[Ask us on X](https://x.com/encapHQ)
+
+[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
+
+## Espresso staking guide
+
+URL: https://encapsulate.xyz/guides/espresso
+
+Stake ESP with MetaMask. Nine steps across Espresso’s staking dashboard and the MetaMask extension, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+Espresso
+
+### Stake ESP with MetaMask
+
+Nine steps across Espresso’s staking dashboard and the MetaMask extension, one per screen, each with the screen you should be looking at.
+
+Nine screens
+
+Scroll ↓
+
+01
+
+of 9
+
+On stake.espresso.network
+
+#### Find Encapsulate on the dashboard
+
+The dashboard lists every Espresso validator. Type Encapsulate in the search box and click Delegate on our row.
+
+02
+
+of 9
+
+On stake.espresso.network
+
+#### Choose MetaMask
+
+The dashboard asks for a wallet first. Choose MetaMask from the list.
+
+03
+
+of 9
+
+In the MetaMask extension
+
+#### Connect MetaMask
+
+MetaMask asks to connect to stake.espresso.network. Pick the account that holds your ESP and click Connect.
+
+04
+
+of 9
+
+On stake.espresso.network
+
+#### Approve ESP for staking
+
+The delegate window opens on Encapsulate. Type the amount of ESP to stake, then click Approve.
+
+05
+
+of 9
+
+In the MetaMask extension
+
+#### Confirm the spending cap
+
+MetaMask shows a spending cap request. It is a permission, not a payment: the most ESP the staking contract may move. Click Confirm.
+
+06
+
+of 9
+
+On stake.espresso.network
+
+#### Delegate
+
+Back in the delegate window, check the amount reads what you want to stake, then click Delegate.
+
+07
+
+of 9
+
+In the MetaMask extension
+
+#### Confirm the delegation
+
+MetaMask shows the transaction: the ESP you send and the network fee. Click Confirm.
+
+08
+
+of 9
+
+On stake.espresso.network
+
+#### Check the confirmation
+
+The window reads Delegation successful, and My delegations shows your ESP. Click Close.
+
+09
+
+of 9
+
+On stake.espresso.network
+
+#### Check your delegation
+
+The balance cards show your Total delegated, and our row lists your ESP under My delegation. Rewards accrue with every block we propose.
+
+Done · 9 of 9
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Stake MINA with Auro Wallet.
+
+Next: Mina
+
+All guides
+
+Espresso’s terms and common questions
+
+Need help? Ask on Discord
+
+## Gitopia staking guide
+
+URL: https://encapsulate.xyz/guides/gitopia
+
+Delegate LORE with Keplr. Six steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+#### 📍Useful Links
+
+[Ping Dashboard - Cosmos Blockchain Explorer And Web Wallet](https://ping.pub/gitopia)
+
+[Keplr - Chrome Web Store](https://chromewebstore.google.com/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en)
+
+#### 🌱 Need Help?
+
+[Ask us on X](https://x.com/encapHQ)
+
+[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
+
+## Gravity Bridge staking guide
+
+URL: https://encapsulate.xyz/guides/gravity-bridge
+
+Delegate GRAV with Keplr. Seven steps across ping.pub and the Keplr extension, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+Gravity Bridge
+
+### Delegate GRAV with Keplr
+
+Seven steps across ping.pub and the Keplr extension, one per screen, each with the screen you should be looking at.
+
+Seven screens
+
+Scroll ↓
+
+01
+
+of 7
+
+On ping.pub
+
+#### Press Delegate
+
+Open Gravity Bridge on ping.pub and connect Keplr with the wallet button at the top right; your address and balances appear. Press Delegate.
+
+02
+
+of 7
+
+On ping.pub
+
+#### Choose Encapsulate
+
+The Delegate window opens with your address as the sender. Open the Validator list and pick Encapsulate (10%).
+
+03
+
+of 7
+
+On ping.pub
+
+#### Enter an amount
+
+With Encapsulate (10%) chosen, type how much to stake and press Send. Simulate only estimates the fee.
+
+04
+
+of 7
+
+In the Keplr extension
+
+#### Unlock Keplr
+
+The Keplr extension opens. Type your password and press Unlock.
+
+05
+
+of 7
+
+In the Keplr extension
+
+#### Approve in Keplr
+
+Keplr shows one message, the amount of GRAV to stake to Encapsulate, with ping.pub in the memo and a fee of a fraction of a cent. Press Approve.
+
+06
+
+of 7
+
+On ping.pub
+
+#### See it go through
+
+ping.pub shows that the delegation completed; View Transaction opens it. Close the window.
+
+07
+
+of 7
+
+On ping.pub
+
+#### Check the dashboard
+
+Back on the dashboard, Staking shows your stake and the table lists Encapsulate with your delegation. Rewards build up with every block and do not compound: Withdraw Rewards sends them to your wallet, and Delegate adds more.
+
+Done · 7 of 7
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Delegate PASG with Keplr.
+
+Next: Passage
+
+All guides
+
+Gravity Bridge’s terms and common questions
+
+Need help? Ask on Discord
+
+## humans.ai staking guide
+
+URL: https://encapsulate.xyz/guides/humans-ai
+
+Delegate HEART with Keplr. Six steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+#### 📍Useful Links
+
+[Ping Dashboard - Cosmos Blockchain Explorer And Web Wallet](https://ping.pub/humans)
+
+[Keplr - Chrome Web Store](https://chromewebstore.google.com/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap)
+
+#### 🌱 Need Help?
+
+[Ask us on X](https://x.com/encapHQ)
+
+[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
+
+## Ika staking guide
+
+URL: https://encapsulate.xyz/guides/ika
+
+Stake IKA with Suiet. Nine steps across the Suiet extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+#### 📍Useful Links
+
+[Stakereef](https://stakereef.com/)
+
+[Suiet | Sui Wallet - Chrome Web Store](https://chromewebstore.google.com/detail/suiet-sui-wallet/khpkpbbcccdmmclmpigdgddabeilkdpd)
+
+#### 🌱 Need Help?
+
+[Ask us on X](https://x.com/encapHQ)
+
+[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
+
+## IOTA staking guide
+
+URL: https://encapsulate.xyz/guides/iota
+
+Stake IOTA with IOTA Wallet. Seven steps across the IOTA Wallet extension and the IOTA explorer, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+IOTA
+
+### Stake IOTA with IOTA Wallet
+
+Seven steps across the IOTA Wallet extension and the IOTA explorer, one per screen, each with the screen you should be looking at.
+
+Seven screens
+
+Scroll ↓
+
+01
+
+of 7
+
+In the IOTA Wallet extension
+
+#### Unlock IOTA Wallet
+
+Open the IOTA Wallet extension. Type your password and press Unlock wallet.
+
+02
+
+of 7
+
+In the IOTA Wallet extension
+
+#### Press Start Staking
+
+The home screen shows your IOTA balance and the coins you hold. Press Start Staking.
+
+03
+
+of 7
+
+In the IOTA Wallet extension
+
+#### Find Encapsulate
+
+Select a Validator opens. Type encapsulate in the search and pick Encapsulate.
+
+04
+
+of 7
+
+In the IOTA Wallet extension
+
+#### Press Next
+
+Encapsulate's row turns grey once it is picked. Press Next.
+
+05
+
+of 7
+
+In the IOTA Wallet extension
+
+#### Enter an amount
+
+Stake IOTA shows Encapsulate's staking APY, our 8% commission, its share of all staked IOTA and how much you already stake with it. Type how much IOTA to stake; Max fills in your whole balance. Press Stake.
+
+06
+
+of 7
+
+In the IOTA Wallet extension
+
+#### Check the transaction
+
+Successfully sent, with Encapsulate, the IOTA you staked and the gas fee. Staking Rewards Start counts down to the next epoch, when your stake starts earning; Redeem Rewards to the epoch after, when its first rewards can be withdrawn. Press View on Explorer.
+
+07
+
+of 7
+
+On explorer.iota.org
+
+#### Check the explorer
+
+The IOTA explorer shows the transaction as a Stake: Success, the IOTA you staked and Encapsulate, 0xedd6…c9ab. From the next epoch, rewards are added to your stake every 24 hours and compound on their own.
+
+Done · 7 of 7
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Stake ESP with MetaMask.
+
+Next: Espresso
+
+All guides
+
+IOTA’s terms and common questions
+
+Need help? Ask on Discord
+
+## ixo staking guide
+
+URL: https://encapsulate.xyz/guides/ixo
+
+Delegate IXO with Keplr. Seven steps across ping.pub and the Keplr extension, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+ixo
+
+### Delegate IXO with Keplr
+
+Seven steps across ping.pub and the Keplr extension, one per screen, each with the screen you should be looking at.
+
+Seven screens
+
+Scroll ↓
+
+01
+
+of 7
+
+On ping.pub
+
+#### Press Delegate
+
+Open ixo on ping.pub and connect Keplr with the wallet button at the top right; your address and balances appear. Press Delegate.
+
+02
+
+of 7
+
+On ping.pub
+
+#### Choose Encapsulate
+
+The Delegate window opens with your address as the sender. Open the Validator list and pick Encapsulate (10%).
+
+03
+
+of 7
+
+On ping.pub
+
+#### Enter an amount
+
+With Encapsulate (10%) chosen, type how much to stake and press Send. Simulate only estimates the fee.
+
+04
+
+of 7
+
+In the Keplr extension
+
+#### Unlock Keplr
+
+The Keplr extension opens. Type your password and press Unlock.
+
+05
+
+of 7
+
+In the Keplr extension
+
+#### Approve in Keplr
+
+Keplr shows one message, the amount of IXO to stake to Encapsulate, with ping.pub in the memo and a fee of a fraction of a cent. Press Approve.
+
+06
+
+of 7
+
+On ping.pub
+
+#### See it go through
+
+ping.pub shows that the delegation completed; View Transaction opens it. Close the window.
+
+07
+
+of 7
+
+On ping.pub
+
+#### Check the dashboard
+
+Back on the dashboard, Staking shows your stake and the table lists Encapsulate with your delegation. Rewards are paid once a day, when the chain mints, and do not compound: Withdraw Rewards sends them to your wallet, and Delegate adds more.
+
+Done · 7 of 7
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Stake MON with MetaMask.
+
+Next: Monad
+
+All guides
+
+ixo’s terms and common questions
+
+Need help? Ask on Discord
+
+## Juno staking guide
+
+URL: https://encapsulate.xyz/guides/juno
+
+Delegate JUNO with Keplr. Nine steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+#### 📍Useful Links
+
+[Keplr - Chrome Web Store](https://chromewebstore.google.com/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en&pli=1)
+
+[Get Keplr Wallet | Extension and Mobile App](https://www.keplr.app/get)
+
+#### 🌱 Need Help?
+
+[Ask us on X](https://x.com/encapHQ)
+
+[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
+
+## Lumera staking guide
+
+URL: https://encapsulate.xyz/guides/lumera
+
+Delegate LUME with Keplr. Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+Lumera
+
+### Delegate LUME with Keplr
+
+Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+Seven screens
+
+Scroll ↓
+
+01
+
+of 7
+
+On wallet.keplr.app
+
+#### Press Start Staking
+
+Open Lumera in the Keplr Dashboard with your wallet connected. The Staking tab shows your LUME, how much is staked and the rewards you can claim. Press Start Staking under Your Validators.
+
+02
+
+of 7
+
+On wallet.keplr.app
+
+#### Find Encapsulate
+
+Stake to opens on Lumera's validators, with the APR and the 21-day unstaking period at the top. Type “encapsulate” in the search and pick Encapsulate.
+
+03
+
+of 7
+
+On wallet.keplr.app
+
+#### Check our numbers
+
+Encapsulate's panel shows its APR, our 10% commission, its share of voting power and the 21-day unstaking period. Press Stake.
+
+04
+
+of 7
+
+On wallet.keplr.app
+
+#### Enter an amount
+
+Type how much LUME to stake; Max fills in your whole available balance. Press Stake.
+
+05
+
+of 7
+
+In the Keplr extension
+
+#### Unlock Keplr
+
+The Keplr extension opens. Type your password and press Unlock.
+
+06
+
+of 7
+
+In the Keplr extension
+
+#### Approve in Keplr
+
+Keplr shows one message, the amount of LUME to stake to Encapsulate, and a fee of under 0.01 LUME. The memo is optional. Press Approve.
+
+07
+
+of 7
+
+On wallet.keplr.app
+
+#### Check the dashboard
+
+Back on the dashboard, Staking Amount shows your stake and Your Validators lists Encapsulate with our 10% commission. Rewards build up with every block and do not compound: Claim sends them to your wallet, and Stake adds more.
+
+Done · 7 of 7
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Delegate GRAV with Keplr.
+
+Next: Gravity Bridge
+
+All guides
+
+Lumera’s terms and common questions
+
+Need help? Ask on Discord
+
+## Mellow staking guide
+
+URL: https://encapsulate.xyz/guides/mellow
+
+Stake MELLOW with MetaMask. Eight steps across the MetaMask extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+#### 📍Useful Links
+
+[app.mellow.finance](https://app.mellow.finance/vaults)
+
+[MetaMask - Chrome Web Store](https://chromewebstore.google.com/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en)
+
+#### 🌱 Need Help?
+
+[Ask us on X](https://x.com/encapHQ)
+
+[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
+
+## Mina staking guide
+
+URL: https://encapsulate.xyz/guides/mina
+
+Stake MINA with Auro Wallet. Nine steps in the Auro Wallet extension, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+Mina
+
+### Stake MINA with Auro Wallet
+
+Nine steps in the Auro Wallet extension, one per screen, each with the screen you should be looking at.
+
+Nine screens
+
+Scroll ↓
+
+01
+
+of 9
+
+In the Auro Wallet extension
+
+#### Unlock Auro Wallet
+
+Open the Auro Wallet extension. Type your password and press Unlock.
+
+02
+
+of 9
+
+In the Auro Wallet extension
+
+#### Press Staking
+
+The home screen shows your account and the MINA you hold. Press Staking.
+
+03
+
+of 9
+
+In the Auro Wallet extension
+
+#### Press Stake
+
+Staking shows the current epoch and the time left in it, your available MINA and Lock Time: Not Locked. Press Stake.
+
+04
+
+of 9
+
+In the Auro Wallet extension
+
+#### Change the validator
+
+Stake opens with Auro's own validator, Auro Wallet, already chosen. Press it to choose another.
+
+05
+
+of 9
+
+In the Auro Wallet extension
+
+#### Find Encapsulate
+
+Block Producers lists Mina's validators. Scroll to Encapsulate and press it.
+
+06
+
+of 9
+
+In the Auro Wallet extension
+
+#### Press Next
+
+Stake now names Encapsulate as the validator. There is no amount to enter: Mina delegates your whole balance. Press Next.
+
+07
+
+of 9
+
+In the Auro Wallet extension
+
+#### Confirm in Auro Wallet
+
+Transaction Overview shows Encapsulate, its block producer address, your own address under From and a network fee of 0.0101 MINA. Press Confirm.
+
+08
+
+of 9
+
+In the Auro Wallet extension
+
+#### Back to Staking
+
+Back on the home screen, your MINA is down only by the fee: delegating moves none of it. Press Staking.
+
+09
+
+of 9
+
+In the Auro Wallet extension
+
+#### Check your stake
+
+Staking lists Encapsulate under Active, with your whole balance staked. It counts from one to two epochs on, 7 to 15 days; from then we pay your share of the block rewards, less our 5% fee, every two epochs.
+
+Done · 9 of 9
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Stake STRK with Ready X.
+
+Next: Starknet
+
+All guides
+
+Mina’s terms and common questions
+
+Need help? Ask on Discord
+
+## Monad staking guide
+
+URL: https://encapsulate.xyz/guides/monad
+
+Stake MON with MetaMask. Eleven steps across MonadVision and the MetaMask extension, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+Monad
+
+### Stake MON with MetaMask
+
+Eleven steps across MonadVision and the MetaMask extension, one per screen, each with the screen you should be looking at.
+
+Eleven screens
+
+Scroll ↓
+
+01
+
+of 11
+
+On monadvision.com
+
+#### Enter the amount
+
+Open MonadVision's MySpace on its Stake tab and type how much MON to stake; Max fills in your balance. There is no minimum.
+
+02
+
+of 11
+
+On monadvision.com
+
+#### Switch the validator
+
+The Validator line shows MonadVision, the site's own validator, and the card stakes with whichever validator this line shows. Press its name, or the ⇄ beside it, to choose another.
+
+03
+
+of 11
+
+On monadvision.com
+
+#### Choose Encapsulate
+
+In Choose a validator, type encap in the search and pick Encapsulate: it shows as Active, with its stake and our 15% commission.
+
+04
+
+of 11
+
+On monadvision.com
+
+#### Connect your wallet
+
+The Validator line now reads Encapsulate, with our total stake, APR and commission. Press Connect Wallet.
+
+05
+
+of 11
+
+On monadvision.com
+
+#### Select MetaMask
+
+In Connect a Wallet, choose MetaMask. Keplr, Phantom and the others work the same way; this guide follows MetaMask.
+
+06
+
+of 11
+
+In the MetaMask extension
+
+#### Unlock MetaMask
+
+MetaMask opens. Type your password and press Unlock.
+
+07
+
+of 11
+
+In the MetaMask extension
+
+#### Connect to MonadVision
+
+MetaMask shows monadvision.com and the account it will connect. The site can see your addresses and balances and send you transaction requests; it cannot move funds without your permission. Press Connect.
+
+08
+
+of 11
+
+On monadvision.com
+
+#### Press Stake
+
+Back on MonadVision your wallet is connected, and your balance shows beside Max. With your amount in and Encapsulate on the Validator line, press Stake.
+
+09
+
+of 11
+
+In the MetaMask extension
+
+#### Confirm in MetaMask
+
+MetaMask shows the MON you are sending, the request from monadvision.com on the Monad network and the network fee, which MetaMask may pay for you. Press Confirm.
+
+10
+
+of 11
+
+On monadvision.com
+
+#### See the confirmation
+
+The stake lands in about a second and MonadVision shows Transaction Success. View Transaction opens it on the explorer; OK closes the notice.
+
+11
+
+of 11
+
+On monadvision.com
+
+#### Check the dashboard
+
+Scroll down to MON Staking: Encapsulate is listed with your stake, its APR and the rewards waiting to be claimed. Rewards build up with every block we propose and do not compound: Claim sends them to your wallet, Stake adds more, and Unstake starts a withdrawal you can collect 7 to 9 hours later.
+
+Done · 11 of 11
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Stake NEAR with Meteor.
+
+Next: NEAR
+
+All guides
+
+Monad’s terms and common questions
+
+Need help? Ask on Discord
+
+## Namada staking guide
+
+URL: https://encapsulate.xyz/guides/namada
+
+Stake NAMADA with Namadillo. Eight steps across the Namadillo extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+#### 📍Useful Links
+
+[Namadillo - Namada User Interface](https://namadillo.app/)
+
+[Namada Keychain - Chrome Web Store](https://chromewebstore.google.com/detail/namada-keychain/hnebcbhjpeejiclgbohcijljcnjdofek)
+
+#### 🌱 Need Help?
+
+[Ask us on X](https://x.com/encapHQ)
+
+[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
+
+## Near staking guide
+
+URL: https://encapsulate.xyz/guides/near
+
+Stake NEAR with Meteor. Eight steps in Meteor's web wallet, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+NEAR
+
+### Stake NEAR with Meteor
+
+Eight steps in Meteor's web wallet, one per screen, each with the screen you should be looking at.
+
+Eight screens
+
+Scroll ↓
+
+01
+
+of 8
+
+On wallet.meteorwallet.app
+
+#### Unlock Meteor
+
+Open the Meteor wallet at wallet.meteorwallet.app. Type your password and press Unlock.
+
+02
+
+of 8
+
+On wallet.meteorwallet.app
+
+#### Press Stake
+
+Meteor opens on your account, with your NEAR under My Assets. Press Stake.
+
+03
+
+of 8
+
+On wallet.meteorwallet.app
+
+#### Create a staking
+
+Staking lists the pools Meteor offers by default and what you have staked so far. Press Create Staking to choose your own validator.
+
+04
+
+of 8
+
+On wallet.meteorwallet.app
+
+#### Change the validator
+
+Stake Your NEAR opens with Meteor Pool already chosen as the validator. Press the validator card to change it.
+
+05
+
+of 8
+
+On wallet.meteorwallet.app
+
+#### Find Encapsulate
+
+Select Validator opens. Type encap in the search and pick Encapsulate V2 Pool.
+
+06
+
+of 8
+
+On wallet.meteorwallet.app
+
+#### Enter an amount
+
+The validator card now reads Encapsulate V2 Pool. Type how much NEAR to stake; Max fills in your whole balance, so leave a little for later fees. Press Stake Now.
+
+07
+
+of 8
+
+On wallet.meteorwallet.app
+
+#### Stake Successful
+
+Meteor shows Stake Successful with the fee, a fraction of a cent, and the transaction ID; View on Explorer opens the transaction. Press Done.
+
+08
+
+of 8
+
+On wallet.meteorwallet.app
+
+#### Check your staking
+
+Back on Staking, My Total Staked shows your stake and My Staking lists Encapsulate V2 Pool, `encapsulate.pool.near`. Rewards are added to your stake every epoch, about 7 hours, so they compound on their own; Stake More adds to it.
+
+Done · 8 of 8
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Stake SUI with Slush.
+
+Next: Sui
+
+All guides
+
+NEAR’s terms and common questions
+
+Need help? Ask on Discord
+
+## OmniFlix staking guide
+
+URL: https://encapsulate.xyz/guides/omniflix
+
+Delegate OMNIFLIX with Keplr. Nine steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+#### 📍Useful Links
+
+[Keplr - Chrome Web Store](https://chromewebstore.google.com/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en&pli=1)
+
+[Get Keplr Wallet | Extension and Mobile App](https://www.keplr.app/get)
+
+#### 🌱 Need Help?
+
+[Ask us on X](https://x.com/encapHQ)
+
+[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
+
+## Passage staking guide
+
+URL: https://encapsulate.xyz/guides/passage
+
+Delegate PASG with Keplr. Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+Passage
+
+### Delegate PASG with Keplr
+
+Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+Seven screens
+
+Scroll ↓
+
+01
+
+of 7
+
+On wallet.keplr.app
+
+#### Press Start Staking
+
+Open Passage in the Keplr Dashboard with your wallet connected. The Staking tab shows your PASG, how much is staked and the rewards you can claim. Press Start Staking under Your Validators.
+
+02
+
+of 7
+
+On wallet.keplr.app
+
+#### Find Encapsulate
+
+Stake to opens on Passage's validators, with the APR and the 21-day unstaking period at the top. Type encapsulate in the search and pick Encapsulate.
+
+03
+
+of 7
+
+On wallet.keplr.app
+
+#### Check our numbers
+
+Encapsulate's panel shows its APR, our 10% commission, its share of voting power and the 21-day unstaking period. Press Stake.
+
+04
+
+of 7
+
+On wallet.keplr.app
+
+#### Enter an amount
+
+Type how much PASG to stake; Max fills in your whole available balance. Press Stake.
+
+05
+
+of 7
+
+In the Keplr extension
+
+#### Unlock Keplr
+
+The Keplr extension opens. Type your password and press Unlock.
+
+06
+
+of 7
+
+In the Keplr extension
+
+#### Approve in Keplr
+
+Keplr shows one message, the amount of PASG to stake to Encapsulate, and a fee of a fraction of a cent. The memo is optional. Press Approve.
+
+07
+
+of 7
+
+On wallet.keplr.app
+
+#### Check the dashboard
+
+Back on the dashboard, Staking Amount shows your stake and Your Validators lists Encapsulate with our 10% commission. Rewards build up with every block and do not compound: Claim sends them to your wallet, and Stake adds more.
+
+Done · 7 of 7
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Stake SOMM with Keplr.
+
+Next: Sommelier
+
+All guides
+
+Passage’s terms and common questions
+
+Need help? Ask on Discord
+
+## Quicksilver staking guide
+
+URL: https://encapsulate.xyz/guides/quicksilver
+
+Delegate QCK with Keplr. Nine steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+#### 📍Useful Links
+
+[Keplr - Chrome Web Store](https://chromewebstore.google.com/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en)
+
+#### 🌱 Need Help?
+
+[Ask us on X](https://x.com/encapHQ)
+
+[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
+
+## Sommelier staking guide
+
+URL: https://encapsulate.xyz/guides/sommelier
+
+Stake SOMM with Keplr. Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+Sommelier
+
+### Stake SOMM with Keplr
+
+Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+Seven screens
+
+Scroll ↓
+
+01
+
+of 7
+
+On wallet.keplr.app
+
+#### Press Start Staking
+
+Open Sommelier in the Keplr Dashboard with your wallet connected. The Staking tab shows your SOMM, how much is staked and the rewards you can claim. Press Start Staking under Your Validators.
+
+02
+
+of 7
+
+On wallet.keplr.app
+
+#### Find Encapsulate
+
+Stake to opens on Sommelier's validators, with the APR and the 28-day unstaking period at the top. Type encapsulate in the search and pick Encapsulate.
+
+03
+
+of 7
+
+On wallet.keplr.app
+
+#### Check our numbers
+
+Encapsulate's panel shows its APR, 0% since Sommelier's inflation and incentives ended, our 10% commission, its share of voting power and the 28-day unstaking period. Press Stake.
+
+04
+
+of 7
+
+On wallet.keplr.app
+
+#### Enter an amount
+
+Type how much SOMM to stake; Max fills in your whole available balance. Press Stake.
+
+05
+
+of 7
+
+In the Keplr extension
+
+#### Unlock Keplr
+
+The Keplr extension opens. Type your password and press Unlock.
+
+06
+
+of 7
+
+In the Keplr extension
+
+#### Approve in Keplr
+
+Keplr shows one message, the amount of SOMM to stake to Encapsulate, and a fee of a fraction of a cent. The memo is optional. Press Approve.
+
+07
+
+of 7
+
+On wallet.keplr.app
+
+#### Check the dashboard
+
+Back on the dashboard, Staking Amount shows your stake and Your Validators lists Encapsulate with our 10% commission. Rewards build up with every block and do not compound: Claim sends them to your wallet, and Stake adds more.
+
+Done · 7 of 7
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Delegate IXO with Keplr.
+
+Next: ixo
+
+All guides
+
+Sommelier’s terms and common questions
+
+Need help? Ask on Discord
+
+## Stargaze staking guide
+
+URL: https://encapsulate.xyz/guides/stargaze
+
+Delegate STARS with Keplr. Eight steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+Connect
+
+#### 📍Useful Links
+
+[Keplr Dashboard Stargaze | Keplr Dashboard](https://wallet.keplr.app/chains/stargaze?modal=staking&chain=stargaze-1&step_id=2)
+
+[Keplr - Chrome Web Store](https://chromewebstore.google.com/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en)
+
+#### 🌱 Need Help?
+
+[Ask us on X](https://x.com/encapHQ)
+
+[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
+
+## Starknet staking guide with Braavos
+
+URL: https://encapsulate.xyz/guides/starknet-braavos
+
+Stake STRK with Braavos. Nine steps across Voyager’s staking dashboard and the Braavos extension, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+Starknet
+
+### Stake STRK with Braavos
+
+Nine steps across Voyager’s staking dashboard and the Braavos extension, one per screen, each with the screen you should be looking at.
+
+Nine screens
+
+Scroll ↓
+
+01
+
+of 9
+
+On voyager.online
+
+#### Connect your wallet
+
+Voyager’s Staking Dashboard lists every Starknet validator. Press Connect Wallet at the top right.
+
+02
+
+of 9
+
+On voyager.online
+
+#### Choose Braavos
+
+In Select a wallet provider, choose Braavos wallet.
+
+03
+
+of 9
+
+In the Braavos extension
+
+#### Unlock Braavos
+
+Braavos opens. Type your password and press Login.
+
+04
+
+of 9
+
+In the Braavos extension
+
+#### Connect to Voyager
+
+Braavos asks to connect voyager.online to your wallet. Check that the account at the top is the one that holds your STRK and press Approve.
+
+05
+
+of 9
+
+On voyager.online
+
+#### Find Encapsulate
+
+Your address now shows at the top right. Type encap in the validator search and press Stake on our row.
+
+06
+
+of 9
+
+On voyager.online
+
+#### Enter an amount
+
+Delegate Stake opens for the validator you picked. Type how much STRK to stake, leaving a little for the fee, then press Delegate. There is no minimum.
+
+07
+
+of 9
+
+In the Braavos extension
+
+#### Sign in Braavos
+
+Braavos shows the transaction from voyager.online: the STRK you send, under Overall balance change, and the network fee, paid in STRK. Press Sign.
+
+08
+
+of 9
+
+In the Braavos extension
+
+#### See the confirmation
+
+Braavos shows Transaction completed. View on Explorer opens it on the explorer; OK closes it.
+
+09
+
+of 9
+
+On voyager.online
+
+#### Check your stake
+
+Open My Activity: the delegation reads Delegated, Encapsulate, your amount and Completed, and My Stake shows your STRK. Rewards arrive every epoch, about an hour, and wait under Rewards to Claim: Claim sends them to your reward address, Restake adds them to your stake.
+
+Done · 9 of 9
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Delegate LUNA with Keplr.
+
+Next: Terra
+
+All guides
+
+Starknet’s terms and common questions
+
+Need help? Ask on Discord
+
+## Starknet staking guide with Ready X
+
+URL: https://encapsulate.xyz/guides/starknet-ready-x
+
+Stake STRK with Ready X. Nine steps across Voyager’s staking dashboard and the Ready X extension, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+Starknet
+
+### Stake STRK with Ready X
+
+Nine steps across Voyager’s staking dashboard and the Ready X extension, one per screen, each with the screen you should be looking at.
+
+Nine screens
+
+Scroll ↓
+
+01
+
+of 9
+
+On voyager.online
+
+#### Connect your wallet
+
+Voyager’s Staking Dashboard lists every Starknet validator. Press Connect Wallet at the top right.
+
+02
+
+of 9
+
+On voyager.online
+
+#### Choose Ready X
+
+In Select a wallet provider, choose Ready X wallet.
+
+03
+
+of 9
+
+In the Ready X extension
+
+#### Unlock Ready X
+
+Ready X opens. Type your password and press Unlock.
+
+04
+
+of 9
+
+In the Ready X extension
+
+#### Connect to Voyager
+
+Ready X asks to connect to Voyager. Pick the account that holds your STRK and press Connect.
+
+05
+
+of 9
+
+On voyager.online
+
+#### Find Encapsulate
+
+Your address now shows at the top right. Type encap in the validator search and press Stake on our row.
+
+06
+
+of 9
+
+On voyager.online
+
+#### Enter an amount
+
+Delegate Stake opens for the validator you picked. Type how much STRK to stake, leaving a little for the fee, then press Delegate. There is no minimum.
+
+07
+
+of 9
+
+In the Ready X extension
+
+#### Confirm in Ready X
+
+Ready X shows the request from voyager.online: the STRK you send, its two calls, Approve spending limit and Enter delegation pool, and the fee, paid in STRK. Press Confirm.
+
+08
+
+of 9
+
+On voyager.online
+
+#### See the confirmation
+
+Voyager shows Stake Successful, your STRK going to Encapsulate. View transaction opens it on the explorer; Close returns to the dashboard.
+
+09
+
+of 9
+
+On voyager.online
+
+#### Check your stake
+
+Open My Activity: the delegation reads Delegated, Encapsulate, your amount and Completed, and My Stake shows your STRK. Rewards arrive every epoch, about an hour, and wait under Rewards to Claim: Claim sends them to your reward address, Restake adds them to your stake.
+
+Done · 9 of 9
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Delegate LUNA with Keplr.
+
+Next: Terra
+
+All guides
+
+Starknet’s terms and common questions
+
+Need help? Ask on Discord
+
+## Sui staking guide
+
+URL: https://encapsulate.xyz/guides/sui
+
+Stake SUI with Slush. Ten steps across SuiVision and the Slush extension, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+Sui
+
+### Stake SUI with Slush
+
+Ten steps across SuiVision and the Slush extension, one per screen, each with the screen you should be looking at.
+
+Ten screens
+
+Scroll ↓
+
+01
+
+of 10
+
+On suivision.xyz
+
+#### Open SuiVision’s Sui staking dashboard
+
+The dashboard shows the Sui validator list and staking details. Search for Encapsulate and open our row.
+
+02
+
+of 10
+
+On suivision.xyz
+
+#### Check our numbers
+
+Our profile shows the staking APY, commission and total stake. Read them, then click Stake.
+
+03
+
+of 10
+
+On suivision.xyz
+
+#### Connect your wallet
+
+Open the Stake tab and click Connect Wallet.
+
+04
+
+of 10
+
+On suivision.xyz
+
+#### Select the wallet
+
+Choose Slush from the wallet list.
+
+05
+
+of 10
+
+In the Slush extension
+
+#### Unlock Slush
+
+Enter your password and click Unlock.
+
+06
+
+of 10
+
+In the Slush extension
+
+#### Connect to SuiVision
+
+Review the connection request from SuiVision, then approve it.
+
+07
+
+of 10
+
+On suivision.xyz
+
+#### Enter an amount
+
+Type the amount of SUI to stake with Encapsulate, then click Stake.
+
+08
+
+of 10
+
+In the Slush extension
+
+#### Approve the stake
+
+Review the transaction request. Approve it to stake your SUI with Encapsulate.
+
+09
+
+of 10
+
+On suivision.xyz
+
+#### Check the confirmation
+
+The confirmation shows the amount staked with Encapsulate. Click OK to close it.
+
+10
+
+of 10
+
+On suivision.xyz
+
+#### Check your stake
+
+Your Sui Staking row now lists Encapsulate and your staked amount. Your stake becomes active at the next epoch, within about 24 hours. Pending reward reads +0 SUI until then.
+
+Done · 10 of 10
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Delegate AXL with Keplr.
+
+Next: Axelar
+
+All guides
+
+Sui’s terms and common questions
+
+Need help? Ask on Discord
+
+## Supra staking guide
+
+URL: https://encapsulate.xyz/guides/supra
+
+Stake SUPRA with StarKey. Eleven steps across the StarKey extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+#### 📍Useful Links
+
+[StarKey Wallet - The official wallet for Supra - Chrome Web Store](https://chromewebstore.google.com/detail/starkey-wallet-the-offici/hcjhpkgbmechpabifbggldplacolbkoh)
+
+#### 🌱 Need Help?
+
+[Ask us on X](https://x.com/encapHQ)
+
+[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
+
+## Terra staking guide
+
+URL: https://encapsulate.xyz/guides/terra
+
+Delegate LUNA with Keplr. Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+Terra
+
+### Delegate LUNA with Keplr
+
+Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+Seven screens
+
+Scroll ↓
+
+01
+
+of 7
+
+On wallet.keplr.app
+
+#### Press Start Staking
+
+Open Terra in the Keplr Dashboard with your wallet connected. The Staking tab shows your LUNA, how much is staked and the rewards you can claim. Press Start Staking under Your Validators.
+
+02
+
+of 7
+
+On wallet.keplr.app
+
+#### Find Encapsulate
+
+Stake to opens on Terra's validators, with the APR and the 21-day unstaking period at the top. Type encap in the search and pick Encapsulate.
+
+03
+
+of 7
+
+On wallet.keplr.app
+
+#### Check our numbers
+
+Encapsulate's panel shows its APR, our 10% commission, its share of voting power and the 21-day unstaking period. Press Stake.
+
+04
+
+of 7
+
+On wallet.keplr.app
+
+#### Enter an amount
+
+Type how much LUNA to stake; Max fills in your whole available balance. Press Stake.
+
+05
+
+of 7
+
+In the Keplr extension
+
+#### Unlock Keplr
+
+The Keplr extension opens. Type your password and press Unlock.
+
+06
+
+of 7
+
+In the Keplr extension
+
+#### Approve in Keplr
+
+Keplr shows one message, the amount of LUNA to stake to Encapsulate, and a fee of a fraction of a cent. The memo is optional. Press Approve.
+
+07
+
+of 7
+
+On wallet.keplr.app
+
+#### Check the dashboard
+
+Back on the dashboard, Staking Amount shows your stake and Your Validators lists Encapsulate with our 10% commission. Rewards build up with every block and do not compound: Claim sends them to your wallet, and Stake adds more.
+
+Done · 7 of 7
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Stake ZIL with Bearby.
+
+Next: Zilliqa
+
+All guides
+
+Terra’s terms and common questions
+
+Need help? Ask on Discord
+
+## UX staking guide
+
+URL: https://encapsulate.xyz/guides/ux
+
+Delegate UX with Keplr. Nine steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+Connect
+
+#### 📍Useful Links
+
+[Get Keplr Wallet | Extension and Mobile App](https://www.keplr.app/get)
+
+[Keplr - Chrome Web Store](https://chromewebstore.google.com/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en&pli=1)
+
+[Keplr Dashboard UX | Keplr Dashboard](https://wallet.keplr.app/chains/ux)
+
+#### 🌱 Need Help?
+
+[Ask us on X](https://x.com/encapHQ)
+
+[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
+
+## Zilliqa staking guide
+
+URL: https://encapsulate.xyz/guides/zilliqa
+
+Stake ZIL with Bearby. Eight steps across Zilliqa’s staking portal and the Bearby extension, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+Zilliqa
+
+### Stake ZIL with Bearby
+
+Eight steps across Zilliqa’s staking portal and the Bearby extension, one per screen, each with the screen you should be looking at.
+
+Eight screens
+
+Scroll ↓
+
+01
+
+of 8
+
+On stake.zilliqa.com
+
+#### Connect your wallet
+
+Zilliqa’s staking portal lists its pools, liquid and non-liquid. Ours is on the Liquid tab, as Encapsulate with its token, encapZIL. Press Connect wallet.
+
+02
+
+of 8
+
+On stake.zilliqa.com
+
+#### Choose Bearby
+
+In Connect a Wallet, choose Bearby Wallet under Installed.
+
+03
+
+of 8
+
+In the Bearby extension
+
+#### Unlock Bearby
+
+Bearby opens. Pick your wallet, type your password and press Unlock.
+
+04
+
+of 8
+
+In the Bearby extension
+
+#### Connect to the portal
+
+Bearby asks to connect stake.zilliqa.com to your wallet. Check that the account selected is the one that holds your ZIL and press Connect.
+
+05
+
+of 8
+
+On stake.zilliqa.com
+
+#### Find Encapsulate
+
+Your balance and address now show at the top right, and the pools may have changed order. Pick Encapsulate on the Liquid tab.
+
+06
+
+of 8
+
+On stake.zilliqa.com
+
+#### Enter an amount
+
+Our panel opens on Stake, with our 8% commission and what one encapZIL is worth in ZIL. Type how much ZIL to stake, at least 100, and press Stake. The line under the amount shows the encapZIL you receive.
+
+07
+
+of 8
+
+In the Bearby extension
+
+#### Confirm in Bearby
+
+Bearby shows the transaction from stake.zilliqa.com: the ZIL you stake, sent from your account to our delegation contract, and three fee speeds, with Market picked. Press Confirm.
+
+08
+
+of 8
+
+On stake.zilliqa.com
+
+#### Check your stake
+
+Back on the portal, our row and the panel show your encapZIL under Staked, and Last transaction opens it on the explorer. Rewards land every block and compound into encapZIL, which is worth more ZIL as they do: there is nothing to claim.
+
+Done · 8 of 8
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Delegate BLD with Keplr.
+
+Next: Agoric
+
+All guides
+
+Zilliqa’s terms and common questions
+
+Need help? Ask on Discord
+
+## Blog
+
+URL: https://encapsulate.xyz/blog
+
+Explainers, field notes and new-network posts from running validators.
+
+Encapsulate · Blog
+
+Deep dives
+
+### What we learn, written down.
+
+Launches, upgrades, and the things that break — notes from running nodes on new chains.
+
+[Book a call](https://cal.com/aditya-encapsulate/30min)
+
+[Read the blog](https://encapsulate.xyz/blog#block-a148eb7f8ea94b95b7725809fef9e0dc)
+
+Written by operators
+
+Scroll ↓
+
+Networks
+
+September 9, 2026
+
+Gno.land: Where Communities Control Their Apps
+
+Security
+
+August 4, 2026
+
+What Broke Coldcard's Bitcoin Security?
+
+July 8, 2026
+
+Can Quantum Computing Crack Bitcoin?
+
+Networks
+
+June 8, 2026
+
+Pharos Network: Unlocking the RealFi Era
+
+May 25, 2026
+
+Espresso: Fast Finality Meets Interoperability
+
+Networks
+
+May 12, 2026
+
+Arc Network: Where Finance Becomes Software
+
+April 14, 2026
+
+Genlayer Bradbury Testnet: Where AI Learns to Agree
+
+Security
+
+March 16, 2026
+
+Is Wrapped Bitcoin the Next Terra Luna?
+
+Trends
+
+February 24, 2026
+
+The Rise Of Intent-Centric Blockchains
+
+February 10, 2026
+
+Who Builds the Stablecoin Rails?
+
+Trends
+
+January 13, 2026
+
+The Rise of Move: Rebuilding Blockchain Logic
+
+Networks
+
+November 28, 2025
+
+MegaETH: Web3 at Web2 Speed
+
+November 18, 2025
+
+Aztec: The Private World Computer Built on Ethereum
+
+Networks
+
+November 11, 2025
+
+Monad: Speed Without Sacrifice
+
+14 of 38 shown
+
+## Brand kit
+
+URL: https://encapsulate.xyz/brand
+
+The Encapsulate mark, colours and type, with the rules for which file goes where. Download the kit.
+
+Encapsulate · Brand
+
+Assets and rules
+
+The kit is six files, two colours and three typefaces, with one rule that decides which mark goes on which ground.
+
+[Download the kit](https://drive.google.com/drive/folders/1u1i-fdr_IgiTadA-LySG4y4RjLNqUjyr?usp=drive_link)
+
+[Read the rules](https://encapsulate.xyz/brand#block-3dee800a513881e7a304fd94a0ffc1ea)
+
+Updated as the system changes
+
+Scroll ↓
+
+### Every ground, both files.
+
+Six files, one per ground. Use the light pair on paper, the reversed pair on ink, and the green pair on the brand green — the rule behind all three is that no part of the mark may be the colour of the ground it sits on, which is why the disc and the capsule swap rather than the whole mark inverting.
+
+01 · The marks
+
+mark-b.svg
+
+Click to download
+
+wordmark.svg
+
+mark-reversed.svg
+
+wordmark-reversed.svg
+
+mark-green.svg
+
+Click to download
+
+wordmark-green.svg
+
+[Download the kit](https://drive.google.com/drive/folders/1u1i-fdr_IgiTadA-LySG4y4RjLNqUjyr?usp=drive_link)
+
+Three grounds, two kinds
+
+### Two brand colours.
+
+Green is a field with black type on it — never green type on white. Click any value to copy it.
+
+02 · Colour
+
+The grounds
+
+Our paper is not white and our dark sections are not black. Put the mark on these, not on #FFF or #000.
+
+The pastel set
+
+Graphics only — wells, covers, card fields. Never type, never a control fill.
+
+### Three faces, one job each.
+
+Mono is for labels, dates and figures — never a sentence. A fourth face draws the wordmark and nothing else.
+
+03 · Type
+
+Aa Bb Cc
+
+Outfit
+
+Headings · 500 – 600
+
+Hanken Grotesk
+
+Body · 400 – 500
+
+Aa Bb Cc
+
+JetBrains Mono
+
+Labels, dates, figures · 400 – 500
+
+And one that is not part of the system
+
+Comfortaa
+
+Draws the wordmark only
+
+The letters in the wordmark are Comfortaa, and that is the only place it appears. It is never set as text — not for a heading, not for a label — and it is not needed to use the logo, because the wordmark ships as paths rather than as type. If you find yourself typing the company name in it, use the wordmark file instead.
+
+### Clear space and minimums.
+
+One rule, not a list of things not to do.
+
+04 · Using it
+
+Clear space
+
+The height of the band inside the mark, on all four sides.
+
+Minimum mark
+
+24px. Below that the band closes up and it reads as a dot.
+
+Minimum wordmark
+
+120px wide, or the letterforms lose their terminals.
+
+The inner gap
+
+Transparent, not white — it takes the colour behind it.
+
+## Privacy policy
+
+URL: https://encapsulate.xyz/privacy-policy
+
+What we collect when you use this site, why, and what we do with it — in plain words, and as little as the site needs.
+
+Encapsulate · Privacy
+
+Updated 26 Sep 2026
+
+### Privacy policy
+
+What we collect when you use this site, why, and what we do with it — in plain words, and as little as the site needs.
+
+Contents
+
+- Who we are
+- What we collect
+- How we use it
+- Who we share it with
+- Cookies
+- How long we keep it
+- Your rights
+- Changes
+
+#### Who we are
+
+Encapsulate runs validators on public blockchains. This policy covers encapsulate.xyz and the pages under it and our booking form. It does not cover the chains themselves: anything you sign on-chain is public by design and outside our control.
+
+The site is run by Encapsulate Limited, a company limited by shares registered with the Innovation City Authority, Ras Al Khaimah, United Arab Emirates (registration no. 01010263, business licence no. 07010264). Registered office: Office A, Innovation City Business Centre, RAK BANK ROC Office, Ground Floor, Al Rifaa, Sheikh Mohammed Bin Zayed Road, Ras Al Khaimah, UAE. That entity is the data controller for anything described here.
+
+#### What we collect
+
+We collect as little as the site needs to work, and we say what each piece is for.
+
+- Booking a call: your name, email and anything you type into the notes. Handled by Cal.com under their terms; we see the booking, not your calendar.
+- Writing to us: the email you send from and what you write.
+- Analytics: two, and neither sets a cookie. Super, our host, counts page views and shows us the totals. Vercel Speed Insights, which Super adds because it hosts on Vercel, measures how fast pages load — not who visits. There is no Google Analytics, Tag Manager, Meta, LinkedIn, Hotjar or Clarity on the site.
+- Server logs: IP address, browser and the page requested, kept by our hosting provider under its own retention.
+
+#### How we use it
+
+To hold the call you booked, to answer what you asked and to keep the site running and safe. Nothing else. We do not sell, rent or trade personal data, and we do not build advertising profiles.
+
+#### Who we share it with
+
+Only the services that make a feature work, each bound by its own terms:
+
+- Cal.com — scheduling the call.
+- Google Workspace — our email; what you send to hello@encapsulate.xyz lands there.
+- Super, on Notion, hosted on Vercel — serving the site, counting page views and keeping its server logs.
+- Authorities, if the law requires it and the request is valid.
+
+#### Cookies
+
+The site sets no cookies. The only cookies anywhere on it come from Cal.com’s booking calendar, on the contact page and in the booking drawer: Cloudflare’s bot check (about thirty minutes) and Cal.com’s own session cookies. None of them track you across sites. If we add anything that needs consent, we will ask for it first, on the page, in plain words.
+
+#### How long we keep it
+
+Booking details until the call has happened and any follow-up is done, then twelve months. Correspondence for as long as the conversation is live, then twelve months. Server logs are the hosting provider’s and follow its retention.
+
+#### Your rights
+
+You can ask what we hold about you, ask us to correct or delete it, or object to a use. Write to the address below; we answer within thirty days. We are established in the United Arab Emirates and handle personal data under the UAE Personal Data Protection Law (Federal Decree-Law No. 45 of 2021). If you are in the EU or UK you also have the right to complain to your own data protection authority.
+
+#### Changes
+
+When this policy changes, the date at the top changes with it. We will not quietly widen what we collect.
+
+Questions about this document
+
+Write to [hello@encapsulate.xyz](mailto:hello@encapsulate.xyz). A person replies, usually within a few days.
+
+## Terms of use
+
+URL: https://encapsulate.xyz/terms-of-use
+
+The ground rules for using this site and for delegating to a validator we run.
+
+Encapsulate · Terms
+
+Updated 26 Sep 2026
+
+### Terms of use
+
+The ground rules for using this site and for delegating to a validator we run. Short, because there is not much to say.
+
+Contents
+
+- What these terms cover
+- Information, not advice
+- Delegating to us
+- Guides and tools
+- Our content
+- Links elsewhere
+- Liability
+- Changes
+
+#### What these terms cover
+
+These terms govern your use of encapsulate.xyz and the content on it. The site is run by Encapsulate Limited, a company limited by shares registered with the Innovation City Authority, Ras Al Khaimah, United Arab Emirates (registration no. 01010263, business licence no. 07010264). Registered office: Office A, Innovation City Business Centre, RAK BANK ROC Office, Ground Floor, Al Rifaa, Sheikh Mohammed Bin Zayed Road, Ras Al Khaimah, UAE. Delegating to a validator we run is a transaction on a public chain, governed by that chain’s protocol; it is not a contract with us, and these terms do not change that.
+
+#### Information, not advice
+
+Reward rates, commissions, unbonding periods and every other figure on this site describe how a chain’s protocol works, as we understand it, at the date shown. They are not financial, legal or tax advice, and they are not a promise of any return. Chains change their parameters; check the chain before you act.
+
+#### Delegating to us
+
+When you delegate, your tokens stay in your wallet under your keys. We never hold, move or have access to them. We run the validator; the protocol pays rewards and applies penalties. If a chain slashes our validator, the protocol may reduce delegated stake as it defines — we describe our safeguards on the Security page, but no operator can make that risk zero.
+
+#### Guides and tools
+
+Our staking guides, dashboards, bots and playbooks are provided as-is, to help. We test them on our own infrastructure, but we cannot know your setup. Read before you run, and keep your own keys out of anything you paste.
+
+#### Our content
+
+The text, diagrams and design of this site are ours. The code we publish is under the licence stated in each repository. Chain names and marks belong to their projects; we show them to identify the network, not to claim any affiliation beyond running a validator on it.
+
+#### Links elsewhere
+
+We link to explorers, wallets, documentation and the chains’ own sites. We do not control them and are not responsible for what they show or do.
+
+#### Liability
+
+To the extent the law allows, we are not liable for losses that arise from using this site, acting on its content, or delegating to a validator we run — including losses from slashing, downtime, protocol changes or market movement. Where the law does not allow a limit, it does not apply. These terms are governed by the laws of the United Arab Emirates as applied in Ras Al Khaimah, and any dispute goes to the courts there.
+
+#### Changes
+
+We may change these terms; the date at the top changes with them. Using the site after a change means you accept it.
+
+Questions about this document
+
+Write to [hello@encapsulate.xyz](mailto:hello@encapsulate.xyz). A person replies, usually within a few days.

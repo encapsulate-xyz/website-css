@@ -1,0 +1,141 @@
+# Encapsulate
+
+> We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
+
+We keep blockchains online.
+Validator infrastructure for new chains, from the first testnet through mainnet.
+
+## Company
+
+- [Encapsulate - Validators for networks we believe in](https://encapsulate.xyz/): We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
+- [Services and tooling](https://encapsulate.xyz/services): Dashboards, Ansible playbooks, governance bots and monitoring we build for the chains we run. Open and free to use.
+- [Security](https://encapsulate.xyz/security): How we hold keys, run machines and handle upgrades: the rules we hold ourselves to.
+- [Governance](https://encapsulate.xyz/governance): How we decide every on-chain vote, and the public record of each one we have cast.
+- [Governance Record](https://encapsulate.xyz/governance/votes)
+- [Investments](https://encapsulate.xyz/investments): The networks and teams we have backed, usually before mainnet, usually as an operator first.
+- [Contact](https://encapsulate.xyz/contact): Book a call, or write to hello@encapsulate.xyz. A person replies.
+
+## Networks
+
+- [Networks](https://encapsulate.xyz/networks): Every chain we validate, mainnet and testnet, with the reward rate where the chain publishes one.
+- [Agoric staking](https://encapsulate.xyz/networks/agoric): Stake BLD with Encapsulate on Agoric: 10% commission, 6.4% a year after commission, 21 days unbonding. Non-custodial.
+- [Althea staking](https://encapsulate.xyz/networks/althea): Stake ALTHEA with Encapsulate on Althea: 10% commission, 24.5% a year after commission, 21 days unbonding. Non-custodial.
+- [Avail staking](https://encapsulate.xyz/networks/avail): Stake AVAIL with Encapsulate on Avail: 20% commission, 7.5% a year after commission, 28 days unbonding. Non-custodial.
+- [Avalanche staking](https://encapsulate.xyz/networks/avalanche): Stake AVAX with Encapsulate on Avalanche: 2% commission, 4.6–5.4% a year after commission, locked 2 weeks–1 year. Non-custodial.
+- [Axelar staking](https://encapsulate.xyz/networks/axelar): Stake AXL with Encapsulate on Axelar: 10% commission, 14.1% a year after commission, 7 days unbonding. Non-custodial.
+- [Chain4Energy staking](https://encapsulate.xyz/networks/chain4energy): Stake C4E with Encapsulate on Chain4Energy: 10% commission, 7.8% a year after commission, 21 days unbonding. Non-custodial.
+- [Cosmos Hub staking](https://encapsulate.xyz/networks/cosmos-hub): Stake ATOM with Encapsulate on Cosmos Hub: 10% commission, 17.7% a year after commission, 21 days unbonding. Non-custodial.
+- [EigenCloud staking](https://encapsulate.xyz/networks/eigencloud): Stake EIGEN with Encapsulate on EigenCloud: 10% commission, 6.4% a year after commission, 14 days unbonding. Non-custodial.
+- [Espresso staking](https://encapsulate.xyz/networks/espresso): Stake ESP with Encapsulate on Espresso: 10% commission, 3.3% a year after commission, 7 days unbonding. Non-custodial.
+- [Gitopia staking](https://encapsulate.xyz/networks/gitopia): Stake LORE with Encapsulate on Gitopia: 10% commission, 41.6% a year after commission, 21 days unbonding. Non-custodial.
+- [Gravity Bridge staking](https://encapsulate.xyz/networks/gravity-bridge): Stake GRAV with Encapsulate on Gravity Bridge: 10% commission, 16.4% a year after commission, 21 days unbonding. Non-custodial.
+- [humans.ai staking](https://encapsulate.xyz/networks/humans-ai): Stake HEART with Encapsulate on humans.ai: 10% commission, 31.7% a year after commission, 14 days unbonding. Non-custodial.
+- [Ika staking](https://encapsulate.xyz/networks/ika): Stake IKA with Encapsulate on Ika: 10% commission, 13.1% a year after commission, 12–36 hours unbonding. Non-custodial.
+- [IOTA staking](https://encapsulate.xyz/networks/iota): Stake IOTA with Encapsulate on IOTA: 8% commission, 11.3% a year after commission, no unbonding. Non-custodial.
+- [ixo staking](https://encapsulate.xyz/networks/ixo): Stake IXO with Encapsulate on ixo: 10% commission, 17.9% a year after commission, 21 days unbonding. Non-custodial.
+- [Lido DVT staking](https://encapsulate.xyz/networks/lido-dvt): Stake ETH through Lido DVT with Encapsulate: 500 validators, 10% fee in all, 2.3% a year after fees, 1–5 days to unstake.
+- [Lumera staking](https://encapsulate.xyz/networks/lumera): Stake LUME with Encapsulate on Lumera: 10% commission, 47.3% a year after commission, 21 days unbonding. Non-custodial.
+- [Mina staking](https://encapsulate.xyz/networks/mina): Stake MINA with Encapsulate on Mina: 5% commission, no unbonding. Non-custodial.
+- [Monad staking](https://encapsulate.xyz/networks/monad): Stake MON with Encapsulate on Monad: 15% commission, 9.8% a year after commission, 4.5–9 hours unbonding. Non-custodial.
+- [NEAR staking](https://encapsulate.xyz/networks/near): Stake NEAR with Encapsulate on NEAR: 5% commission, 4.7% a year after commission, 22–30 hours unbonding. Non-custodial.
+- [Passage staking](https://encapsulate.xyz/networks/passage): Stake PASG with Encapsulate on Passage: 10% commission, 6.7% a year after commission, 21 days unbonding. Non-custodial.
+- [Sommelier staking](https://encapsulate.xyz/networks/sommelier): Stake SOMM with Encapsulate on Sommelier: 10% commission, 0% a year after commission, 28 days unbonding. Non-custodial.
+- [Starknet staking](https://encapsulate.xyz/networks/starknet): Stake STRK with Encapsulate on Starknet: 5% commission, 7.5% a year after commission, 7 days unbonding. Non-custodial.
+- [Sui staking](https://encapsulate.xyz/networks/sui): Stake SUI with Encapsulate on Sui: 8% commission, 1.3% a year after commission, no unbonding. Non-custodial.
+- [Supra staking](https://encapsulate.xyz/networks/supra): Stake SUPRA with Encapsulate on Supra: 38.72% commission, 8.0% a year after commission, up to 48 hours unbonding. Non-custodial.
+- [Terra staking](https://encapsulate.xyz/networks/terra): Stake LUNA with Encapsulate on Terra: 10% commission, 35.9% a year after commission, 21 days unbonding. Non-custodial.
+- [Vara staking](https://encapsulate.xyz/networks/vara): Stake VARA with Encapsulate on Vara: 5% commission, 16.9% a year after commission, 7 days unbonding. Non-custodial.
+- [Zilliqa staking](https://encapsulate.xyz/networks/zilliqa): Stake ZIL with Encapsulate on Zilliqa: 8% commission, 8.2% a year after commission, about 6 days unbonding. Non-custodial.
+
+## Staking guides
+
+- [Staking guides](https://encapsulate.xyz/guides): Step-by-step staking guides for every chain we run, per wallet, with a screen for each step.
+- [Agoric staking guide](https://encapsulate.xyz/guides/agoric): Delegate BLD with Keplr. Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [Althea staking guide](https://encapsulate.xyz/guides/althea): Stake ALTHEA with MetaMask. Nine steps across the MetaMask extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [Avail staking guide](https://encapsulate.xyz/guides/avail): Stake AVAIL with SubWallet. Thirteen steps across the SubWallet extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [Avalanche staking guide](https://encapsulate.xyz/guides/avalanche): Stake AVAX with Core. Twelve steps across the Core extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [Axelar staking guide](https://encapsulate.xyz/guides/axelar): Delegate AXL with Keplr. Seven steps across the extension and the Keplr dashboard, one per screen, each with the screen you should be looking at.
+- [EigenCloud staking guide](https://encapsulate.xyz/guides/eigen-layer): Stake EIGEN with MetaMask. Eleven steps across the MetaMask extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [EigenCloud stETH restaking guide](https://encapsulate.xyz/guides/eigen-layer-steth): Restake stETH with MetaMask. Eighteen steps across the MetaMask extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [Espresso staking guide](https://encapsulate.xyz/guides/espresso): Stake ESP with MetaMask. Nine steps across Espresso’s staking dashboard and the MetaMask extension, one per screen, each with the screen you should be looking at.
+- [Gitopia staking guide](https://encapsulate.xyz/guides/gitopia): Delegate LORE with Keplr. Six steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [Gravity Bridge staking guide](https://encapsulate.xyz/guides/gravity-bridge): Delegate GRAV with Keplr. Seven steps across ping.pub and the Keplr extension, one per screen, each with the screen you should be looking at.
+- [humans.ai staking guide](https://encapsulate.xyz/guides/humans-ai): Delegate HEART with Keplr. Six steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [Ika staking guide](https://encapsulate.xyz/guides/ika): Stake IKA with Suiet. Nine steps across the Suiet extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [IOTA staking guide](https://encapsulate.xyz/guides/iota): Stake IOTA with IOTA Wallet. Seven steps across the IOTA Wallet extension and the IOTA explorer, one per screen, each with the screen you should be looking at.
+- [ixo staking guide](https://encapsulate.xyz/guides/ixo): Delegate IXO with Keplr. Seven steps across ping.pub and the Keplr extension, one per screen, each with the screen you should be looking at.
+- [Juno staking guide](https://encapsulate.xyz/guides/juno): Delegate JUNO with Keplr. Nine steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [Lumera staking guide](https://encapsulate.xyz/guides/lumera): Delegate LUME with Keplr. Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [Mellow staking guide](https://encapsulate.xyz/guides/mellow): Stake MELLOW with MetaMask. Eight steps across the MetaMask extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [Mina staking guide](https://encapsulate.xyz/guides/mina): Stake MINA with Auro Wallet. Nine steps in the Auro Wallet extension, one per screen, each with the screen you should be looking at.
+- [Monad staking guide](https://encapsulate.xyz/guides/monad): Stake MON with MetaMask. Eleven steps across MonadVision and the MetaMask extension, one per screen, each with the screen you should be looking at.
+- [Namada staking guide](https://encapsulate.xyz/guides/namada): Stake NAMADA with Namadillo. Eight steps across the Namadillo extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [Near staking guide](https://encapsulate.xyz/guides/near): Stake NEAR with Meteor. Eight steps in Meteor's web wallet, one per screen, each with the screen you should be looking at.
+- [OmniFlix staking guide](https://encapsulate.xyz/guides/omniflix): Delegate OMNIFLIX with Keplr. Nine steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [Passage staking guide](https://encapsulate.xyz/guides/passage): Delegate PASG with Keplr. Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [Quicksilver staking guide](https://encapsulate.xyz/guides/quicksilver): Delegate QCK with Keplr. Nine steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [Sommelier staking guide](https://encapsulate.xyz/guides/sommelier): Stake SOMM with Keplr. Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [Stargaze staking guide](https://encapsulate.xyz/guides/stargaze): Delegate STARS with Keplr. Eight steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [Starknet staking guide with Braavos](https://encapsulate.xyz/guides/starknet-braavos): Stake STRK with Braavos. Nine steps across Voyager’s staking dashboard and the Braavos extension, one per screen, each with the screen you should be looking at.
+- [Starknet staking guide with Ready X](https://encapsulate.xyz/guides/starknet-ready-x): Stake STRK with Ready X. Nine steps across Voyager’s staking dashboard and the Ready X extension, one per screen, each with the screen you should be looking at.
+- [Sui staking guide](https://encapsulate.xyz/guides/sui): Stake SUI with Slush. Ten steps across SuiVision and the Slush extension, one per screen, each with the screen you should be looking at.
+- [Supra staking guide](https://encapsulate.xyz/guides/supra): Stake SUPRA with StarKey. Eleven steps across the StarKey extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [Terra staking guide](https://encapsulate.xyz/guides/terra): Delegate LUNA with Keplr. Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [UX staking guide](https://encapsulate.xyz/guides/ux): Delegate UX with Keplr. Nine steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+- [Zilliqa staking guide](https://encapsulate.xyz/guides/zilliqa): Stake ZIL with Bearby. Eight steps across Zilliqa’s staking portal and the Bearby extension, one per screen, each with the screen you should be looking at.
+
+## Blog
+
+- [Blog](https://encapsulate.xyz/blog): Explainers, field notes and new-network posts from running validators.
+- [Agoric Testnet Technical Analysis](https://encapsulate.xyz/blog/agoric-testnet-17-analysis): Validators were missing blocks in phase 4.5. We pulled the data and found the culprit.
+- [Aleo Node Setup With Monitoring](https://encapsulate.xyz/blog/aleo-node-setup): Run an Aleo node as prover, client or validator — hardware, ports, and monitoring that works.
+- [Aleo Record Model](https://encapsulate.xyz/blog/aleo-record-model): Accounts waste work and leak state. Aleo's record model, and what it buys you.
+- [Arc Network: Where Finance Becomes Software](https://encapsulate.xyz/blog/arc-network): Circle is turning settlement into software. What Arc actually does, and why it matters.
+- [Aztec: The Private World Computer Built on Ethereum](https://encapsulate.xyz/blog/aztec): Privacy you can program, on Ethereum. What Noir and a three-layer network make possible.
+- [Berachain's Proof-of-Liquidity, Explained](https://encapsulate.xyz/blog/berachain-research): Proof-of-Liquidity pays the pools that keep markets deep. How Berachain's economics work.
+- [Can Quantum Computing Crack Bitcoin?](https://encapsulate.xyz/blog/can-quantum-computing-crack-bitcoin): Bitcoin's keys are not broken yet. Here is the research, the timeline and the honest risk.
+- [Canton Network: Privacy Meets Tokenization](https://encapsulate.xyz/blog/canton-network): Institutions want privacy and tokenisation at once. Canton's answer, and what we run on it.
+- [Celestia Testnet Log Analysis](https://encapsulate.xyz/blog/celestia-testnet-log-analysis): What a testnet's logs say about its health. Our analysis, with the code to repeat it.
+- [Delegating zk-SNARKs Proofs with Privacy for Performance](https://encapsulate.xyz/blog/prover-delegation): Proving is expensive. Delegating it without giving away the secret, and what that costs.
+- [Double Zero](https://encapsulate.xyz/blog/doublezero): The public internet is Solana's bottleneck. What IBRL means, and how DoubleZero routes past it.
+- [Espresso : Fast Finality Meets Interoperability](https://encapsulate.xyz/blog/espresso): Fast finality and shared settlement, so chains stop being islands. We run a node on it.
+- [FogoChain: I Feel the Need, The Need for Speed](https://encapsulate.xyz/blog/fogochain): One client, Firedancer, tuned for trading-floor latency. Fogo's bet, examined.
+- [Genlayer Bradbury Testnet: Where AI Learns to Agree](https://encapsulate.xyz/blog/genlayer-bradbury): AI agents need contracts that can judge, not just execute. Inside the Bradbury testnet.
+- [GenLayer: The Court of the Internet for the AI Age](https://encapsulate.xyz/blog/genlayer): Contracts that can weigh a subjective claim. GenLayer as the internet's small-claims court.
+- [Gno.land: Where Communities Control Their Apps](https://encapsulate.xyz/blog/gnoland-where-communities-control-their-apps): A validator seat earned by contributing code, not by buying stake. We joined at testnet.
+- [Governance Bot Improvements](https://encapsulate.xyz/blog/governance-bot-improvements): Our bot posts chain proposals to Discord as they land. What we fixed: auto-publish and spam.
+- [How Aleo executes Decentralized Private Computation](https://encapsulate.xyz/blog/aleo-dpc): Zero-knowledge proofs beyond fixed circuits. How Aleo runs private computation.
+- [How decentralized is Aptos Really ?](https://encapsulate.xyz/blog/is-aptos-decentralized): We mapped every Aptos validator by ISP and country. The answer is uncomfortable.
+- [IOTA Rebased: Unlocking New Possibilities](https://encapsulate.xyz/blog/iota-rebased-unlocking-new-possibilities): IOTA moves from UTXO to objects and adds staking. What Rebased changes for validators.
+- [Is Wrapped Bitcoin the Next Terra Luna?](https://encapsulate.xyz/blog/possible-wbtc-crash): Every wrapped BTC is someone's promise. We look at who holds the keys, and what breaks.
+- [MegaETH: Web3 at Web2 Speed](https://encapsulate.xyz/blog/megaeth-web3-at-web2-speed): Web2 speed on Ethereum's security, through mini-blocks and a realtime API. How it holds up.
+- [Monad: L1 Scaling Fixed Forever?](https://encapsulate.xyz/blog/monad-l1-scaling): MonadBFT, RaptorCast and parallel execution: the ideas behind Monad's throughput.
+- [Monad: Speed Without Sacrifice](https://encapsulate.xyz/blog/monad-speed-without-sacrifice): Parallel execution without leaving the EVM. What Monad changes for builders and for nodes.
+- [NEAR Protocol 2025 Outlook: What’s Ahead?](https://encapsulate.xyz/blog/near-protocol-2025-outlook): Chain abstraction, intents and user-owned AI. Where NEAR is actually heading in 2025.
+- [Pharos Network: Unlocking the RealFi Era](https://encapsulate.xyz/blog/pharos): Real-world assets need rails that scale and comply. Pharos is building them; we validate.
+- [Solana in 2025: Transforming Into A Behemoth](https://encapsulate.xyz/blog/solana-state-2025): Firedancer, institutional flows and record throughput. Solana's 2025, read by operators.
+- [Somnia Network: The Future of On-Chain Everything](https://encapsulate.xyz/blog/somnia): A million transactions a second — and what has to be true for that number to matter.
+- [Story Protocol: Streamlining IP Rights for Creators.](https://encapsulate.xyz/blog/story-protocol): IP as code: licensing, royalties and provenance on-chain. What Story gives creators.
+- [Symbiotic Finance: A Deep Dive](https://encapsulate.xyz/blog/symbiotic): Shared security without giving up control. How Symbiotic pools stake across protocols.
+- [The Rise Of Intent-Centric Blockchains](https://encapsulate.xyz/blog/intent-centric-blockchains): Stop writing transactions; state the outcome. Anoma, SUAVE and Essential, compared.
+- [The Rise of Move: Rebuilding Blockchain Logic](https://encapsulate.xyz/blog/move-chains): One language, three chains, very different bets. Sui, IOTA and Aptos on Move, explained.
+- [What are Zk Snarks ?](https://encapsulate.xyz/blog/zk-snarks): Zero-knowledge proofs first, then zk-SNARKs — explained without the maths degree.
+- [What Broke Coldcard's Bitcoin Security?](https://encapsulate.xyz/blog/what-broke-coldcards-bitcoin-security): A firmware bug cut seed entropy and $89m walked out. What it should teach the rest of us.
+- [Who Builds the Stablecoin Rails?](https://encapsulate.xyz/blog/who-builds-the-stablecoin-rails): Crypto proved it can move value. Moving money is a different job — here is who is building it.
+- [XMTP: The Future of Messaging?](https://encapsulate.xyz/blog/xmtp-the-future-of-messaging): Encrypted messaging that no platform owns. What XMTP is, and why wallets are adopting it.
+- [ZEXE: How Aleo Achives private computation ?](https://encapsulate.xyz/blog/zexe): ZEXE is how Aleo gets private, expressive computation. Commitments and proofs, unpacked.
+- [Zilliqa 2.0 Launch - What major changes we can expect?](https://encapsulate.xyz/blog/zilliqa-2-launch): X-shards, proof of stake and smart accounts. What Zilliqa 2.0 changes from a validator's seat.
+
+## Optional
+
+- [Brand kit](https://encapsulate.xyz/brand): The Encapsulate mark, colours and type, with the rules for which file goes where. Download the kit.
+- [Privacy policy](https://encapsulate.xyz/privacy-policy): What we collect when you use this site, why, and what we do with it — in plain words, and as little as the site needs.
+- [Terms of use](https://encapsulate.xyz/terms-of-use): The ground rules for using this site and for delegating to a validator we run.
+
+## Full text
+
+- [llms-full.txt](https://encapsulate.xyz/llms-full.txt): every page of encapsulate.xyz but the blog posts and the vote record, as Markdown (152 kB, 2026-10-25)
+- [llms-blog.txt](https://encapsulate.xyz/llms-blog.txt): every blog post on encapsulate.xyz/blog, part 1 of 2, as Markdown (235 kB, 2026-10-25)
+- [llms-blog-2.txt](https://encapsulate.xyz/llms-blog-2.txt): every blog post on encapsulate.xyz/blog, part 2 of 2, as Markdown (158 kB, 2026-10-25)
+- [llms-votes.txt](https://encapsulate.xyz/llms-votes.txt): our governance vote record, every vote on encapsulate.xyz/governance/votes, part 1 of 2, as Markdown (247 kB, 2026-10-25)
+- [llms-votes-2.txt](https://encapsulate.xyz/llms-votes-2.txt): our governance vote record, every vote on encapsulate.xyz/governance/votes, part 2 of 2, as Markdown (122 kB, 2026-10-25)

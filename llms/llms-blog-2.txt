@@ -1,0 +1,2380 @@
+# Encapsulate — every blog post on encapsulate.xyz/blog (part 2 of 2)
+
+> We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
+
+As Markdown, as it reads on 2026-10-25. The index of the site is https://encapsulate.xyz/llms.txt.
+
+## Solana in 2025: Transforming Into A Behemoth
+
+URL: https://encapsulate.xyz/blog/solana-state-2025
+
+Firedancer, institutional flows and record throughput. Solana's 2025, read by operators.
+
+Networks · July 15, 2025 · 25 min
+
+### Solana x 2025 - The Story So Far
+
+Firedancer, institutional flows and record throughput. Solana's 2025, read by operators.
+
+Reading
+
+0%
+
+01
+
+Major Technological Developments in 2025
+
+02
+
+#1 - Firedancer: The Game-Changing Validator Client
+
+03
+
+#2 - Alpenglow Consensus Algorithm: Redefining Blockchain Consensus
+
+04
+
+#3 - Network Performance and Scaling Improvements
+
+05
+
+#4 - DoubleZero
+
+06
+
+Exciting Protocols to Watch Out For in 2025
+
+07
+
+1. Jupiter - The DeFi Conglomerate
+
+08
+
+2. Kamino Finance - The Yield Optimization Powerhouse
+
+09
+
+3. Drift Protocol - The Perpetuals Trading Innovation Hub
+
+10
+
+4. Raydium - The DEX Innovation Leader
+
+11
+
+5. Solayer - The Restaking Revolution
+
+12
+
+6. Bullet - Competitor to Hyperliquid
+
+13
+
+Institutional Adoption and ETF Developments
+
+14
+
+DeFi and Ecosystem Growth
+
+15
+
+Memecoin Phenomenon and Cultural Impact
+
+16
+
+Gaming and NFT Developments
+
+17
+
+Regulatory Developments and Policy Institute
+
+18
+
+Network Health and Decentralization
+
+19
+
+Major Events and Conferences
+
+20
+
+ETH vs. Solana Battle
+
+21
+
+Challenges and Areas for Improvement
+
+22
+
+Is Solana Making Money?
+
+23
+
+Future Outlook and Roadmap
+
+24
+
+Encapsulate’s Solana 2025 Thesis
+
+Launching a chain?
+
+We join at testnet and stay.
+
+Book a call
+
+Solana has emerged as one of the most transformative blockchain platforms in 2025, experiencing unprecedented growth, technological advancement, and institutional adoption. The Solana ecosystem began 2025 on a high note, hitting all time highs at the back of the launch of President Trump's TRUMP memecoin, setting the stage for a year of remarkable developments across multiple fronts.
+
+This comprehensive research examines Solana's evolution throughout 2025, focusing on key areas including major protocol upgrades, institutional adoption milestones, regulatory developments, ecosystem expansion, and technological innovations. The analysis reveals that Solana has successfully positioned itself as a leading blockchain platform, challenging Ethereum's dominance while carving out its unique niche in high-performance decentralized applications.
+
+The year 2025 has been pivotal for Solana, marking a period of maturation from a high-speed experimental blockchain to a robust, enterprise-ready platform. The network has experienced 100% uptime for nearly 16 months and counting, demonstrating unprecedented reliability that has become crucial for institutional adoption and real-world applications.
+
+One of the most significant shifts in the cryptocurrency landscape has been the increasing interest from institutional investors, with Solana positioned at the forefront of this institutional wave. The platform's evolution reflects a strategic shift from speculative investment to practical application, as institutions increasingly ask "how can we use Solana?" rather than "should we invest in it?"
+
+### Major Technological Developments in 2025
+
+#### #1 - Firedancer: The Game-Changing Validator Client
+
+Perhaps the most significant technological development for Solana in 2025 has been the advancement of Firedancer, a revolutionary validator client that promises to redefine blockchain performance standards. Firedancer is a new client written from the ground up and maintained by Jump Crypto. As of April 17, 2025, 34 validators are using firedancer (about 7%), but this number is expected to quickly grow.
+
+> The impact of Firedancer cannot be overstated. According to Austin Federa, a key figure in the Solana ecosystem: "If you go to Breakpoint from 2024, there was a demo that the Firedancer team ran showing a million transactions per second running on I think it was six nodes and four continents. And that was running on the DoubleZero network." This demonstration represents a quantum leap in blockchain performance, far exceeding the capabilities of traditional networks.
+
+_FIG. 1 Firedancer adoption across the Solana validator set_
+
+The current implementation, known as Frankendancer, represents a hybrid approach. The current version, Frankendancer, is a hybrid Firedancer/Agave release. Firedancer was engineered for massive parallelism and includes well-designed dashboard and telemetry tooling. This gradual rollout strategy ensures network stability while introducing revolutionary performance improvements.
+
+##### Performance Breakthrough
+
+Firedancer has demonstrated the potential to process over 1 million transactions per second (TPS), far exceeding Solana's current capability of around 3,000 TPS for actual user transactions. In a live demo broadcast in 2022, Firedancer demonstrated an ability to process over 1 million transactions per second. This figure is many times greater than Solana's current theoretical limit of 50,000 tps, and far exceeds the amount of transactions leading service providers like Visa typically handle.
+
+##### Revolutionary Architecture
+
+Firedancer is written from scratch in C/C++ (versus Solana's original Rust client) and designed from the ground up to be fast. The concurrency model draws from experience in the low latency trading space, and the code contains many novel high-performance reimplementations of core Solana primitives.
+
+Key technical innovations include:
+
+- Modular tile architecture that breaks validator functions into independent processes
+- Custom QUIC networking with kernel bypass techniques for ultra-low latency
+- AVX512 cryptography for accelerated signature verification
+- Parallel processing pipeline that maximizes CPU utilization
+
+##### Enhanced Network Resilience
+
+Firedancer is independently developed—sharing virtually no code with the original Solana Labs validator client. This means that bugs or issues in one validator client won't affect the other, significantly reducing the chances of network-wide outages and improving Solana's uptime and reliability.
+
+Currently, Solana has been vulnerable because it primarily relies on one main client implementation. Right now, the Solana blockchain has only three validator clients in operation, making Firedancer the fourth option and dramatically improving decentralization.
+
+##### Security and Stability Improvements
+
+The architecture of the validator allows it to run with a highly restrictive sandbox and almost no system calls, which significantly reduces attack surfaces. Solana currently finalizes blocks in about 400 milliseconds. With optimizations enabled by Firedancer, that number could fall to around 120 milliseconds—a 4x improvement that makes Solana more responsive and better suited for real-time applications.
+
+##### Current Status and Rollout
+
+A hybrid version known as Frankendancer, which integrates components from both Firedancer and existing clients, is already live on Solana mainnet. The full Firedancer implementation is currently operational on testnet. Frankendancer is live on mainnet, and Firedancer is live on testnet.
+
+##### What is Jito + Frankendancer?
+
+Jito is a specialized validator client that focuses on Maximal Extractable Value (MEV) optimization. The Jito validator client is a fork of the Solana Labs validator client and is mostly used by validators that specialize on all things Maximal Extractable Value (MEV). By optimizing for MEV, the Jito validator client helps reduce network spam and improves the overall efficiency of Solana.
+
+Frankendancer is the hybrid implementation that combines Firedancer's high-performance networking components with existing Agave runtime code. Frankendancer is a hybrid validator using parts of Firedancer and parts of Agave.
+
+##### Client Distribution:
+
+- Agave + Jito: 857 validators with 357.8M SOL staked (89.0% of network stake)
+- Frankendancer + Jito: 77 validators with 31.6M SOL staked (7.9% of network stake)
+- Agave Vanilla: 83 validators with 9.8M SOL staked (2.4%)
+- Frankendancer Vanilla: 18 validators with 2.7M SOL staked (0.7%)
+
+##### Why Jito + Frankendancer Matters?
+
+1. MEV Optimization: Jito's MEV capabilities help validators capture additional revenue from transaction ordering and bundling
+2. Enhanced Performance: Frankendancer's networking improvements boost overall throughput
+3. Network Efficiency: By optimizing for MEV, the Jito validator client helps reduce network spam and improves the overall efficiency of Solana.
+4. Revenue Enhancement: Validators running Jito can earn additional fees from MEV extraction
+
+##### Why It's Game-Changing?
+
+1. Massive scalability leap: From thousands to potentially millions of TPS
+2. Network resilience: Multiple independent clients prevent single points of failure
+3. Performance optimization: Leverages cutting-edge hardware capabilities and low-latency trading expertise
+4. Security enhancement: Sandboxed architecture with minimal system calls
+5. Future-proofing: Built for sharding and elastic scaling
+
+As one industry leader noted: "This technological feat makes the fastest, most performant blockchain currently on the market even better. Solana is designed to be a high throughput, low latency global state machine. Firedancer is a giant leap forward towards perfecting these goals."
+
+Firedancer essentially transforms Solana from an already fast blockchain into a potential global-scale transaction processing system that could handle the demands of traditional finance while maintaining decentralization and security.
+
+#### #2 - Alpenglow Consensus Algorithm: Redefining Blockchain Consensus
+
+Another groundbreaking development in 2025 has been the introduction of the Alpenglow consensus algorithm. Solana's current blockchain consensus mechanism - a hybrid of Proof of History (PoH) and Tower BFT - delivered unprecedented throughput but introduced operational trade-offs: Slow Finality (12.8 seconds): Optimistic confirmation (500–600ms) lacked deterministic finality, limiting real-time use cases.
+
+The Alpenglow upgrade addresses these limitations fundamentally. Votor replaces Tower BFT's on-chain votes with a two-tiered consensus mechanism blockchain: Fast-Finalization Path: Blocks finalize in 150ms if ≥80% of stake approves in the first voting round. Slow-Finalization Path: If initial approval is ≥60%, a second round begins. Finalization occurs if approval remains ≥60%, ensuring liveness even with partial outages.
+
+##### Before Alpenglow (Current State)
+
+Block Finality Time: With Tower BFT, Solana's finality is set at 12.8 seconds due to the 32-deep tower structure and 400-millisecond slot times
+
+Block Production: Blocks are still produced every 400 milliseconds, but true finality (when transactions are irreversible) takes much longer
+
+Optimistic Confirmations: Solana introduced an optimistic confirmation system, which allowed applications to update their UI faster, giving users the impression of quicker transaction completion. However, this still resulted in confirmation times of around one second
+
+##### After Alpenglow (Proposed)
+
+Block Finality Time: The researchers ran some tests: if adopted, Alpenglow would reduce Solana's latency — the time it takes to finalize a block of transactions — from just under 13 seconds to as little as a tenth of a second
+
+Specific Performance: Simulations show Alpenglow would achieve finality in about 150 milliseconds, with some estimates suggesting Depending on a validator's geographic location, this will fall from 12.8 seconds to 100-150ms
+
+Real-World Testing: To test the upgrade, Solana conducted a network-wide latency test with a lead validator based in Zurich, Switzerland. Results showed that 65% of network stake finalized blocks in under 200 milliseconds
+
+##### The Dramatic Improvement
+
+This represents approximately a 100x improvement in finality speed - from 12.8 seconds down to 100-150 milliseconds. Before this, Solana's average block finality time was over 12 seconds — now it's cut to less than a second.
+
+| Before Alpenglow | After Alpenglow |
+| --- | --- |
+| 12.8 seconds | 100-150 milliseconds |
+
+##### Technical Changes
+
+The improvement comes from replacing Solana's current consensus mechanism with two new components:
+
+- Votor: Handles faster block finalization through improved voting
+- Rotor: Replaces the Turbine protocol for more efficient data propagation
+
+"A median latency of 150ms does not just mean that Solana is fast," Wattenhofer, Kniep and Sliwinski said. "It means Solana can compete with Web2 infrastructure in terms of responsiveness, potentially making blockchain technology viable for entirely new categories of applications that demand real-time performance".
+
+The Alpenglow upgrade is still in proposal phase and could go live as early as the end of 2025 or early 2026, pending community governance approval.
+
+#### #3 - Network Performance and Scaling Improvements
+
+Solana's network performance improvements in 2025 have been remarkable. Solana is planning to double its block space by 2025, significantly increasing its already high transaction throughput. A new consensus algorithm is being implemented, which will eliminate vote transactions and increase finality and block times.
+
+The network has proven its resilience during periods of extreme stress. During periods of high network activity in January 2025, the Solana network broke several records, including all-time highs of activity for any blockchain in history. While some network applications faced challenges during this time, overall the network handled the burst remarkably well with no downtime.
+
+Performance metrics from this stress test were impressive:
+
+- Several days of over 200M daily transactions
+- 400k+ new wallet downloads
+- Over $200M in liquidity inflows
+- DEX volume of up to $39B/day
+
+#### #4 - DoubleZero
+
+##### Say Hello to the IBRL Revolution
+
+DoubleZero is a groundbreaking infrastructure project that's building what they call a "new internet" specifically designed for high-performance blockchain networks, with Its motto – "Increase bandwidth, Reduce Latency" or IBRL – proliferated through the Solana community even before DoubleZero debuted its white paper in December. Founded by Austin Federa (former Solana Foundation head of strategy) and co-founders Andrew McConnell and Mateo Ward, DoubleZero Foundation, a startup building a "new internet" to improve blockchain performance, raised $28 million at a $400 million valuation from top-tier VCs including Dragonfly and Multicoin Capital.
+
+The core concept addresses a fundamental limitation: the current internet infrastructure is ill-suited for the demands of high-performance blockchain networks. DoubleZero's vision is to amass a global network of private fiber optic cables, and then harness them so that blockchains can transmit their data more efficiently than possible on the public internet. This infrastructure leverages private line operated by Jump Crypto, RockawayX, Distributed Global, Latitude and Teraswitch, essentially creating a dedicated highway for blockchain data transmission.
+
+_FIG. 2 Inside and outside the colocation rings_
+
+##### How IBRL Will Transform Solana's Growth
+
+The IBRL concept is positioned to be transformative for Solana's scalability ambitions. The project is seen as an enabling technology for Solana's grander plans to process one million transactions per second. The impact has already been demonstrated: Federa mentioned a demo from Breakpoint 2024 where Firedancer, running on the DoubleZero network, achieved one million transactions per second across six nodes on four continents.
+
+Double Zero is on a mission to create a "new internet" specifically designed for high-performance blockchain networks, with the potential to make Solana up to 10 times faster in the next two years. The economic model is designed to be self-sustaining: while initially mentioning a 5% seed fee for validators to use the DoubleZero network, Federa clarified that the launch would start with a lower fee, gradually increasing as the network proves its value. The value proposition is compelling - "If we make Solana twice as performance and as twice as much block space, validators will make more than 5% more, right? Stakers will make more than 5% more".
+
+Check out our for a deep-dive into DoubleZero and IBRL:
+
+The infrastructure is already gaining real-world adoption, with DeFi Development Corp. (NASDAQ:DFDV) has integrated DoubleZero into its Solana validator operations, representing early validation of the technology's practical benefits. DoubleZero's approach mirrors the strategy of major tech companies: "People forget that like Facebook literally wired up the entire Philippines with subsea cables so they could sell ads to people there. At some point, all sufficiently large enough software companies have to start looking at hardware or else they realize their ambitions simply cannot be met".
+
+By solving the networking bottleneck that has long constrained blockchain performance, DoubleZero's IBRL concept could be the key infrastructure that enables Solana to achieve its vision of becoming the world's most performant blockchain, potentially handling millions of transactions per second while maintaining decentralization - a breakthrough that could establish Solana as the definitive platform for global-scale applications.
+
+### Exciting Protocols to Watch Out For in 2025
+
+#### 1. Jupiter - The DeFi Conglomerate
+
+After the decline of memecoins in early 2025, Jupiter rose to become the top fee generating protocol on Solana, with daily fees generated of over $2M according to DefiLlama. Jupiter has evolved far beyond being just a DEX aggregator - it's becoming Solana's DeFi super-app. Approximately 60% of total DEX volumes are facilitated by Jupiter, the leading DEX aggregator on Solana and the largest DeFi project on the platform. What makes Jupiter exciting is its expansion into perpetuals, options, and its upcoming Jupiter Mobile wallet, positioning it as the one-stop shop for all Solana DeFi needs. The platform's ability to aggregate liquidity across multiple DEXes ensures users get the best prices while its governance token JUP gives holders voting power over this increasingly influential protocol.
+
+#### 2. Kamino Finance - The Yield Optimization Powerhouse
+
+Kamino (KMNO), a decentralized lending platform, with TVL or 16.03% of the total, worth $2.43 billion, has positioned itself as Solana's premier lending and liquidity management platform. Kamino launched its Lend V2 program in late 2024, introducing "The Vault Layer", which aggregates and automates liquidity across various markets to deliver risk-optimized yields. An interesting innovation of theirs is the "Scam Wick Protection", enabled by their next-generation liquidations engine that protects users from unnecessary liquidations. What's particularly exciting is Kamino's automated yield strategies that handle the complexity of DeFi farming for users, making sophisticated yield generation accessible to everyone. The platform's integration with major Solana DEXes and its upcoming KMNO token airdrop make it a protocol to watch closely.
+
+#### 3. Drift Protocol - The Perpetuals Trading Innovation Hub
+
+Drift Protocol, the largest open-sourced perpetual futures exchange built on Solana, is not just an application — it's a layer for other protocols to build upon. With the recent launch of its new governance token, $DRIFT, the platform has reached a significant milestone in its evolution with a Cumulative trading Volume of over $24 Billion and Total Value Locked (TVL) of over $300 Million. Drift stands out for its sophisticated hybrid liquidity model that combines virtual AMMs with just-in-time auction systems, enabling orders of any size gets filled with near-zero slippage and at the lowest fees. The platform's cross-margined accounts allow traders to use any deposited asset as collateral across all positions, maximizing capital efficiency. With leverage up to 20x and its expansion into prediction markets, Drift is pushing the boundaries of what's possible in decentralized derivatives trading.
+
+#### 4. Raydium - The DEX Innovation Leader
+
+Raydium (RAY) continues to dominate Solana DEXs with TVL of $1.77 billion and remains the go-to platform for new token launches and liquidity provision. What makes Raydium exciting is its hybrid model that combines an automated market maker with Solana's central limit order book, providing both the flexibility of liquidity pools and the precision of traditional order books. Raydium and Openbook are achieving significant volumes, particularly during periods of meme coin popularity. The platform's integration with major launches (including many memecoins that have gained massive popularity) and its role as the primary liquidity hub for new Solana projects makes it essential infrastructure. Raydium's concentrated liquidity features and its position as the largest native DEX on Solana ensure it remains at the center of the ecosystem's growth.
+
+#### 5. Solayer - The Restaking Revolution
+
+Solayer began as a crypto project dedicated to enabling restaking on Solana, a process in which staked tokens are then further used to secure the networks of other crypto projects. Solayer continues to innovate, venturing into other fields of Solana DeFi, beginning with the launch of the stablecoin sUSD (Solayer USD) in October 2024. The most exciting development is Solayer InfiniSVM, a hardware accelerated Solana Virtual Machine (SVM) Layer 1 blockchain unveiled in January 2025. Solayer is essentially building Solana's version of EigenLayer, allowing SOL holders to restake their tokens to secure additional networks and earn extra yield. The introduction of sUSD, a treasury-backed stablecoin developed with OpenSea, shows Solayer's ambition to become a multi-faceted DeFi infrastructure provider. As restaking becomes a major narrative in crypto, Solayer is positioned to capture significant value by enabling this new primitive on Solana.
+
+#### 6. Bullet - Competitor to Hyperliquid
+
+Bullet is emerging as a formidable challenger to Hyperliquid's dominance in the perpetuals trading space, leveraging Solana's infrastructure to build what they call a "Network Extension" that promises to deliver sub-2ms transaction execution and thousands of TPS. We built Bullet because we recognized that Solana, despite being a powerhouse in spot and memecoin trading, lagged significantly behind the competition when it came to a professional-grade derivatives trading experience. The platform, evolved from Zeta Markets, functions as a high-performance decentralized exchange (DEX) specifically built for perpetual futures trading. Bullet targets high-frequency traders by offering ultra-low latency (2ms) and real-time transaction processing capabilities. What makes Bullet particularly exciting in its competition with Hyperliquid is its unique hybrid approach - existing as a network extension (an application-specific layer) on Solana, we benefit from the throughput and continued scaling of the Solana base layer, whilst applying many of the learnings and research from zero-knowledge cryptography and modular blockchain design principles.
+
+While Hyperliquid has captured over 80% of the on-chain perpetual futures market, Zeta Markets has rebranded as Bullet, marking a shift toward a performance-focused trading platform. Bullet is being built as a Solana-native extension optimized for trading, leveraging zero-knowledge proofs for high speed and scalability. With its current testnet phase generating significant anticipation for a potential $BULLET token airdrop and its promise to finally deliver decentralized exchanges (DEX) that can compete with centralized exchanges (CEX) without having to trade off security and transparency, Bullet represents Solana's most serious attempt to reclaim market share from Hyperliquid in the high-performance derivatives trading arena.
+
+### Institutional Adoption and ETF Developments
+
+##### The ETF Revolution
+
+One of the most significant developments for Solana in 2025 has been the progress toward Exchange-Traded Fund (ETF) approval. The U.S. Securities and Exchange Commission reportedly asked prospective issuers to amend their S-1 filings in the next week, according to the story, and will comment on the paperwork in the next 30 days after submission.
+
+The first major breakthrough came with the approval of a Solana staking ETF. In July 2025, the U.S. made headlines by approving the first Solana staking ETF, launched by REX Shares and Osprey Funds. This Solana ETF is the first in the U.S. to combine price tracking with Solana staking reward distributions.
+
+The impact has been substantial. The launch and growth of Solana ETF products are reshaping cryptocurrency investing in 2025. With the debut of innovative Solana staking ETF products in Canada and, now, the first U.S. Solana staking ETF approval, both institutional and retail inflows have soared—surpassing $500 million in the first weeks across North America.
+
+##### Corporate Treasury Adoption
+
+Corporate adoption of Solana has accelerated significantly in 2025. Education technology firm Classover disclosed a major strategic treasury reserve adjustment, increasing its Solana holdings by 295% to surpass 50,000 SOL tokens.
+
+Corporate interest in Solana is growing, and DeFi Development Corp. is the latest to announce the addition of more tokens to its growing portfolio. In a July 3 press release, the company announced the purchase of 17,760 Solana (SOL) worth $2.7 million, demonstrating growing institutional confidence.
+
+The scale of institutional involvement is impressive. DeFi Technologies is the largest institutional asset manager of Solana in North America. As the parent company of Valour, DeFi Technologies manages more Solana than any other public company or asset manager in North America, with Valour's Solana ETP holds US$274,850,850 (C$377,548,870) in AUM, exceeding the Bitcoin ETP at US$269,640,836.
+
+### DeFi and Ecosystem Growth
+
+##### DeFi Leadership and Innovation
+
+Solana has established itself as a dominant force in decentralized finance. Solana, Ethereum's largest rival, leads among cryptos with highest dApp revenue. In June 2025, Solana clocked over $146 million in revenue from decentralized applications in its ecosystem.
+
+The DeFi ecosystem's growth is reflected in impressive metrics. App revenue for Solana has been growing consistently since Q3 2023. The past two quarters have shown a significant increase over previous quarters, with over $1B in app revenue each.
+
+_FIG. 3 Developer Count_
+
+##### Developer Ecosystem Expansion
+
+The developer ecosystem has shown remarkable growth. Solana was the #1 blockchain ecosystem for new developers in 2024, with over 7600 new developers joining the network, over 3200 monthly active developers, and 83% year-over-year growth.
+
+Key projects driving this growth include Jupiter, which has evolved from a simple swap aggregator into Solana's top DeFi hub, and innovative platforms like Pump.fun, which has democratized token creation. Pump.fun drove Solana's memecoin wave and now routes all tokens to its new native DEX, PumpSwap, with creator revenue features.
+
+### Memecoin Phenomenon and Cultural Impact
+
+##### The Memecoin Explosion
+
+2025 has been the year of the Solana memecoin phenomenon. Most notably, Solana is the choice blockchain for many NFT collections including Pudgy Penguins, Azuki and more to launch their own memecoins. This trend began with President Trump's TRUMP memecoin launch, which set the stage for an explosion of memecoin activity.
+
+The scale of this phenomenon is remarkable. PENGU is the official memecoin of the famed Pudgy Penguins NFT collection. The PENGU token launched in December 2024, in what was one of the most prolific airdrops at the time, rewarding not just their NFT holders but users of the Solana ecosystem in general, with over a million Solana wallets eligible for the airdrop.
+
+##### Technical Infrastructure Supporting Memecoins
+
+The technical characteristics of Solana make it particularly well-suited for memecoin trading. Solana's rapid network speeds lend themselves to the quick creation and trading of memecoins. What's more, platforms such as Pump.fun, Moonshot, and others that simplify the creation of SPL tokens have democratized meme coin production, leading to an explosion of new tokens.
+
+The low transaction costs on Solana make it economically viable for users to engage in speculative trading of meme coins. Coupled with this, the cultural resonance of meme coins within the Solana community has made it a breeding ground for speculative investments.
+
+### Gaming and NFT Developments
+
+##### Gaming Infrastructure
+
+Solana has made significant strides in blockchain gaming infrastructure. Non-fungible tokens (NFTs) are rapidly gaining popularity as a means of integrating Solana into games. These unique digital assets are stored on the Solana blockchain and come with a JSON metadata attached to them.
+
+The platform supports sophisticated gaming mechanics. You can also use dynamic metadata (using Token Extensions) to save character level and experience or items in an NFT. Here is a Video Walkthrough with source code that explains dynamic metadata NFTs.
+
+##### NFT Ecosystem Evolution
+
+The NFT ecosystem has evolved significantly, with projects like Mad Lads leading innovation. Mad Lads NFTs are xNFTs, which means they are NFTs with an embedded code script that can be executed by an application that supports them, like the Backpack wallet, which is also developed by Coral.
+
+### Regulatory Developments and Policy Institute
+
+##### Solana Policy Institute Launch
+
+A major development in 2025 has been the establishment of the Solana Policy Institute. The Solana Policy Institute (SPI), a non-partisan, non-profit organization, was established on March 31 to engage with lawmakers, educate them on the role of decentralized networks in the digital economy, and advocate for Solana (SOL) in Washington.
+
+Solana Policy Institute is a non-partisan, not-for-profit focused on educating policymakers on how decentralized networks like Solana are the future of the digital economy—and why the people building on and using them need legal certainty to flourish.
+
+##### Leadership and Strategic Approach
+
+The institute has attracted high-profile leadership. Miller Whitehouse-Levine, former CEO of the DeFi Education Fund, yesterday announced his latest venture as founder and CEO of the Solana Policy Institute. Then, this afternoon, Blockchain Association CEO Kristin Smith said she would become the fledgling non-profit's first president in May.
+
+The strategic approach is comprehensive. SPI's strategic approach includes convening voices from within the Solana ecosystem, such as infrastructure providers, developers, and users of decentralized applications (dApps). These stakeholders will provide policymakers with case-specific insights, demonstrating how blockchain-based tools are deployed in practice.
+
+### Network Health and Decentralization
+
+##### Validator Economics and Health
+
+Validator economics have improved significantly in 2025. Validator health is thriving. Validators now earn from a variety of sources—not just increased inflation rewards and transaction fees, but also 100% of priority fees (SIMD-0096), MEV (via Jito), and out-of-protocol deals.
+
+As a result of these improved economics, the breakeven stake for a validator has dropped from ~50k SOL to 16k SOL. Commission rates are trending to 0% and APYs are up to 7.5%, encouraging even more staking.
+
+##### Decentralization Metrics
+
+Solana maintains strong decentralization metrics. As of April 16, 2025, Solana's Nakamoto Coefficient is 20. This means the lowest number of validators that would have to collude to censor the network is 20. While this has decreased from previous highs, it remains competitive with other major blockchains.
+
+Solana and Ethereum are the only L1 networks with more than one client. Ethereum leads by count of distinct clients, with Nethermind (21% usage) and Geth (54%) being the most popular.
+
+### Major Events and Conferences
+
+Solana is orchestrating an ambitious global events strategy for 2025 that reflects its growing maturity and international reach. The Solana Foundation will once again host the landmark Solana Breakpoint conference, coming to Abu Dhabi in December 2025, marking a strategic shift to engage with crypto-friendly jurisdictions in the Middle East after previous years in Europe and Singapore. Beyond the flagship Breakpoint, Solana is launching an entirely new series called APEX: focused, mega-regional events meant to initiate and incubate high-quality apps. Each mega-region will have its own conference – focussed on founders, apps and tokens – where teams can showcase their products and connect with investors and partners. Coming in 2025 to Mexico City, Cape Town, Budapest, Singapore, and Mumbai. Additionally, Accelerate, described as a "mini breakpoint" event, is scheduled for May 19-26, 2025, in the United States, providing developers and builders with more intimate, focused networking opportunities.
+
+The Foundation's 2025 strategy represents a fundamental shift toward deeply product- and growth-focused events where attendees should walk away with actionable playbooks to solve their growth challenges, engage in deep work with peers, connect with potential hires or enterprise partners, or drive communication and marketing outcomes. This includes innovative formats like Startup Villages, hosted by Superteam with other ecosystem teams, which create opportunities for attendees to engage in deep work, attend workshops and build meaningful products and connections over two weeks, instead of a couple of days. The events will follow a "barbell format" focusing on either small, niche gatherings for specific groups like product designers or DePIN teams, or large-scale events serving the entire ecosystem. With community-driven hacker houses, founder villas, and ecosystem-native events complementing the official programming, Solana's 2025 events calendar is designed to foster genuine collaboration and product development rather than just networking, positioning the ecosystem for sustained growth as it enters what many expect to be a transformative year for crypto adoption.
+
+### ETH vs. Solana Battle
+
+In 2025, Solana has emerged as Ethereum's most formidable challenger in the race for DeFi dominance, and the data suggests this battle is far from one-sided. While Ethereum remains the leader in DeFi with a significantly higher TVL, thanks to its established ecosystem and broad developer support and over 55% of total value locked (TVL) across major chains resides on Ethereum, Solana is rapidly closing the gap through superior performance metrics and user engagement. The network consistently processes over 100 million transactions per day, powered by an average of 500,000 daily active wallets, underscoring its position as the most performant Layer-1 blockchain by throughput. The TVL gap tells only part of the story - while Ethereum holds around $71 billion compared to Solana's $9 billion, in terms of daily active users, revenue, transaction count, Total Value Locked (TVL), and developer adoption, Solana is now leading the way, not Ethereum. Over the past three months, Solana has consistently processed five times more daily transactions than Ethereum and recorded same level of the DEX trading volume.
+
+Solana's path to DeFi leadership is being paved through innovation, user experience, and cost efficiency rather than just raw capital accumulation. Monthly DEX volume skyrocketed from $1 billion in 2023 to a record-breaking $129 billion in November 2024, surpassing Ethereum's all-time high of $117 billion set in May 2021, demonstrating that Solana has achieved parity in actual trading activity despite the TVL disadvantage. The network's breakthrough comes from its ability to serve different market segments - while Ethereum remains the choice for "serious money" and institutional DeFi, Solana has captured the retail and high-frequency trading markets through platforms like Pump.fun, which became the biggest revenue-generating dApp across all blockchains. Notably, top developers at Ethereum are finally waking up to the realization that Solana is eating their lunch these days. They are complaining that their future roadmap for growth is "too unambitious," and some have warned about the need to adopt a new strategy to take on Solana. With Firedancer's arrival promising million-TPS capabilities and Solana's proven ability to handle real-world usage at scale, the question isn't whether Solana will challenge Ethereum for DeFi supremacy - it's whether Ethereum can adapt fast enough to maintain its lead in an increasingly performance-driven market.
+
+### Challenges and Areas for Improvement
+
+##### Network Congestion and User Experience
+
+Despite significant improvements, challenges remain. The memecoin boom has sometimes led to network congestion and user experience issues. However, this is a classic case of Solana suffering from its own success, as the blockchain of choice for retail, it naturally attracts both real users and bad actors.
+
+##### Validator Consolidation Concerns
+
+Geographic consolidation of validators remains a concern. However, nodes have started to consolidate geographically to locations with major data centers and minimal latency (for example, clustering in Germany). The Solana Foundation believes this consolidation is due to: Timely Vote Credits (TVC) which incentivize stakers to move their stake.
+
+### Is Solana Making Money?
+
+The blockchain has experienced explosive revenue growth that demonstrates its transition from a promising but struggling network to a genuine financial powerhouse. Application revenues on the Solana network increased by 213% in the fourth quarter of 2024, primarily due to memecoin speculation, according to a report by crypto research firm Messari. Cumulative app revenues grew from $268 million in Q3 2024 to $840 million in Q4, Messari said. They peaked in November at $367 million. This represents one of the most dramatic revenue acceleration stories in the crypto space.
+
+The money is coming from multiple sources, but memecoins have been the primary driver. According to DefiLlama data, pump.fun, Solana's viral token launcher, recorded the highest consistent revenue generation, recording an average of $29.21M in monthly revenue in 2024. Pump.fun has consistently generated millions of dollars in revenue on a daily basis in Q4, recording an all-time high of $14.3M on November 23. Beyond just the memecoin mania, Solana's DeFi ecosystem has matured significantly. Monthly DEX volume skyrocketed from $1 billion in 2023 to a record-breaking $129 billion in November 2024, surpassing Ethereum's all-time high of $117 billion set in May 2021. This isn't just speculative trading - it represents real economic activity with sustainable fee generation. In July, Solana surpassed Ethereum in weekly total fees for the first time, clocking approximately $25 million in weekly revenue versus Ethereum's $21 million, proving that Solana has achieved genuine revenue competitiveness with the world's leading smart contract platform.
+
+### Future Outlook and Roadmap
+
+##### Upcoming Developments
+
+Several major developments are planned for the remainder of 2025 and beyond. Alpenglow consensus algorithm - Announced at Scale or Die, this major consensus algorithm update is designed to reduce block times and improve network stability.
+
+The DoubleZero network - Already in testnet, DoubleZero is a new global network for high-performance distributed systems and blockchains. Validators moving to the DoubleZero network are expected to see significantly higher bandwidth and lower latency.
+
+##### Scaling and Performance Goals
+
+The network continues to push performance boundaries. Compute Units limit increase - CU limits have recently been raised to 50m, soon to bump to 60m, with future increases planned of 100m and beyond.
+
+### Encapsulate’s Solana 2025 Thesis
+
+Solana's evolution in 2025 represents a watershed moment in blockchain technology. The platform has successfully transitioned from a high-speed experimental network to a mature, enterprise-ready infrastructure that supports a diverse ecosystem of applications, from DeFi protocols to gaming platforms and institutional financial products.
+
+Key achievements include the deployment of revolutionary technologies like Firedancer and Alpenglow, which promise to redefine blockchain performance standards. The platform has demonstrated exceptional resilience during periods of extreme network stress while maintaining near-perfect uptime for over 16 months.
+
+Institutional adoption has accelerated dramatically, with the approval of the first Solana staking ETF in the United States and significant corporate treasury allocations. The establishment of the Solana Policy Institute demonstrates the ecosystem's commitment to regulatory clarity and responsible innovation.
+
+The developer ecosystem continues to thrive, with Solana attracting the highest number of new developers among all blockchain platforms. The memecoin phenomenon, while controversial, has demonstrated the platform's ability to handle massive transaction volumes and has driven significant user adoption.
+
+As we look towards 2025, Solana's roadmap is filled with ambitious goals and exciting developments. From major protocol upgrades like Firedancer and the new consensus algorithm to ecosystem improvements like RPS 2.0, the network is poised for significant growth and evolution.
+
+However, challenges remain, including validator geographic consolidation, the need for continued user experience improvements, and the ongoing task of balancing rapid innovation with network stability. The platform's success has also attracted both legitimate users and bad actors, requiring ongoing vigilance from the community.
+
+Looking forward, Solana appears well-positioned to play a leading role in the future of blockchain technology. With major technological upgrades on the horizon, growing institutional interest, and a vibrant ecosystem of developers and projects, the platform's influence and importance in the cryptocurrency space is likely to continue growing.
+
+The combination of technical excellence, practical utility, and community-driven innovation suggests that Solana has successfully established itself as a foundational platform for the next generation of decentralized applications and financial services. As the blockchain industry matures, Solana's focus on performance, usability, and real-world adoption positions it as a key infrastructure layer for the digital economy of the future.
+
+Written by
+
+Aditya Verma · Founder
+
+Running a chain we should know about?
+
+Tell us what it takes to run it. If it's a fit, you'll hear from us within a week.
+
+Book a call
+
+All posts
+
+Next
+
+What is IBRL and Why Does It Matter?
+
+## Somnia Network: The Future of On-Chain Everything
+
+URL: https://encapsulate.xyz/blog/somnia
+
+A million transactions a second — and what has to be true for that number to matter.
+
+Networks · September 2, 2025 · 6 min
+
+### Why Somnia Network is Revolutionizing Blockchain: The Future of On-Chain Everything
+
+A million transactions a second — and what has to be true for that number to matter.
+
+Reading
+
+0%
+
+01
+
+The Performance Revolution: 1M+ TPS Changes Everything
+
+02
+
+Four Revolutionary Innovations That Set Somnia Apart
+
+03
+
+Why Somnia's Future is Incredibly Bright?
+
+04
+
+Real-World Applications That Will Define Web3's Future
+
+05
+
+Final Thoughts
+
+Launching a chain?
+
+We join at testnet and stay.
+
+Book a call
+
+The blockchain industry has long promised a decentralized future where everything runs on-chain, but technical limitations have kept this vision just out of reach. While Ethereum pioneered smart contracts and DeFi, its 70,000x slower performance compared to what's needed for mass consumer applications has created a significant barrier to mainstream adoption. Enter Somnia Network—a Layer 1 blockchain that's not just incrementally better, but fundamentally different in its approach to solving blockchain's most persistent challenges.
+
+#### The Performance Revolution: 1M+ TPS Changes Everything
+
+Most blockchains today struggle to handle even a few thousand transactions per second, creating bottlenecks that make real-time applications impossible. Somnia has shattered these limitations with over 1,000,000 transactions per second (TPS) with sub-second finality. To put this in perspective, this makes Somnia 70,000 times faster than Ethereum.
+
+But raw speed isn't everything—it's what this speed enables that makes Somnia transformational. This performance and cost enable a new class of decentralized applications that can now have all their data and logic on-chain, opening doors to applications that were previously impossible on blockchain infrastructure.
+
+#### Four Revolutionary Innovations That Set Somnia Apart
+
+Somnia doesn’t just optimize the EVM—it rethinks the stack end-to-end, from consensus to state storage and networking. Together, MultiStream Consensus, Accelerated Sequential Execution, IceDB, and streaming compression with BLS aggregation deliver predictable, low-cost performance designed for million-TPS, real-time onchain apps.
+
+##### 1. MultiStream Consensus: Rethinking Blockchain Architecture
+
+Traditional blockchains require every validator to process every transaction, creating inherent bottlenecks. Somnia's MultiStream model enables each validator to operate its own independent blockchain, called a "data chain". Data chains are independent chains that hold raw transaction data, fully controlled by validators, while a separate consensus chain keeps track of all these datachains and maintains order.
+
+This separation of data production from consensus processing allows over 1 million transactions per second with sub-second finality while maintaining security through Byzantine Fault Tolerance protocols.
+
+_FIG. 1 Somnia's datachains and consensus chain_
+
+##### 2. IceDB: The Database Built for Blockchain
+
+Most blockchains rely on general-purpose databases like LevelDB or RocksDB, which weren't designed for blockchain's unique requirements. Somnia created IceDB from the ground up with average read/write times of 15-100 nanoseconds.
+
+Every data read and write returns a "performance report" that details the exact resources used, allowing the system to charge users based on the actual load they put on the system. This means operations that access frequently used data use less gas, creating natural incentives for efficient application design.
+
+##### 3. Accelerated Sequential Execution: Hardware Level Parallelism
+
+While many blockchains pursue parallel execution, Somnia took a different approach. Sequential Execution processes transactions one at a time on a single core, avoiding the congestion that occurs when multiple threads attempt to access the same data. The blockchain is optimized for single-thread Sequential Execution, which outperforms traditional parallel models, especially in times of high transaction density. This approach eliminates the complex coordination required in parallel systems and provides predictable, consistent performance even during peak usage.
+
+Somnia's Hardware-Level Solution: Working Smarter, Not Harder
+
+_FIG. 2 In-order against out-of-order execution_
+
+Rather than fighting this fundamental limitation, Somnia takes a completely different approach by tapping into the parallel processing power that already exists inside every single CPU core. Modern processors are incredibly sophisticated - while they appear to execute instructions one after another, they're actually running multiple operations simultaneously behind the scenes. When your CPU is waiting for data from memory, it doesn't just sit idle; it races ahead to work on other calculations. Somnia harnesses this by compiling smart contracts directly to native assembly code instead of running them through the traditional Ethereum Virtual Machine interpreter. The result? A token swap that might involve hashing sender and receiver accounts plus looking up their balances can see all these operations happen in parallel, potentially doubling execution speed. Best of all, this works for every single transaction - even when they're all fighting over the same blockchain state during those critical traffic spikes.
+
+##### 4. Advanced Compression: 20x More Efficient Data Transfer
+
+Advanced compression techniques allow Somnia to move data between nodes up to 20 times more efficiently than other blockchains. Streaming compression enhances data transmission efficiency by leveraging the shared history between senders and receivers, allowing for substantial compression by referencing earlier data points.
+
+#### Why Somnia's Future is Incredibly Bright?
+
+- Perfect Timing for the On-Chain Revolution
+
+The blockchain industry is at an inflection point. While DeFi and NFTs proved blockchain's potential, they also revealed its limitations. SocialFI, on-chain games, and metaverses fully on-chain represent the next wave of blockchain applications, but they require infrastructure that can handle millions of users with real-time interactions.
+
+Somnia isn't just building for today's applications—it's building the infrastructure that will enable entirely new categories of on-chain experiences that we haven't even imagined yet.
+
+- Massive Ecosystem Support
+
+The project has secured substantial backing for growth. Somnia's ecosystem will benefit from $270M in cumulative funding, driving innovation in fully on-chain applications. Additionally, Somnia announced its developer grant program featuring $10 million in financial support for developers building applications on the network, connecting builders with leading Web3 investors including Mirana Ventures, Spartan Capital, and CMT Digital.
+
+- World-Class Technical Team
+
+Somnia was launched in 2024 by the Somnia Foundation, an independent organization initiated by Improbable, a British technology company known for its SpatialOS computing platform. Improbable has raised over $822M in funding and brings deep expertise in distributed systems and real-time multiplayer infrastructure—exactly the skills needed to build blockchain infrastructure for mass consumer applications.
+
+- EVM Compatibility: The Best of Both Worlds
+
+Somnia maintains full EVM compatibility, meaning you can use all the tools and code in the EVM ecosystem. Developers can easily deploy their existing EVM applications to the network, providing a clear migration path for the thousands of projects already built on Ethereum and other EVM chains.
+
+#### Real-World Applications That Will Define Web3's Future
+
+Mainnet is just the beginning: after a six-month testnet that processed 2B+ transactions—including an 80M+ single-day EVM record—Somnia has already proven real, at-scale performance. With sub-second finality, sub-cent fees, and a fast-growing builder ecosystem, the road ahead looks incredibly bright.
+
+- Gaming: True On-Chain Ownership
+- Games moving logic and data on-chain enable user ownership and composable games that can be built faster and last forever. Imagine games where every item, every character upgrade, and every game state exists permanently on-chain, creating true digital ownership and enabling games to build on top of each other.
+- Social Networks: User Sovereignty at Scale
+- Moving all the data and logic of social networks on-chain enables user sovereignty, greater composability and transparency of social algorithms. Users would own their social graphs, content, and data, while algorithms become transparent and auditable.
+- Metaverses: Fully On-Chain Virtual Worlds
+- Enabling full economies with mass UGC items and experience to be created on-chain allows users to fully own their experience and economy. Every virtual asset, every interaction, and every economic transaction becomes part of a permanent, interoperable digital economy.
+
+#### Final Thoughts
+
+Somnia is building more than just a fast blockchain—it's creating an ecosystem designed for network effects. Somnia's chain design, along with some Solidity extensions, allows developers to react to data changes and events fully on-chain, enabling new real-time reactive on-chain apps.
+
+This reactive programming model means applications built on Somnia can respond to events from other applications in real-time, creating composable experiences that become more valuable as the network grows.
+
+Encapsulate is proud to join Somnia mainnet as a validator—excited by the network’s blend of technical ambition and a fast-growing builder ecosystem (grants, accelerators, and low-code tools like Somnia Builder) that can welcome millions of new users while delighting power users. As always, we’ll keep building in the open—publishing Ansible roles and reference configs for turnkey operations, sharing Prometheus alert packs and Grafana dashboards—and continue adding community resources like runbooks, security hardening guides, gas-tuning tips, snapshot/backup tooling, and other small utilities that make validator operations simpler and safer.
+
+Written by
+
+Aditya Verma · Founder
+
+Running a chain we should know about?
+
+Tell us what it takes to run it. If it's a fit, you'll hear from us within a week.
+
+Book a call
+
+All posts
+
+Next
+
+Solana in 2025: Transforming Into A Behemoth
+
+## Story Protocol: Streamlining IP Rights for Creators.
+
+URL: https://encapsulate.xyz/blog/story-protocol
+
+IP as code: licensing, royalties and provenance on-chain. What Story gives creators.
+
+Networks · October 14, 2024 · 8 min
+
+### Turning IP Into Code: How Story Protocol Makes the Legal System More Efficient for Creators
+
+IP as code: licensing, royalties and provenance on-chain. What Story gives creators.
+
+Reading
+
+0%
+
+01
+
+How you code an IP onchain: The challenges!
+
+02
+
+Welcome to the World’s Tailored Blockchain for IP Protection
+
+03
+
+Promising! But What Do I Build on Story?
+
+04
+
+What We Think Of Story at Encapsulate
+
+Launching a chain?
+
+We join at testnet and stay.
+
+Book a call
+
+Imagine this: you’re a talented digital artist who spends months perfecting a stunning collection of original artwork. You finally release it online, excited to share it with the world. But almost immediately, you discover copies of your work popping up everywhere—social media, blogs, even merchandise—without your permission.
+
+Frustrating, right?
+
+You want to protect your creation, but dealing with copyright infringement means going through a traditional legal system that is slow, expensive, and involves lawyers at every step. Worse still, when someone expresses interest in licensing your work for use in a marketing campaign, you’re faced with even more legal hurdles—contracts, negotiations, and more fees.
+
+Now multiply this scenario across countless creative industries—musicians, writers, filmmakers, designers—and add to the mix the recent surge of AI-generated content. Advanced AI models are scraping massive amounts of data, often pulling from copyrighted material without proper attribution. The rate at which these models are creating new content is far faster than the current intellectual property (IP) system, which was built for the physical world and is ill-equipped to handle the digital chaos.
+
+Enter Story Protocol!
+
+Story has set out to make the legal system for creative Intellectual Property (IP) more efficient by turning IP "programmable" on the blockchain. How are they doing it? Here’s Story’s story…
+
+#### How you code an IP onchain: The challenges!
+
+Intellectual property (IP) represents the legal embodiment of creative ideas, but ideas are rarely static. They blend, morph, and build upon each other, evolving over time. Remixing and reinterpreting existing concepts is not only common but integral to the creative process.
+
+This dynamic nature of ideas leads to the formation of complex IP relationships—where new creations become part of a larger web of connected works, resulting in intricate, branching networks of intellectual property. These branches extend deep, with each new derivative work adding more layers to the tree of attribution.
+
+Tracking the ownership and origins of intellectual property is far more complicated than simply querying a blockchain for a balance or a public key. Each work may have multiple contributors and influences, requiring a system that can traverse these growing, interconnected trees as the IP evolves.
+
+The deeper and more intertwined the connections, the greater the challenge in managing and attributing ownership fairly and transparently. This is where the limitations of existing blockchain infrastructure become evident.
+
+Also, this was the point where the idea of building a vertically integrated tech stack became even more compelling for the Story team!
+
+How did they go about things? let’s get a bit technical in the next section.
+
+#### Welcome to the World’s Tailored Blockchain for IP Protection
+
+To tackle the above-mentioned problem, Story introduces a custom Layer 1 blockchain designed specifically for the efficient management of intellectual property. Let’s have a look at their vertically integrated tech stack and their most critical cogs in the wheel-
+
+##### 1. Story Network
+
+This purpose-built Layer 1 blockchain merges the strengths of Ethereum Virtual Machine (EVM) compatibility with the Cosmos SDK. It offers full EVM compatibility along with advanced execution layer optimizations, designed specifically to manage complex data structures like intellectual property (IP) in a fast and cost-effective manner. The network achieves this through:
+
+- Precompiled Primitives: These are utilized to efficiently traverse intricate data structures, such as IP graphs, in mere seconds at minimal costs.
+- Consensus Layer: Built on the robust CometBFT stack, the consensus layer ensures rapid finality and low transaction fees.
+
+##### 2. Proof-of-Creativity Protocol
+
+It is a suite of smart contracts deployed natively on the Story Network, enabling seamless onramping of intellectual property (IP) to the blockchain.
+
+Key features include:
+
+- Registration of IP Assets: Creators can register their IP as IP Assets (IPA), which serve as programmable metadata for intellectual property.
+- Structure of IP Assets: Each IPA consists of:
+- On-Chain NFT: This can be an existing NFT, such as Bored Ape Yacht Club, representing its own IP or a newly minted NFT representing off-chain IP (e.g., a real-world asset). Associated IP Account: Implemented as a modified ERC-6551 (Token Bound Account), allowing for enhanced functionality.
+- Modular Interaction: The protocol includes various modules that facilitate interactions with IP Assets:
+- Licensing Module: Owners can define licensing terms, including whether derivative works can be commercially used and the associated costs. Royalty Module: Creators can generate revenue streams from derivative works. Dispute Module: Allows for raising disputes over IP rights and usage FIG. 1 How an IP account is controlled
+
+This structured approach empowers creators to effectively manage, license, and monetize their intellectual property in a decentralized environment.
+
+##### 3. Programmable IP License (PIL) 💊
+
+It is a groundbreaking License Template that simplifies the management of Intellectual Property. As the first and only example of its kind, the PIL is designed to facilitate the complex landscape of IP licensing in a decentralized manner.
+
+How the PIL Works: Behind the Scenes
+
+At its core, the PIL operates as a structured set of predefined terms that creators can customize according to their needs. These terms include:
+
+- Commercial Use: Specifies whether others can use the work for commercial purposes.
+- Minting Fee: Sets the cost associated with minting a license to utilize the IP in new works.
+- Derivatives Attribution: Determines if creators must credit the original author in any derivative works.
+
+Click [here](https://docs.story.foundation/docs/pil-terms) to see all the terms defined by PIL and their relevant explanations in code.
+
+PIL Properties: Bridging Code and Law
+
+The PIL operates in tandem with the Story Protocol, enforcing license parameters on-chain. This integration bridges the gap between legal agreements and blockchain technology, enabling transparent, autonomous, and permissionless smart contracts for intellectual property management. Some notable properties of the PIL include:
+
+- Universal Licensing: Unlike existing open-source licenses that require parties to agree on specific versions, the PIL offers a flexible framework that accommodates various licensing needs without the confusion of multiple agreements.
+- Permissionless Derivatives: A hallmark of Web3, the PIL allows for the creation of derivative works without prior approval. While some IP Assets (IPAs) may require permissions due to brand constraints, the default setting encourages creativity without red tape.
+- Commercial Use Flexibility: The PIL does more than provide a simple yes/no on commercial use. Creators can define terms to limit the commercial rights of specific parties, clarify what constitutes commercial use, and manage activity across different media formats.
+- Progressive Complexity: The PIL allows for a tiered approach to complexity. Under each parameter, IPAs can select tags that align with their project needs. For instance, a license may be limited to a specific jurisdiction, with global licensing as the default setting. This adaptability caters to both seasoned media companies and casual creators.
+- Adaptability: The parameters of the PIL can be published as a license library, enabling others to map their existing agreements to Story’s smart contracts easily. This flexibility promotes widespread adoption of the framework.
+- Content Standards: To ensure a healthy ecosystem, the original licensor can choose from specific content standards that creators must adhere to, promoting quality and compliance.
+
+_FIG. 2 Story's licensing contracts_
+
+Through the Programmable IP License, Story Protocol is redefining the landscape of intellectual property management, providing creators with a robust, flexible, and efficient way to license their work in a rapidly evolving digital world.
+
+#### Promising! But What Do I Build on Story?
+
+Excited about the potential of Story and their vision of transforming the internet into an IP Legoland?
+
+Convinced they’re building something that can truly reshape how creators protect their rights over digital assets?
+
+Ready to build something that seamlessly integrates into the existing tech stack and contributes to the mission of making creative intellectual property (IP) programmable on the blockchain?
+
+Here are a few ideas to help you hit the ground running. Use them as a starting point or as inspiration to guide the direction you want to build in.
+
+- IP Attribution Tracker for Content Creators
+- Build a tool that helps content creators (YouTubers, podcasters, bloggers) track and manage attribution for any licensed content they use. The tool could automatically issue License Tokens for the usage of music, images, or videos and ensure royalties are paid to the original IP owners.
+- Smart Royalty Distribution for Music Creators
+- Develop a platform where musicians can license their songs or beats, using Story Protocol's royalty module to automate payments. License Tokens could allow other artists to remix or sample their work, and Royalty Tokens would distribute earnings to the original creator every time the licensed music is used.
+- IP-Integrated Meme Creation Tool Design a meme generator that automatically registers intellectual property (IP) for every meme created or remixed. This tool would enable users to craft and customize memes while ensuring all content is properly protected on the blockchain. By incorporating IP registration directly into the creation process, meme creators can maintain control over their original work and easily manage derivative creations.
+- Comprehensive Licensing Hub Develop a streamlined marketplace where creators can easily license and source high-quality stock images, videos, music, and audio samples for commercial projects. This platform would simplify the process of acquiring media assets by offering fully licensed content, ensuring creators can use materials with confidence, and helping licensors manage their IP and receive appropriate credit and compensation.
+
+Story team has compiled a comprehensive [list of ideas](https://github.com/storyprotocol/ideas) that can be worked upon using Story Protocol, here is the list that you would love to check out. You can also chat with the Story team if you have any queries regarding the posted ideas and the dev team would be more than happy to come in and help you get started with the ideas.
+
+#### What We Think Of Story at Encapsulate
+
+At Encapsulate.xyz, we're dedicated to securing decentralized networks and empowering communities through blockchain technology. With over $248 million in staked assets across 32 networks, our commitment to maintaining zero slashes, providing governance participation, and fostering community contributions defines who we are. As validators, we see firsthand how blockchain technology is transforming industries—and Story Protocol is no exception.
+
+Story Protocol is doing something revolutionary by bridging the gap between the rigid legal frameworks of intellectual property and the openness of the internet. As champions of decentralization, we at Encapsulate believe that IP should embrace the very ethos of Web3—openness, transparency, and programmability. Story Protocol aligns with this vision by making intellectual property truly interoperable with blockchain infrastructure, unlocking the potential for global-scale collaboration, seamless licensing, and frictionless ownership.
+
+The protocol’s vertically integrated architecture is particularly impressive. By handling complex data structures like IP graphs in a cost-efficient manner and offering tools like the Proof-of-Creativity Protocol and Programmable IP License, Story not only protects creators but also empowers them to manage their IP dynamically. It transforms the traditionally rigid, costly legal framework into an agile, blockchain-native ecosystem. Story aligns with our mission to promote secure, decentralized technologies, and we’re excited to see how it will redefine how intellectual property is managed and monetized in the digital age.
+
+DM
+
+Written by
+
+Doyel Mishra
+
+Running a chain we should know about?
+
+Tell us what it takes to run it. If it's a fit, you'll hear from us within a week.
+
+Book a call
+
+All posts
+
+Next
+
+Unlocking Liquidity: How Berachain's Proof-of-Liquidity is Changing Blockchain Economics
+
+## Symbiotic Finance: A Deep Dive
+
+URL: https://encapsulate.xyz/blog/symbiotic
+
+Shared security without giving up control. How Symbiotic pools stake across protocols.
+
+Networks · November 20, 2024 · 10 min
+
+### Introduction: What is Symbiotic Finance and Why Does It Matter?
+
+Shared security without giving up control. How Symbiotic pools stake across protocols.
+
+Reading
+
+0%
+
+01
+
+Shared Security in Web3: The Foundation of Symbiotic Finance
+
+02
+
+How Symbiotic Finance Works: Core Components and Operational Flow Explained
+
+03
+
+Key Mechanisms that Drive Symbiotic Finance
+
+04
+
+Key Takeaways from Symbiotic Finance
+
+Launching a chain?
+
+We join at testnet and stay.
+
+Book a call
+
+Imagine if DeFi networks could share a security backbone, pooling resources to achieve both efficiency and resilience, without compromising control. Symbiotic Finance makes this vision a reality. Instead of each protocol building isolated defenses—locking up capital and resources for security that could otherwise fuel growth—Symbiotic introduces a flexible, shared security model that’s designed to scale. Networks can leverage shared security to lower costs, reduce risks, and expand faster.
+
+This isn’t just about security; it’s about redefining what decentralized infrastructure can achieve when it’s built on a collaborative foundation. By enabling network builders to manage their own rules and risks within a shared framework, Symbiotic Finance offers a revolutionary solution to DeFi’s biggest limitations.
+
+So, what does this actually look like in action? In the sections ahead, we’ll explore Symbiotic’s innovative model, from flexible staking options to efficient dispute resolution mechanisms, and reveal how each piece contributes to a more secure, capital-efficient, and adaptable DeFi ecosystem.
+
+#### Shared Security in Web3: The Foundation of Symbiotic Finance
+
+In DeFi, security isn’t just a feature—it’s a necessity that defines a protocol’s capacity to grow. Shared security models have emerged as a solution, allowing networks to strengthen their defenses by pooling security resources.
+
+Symbiotic Finance is pioneering this approach, introducing a flexible shared security framework tailored specifically for decentralized systems.
+
+_FIG. 1 Symbiotic's coordination layer_
+
+##### Understanding Shared Security: Why It’s Important in Decentralized Finance
+
+At its core, shared security allows multiple networks to rely on a unified security layer rather than building isolated defenses. This model is essential for DeFi, where independent security mechanisms can be costly, inefficient, and vulnerable to isolated risks.
+
+Shared security amplifies resilience while streamlining capital use, making it possible for smaller or newer networks to achieve robust protection without overspending on staking infrastructure.
+
+##### The Challenges in Web3 Security Symbiotic Aims to Solve
+
+The current approach to security in DeFi often forces networks into rigid frameworks with high collateral requirements and limited flexibility. Symbiotic Finance tackles these issues by offering a customizable shared security protocol where networks retain full control.
+
+Instead of being constrained by uniform rules, network builders can choose how they want to manage their staking, slashing, and rewards mechanisms. This flexibility makes it easier to adapt security setups in response to changing needs, while Symbiotic’s non-upgradeable contracts eliminate risks from unexpected governance changes.
+
+##### Key Benefits of Symbiotic’s Approach
+
+Symbiotic’s model combines flexibility with capital efficiency, two elements that are often at odds in Web3 security. By enabling networks to fine-tune their security parameters, Symbiotic minimizes the amount of locked capital needed while maximizing protection. And because each network can customize its approach, Symbiotic helps builders focus on scaling and innovation rather than reinventing security.
+
+In the sections that follow, we’ll explore how Symbiotic’s modular design enables flexible staking, efficient dispute handling, and streamlined reward distribution, all within a shared framework that enhances security across networks.
+
+#### How Symbiotic Finance Works: Core Components and Operational Flow Explained
+
+At its core, Symbiotic Finance serves as a coordination layer where assets are pooled and utilized to secure multiple networks. Collateral is first brought into the protocol, where it is then allocated across vaults.
+
+These vaults are managed by operators, who are responsible for securing network functions, while resolvers act as neutral arbiters in case disputes arise. Each of these components works in tandem to create a cohesive shared security experience that’s flexible enough to adapt to individual network requirements.
+
+##### Collateral: The Foundation of Security
+
+What is Collateral and Why it’s Critical
+
+Collateral in Symbiotic Finance is the essential layer of economic security that underpins all operations. Networks provide assets that serve as collateral, creating a shared pool that secures services like staking and dispute resolution. This shared collateral means that multiple networks can benefit from a common security layer, avoiding the need to duplicate capital-intensive security setups.
+
+Types of Collateral Supported
+
+Symbiotic is designed to be multi-asset compatible. The protocol accepts a wide range of collateral types, from ERC20 tokens to validator positions on Ethereum, even LP tokens and assets from across blockchains. This flexibility lets networks use assets that align with their own ecosystems, increasing usability without sacrificing security.
+
+Capital Efficiency Through Cross-Network Compatibility
+
+One of Symbiotic’s biggest strengths is its ability to enable capital efficiency. Instead of siloed assets that are tied down in individual networks, collateral within Symbiotic can be restaked or redeployed across various networks. This cross-network compatibility reduces overall capital requirements and enables more scalable, cost-effective security for everyone involved.
+
+##### Vaults: Managing Staking and Restaking
+
+Introduction to Vaults as Collateral Pools
+
+Vaults are Symbiotic’s primary means of managing collateral and ensuring it’s used effectively. Think of vaults as specialized pools where collateral is deposited, staked, and even restaked, depending on the needs of each network.
+
+Functionality of Vaults
+
+Vaults manage staking operations by handling deposits, allocating collateral to operators, and redistributing assets when necessary. Each vault can be tailored to match the needs of different networks, whether that means supporting operator-specific staking pools or broader multi-operator setups that spread risk and rewards across multiple participants.
+
+Customization and Flexibility
+
+Symbiotic’s vaults come with high customization options. For example, networks can choose to delegate specific operators within a vault or create unique slashing and rewards mechanisms tailored to their specific risk profiles. This customization allows networks to manage their security arrangements precisely as needed, maintaining a balance between security and capital efficiency.
+
+##### Operators: Providing Decentralized Infrastructure
+
+Role of Operators
+
+Operators are the backbone of Symbiotic’s infrastructure. They manage network nodes, validate transactions, and keep systems operational. By registering with Symbiotic, operators become eligible to receive stake from multiple networks, streamlining their role across various protocols.
+
+Registration and Opt-In Process
+
+Operators enter the ecosystem by registering in Symbiotic’s OperatorRegistry, then opting into specific networks and vaults that match their expertise. This process allows operators to work with multiple networks, reducing redundancy while providing networks with a reliable pool of skilled infrastructure providers.
+
+Operator Reputation and Security Guarantees
+
+Operators in Symbiotic build a reputation based on their performance, slashing history, and reliability. This reputation system incentivizes operators to maintain high standards, as a strong reputation increases their likelihood of being selected by networks. It also adds an additional layer of trust, ensuring that networks have access to reliable security providers.
+
+_FIG. 2 Operators draw stake from several vaults_
+
+##### Resolvers: Ensuring Fairness and Mitigating Risks
+
+Purpose of Resolvers in Dispute Resolution
+
+In decentralized environments, disputes and slashing incidents can arise. Resolvers are a neutral party in Symbiotic’s ecosystem, responsible for overseeing and managing these incidents to ensure they are handled fairly.
+
+Slashing and Veto Mechanisms
+
+When slashing penalties are proposed, resolvers have the power to pass or veto these actions. This safeguard prevents unjust or erroneous slashing, protecting operators and networks from undue penalties. Resolvers can be automated (for clear-cut issues) or involve decentralized committees, depending on each network’s preference.
+
+Neutrality and Decentralized Dispute Resolution
+
+Resolvers provide a critical layer of neutrality and credibility. By overseeing slashing and penalties objectively, resolvers help Symbiotic maintain trust among participants, ensuring that economic risks are managed impartially and with transparency.
+
+##### Networks: Customizing Security Needs
+
+Networks as Participants and Beneficiaries
+
+Networks engage with Symbiotic as both users and beneficiaries, drawing on the protocol’s shared security resources. They bring in collateral, interact with vaults and operators, and set their own rules for rewards and slashing.
+
+Custom Rules and Incentive Structures
+
+Symbiotic’s framework allows networks to define how they engage with collateral, operators, and rewards. Each network can create unique incentives, set slashing criteria, and manage staking pools as they see fit, enabling complete flexibility in managing security.
+
+Middleware Integration
+
+Middleware contracts act as the bridge between networks and Symbiotic’s core components, ensuring smooth communication and coordination. Middleware allows networks to retrieve data, manage slashing requests, and interact with vaults seamlessly, further simplifying network integration.
+
+##### Putting It All Together: Symbiotic’s Workflow from Start to Finish
+
+Step-by-Step Operational Flow
+
+1. Collateral Introduction: Networks deposit assets as collateral, which enter the protocol through vaults.
+2. Operator Engagement: Operators register, opt into networks, and receive allocated stakes to manage network nodes and infrastructure.
+3. Security and Dispute Handling: Resolvers monitor activity and intervene in slashing cases, maintaining fairness.
+4. Customization by Networks: Each network tailors its rules, rewards, and penalties to fit its unique requirements.
+5. End-to-End Coordination: Middleware contracts enable communication across components, ensuring smooth operations.
+
+Example Workflow
+
+Imagine a new DeFi protocol integrating with Symbiotic. The protocol deposits collateral, which is then assigned to vaults and managed by chosen operators. Resolvers monitor the operators’ performance, ready to veto any unfair slashing incidents, while the protocol uses Symbiotic’s tools to manage rewards and tailor security to its needs. The entire system operates with cross-network efficiency and full customization.
+
+#### Key Mechanisms that Drive Symbiotic Finance
+
+Symbiotic Finance’s architecture is grounded in mechanisms that ensure secure, fair, and flexible operations across networks. Let’s explore these key processes and how they create a resilient shared security framework.
+
+##### Slashing and Risk Management
+
+Instant vs. Veto-Slashing: How Slashing Works to Penalize Misbehavior
+
+Slashing is Symbiotic’s main tool for enforcing accountability among operators. There are two types of slashing: instant slashing and veto-slashing. Instant slashing allows the system to penalize misbehaving operators immediately. In contrast, veto-slashing introduces a delay, during which designated entities, known as resolvers, review the slashing request and have the authority to either approve or veto it. This mechanism balances rapid response for clear-cut issues with a layer of review, preventing unwarranted or overly harsh penalties.
+
+Why Slashing is Essential for Security and How Symbiotic Manages It
+
+Slashing ensures that operators maintain high performance standards, securing the network’s overall integrity. In Symbiotic, slashing isn’t just a punitive measure; it’s a preventive one. By introducing both instant and veto options, Symbiotic allows networks to implement flexible penalties that match the severity of the misconduct. Networks can define specific slashing criteria suited to their needs, ensuring that economic risks are managed effectively while protecting operators from unjust consequences.
+
+_FIG. 3 Three ways a slash is resolved on Symbiotic_
+
+Flexible Resolution Processes through Resolvers
+
+Resolvers play a central role in Symbiotic’s approach to slashing, adding an objective layer to the process. When a slashing event occurs, resolvers evaluate whether the penalty is justified, offering a veto option if necessary. Resolvers can be decentralized committees, automated verification systems, or third-party arbitration services. This flexibility allows networks to choose the level of oversight and neutrality they need, fostering a fairer, more transparent risk management system.
+
+##### Reward Distribution and Incentives
+
+Breakdown of Operator and Staker Rewards
+
+Symbiotic’s reward system is designed to incentivize both operators and stakers to actively participate and contribute to network security. Operators earn rewards for maintaining network infrastructure, while stakers are rewarded for providing the collateral that secures the ecosystem. These incentives are essential to ensuring robust participation from both parties, which, in turn, strengthens Symbiotic’s shared security model.
+
+Reward Distribution Models: Off-Chain, Merkle Tree, On-Chain Calculations
+
+Symbiotic offers several methods for distributing rewards, each tailored to different preferences for efficiency and transparency:
+
+- Off-Chain Calculations: Networks can perform calculations off-chain and then batch transfer rewards to recipients. This method is efficient but may lack real-time transparency.
+- Merkle Tree Distribution: Rewards are calculated off-chain and represented in a Merkle tree, allowing participants to claim their rewards on-chain by providing a Merkle proof. This method balances efficiency with on-chain verification.
+- On-Chain Calculations: All reward calculations are processed on-chain, ensuring maximum transparency. While this method may be less efficient due to gas costs, it offers the highest level of trust and transparency.
+
+These flexible options let networks choose the best reward distribution model to fit their needs and resources.
+
+How Rewards Encourage Participation and Security in Symbiotic
+
+Rewards are a powerful motivator in Symbiotic’s ecosystem. By offering customizable reward structures, Symbiotic incentivizes operators and stakers to consistently contribute to network security. This continuous participation reinforces the shared security layer, ensuring that networks remain protected while participants are motivated to maintain high standards.
+
+##### Staking Lifecycle and Epochs
+
+Lifecycle of a Stake: From Deposits to Withdrawals
+
+In Symbiotic, the staking process follows a structured lifecycle that includes deposits, restaking, and eventual withdrawals. When a staker deposits assets, these funds enter a vault and are allocated to various operators or networks. This lifecycle is carefully managed to optimize both security and capital efficiency, enabling networks to draw on collateral as needed without the risk of mismanagement.
+
+Epochs in Symbiotic Finance and Why They Matter
+
+An epoch in Symbiotic represents a fixed time period during which a specific set of operators and stakes is active. At the end of each epoch, the system can reassess operators, allocate new stakes, and perform slashing if necessary. This approach allows Symbiotic to maintain a predictable rhythm of security checks and updates, ensuring that networks are continually protected without abrupt or unpredictable changes.
+
+Managing Stake Transitions and Slashing within Epochs
+
+Symbiotic’s epoch-based structure simplifies the process of managing stake transitions and slashing events. During an epoch, all activities—such as staking, slashing, and reward distribution—are tracked within that timeframe. When an epoch ends, any slashing requests can be reviewed by resolvers, rewards can be distributed, and stakes can be reassessed or withdrawn. This cyclical approach provides networks with stability and predictability, while still allowing flexibility for operators and stakers to adapt as needed.
+
+#### Key Takeaways from Symbiotic Finance
+
+Symbiotic Finance is helping redefine how security is managed in DeFi and beyond. Its shared security framework not only enhances protection across networks but also opens up new possibilities for collaboration, allowing smaller and emerging networks to access high-quality security without needing large amounts of capital. This approach is setting the stage for a more interconnected, resilient Web3 ecosystem, where security is accessible, adaptable, and built to grow alongside the networks it protects.
+
+##### Final Thoughts on Shared Security for Web3 Builders and Users
+
+For Web3 builders and users, Symbiotic offers a path forward where security isn’t a hurdle but a growth enabler. Its shared security model brings a blend of flexibility and robustness that appeals to a broad spectrum of projects—from DAOs and DeFi protocols to cross-chain applications. As more projects recognize the benefits of collaborative security, Symbiotic’s approach may become a foundational standard, fostering a secure, scalable, and interconnected Web3 landscape.
+
+In embracing shared security, Symbiotic Finance is more than just a protocol; it’s a strategic shift towards a decentralized future where networks can innovate and scale with confidence.
+
+AK
+
+Written by
+
+Abhishek Kumar
+
+Running a chain we should know about?
+
+Tell us what it takes to run it. If it's a fit, you'll hear from us within a week.
+
+Book a call
+
+All posts
+
+Next
+
+Story Protocol: Streamlining IP Rights for Creators.
+
+## The Rise Of Intent-Centric Blockchains
+
+URL: https://encapsulate.xyz/blog/intent-centric-blockchains
+
+Stop writing transactions; state the outcome. Anoma, SUAVE and Essential, compared.
+
+Trends · February 24, 2026 · 6 min
+
+### The Rise Of Intent-Centric Blockchains
+
+Stop writing transactions; state the outcome. Anoma, SUAVE and Essential, compared.
+
+Reading
+
+0%
+
+01
+
+The Foundations of Intent-Centric Design
+
+02
+
+Anoma: A Generalized Intent Coordination Layer
+
+03
+
+Flashbots SUAVE: Reimagining Execution and Ordering
+
+04
+
+Essential: Declarative Logic for Blockchain Systems
+
+05
+
+Self Chain: Intent Abstraction at Layer One
+
+06
+
+Structural Implications for Blockchain Infrastructure
+
+07
+
+Comparison:
+
+08
+
+Final Thoughts:
+
+Launching a chain?
+
+We join at testnet and stay.
+
+Book a call
+
+Blockchain infrastructure is entering a new architectural phase. Early networks were built around transactions as the fundamental primitive, requiring users to manually define contract calls, manage gas, and sequence every execution step precisely. While this design enabled programmable finance, it also introduced complexity that limited usability and cross-chain coordination.
+
+A new paradigm is emerging: intent-centric architecture.
+
+Rather than requiring users to define how an action should be executed, intent-centric systems allow them to declare the outcome they want. Specialized solver networks, execution markets, and coordination layers then determine the most efficient way to fulfill that objective. This represents a structural shift in blockchain design, moving from imperative transaction construction toward declarative outcome specification.
+
+Among the projects advancing this model most prominently are Anoma, Flashbots SUAVE, Essential, and Self Chain. Each approaches intent from a different layer of the stack, yet all reflect the same core thesis: blockchain infrastructure should optimize around user goals rather than transaction mechanics.
+
+#### The Foundations of Intent-Centric Design
+
+Traditional blockchain interactions operate imperatively. A user who wishes to perform a swap or execute a strategy must construct a transaction that specifies exact inputs, contract addresses, calldata parameters, gas fees, and execution order. Every step must be explicitly defined before submission to the network.
+
+Intent-centric systems introduce a declarative alternative. Instead of detailing execution steps, users describe a desired end state or constraint. For example, a user may specify that they wish to exchange one asset for another at the best available rate within defined slippage limits. The system is then responsible for identifying counterparties, routing liquidity, optimizing execution, and settling the transaction.
+
+This approach creates structural advantages across the ecosystem. User experience improves because complexity is abstracted away. Liquidity routing becomes more efficient as solvers compete to fulfill demand. Cross-chain coordination becomes feasible without forcing users to manually bridge assets or manage multiple environments. Execution markets can also become more transparent and competitive, particularly when combined with MEV-aware infrastructure.
+
+Against this backdrop, the four architectures discussed below illustrate different implementations of intent-centric design.
+
+#### Anoma: A Generalized Intent Coordination Layer
+
+Anoma represents one of the earliest attempts to build a protocol where intent is the primary coordination primitive. Rather than centering its architecture around transactions, Anoma treats intents as objects that can be discovered, matched, and resolved within a decentralized network.
+
+Users publish intents into a shared discovery layer, where solvers observe compatible intents and compute settlement strategies that satisfy all constraints simultaneously. These solutions can involve multi-party matching, cross-application coordination, and atomic settlement across domains. Because intents describe outcomes rather than procedural steps, the protocol can combine them in ways that individual users may not have anticipated.
+
+Anoma’s architecture functions more like a distributed operating system than a traditional blockchain. It enables decentralized coordination at a higher abstraction layer, where transaction construction becomes a secondary concern.
+
+_FIG. 1 An intent from user to settlement_
+
+In this model, the blockchain is no longer a simple execution engine but a coordination framework for solving user-defined objectives.
+
+#### Flashbots SUAVE: Reimagining Execution and Ordering
+
+Flashbots developed SUAVE, or Single Unified Auction for Value Expression, to address inefficiencies and extractive dynamics in transaction ordering. Unlike Anoma, SUAVE does not seek to replace application-layer logic but instead focuses on the execution and block-building layer of blockchain systems.
+
+SUAVE introduces an environment where users can submit preferences or intents privately. These preferences enter a competitive execution market in which solvers construct optimized bundles. Builders then assemble blocks from these outputs in a decentralized manner. By separating execution logic from individual chains and introducing competition around order flow, SUAVE seeks to reduce harmful forms of maximal extractable value while improving execution efficiency.
+
+_FIG. 2 Private preference to target chain_
+
+The significance of SUAVE lies in its reframing of transaction ordering as a market around user-defined outcomes. Rather than exposing raw transactions to public mempools, it enables a structured environment in which intent signals can be aggregated, optimized, and executed with greater fairness. SUAVE thus represents intent-centric design at the execution infrastructure layer.
+
+#### Essential: Declarative Logic for Blockchain Systems
+
+Essential approaches intent-centric architecture through formal declarative design. Its framework emphasizes structured expression of user goals through a domain-specific language, allowing precise definition of constraints and outcomes.
+
+Instead of constructing raw transactions, users describe what conditions must be met for execution to be valid. Solvers then interpret these constraints, compute viable strategies, and submit optimized transactions to the underlying network. By formalizing intent expression, Essential aims to reduce ambiguity while enabling competitive resolution mechanisms.
+
+_FIG. 3 Compiling an intent into a transaction bundle_
+
+This structured approach may prove especially valuable in complex financial applications where conditional execution, multi-step strategies, and cross-protocol coordination are required. By introducing a formal declarative layer, Essential seeks to bridge traditional programming logic with blockchain execution environments in a more expressive manner.
+
+#### Self Chain: Intent Abstraction at Layer One
+
+Self Chain integrates intent-centric principles directly into a Layer-1 blockchain environment. Its focus is not on generalized solver coordination or execution markets but on simplifying user interaction at the protocol level.
+
+Self Chain embeds intent resolution mechanisms within its execution stack, allowing users to express goals without manually orchestrating cross-chain transfers, gas management, or contract sequencing. The architecture emphasizes abstraction through keyless wallet systems and intelligent routing mechanisms that interpret user objectives and determine optimal execution paths.
+
+_FIG. 4 Goal to execution on Self Chain_
+
+This design prioritizes accessibility and usability. While less modular than Anoma’s coordination layer or SUAVE’s execution marketplace, Self Chain brings intent abstraction directly into base-layer infrastructure. The result is a user-facing environment where complexity is minimized at the protocol level.
+
+#### Structural Implications for Blockchain Infrastructure
+
+Taken together, these four architectures illustrate how intent-centric design can reshape multiple layers of the blockchain stack. Anoma redefines coordination primitives, SUAVE restructures execution markets, Essential formalizes declarative expression, and Self Chain integrates abstraction at Layer 1. Each reflects a broader shift away from transaction-first design.
+
+As blockchain ecosystems become increasingly modular, the need for coordination across chains, liquidity sources, and execution environments grows more urgent. Intent-centric systems address this fragmentation by aggregating user demand before determining execution supply. Rather than requiring users to navigate infrastructure manually, these architectures enable infrastructure to adapt dynamically to user goals.
+
+This evolution carries implications for validators, builders, and infrastructure providers. Execution markets may become more competitive and solver-driven. Liquidity routing may grow more efficient. Cross-domain coordination may become native rather than layered. The abstraction of complexity could expand participation beyond technically sophisticated users.
+
+#### Comparison:
+
+| Category | Anoma | Flashbots SUAVE | Essential | Self Chain |
+| --- | --- | --- | --- | --- |
+| Primary Layer | Generalized intent-native protocol stack | Execution and block-building infrastructure | Declarative intent execution layer | Layer-1 blockchain |
+| Architectural Focus | Decentralized intent coordination and matching | MEV-aware ordering and execution markets | Structured declarative intent compilation | UX-focused intent abstraction at protocol level |
+| Core Primitive | Intent as coordination object | User preferences / execution intents | Declarative intent with constraints | Goal-based user interaction |
+| Role of Solvers | Match and resolve multi-party intents | Compete to construct optimal execution bundles | Interpret constraints and compute execution paths | Route and resolve user goals internally |
+| Scope of Coordination | Cross-application and potentially cross-chain atomic settlement | Cross-chain execution and ordering | Cross-protocol optimization within execution layer | Cross-chain abstraction within L1 environment |
+| Privacy Orientation | Designed with privacy-preserving coordination in mind | Private preference submission and encrypted execution markets | Depends on underlying settlement layer | Focused more on usability than privacy |
+| Degree of Modularity | Highly modular coordination framework | Shared execution layer independent of base chains | Structured execution layer adaptable to ecosystems | Integrated L1 design with embedded abstraction |
+| Target Beneficiaries | Application builders and coordination-heavy protocols | Traders, builders, and MEV-sensitive participants | Developers requiring formal constraint-based execution | End users seeking simplified blockchain interaction |
+| Design Philosophy | Blockchain as an intent-native operating system | Execution markets optimized around user-defined outcomes | Declarative logic layer for outcome specification | Intent abstraction embedded directly into base protocol |
+
+#### Final Thoughts:
+
+Intent-centric architecture remains in an early phase of development. Questions around solver decentralization, economic incentives, and standardization are still being resolved. However, the conceptual shift is unmistakable.
+
+Anoma demonstrates full-stack intent coordination. SUAVE transforms ordering into a competitive preference market. Essential formalizes declarative intent specification. Self Chain embeds abstraction into the base layer itself. Together, they signal a structural rethinking of how decentralized systems coordinate value and execution.
+
+At Encapsulate, we closely monitor emerging architectural shifts that redefine blockchain infrastructure. As intent-centric systems move from experimental frameworks to production networks, they are likely to influence how validators participate, how execution markets evolve, and how decentralized ecosystems coordinate across chains.
+
+The next phase of blockchain innovation may not be defined by faster block times or higher throughput alone. It may instead be defined by smarter coordination, where infrastructure optimizes around outcomes rather than transactions. And that coordination begins with intent.
+
+Written by
+
+S Maheswaran · Content & Socials Manager
+
+Running a chain we should know about?
+
+Tell us what it takes to run it. If it's a fit, you'll hear from us within a week.
+
+Book a call
+
+All posts
+
+Next
+
+Who Builds the Stablecoin Rails?
+
+## The Rise of Move: Rebuilding Blockchain Logic
+
+URL: https://encapsulate.xyz/blog/move-chains
+
+One language, three chains, very different bets. Sui, IOTA and Aptos on Move, explained.
+
+Trends · January 13, 2026 · 6 min
+
+### The Rise of Move: Rebuilding Blockchain Logic
+
+One language, three chains, very different bets. Sui, IOTA and Aptos on Move, explained.
+
+Reading
+
+0%
+
+01
+
+What is Move and Why It Matters?
+
+02
+
+Sui - Object-Centric Design for Real-Time Apps
+
+03
+
+IOTA - MoveVM Built Directly Into Layer-1 Execution
+
+04
+
+Aptos - Developer-Centric Performance
+
+05
+
+Supra - Integrated Infrastructure and Extreme Throughput
+
+06
+
+Movement Labs (M1) - Bringing Move to Ethereum L2
+
+07
+
+Starcoin - Historical Importance, Evolving Relevance
+
+08
+
+What 2026 Means for Move-Based Blockchains?
+
+09
+
+Conclusion
+
+Launching a chain?
+
+We join at testnet and stay.
+
+Book a call
+
+Blockchain technology continues to evolve, and by 2026 one of the most compelling developments in the space is the rise of Move-based blockchains. These are networks built around the Move programming language - a language originally designed for Meta’s Diem project - that now power a range of ecosystems optimized for speed, safety, and modern smart contracts. In this post, we break down what makes Move unique, explore five of the most noteworthy Move chains (Sui, Iota, Aptos, Supra, Movement Labs/M1, and Starcoin), and explain why Move is increasingly relevant for Web3 in 2026.
+
+#### What is Move and Why It Matters?
+
+At a fundamental level, Move is a smart contract language built with resource-oriented programming and formal verification as core principles. Unlike languages such as Solidity, which evolved from the early Ethereum design, Move treats digital assets as first-class resources. Those resources can’t be duplicated or accidentally destroyed, reducing the class of bugs that have historically plagued smart contracts.
+
+This doesn’t just make Move safer - it enables smart contracts to have clearer semantics and higher confidence in correctness. It also opens a new design space for blockchain execution models that emphasize parallelism and object-level state rather than the traditional, sequential account-based models that many chains still rely on.
+
+By 2026, this design philosophy is not just academic - it’s translating to real networks with real users, ecosystems, and significant throughput capabilities.
+
+#### Sui - Object-Centric Design for Real-Time Apps
+
+Sui is one of the most advanced examples of a Move-based chain. What sets Sui apart is its object-centric model, which treats every piece of on-chain state as an object that can be independently processed. This enables true parallel transaction execution, meaning many independent transactions can be finalized simultaneously without waiting on global ordering.
+
+This architectural choice has significant implications:
+
+- High performance: Sui has demonstrated throughput of over 290,000 transactions per second in test environments, a figure that puts it in the same league as some of the fastest chains in crypto.
+- Fast finality: By decoupling consensus from execution, Sui can confirm transactions rapidly, which is particularly useful for applications like gaming and dynamic NFTs where responsiveness matters.
+- Developer experience: Its tooling and Move integration make it a popular choice for builders in sectors that require real-time interaction and low latency.
+
+In short, Sui exemplifies what a high-performance, Move-native blockchain can look like - especially for interactive, parallel workloads.
+
+_FIG.1 A transaction through an object-model chain_
+
+#### IOTA - MoveVM Built Directly Into Layer-1 Execution
+
+IOTA is one of the newest and most interesting implementations of the Move programming model. What makes IOTA stand out is its native MoveVM integration at the protocol layer, allowing smart contracts to execute directly on the network without relying on secondary execution frameworks. This gives developers the ability to write resource-safe logic in Move while tapping into a parallel execution pipeline designed for high-performance computation across diverse use cases.
+
+This approach has clear advantages:
+
+- Programmable L1 with Move: Move is not “added on top,” but embedded directly into IOTA’s execution environment, making it a first-class part of the network’s design.
+- Parallel smart contract execution: Independent transactions can be processed concurrently, enabling responsive applications and avoiding typical bottlenecks seen in sequential execution models.
+- Low-friction development: With support for the IOTA CLI, Move package tooling, and testnet deployment flows, developers can go from building to shipping smart contracts with minimal friction.
+- Cost efficiency for builders: MoveVM benefits from IOTA’s fee-efficient architecture, enabling use cases such as micro transactions, tokenization, and rapid on-chain updates without the burden of high gas fees.
+
+In short, IOTA demonstrates how Move can power a modern programmable layer-1, delivering scalable execution, streamlined development, and asset safety for builders creating the next wave of on-chain applications.
+
+_FIG.2 A transaction through IOTA with the Move VM_
+
+#### Aptos - Developer-Centric Performance
+
+While Sui shines on performance, Aptos takes a slightly different path by focusing on developer experience, modular architecture, and stable execution models. Built by a team of engineers with roots in Meta, Aptos combines Move with a carefully engineered parallel execution engine called BlockSTM.
+
+BlockSTM allows Aptos to attempt optimistic parallel execution - transactions are processed in parallel when possible, rolling back only if there’s contention. The result is meaningful performance with strong consistency guarantees:
+
+- 160,000+ transactions per second in testing - a figure that’s competitive with other high-performance chains.
+- Strong ecosystem tooling: From CLI integrations to native formal verification support, Aptos emphasizes an environment where developers can move quickly without compromising safety.
+
+Aptos is particularly appealing for builders focused on DeFi, financial infrastructure, and composable smart contracts — use cases where both safety and performance are critical.
+
+_FIG. 3 Block-STM execution_
+
+#### Supra - Integrated Infrastructure and Extreme Throughput
+
+If Sui and Aptos are optimized for user-facing apps and developer ergonomics, Supra is optimized for broad, high-performance infrastructure. Supra’s design combines a high-throughput consensus protocol with built-in services like oracles, randomness (VRF), and native automation.
+
+What makes Supra noteworthy:
+
+- 500,000+ transactions per second demonstrated in testing, making it one of the fastest Move-based networks in existence.
+- Vertical integration: Instead of requiring external middleware for core functions like oracle data or automation triggers, Supra delivers these as native features — reducing latency and simplifying integration.
+- Interoperability roadmap: Support for multiple virtual machine formats (including EVM, SolanaVM, and CosmWasm) is planned, extending Supra’s utility beyond the Move ecosystem itself.
+
+This makes Supra a compelling choice for DeFi, cross-chain systems, and complex automated protocols where every millisecond counts and reducing external dependencies leads to better performance.
+
+_FIG. 4 Request to output through the Move stack_
+
+#### Movement Labs (M1) - Bringing Move to Ethereum L2
+
+While Sui, Aptos, and Supra are layer-1 blockchains, Movement Labs (also known as M1, now rebranded as Move Industries) represents a different strategy: bringing Move into the Ethereum ecosystem. Instead of launching its own chain, Movement built a Move-enabled Layer-2 on Ethereum using optimistic rollup techniques.
+
+The goal here is ambitious:
+
+- Enable developers to write Move smart contracts that run alongside (or interoperably with) Solidity and EVM systems.
+- Benefit from Ethereum’s massive liquidity and user base while retaining some of Move’s safety and modular benefits.
+
+Early performance and design were promising, but the project also faced real challenges, including leadership changes and a volatile token market in 2025. Nevertheless, Movement Labs remains one of the first serious attempts to merge Move logic with Ethereum’s ecosystem, and its long-term success will depend on execution and adoption.
+
+_FIG. 5 A transaction through the M1 rollup_
+
+#### Starcoin - Historical Importance, Evolving Relevance
+
+Finally, Starcoin represents an important early chapter in the history of Move adoption. As one of the first blockchains to implement Move outside of Meta’s internal experiments, Starcoin focused on governance and formal verification, even exploring hybrid consensus models.
+
+By 2025 and into 2026, Starcoin’s development activity had slowed considerably, and it is often considered dormant compared to the other active Move chains. However, its early experimentation helped demonstrate the viability of Move beyond its original context, and its influence persists in technical discussions around governance, contract safety, and distributed state.
+
+_FIG. 6 From contract to on-chain asset on Starcoin_
+
+#### What 2026 Means for Move-Based Blockchains?
+
+By 2026, Move-powered networks are no longer fringe experiments - they have matured into real ecosystems with specific design priorities:
+
+- Parallel execution and object-centric models (Sui)
+- Developer-friendly tooling and modular upgrades (Aptos)
+- Infrastructure-level integration and throughput (Supra)
+- Cross-ecosystem reach (Move Industries)
+
+Each of these networks is built differently, yet all share a common lineage in Move, and all point to a broader trend: blockchain platforms are diversifying beyond traditional VM models. Move offers a fresh trade-off in safety, performance, and expressiveness - and by 2026, that trade-off is proving valuable in contexts as diverse as DeFi, gaming, automation, and cross-chain interoperability.
+
+#### Conclusion
+
+Move is more than a programming language - it’s a foundation for execution innovation. In 2026, Move-based blockchains stand out not because they mimic older models, but because they rethink how blockchains execute transactions, represent assets, and serve developers.
+
+For builders and users alike, this shift matters. Whether you care about throughput, safety, modularity, or real-time performance, there’s a Move chain tailored to that need - and that diversity is why Move is not just relevant, but central to the next phase of blockchain evolution.
+
+As the infrastructure layer evolves, Encapsulate is supporting networks that redefine execution and unlock the next wave of builders.
+
+That’s why we run validators and contribute to the growth of Move-powered ecosystems, including Sui Network, Iota, Supra. We’re excited for what comes next - and we’re here to help Move builders go farther, faster.
+
+Written by
+
+S Maheswaran · Content & Socials Manager
+
+Running a chain we should know about?
+
+Tell us what it takes to run it. If it's a fit, you'll hear from us within a week.
+
+Book a call
+
+All posts
+
+Next
+
+MegaETH: Web3 at Web2 Speed
+
+## What are Zk Snarks ?
+
+URL: https://encapsulate.xyz/blog/zk-snarks
+
+Zero-knowledge proofs first, then zk-SNARKs — explained without the maths degree.
+
+Zero knowledge · June 28, 2023 · 4 min
+
+### What are Zk Snarks?
+
+Zero-knowledge proofs first, then zk-SNARKs — explained without the maths degree.
+
+Reading
+
+0%
+
+01
+
+Zero Knowledge Proofs
+
+02
+
+Drawback
+
+03
+
+Solution → Zk Snarks
+
+Launching a chain?
+
+We join at testnet and stay.
+
+Book a call
+
+First, we need to understand what zero-knowledge proofs are. Then, we will see what zk-SNARKs are.
+
+#### Zero Knowledge Proofs
+
+A zero knowledge proof is the ability to show that you can do something or you know something without even having to demonstrate or tell the thing you know.
+
+Here is an example:
+
+Let's say there are two people, Alice and Bob. Alice says that she knows a magical spell using which she can go right through the wall. Bob doesn't believe her.
+
+| Claim | Alice can pass right throught the wall using the magical spell |
+| --- | --- |
+
+What are her choices?
+
+| Choices | Is Zero Knowledge |
+| --- | --- |
+| Demonstrate how she does it? | No |
+| Somehow proof to bob that she can do it without actually doing it | Yes |
+
+Alice decided to conduct an experiment where she could go into a cave either via path A or B.
+
+_FIG. 1 The cave: a zero-knowledge proof in one picture_
+
+Bob will then stand at the center of the cave and call Alice to come out through a specific path. Alice has to come out only through that path.
+
+_FIG. 2 The cave, mid-round_
+
+_FIG. 3 An interactive proof, round by round_
+
+_FIG. 4 Verifier, oracle and prover_
+
+Given that Bob doesn't know which paths Alice chose to go in, the probability that both might have chosen the same path is 50%.
+
+Here is some math behind it:
+
+If we assume that each person independently chooses a path without any prior knowledge or influence from each other, then the probability of both individuals choosing the same path depends on the number of available paths and the choices made by each person.
+
+Let's say there are two paths, path A and path B. Each person has a 50% chance of choosing either path, assuming they have no preference or bias. In this case, the probability of both individuals choosing the same path would be:
+
+```
+Probability = (Probability of choosing path A) * (Probability of choosing path A) + (Probability of choosing path B) * (Probability of choosing path B)
+```
+
+Since each person has a 50% chance of choosing either path, we can substitute the probabilities:
+
+```
+Probability = (0.5) * (0.5) + (0.5) * (0.5)
+Probability = 0.25 + 0.25
+Probability = 0.5
+```
+
+Therefore, if both individuals choose their paths independently and without any influence, the probability of both choosing the same path is 0.5 or 50%.
+
+So that means there is a 50% chance she knows the magic spell and a 50% chance she doesn't. Well, that's not so convincing. In other words, she had a 50-50 chance of successfully faking the magic spell.
+
+But what if we repeat this experiment 100 times? Here is the math.
+
+If both individuals are choosing the same path for each of the 100 times, we can calculate the probability by multiplying the probabilities of choosing the same path in each individual trial.
+
+Let's assume that the probability of both individuals choosing the same path in a single trial is denoted by p. Since they are choosing the same path each time, the probability of this happening in each trial is p.
+
+The probability of them choosing the same path for 100 times in a row is:
+
+```
+Probability = p * p * p * ... * p (repeated 100 times)
+```
+
+Mathematically, this can be expressed as:
+
+```
+Probability = p^100
+```
+
+Therefore, the probability of both individuals choosing the same path for 100 consecutive times depends on the value of p. If p is 0.5 (50% chance of choosing the same path in a single trial), the probability would be:
+
+```
+Probability = 0.5^100
+```
+
+Calculating this value gives us:
+
+```
+Probability ≈ 7.88860905221e-31
+```
+
+In other words, the probability is approximately 0.0000000000000000000000000000000788860905221.
+
+Therefore, if both individuals are choosing the same path each time for 100 trials, the probability of that happening is extremely small.
+
+After conducting this experiment 100 times, she has a 0.00000000000000000000000000000788860905221% chance that she will be able to successfully fake that she knows the magic spell every time without actually knowing it.
+
+Which means after this experiment if conducted 100 times, Bob will know that Alice knows the magic spell with 99.99999999999999999999999999999211139094779% certainty.
+
+In fact, we don't even need to do it 100 times to be sure. Conducting that experiment just 7 times will give more than 99% certainty that Alice knows the magic spell.
+
+To determine the number of times you need to repeat the experiment to achieve a probability less than 0.01, we can follow a similar approach.
+
+The complement of the probability you desire (0.01) is 1 - 0.01 = 0.99.
+
+Let's find out the number of times we need to repeat the experiment to achieve a complement probability of 0.99.
+
+The probability of two people choosing the same path each time is given by (1/2)^2 = 1/4 = 0.25.
+
+Let's denote the number of times we need to repeat the experiment as N.
+
+The probability of two people choosing the same path in all N repetitions is (1/2)^N.
+
+So, we need to solve the following equation:
+
+```
+(1/2)^N < 0.99
+```
+
+Taking the logarithm base 2 of both sides:
+
+```
+log2((1/2)^N) < log2(0.99)
+N * log2(1/2) < log2(0.99)
+N * (-1) < log2(0.99)
+N > -log2(0.99)
+```
+
+Using a calculator, we find:
+
+```
+N > 6.643856189774724
+```
+
+Since N represents the number of repetitions, it must be an integer. Therefore, we need to repeat the experiment at least 7 times to achieve a probability less than 0.01.
+
+So to sum up, a zero-knowledge interaction proof will look like this:
+
+#### Drawback
+
+While that experiment was cool, it is not practical due to two main reasons:
+
+1. Interactive: Both verifier and prover need to be present at the time of this ceremony.
+2. Time-consuming: You have to repeat the experiment at least seven times to get more than 99% certainty of the proof.
+
+#### Solution → Zk Snarks
+
+Instead, what we verify and prove is that they can both agree on the same sequence of challenges and a hash function. Finally, the prover only needs to send the very last proof, and verifiers can iteratively check and verify that it's correct, making the whole interaction non-interactive and sufficient.
+
+Written by
+
+Aditya Verma · Founder
+
+Running a chain we should know about?
+
+Tell us what it takes to run it. If it's a fit, you'll hear from us within a week.
+
+Book a call
+
+All posts
+
+Next
+
+Governance Bot Improvements
+
+## What Broke Coldcard's Bitcoin Security?
+
+URL: https://encapsulate.xyz/blog/what-broke-coldcards-bitcoin-security
+
+A firmware bug cut seed entropy and $89m walked out. What it should teach the rest of us.
+
+Security · August 4, 2026 · 4 min
+
+### What Broke Coldcard's Bitcoin Security?
+
+A firmware bug cut seed entropy and $89m walked out. What it should teach the rest of us.
+
+Reading
+
+0%
+
+01
+
+When Hardware Wallets Fail at Their Most Important Job
+
+02
+
+Understanding Seed Entropy
+
+03
+
+What Went Wrong Inside Coldcard?
+
+04
+
+How the Vulnerability Went Undetected for Years
+
+05
+
+Why This Wasn't a Traditional Hack
+
+06
+
+How the Attack Unfolded
+
+07
+
+Why Air-Gapped Wallets Didn't Help
+
+08
+
+Open Source Wasn't Enough
+
+09
+
+A Wake-Up Call for the Hardware Wallet Industry
+
+10
+
+What Should Coldcard Users Do?
+
+11
+
+Final Thoughts
+
+Launching a chain?
+
+We join at testnet and stay.
+
+Book a call
+
+A firmware bug in Coldcard hardware wallets reduced seed entropy, allowing attackers to recreate wallet seeds and steal over $89 million in Bitcoin. Here's what happened, why it matters, and what the entire crypto industry should learn.
+
+#### When Hardware Wallets Fail at Their Most Important Job
+
+For years, hardware wallets have been considered the gold standard for Bitcoin security, promising to keep your private keys offline, protect your recovery phrase, and ensure your seed never touches the internet.
+
+The recent Coldcard incident proved that following all of these rules still isn't enough if the wallet generates a weak seed in the first place.
+
+Over 4,585 Bitcoin addresses have already been compromised across three attack waves, with approximately 1,367 BTC (around $89 million) stolen. The wallets weren't hacked through malware, phishing, or internet connectivity. Instead, the vulnerability existed from the moment the recovery phrase was created.
+
+This incident isn't just a Coldcard story - it's a reminder that cryptographic randomness is the foundation of digital asset security.
+
+#### Understanding Seed Entropy
+
+Every Bitcoin wallet begins with a recovery phrase.
+
+Those familiar 12 or 24 words are simply a human-readable representation of a randomly generated cryptographic number.
+
+For a standard 12-word wallet, that randomness equals 128 bits of entropy, creating approximately:
+
+2¹²⁸ possible combinations
+
+That's roughly 340 undecillion possible seeds which is far beyond anything that can realistically be brute-forced.
+
+Everything about Bitcoin security depends on achieving that level of randomness.
+
+If entropy decreases, so does security.
+
+#### What Went Wrong Inside Coldcard?
+
+The vulnerability originated in firmware released during March 2021.
+
+Coldcard devices include a hardware True Random Number Generator (TRNG) specifically designed to generate unpredictable randomness.
+
+However, during a cryptographic library migration, a build configuration mistake caused firmware to reference a software pseudo-random number generator instead of the intended hardware entropy source.
+
+The hardware randomness still existed.
+
+It simply wasn't being used.
+
+Because of this, recovery seeds generated on affected firmware contained substantially less randomness than intended.
+
+_FIG. 1 How a firmware configuration error reduced seed entropy_
+
+Instead of producing fully unpredictable 128-bit seeds, researchers estimate:
+
+| Device | Intended Entropy | Estimated Effective Entropy |
+| --- | --- | --- |
+| Mk2 / Mk3 | 128 bits | ~40 bits |
+| Mk4 / Mk5 / Q | 128 bits | ~72 bits (Coinkite estimate, though some researchers estimate lower) |
+
+_FIG. 2 Seed entropy by wallet generation_
+
+The exact entropy for later devices remains debated, but all parties agree affected firmware produced weaker randomness than designed.
+
+#### How the Vulnerability Went Undetected for Years
+
+The bug wasn't discovered overnight. It remained hidden for more than five years before attackers began exploiting vulnerable wallets. The sequence below shows how a small firmware mistake evolved into one of the largest hardware wallet security incidents in Bitcoin's history.
+
+_FIG. 3 The Coldcard firmware bug, 2021 to 2026_
+
+#### Why This Wasn't a Traditional Hack
+
+Many headlines described the incident as hackers "brute-forcing" wallet seeds.
+
+That isn't technically accurate.
+
+Brute-forcing a genuine 128-bit seed is practically impossible.
+
+Instead, attackers exploited predictable randomness.
+
+Rather than searching through an unimaginably large keyspace, they recreated the same deterministic process used by vulnerable firmware.
+
+In other words:
+
+- They didn't guess the keys.
+- They regenerated them.
+
+That distinction explains why offline storage offered no protection.
+
+#### How the Attack Unfolded
+
+[Galaxy Research](https://x.com/glxyresearch) tracked the exploit across three coordinated waves.
+
+The first wave drained more than 1,082 BTC from 1,195 wallets within roughly 41 minutes.
+
+Additional waves increased the total losses to:
+
+- 4,585 compromised wallets
+- 1,367 BTC stolen
+- Approximately $89 million
+- Funds remaining largely unspent during initial investigations
+
+Researchers also observed that higher-value wallets were targeted first, suggesting attackers had already generated a database of vulnerable addresses before broadcasting transactions.
+
+#### Why Air-Gapped Wallets Didn't Help
+
+One of the biggest misconceptions in crypto security is that offline equals secure.
+
+Air-gapped devices prevent remote compromise.
+
+They do not protect against weak cryptographic keys.
+
+If the seed phrase itself lacks sufficient entropy, every private key derived from it becomes vulnerable, regardless of whether the wallet ever connects to the internet.
+
+This incident demonstrates an important security principle: A wallet is only as secure as the randomness used to create its keys.
+
+#### Open Source Wasn't Enough
+
+Coldcard firmware is publicly available, yet this issue remained unnoticed for more than five years.
+
+Open source offers transparency. It does not guarantee review.
+
+Complex firmware often contains thousands of lines of code, build configurations, compiler directives, and cryptographic dependencies that few people thoroughly audit.
+
+Security comes from independent verification, not simply public availability.
+
+#### A Wake-Up Call for the Hardware Wallet Industry
+
+The broader lesson extends far beyond one manufacturer.
+
+Modern hardware wallets increasingly advertise:
+
+- Secure elements
+- Air-gapped signing
+- Tamper resistance
+- Open-source firmware
+
+But none of those features matter if entropy generation isn't independently validated.
+
+Security practitioners have pointed to standards like NIST SP 800-90B, which defines rigorous methods for validating entropy sources used in cryptographic systems. While hardware wallets aren't required to follow these standards today, the incident has sparked renewed discussion around adopting stronger entropy validation practices across the industry.
+
+Future hardware wallet assurance should include:
+
+- Independent entropy validation
+- Verification of the actual firmware execution path
+- Firmware-specific certification
+- Public transparency around audited firmware versions
+
+Randomness should become a first-class security requirement.
+
+#### What Should Coldcard Users Do?
+
+If your wallet was created using affected firmware, updating the device alone is not enough.
+
+The existing seed remains weak.
+
+Users should:
+
+- Update to the latest firmware.
+- Generate a brand-new recovery phrase.
+- Move all funds to addresses derived from the new seed.
+- Never reuse the compromised recovery phrase.
+- Consider supplementing hardware-generated entropy with manual dice rolls where supported.
+
+Once a weak seed exists, the only permanent solution is migration.
+
+#### Final Thoughts
+
+The Coldcard exploit wasn't caused by a failure in Bitcoin. It wasn't caused by cryptographic weakness and by users making poor security decisions.
+
+It was caused by one of the most fundamental assumptions in cryptography breaking silently: randomness.
+
+The incident should serve as a turning point for hardware wallet manufacturers and the wider self-custody ecosystem. As digital assets continue to grow in value, secure key generation deserves the same level of scrutiny as secure key storage.
+
+At Encapsulate, we believe self-custody security depends not only on protecting private keys after they're created, but also on ensuring they're generated with truly unpredictable entropy from the very beginning.
+
+Written by
+
+S Maheswaran · Content & Socials Manager
+
+Running a chain we should know about?
+
+Tell us what it takes to run it. If it's a fit, you'll hear from us within a week.
+
+Book a call
+
+All posts
+
+Next
+
+Can Quantum Computing Crack Bitcoin?
+
+## Who Builds the Stablecoin Rails?
+
+URL: https://encapsulate.xyz/blog/who-builds-the-stablecoin-rails
+
+Crypto proved it can move value. Moving money is a different job — here is who is building it.
+
+Trends · February 10, 2026 · 7 min
+
+### Who Builds the Stablecoin Rails?
+
+Crypto proved it can move value. Moving money is a different job — here is who is building it.
+
+Reading
+
+0%
+
+01
+
+Why the moment is urgent
+
+02
+
+The shift from crypto networks to money networks
+
+03
+
+Arc: Bringing determinism to digital dollar settlement
+
+04
+
+Tempo: Connecting banks to blockchains without friction
+
+05
+
+Stable: Making digital dollars feel invisible
+
+06
+
+Plasma: Pairing infrastructure with understanding
+
+07
+
+How the Stablecoin L1s Differ
+
+08
+
+What success will look like
+
+09
+
+Final thoughts
+
+Launching a chain?
+
+We join at testnet and stay.
+
+Book a call
+
+Crypto spent a decade proving blockchains could move value. Can they move money in ways businesses and governments actually need?
+
+Stablecoins have quietly become the answer. They dominate onchain transaction volume, power remittances, enable trading, and increasingly function as digital dollars for people far outside the traditional banking system.
+
+But there is a structural problem. Most major blockchains were not built specifically for stablecoin payments. They evolved from environments designed for experimentation, speculation, and generalized smart contracts.
+
+As real usage grows, a new design philosophy is emerging: build Layer 1 networks where stablecoins are not an application, but the foundation.
+
+This is the category where Arc, Tempo, Stable, and Plasma are positioning themselves.
+
+Each is effectively asking what the internet’s financial rails should look like if we started from digital dollars instead of retrofitting them later.
+
+#### Why the moment is urgent
+
+What makes the moment urgent is scale. Stablecoins already process enormous annual settlement volume, often rivaling or surpassing traditional payment networks in cross border contexts. Startups pay contractors with them, exporters hedge currency exposure with them, and entire communities use them as a store of value against local volatility.
+
+The experiment phase is over. The conversation has shifted from “does it work” to “can it work reliably every single day at global scale.”
+
+#### The shift from crypto networks to money networks
+
+When institutions, payment processors, and corporates evaluate infrastructure, their requirements differ dramatically from early crypto users.
+
+They need transactions that close with certainty. They need cost predictability. They need compliance alignment, auditability, and systems that integrate with existing treasury workflows. Downtime or fee volatility is not an inconvenience, it is operational risk.
+
+In traditional finance, infrastructure is judged by the absence of drama. Payments clear, reports reconcile, audits pass, and no one notices the system because it simply functions. For stablecoins to capture larger shares of global flows, blockchains must deliver the same invisibility.
+
+This requirement changes how networks are designed, marketed, and operated. Success is no longer defined by how much activity happens during bull markets, but by whether enterprises can trust the rails during ordinary Tuesdays.
+
+Stablecoin specialized L1s are responding by redesigning the base layer around these realities. Performance is measured less by meme activity and more by whether payroll runs on time, remittances land instantly, and finance teams can reconcile balances without surprises.
+
+In short, the product becomes reliable digital cash movement.
+
+At a high level, the architecture of stablecoin payments looks like this:
+
+_FIG. 1 Payments on a stablecoin L1_
+
+The race between networks is ultimately about who can run this middle layer with the greatest reliability and trust.
+
+#### Arc: Bringing determinism to digital dollar settlement
+
+Arc’s approach centers on making stablecoins behave like financial infrastructure institutions already understand.
+
+A defining theme is deterministic finality. For a business sending millions in cross border flows or managing intraday liquidity, knowing exactly when a transaction is final is critical. Arc engineers its consensus and network design around eliminating ambiguity in settlement outcomes.
+
+The chain also emphasizes operational resilience. Its technical communications frequently explore uptime, reliability metrics, and performance under stress, reflecting a worldview closer to payments engineering than experimental DeFi.
+
+Another pillar is deep alignment with regulated dollar assets, particularly USDC. Arc treats standardized stablecoin interfaces as the bridge that allows fintech systems, FX desks, and treasury software to plug directly into onchain liquidity.
+
+The opportunity here is straightforward. If digital dollars are going to support 24 hour global finance, they need infrastructure that mirrors the expectations of professional markets.
+
+If a treasury team cannot predict settlement windows, capital buffers increase and efficiency drops. If reversibility remains uncertain, compliance complexity rises. By engineering determinism into the base layer, Arc reduces friction that would otherwise slow institutional participation.
+
+Arc is building toward that future.
+
+#### Tempo: Connecting banks to blockchains without friction
+
+Tempo operates at the intersection of traditional payment rails and onchain settlement.
+
+Rather than assuming crypto replaces banks, Tempo designs for interoperability. Its messaging consistently revolves around enabling ACH pathways, wire compatibility, global payouts, and enterprise treasury coordination.
+
+This orientation makes stablecoins less of a parallel system and more of an upgrade layer. Businesses can keep familiar compliance processes while benefiting from faster and more transparent movement of funds.
+
+Tempo also highlights the importance of fee logic. Predictability matters when finance departments forecast costs or manage large payment volumes. By reducing exposure to volatile gas environments, Tempo aims to offer something that resembles contractual infrastructure rather than open ended experimentation.
+
+The real innovation is not just speed. It is coordination. Tempo aims to let multiple financial actors, banks, fintechs, and platforms interact around a shared stablecoin framework without rebuilding their internal processes from scratch.
+
+For remittance providers, payroll companies, and multinational operators, the value proposition is clear: blockchain speed without operational chaos.
+
+#### Stable: Making digital dollars feel invisible
+
+Stable focuses intensely on usability.
+
+Its thesis is that mainstream adoption will not come from users learning crypto mechanics. It will come from technology disappearing into intuitive applications while the benefits of blockchain settlement operate in the background.
+
+The network architecture is built to support this abstraction. Developers receive strong primitives for performance and integration, while end users interact with experiences that resemble modern fintech products rather than wallets and gas estimators.
+
+History suggests that platforms achieving mass adoption often win because they remove cognitive overhead. When users stop thinking about the technology and simply complete tasks, scale follows naturally.
+
+This product mindset could become decisive. If stablecoins are going to power everyday commerce, users must trust them as easily as they trust a banking app. The complexity cannot leak through the interface.
+
+Stable is betting that the winning infrastructure will be the one people barely notice.
+
+#### Plasma: Pairing infrastructure with understanding
+
+Plasma approaches the market from both a technical and educational angle.
+
+Beyond building rails for payments, the project invests heavily in explaining why stablecoins matter, how collateral models work, how they differ from central bank digital currencies, and how blockchain transparency strengthens financial accountability.
+
+This matters because adoption is psychological as much as technical. Governments, enterprises, and individuals need confidence before shifting meaningful economic activity onchain.
+
+Plasma frequently highlights real world demand drivers such as inflation hedging, cross border remittances, and access to dollar denominated savings in regions where banking services are limited. In these environments, stablecoins are not speculative tools, they are financial lifelines.
+
+By combining literacy with infrastructure, Plasma aims to accelerate both usage and trust.
+
+Education also plays a regulatory role. Clear explanations around reserves, transparency, and risk profiles make conversations with policymakers and institutions more productive, accelerating pathways to broader acceptance.
+
+#### How the Stablecoin L1s Differ
+
+| Feature / Focus | Arc | Tempo | Stable | Plasma |
+| --- | --- | --- | --- | --- |
+| Core Philosophy | Institutional grade settlement for digital dollars | Bridge between banks and onchain payments | Make stablecoin usage invisible and intuitive | Drive adoption through infrastructure plus education |
+| Primary Customer | Institutions, fintechs, FX and treasury operators | Payment providers, remittance firms, corporates | App developers, mainstream users, fintech products | Emerging markets, businesses, new stablecoin users |
+| Payments Orientation | High, built for deterministic execution | High, focused on real world payout flows | High, optimized for everyday usability | High, emphasizes practical financial utility |
+| Finality & Reliability | Deterministic and predictable | Designed for operational consistency | Focus on smooth UX backed by strong infra | Focus on trust and transparent mechanics |
+| Fiat Integration | Strong alignment with regulated stablecoins | Deep connection to ACH, wires, banking rails | Abstracted for end users via apps | Focus on accessibility to dollar systems |
+| Fee Experience | Built for cost clarity at scale | Emphasis on predictable pricing | Hidden behind user friendly interfaces | Designed for affordability and inclusion |
+| Developer Angle | Standardized money interfaces | Tools for payment orchestration | Primitives for seamless app integration | Resources plus knowledge for builders |
+| Adoption Strategy | Win institutional flows | Win global payment corridors | Win consumer and fintech UX | Win through understanding and real need |
+| Big Market Bet | Onchain becomes backend for finance | Stablecoins upgrade existing rails | Users should not feel blockchain | Demand for digital dollars keeps rising |
+
+No design wins every category. Some networks may move faster with institutional integrations but trade away openness. Others may empower developers yet face longer pathways toward regulatory comfort. The eventual leaders will be those that balance usability, compliance alignment, and global liquidity at the same time.
+
+#### What success will look like
+
+If stablecoin L1s succeed, most users may never know which chain processes their transactions. They will simply see salaries arrive on time, suppliers paid in minutes instead of days, and international transfers completing without a maze of intermediaries taking fees along the way.
+
+Imagine a global company paying thousands of contractors every Friday. The winning infrastructure will be the one that executes those flows predictably, reconciles cleanly, and never forces the finance team to wonder whether money will land.
+
+For businesses, success means programmable liquidity, real time visibility, and lower operational overhead. For consumers, it means access to stable value with fewer barriers and fewer delays.
+
+Infrastructure wins when outcomes improve.
+
+#### Final thoughts
+
+Stablecoins are rapidly becoming the default settlement asset of the internet. As volumes grow from trading activity into payroll, supplier payments, and treasury operations, tolerance for failure drops toward zero. Reliability, performance, and constant availability become business requirements.
+
+In that environment, validator infrastructure is no longer background machinery. It is part of the product.
+
+Encapsulate supports this shift by operating professional grade validators across networks building real world financial rails. As builders deliver better payment experiences and institutions route serious capital onchain, dependable infrastructure ensures transactions finalize when they are supposed to, every time.
+
+The next phase of adoption will not be defined by speculation. It will be defined by money moving quietly and continuously across borders.
+
+Encapsulate is committed to strengthening the foundations that make that movement possible.
+
+Written by
+
+S Maheswaran · Content & Socials Manager
+
+Running a chain we should know about?
+
+Tell us what it takes to run it. If it's a fit, you'll hear from us within a week.
+
+Book a call
+
+All posts
+
+Next
+
+The Rise of Move: Rebuilding Blockchain Logic
+
+## XMTP: The Future of Messaging?
+
+URL: https://encapsulate.xyz/blog/xmtp-the-future-of-messaging
+
+Encrypted messaging that no platform owns. What XMTP is, and why wallets are adopting it.
+
+Networks · April 4, 2025 · 5 min
+
+### XMTP: The Future of Messaging?
+
+Encrypted messaging that no platform owns. What XMTP is, and why wallets are adopting it.
+
+Reading
+
+0%
+
+01
+
+What is XMTP?
+
+02
+
+That Core Framework of XMTP
+
+03
+
+Interesting Use Cases for XMTP
+
+04
+
+Why is XMTP a Game Changer?
+
+05
+
+What Next For XMTP?
+
+Launching a chain?
+
+We join at testnet and stay.
+
+Book a call
+
+If you think that encryption is some kind of a the gold standard for communication, you’re mistaken. When governments around the world are building secret back doors into messaging apps, none of your messages are going to be private in the future (if they’re not already).
+
+In today's digital landscape, the demand for secure, private, and decentralized communication channels has never been greater. Enter XMTP (Extensible Message Transport Protocol), the largest and most secure decentralized messaging network, poised to redefine how we connect online.
+
+#### What is XMTP?
+
+XMTP is what a dream end-to-end messaging infrastructure looks like. It’s an open and permissionless system that empowers developers to build end-to-end encrypted 1:1, group, and broadcast messaging experiences. By leveraging advanced cryptographic techniques and secure key management practices, XMTP ensures that messages remain confidential and tamper-proof. XMPT secures not just your messages and your privacy - it goes beyond and protects your identity.
+
+#### That Core Framework of XMTP
+
+1. End-to-End Encryption with MLS: XMTP integrates the revolutionary Messaging Layer Security (MLS) standard, providing robust encryption with forward secrecy and post-compromise security. This ensures that only intended recipients can access the message content, safeguarding communications against potential breaches. Read more about the detailed technical framework for MLS here:
+2. [RFC 9420: The Messaging Layer Security (MLS) Protocol Messaging applications are increasingly making use of end-to-end security mechanisms to ensure that messages are only accessible to the communicating endpoints, and not to any servers involved in delivering messages. Establishing keys to provide such protections is challenging for group chat settings, in which more than two clients need to agree on a key but may not be online at the same time. In this document, we specify a key establishment protocol that provides efficient asynchronous group key establishment with forward secrecy (FS) and post-compromise security (PCS) for groups in size ranging from two to thousands. www.rfc-editor.org](https://www.rfc-editor.org/rfc/rfc9420.html)
+3. User-Controlled Consent: XMTP defeats the menace of never-ending spam once and for all, by allowing users to set consent preferences, enabling spam-free inboxes that accept messages only from chosen contacts.
+4. Syncs Smoothly with Web3 and Crypto: XMTP makes your Web3 experience a breeze by supporting decentralized identities, crypto txns, all inside messaging experience - so you don’t have to use multiple touchpoints to manage your interactions. Imagine the innovative applications that can built when one bridges communication and blockchain functionalities.
+5. Data Ownership Meets Interoperability: Now, users can ensure 100% privacy and still carry their data + identity + messages wherever they want to take it. own their conversations, data, and identity. Any app built with XMTP talks to each other, which means users get a seamless and unified messaging experience, which is fully encrypted.
+6. Anti-Censhorship Architecture: XMTP is an open protocol, meaning it is designed to resist any kind of attempts to censorship by governments. This means that developers can now build stress-free, knowing their access and functionality can't be revoked by a central authority, ensuring freedom and sustainability.
+
+_FIG. 1 XMTP against the mainstream messengers_
+
+#### Interesting Use Cases for XMTP
+
+XMTP tackles a lot of real-world challenges across diverse domains. DeFi, e-commerce, gaming; it touches major industries which are growing at breakneck speed. XMTP is the connective tissue that binds various sectors with common communication standards. Here's a concise look at how XMTP is going to fundamentally change how we ‘interact and transact’ in tomorrow's fully decentralized world.
+
+- Messaging
+
+This is the obvious one. Be it peer-to-peer messaging or group chat, XMTP's encryption ensures an unbreakable level of security and privacy. It’s extremely flexible too. This makes for rich features like attachments, read receipts, and metadata handling.
+
+- Automation
+
+As we move into the automation economy, XMTP becomes a big driving force of new user adoption, as it allows for ease of access which was previously alien in the Web3 space, for example. Now, Web3 automation tools can use XMTP for sending secure automated messages and notifications between different wallets. The standardization ensures interoperability across various networks and blockchain layers.
+
+- Broadcast
+
+In a Web3 world where markets operate 24x7, an XMTP integration can enable DeFi projects like GMX, Hyperliquid, Aave - to deliver real-time notifications and critical alerts for traders directly in their wallets.
+
+- E-Commerce
+
+XMTP removes the need for trusting 3rd party arbiters and enhances buyer-seller communication. XMTP can provide the tech stack you need to do business on your own terms - encrypted channels for negotiations, escrows, and other txns, ensuring privacy and trust in the e-commerce space.
+
+- DAOs
+
+DAOs strive for transparency and accountability within their community. XMTP can facilitate secure group chats, vote notifications, and subscriptions among members, adding the ‘trust layer’ to the decentralized setup - enabling more users to interact inside communities seamlessly.
+
+- DeFi
+
+DeFi platforms require robust security for txns and communications. From token transfers to NFT minting, XMTP serves as a secure layer that aids in the safe execution and notification of various DeFi operations.
+
+- DeSo
+
+Decentralized social platforms can leverage XMTP to offer secure and private messaging. This opens the doors to discovering new friends and creating encrypted group chats between connections.
+
+- Frames
+
+Frames allow for the creation of interactive and authenticated experiences within any app, enabling txns, dApps, analytics, tipping, and more, revolutionizing the way apps and websites interact with their users.
+
+- Gaming
+
+From in-game notifications to NFT marketplaces, XMTP takes gaming experiences to the next level. It promotes real-time messaging, competitive play, and secure txns within the gaming ecosystem.
+
+- Groups
+
+Group chats in XMTP can enhance the interactive experience in the Web3 space, facilitating group purchases, collective investment decisions, and more, making it more interactive and engaging for all members.
+
+- Marketing
+
+In the marketing space, XMTP can enable wallets to receive newsletters and promotional communications securely. It nurtures user trust while allowing targeted outreach to various stakeholders.
+
+- Support
+
+Customer support can leverage XMTP to provide private channels for sensitive customer interactions. It facilitates finance txns, AI automation, and DAO operations, revolutionizing the support experience.
+
+#### Why is XMTP a Game Changer?
+
+XMTP has already shown promise by integrating with major players:
+
+- Lens Protocol
+- Farcaster
+- Coinbase Wallet
+- Convo
+- Zerion
+
+This growing adoption means XMTP could become the default messaging layer of Web3. To put it simple, XMTP = the WhatsApp of Web3, but decentralized, encrypted, and wallet-native - which can custom-built serve a multitude of use cases. It will interesting to see its exponential adoption curve in 2025, as it takes over the global conversation where there is already deep distrust in the mainstream messaging platforms we currently use.
+
+#### What Next For XMTP?
+
+_Appreciation from the XMTP team_
+
+XMTP testnet is LIVE at the moment. And, our team at [encapsulate.xyz](https://encapsulate.xyz/) is busy working with them to test their network. We’re looking forward to support the XMTP mainnet launch, which is coming soon. We are an active member of the XMTP community and wish to see them scale their product to the depths and breadth of the Web3 space.
+
+Written by
+
+Aditya Verma · Founder
+
+Running the XMTP testnet?
+
+Mainnet has not launched yet
+
+Delegate
+
+Coming soon on mainnet
+
+All posts
+
+Next
+
+IOTA Rebased: Unlocking New Possibilities
+
+## ZEXE: How Aleo Achives private computation ?
+
+URL: https://encapsulate.xyz/blog/zexe
+
+ZEXE is how Aleo gets private, expressive computation. Commitments and proofs, unpacked.
+
+Zero knowledge · May 15, 2023 · 3 min
+
+### ZEXE: How Aleo Achives private computation?
+
+ZEXE is how Aleo gets private, expressive computation. Commitments and proofs, unpacked.
+
+Reading
+
+0%
+
+01
+
+The Blockchain Revolution and Its Privacy Predicaments
+
+02
+
+Introducing ZEXE: Privacy Taken to New Heights
+
+03
+
+Delving Deeper: Commitment Schemes and Zero-Knowledge Proofs
+
+04
+
+Wrapping Up
+
+Launching a chain?
+
+We join at testnet and stay.
+
+Book a call
+
+In the ever-evolving landscap of distributed-ledger systems, or more commonly known as blockchain technology, the quest for achieving superior privacy and expressiveness continues to spur innovative solutions. One such innovative leap is ZEXE, a system that endeavors to revolutionize the sphere of privacy-preserving applications.
+
+#### The Blockchain Revolution and Its Privacy Predicaments
+
+Blockchain, a digital ledger of transactions that is duplicated and distributed across an entire network of computer systems, has undeniably shaped the dawn of the cryptocurrencies era. With each block in a blockchain containing a hash – a cryptographically computed unique identifier – that links it to the preceding block, the system ensures an incorruptible sequence of transaction data.
+
+Nonetheless, this transparency becomes a double-edged sword. Inherent in most blockchain-based cryptocurrencies, like Bitcoin, is their limited privacy feature. Though transactions are pseudonymous, meaning they're associated with addresses and not directly with individuals, the openly available transaction data could potentially allow malicious actors to trace back to the actual owners. This lack of privacy even extends to the more advanced Ethereum platform, where each public key is persistently reused as an address.
+
+_FIG. 1 How privacy differs across cryptocurrencies_
+
+_FIG. 2 The three phases of a commitment scheme_
+
+#### Introducing ZEXE: Privacy Taken to New Heights
+
+To address these privacy challenges, a team of privacy researchers, including several ZCash founding scientists, devised a scheme they coined ZEXE, an acronym for Zero-knowledge EXEcution. ZEXE distinguishes itself as the pioneer ledger-based scheme enabling applications to execute trustlessly, privately, and scalably.
+
+ZEXE is not just an independent entity; it forms the computational backbone of Aleo, a platform devised by ZEXE's authors. Aleo ambitiously strides beyond ZEXE by proposing a full-stack approach for creating private applications.
+
+#### Delving Deeper: Commitment Schemes and Zero-Knowledge Proofs
+
+To truly appreciate the architectural finesse of ZEXE, one needs to familiarize themselves with two key cryptographic building blocks: commitment schemes and zero-knowledge proofs.
+
+A commitment scheme can be visualized as a secured lockbox, with the following three steps:
+
+1. Key generation: Here, a pair of keys, the prover’s key and the verifier’s key, are generated and shared with the corresponding parties.
+2. Commitment phase: The prover uses his key and a message to generate a commitment. Alongside, an opening value is created, which is only revealed during the verification phase.
+3. Verification phase: The verifier employs her key, the commitment, the original message, and the opening value to validate the authenticity of the commitment.
+
+_FIG. 3 Zero-knowledge proofs, in general and for transactions_
+
+Moving on to zero-knowledge proofs, this fascinating protocol allows a prover to convince a verifier of the truth of a statement without revealing any other information. In essence, it's like demonstrating you know the password to a system without actually typing it in.
+
+When the transaction requires the sender to commit to transferring a specific value to the receiver, both commitment schemes and zero-knowledge proofs play a crucial role. The sender commits to the value, making it both hidden and binding. Following this, they create a zero-knowledge proof that asserts their ownership of the coins to be transferred without revealing any transaction details.
+
+By skillfully implementing a commitment scheme and zero-knowledge proof, the transaction details — namely the sender, the receiver, and the amount transferred — remain hidden, thereby establishing superior data privacy.
+
+#### Wrapping Up
+
+To sum up, ZEXE emerges as a cryptographic tour de force in securing transactional privacy in the vast universe of distributed-ledger systems. It carefully blends the power of commitment schemes and zero-knowledge proofs to provide a privacy-preserved, trustless, and scalable platform for executing applications. With the advent of ZEXE, the future of privacy-focused blockchain technology seems brighter than ever before.
+
+_FIG. 4 How data privacy is achieved_
+
+Written by
+
+Aditya Verma · Founder
+
+Running a chain we should know about?
+
+Tell us what it takes to run it. If it's a fit, you'll hear from us within a week.
+
+Book a call
+
+All posts
+
+Next
+
+Celestia Testnet Log Analysis
+
+## Zilliqa 2.0 Launch - What major changes we can expect?
+
+URL: https://encapsulate.xyz/blog/zilliqa-2-launch
+
+X-shards, proof of stake and smart accounts. What Zilliqa 2.0 changes from a validator's seat.
+
+Networks · April 11, 2025 · 4 min
+
+### Zilliqa 2.0 Launch - What major changes we can expect?
+
+X-shards, proof of stake and smart accounts. What Zilliqa 2.0 changes from a validator's seat.
+
+Reading
+
+0%
+
+01
+
+#1- X-Shards
+
+Launching a chain?
+
+We join at testnet and stay.
+
+Book a call
+
+##### Introduction to Zilliqa 2.0
+
+Zilliqa, a pioneering force in blockchain technology, is on the brink of a transformative upgrade with the forthcoming launch of Zilliqa 2.0. This evolution promises to enhance the network's scalability, efficiency, and user-friendliness, positioning it at the forefront of the decentralized technology landscape.
+
+Zilliqa 2.0 represents a comprehensive overhaul of the existing blockchain infrastructure, aiming to address current limitations and unlock new potentials. The upgrade focuses on enhancing performance, fostering interoperability, and simplifying user interactions, thereby catering to a broader spectrum of developers and users. There are 6 major changes happening in Zilliqa 2.0.
+
+_FIG. 1 What is new in Zilliqa 2.0_
+
+#### #1- X-Shards
+
+A standout feature of Zilliqa 2.0 is the introduction of X-Shards, an advanced sharding mechanism that allows for unprecedented customization and scalability. Building upon Zilliqa's original sharding technology, X-Shards enable the creation of application-specific shards tailored to distinct requirements. These shards can be configured with specific parameters, such as native tokens, transaction fees, and consensus models, offering developers the flexibility to optimize performance and functionality. Furthermore, seamless communication between X-Shards and the mainnet ensures interoperability and cohesive network operation.
+
+_FIG. 2 How X-shards on Zilliqa 2.0 interact_
+
+##### #2 - Transition to Proof-of-Stake (PoS) Consensus
+
+Zilliqa 2.0 marks a strategic shift from the existing Proof-of-Work (PoW) consensus mechanism to a more efficient Proof-of-Stake (PoS) model. This transition is poised to deliver several benefits:
+
+Enhanced Efficiency: PoS reduces the computational demands associated with PoW, leading to faster transaction processing and lower latency.
+
+Energy Sustainability: By minimizing energy consumption, PoS aligns with global sustainability efforts, addressing environmental concerns linked to traditional blockchain operations.
+
+Decentralized Participation: PoS allows a broader range of participants to engage in network validation by staking their tokens, promoting a more inclusive and decentralized ecosystem.
+
+This consensus upgrade is expected to achieve up to 30-times faster block times and 10-times quicker finality, significantly boosting the network's performance.
+
+##### #3 - Universal Cross-Chain Broker
+
+Interoperability stands as a cornerstone of Zilliqa 2.0's design philosophy. The network aims to seamlessly integrate with other blockchain platforms, particularly those compatible with the Ethereum Virtual Machine (EVM). This integration facilitates:
+
+Asset Portability: Users can transfer assets across different blockchain networks effortlessly, enhancing liquidity and utility.
+
+Expanded dApp Ecosystem: Developers can create decentralized applications that operate across multiple platforms, broadening their reach and functionality.
+
+Universal Cross-Chain Broker: Zilliqa 2.0 introduces a Universal Cross-Chain Broker, simplifying the deployment of cross-chain bridges and atomic swaps, thereby streamlining multi-chain interactions.
+
+These advancements position Zilliqa 2.0 as a hub within the broader blockchain ecosystem, fostering collaboration and innovation.
+
+_FIG. 3 How the universal cross-chain broker works_
+
+##### #4 - Smart Accounts
+
+To bridge the gap between Web2 and Web3 experiences, Zilliqa 2.0 introduces Smart Accounts. These accounts incorporate features designed to enhance usability:
+
+Social Media Integration: Users can log in using existing social media credentials, reducing reliance on complex private key management.
+
+Flexible Gas Fee Payments: The system allows for transaction fees to be paid using various fungible assets, eliminating the necessity to hold native tokens solely for this purpose.
+
+Error Prevention Mechanisms: Built-in safeguards help prevent common transactional errors, such as sending assets to incorrect addresses.
+
+By implementing these features, Zilliqa 2.0 aims to make blockchain interactions as intuitive and seamless as traditional online experiences.
+
+_FIG. 4 How native account abstraction works on Zilliqa 2.0_
+
+##### #5 - Light Clients
+
+Zilliqa 2.0 incorporates support for light clients, which are streamlined nodes that interact with the blockchain without storing its entire history. This development offers several advantages:
+
+Resource Efficiency: Light clients require minimal storage and computational power, making them suitable for devices with limited resources, such as smartphones.
+
+Enhanced Security: Users retain control over their private keys, reducing reliance on centralized entities and mitigating associated risks.
+
+Increased Accessibility: By lowering technical barriers, light clients enable a broader audience to participate in the blockchain ecosystem.
+
+This feature aligns with Zilliqa's commitment to fostering a decentralized and user-centric network.
+
+##### #6 - Tokenomics 2.0 for Zilliqa 2.0
+
+In preparation for Zilliqa 2.0, the network is implementing changes to its tokenomics to ensure long-term sustainability:
+
+Staking Reward Adjustments: A proposal has been made to adjust the staking annual percentage rate (APR) to approximately 8%, aligning with industry standards and promoting a balanced token economy.
+
+Inflation Control: The adjustment aims to reduce the inflationary characteristics of ZIL, moving towards a zero-inflation or deflationary model to preserve the token's value.
+
+Gradual Implementation: The reduction in staking rewards is planned to occur over 15 months, decreasing the share of total rewards received by Staked Seed Nodes (SSNs) from 40% to 25% at a rate of 1% per month.
+
+These measures are designed to create a sustainable and attractive economic environment for both validators and token holders.
+
+##### Final Thoughts
+
+We at [encapsulate.xyz](https://encapsulate.xyz/) are working with 40+ networks at the moment. We are also excited to be on the Zilliqa 2.0 testnet and we’re super pumped for Zilliqa 2.0 mainnet launch. We believe the revolution Zilliqa 2.0 will bring to the market will be a game changer for the whole DeFi landscape.
+
+Our Story So Far
+
+Written by
+
+Aditya Verma · Founder
+
+Delegating on Zilliqa?
+
+Our address, commission and uptime
+
+Delegate ZIL
+
+All posts
+
+Next
+
+XMTP: The Future of Messaging?
