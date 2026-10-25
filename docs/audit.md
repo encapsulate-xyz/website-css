@@ -1,4 +1,4 @@
-# Below 900px and the audit of 2026-09-26
+# Below 900px, the audit of 2026-09-26 and the raw-Notion audit of 2026-10-25
 
 Part of the notes for website-css, moved out of `CLAUDE.md` on 2026-10-08 as they were. `CLAUDE.md` holds
 what every task needs and the index of these files.
@@ -118,3 +118,35 @@ blocks were deleted (originals in backups/zk-snarks-code-blocks-2026-09-26.json)
 
 Still open: the stage block under the index on touch phones, the code copy button over a phone's first
 line.
+
+## The raw-Notion audit of 2026-10-25 — every page type, fresh and in-app, 1440 and 390 (v404)
+
+The user: "audit the website to make sure raw notion doesnt appear anywhere else too", "and fix if it does".
+
+**How.** `scripts/flashcheck.mjs` records every frame Chrome paints while a page arrives (the screencast sends a
+frame per paint, so nothing falls between two screenshots): `cold <url>`, or `nav <from> <to>` through Super's own
+router. `scripts/flashsheet.py` lays a recording's distinct frames out on one sheet. 24 pages — every main page, three
+chain pages, four converted guides, a post, /governance/votes, both 404s, /team — fresh and arriving from another
+page, at 1440×900 and 390×844: 96 recordings, read frame by frame; then every fix recorded the same way with the
+repo's files served for every pinned tag. `livecheck.mjs` took `PRELOAD=file.js` for a logger that has to see a
+load's first frames.
+
+**What showed, and what changed:**
+
+| Where | What showed | Fix |
+|---|---|---|
+| In-app navigation to a page whose CSS is in its own head (home, /networks, /governance, /guides, /services, /investments, /security, /contact, /brand, the legal pages) | Super renders a page's head *inside* the page (`main.super-content`), in the same commit that swaps the page in, so its stylesheet starts loading once the page is up: unstyled for 0–50ms on a quiet network and up to 490ms on a busy one (/contact; /brand 180, /guides 100 — 3 of 20 runs); the homepage's hero half-styled for ~120ms | blocks.js marks `html[data-enc-css-wait]` in the commit's own microtask for each stylesheet added inside `.super-content` that has not loaded, until each loads or fails (3s at most), and main.css §03 hides `.super-content` under the mark. No page head has to change for it, so a head that lags cannot leave a page hidden. A 16-page chain of navigations: hidden 0–22ms each |
+| Guide pages, fresh load (every converted guide) | Super's gallery of step tiles for 12–130ms, then the footer alone on screen for 130–530ms while guide.js fetched /guides for the head — claiming the page set the raw blocks and the deck `display: none`, and the page folded up under the footer — at times Super's own unstyled footer | guide.css hides the raw page by `parent-page__guides` from the first paint until the bands are in (visibility, so it keeps its height; 3s); the display-none rules wait for the bands; the /guides fetch starts as guide.js runs. A guide with no numbered steps (16 of 33, not converted) is marked `data-enc-guide-none` once its blocks are in (the footer has parsed) and shows as before |
+| /brand, fresh load | the cover's five lines as plain centred text for ~65ms, twice: before the build and when Super drew the page again | brand.css hides the cover's content until `.enc-mid`; brand.js builds on the next frame while the cover is unbuilt; the cover's min-height fallback is 0 (56px showed the next band's heading under it until measured) |
+| The 404 — an unknown address (which shows /page-not-found in a full-window frame) and /page-not-found | Super's own footer, a white list of links, for up to 300ms; and one empty frame with the footer at the top when Super drew the page again | main.css §16 hides Super's footer content until footer.js has built (visibility; 3s); footer.js builds on the next frame while unbuilt; notfound.js rebuilds in the observer's microtask when the finder has gone |
+| Chain pages, fresh load | the page blank for 50–65ms after the first build: Super's second draw dropped the bands and the quiet tick rebuilt 30ms later | chain.js rebuilds in the same microtask (the id and the row are settled promises, so the build lands before the paint). And the name broke inside its word ("Cosmo / s Hub") for ~100ms before Outfit loaded: `fitName` fits once with a 15% margin on the fallback face, then exactly |
+| Chain pages after an in-app navigation from /blog | 6 of 28 — Agoric, Espresso, IOTA, Monad, NEAR, Zilliqa — marked "no" and left as raw Notion (on the live site before this audit) | chain.js read the page's id from the document's own data, which after a navigation is the first page's: on /blog the path is a post's Chain mention, and the first `blockId` after it a post's. From another page's data only an id written beside the path is taken; otherwise the page is fetched. From /blog 28 of 28 build |
+| Every page with a cover field | the field gone for 20–700ms and the label pairs on one line after Super drew the page again | covers.js redoes the cover in the observer's own microtask. The next frame was not soon enough: Super draws the page again inside a frame callback, so that frame painted bare, and a long task held the next one ~200ms (/governance) |
+
+**Left as they are:** /team's landing scrolls through the homepage to Who we are (a landing, not raw); the contact
+heading's line moves as Outfit loads; an unconverted guide is Super's tiles until it is converted. **Checked
+after:** every page builds, the wait mark always clears, an idle page makes 4–7 mutations in 3s, as live does.
+
+**The rule for a builder** (also in CLAUDE.md, "Things that bite"): hide what it replaces by Super's page class from
+the first paint (visibility and a 3s reveal), rebuild in the observer's own microtask when Super's second draw drops
+the build, and record the page with `flashcheck.mjs`, fresh and in-app, at 1440 and 390.

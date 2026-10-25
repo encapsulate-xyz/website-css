@@ -163,6 +163,13 @@
   margin-top: 0 !important;
 }
 
+/* A page that arrives by a client-side navigation is hidden until the stylesheets in its own head
+   have loaded (blocks.js sets the mark; 3s at most). Super swaps the page in before its CSS has
+   arrived, and it showed unstyled for up to 490ms (2026-10-25). */
+html[data-enc-css-wait] .super-content {
+  visibility: hidden !important;
+}
+
 /* Horizontal scrolling shall not occur. Also absorbs the 100vw overshoot from
    the full-bleed footer in section 14 when a classic scrollbar is present. */
 body {
@@ -4387,6 +4394,16 @@ body:has(.notion-root > .notion-callout:first-child > .notion-callout__content >
 .super-footer[data-enc-footer] > :not(.enc-foot) {
   display: none !important;
 }
+
+/* Super's own footer is not shown while footer.js has yet to build (2026-10-25): it was the white
+   list of links on screen for up to 300ms wherever the footer is in view as a page loads — the 404
+   page, a guide waiting for its index. Visibility, so it keeps its place; 3s, so a footer the script
+   cannot build still shows as configured. */
+.super-footer:not(:has(> .enc-foot)) > * {
+  visibility: hidden;
+  animation: enc-foot-reveal 0s linear 3s forwards;
+}
+@keyframes enc-foot-reveal { to { visibility: visible; } }
 
 .enc-foot {
   display: flex;

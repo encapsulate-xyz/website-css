@@ -273,6 +273,39 @@
     if (!a.rel) a.rel = "noopener";
   }, true);
 
+  /* a page that arrives by a client-side navigation waits for its own stylesheet (2026-10-25). Super
+     renders a page's head inside the page (main.super-content), in the same commit that swaps the page
+     in, so the page's CSS starts loading only once the page is up: measured from /blog, the page was
+     on screen unstyled for 0–50ms on a quiet network and up to 490ms on a busy one (/contact; /brand
+     180, /guides 100). This runs in the commit's own microtask, before anything is painted, and keeps
+     the page hidden (main.css §03) until every stylesheet it brought has loaded or failed, 3s at most.
+     A sheet already in memory has its `sheet` at once and is not waited for. While the document is
+     still parsing, a stylesheet in the body holds rendering by itself, so those are left alone. */
+  var waiting = [], gaveUp = 0;
+  function wait(link) {
+    if (link.sheet || waiting.indexOf(link) >= 0) return;
+    waiting.push(link);
+    document.documentElement.setAttribute("data-enc-css-wait", "");
+    var done = function () {
+      waiting.splice(waiting.indexOf(link), 1);
+      if (!waiting.length) { clearTimeout(gaveUp); document.documentElement.removeAttribute("data-enc-css-wait"); }
+    };
+    link.addEventListener("load", done, { once: true });
+    link.addEventListener("error", done, { once: true });
+    clearTimeout(gaveUp);
+    gaveUp = setTimeout(function () { waiting = []; document.documentElement.removeAttribute("data-enc-css-wait"); }, 3000);
+  }
+  new MutationObserver(function (muts) {
+    if (document.readyState === "loading") return;
+    muts.forEach(function (m) {
+      Array.prototype.forEach.call(m.addedNodes, function (n) {
+        if (n.nodeType !== 1) return;
+        var links = n.matches("link[rel~='stylesheet']") ? [n] : n.querySelectorAll("link[rel~='stylesheet']");
+        Array.prototype.forEach.call(links, function (l) { if (l.closest(".super-content")) wait(l); });
+      });
+    });
+  }).observe(document.documentElement, { childList: true, subtree: true });
+
   function tick() {
     Array.prototype.forEach.call(document.querySelectorAll(".notion-code"), enhance);
   }

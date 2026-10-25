@@ -548,6 +548,9 @@
   function start() {
     tick();
     new MutationObserver(function () {
+      /* Super drawing the page again takes the finder out with it: it goes back in this same task,
+         not the next, or the page stood empty under the footer for a frame (2026-10-25) */
+      if ((!live || !live.sec.isConnected) && mode()) { tick(); return; }
       // Super's error block or the page's own blocks may arrive after the first pass, and on a 404
       // the revived navbar.js brings window.encCounts a moment later
       if (framedOnce || !live || !live.sec.isConnected || mode() !== (live && live.mode) || !asked) schedule();

@@ -460,7 +460,7 @@
     // measured on a canvas, so it needs no layout and cannot miss a hero that is rebuilt: the
     // word's width at 100px in Outfit 600, less the name's own tracking (-0.058em a letter)
     var FONT = '600 100px "Outfit"';
-    function set() {
+    function set(spare) {
       var c = fitName.ctx || (fitName.ctx = document.createElement("canvas").getContext("2d"));
       if (!c) return;
       c.font = FONT;
@@ -468,10 +468,13 @@
       h.textContent.split(/\s+/).forEach(function (w) {
         if (w) em = Math.max(em, c.measureText(w).width / 100 - 0.058 * w.length);
       });
-      if (em > 0) h.style.setProperty("--name-em", (em * 1.02).toFixed(3));
+      if (em > 0) h.style.setProperty("--name-em", (em * (spare || 1.02)).toFixed(3));
     }
+    /* before Outfit has loaded the canvas measures the fallback face, so the first fit keeps a wide
+       margin and the exact one follows the font: with no fit at all until then, a fresh load broke
+       the name inside its word for 100ms ("Cosmo / s Hub", 2026-10-25) */
     if (!document.fonts || document.fonts.check(FONT)) set();
-    else document.fonts.load(FONT).then(set, set);
+    else { set(1.15); document.fonts.load(FONT).then(function () { set(); }, function () { set(); }); }
   }
 
   /* 01 · the chain: type on paper, the chain's tint as the field, the mark on the seam with the
@@ -982,7 +985,20 @@
     return /^[0-9a-f]{32}$/.test(key.replace(/-/g, "")) || m.classList.contains("parent-page__networks") ||
       m.classList.contains("parent-page__networks-mainnet") ? key : null;
   }
-  function idIn(text, path) {
+  /* The data in document.scripts is that of the page the document was loaded as. After a client-side
+     navigation it is another page's, where the path can be a mention of the chain — a post's or a
+     guide's Chain property, {"id":…,"title":…,"uri":"/networks/monad"} — and the first blockId after it
+     some other block's: from /blog, Monad was read as a post, marked "no" and left as raw Notion
+     (2026-10-25). Only an id written beside the path is taken from another page's data; the loose
+     search is for the page's own, and otherwise the page itself is fetched. */
+  var DOC_PATH = location.pathname.replace(/\/$/, "");
+  function idIn(text, path, own) {
+    var beside = text.indexOf('"uri":"' + path + '","blockId":"');
+    if (beside >= 0) {
+      var b = /"blockId":"([0-9a-f-]{36})"/.exec(text.slice(beside, beside + path.length + 60));
+      if (b) return b[1].replace(/-/g, "");
+    }
+    if (!own) return null;
     var at = text.indexOf('"uri":"' + path + '"');
     if (at < 0) return null;
     var m = /"blockId":"([0-9a-f-]{36})"/.exec(text.slice(at, at + 60000));
@@ -1000,11 +1016,11 @@
       var t = s.textContent || "";
       if (t.indexOf("__next_f") >= 0) raw += t + "\n";
     });
-    var found = idIn(decode(raw), path);
+    var found = idIn(decode(raw), path, path === DOC_PATH);
     ids[path] = found ? Promise.resolve(found)
       : fetch(location.pathname, { credentials: "same-origin" })
           .then(function (r) { return r.ok ? r.text() : ""; })
-          .then(function (h) { return idIn(decode(h), path); })
+          .then(function (h) { return idIn(decode(h), path, true); })
           .catch(function () { return null; });
     return ids[path];
   }
@@ -1123,9 +1139,16 @@
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", tick);
   else tick();
+  /* when Super draws a built chain page again it drops the bands, and the page stood blank for 50–65ms
+     until the quiet tick rebuilt it (a fresh load, every chain, 2026-10-25). The row and the id are
+     already in hand then, so the rebuild runs at once: its promises settle in this same task, before
+     anything is painted. */
   var t = 0;
-  new MutationObserver(function () { clearTimeout(t); t = setTimeout(tick, 30); })
-    .observe(document.documentElement, { childList: true, subtree: true });
+  new MutationObserver(function () {
+    clearTimeout(t); t = setTimeout(tick, 30);
+    var root = live && pageKey() === live.key && document.querySelector(".notion-root");
+    if (root && !root.contains(live.wrap)) tick();
+  }).observe(document.documentElement, { childList: true, subtree: true });
 
   window.encChain = { version: VERSION, decode: decode, rowIn: rowIn, rowOf: rowOf, shared: shared, chains: chains };
 })();

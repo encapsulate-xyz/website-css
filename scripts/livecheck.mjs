@@ -128,6 +128,9 @@ await send("Emulation.setDeviceMetricsOverride", { width: W, height: H, deviceSc
 if (process.env.REDUCED) await send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
 await send("Fetch.enable", { patterns: TAGS.map(t => ({ urlPattern: "*website-css@" + t + "/*" })) });
 await send("Page.enable");
+/* PRELOAD=file.js runs that file in the page before any of the page's own scripts — a logger that
+   has to see the first frames of a load (2026-10-25: the raw-Notion audit) */
+if (process.env.PRELOAD) await send("Page.addScriptToEvaluateOnNewDocument", { source: readFileSync(process.env.PRELOAD, "utf8") });
 await send("Page.navigate", { url: url + (url.includes("?") ? "&" : "?") + "lc=" + Date.now() });
 await sleep(+(process.env.WAIT || 9000));
 if (stepsFile) await (await import(resolve(stepsFile))).default({ at, move, click, press, wheel, pixel, sleep, shot });

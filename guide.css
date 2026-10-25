@@ -7,9 +7,22 @@
    Loaded from the SITE head, like post.css: a guide page has no Code panel of its own, so both
    the stylesheet and the script are site-wide and scoped by the page's own [data-enc-guide]. */
 
+/* ── no raw Notion before the build (2026-10-25) ─────────────────────────────────────────────
+   A fresh load showed Super's gallery of step tiles for up to 130ms before guide.js ran, then the
+   footer alone across the screen for up to 530ms while the script fetched /guides for the head: the
+   raw blocks went display none when it claimed the page, and the page folded up under the footer.
+   A guide is hidden by Super's own page class from the first paint until its bands are in, and keeps
+   its height while it waits. A guide with no numbered steps (one not converted yet) is shown as soon
+   as the page has parsed — guide.js marks it. 3s is the fallback. */
+.super-content.parent-page__guides .notion-root:not(:has(> .enc-gd)):not([data-enc-guide-none]) > * {
+  visibility: hidden;
+  animation: enc-gd-reveal 0s linear 3s forwards;
+}
+@keyframes enc-gd-reveal { to { visibility: visible; } }
+
 /* ── what the design does not draw ───────────────────────────────────────────────────────── */
-.notion-root[data-enc-guide] [data-enc-source] { display: none !important; }
-.notion-root[data-enc-guide] > *:not(.enc-gd) { display: none !important; }
+.notion-root[data-enc-guide]:has(> .enc-gd) [data-enc-source] { display: none !important; }
+.notion-root[data-enc-guide]:has(> .enc-gd) > *:not(.enc-gd) { display: none !important; }
 body:has(.notion-root[data-enc-guide]) .notion-header { display: none !important; }
 
 /* the bands run the full width; Super's own padding would inset them */

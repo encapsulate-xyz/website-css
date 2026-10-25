@@ -562,7 +562,14 @@
 
   function build(root) {
     var list = deck(root);
-    if (!list.length) return;
+    /* a guide with no numbered steps is not converted yet and stays as Super draws it: marked, once
+       the page's blocks are all in (the footer comes after them), so guide.css stops hiding it */
+    if (!list.length) {
+      var whole = document.readyState !== "loading" || document.querySelector("footer.super-footer");
+      if (whole && !root.hasAttribute("data-enc-guide-none")) root.setAttribute("data-enc-guide-none", "");
+      return;
+    }
+    if (root.hasAttribute("data-enc-guide-none")) root.removeAttribute("data-enc-guide-none");
 
     /* claim the page before the fetch: the observer fires again while the index is loading, and
        two builds in flight appended two sets of bands */
@@ -633,6 +640,9 @@
     build(root);
   }
 
+  /* the head waits for /guides (the title, the marks, the next guide), so on a guide the fetch starts
+     as this file runs, not once the page has parsed: the page is hidden until the bands are in */
+  if (guidePage()) index();
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", tick);
   } else {

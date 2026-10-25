@@ -302,10 +302,15 @@
     if (footer) build(footer);
   }
 
-  var t = 0;
+  /* a footer not built yet — on load, or after Super renders it again — is built on the next frame,
+     not once the page goes quiet: that left Super's own footer up for up to 300ms where it is in view
+     (main.css §16 now hides it until the build, 2026-10-25). A later change still rebuilds. */
+  var t = 0, f = 0;
   new MutationObserver(function (muts) {
     if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-foot"); })) return;
     clearTimeout(t); t = setTimeout(apply, 60);
+    var footer = !f && document.querySelector("footer.super-footer");
+    if (footer && !footer.querySelector(":scope > .enc-foot")) f = requestAnimationFrame(function () { f = 0; apply(); });
   }).observe(document.body, { childList: true, subtree: true });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply);
   else apply();

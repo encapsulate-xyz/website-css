@@ -40,7 +40,7 @@ note goes into its subject's file, not here; only a rule for every task belongs 
 | `docs/paths-and-404.md` | the paths, the redirects, notfound.css + notfound.js, the section names (anchors.js) | Paths — no /mainnet, and the 404 page; Section names |
 | `docs/seo.md` | how Super sets it, what is set, the SEO job | SEO; The SEO job — every database row's card, title, description, and four content properties |
 | `docs/site-data.md` | the private repo whose scheduled jobs write Notion | site-data — the jobs |
-| `docs/audit.md` | the phone work and the full-width audit | Below 900px; The audit of 2026-09-26 — every page the navbar and footer reach, 320–2560 |
+| `docs/audit.md` | the phone work, the full-width audit and the raw-Notion audit | Below 900px; The audit of 2026-09-26 — every page the navbar and footer reach, 320–2560; The raw-Notion audit of 2026-10-25 |
 | `docs/todo.md` | every TODO and the open items | TODO — run both governance jobs from a GitHub Action; Done — the APY property is filled by site-data; TODO — the Networks set's open values; TODO — three chain pages still point outside the site; TODO — the Sui guide moves to Slush; TODO — the GitHub Actions; TODO — check every line break against its handoff; TODO — the newsletter; TODO — the Services tiles come from the menu, not the page; TODO — connect Super's own MCP; Open items |
 
 **On "what's left to do", read `docs/todo.md`.** **React #418 on every page is settled: leave it and do not
@@ -177,7 +177,8 @@ User rules that stand on every task:
 | `docs/*.md` | the notes by subject — each page's and system's handoffs, decisions and traps (see "The notes, by subject" above) | — |
 | `build.py` | strips comments into `dist/`, copies the JS | — |
 | `scripts/paste_table.py` | prints the paste table from head/*.html vs what the live pages serve | — |
-| `scripts/livecheck.mjs` | loads a live page in headless Chrome with pinned tags' files served from this repo (or a pushed commit) — pass every tag the page pins, comma-separated (`v263,v227,v220`), runs a check in the page, optional real mouse, wheel and key steps (`move`, `click` — a real press and release — `wheel(x, y, dy)` and `press(key)`) and a screenshot; `REDUCED=1` loads it as a reader who asked for reduced motion. The scratchpad copies it replaced were lost on 2026-09-24 | — |
+| `scripts/livecheck.mjs` | loads a live page in headless Chrome with pinned tags' files served from this repo (or a pushed commit) — pass every tag the page pins, comma-separated (`v263,v227,v220`), runs a check in the page, optional real mouse, wheel and key steps (`move`, `click` — a real press and release — `wheel(x, y, dy)` and `press(key)`) and a screenshot; `REDUCED=1` loads it as a reader who asked for reduced motion, `PRELOAD=file.js` runs a file before the page's own scripts. The scratchpad copies it replaced were lost on 2026-09-24 | — |
+| `scripts/flashcheck.mjs`, `scripts/flashsheet.py` | record every frame Chrome paints while a page arrives — `cold <url>` or `nav <from> <to>` through Super's router — with pinned tags served from this repo, and lay the distinct frames out on a sheet (Pillow). Built for the raw-Notion audit of 2026-10-25 | — |
 | `scripts/audit.mjs` | audits a live page at many widths (default 16, 320–2560; touch under 835) with every tag it pins served from this repo: sideways scroll and what causes it, text cut by its box, broken images, script errors, failed requests, screenshots per screen (`--shots`), a page check of your own (`--check`). `BLOCK=1` loads the page with none of our files, `ALLOW=a.js,b.js` with only those scripts — how a fault is traced to us or to Super. Built for the audit of 2026-09-26 |
 | `scripts/make_glyph.py`, `scripts/GLYPH-SPEC.md` | the glyph pipeline (the design project's, identical to the brand kit's): any logo → pure black on transparency, 600×600, longest solid side 288, centred; modes alpha / inverse / badge; the spec's checks | — |
 | `scripts/og_cards.py`, `scripts/og/` | the social cards (og:image) of the database pages — `posts`, `chains` or `guides`: renders each page's card from its own design (`og/post.html` = Blog Cover System 17d, the chain hero captured live, `og/guide.html` = the guide head drawn by guide.css; `og/render.mjs` is the one-tab headless renderer) and attaches it to the row's `meta:image` with its text properties (see "SEO") | — |
@@ -416,6 +417,14 @@ A new page script must follow the same rule: site head, and driven by an observe
 load order.
 
 ## Things that bite in Super / Notion markup
+
+- **Super draws a page twice on a fresh load, and swaps a page in before its own CSS has loaded** (the raw-Notion
+  audit, 2026-10-25, `docs/audit.md`). A script-built section is hidden by Super's page class from the first paint
+  until it is built (visibility and a 3s reveal), is rebuilt in the observer's own microtask when the second draw
+  drops it — a rebuild after a quiet period, or even on the next frame, painted the raw page in between — and is
+  recorded with `scripts/flashcheck.mjs`, fresh and in-app, at 1440 and 390. A page's own head CSS is covered by
+  blocks.js's wait (`html[data-enc-css-wait]`). After a client-side navigation `document.scripts` hold the *first*
+  page's data, not this one's (chain.js read Monad's id out of /blog's).
 
 - **Every card property carries `z-index: 10` (Super's notion.css), and a grid or flex item's
   z-index works without `position`.** Where a gallery's cards are `display: contents`, their

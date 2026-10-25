@@ -386,12 +386,16 @@
     cover(); coverTop(); bands(); marks(); colour(); faces(); rules();
   }
 
-  var t = 0;
+  /* a cover not built yet — on load, or after Super draws the page again — is built on the next
+     frame, not once the page goes quiet (brand.css hides its lines until then, 2026-10-25) */
+  var t = 0, f = 0;
   new MutationObserver(function (muts) {
     if (muts.every(function (m) {
       return m.target.closest && m.target.closest(".enc-marks, .enc-swatches, .enc-face, .enc-rules");
     })) return;
     clearTimeout(t); t = setTimeout(build, 120);
+    var box = !f && /^\/brand\/?$/.test(location.pathname) && byId(COVER);
+    if (box && !box.querySelector(".enc-mid")) f = requestAnimationFrame(function () { f = 0; build(); });
   }).observe(document.body, { childList: true, subtree: true });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
   else build();

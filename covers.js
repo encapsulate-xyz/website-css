@@ -334,9 +334,24 @@
     setVar(cover, "--enc-field-rise", String(Math.round((b.top - top) / b.height * 1000) / 1000));
   }
 
+  /* a cover that has lost its field or its pairs — Super drew the page again — is redone at once, in
+     the observer's own microtask: waiting for the page to go quiet left the field gone for 20–700ms
+     and the label pairs on one line on a fresh load, and the next frame was not soon enough either —
+     Super draws the page again inside a frame callback, so that frame was painted bare and a long
+     task held the next one for 200ms (/governance, 2026-10-25) */
+  function unbuilt() {
+    var cover = document.querySelector(".notion-root > .notion-callout:first-child");
+    if (!cover || !cover.querySelector(":scope > .notion-callout__content > h1.notion-heading")) return false;
+    var path = location.pathname.replace(/\/+$/, "") || "/";
+    if (FIELDS[path] && !cover.querySelector(":scope > .enc-cover")) return true;
+    return !cover.hasAttribute("data-enc-pairs") &&
+      cover.querySelectorAll(":scope > .notion-callout__content > p.notion-text").length >= 5;
+  }
   var t = 0;
-  new MutationObserver(function () { clearTimeout(t); t = setTimeout(apply, 60); })
-    .observe(document.body, { childList: true, subtree: true });
+  new MutationObserver(function () {
+    clearTimeout(t); t = setTimeout(apply, 60);
+    if (unbuilt()) apply();
+  }).observe(document.body, { childList: true, subtree: true });
   window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(apply, 100); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(apply);
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply);

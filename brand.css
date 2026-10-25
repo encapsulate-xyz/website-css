@@ -29,7 +29,9 @@
   margin: 0 calc(50% - 50vw) !important;
   /* the top clears the bar that lies over the cover */
   padding: clamp(96px, 12vh, 128px) clamp(28px, 7vw, 110px) clamp(40px, 6vh, 72px) !important;
-  min-height: calc(100svh - var(--enc-cover-top, 56px)) !important;
+  /* 0 before brand.js measures it: the cover starts at the top edge, and 56px let the next band's
+     heading show under it until the build (2026-10-25) */
+  min-height: calc(100svh - var(--enc-cover-top, 0px)) !important;
   display: flex !important;
   background-color: #FAFAF8 !important;
   background-image:
@@ -40,6 +42,15 @@
   border: 0 !important;
   border-radius: 0 !important;
 }
+
+/* the cover's five lines and two buttons are not shown before brand.js has paired them (2026-10-25):
+   a fresh load showed them as five plain centred lines for 65ms, twice — before the build and again
+   when Super drew the page a second time. 3s is the fallback. */
+.notion-root #block-3dee800a5138811b9298fe700f0a4d09:not(:has(.enc-mid)) > .notion-callout__content {
+  visibility: hidden;
+  animation: enc-br-reveal 0s linear 3s forwards;
+}
+@keyframes enc-br-reveal { to { visibility: visible; } }
 
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 .enc-cover,
 .notion-root #block-3dee800a5138811b9298fe700f0a4d09 > .notion-callout__icon,
