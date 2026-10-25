@@ -791,3 +791,10 @@ button.enc-ch__disc:focus-visible { outline: 3px solid rgba(0, 0, 0, 0.32); outl
 
 /* a mono caption left one word on its last line */
 .enc-ch__cap9 { text-wrap: pretty; }
+
+/* a first visit draws the hero before the chain list is known: the field has no tint until the
+   list comes, and then fades in — the colour is the chain's place in the list, as on /networks, and
+   a guess from Order showed 12 of 28 chains in one colour and then another (chain.js, 2026-10-25) */
+.enc-ch__field[data-enc-late] { animation: enc-ch-tint 280ms ease-out both; }
+@keyframes enc-ch-tint { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .enc-ch__field[data-enc-late] { animation: none; } }

@@ -26,7 +26,7 @@ is now `id="block-networks-<chain>"` with a `.notion-collection-card__anchor` li
 | The line under the name, the buttons, "What we run" (a two-column table), the five questions (Heading 3 + paragraph) | the **row page's own blocks**, written by `scripts/chain_pages.py` from `notion/chain-pages.json` |
 | The words every chain page shares (band names, figure labels, captions, the estimate's lines) | the **"Chain page copy" toggle on /networks** (`3e5e800a…81d484b8…`), hidden there by chain.css |
 | A chain's own words where the shared ones are untrue (Lido's fee, Avalanche's staking period, Mina's and Zilliqa's reward lines) and the Lido validators band | the row page's own **"Chain page copy" toggle**, which overrides the shared one key by key |
-| The other chains (the drifting pills) and each page's tint | the set's view on **/services** (it shows Tier, Stage and Order): god, high and medium tiers, Order-sorted; the tint is the chain's position in that order, the same pastel as its /networks card |
+| The other chains (the drifting pills) and each page's tint | the set's view on **/services** (it shows Tier, Stage and Order): god, high and medium tiers, Order-sorted; the tint is the chain's position in that order, the same pastel as its /networks card. On a first visit, before the list is kept, the field has no tint and fades in when the list comes — never a guess from Order, which has gaps (2026-10-25, v405) |
 
 **No raw Notion before the build.** chain.js runs deferred, after the first paint, and Super's
 hydration strips its attribute once more before it settles — the raw blocks showed twice (437ms,

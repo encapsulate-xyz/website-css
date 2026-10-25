@@ -399,11 +399,14 @@
     P.rank = -1;
     var here = location.pathname.replace(/\/$/, "");
     var me = function (x) { return x.id === id || x.href === here || x.href === "/" + id; };
-    list.forEach(function (x, i) { if (me(x)) P.rank = i; });
+    (list || []).forEach(function (x, i) { if (me(x)) P.rank = i; });
+    /* the tint is the chain's place in the list, as on /networks. Before the list is known (a first
+       visit: null) there is no tint, not a guess from Order — Order has gaps (no row holds 16), and
+       the guess drew 12 of 28 chains in one colour and then another (2026-10-25) */
     var order = num(row.Order);
-    P.tint = TINTS[(P.rank >= 0 ? P.rank : (isNaN(order) ? 0 : order)) % 5];
+    P.tint = P.rank >= 0 ? TINTS[P.rank % 5] : list ? TINTS[(isNaN(order) ? 0 : order) % 5] : "";
     P.glyph = row.Cover || "";
-    P.others = list.filter(function (x) { return !me(x) && TIERS[x.tier]; });
+    P.others = (list || []).filter(function (x) { return !me(x) && TIERS[x.tier]; });
     P.rate = num(row["Reward rate"]);
     P.comm = num(row.Commission);
     P.src = src;
@@ -458,23 +461,26 @@
      takes the smaller of the design size and what the column holds (100cqi / --name-em). */
   function fitName(h) {
     // measured on a canvas, so it needs no layout and cannot miss a hero that is rebuilt: the
-    // word's width at 100px in Outfit 600, less the name's own tracking (-0.058em a letter)
-    var FONT = '600 100px "Outfit"';
+    // word's width at 100px in Outfit 600, less the name's own tracking (-0.058em a letter). The
+    // canvas is given the name's own stack (chain.css), so before Outfit has loaded it measures the
+    // face the name is drawn in: given "Outfit" alone it measured the browser's default serif, far
+    // narrower than the sans the name falls back to, and the first fit still broke "Cosmo / s Hub"
+    var FONT = '600 100px "Outfit"', STACK = '600 100px "Outfit", sans-serif';
     function set(spare) {
       var c = fitName.ctx || (fitName.ctx = document.createElement("canvas").getContext("2d"));
       if (!c) return;
-      c.font = FONT;
+      c.font = STACK;
       var em = 0;
       h.textContent.split(/\s+/).forEach(function (w) {
         if (w) em = Math.max(em, c.measureText(w).width / 100 - 0.058 * w.length);
       });
       if (em > 0) h.style.setProperty("--name-em", (em * (spare || 1.02)).toFixed(3));
     }
-    /* before Outfit has loaded the canvas measures the fallback face, so the first fit keeps a wide
-       margin and the exact one follows the font: with no fit at all until then, a fresh load broke
-       the name inside its word for 100ms ("Cosmo / s Hub", 2026-10-25) */
-    if (!document.fonts || document.fonts.check(FONT)) set();
-    else { set(1.15); document.fonts.load(FONT).then(function () { set(); }, function () { set(); }); }
+    /* before Outfit has loaded the name is fitted to the fallback face, then again to Outfit: with
+       no fit until the font came, a fresh load broke the name inside its word for 100ms (2026-10-25) */
+    set();
+    if (document.fonts && !document.fonts.check(FONT))
+      document.fonts.load(FONT).then(function () { set(); }, function () { set(); });
   }
 
   /* 01 · the chain: type on paper, the chain's tint as the field, the mark on the seam with the
@@ -484,6 +490,7 @@
     s.setAttribute("data-enc-band", "hero");
     var field = el("div", "enc-ch__field");
     field.style.background = P.tint;
+    if (P.late) field.setAttribute("data-enc-late", "");
     field.setAttribute("aria-hidden", "true");
     s.appendChild(field);
     var type = el("div", "enc-ch__type");
@@ -1024,7 +1031,7 @@
           .catch(function () { return null; });
     return ids[path];
   }
-  var building = null;
+  var building = null, tintless = null;
   /* Build at once from what is at hand — the row's own data is in the page, and the shared words
      and the chain list come from localStorage (or the fallback words and no list on a first ever
      visit) — then read both fresh and build again only if they differ. The first visit used to
@@ -1038,7 +1045,7 @@
     rowOf(id).then(function (row) {
       if (pageKey() !== key) { building = null; return; }
       if (!isChain(row)) { root.removeAttribute("data-enc-chain"); building = null; return; }
-      var had = { words: kept("enc-chain-copy", {}), list: kept("enc-chain-list", []) };
+      var had = { words: kept("enc-chain-copy", {}), list: kept("enc-chain-list", null) };
       render(root, id, key, row, src, had.words, had.list);
       Promise.all([shared(), chains()]).then(function (res) {
         var words = res[0] || {}, list = res[1] || [];
@@ -1053,7 +1060,10 @@
 
   function render(root, id, key, row, src, shared, list) {
       var words = Object.assign({}, shared || {}, linesOf(src.toggle));
-      var P = new Page(root, id, row, words, list || [], src);
+      var P = new Page(root, id, row, words, list || null, src);
+      // the field comes in when the list does, on a page first drawn without it
+      P.late = !!P.tint && tintless === key;
+      tintless = P.tint ? null : key;
       var wrap = el("div", "enc-ch");
       wrap.appendChild(P.hero());
       var vals = P.validators();

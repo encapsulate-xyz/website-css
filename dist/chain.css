@@ -229,3 +229,8 @@ to{transform: translateX(-50%);}
 @media (hover: none){.enc-ch a.enc-ch__tert,.enc-ch-dock a.enc-ch__tert{padding-block: 12px;margin-block: -12px;}
 }
 .enc-ch__cap9{text-wrap: pretty;}
+.enc-ch__field[data-enc-late]{animation: enc-ch-tint 280ms ease-out both;}
+@keyframes enc-ch-tint{from{opacity: 0;}
+}
+@media (prefers-reduced-motion: reduce){.enc-ch__field[data-enc-late]{animation: none;}
+}
