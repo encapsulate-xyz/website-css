@@ -1598,9 +1598,11 @@
          the file is asked for once that still is on screen. A video is the page's largest element until a frame of
          it is painted, so PageSpeed timed the page by the whole 1.3MB file (LCP 7.9s on a phone); a poster is what
          it times instead, and the file no longer shares the line with the page's first paint. The still is the
-         same file at the same size, so the hero looks as it did; the loop starts a frame later. */
-      var still = /url\(["']?([^"')]+)/.exec(getComputedStyle(v).backgroundImage || "");
-      if (still && !v.getAttribute("poster")) v.poster = still[1];
+         same file at the same size, so the hero looks as it did; the loop starts a frame later. The still's address
+         is home.css's own, as the stylesheet resolves "../img/home-loop-poster.webp" (reading the painted
+         background instead would cost a style pass before the first paint). */
+      var css = document.querySelector('link[rel="stylesheet"][href*="/dist/home.css"]');
+      if (css && !v.getAttribute("poster")) v.poster = css.href.replace(/dist\/home\.css.*$/, "img/home-loop-poster.webp");
       requestAnimationFrame(function () {
         setTimeout(function () {
           v.autoplay = true;
