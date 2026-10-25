@@ -213,6 +213,14 @@ holds, and the Search Console routine").
   (`backups/super-hidden-2026-10-25.json` says how), or ask the user whether the old Newsletters and Contact Us
   databases, which no form writes to any more, can be emptied.
 
+## TODO — rebuild llms.txt on a schedule (2026-10-25)
+
+The six llms files (`docs/seo.md`, "llms.txt") are a snapshot of the day they were built: the rates, the stake and the
+vote record move every day. A weekly site-data job could run `scripts/llms.py` and replace the files in Super. That
+needs the upload done without the dashboard tab (Super's own MCP lists files, see the TODO above, or the presigned
+upload the Files page uses, not yet traced). Until then, rebuild by hand with each page change
+(`notion/new-row-checklist.md`).
+
 ## Open items
 
 - /services, /investments, /brand, /blog, /guides were still served with site Head v55 at the last

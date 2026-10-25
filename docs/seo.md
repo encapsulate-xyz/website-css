@@ -185,6 +185,54 @@ Search Console tab was in front). The Pages report's indexed list lags by days, 
 Removals: NEW REQUEST, the URL into the New Request box's own text input (the side drawer is a `role="dialog"` too),
 NEXT, SUBMIT REQUEST; the list's "1–10 of N" is the count to watch, not the rows on the page.
 
+## llms.txt — the site for language models (2026-10-25)
+
+The user: "add a very comprehehnsive and complete llms file". The site had none (both addresses 404), and Lighthouse's
+Agentic Browsing category checks for one (an H1, a Markdown link, at least 50 characters). **Six files, served from
+Super → Files** (Pro; "small text files served from your domain", up to 250 kB each) as `text/plain` at
+`https://encapsulate.xyz/<name>`, built by `scripts/llms.py` and committed in `llms/`:
+
+| File | What | Size on 2026-10-25 |
+|---|---|---|
+| `llms.txt` | the index ([llmstxt.org](https://llmstxt.org)): H1, the homepage's description as the summary, the hero's two lines, every page as `- [title](url): its own meta description` under Company, Networks, Staking guides, Blog and Optional (brand, the legal pages), then the five full-text files | 22 kB |
+| `llms-full.txt` | every page's text as Markdown but the blog posts and the vote record | 152 kB |
+| `llms-blog.txt`, `llms-blog-2.txt` | the 38 posts | 235 + 159 kB |
+| `llms-votes.txt`, `llms-votes-2.txt` | /governance/votes, all 1,183 rows (the 729 votes from before the record have none), the table's header repeated at the top of each part | 248 + 122 kB |
+
+**Why five full-text files:** Super takes nothing over 250 kB, and the vote record alone is 369 kB, the posts 385 kB,
+everything else 152 kB. `llms.py` packs each group into parts under the limit and cuts a page only between blocks or
+table rows.
+
+**How a page is read** (`scripts/llms_extract.js`, run in each sitemap page by `livecheck.mjs` at 1440, reduced motion,
+9s wait): what a reader sees, in order. Headings, paragraphs, lists, tables, code, quotes and links as Markdown; **a closed toggle's
+content is read** (the homepage's "What you get" lists, the FAQs). Not read: the navbar and footer, any hidden block
+(copy toggles hidden by id, `[data-enc-source]` galleries), `aria-hidden` copies (marquees), drawings, controls, and
+on a chain page the trail over each section and the calendar's day cells (`.enc-ch__crumb`, `.enc-ch__week`,
+`.enc-ch__days`). A block repeating one of the four before it is dropped. Left out of the index: /team (a forward to
+/#team) and /page-not-found. **/governance/votes is in**, though it is noindex for search: llms.txt is not a search
+index, and the record is the one page with every vote and its reason. Checked on the first build: all 112 sitemap pages
+are in the index, no copy toggle's keys leaked in, and none of the Terra per-validator names appear.
+
+**It is a snapshot.** The live figures (the stake, delegators, every rate and commission) and the record are as they
+read on the day it was built; each file says that day. **Run it again whenever a page is added, moved, removed or
+rewritten** (`notion/new-row-checklist.md`), and upload the changed files:
+
+```bash
+python3 scripts/llms.py           # reads every sitemap page, about 5 minutes, four at a time
+python3 scripts/llms.py --cached  # lays out again from the pages read last time (backups/llms-pages/)
+```
+
+**Uploading** (from a visible app.super.so tab, the Files page, `/site/<site>/files`): the API's `addSiteFiles(input:
+{id: <site>, files: [{name, dir: root, content}]})` wants an *uploaded file's key* as `content`, not the text
+(`INVALID_FILE_KEY`), so hand the files to the page's own input and let it upload them. Commit and push `llms/`,
+fetch each file from `cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@<full sha>/llms/<name>`, check its SHA-1
+against the local file, then build a `DataTransfer` of `new File([text], name, {type: "text/plain"})`, set it as
+`input[type=file]`'s `files` and dispatch `change`; the toast reads "<name> is live" and `site(id) { files { name dir
+size } }` lists it. Check with curl: 200, `text/plain`, byte-identical to `llms/`. **The page refuses a name that
+is already there**, and `updateSiteFile(input: {siteId, id, dir})` only moves a file between `root` and
+`wellKnown`. So to replace a file, first `removeSiteFile(input: {siteId, id})`, then upload it again. That route
+follows from the API's shape and has not been run yet.
+
 ## The SEO job — every database row's card, title, description, and four content properties (built 2026-09-30)
 
 `site-data/jobs/content/seo.mjs`, `content.yml` (daily, 07:10 UTC; item E1 with B1, B2, U1, U3 in the plan): it goes

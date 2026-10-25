@@ -54,6 +54,8 @@ the steps of the SEO audit of 2026-09-26/28, for Google and for AI search. Keep 
       one without simply goes (404).
 - [ ] **Check the live HTML** after the refresh: status 200, one canonical and it is its own, the title, the
       description, `og:image` on assets.super.so, no noindex, in `sitemap.xml`.
+- [ ] **llms.txt**: `python3 scripts/llms.py`, commit `llms/`, and upload the files that changed to Super → Files
+      (remove the old one first; `docs/seo.md`, "llms.txt"). A new page joins the index and its full-text file.
 - [ ] **Search Console, every new page** (CLAUDE.md, "After every task, Search Console"; I do it, in the user's signed-in
       Chrome): URL inspection → not on Google → REQUEST INDEXING; past the day's quota, add it to `docs/todo.md`,
       "TODO — Search Console". A moved page: inspect the new path. Say in the reply which were requested.
@@ -62,6 +64,7 @@ the steps of the SEO audit of 2026-09-26/28, for Google and for AI search. Keep 
 
 - [ ] Back it up first (the row and its blocks, as `backups/<what>-<date>.json`).
 - [ ] Search Console: if the removed page is on Google, Removals → New request (or leave it to the 404 or redirect, and say so).
+- [ ] Rebuild llms.txt (`python3 scripts/llms.py`) and replace the changed files in Super → Files.
 - [ ] Remove its page in Super (`removeSitePage`), then put it in Notion's trash — a refetch of a trashed
       page makes it 404, but Super keeps serving its cached copy until then.
 - [ ] A successor exists (a guide for a guide post)? Add a 308 at the old path to it.
