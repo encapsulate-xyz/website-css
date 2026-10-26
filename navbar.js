@@ -548,6 +548,40 @@
     return w;
   }
 
+  /* WHAT DOES NOT FIT GIVES WAY, measured on the drawn panel (2026-10-26). The row is the preview's height at
+     every width, and the ledger and the third column clip at its edge, so content that ran past it was simply cut:
+     - THE LEDGER. The file: "the ledger divides the fixed row equally among the group's pages, so any count fits
+       by construction (five pages → 40px rows)". Under about 1130px Services' five pages ran past the row, and
+       the clip cut Bots in half and hid Monitoring, so it could not be reached from the bar. Where they do not
+       fit, the rows drop their line and share the row (main.css, `[data-enc-crowded]`).
+     - THE CHAINS. A rate stays on one line, as the file draws it — a range ("4.6–5.4%") broke onto two — and
+       where a name would be cut beside its rate, the column keeps the names and the rates give way, as they
+       already did at 1101–1365 ("The name stays, the rate goes"): "Cosm…" and "Avala…" at 1440.
+     Both are measured with the attribute off and set only if needed, in the same task, so nothing paints between. */
+  function crowd(box, over) {
+    if (!box) return;
+    box.removeAttribute("data-enc-crowded");
+    if (over(box)) box.setAttribute("data-enc-crowded", "");
+  }
+  function fitLedger(panel) {
+    crowd(panel.querySelector(".super-navbar__list-content-column"), function (c) {
+      return c.scrollHeight > c.clientHeight + 1;
+    });
+  }
+  function fitChains(box) {
+    crowd(box, function (b) {
+      var rated = all(b, ".enc-nav__row-fig").some(function (f) { return f.offsetWidth > 0; });
+      return rated && all(b, ".enc-nav__row-name").some(function (n) { return n.scrollWidth > n.clientWidth + 1; });
+    });
+  }
+  function fitOpen() {
+    all(document, ".super-navbar__list-content[data-enc-nav]").forEach(function (panel) {
+      fitLedger(panel);
+      var box = panel.querySelector('.enc-nav__third[data-enc-filled] .enc-nav__extra[data-enc-kind="chains"]');
+      if (box) fitChains(box);
+    });
+  }
+
   var DRAW = {
     chains: function (box, rows) {
       rows.forEach(function (c, i) {
@@ -1365,6 +1399,7 @@
           extra.setAttribute("data-enc-kind", kind);
           DRAW[kind](extra, rows);
           third.setAttribute("data-enc-filled", "");
+          if (kind === "chains") fitChains(extra);
         });
       }, docs[page] ? 0 : 220);
     }
@@ -1400,6 +1435,7 @@
       a.addEventListener("focus", function () { show(a); });
     });
     show(links[0]);
+    fitLedger(panel);
   }
 
   /* WHICH ITEM IS THE PAGE YOU ARE ON. The design gives it paper, a ring and the highlight. Super
@@ -1932,6 +1968,7 @@
   });
   window.addEventListener("resize", function () {
     if (sheetOpen() && !window.matchMedia(COMPACT).matches) closeSheet(false);
+    fitOpen();
   });
 
   /* Super renders each group's trigger as a span with no tabindex, so a keyboard never reached a
@@ -1967,7 +2004,7 @@
 
   /* a marker, so a live page can be asked which build ran — and the readers, so each can be run
      against its page from the console without opening the menu */
-  window.encNav = { version: 19, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
+  window.encNav = { version: 20, menu: function () { return menu; }, openSheet: openSheet, closeSheet: closeSheet, counts: counts, read: READ, draw: DRAW, kind: KIND, shot: shotOf, page: pageOf,
     groups: function () { return groups; }, harvest: function () { return { done: harvested, tries: harvestTries }; },
     ground: ground, isInk: isInk, groundUnder: groundUnder, wordmark: wearWordmark,
     band: band };

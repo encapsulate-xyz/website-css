@@ -668,6 +668,10 @@ body .super-root nav.super-navbar:has(~ :where(.super-content-wrapper) > .super-
   width: 100% !important;
   max-width: none !important;
   min-width: 0 !important;
+  /* Super caps the panel at 60vh and scrolls what is past it (super.css); the panel is 478px from 1366 up, so a
+     window under 797px tall cut its foot and put a scrollbar inside it — a 1440 × 900 MacBook's Chrome is about
+     790, a 1280 × 800 lost 26px (2026-10-26). The file has no cap: it may take the whole screen under the bar. */
+  max-height: calc(100vh - 64px) !important;
   margin: 0 !important;
   padding: 26px 44px 22px !important;   /* the design's own gutter */
   border: 0 !important;
@@ -742,6 +746,24 @@ body .super-root nav.super-navbar:has(~ :where(.super-content-wrapper) > .super-
   line-height: 1.4;
   color: #6B6F68;
 }
+
+/* a ledger whose pages run past the row (navbar.js fitLedger, "What does not fit gives way"): the file's rule,
+   "the ledger divides the fixed row equally among the group's pages … five pages → 40px rows" — the rows share
+   the row, never taller than the design's 52, and keep their names; the line under each gives way */
+.super-root .super-navbar__list-content .super-navbar__list-content-column[data-enc-crowded] > li {
+  display: flex;                   /* each link sits in Super's own li, which is what shares the column */
+  flex: 1 1 0;
+  min-height: 0;
+  max-height: 52px;
+}
+.super-root .super-navbar__list-content .super-navbar__list-content-column[data-enc-crowded] .super-navbar__list-item {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  align-content: center !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+.super-navbar__list-content-column[data-enc-crowded] .enc-nav__desc { display: none; }
 
 /* the destination, filling the middle column */.enc-nav__preview {
   display: flex;
@@ -904,6 +926,7 @@ body .super-root nav.super-navbar:has(~ :where(.super-content-wrapper) > .super-
 
 .enc-nav__row-fig {
   margin-left: auto;
+  white-space: nowrap;             /* the file's own: a range rate ("4.6–5.4%") broke onto two lines */
   font-family: var(--type-mono), ui-monospace, monospace;
   font-size: 11px;
   font-variant-numeric: tabular-nums;
@@ -911,6 +934,8 @@ body .super-root nav.super-navbar:has(~ :where(.super-content-wrapper) > .super-
 }
 
 .enc-nav__row-fig[data-enc-rate] { color: #3F6B27; }
+/* where a name would be cut beside its rate, the names stay and the rates give way (navbar.js fitChains) */
+.enc-nav__extra[data-enc-kind="chains"][data-enc-crowded] .enc-nav__row-fig { display: none; }
 
 /* lists, guides and posts: rows under hairlines */
 .enc-nav__third[data-enc-filled] .enc-nav__extra[data-enc-kind="list"],

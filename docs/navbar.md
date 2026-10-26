@@ -314,3 +314,32 @@ in Notion) and its capture, which is now the new /services band on the Sui split
 kept as `backups/nav-dashboards-2026-10-21-built.png`). The capture before this round is in
 `backups/nav-dashboards-2026-09-24.*`. **A new picture needs a new navbar.js pin**: navbar.js asks for
 `img/nav-panels/<name>.webp` beside its own tag, so the image changes only when site.html's navbar.js tag does.
+
+**The pass of 2026-10-26 (v418): the Brand kit capture, and what does not fit gives way.** Read against the file
+again, capture by capture (every `cover-thumbs` and `panel-thumbs-2x` file hashed against `img/`) and string by
+string (DESC, ABOUT, the groups, SEARCH); every panel hovered, row by row, at nine widths from 960 to 1920.
+- **The Brand kit capture is the line grid.** The file's `THUMB_V = 7` says why ("brand-kit on the line grid, 22 Oct
+  2026"): /brand's cover changed from the dot grid to the line grid in v375 and the design recaptured it; the bar kept
+  showing the dots. `img/nav-covers/brand-kit.png` is the file's, the WebP made as the others were (q88, `-m 6
+  -sharp_yuv`, 18.6KB). The other eight covers and the five tool captures are byte for byte the file's (the Networks
+  cover past `get_file`'s cut, by its first 192KB). The copy matched.
+- **The ledger fits its row** (navbar.js `fitLedger`, main.css `[data-enc-crowded]`). The file: "the ledger divides
+  the fixed row equally among the group's pages, so any count fits by construction (five pages → 40px rows)" — its
+  own code never did, and the row is the preview's height. Under about 1130px Services' five pages ran past it and the
+  clip cut Bots in half and hid Monitoring, which could not be reached from the bar (at 960: rows to 447 in a column
+  ending at 375). Where the rows do not fit, they drop their line and share the row through Super's own `li`s (the
+  links sit in them; a flex rule on the links did nothing and they fell to 15px), never taller than 52: 41px at 960,
+  45 at 1024, 52 from about 1100. From 1180 every line is there, as before.
+- **A chain's rate is one line, and gives way to the names.** The file draws the rate `nowrap`; ours wrapped, and
+  Avalanche's range "4.6–5.4%" stood on two lines beside "Avala…", with "Cosm…" and "EigenCl…" at 1366–1536. `nowrap`
+  alone cut Avalanche to a letter. `fitChains` keeps the names whenever one would be cut beside its rate and drops
+  the column's rates — the same choice as 1101–1365 ("The name stays, the rate goes") — so from 1101 to about 1640
+  the column is names only, and the rates show from there up (1728: all 21 whole, with rates). It is measured, not a
+  breakpoint, so a shorter rate or name brings the rates back at a narrower width by itself.
+- **The panel is not capped at 60vh.** Super's `super.css` sets `max-height: 60vh` with `overflow: auto` on the
+  panel; ours is 478px from 1366 up, so any window under 797px tall cut its foot and put a scrollbar inside it (a
+  1440 × 900 MacBook's Chrome is about 790; 1280 × 800 lost 26px). It may take the window under the bar now
+  (`calc(100vh - 64px)`). Both fits are measured once the panel or column is drawn, with the attribute off and set in
+  the same task, and again on resize. Left as the file draws them: a list, guide or post row cut with an ellipsis in
+  the narrow third column at 960–1180; the Contact column's first row is the page's booking headline, a question now
+  ("Did your validator answer the last emergency upgrade?"), read from the page as the rule says.
