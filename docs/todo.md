@@ -221,6 +221,17 @@ That is on the 0.1 line Agentic Browsing and Core Web Vitals pass or fail on. Fi
 `cls-culprits-insight` sub-items, or `fbdebug.mjs` pointed at the page), give it its size, and check every chain and
 guide page. **/networks/sui also fails colour contrast** (Accessibility): find the element and its pair.
 
+## TODO — /networks' phone shift on PageSpeed (found 2026-10-26)
+
+PageSpeed's phone run of /networks showed a layout shift on three runs after v415–v417: **0.167** (the cover's field,
+`.enc-cover__box`), **0.099** and **0.091** (the cover's heading), root cause given as "Unsized image element". It does
+not reproduce in Linux (`backups/lhr/shift.mjs` and `coverlog.mjs`, 412px, 4× CPU): 0.002 with v414 and v415 alike,
+with our fonts held back 1.5 s, with covers.js, all our scripts or Super's main chunk held 2 s, with Super's image
+service, its asset host or our drawings held 2.5 s. Not the label pair: /networks' top pair fits at 412 with 9.5px to
+spare (the pair that does not fit was /contact's and /governance's, fixed in v417, `docs/audit.md`, "The third
+pass"). Next: read the shift's frames from PageSpeed's own report (its filmstrip thumbnails are too small to tell;
+the report JSON from the web UI, or a run with an API key once the shared quota allows), then test what moved.
+
 ## TODO — rebuild llms.txt on a schedule (2026-10-25)
 
 The six llms files (`docs/seo.md`, "llms.txt") are a snapshot of the day they were built: the rates, the stake and the

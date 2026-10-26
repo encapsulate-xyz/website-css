@@ -479,3 +479,22 @@ on /networks) and the boxes of its first seven blocks, on nine pages at 412 and 
 - **One bundle for the 20 deferred scripts**: post.js runs 17th, after every script before it has downloaded, and the
   post's largest paint waits for it. Not measured: in the harness the page's data still names the 20 scripts, so the
   test would not be the page a reader gets.
+
+**After (PageSpeed, v415–v417 live on all 114 pages; v414 in brackets where it was run):**
+
+| Page | Desktop | Phone |
+|---|---|---|
+| Homepage | 94 (89, 92) | 47 |
+| /blog | 92 (78, 90) | 65 (54, 55) |
+| /blog/monad-l1-scaling | 91 (87) | PageSpeed's run failed |
+| /networks | 93, 87, 92 (89) | 54, 62, 62 — a shift of 0.09–0.17 on each (`docs/todo.md`) |
+| /investments | 97 | 65 |
+| /guides | 88 — TBT 240 ms, all Super's main chunk | 55 |
+| /contact | 64 (v415) → 87 (v416) → 98 (v417) | 37 → 56 → 64; CLS 0.095 → 0.004 |
+| /security | 97 | 62 |
+
+/services and /governance were not run again (the browser extension dropped); /governance's desktop is Super drawing
+the record table, as before. What is left in every desktop's blocking time is Super's main chunk; the phones stay where
+"The first paint" put them. **Every script in the site head is in the DOM twice** — Super draws its head once in the
+HTML and once from its page data — and each runs once (covers.js: one run, one fetch, one field, checked live on
+/contact and /governance); that was so before v417.
