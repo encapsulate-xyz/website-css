@@ -315,7 +315,9 @@ paste, pages pick it up unevenly; check each page's served `website-css@vN` befo
 - Fonts rendered: Outfit, Hanken Grotesk, JetBrains Mono, Architects Daughter — **served from this repo since
   2026-10-26** (`fonts.css` + `fonts/`, inside site.css; no Google Fonts link any more, so none goes back in a head). **Outfit's Latin
   file is preloaded** in head/site.html, on site.css's tag (build.py warns when they differ): a heading that is a page's
-  largest paint waited for it (`docs/audit.md`, "The first paint"). Manrope went with the old slide-out
+  largest paint waited for it (`docs/audit.md`, "The first paint"). **Its face is `font-display: fallback`**, the one
+  change from Google's rules (fonts.css): with `swap` Super's second draw repainted the heading in Outfit as a larger
+  paint and moved the page's largest paint to it (`docs/audit.md`, "The third pass"). Manrope went with the old slide-out
   menu (2026-09-22). Arial Black, Georgia, Verdana, Monaco are system fonts. **Inter is not in the design**: Super's
   font variables are Hanken Grotesk (main.css §02), and Super's theme font — which it preloads on every page but
   nothing draws — is Geist, the smallest of its 68 (69 KB against Inter's 205; `docs/audit.md`, "Super's theme font").

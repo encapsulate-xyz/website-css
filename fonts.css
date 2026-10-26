@@ -213,12 +213,18 @@
   src: url(../fonts/outfit-latin-ext.woff2) format('woff2');
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-/* latin */
+/* latin — the one change from Google's rules: `fallback`, not `swap`. A cover's heading is its page's largest paint;
+   drawn first in the stand-in (main.css §01) and then in Outfit, it was painted again when Super draws the page a
+   second time, as a new element 6.5% larger in Outfit, and the largest paint moved to that second draw (/blog: 0.7 s
+   → 1.5 s). The file is preloaded beside site.css (head/site.html) and is ready 30–140 ms after the first paint, so
+   `fallback` holds the heading at most 100 ms and draws it once in Outfit. A file later than that swaps in as before
+   when it comes within 3 s, and after 3 s the page keeps the stand-in (`block` measured the same, but could hold a
+   heading 3 s on a slow line; docs/audit.md, "The third pass") */
 @font-face {
   font-family: 'Outfit';
   font-style: normal;
   font-weight: 100 900;
-  font-display: swap;
+  font-display: fallback;
   src: url(../fonts/outfit-latin.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }

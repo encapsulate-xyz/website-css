@@ -415,3 +415,47 @@ on /governance it is Super drawing the whole record table (tasks of 842, 729 and
 579 on desktop), which only a shorter Notion view would shrink, and that changes what the page holds. /blog's heading
 is its largest paint and was held 2.27 s after the response on the 78 run (the "element render delay"). The phone
 stays where "The first paint" put it: Lighthouse replays Super's ~600 KB of scripts before the largest paint.
+
+## The third pass (2026-10-26, v415)
+
+The same request, after v414. **A cover's heading is its page's largest paint, and Super's second draw moved it.** With
+`font-display: swap` the heading is first painted in the stand-in (main.css §01) and redrawn in Outfit once the file is
+ready, a few frames later. Then Super draws the page a second time and the heading is a **new element**, painted in
+Outfit, whose text covers 6.5% more than the stand-in's did (/blog at 1440: 126,420 against 118,650 px²), so it counts
+as a new, larger paint and the largest paint moved to the second draw: /blog 0.7 → 1.5 s at 4× CPU, /investments
+0.73 → 1.01 s at 1×. Recorded frame by frame (`scratchpad/sel/lcpwatch.mjs`: every largest-paint entry, and the
+heading's font, size, box and node in every frame).
+
+**Outfit's Latin face is `font-display: fallback`** (fonts.css, the one change from Google's rules): the heading is held
+up to 100 ms, and the preloaded file is ready 25–35 ms after the first paint at 1× CPU (88–142 at 4×), so it is drawn
+once, in Outfit, and the second draw paints nothing larger. **What a reader sees**: the heading comes 25–100 ms after
+the rest of the first paint, in its own font from the start, where before it came with the first paint in the stand-in
+and changed font a few frames later (the stand-in is size-matched, so nothing moved). A file later than 100 ms swaps in
+as before when it comes within 3 s; after 3 s the page keeps the stand-in, which needs the 32 KB file, asked for beside
+the stylesheet, to come 3 s after it. `block` scored the same, but holds a heading up to 3 s on a slow line.
+
+Lighthouse 13.5 in Linux, desktop, two rounds, each arm's site.css served the same way (`SWAP=site.css
+SWAPDIR=backups/ab/<arm>`), score and observed LCP in ms:
+
+| Page | swap (live) | fallback | block |
+|---|---|---|---|
+| /blog | 76, 78 · 1,153, 1,138 | 83, 83 · 750, 756 | 80, 81 · 777, 984 |
+| /investments | 80, 78 · 994, 1,110 | 84, 85 · 738, 696 | 83, 85 · 794, 662 |
+| /guides | 74, 73 · 1,533, 1,211 | 80, 80 · 711, 661 | 79, 76 · 941, 1,053 |
+| /security | 79, 79 · 1,431, 1,078 | 77, 82 · 822, 692 | 82, 86 · 664, 638 |
+
+A first round of swap against block: /contact 79, 81 → 86, 84; /networks 79, 77 → 80, 76 (its heading already painted
+once); /services 80, 81 → 79, 75, noise (observed LCP 1,839, 673 → 823, 1,037). **`lhrun.mjs` serves what it swaps and
+the page itself uncompressed** (a gzip body through `request.respond` is not decoded: the page came back blank), so the
+simulation counts 500 KB of HTML and 262 KB of CSS where PageSpeed counts 56 and 33, and its scores run 5–10 under
+PageSpeed's: compare arms, not totals.
+
+**Tried and dropped:**
+- **A preload of the post's mark in the post's own head** (`<link rel="preload" as="image" … fetchpriority="high">`, the
+  mark's `/_next/image` address): the image arrived 700 ms earlier and then waited 400 ms for post.js to draw the head;
+  the Monad post 76, 76, 77 → 78, 79, 76 (simulated LCP −180 ms). Not worth 38 heads to keep in step with each glyph.
+- **Outfit inside site.css as data** (no preload, no second request): the first paint 50–80 ms later, the heading's
+  paint no earlier.
+- **One bundle for the 20 deferred scripts**: post.js runs 17th, after every script before it has downloaded, and the
+  post's largest paint waits for it. Not measured: in the harness the page's data still names the 20 scripts, so the
+  test would not be the page a reader gets.
