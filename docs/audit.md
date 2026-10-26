@@ -339,3 +339,60 @@ which a read in our frame only moves earlier: without the read it lands in the s
 4.3 s (jsDelivr) and 0.25 s to 1.7 s (Super) between consecutive runs, and the phone score from 54 to 71. To see what
 holds a paint, record the paint entries from the first moment of the page (`livecheck.mjs` with `PRELOAD=`), and read
 Lighthouse's own model (`@paulirish/trace_engine/models/trace/lantern/metrics`) before guessing what it counts.
+
+## The second pass (2026-10-26, v413–v414)
+
+The same request, repeated after the push back ("audit again … no noticable change as a user"). PageSpeed that morning
+(phone / desktop): the Monad post 62 / 80 (desktop TBT 280 ms, Accessibility 97), /networks 50 / 93, /blog 63 / 85, the
+homepage 56 / 72. **/blog's phone TBT of 350 ms is Super's**: its long tasks were all Super's main chunk
+(`2epv_ayozjutl.js`, 204, 168, 144 and 144 ms) and the document's own parse (98 ms); none of ours ran long.
+
+**v413, the post's reading bar** is named by its label (`aria-labelledby`) and carries its value — PageSpeed's "ARIA
+progressbar elements do not have accessible names", the post's 97. `aria-valuenow` is written only when it changes.
+
+**v414 — nothing on screen changes:**
+- **Outfit's Latin file is preloaded** beside site.css (head/site.html, on site.css's tag; build.py warns when they
+  differ or the file is missing). On a page whose largest paint is its heading, Linux drew the fallback first and the
+  heading's paint waited for Outfit (observed on Linux, FCP → LCP in ms: /networks 717 → 1,481, /governance
+  836 → 3,233, /investments 401 → 2,465, /guides 469 → 1,039). Lighthouse 13.5 in Linux, desktop, two rounds, live head
+  vs the preload (`scripts/linux/lhrun.mjs`, `INJECT=`): /networks 81, 84 → 94, 90; /guides 80, 80 → 86, 90;
+  /investments 90, 89 → 97, 95; /contact 87, 84 → 93, 96; /blog 88, 86 → 91, 95; /governance 31, 31 → 33, 33. With it,
+  the observed LCP is the FCP on every one of them. The homepage (its LCP is the loop's still) and the phones: no change
+  beyond noise.
+- **The tweets wait for the reader** (blocks.js, the last IIFE). Super's tweet block loads Twitter's widgets.js with the
+  page, and on PageSpeed it was 0.9–1.1 s of CPU on the Monad post (two tweets; fogochain and xmtp have one each — 3 of
+  38 posts). blocks.js stands in for `window.twttr` and starts the real script at the reader's first scroll, wheel,
+  touch, click or key, or 10 s after load, whichever comes first; one copy of widgets.js, the same heights once built
+  (Monad 792/846 px at 1728, 634/696 at 390; XMTP 1,220), the router's hops /blog → a post and post → post built too.
+  **The one change a reader can see**: a tweet below the fold builds when they start reading rather than with the page.
+- **governance.js places every split label, then measures them all, then fits them** (`layoutSplit`, `across()` returns
+  its measure and fit): measured one at a time, after each one's own writes, each label forced a layout (131 ms on the
+  homepage). The labels land where they did, checked at 1728 and 1100.
+- **No `:has()` asks from the top of the page** (main.css §04, post.css, guide.css, chain.css, notfound.css). A rule
+  that styles something *inside* an element it asks a `:has()` of — `body:has(…) .notion-header`, `body:has(…) .super-root
+  nav …`, `.super-content:has(…) .notion-root` — has Chrome restyle that element's whole subtree whenever anything in it
+  changes that the `:has()` might care about. Asked from body, html or the content, that is the whole document: while
+  /governance built its 1,184 rows it restyled all ~25,000 elements a dozen times, **3,961 ms of style at 4× CPU**
+  (1,440 px, traced), 2,283 ms of it in the twelve passes over 10,000 elements. Each rule now asks from beside or from
+  itself, which restyles only that element, and matches exactly what it matched (the tree is the same on every page:
+  the bar, then the content's wrapper; in the content, the header before the article):
+  - the post's ink bar: `body .super-root nav.super-navbar:has(~ :where(.super-content-wrapper) > .super-content[class*="parent-page__blog"])`;
+  - the header a post, guide or chain page hides: `body .notion-header:has(~ .notion-root[data-enc-…])`;
+  - the content's padding: `.super-content:has(> .notion-root[…])`, and the cover's `body .super-content:has(> .notion-root > .notion-callout:first-child …)`;
+  - the guide's footer snap: `… :where(.super-content-wrapper):has(> :where(.super-content) > .notion-root[data-enc-guide]) ~ .super-footer`;
+  - the 404: `.super-content-wrapper > .enc-nf ~ .super-error` (notfound.js puts the finder first), no `:has()` at all;
+  - the guide's `.super-content:has(…) .notion-root { padding-bottom: 0 }` is gone: `.notion-root[data-enc-guide]`
+    already sets `padding: 0 !important`, and nothing else gives the article a forced bottom padding.
+
+  Each selector keeps its specificity (`:where()` and a leading `body` make up the difference). After, the same trace:
+  **1,211–1,239 ms** of style on /governance, three passes over 10,000 elements (the page's first style, and Super's
+  two draws). The homepage 539 → 453 ms. It was held back in "The first paint" as a refactor; measured, it was the
+  largest single cost on /governance. Found by taking the rules out in groups and putting them back one at a time
+  (`scratchpad/hasx/`): a `:has()` costs only when its rule is actually matched against a page element, so a test rule
+  that matches nothing proves nothing. **A new rule asks from beside or from itself, never `html:has()`, `body:has()`
+  or `.super-content:has()` followed by a descendant.** Checked: the computed style of every element the rewritten
+  rules reach (html, body, the bar and everything in it with its ::before and ::after, the wrapper, the content and its
+  children, the footer) on 15 pages and two router hops, at 1440 and 390, live against the new site.css: no difference.
+- **Tried and dropped:** the navbar's `ground()` in a frame instead of a 0 ms timer (977 against 978 ms of style and
+  layout); renaming the record cells' `data-enc-chain` (the chain pages' mark), which turned out not to be what made
+  the page restyle.
