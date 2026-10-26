@@ -124,6 +124,14 @@ if not sys.argv[1:]:
     css = re.search(r'website-css@(v\d+)/dist/home\.css', head)
     if pre and css and pre.group(1) != css.group(1):
         print(f"WARNING head/home.html: the poster preload is on {pre.group(1)} but home.css on {css.group(1)} — give them the same tag")
+    # the headings' font is preloaded from the tag site.css draws it from, or it is downloaded twice
+    head = open(os.path.join('head', 'site.html'), encoding='utf-8').read()
+    css = re.search(r'website-css@(v\d+)/dist/site\.css', head)
+    for pre in re.finditer(r'website-css@(v\d+)/fonts/([\w.-]+)', head):
+        if css and pre.group(1) != css.group(1):
+            print(f"WARNING head/site.html: the {pre.group(2)} preload is on {pre.group(1)} but site.css on {css.group(1)} — give them the same tag")
+        if not os.path.exists(os.path.join('fonts', pre.group(2))):
+            print(f"WARNING head/site.html: the preloaded fonts/{pre.group(2)} is not in fonts/")
     stale = os.path.join('dist', 'home-head.html')
     if os.path.exists(stale):
         os.remove(stale)

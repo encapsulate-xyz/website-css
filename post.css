@@ -13,7 +13,7 @@
    blank page. post.js builds on the next frame; on a cold load, at the scripts, 50–90ms after the
    first paint. */
 .super-content.parent-page__blog .notion-root:not([data-enc-post]),
-.super-content.parent-page__blog:not(:has(.notion-root[data-enc-post])) .notion-header {
+.super-content.parent-page__blog > .notion-header:not(:has(~ .notion-root[data-enc-post])) {
   visibility: hidden;
   animation: enc-po-reveal 0s linear 3s forwards;
 }
@@ -21,7 +21,9 @@
 
 /* ── what the design does not draw ── */
 .notion-root[data-enc-post] [data-enc-source] { display: none !important; }
-body:has(.notion-root[data-enc-post]) .notion-header { display: none !important; }
+/* the header and the article are siblings: each `:has()` here looks across or one level down, never
+   from body down the whole page (main.css §04, "WHERE THE PAGE STARTS ON INK") */
+body .notion-header:has(~ .notion-root[data-enc-post]) { display: none !important; }
 
 /* the article runs the full width; Super's own padding would inset the bands */
 .notion-root[data-enc-post] {
@@ -29,7 +31,7 @@ body:has(.notion-root[data-enc-post]) .notion-header { display: none !important;
   max-width: none !important;
 }
 
-.super-content:has(.notion-root[data-enc-post]) {
+.super-content:has(> .notion-root[data-enc-post]) {
   padding: 0 !important;
   max-width: none !important;
 }

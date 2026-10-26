@@ -10,8 +10,9 @@
   animation: enc-nf-reveal 0s linear 5s forwards;
 }
 @keyframes enc-nf-reveal { to { visibility: visible; } }
-.super-content-wrapper:has(> .enc-nf) > .super-error,
-.super-content-wrapper:has(> .enc-nf) > .super-content { display: none !important; }
+/* notfound.js puts the finder first in the wrapper, so what it replaces follows it */
+.super-content-wrapper > .enc-nf ~ .super-error,
+.super-content-wrapper > .enc-nf ~ .super-content { display: none !important; }
 #block-3e9e800a51388179926df81f919aeed1 { display: none !important; }   /* "404 page copy" */
 
 .enc-nf {

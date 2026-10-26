@@ -1072,12 +1072,18 @@
       SP.paths[v].remove(); SP.labels[v].remove();
       delete SP.paths[v]; delete SP.labels[v];
     });
-    if (!down) L.bands.forEach(function (b) { across(b, SP.labels[b.k], G3.x3 * Math.min(1, W / G3.W) + 24, W, ink); });
-    else under(L.bands, W, H);
+    if (!down) {
+      // every label placed, then every one measured, then the ones that run over made smaller: measured one by one,
+      // after each one's own writes, each label forced a layout of its own (PageSpeed, 2026-10-26: 131ms on the homepage)
+      var fits = L.bands.map(function (b) { return across(b, SP.labels[b.k], G3.x3 * Math.min(1, W / G3.W) + 24, W, ink); });
+      fits.forEach(function (f) { f.measure(); });
+      fits.forEach(function (f) { f.fit(); });
+    } else under(L.bands, W, H);
   }
 
   // beside its ribbon: the figure's digits centred on the ribbon, two-thirds as tall as it is thick and never
-  // under MIN_FS, the word on the digits' middle; made smaller only if it would run past the right edge
+  // under MIN_FS, the word on the digits' middle; made smaller only if it would run past the right edge. It places the
+  // label and hands back its measure and its fit, which layoutSplit runs for every label at once
   function across(b, lab, x, W, ink) {
     var th = b.d - b.c, cap = ink.bottom - ink.top, mid = (b.c + b.d) / 2;
     var fs = th > 0 ? Math.max(MIN_FS, G3.ratio * th / cap) : 0, fig = lab.firstChild, word = lab.lastChild;
@@ -1091,11 +1097,16 @@
       word.style.transform = "translateY(" + (fs * ((ink.top + ink.bottom) / 2 - 0.5)).toFixed(2) + "px)";
     };
     place();
-    var room = W - x - 2, over = lab.scrollWidth - room;
-    if (over > 0 && fig.offsetWidth > 0) {
-      fs *= Math.max(0.1, (fig.offsetWidth - over) / fig.offsetWidth);
-      place();
-    }
+    var room = W - x - 2, over = 0, figW = 0;
+    return {
+      measure: function () { over = lab.scrollWidth - room; figW = fig.offsetWidth; },
+      fit: function () {
+        if (over > 0 && figW > 0) {
+          fs *= Math.max(0.1, (figW - over) / figW);
+          place();
+        }
+      }
+    };
   }
 
   // under the ribbons, a phone: each label at its ribbon's left edge, moved right to clear the one before it

@@ -29,12 +29,14 @@
 
 /* ── what the design does not draw ───────────────────────────────────────────────────────── */
 .notion-root[data-enc-chain]:not([data-enc-chain="no"]) > *:not(.enc-ch) { display: none !important; }
-body:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])) .notion-header { display: none !important; }
+/* each `:has()` here looks across or one level down, never from body down the whole page (main.css
+   §04, "WHERE THE PAGE STARTS ON INK") */
+body .notion-header:has(~ .notion-root[data-enc-chain]:not([data-enc-chain="no"])) { display: none !important; }
 
 /* the bands run the full width; Super's own padding would inset them — and a page that ends in
    a band runs into the footer */
 .notion-root[data-enc-chain]:not([data-enc-chain="no"]),
-.super-content:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])) {
+.super-content:has(> .notion-root[data-enc-chain]:not([data-enc-chain="no"])) {
   padding: 0 !important;
   max-width: none !important;
 }

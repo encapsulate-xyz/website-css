@@ -23,17 +23,18 @@
 /* ── what the design does not draw ───────────────────────────────────────────────────────── */
 .notion-root[data-enc-guide]:has(> .enc-gd) [data-enc-source] { display: none !important; }
 .notion-root[data-enc-guide]:has(> .enc-gd) > *:not(.enc-gd) { display: none !important; }
-body:has(.notion-root[data-enc-guide]) .notion-header { display: none !important; }
+/* each `:has()` here looks across or one level down, never from body or html down the whole page
+   (main.css §04, "WHERE THE PAGE STARTS ON INK") */
+body .notion-header:has(~ .notion-root[data-enc-guide]) { display: none !important; }
 
-/* the bands run the full width; Super's own padding would inset them */
+/* the bands run the full width; Super's own padding would inset them — and a page that ends in a
+   band runs into the footer (the article's own bottom padding was a second rule until 2026-10-26,
+   asked as `.super-content:has(…) .notion-root`, which restyled the whole page on every change) */
 .notion-root[data-enc-guide],
-.super-content:has(.notion-root[data-enc-guide]) {
+.super-content:has(> .notion-root[data-enc-guide]) {
   padding: 0 !important;
   max-width: none !important;
 }
-
-/* a page that ends in a band runs into the footer */
-.super-content:has(.notion-root[data-enc-guide]) .notion-root { padding-bottom: 0 !important; }
 
 .enc-gd {
   --gd-ink: #2A2C28;
@@ -61,7 +62,7 @@ body:has(.notion-root[data-enc-guide]) .notion-header { display: none !important
 /* the bands are built above whatever the reader is looking at, and scroll anchoring answered by
    holding the footer in place — the page opened at its end. */
 html:has(.notion-root[data-enc-guide]),
-html:has(.notion-root[data-enc-guide]) body,
+html body:has(.notion-root[data-enc-guide]),
 .notion-root[data-enc-guide] {
   overflow-anchor: none;
 }
@@ -82,8 +83,8 @@ html:has(.notion-root[data-enc-guide]) { scroll-padding-top: 0; }
     scroll-behavior: smooth;
   }
   html[data-enc-guide-snap] .enc-gd__band,
-  html[data-enc-guide-snap] body:has(.notion-root[data-enc-guide]) .super-footer,
-  html[data-enc-guide-snap] body:has(.notion-root[data-enc-guide]) footer {
+  html[data-enc-guide-snap] body :where(.super-content-wrapper):has(> :where(.super-content) > .notion-root[data-enc-guide]) ~ .super-footer,
+  html[data-enc-guide-snap] body :where(.super-content-wrapper):has(> :where(.super-content) > .notion-root[data-enc-guide]) ~ footer {
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }

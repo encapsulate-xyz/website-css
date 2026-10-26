@@ -465,11 +465,14 @@ body {
    it has its own paper ground again. navbar.js measures the ground under the bar and marks it
    `[data-enc-nav-ink]`; it was keyed off Super's `parent-page__blog` class until 2026-09-23,
    which left the guide page's bar on paper over its ink head. The class stays as the no-JS
-   fallback for a post. */
+   fallback for a post. It is read from the bar's own next sibling, not as `body:has(…)`: a `:has()` on
+   body (or html, or the content) is checked again on every change anywhere in the page, and each one
+   restyles the whole document — /governance building its 1,184 rows restyled its 38,000 elements a
+   dozen times, 2.3s of a 4×-throttled load (2026-10-26; docs/audit.md, "The page-wide :has()"). */
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__item,
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__list,
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__item,
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list {
+body .super-root nav.super-navbar:has(~ :where(.super-content-wrapper) > .super-content[class*="parent-page__blog"]):not([data-enc-nav-open]) .super-navbar__item,
+body .super-root nav.super-navbar:has(~ :where(.super-content-wrapper) > .super-content[class*="parent-page__blog"]):not([data-enc-nav-open]) .super-navbar__list {
   color: #C9C9C4 !important;   /* at rest; paper on hover, below (handoff, read 2026-09-23) */
 }
 
@@ -480,19 +483,19 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
 
 /* the current page's item at rest, on ink: the same paper tab */
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__list[data-enc-current],
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__list[data-enc-current] {
+body .super-root nav.super-navbar:has(~ :where(.super-content-wrapper) > .super-content[class*="parent-page__blog"]):not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__list[data-enc-current] {
   background: transparent !important;
   border-color: transparent !important;
   box-shadow: none !important;
   color: #000000 !important;
 }
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__list[data-enc-current]::after,
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__list[data-enc-current]::after {
+body .super-root nav.super-navbar:has(~ :where(.super-content-wrapper) > .super-content[class*="parent-page__blog"]):not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__list[data-enc-current]::after {
   background: #FAFAF8;
 }
 
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__item-list,
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__item-list {
+body .super-root nav.super-navbar:has(~ :where(.super-content-wrapper) > .super-content[class*="parent-page__blog"]):not([data-enc-nav-open]) .super-navbar__item-list {
   /* opaque, so the cover's discs do not show through the track (handoff 2026-09-23; it was the
      .06 wash on a .3 ring) */
   background: #373834 !important;
@@ -500,19 +503,19 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
 }
 
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__list::before,
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__list::before {
+body .super-root nav.super-navbar:has(~ :where(.super-content-wrapper) > .super-content[class*="parent-page__blog"]):not([data-enc-nav-open]) .super-navbar__list::before {
   background: #9FA39B !important;
 }
 
 /* the caret on ink: the on-ink grey where a pill is not lit, #6B6F68 on the paper tab at rest */
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__list[data-enc-current]::before,
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__list[data-enc-current]::before {
+body .super-root nav.super-navbar:has(~ :where(.super-content-wrapper) > .super-content[class*="parent-page__blog"]):not([data-enc-nav-open]):not(:has(.super-navbar__list:hover, .super-navbar__item:hover)) .super-navbar__list[data-enc-current]::before {
   background: #6B6F68 !important;
 }
 
 /* the mark on ink is the brand's own reversed wordmark, which navbar.js swaps in — the filter is
    only for the moment before the swap, and for a post if the script has not run */
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__logo img:not([data-enc-logo]) {
+body .super-root nav.super-navbar:has(~ :where(.super-content-wrapper) > .super-content[class*="parent-page__blog"]):not([data-enc-nav-open]) .super-navbar__logo img:not([data-enc-logo]) {
   filter: brightness(0) invert(1);
 }
 .super-root nav.super-navbar .super-navbar__logo img[data-enc-logo] {
@@ -587,12 +590,12 @@ body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navba
 
 /* Book a call on ink keeps the lift inside and drops the shadow under it */
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__cta,
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__cta {
+body .super-root nav.super-navbar:has(~ :where(.super-content-wrapper) > .super-content[class*="parent-page__blog"]):not([data-enc-nav-open]) .super-navbar__cta {
   box-shadow: var(--btn-1-highlight) !important;
 }
 
 .super-root nav.super-navbar[data-enc-nav-ink]:not([data-enc-nav-open]) .super-navbar__cta:hover,
-body:has(.super-content[class*="parent-page__blog"]) .super-root nav.super-navbar:not([data-enc-nav-open]) .super-navbar__cta:hover {
+body .super-root nav.super-navbar:has(~ :where(.super-content-wrapper) > .super-content[class*="parent-page__blog"]):not([data-enc-nav-open]) .super-navbar__cta:hover {
   box-shadow: var(--btn-1-highlight-hover) !important;
 }
 
@@ -4258,8 +4261,9 @@ html:not([data-enc-mouse]) .enc-fb[data-ink]:has(:focus-visible) { outline-color
   --btn-fs: 16px;
 }
 
-/* the cover starts at the top edge — the bar lies over it (§04) — so Super's own top padding goes */
-body:has(.notion-root > .notion-callout:first-child > .notion-callout__content > h1.notion-heading) .super-content {
+/* the cover starts at the top edge — the bar lies over it (§04) — so Super's own top padding goes.
+   Asked of the content's own child, never as `body:has(…)` (§04, "WHERE THE PAGE STARTS ON INK") */
+body .super-content:has(> .notion-root > .notion-callout:first-child > .notion-callout__content > h1.notion-heading) {
   padding-top: 0 !important;
 }
 

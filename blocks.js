@@ -22,7 +22,8 @@
                    the icon follows it.
 
    And one thing for every link on the site, since this is the file every page loads for Notion's own
-   blocks: a link to another site opens in a new tab (2026-10-13, below).
+   blocks: a link to another site opens in a new tab (2026-10-13, below). And the tweets are built once
+   the reader is on the page (2026-10-26, at the end).
 
    Nothing here writes a word: every character is the block's own. A block a page script reads
    and hides ([data-enc-source]) is left alone, and so is a Super embed (code that starts
@@ -340,4 +341,52 @@
   }
   mark();
   new MutationObserver(mark).observe(document.head, { childList: true, subtree: true, characterData: true });
+})();
+
+/* The tweets are built once the reader is on the page (2026-10-26, docs/audit.md, "The first paint"). Super draws
+   Notion's tweet block with react-tweet-embed, which loads Twitter's widgets.js and builds every tweet the moment the
+   page is up: on /blog/monad-l1-scaling, two tweets halfway down, 0.9–1.1s of Twitter's script ran while the page
+   loaded — the post's largest blocking time on PageSpeed (desktop 80). The component asks `window.twttr.ready()` first
+   and builds through it when it is there, so this stands in for it until the reader first scrolls, touches, clicks or
+   types, or 10s after the page has loaded; then Twitter's own script is loaded, once, and builds each tweet with the
+   component's own id, box and options. A reader is a second or so behind where they were — the tweets used to be built
+   1–3s after arriving — so a tweet is in before anyone reaches it, and nothing above a section a reader jumps to grows
+   afterwards (Safari does not hold the view when something above it grows). Not built only as each tweet nears the
+   view for that reason. The stand-in steps aside before Twitter's script runs, so that script starts clean; a second
+   copy of it (a tweet mounted meanwhile loads its own) finds the first one's and does nothing. If Super's component
+   mounts before this file runs, it loads Twitter's script itself, as before. */
+(function () {
+  if (window.twttr) return;
+  var WIDGETS = "https://platform.twitter.com/widgets.js", real = null;
+  var mine = function (f) { var p = Promise.resolve({ widgets: widgets }); if (f) p.then(f); return p; };
+  var stand = { ready: mine };
+  function load() {
+    if (!real) real = new Promise(function (done) {
+      // Twitter's script keeps the object it finds and puts its own ready() on it: if it has run, it is here already
+      var t = window.twttr;
+      if (t && t.ready && t.ready !== mine) return t.ready(done);
+      if (t === stand) window.twttr = undefined;
+      var s = document.createElement("script");
+      s.src = WIDGETS;
+      s.async = true;
+      s.onload = function () { var t = window.twttr; if (t && t.ready) t.ready(done); };
+      document.head.appendChild(s);
+    });
+    return real;
+  }
+  var EVENTS = ["scroll", "wheel", "touchstart", "pointerdown", "keydown"], go;
+  var here = new Promise(function (r) { go = r; });
+  function arrive() {
+    EVENTS.forEach(function (n) { window.removeEventListener(n, arrive, true); });
+    go();
+  }
+  EVENTS.forEach(function (n) { window.addEventListener(n, arrive, { capture: true, passive: true }); });
+  if (document.readyState === "complete") setTimeout(arrive, 10000);
+  else window.addEventListener("load", function () { setTimeout(arrive, 10000); });
+  var widgets = {
+    createTweetEmbed: function (id, box, options) {
+      return here.then(load).then(function (t) { return t.widgets.createTweetEmbed(id, box, options); });
+    }
+  };
+  window.twttr = stand;
 })();

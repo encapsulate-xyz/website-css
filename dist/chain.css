@@ -3,8 +3,8 @@
 @keyframes enc-ch-reveal{to{visibility: visible;}
 }
 .notion-root[data-enc-chain]:not([data-enc-chain="no"]) > *:not(.enc-ch){display: none !important;}
-body:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])) .notion-header{display: none !important;}
-.notion-root[data-enc-chain]:not([data-enc-chain="no"]),.super-content:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])){padding: 0 !important;max-width: none !important;}
+body .notion-header:has(~ .notion-root[data-enc-chain]:not([data-enc-chain="no"])){display: none !important;}
+.notion-root[data-enc-chain]:not([data-enc-chain="no"]),.super-content:has(> .notion-root[data-enc-chain]:not([data-enc-chain="no"])){padding: 0 !important;max-width: none !important;}
 @media (min-width: 701px) and (prefers-reduced-motion: no-preference){html:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])){scroll-snap-type: y proximity;}
 .enc-ch__hero,.enc-ch__bandsec{scroll-snap-align: start;}
 }

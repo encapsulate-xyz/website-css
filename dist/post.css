@@ -1,10 +1,10 @@
-.super-content.parent-page__blog .notion-root:not([data-enc-post]),.super-content.parent-page__blog:not(:has(.notion-root[data-enc-post])) .notion-header{visibility: hidden;animation: enc-po-reveal 0s linear 3s forwards;}
+.super-content.parent-page__blog .notion-root:not([data-enc-post]),.super-content.parent-page__blog > .notion-header:not(:has(~ .notion-root[data-enc-post])){visibility: hidden;animation: enc-po-reveal 0s linear 3s forwards;}
 @keyframes enc-po-reveal{to{visibility: visible;}
 }
 .notion-root[data-enc-post] [data-enc-source]{display: none !important;}
-body:has(.notion-root[data-enc-post]) .notion-header{display: none !important;}
+body .notion-header:has(~ .notion-root[data-enc-post]){display: none !important;}
 .notion-root[data-enc-post]{padding: 0 !important;max-width: none !important;}
-.super-content:has(.notion-root[data-enc-post]){padding: 0 !important;max-width: none !important;}
+.super-content:has(> .notion-root[data-enc-post]){padding: 0 !important;max-width: none !important;}
 .notion-root[data-enc-post] .enc-po__wrap{width: 100vw;margin-inline: calc(50% - 50vw);display: flex;flex-direction: column;}
 .notion-root[data-enc-post] .enc-po__head{position: relative;overflow: hidden;background: #2A2C28;padding: clamp(64px,9vw,140px) clamp(28px,6vw,96px) clamp(56px,7vw,96px);min-height: min(92vh,940px);display: flex;flex-direction: column;justify-content: flex-end;gap: 28px;}
 .notion-root[data-enc-post] .enc-po__mark{position: absolute;right: -12%;top: 50%;transform: translateY(-50%);width: min(58vw,760px);aspect-ratio: 1 / 1;object-fit: contain;opacity: 0.16;pointer-events: none;filter: brightness(0) invert(1);}

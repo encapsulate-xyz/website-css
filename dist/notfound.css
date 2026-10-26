@@ -1,7 +1,7 @@
 .super-error__not-found .super-error__content,.super-content.page__page-not-found .notion-root{visibility: hidden;animation: enc-nf-reveal 0s linear 5s forwards;}
 @keyframes enc-nf-reveal{to{visibility: visible;}
 }
-.super-content-wrapper:has(> .enc-nf) > .super-error,.super-content-wrapper:has(> .enc-nf) > .super-content{display: none !important;}
+.super-content-wrapper > .enc-nf ~ .super-error,.super-content-wrapper > .enc-nf ~ .super-content{display: none !important;}
 #block-3e9e800a51388179926df81f919aeed1{display: none !important;}
 .enc-nf{box-sizing: border-box;width: 100%;align-self: stretch;min-height: 100vh;background: #FAFAF8;display: flex;flex-direction: column;gap: clamp(32px,5vh,56px);padding: clamp(96px,12vh,128px) clamp(28px,6vw,96px) clamp(40px,6vh,72px);font-family: "Hanken Grotesk",system-ui,sans-serif;color: #000;}
 .enc-nf *,.enc-nf *::before,.enc-nf *::after{box-sizing: border-box;}
