@@ -4,10 +4,12 @@
      waited for Outfit to arrive (docs/audit.md, "The first paint"). On site.css's tag, or it is fetched twice (build.py checks) -->
 <link rel="preload" href="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v415/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v415/dist/site.css">
+<!-- covers.js is read here, as the page is, and not deferred: it settles a cover's label pairs before the first
+     paint, which on a phone moved the heading a line down after it (covers.js, "The pairs are settled") -->
+<script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v417/dist/covers.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/booking.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/navbar.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/footer.js" defer></script>
-<script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/covers.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v414/dist/blocks.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/filterbar.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/anchors.js" defer></script>
