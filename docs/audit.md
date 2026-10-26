@@ -450,6 +450,11 @@ the page itself uncompressed** (a gzip body through `request.respond` is not dec
 simulation counts 500 KB of HTML and 262 KB of CSS where PageSpeed counts 56 and 33, and its scores run 5–10 under
 PageSpeed's: compare arms, not totals.
 
+**v416, /contact's booker waits for the reader** (contact.js): cal.com's embed was the page's whole blocking time
+on PageSpeed (desktop 64, TBT 1.5 s, all of it app.cal.com's chunks). Its frame is in place at its own height from the
+start, below the first screen, and cal.com starts at the reader's first move or 10 s after load
+(`docs/booking-and-contact.md`, "The booker on /contact").
+
 **Tried and dropped:**
 - **A preload of the post's mark in the post's own head** (`<link rel="preload" as="image" … fetchpriority="high">`, the
   mark's `/_next/image` address): the image arrived 700 ms earlier and then waited 400 ms for post.js to draw the head;

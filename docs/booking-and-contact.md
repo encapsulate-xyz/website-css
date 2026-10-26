@@ -77,3 +77,16 @@ it does on the homepage. Consequences, all of them learned the hard way:
 - Removed from Notion on 2026-09-18: the fold's "Open the institutional dial" button (the dial is
   in the fold now) and, by the user's own edit, the paragraph "Size, custody and jurisdiction are
   the first things we will ask."
+
+## The booker on /contact starts at the reader's first move (2026-10-26, v416)
+
+cal.com's embed is 2 MB and 1.5–2 s of script, and it ran while /contact loaded: on PageSpeed the page's whole blocking
+time (desktop 64, TBT 1.5 s, every long task one of app.cal.com's chunks). The frame is in place from the first build at
+its own height (680px, 560 on a phone, `contact-us.css`), 300px under the first screen on a desktop and 550 on a phone,
+and **contact.js starts cal.com in it at the reader's first move** — pointermove, scroll, wheel, touchstart, pointerdown
+or keydown — **or 10 s after load**, the tweets' rule (blocks.js). A reader who comes through the site has clicked
+already, so the booker starts with the page. Checked live at 1440: before a move the frame is 680px with nothing asked
+of cal.com; after a real mouse move the booker is in and the frame 790px at the same place as before (1196px down);
+with no input at all it is in by 14 s; the hop /investments → /contact ("Send the spec") builds it at once. **The Linux
+harness cannot measure this one**: its Chromium runs cal.com's frame in a process of its own and shows the old file at
+0 ms of blocking time, where PageSpeed counts the frame's tasks.

@@ -172,6 +172,24 @@
     })(window, "https://app.cal.com/embed/embed.js", "init");
   }
 
+  /* The booker starts once the reader is on the page (2026-10-26, docs/audit.md, "The third pass"): cal.com's embed is
+     2 MB and 1.5–2 s of script, which ran while /contact loaded — the page's whole blocking time on PageSpeed (desktop
+     64, TBT 1.5 s). The frame sits below the cover, 300px under the first screen on a desktop and 550px on a phone, and
+     is in place from the start at its own height; what it holds is asked for at the reader's first move — the mouse, a
+     scroll, a touch, a key — or 10s after the page has loaded, as the tweets are (blocks.js). A reader who arrives
+     through the site has moved already, and the booker starts with the page as before. */
+  var EVENTS = ["pointermove", "scroll", "wheel", "touchstart", "pointerdown", "keydown"], moved = false, waiting = [];
+  function arrive() {
+    if (moved) return;
+    moved = true;
+    EVENTS.forEach(function (n) { window.removeEventListener(n, arrive, true); });
+    waiting.splice(0).forEach(function (f) { f(); });
+  }
+  EVENTS.forEach(function (n) { window.addEventListener(n, arrive, { capture: true, passive: true }); });
+  if (document.readyState === "complete") setTimeout(arrive, 10000);
+  else window.addEventListener("load", function () { setTimeout(arrive, 10000); });
+  function here(f) { if (moved) f(); else waiting.push(f); }
+
   function calendar(call, link) {
     if (!link || call.querySelector(".enc-ct__cal")) return;
     var href = link.getAttribute("href") || "";
@@ -181,6 +199,13 @@
     var box = el("div", "enc-ct__cal");
     box.id = "enc-cal";
     link.parentNode.parentNode.insertBefore(box, link.parentNode);
+    here(function () {
+      // a frame Super drew over meanwhile is not started; the one built in its place is
+      if (box.isConnected) start(box, slug, layout);
+    });
+  }
+
+  function start(box, slug, layout) {
     loader();
     window.Cal("init", "enc", { origin: "https://app.cal.com" });
     window.Cal.ns.enc("ui", CAL_UI);
