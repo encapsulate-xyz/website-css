@@ -19,7 +19,7 @@
    navigation, so this builds off a MutationObserver like the other page scripts. */
 (function () {
   var PATH = /^\/blog\/.+/;
-  var VERSION = "11";
+  var VERSION = "12";
   var LD = "enc-ld-post";
 
   /* ── structured data (2026-09-27) ── for search engines: built from what the page shows, as a
@@ -257,10 +257,16 @@
     var r = el("aside", "enc-po__rail");
     var prog = el("div", "enc-po__prog");
     var row = el("div", "enc-po__progrow");
-    row.appendChild(el("span", "enc-po__proglabel"));
+    var name = el("span", "enc-po__proglabel");
+    name.id = "enc-po-reading";
+    row.appendChild(name);
     row.appendChild(el("span", "enc-po__progpct", "0%"));
     var bar = el("div", "enc-po__bar");
     bar.setAttribute("role", "progressbar");
+    // named by the label beside it ("Reading", from the copy), and read out as a value, not as busy (PageSpeed,
+    // 2026-10-26: "ARIA progressbar elements do not have accessible names" took the post's desktop Accessibility to 97)
+    bar.setAttribute("aria-labelledby", name.id);
+    bar.setAttribute("aria-valuenow", "0");
     bar.appendChild(el("span", "enc-po__barfill"));
     prog.appendChild(row);
     prog.appendChild(bar);
@@ -395,6 +401,8 @@
       var label = wrap.querySelector(".enc-po__progpct");
       if (fill) fill.style.width = pct + "%";
       if (label) label.textContent = pct + "%";
+      var bar = wrap.querySelector(".enc-po__bar");
+      if (bar && bar.getAttribute("aria-valuenow") !== String(pct)) bar.setAttribute("aria-valuenow", pct);
       var at = 0;
       heads.forEach(function (h, i) {
         var n = document.getElementById(h.id);
