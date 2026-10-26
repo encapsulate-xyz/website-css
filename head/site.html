@@ -1,18 +1,21 @@
 <!-- SITE — Super → Settings → Code → Head (every page). site.css is Super's theme (minima), main.css, the page sheets every page
      carries and the fonts, in one file (build.py, 2026-10-26) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v411/dist/site.css">
+<!-- the headings' font, asked for beside the stylesheet instead of after it: a page whose largest paint is its heading
+     waited for Outfit to arrive (docs/audit.md, "The first paint"). On site.css's tag, or it is fetched twice (build.py checks) -->
+<link rel="preload" href="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v414/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v414/dist/site.css">
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/booking.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/navbar.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/footer.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/covers.js" defer></script>
-<script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/blocks.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v414/dist/blocks.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/filterbar.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/anchors.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v411/dist/home.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/network.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/guides.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/blog.js" defer></script>
-<script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/governance.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v414/dist/governance.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/contact.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v407/dist/security.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@v410/dist/investments.js" defer></script>

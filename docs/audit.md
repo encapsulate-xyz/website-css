@@ -392,7 +392,9 @@ progressbar elements do not have accessible names", the post's 97. `aria-valueno
   that matches nothing proves nothing. **A new rule asks from beside or from itself, never `html:has()`, `body:has()`
   or `.super-content:has()` followed by a descendant.** Checked: the computed style of every element the rewritten
   rules reach (html, body, the bar and everything in it with its ::before and ::after, the wrapper, the content and its
-  children, the footer) on 15 pages and two router hops, at 1440 and 390, live against the new site.css: no difference.
+  children, the footer) on 14 pages and two router hops (a post → /governance, back), at 1440 and 390, live against the
+  new site.css: no difference. The 404 is drawn in a frame from /page-not-found, so it was read there: the finder first,
+  the content hidden, with either stylesheet.
 - **Tried and dropped:** the navbar's `ground()` in a frame instead of a 0 ms timer (977 against 978 ms of style and
   layout); renaming the record cells' `data-enc-chain` (the chain pages' mark), which turned out not to be what made
   the page restyle.
