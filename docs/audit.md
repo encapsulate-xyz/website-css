@@ -455,6 +455,21 @@ on PageSpeed (desktop 64, TBT 1.5 s, all of it app.cal.com's chunks). Its frame 
 start, below the first screen, and cal.com starts at the reader's first move or 10 s after load
 (`docs/booking-and-contact.md`, "The booker on /contact").
 
+**v417, a cover's label pairs are settled before the first paint** (covers.js, head/site.html). PageSpeed's phone
+runs showed shifts on the covers (/networks 0.167 and 0.099, /contact 0.095), and Linux reproduced one: on a phone a
+top pair that does not fit stands as two (main.css §19), and covers.js, deferred, decided it once the whole page had
+been read, after the first paint — the heading and everything under it moved down 26px while the reader looked at
+it (/governance at 412px, 9.5 s after the load at 4× CPU, CLS 0.104; /contact at 1.2 s). covers.js is now the one
+script the head runs as the page is read, right after site.css, not deferred: its observer sees the cover's five
+lines as they are parsed and settles the pairs in its own microtask, before any paint; the field (its glyphs are read
+off the gallery further down /networks) and the catch-up timer wait for the parsed page as before. Recorded frame by
+frame at 412: the heading is at 180px from the first frame on /contact and /governance (it was at 154, then 180).
+Lighthouse in Linux, live → new (the page's HTML rewritten to the new head, `SUBSFILE=`): /contact phone CLS
+0.099 → 0.004, 54, 54 → 59, 61, desktop 88 → 95; /investments desktop 89 → 94; /governance phone TBT 4.4 → 3.4–3.6 s;
+/networks level; covers.js is not among the render-blocking files and the first paint moved within the noise. **The
+end state is the same**: every cover's marks, the four variables covers.js sets, its field (24 marks and 24 glyphs
+on /networks) and the boxes of its first seven blocks, on nine pages at 412 and 1440, identical with either head.
+
 **Tried and dropped:**
 - **A preload of the post's mark in the post's own head** (`<link rel="preload" as="image" … fetchpriority="high">`, the
   mark's `/_next/image` address): the image arrived 700 ms earlier and then waited 400 ms for post.js to draw the head;

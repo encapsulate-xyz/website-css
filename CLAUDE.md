@@ -176,7 +176,7 @@ User rules that stand on every task:
 | `navbar.js` | the bar's panels — design *Navbar 4f Page*; Super still owns the menu — and, under 960px, the compact bar's Menu button and sheet | site Head |
 | `booking.js` | the booking drawer — every "Book a call" on the site, except /contact-us | site Head |
 | `footer.js` | footer 44b, built inside Super's footer | site Head |
-| `covers.js` | inner-page cover graphics ("fields") | site Head |
+| `covers.js` | inner-page cover graphics ("fields"), and the covers' label pairs | site Head, **right after site.css and not deferred** — the one script read with the page, so a phone's pairs are settled before the first paint (`docs/audit.md`, "The third pass") |
 | `filterbar.js` | the filter bar (design *Filter Bar Patterns*, G · the command field) — one component for /networks, /governance-record and /blog; styles main.css §13c | site Head, before the page scripts |
 | `anchors.js` | the site's section names — /#testimonials, /security#keys, /guides/&lt;guide&gt;#step-4 — and the landing of any `#name` or `#block-…` on every page; /team → /#team (`docs/paths-and-404.md`, "Section names") | site Head |
 | `notfound.css`, `notfound.js` | the 404 page (design *404 Page*, D · the finder) — see "The 404 page". notfound.js is linked **async**, the only one | site Head |

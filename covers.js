@@ -304,6 +304,8 @@
     var path = location.pathname.replace(/\/+$/, "") || "/";
     var build = FIELDS[path];
     if (!build) return;
+    // the field waits for the parsed page: /networks's glyphs are read off the gallery further down
+    if (document.readyState === "loading") return;
     if (cover.querySelector(":scope > .enc-cover")) return;
     var ground = getComputedStyle(cover).backgroundColor;
     if (ground && ground !== "rgba(0, 0, 0, 0)" && ground !== "transparent") PAPER = ground;
@@ -343,17 +345,28 @@
     var cover = document.querySelector(".notion-root > .notion-callout:first-child");
     if (!cover || !cover.querySelector(":scope > .notion-callout__content > h1.notion-heading")) return false;
     var path = location.pathname.replace(/\/+$/, "") || "/";
-    if (FIELDS[path] && !cover.querySelector(":scope > .enc-cover")) return true;
+    if (FIELDS[path] && !cover.querySelector(":scope > .enc-cover") && document.readyState !== "loading") return true;
     return !cover.hasAttribute("data-enc-pairs") &&
       cover.querySelectorAll(":scope > .notion-callout__content > p.notion-text").length >= 5;
   }
+  /* THE PAIRS ARE SETTLED BEFORE THE FIRST PAINT (2026-10-26, docs/audit.md, "The third pass"). This file is the one
+     script the site head runs as the page is read, right after site.css, not deferred: deferred, it ran once the
+     whole page had been read, after the first paint, and on a phone a pair it stood as two moved the heading and
+     everything under it down a line while the reader looked at it (/governance at 412px: 26px, 9.5s after the load
+     on a 4x CPU, CLS 0.10; /contact, /networks on PageSpeed). Now the observer below sees the cover's five lines as
+     they are read and settles the pairs in its own microtask, which runs before any paint; the field and the rest
+     come with the parsed page, as before, and the catch-up timer waits for it too — while the page is read it would
+     force a layout on every chunk. */
   var t = 0;
   new MutationObserver(function () {
-    clearTimeout(t); t = setTimeout(apply, 60);
+    if (document.readyState !== "loading") { clearTimeout(t); t = setTimeout(apply, 60); }
     if (unbuilt()) apply();
-  }).observe(document.body, { childList: true, subtree: true });
+  }).observe(document.documentElement, { childList: true, subtree: true });
   window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(apply, 100); });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(apply);
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply);
-  else apply();
+  function parsed() {
+    apply();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(apply);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", parsed);
+  else parsed();
 })();

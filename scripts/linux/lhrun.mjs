@@ -1,5 +1,5 @@
 // One Lighthouse run in Linux Chromium, as PageSpeed runs it (docs/audit.md, "The first paint"):
-//   docker run --rm --shm-size=1g -v "$PWD":/repo:ro -e URL=… -e FF=desktop|mobile [-e INJECT='<link …>'] [-e SWAP=blocks.js,post.js [-e SWAPDIR=/repo/backups/ab/a]] [-v …:/out -e LHR=/out/x.json] enc-lh node /repo/scripts/linux/lhrun.mjs
+//   docker run --rm --shm-size=1g -v "$PWD":/repo:ro -e URL=… -e FF=desktop|mobile [-e INJECT='<link …>'] [-e SWAP=blocks.js,post.js [-e SWAPDIR=/repo/backups/ab/a]] [-e SUBS='[["re","to"]]'] [-v …:/out -e LHR=/out/x.json] enc-lh node /repo/scripts/linux/lhrun.mjs
 // The page's HTML is fetched here and served to Chromium, with INJECT put at the top of its <head> when given, and the
 // dist files named in SWAP are served from this repo for whatever tag the page pins, so a change can be measured before
 // it is released and pasted (every variant goes through the same path). Prints the score, the simulated and observed
@@ -16,6 +16,7 @@ const chromeLauncher = await import(req.resolve("chrome-launcher"));
 const URL = process.env.URL || "https://encapsulate.xyz/", FF = process.env.FF || "desktop", INJECT = process.env.INJECT || "";
 const SWAP = (process.env.SWAP || "").split(",").filter(Boolean);
 const SWAPDIR = process.env.SWAPDIR || "/repo/dist";   // another folder under /repo, to A/B two builds served the same way
+const SUBS = JSON.parse(process.env.SUBS || (process.env.SUBSFILE ? readFileSync(process.env.SUBSFILE, "utf8") : "[]"));   // [[regex, replacement]] on the page's HTML: a head change that moves a line
 const chrome = await chromeLauncher.launch({ chromePath: "/usr/bin/chromium", chromeFlags: ["--headless=new", "--no-sandbox"] });
 const browser = await puppeteer.connect({ browserURL: `http://127.0.0.1:${chrome.port}` });
 const page = await browser.newPage();
@@ -28,6 +29,7 @@ page.on("request", async r => {
   const res = await fetch(r.url(), { headers: { "user-agent": r.headers()["user-agent"] || "" } });
   let html = await res.text();
   if (INJECT) html = html.replace(/<head([^>]*)>/i, (m) => m + INJECT);
+  for (const [re, to] of SUBS) html = html.replace(new RegExp(re), to);
   r.respond({ status: res.status, contentType: "text/html; charset=utf-8", body: html });
 });
 const out = await lighthouse(URL, { output: "json", onlyCategories: ["performance"], logLevel: "error" }, FF === "desktop" ? desktopConfig : undefined, page);
