@@ -481,6 +481,11 @@ load order.
   state), blog.css (Empty state, Post page copy), guides.css (Guide page copy) and services.css
   (Services page copy). A new copy toggle — or one recreated in Notion — gets its id added there.
 
+- **Never ask a `:has()` from html, body or the content and then style something inside it** (`body:has(…) .x`,
+  `.super-content:has(…) .notion-root`): Chrome restyles that whole subtree on every change under it — /governance
+  restyled its 25,000 elements a dozen times while its rows went in (2026-10-26, v414). Ask from beside
+  (`.notion-header:has(~ .notion-root[…])`, the bar's `:has(~ …)`) or from the element itself with `>`
+  (`.super-content:has(> .notion-root[…])`) — `docs/audit.md`, "The second pass".
 - **A script that watches the page must not wake itself.** governance.js's observer rebuilt on
   every childList change, and its own pass rewrote the pager's two labels (a text write replaces
   the text node) and re-appended every row after a sort — so the record page rebuilt 8 times a

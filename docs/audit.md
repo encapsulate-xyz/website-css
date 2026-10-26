@@ -398,3 +398,20 @@ progressbar elements do not have accessible names", the post's 97. `aria-valueno
 - **Tried and dropped:** the navbar's `ground()` in a frame instead of a 0 ms timer (977 against 978 ms of style and
   layout); renaming the record cells' `data-enc-chain` (the chain pages' mark), which turned out not to be what made
   the page restyle.
+
+**After (PageSpeed, v414 live on all 114 pages; morning in brackets):**
+
+| Page | Phone | Desktop |
+|---|---|---|
+| Homepage | 48, 72 (56) | 89, 92 (72) |
+| /blog/monad-l1-scaling | 68 (62) | 87 (80); Accessibility 100 (97) |
+| /networks | 73 (50) | 89 (93) |
+| /blog | 54, 55 (63) | 78, 90 (85) |
+| /governance | 31 | 51 |
+
+The swing between two runs of one page is as large as any change (the homepage's phone 48 then 72). What is left in
+Total Blocking Time is Super's main chunk on every run — on the post, /blog and /networks no long task was ours — and
+on /governance it is Super drawing the whole record table (tasks of 842, 729 and 722 ms on the phone, 709, 705 and
+579 on desktop), which only a shorter Notion view would shrink, and that changes what the page holds. /blog's heading
+is its largest paint and was held 2.27 s after the response on the 78 run (the "element render delay"). The phone
+stays where "The first paint" put it: Lighthouse replays Super's ~600 KB of scripts before the largest paint.
