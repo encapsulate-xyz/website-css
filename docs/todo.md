@@ -188,9 +188,11 @@ tab open and its token fresh.
   during (ToolSearch found none); they load in a new session, as `mcp__claude_ai_Super__…`.
 - **Then — started 2026-10-27:** its tools are listed (65, `mcp__claude_ai_Super__*`). The stored site head and body
   match `head/site.html` and `head/site-body.html` by sha256 (`get_code`), so a head paste is now `set_code` with the
-  whole file, checked against `shasum -a 256`, with a rollback in `list_code_history` / `restore_code`. Left to check
-  on the first real use: whether pages pick a `set_code` head up without a refresh (until then the pages are refreshed
-  through the dashboard's GraphQL route as before), and whether `add_file` over an existing llms file replaces it.
+  whole file, checked against `shasum -a 256`, with a rollback in `list_code_history` / `restore_code`. **First used
+  for v419 (2026-10-27):** `patch_code` swapped the changed pins and the boxes' hashes matched the files. The pages
+  picked the head up unevenly without a refresh, so they are still refreshed; `sync_page` does one page fully (both
+  heads and its Notion), the dashboard's GraphQL loop does them all. Left to check: whether `add_file` over an existing
+  llms file replaces it.
   It has no per-page sitemap switch, so /team stays in the sitemap. Never its colour, font, theme or style tools: the
   design lives in this repo.
 
