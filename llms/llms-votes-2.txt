@@ -2,10 +2,11 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-10-25. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-10-27. The index of the site is https://encapsulate.xyz/llms.txt.
 
 | Network | Reference | Proposal | Our vote | Proof | Rationale | Recorded |
 | --- | --- | --- | --- | --- | --- | --- |
+| Osmosis | 464 | Match External Incentives to extended STARS/OSMO pair | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/BC85893F19F2D8D747FD48D9BC67FCB7813F6AD6BA0DD7DCD658D3A2E2BC0135) | The work is useful to the chain and the amount asked is proportionate to it. | March 21, 2023 |
 | Osmosis | 464 | Match External Incentives to extended STARS/OSMO pair | ABSTAIN | [View Tx Hash](https://www.mintscan.io/osmosis/txs/85DC32C88BC9912C847D82BA462D61EDA2D6E319A163E47D20D879B882EA2C48) | The community's call to make. We abstain rather than let our stake decide it. | March 21, 2023 |
 | Osmosis | 464 | Match External Incentives to extended STARS/OSMO pair | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/7D62A403B78A2D403E2F70CDDC9C6290570AFE004603ADDEDD52647CE0E50724) | A reasonable ask for work the chain benefits from, at a size the pool can carry. | March 21, 2023 |
 | Osmosis | 463 | Enable ica lock and unlock | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/77D40C9DEC11751663B2EB6528D0438BA7BE86F5092AB2961CE1071334B9192F) | The case is made in the proposal itself and the risk is contained. Yes. | March 19, 2023 |

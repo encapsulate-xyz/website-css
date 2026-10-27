@@ -2,7 +2,7 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-10-25. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-10-27. The index of the site is https://encapsulate.xyz/llms.txt.
 
 ## Governance Record
 
@@ -10,6 +10,7 @@ URL: https://encapsulate.xyz/governance/votes
 
 | Network | Reference | Proposal | Our vote | Proof | Rationale | Recorded |
 | --- | --- | --- | --- | --- | --- | --- |
+| Terra | 4853 | Phoenix Foundation: Appoint Martin as Emergency Supervisor | ABSTAIN | [View Tx Hash](https://www.mintscan.io/terra/tx/F3EFCDB073E6EB94AF0FCE74D691BFBA7D11A7C8557E6F9C8F89BF6B236CB0F5) | Not enough in the proposal to judge it either way, so we abstain rather than guess. | October 27, 2026 |
 | Axelar | 501 | Instantiate and register arc with reward pools | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/BB7A56F88567371F90452E3E7933E8C5D30E71AD92BEBC179820DEB7ACC729FC) | The code and the addresses were published with the proposal, and the change is contained. Yes. | October 24, 2026 |
 | Axelar | 500 | Interchain Token Service Batch Migration | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/691E5D4C442DB91E15D3E2A358BDFD4C2381F7A5D419D9AC092BA29F1D4514DB) | Deployment work the chain's connections depend on; supporting it keeps them working. | October 22, 2026 |
 | Sui | 139 | Protocol upgrade to version 139 | YES | [View Release](https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.82.3) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | October 21, 2026 |
@@ -773,4 +774,3 @@ URL: https://encapsulate.xyz/governance/votes
 | Osmosis | 467 | Regular Incentive adjustment for 2023-03-20 | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/81F3623FABA6923885E96B433B8682439CE2A0C5DC7C7785773DBFDA617F8A2D) | The work is useful to the chain and the amount asked is proportionate to it. | March 21, 2023 |
 | Osmosis | 466 | Enable icq messages | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/8EDE4F253A19A1FDD559D46D47457A30A95730F19588FAEE9B7021D6721D0AF1) | We read it in full and see nothing that works against the chain or its delegators. | March 21, 2023 |
 | Osmosis | 465 | Enable Superfluid Staking on OSMO/FTM | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/44A494CBB055669DE804BFD754AE0FCE32A7DD7198617CA0333E8B02E691F170) | It fits the project's direction and carries no cost we can find for delegators. | March 21, 2023 |
-| Osmosis | 464 | Match External Incentives to extended STARS/OSMO pair | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/BC85893F19F2D8D747FD48D9BC67FCB7813F6AD6BA0DD7DCD658D3A2E2BC0135) | The work is useful to the chain and the amount asked is proportionate to it. | March 21, 2023 |

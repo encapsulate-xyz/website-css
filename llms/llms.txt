@@ -27,7 +27,7 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 - [Cosmos Hub staking](https://encapsulate.xyz/networks/cosmos-hub): Stake ATOM with Encapsulate on Cosmos Hub: 10% commission, 17.7% a year after commission, 21 days unbonding. Non-custodial.
 - [EigenCloud staking](https://encapsulate.xyz/networks/eigencloud): Stake EIGEN with Encapsulate on EigenCloud: 10% commission, 6.4% a year after commission, 14 days unbonding. Non-custodial.
 - [Espresso staking](https://encapsulate.xyz/networks/espresso): Stake ESP with Encapsulate on Espresso: 10% commission, 3.3% a year after commission, 7 days unbonding. Non-custodial.
-- [Gitopia staking](https://encapsulate.xyz/networks/gitopia): Stake LORE with Encapsulate on Gitopia: 10% commission, 41.6% a year after commission, 21 days unbonding. Non-custodial.
+- [Gitopia staking](https://encapsulate.xyz/networks/gitopia): Stake LORE with Encapsulate on Gitopia: 10% commission, 41.0% a year after commission, 21 days unbonding. Non-custodial.
 - [Gravity Bridge staking](https://encapsulate.xyz/networks/gravity-bridge): Stake GRAV with Encapsulate on Gravity Bridge: 10% commission, 16.4% a year after commission, 21 days unbonding. Non-custodial.
 - [humans.ai staking](https://encapsulate.xyz/networks/humans-ai): Stake HEART with Encapsulate on humans.ai: 10% commission, 31.7% a year after commission, 14 days unbonding. Non-custodial.
 - [Ika staking](https://encapsulate.xyz/networks/ika): Stake IKA with Encapsulate on Ika: 10% commission, 13.1% a year after commission, 12–36 hours unbonding. Non-custodial.
@@ -36,7 +36,7 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 - [Lido DVT staking](https://encapsulate.xyz/networks/lido-dvt): Stake ETH through Lido DVT with Encapsulate: 500 validators, 10% fee in all, 2.3% a year after fees, 1–5 days to unstake.
 - [Lumera staking](https://encapsulate.xyz/networks/lumera): Stake LUME with Encapsulate on Lumera: 10% commission, 47.3% a year after commission, 21 days unbonding. Non-custodial.
 - [Mina staking](https://encapsulate.xyz/networks/mina): Stake MINA with Encapsulate on Mina: 5% commission, no unbonding. Non-custodial.
-- [Monad staking](https://encapsulate.xyz/networks/monad): Stake MON with Encapsulate on Monad: 15% commission, 9.8% a year after commission, 4.5–9 hours unbonding. Non-custodial.
+- [Monad staking](https://encapsulate.xyz/networks/monad): Stake MON with Encapsulate on Monad: 15% commission, 9.1% a year after commission, 4.5–9 hours unbonding. Non-custodial.
 - [NEAR staking](https://encapsulate.xyz/networks/near): Stake NEAR with Encapsulate on NEAR: 5% commission, 4.7% a year after commission, 22–30 hours unbonding. Non-custodial.
 - [Passage staking](https://encapsulate.xyz/networks/passage): Stake PASG with Encapsulate on Passage: 10% commission, 6.7% a year after commission, 21 days unbonding. Non-custodial.
 - [Sommelier staking](https://encapsulate.xyz/networks/sommelier): Stake SOMM with Encapsulate on Sommelier: 10% commission, 0% a year after commission, 28 days unbonding. Non-custodial.
@@ -134,8 +134,8 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 
 ## Full text
 
-- [llms-full.txt](https://encapsulate.xyz/llms-full.txt): every page of encapsulate.xyz but the blog posts and the vote record, as Markdown (152 kB, 2026-10-25)
+- [llms-full.txt](https://encapsulate.xyz/llms-full.txt): every page of encapsulate.xyz but the blog posts and the vote record, as Markdown (152 kB, 2026-10-27)
 - [llms-blog.txt](https://encapsulate.xyz/llms-blog.txt): every blog post on encapsulate.xyz/blog, part 1 of 2, as Markdown (235 kB, 2026-10-25)
 - [llms-blog-2.txt](https://encapsulate.xyz/llms-blog-2.txt): every blog post on encapsulate.xyz/blog, part 2 of 2, as Markdown (158 kB, 2026-10-25)
-- [llms-votes.txt](https://encapsulate.xyz/llms-votes.txt): our governance vote record, every vote on encapsulate.xyz/governance/votes, part 1 of 2, as Markdown (247 kB, 2026-10-25)
-- [llms-votes-2.txt](https://encapsulate.xyz/llms-votes-2.txt): our governance vote record, every vote on encapsulate.xyz/governance/votes, part 2 of 2, as Markdown (122 kB, 2026-10-25)
+- [llms-votes.txt](https://encapsulate.xyz/llms-votes.txt): our governance vote record, every vote on encapsulate.xyz/governance/votes, part 1 of 2, as Markdown (247 kB, 2026-10-27)
+- [llms-votes-2.txt](https://encapsulate.xyz/llms-votes-2.txt): our governance vote record, every vote on encapsulate.xyz/governance/votes, part 2 of 2, as Markdown (122 kB, 2026-10-27)

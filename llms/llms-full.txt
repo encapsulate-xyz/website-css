@@ -2,7 +2,7 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-10-25. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-10-27. The index of the site is https://encapsulate.xyz/llms.txt.
 
 ## Encapsulate - Validators for networks we believe in
 
@@ -20,7 +20,7 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 
 01 / 04 · Staked
 
-#### $70,189,202
+#### $69,451,412
 
 Under management by
 
@@ -38,7 +38,7 @@ Mainnet validator, in the active set.
 
 02 / 04 · Delegators
 
-#### 14,169
+#### 14,172
 
 delegators
 
@@ -188,34 +188,38 @@ Read, weigh, listen, step back: the same four questions before every vote. The s
 
 The record, by outcome
 
-1,912
+#### 1,913 votes.
 
-votes
+Every vote in the record, in one block.
 
-1,243
+#### Yes, 1,243 times.
 
-Yes
+Nearly two votes in three: 65.0% of the record.
 
-78
+#### No, 78 times.
 
-No
+About one vote in twenty-five: 4.1% of the record.
 
-478
+#### No with veto, 478 times.
 
-No with veto
+About one vote in four: 25.0% of the record.
 
-113
+#### Abstain, 114 times.
 
-Abstain
+About one vote in seventeen: 6.0% of the record.
+
+#### Four answers, one record.
+
+Every one of the 1,913 is a Yes, a No, a No with veto or an Abstain.
 
 | Proposal | Our vote | Recorded |  |  |
 | --- | --- | --- | --- | --- |
+| Phoenix Foundation: Appoint Martin as Emergency Supervisor Terra · 4853 | ABSTAIN | Oct 27, 2026 | [View Tx Hash](https://www.mintscan.io/terra/tx/F3EFCDB073E6EB94AF0FCE74D691BFBA7D11A7C8557E6F9C8F89BF6B236CB0F5) | Not enough in the proposal to judge it either way, so we abstain rather than guess. |
 | Instantiate and register arc with reward pools Axelar · 501 | YES | Oct 24, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/BB7A56F88567371F90452E3E7933E8C5D30E71AD92BEBC179820DEB7ACC729FC) | The code and the addresses were published with the proposal, and the change is contained. Yes. |
 | Interchain Token Service Batch Migration Axelar · 500 | YES | Oct 22, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/691E5D4C442DB91E15D3E2A358BDFD4C2381F7A5D419D9AC092BA29F1D4514DB) | Deployment work the chain's connections depend on; supporting it keeps them working. |
 | Protocol upgrade to version 139 Sui · 139 | YES | Oct 21, 2026 | [View Release](https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.82.3) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. |
 | Gaia v29.0.0 upgrade Cosmos Hub · 1059 | YES | Oct 21, 2026 | [View Tx Hash](https://www.mintscan.io/cosmos/tx/218B5EBDCEBF3516F2F2D1225DA0CCFFFC9726814FB551A5B9EC313786998258) | A scheduled upgrade on a published release. We support it so the validator set moves together and the chain stays live. |
 | Interchain Governance Proposal Axelar · 499 | YES | Oct 14, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/D474032B96A0AC849F523BF7F53A78EB4F47FEEB6C0B0BDD12BD31089E0BED26) | We read it in full and see nothing that works against the chain or its delegators. |
-| Authorize Coordinator to instantiate VotingVerifier code 64 Axelar · 498 | YES | Oct 9, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/24EF6C4921F8DB0BA8B731805156ACA5B32092DC5387C505D3BAE8D0F0D94E2C) | Routine contract housekeeping that keeps existing integrations running. No change to protocol risk. |
 
 [View voting history](https://encapsulate.xyz/governance)
 
@@ -845,11 +849,11 @@ Published as cast
 
 Scroll ↓
 
-Interchain Token Service Batch Migration“Deployment work the chain's connections depend on; supporting it keeps them working.”
+Instantiate and register arc with reward pools“The code and the addresses were published with the proposal, and the change is contained. Yes.”
 
 The record
 
-1,912
+1,913
 
 Six years of votes.
 
@@ -869,6 +873,7 @@ The record · newest first
 
 | Proposal | Our vote | Recorded |  |  |
 | --- | --- | --- | --- | --- |
+| Phoenix Foundation: Appoint Martin as Emergency Supervisor Terra · 4853 | ABSTAIN | [View Tx Hash](https://www.mintscan.io/terra/tx/F3EFCDB073E6EB94AF0FCE74D691BFBA7D11A7C8557E6F9C8F89BF6B236CB0F5) | Not enough in the proposal to judge it either way, so we abstain rather than guess. | Oct 27, 2026 |
 | Instantiate and register arc with reward pools Axelar · 501 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/BB7A56F88567371F90452E3E7933E8C5D30E71AD92BEBC179820DEB7ACC729FC) | The code and the addresses were published with the proposal, and the change is contained. Yes. | Oct 24, 2026 |
 | Interchain Token Service Batch Migration Axelar · 500 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/691E5D4C442DB91E15D3E2A358BDFD4C2381F7A5D419D9AC092BA29F1D4514DB) | Deployment work the chain's connections depend on; supporting it keeps them working. | Oct 22, 2026 |
 | Protocol upgrade to version 139 Sui · 139 | YES | [View Release](https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.82.3) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | Oct 21, 2026 |
@@ -878,9 +883,8 @@ The record · newest first
 | Protocol upgrade to version 138 Sui · 138 | YES | [View Release](https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.81.1) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | Oct 7, 2026 |
 | Protocol upgrade to version 37 IOTA · 37 | YES | [View Release](https://github.com/iotaledger/iota/releases/tag/v1.33.1) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | Oct 7, 2026 |
 | Move the 1,227,121 ATOM recovered after the Neutron exploit to the Neutron recovery multisig Cosmos Hub · 1058 | YES | [View Tx Hash](https://www.mintscan.io/cosmos/tx/2AA2B6A70FE601F38CFDAF327496F14E0704A545CF45A64D720DB853F3BB65CD) | Repair work on an existing route rather than a new commitment, so we support it. | Oct 5, 2026 |
-| Upgrade Terra to v2.22.0 Terra · 4852 | YES | [View Tx Hash](https://www.mintscan.io/terra/tx/7607AE3F31BBB454EF1F684326C5DBBDB76743E63BED6FCF869C873E5445EE4F) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. | Oct 5, 2026 |
 
-10 of 1,912 shown
+10 of 1,913 shown
 
 ## Investments
 
@@ -1092,7 +1096,7 @@ Lido DVT
 
 Monad
 
-9.8%
+9.1%
 
 NEAR
 
@@ -1162,7 +1166,7 @@ Althea
 
 Gitopia
 
-41.6%
+41.0%
 
 Gravity Bridge
 
@@ -1308,7 +1312,7 @@ Of every 100 BLD staked
 
 6.4 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -1328,9 +1332,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 15 Nov
+In your wallet · 17 Nov
 
 Live dates
 
@@ -1494,7 +1498,7 @@ Of every 100 ALTHEA staked
 
 24.5 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -1514,9 +1518,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 15 Nov
+In your wallet · 17 Nov
 
 Live dates
 
@@ -1680,7 +1684,7 @@ Of every 100 AVAIL staked
 
 7.5 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -1700,9 +1704,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 22 Nov
+In your wallet · 24 Nov
 
 Live dates
 
@@ -1864,7 +1868,7 @@ Of every 100 AVAX staked
 
 4.6 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -1884,9 +1888,9 @@ Staking period
 
 Locked for the period you choose
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-The shortest period ends · 8 Nov
+The shortest period ends · 10 Nov
 
 Live dates · the shortest period, 2 weeks
 
@@ -2048,7 +2052,7 @@ Of every 100 AXL staked
 
 14.1 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 26 Oct 2026
 
 Commission
 
@@ -2068,9 +2072,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 1 Nov
+In your wallet · 3 Nov
 
 Live dates
 
@@ -2232,7 +2236,7 @@ Of every 100 C4E staked
 
 7.8 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -2252,9 +2256,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 15 Nov
+In your wallet · 17 Nov
 
 Live dates
 
@@ -2418,7 +2422,7 @@ Of every 100 ATOM staked
 
 17.7 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -2438,9 +2442,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 15 Nov
+In your wallet · 17 Nov
 
 Live dates
 
@@ -2600,7 +2604,7 @@ Of every 100 EIGEN staked
 
 6.4 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -2620,9 +2624,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 8 Nov
+In your wallet · 10 Nov
 
 Live dates
 
@@ -2804,9 +2808,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 1 Nov
+In your wallet · 3 Nov
 
 Live dates
 
@@ -2944,7 +2948,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/gitopia
 
-Stake LORE with Encapsulate on Gitopia: 10% commission, 41.6% a year after commission, 21 days unbonding. Non-custodial.
+Stake LORE with Encapsulate on Gitopia: 10% commission, 41.0% a year after commission, 21 days unbonding. Non-custodial.
 
 ### Gitopia
 
@@ -2960,15 +2964,15 @@ The terms
 
 Reward rate
 
-41.6%
+41.0%
 
 Set by the chain, not by us
 
 Of every 100 LORE staked
 
-41.6 earned in a year
+41 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -2988,9 +2992,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 15 Nov
+In your wallet · 17 Nov
 
 Live dates
 
@@ -3022,23 +3026,23 @@ Horizon
 
 Not compounded — Gitopia pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,416
+1,410
 
 Year 1
 
-1,832
+1,820
 
 Year 2
 
-2,248
+2,230
 
 Year 3
 
-2,664
+2,640
 
 Year 4
 
-3,080
+3,050
 
 Year 5
 
@@ -3154,7 +3158,7 @@ Of every 100 GRAV staked
 
 16.4 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -3174,9 +3178,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 15 Nov
+In your wallet · 17 Nov
 
 Live dates
 
@@ -3340,7 +3344,7 @@ Of every 100 HEART staked
 
 31.7 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -3360,9 +3364,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 8 Nov
+In your wallet · 10 Nov
 
 Live dates
 
@@ -3526,7 +3530,7 @@ Of every 100 IKA staked
 
 13.1 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -3546,9 +3550,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 27 Oct
+In your wallet · 29 Oct
 
 Live dates
 
@@ -3710,7 +3714,7 @@ Of every 100 IOTA staked
 
 11.3 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -3730,9 +3734,9 @@ None
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 25 Oct
+In your wallet · 27 Oct
 
 Live dates
 
@@ -3894,7 +3898,7 @@ Of every 100 IXO staked
 
 17.9 earned in a year
 
-After our commission · as of 24 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -3914,9 +3918,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 15 Nov
+In your wallet · 17 Nov
 
 Live dates
 
@@ -4100,7 +4104,7 @@ Of every 100 ETH staked
 
 2.3 earned in a year
 
-After Lido’s fee · as of 25 Oct 2026
+After Lido’s fee · as of 27 Oct 2026
 
 Lido’s fee
 
@@ -4120,9 +4124,9 @@ Unbonding
 
 Lido’s withdrawal queue
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 30 Oct
+In your wallet · 1 Nov
 
 Live dates
 
@@ -4284,7 +4288,7 @@ Of every 100 LUME staked
 
 47.3 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -4304,9 +4308,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 15 Nov
+In your wallet · 17 Nov
 
 Live dates
 
@@ -4484,9 +4488,9 @@ None
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 25 Oct
+In your wallet · 27 Oct
 
 Live dates
 
@@ -4590,7 +4594,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/monad
 
-Stake MON with Encapsulate on Monad: 15% commission, 9.8% a year after commission, 4.5–9 hours unbonding. Non-custodial.
+Stake MON with Encapsulate on Monad: 15% commission, 9.1% a year after commission, 4.5–9 hours unbonding. Non-custodial.
 
 ### Monad
 
@@ -4606,15 +4610,15 @@ The terms
 
 Reward rate
 
-9.8%
+9.1%
 
 Set by the chain, not by us
 
 Of every 100 MON staked
 
-9.8 earned in a year
+9.1 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -4634,9 +4638,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 26 Oct
+In your wallet · 28 Oct
 
 Live dates
 
@@ -4668,23 +4672,23 @@ Horizon
 
 Not compounded — Monad pays rewards to a claimable balance. After our 15% commission. An estimate at today’s rate, which the chain can change.
 
-1,098
+1,091
 
 Year 1
 
-1,196
+1,182
 
 Year 2
 
-1,294
+1,273
 
 Year 3
 
-1,392
+1,364
 
 Year 4
 
-1,490
+1,455
 
 Year 5
 
@@ -4798,7 +4802,7 @@ Of every 100 NEAR staked
 
 4.7 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -4818,9 +4822,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 27 Oct
+In your wallet · 29 Oct
 
 Live dates
 
@@ -4832,7 +4836,7 @@ Since we joined
 
 Launch
 
-12 months
+13 months
 
 Today
 
@@ -4982,7 +4986,7 @@ Of every 100 PASG staked
 
 6.7 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -5002,9 +5006,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 15 Nov
+In your wallet · 17 Nov
 
 Live dates
 
@@ -5188,9 +5192,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 22 Nov
+In your wallet · 24 Nov
 
 Live dates
 
@@ -5346,7 +5350,7 @@ Of every 100 STRK staked
 
 7.5 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -5366,9 +5370,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 1 Nov
+In your wallet · 3 Nov
 
 Live dates
 
@@ -5530,7 +5534,7 @@ Of every 100 SUI staked
 
 1.3 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -5550,9 +5554,9 @@ None
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 25 Oct
+In your wallet · 27 Oct
 
 Live dates
 
@@ -5714,7 +5718,7 @@ Of every 100 SUPRA staked
 
 8 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -5734,9 +5738,9 @@ Up to 48 hours
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 27 Oct
+In your wallet · 29 Oct
 
 Live dates
 
@@ -5748,7 +5752,7 @@ Since we joined
 
 Launch
 
-22 months
+23 months
 
 Today
 
@@ -5898,7 +5902,7 @@ Of every 100 LUNA staked
 
 35.9 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -5918,9 +5922,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 15 Nov
+In your wallet · 17 Nov
 
 Live dates
 
@@ -6082,7 +6086,7 @@ Of every 100 VARA staked
 
 16.9 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -6102,9 +6106,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 1 Nov
+In your wallet · 3 Nov
 
 Live dates
 
@@ -6266,7 +6270,7 @@ Of every 100 ZIL staked
 
 8.2 earned in a year
 
-After our commission · as of 25 Oct 2026
+After our commission · as of 27 Oct 2026
 
 Commission
 
@@ -6286,9 +6290,9 @@ About 6 days
 
 How long to withdraw
 
-Withdraw today · 25 Oct
+Withdraw today · 27 Oct
 
-In your wallet · 31 Oct
+In your wallet · 2 Nov
 
 Live dates
 
