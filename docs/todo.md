@@ -183,10 +183,9 @@ SEO titles and descriptions, redirects, the navigation menu, files, analytics an
 through Super's dashboard GraphQL API from a visible Chrome tab (memory, `reference-super-dashboard`), which needs that
 tab open and its token fresh.
 
-- **The user's step:** claude.ai → Customize → Connectors → + Add → Add custom connector, named "Super", the address
-  above, the suggested sign-in, then sign in and pick the workspace (or, for this project alone,
-  `claude mcp add --transport http super https://mcp.super.so/mcp` and `/mcp` to sign in). Super's own step 4,
-  connecting Notion's connector, is not needed: Notion is written through the integration token.
+- **The user's step — done 2026-10-27:** connected as the claude.ai connector "Super" (`claude mcp list` shows
+  "claude.ai Super: https://mcp.super.so/mcp - ✔ Connected"). Its tools were not in the session it was connected
+  during (ToolSearch found none); they load in a new session, as `mcp__claude_ai_Super__…`.
 - **Then:** list its tools, move the head pastes (whole `head/*.html` files, checked by SHA-1 as now) and the page
   refreshes onto it, and keep the GraphQL route as the fallback. Never its colour, font or restyle tools: the design
   lives in this repo.
