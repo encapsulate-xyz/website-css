@@ -232,7 +232,14 @@ python3 scripts/llms.py           # reads every sitemap page, about 5 minutes, f
 python3 scripts/llms.py --cached  # lays out again from the pages read last time (backups/llms-pages/)
 ```
 
-**Uploading** (from a visible app.super.so tab, the Files page, `/site/<site>/files`): the API's `addSiteFiles(input:
+**Uploading — through Super's MCP since 2026-10-27** (first run that day, the four changed files): commit and push
+`llms/`, then for each changed file `remove_file` (siteId, name) and at once `add_file` (siteId, name, `sourceUrl`
+`https://cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@<full sha>/llms/<name>`), one file at a time, so each is gone
+for seconds only. `add_file` over a name that is there is refused ("already exists in /; remove_file first"). Then curl
+each one back: 200, `text/plain;charset=UTF-8`, byte-identical (`cmp`) to `llms/`. The dashboard route below is the
+fallback.
+
+**Uploading from the dashboard** (from a visible app.super.so tab, the Files page, `/site/<site>/files`): the API's `addSiteFiles(input:
 {id: <site>, files: [{name, dir: root, content}]})` wants an *uploaded file's key* as `content`, not the text
 (`INVALID_FILE_KEY`), so hand the files to the page's own input and let it upload them. Commit and push `llms/`,
 fetch each file from `cdn.jsdelivr.net/gh/encapsulate-xyz/website-css@<full sha>/llms/<name>`, check its SHA-1
@@ -241,7 +248,7 @@ against the local file, then build a `DataTransfer` of `new File([text], name, {
 size } }` lists it. Check with curl: 200, `text/plain`, byte-identical to `llms/`. **The page refuses a name that
 is already there**, and `updateSiteFile(input: {siteId, id, dir})` only moves a file between `root` and
 `wellKnown`. So to replace a file, first `removeSiteFile(input: {siteId, id})`, then upload it again. That route
-follows from the API's shape and has not been run yet.
+follows from the API's shape and was never run: the MCP's came first.
 
 ## The SEO job — every database row's card, title, description, and four content properties (built 2026-09-30)
 

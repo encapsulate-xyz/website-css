@@ -191,8 +191,8 @@ tab open and its token fresh.
   whole file, checked against `shasum -a 256`, with a rollback in `list_code_history` / `restore_code`. **First used
   for v419 (2026-10-27):** `patch_code` swapped the changed pins and the boxes' hashes matched the files. The pages
   picked the head up unevenly without a refresh, so they are still refreshed; `sync_page` does one page fully (both
-  heads and its Notion), the dashboard's GraphQL loop does them all. Left to check: whether `add_file` over an existing
-  llms file replaces it.
+  heads and its Notion), the dashboard's GraphQL loop does them all. `add_file` over an existing name is refused, so an
+  llms file is `remove_file` then `add_file` from jsDelivr (`docs/seo.md`, "llms.txt"); first done the same day.
   It has no per-page sitemap switch, so /team stays in the sitemap. Never its colour, font, theme or style tools: the
   design lives in this repo.
 
