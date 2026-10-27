@@ -186,9 +186,13 @@ tab open and its token fresh.
 - **The user's step — done 2026-10-27:** connected as the claude.ai connector "Super" (`claude mcp list` shows
   "claude.ai Super: https://mcp.super.so/mcp - ✔ Connected"). Its tools were not in the session it was connected
   during (ToolSearch found none); they load in a new session, as `mcp__claude_ai_Super__…`.
-- **Then:** list its tools, move the head pastes (whole `head/*.html` files, checked by SHA-1 as now) and the page
-  refreshes onto it, and keep the GraphQL route as the fallback. Never its colour, font or restyle tools: the design
-  lives in this repo.
+- **Then — started 2026-10-27:** its tools are listed (65, `mcp__claude_ai_Super__*`). The stored site head and body
+  match `head/site.html` and `head/site-body.html` by sha256 (`get_code`), so a head paste is now `set_code` with the
+  whole file, checked against `shasum -a 256`, with a rollback in `list_code_history` / `restore_code`. Left to check
+  on the first real use: whether pages pick a `set_code` head up without a refresh (until then the pages are refreshed
+  through the dashboard's GraphQL route as before), and whether `add_file` over an existing llms file replaces it.
+  It has no per-page sitemap switch, so /team stays in the sitemap. Never its colour, font, theme or style tools: the
+  design lives in this repo.
 
 ## TODO — Search Console (from 2026-10-25; the routine is CLAUDE.md, "After every task, Search Console")
 
