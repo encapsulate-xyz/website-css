@@ -360,25 +360,40 @@ behind it.", which named pillars the section no longer shows; the new one pairs 
 by outcome". Old text in `backups/governance-stray-row-and-home-heading-2026-10-25.json`; the block (and `#governance`)
 is the same.
 
-**The vote split fills the strip's place** (2026-10-25, design *Vote Split Patterns*, G3 "Pastel ribbons"; built on
-/governance first by mistake — v396 — and moved here the same day, the user: "g3 isnt for /governance, it was the
-homepage governance section"). Two paragraphs in the lede's column, after the lede: the kicker "The record, by
-outcome" (`404e800a…816a…`, area `skick`) and the line `404e800a…8128…`, "1,911 votes · 1,242 Yes · 78 No · 478 No
-with veto · 113 Abstain" (area `split`), which **site-data's count job writes** after every governance run with the
-count band's figure. The homepage carries only the past month's rows, so it cannot count the record itself.
-governance.js (3b) draws the line and hides it: the record as one trunk that parts into a pastel ribbon per outcome
-and straightens to the right edge, each figure inside its ribbon, its digits two-thirds as tall as the ribbon is thick
-and centred on it by the digits' measured ink (never under 11px, its size at 1440; smaller only to stay inside the right edge), the total
-upright beside the trunk with a rule exactly as long as the trunk is thick. Colours by the line's words: Yes
-`#DCEEC7`, No `#F8E8B3`, No with veto `#F7DCE7` (the veto dot's pink), Abstain `#D2E3F6`. **The 729 votes from before
-the record are frozen by outcome** (the user chose "474 Yes, 212 No and 43 Abstain", the record's proportions of the
-day; the 212 is 30 No and 182 No with veto by the same proportions — site-data `BEFORE_SPLIT`), so only votes added to
-the record move it. An outcome the line leaves out has no ribbon (No with veto joins whenever it is not zero). Under
-760px the flow runs down the screen, the total in a row above it with its measure under it, each figure under its
-ribbon at 30px (smaller, to 18, if the row would not fit; a long word wraps at 9ch). It pours in once (clip-path, 1.6s)
-the first time the box is on the screen — the observer watches the box, not the clipped body, which a target's own
-clip-path hides from it. Reduced motion, a hidden tab or no IntersectionObserver: whole. A line it cannot read stays
-as Notion wrote it. The G3 drawing's kicker adds "· each figure two-thirds as tall as its ribbon", the design describing
-itself, left out. Section name `#by-outcome`. **The figures have an 11px floor** (the user, the same day): the drawing scales
-down between 760 and 1100px, and with the design's "never clamped up" 78 No came out at about 6px at 800; 11px is
-its size at 1440, so a desktop is unchanged, and a floored figure overhangs its thin ribbon by a pixel or two.
+**The vote split fills the strip's place, told as a story since 2026-10-27** (design *Vote Split Story*, "G3d, told as
+a story"; the user chose "Homepage, replacing G3"). Before it, from 2026-10-25, it was G3 "Pastel ribbons" of *Vote Split
+Patterns* (built on /governance first by mistake, v396, and moved here the same day, the user: "g3 isnt for
+/governance, it was the homepage governance section"): one static drawing that poured in once, its figures inside the
+ribbons with an 11px floor (`git show v418:governance.js`, 3b). **The story** is a pinned stage, one screen of scroll a
+beat, (beats + 0.4) screens in all (640vh with four outcomes), between the lede and the six rows, full width
+(`[data-enc-story]`, governance.js 3b, home.css). Its head row is the kicker's words, "The record, by outcome", and the
+counter ("01 / 06"); then the beat's headline (Outfit 600, 34–64px) and lead, crossfading in one grid cell; then the
+drawing, scaled to the room left; "Scroll ↓" until the reader moves. It opens on the record as one ink block (#2A2C28)
+beside its total; each beat one answer takes its pastel from the block's left edge and pours out as its ribbon, in
+ballot order, then the record parts at that answer's seam and the ribbons already told lift by half a gap, staying
+centred on the block; the close holds the whole split. Scrolling back reverses it. The figures stand in one column at the
+ribbons' ends (the design's default of its six Figures settings, "Column"; Order "Ballot order", Opening "Ink block"), one
+size, tabular, right-aligned, the name on the figure's cap line and the share on its baseline. Under 760px the record runs
+across the top and each answer pours down into its column, its figure under it at 36px; a figure too close to its
+neighbour drops a row. Reduced motion steps it a beat at a time; print shows it whole. Colours by the line's words: Yes
+`#DCEEC7`, No `#F8E8B3`, No with veto `#F7DCE7`, Abstain `#D2E3F6`.
+**Its numbers** are the line `404e800a…8128…`, "1,913 votes · 1,243 Yes · 78 No · 478 No with veto · 114 Abstain", which
+**site-data's count job writes** after every governance run with the count band's figure (the homepage carries only the
+past month's rows, so it cannot count the record itself). **The 729 votes from before the record are frozen by outcome**
+(the user chose "474 Yes, 212 No and 43 Abstain", the record's proportions of the day; the 212 is 30 No and 182 No with
+veto by the same proportions — site-data `BEFORE_SPLIT`), so only votes added to the record move it. An outcome the line
+leaves out has no ribbon and no beat. The line and the kicker (`404e800a…816a…`) are hidden once drawn; a line it cannot
+read stays as Notion wrote it, with its kicker.
+**Its words** are the "Vote split copy" toggle under the line (`406e800a513881c19f5feac5490bdc30`, hidden by its id in
+home.css; fallback `STORY` in governance.js): `open`, `open lead`, `answer`, `answer one`, `answer lead`, `answer lead
+plain`, `close`, `close lead`, `counter`, `scroll`, each `key · text` with `{total}`, `{word}`, `{answer}`, `{count}`,
+`{share}`, `{share words}`, `{answers}`, `{list}`, `{beat}`, `{beats}` filled in from the counts. What fills them is
+worked out in governance.js, as the Why Stake figures are: the share in words by the design's rule (the nearest half,
+third or quarter within five points, otherwise one in N; "exactly" only when the count divides the record, "about" within
+0.4 points, else "nearly" or "more than"), the number words, the articles and the "a, b or c" list. On 1,913 votes:
+"Nearly two votes in three: 65.0% of the record." (Yes), "About one vote in twenty-five" (No), "About one vote in four"
+(No with veto; the design's 1,912 made it "exactly"), "About one vote in seventeen" (Abstain).
+**Left out of the design:** the page header and the note (the design's own), and the "A" pill beside the label, which
+names the design's one telling. Section name `#by-outcome`: the top of the track, where the stage pins on its first beat
+(the kicker until drawn). Checked 2026-10-27 at 320–2560 (audit.mjs: no sideways scroll, no error but React #418), every
+beat at 1440, 1024×700, 800 and 390, reduced motion, and an idle page (0 mutations in 3s).

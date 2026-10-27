@@ -118,7 +118,7 @@ named by pattern, so they need only the check that one lands (`notion/new-row-ch
 
 | Page | Names |
 |---|---|
-| / | `stats` (its four screens: `staked`, `delegators`, `mainnets`, `uptime`), `audience`, `why-stake`, `networks`, `testimonials`, `governance` (its heading), `by-outcome` (the vote split's kicker, "The record, by outcome"), `services`, `institutional` (the form, hidden since 2026-10-25: it and `#block-…1975` forward to /contact#institutional), `deep-dives` (the blog band; `blog` before 2026-10-24, still kept), `team`, `contact`; /team forwards to /#team |
+| / | `stats` (its four screens: `staked`, `delegators`, `mainnets`, `uptime`), `audience`, `why-stake`, `networks`, `testimonials`, `governance` (its heading), `by-outcome` (the vote split's story, "The record, by outcome": the top of its track; its kicker until it is drawn), `services`, `institutional` (the form, hidden since 2026-10-25: it and `#block-…1975` forward to /contact#institutional), `deep-dives` (the blog band; `blog` before 2026-10-24, still kept), `team`, `contact`; /team forwards to /#team |
 | /networks | `count`, `list`, `chain-teams` |
 | /governance | `record`, `pillars`, `votes` (the heading "Every vote, on chain.") |
 | /blog | `posts` |

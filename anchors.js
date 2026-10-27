@@ -64,8 +64,9 @@
       // the section's heading callout: where the first quote pins at a desktop width
       testimonials: b("3dae800a51388066b66ffeeb9bdb1550"),
       governance: heading(b("8596efbf83c94c59ac8278879b8be3bc")),
-      // the vote split: its kicker, so the line names what follows
-      "by-outcome": heading(b("404e800a5138816ab84adfcc33e9bb44")),
+      // the vote split, told as a story (2026-10-27): the top of its track, where the stage pins on its first beat;
+      // the kicker until it is drawn, or if the line cannot be read
+      "by-outcome": ["[data-enc-story]", b("404e800a5138816ab84adfcc33e9bb44")],
       services: b("3dbe800a5138800d8a72c99cdde9bc3f"),
       // institutional: hidden on 2026-10-25, sent to /contact (GONE)
       // the blog band, "Deep dives." since 2026-10-24; #blog was its name before and still lands

@@ -918,62 +918,57 @@
     }
   }
 
-  /* ── 3b · the homepage's vote split (design Vote Split Patterns, G3 "Pastel ribbons", 2026-10-25) ──
-     In the homepage's governance section, between the lede and the six rows, where the pillar strip was: the
-     record as one trunk that parts into a pastel ribbon per outcome and straightens to the right edge; each
-     ribbon carries its own figure, its digits two-thirds as tall as the ribbon is thick, never under 11px (the
-     design never sized one up; between 760 and 1100px that left 78 No at 6px, and the user asked for the floor,
-     2026-10-25 — 11px is the size it has at 1440, so a desktop is unchanged), the total set upright beside the trunk with a rule exactly as long as the
-     trunk is thick. It draws one line in Notion, "1,911 votes · 1,242 Yes · 78 No · 478 No with veto · 113
-     Abstain", which site-data's count job writes after every governance run with the count band's figure: the
-     record's rows plus the 729 votes from before it, frozen by outcome on 2026-10-25 (the user: "474 Yes, 212
-     No and 43 Abstain"; the 212 is 30 No and 182 No with veto, by the same proportions), so only votes added
-     to the record move it. The homepage carries only the past month's rows, so it cannot count the record
-     itself. The line is the source: hidden once drawn, its figures and words are the drawing's, and an outcome
-     the line leaves out has no ribbon (No with veto joins whenever it is not zero). The kicker above it is its
-     own paragraph. Under 760px the flow runs down the screen, the total above it and the figures under the
-     ribbons at a size that reads. It pours in once, left to right (down, on a phone), the first time it is on
-     the screen; reduced motion, a hidden tab or no IntersectionObserver show it whole. */
+  /* ── 3b · the homepage's vote split, told as a story (design Vote Split Story, "G3d, told as a story", 2026-10-27) ──
+     In the homepage's governance section, between the lede and the six rows, in place of G3 "Pastel ribbons"
+     (2026-10-25): a pinned stage, one screen of scroll a beat and (beats + 0.4) screens in all. It opens on the record
+     as one ink block beside its total; each beat one answer takes its pastel from the block's left edge and pours out
+     as its ribbon, in ballot order from the top, so what is left of the block is always one piece; then the record
+     parts at that answer's seam, the ribbons already told lifting by half a gap so the set stays centred on the block.
+     The close holds the whole split, and scrolling back reverses every beat. The figures stand in one column at the
+     ribbons' ends (the design's default, "Column"): one size, tabular and right-aligned, each with its name on the
+     figure's cap line and its share on its baseline. Under 760px the record runs across the top and each answer pours
+     down into its column, its figure under it at 36px; a figure too close to its neighbour drops a row.
+     Its numbers are one line in Notion, "1,913 votes · 1,243 Yes · 78 No · 478 No with veto · 114 Abstain", which
+     site-data's count job writes after every governance run: the record's rows plus the 729 votes from before it,
+     frozen by outcome on 2026-10-25 (the user: "474 Yes, 212 No and 43 Abstain"; the 212 is 30 No and 182 No with
+     veto, by the same proportions). The homepage carries only the past month's rows, so it cannot count the record
+     itself. The line, and the kicker above it ("The record, by outcome", the stage's label), are the source: hidden
+     once drawn. An outcome the line leaves out has no ribbon and no beat. The beats' words are the "Vote split copy"
+     toggle under the line; what they fill in is worked from the counts here: the share in words follows the design's
+     rule (the nearest half, third or quarter within five points, otherwise one in N, "exactly" only when the count
+     divides the record), with the number words, the articles and the list, which no Notion block can hold. A line it
+     cannot read stays as Notion wrote it. Reduced motion steps it a beat at a time with nothing moving; print shows it
+     whole. The design's "A" pill beside the label names its one telling, so it is left out. */
   var LINE = "block-404e800a51388128ba49e43d1ce92374";   // the line, written by site-data's count job
+  var KICK = "block-404e800a5138816ab84adfcc33e9bb44";   // "The record, by outcome"
   var FILLS = { "yes": "#DCEEC7", "no": "#F8E8B3", "no with veto": "#F7DCE7", "abstain": "#D2E3F6" };
-  var G3 = { W: 1146, T: 300, g: 40, x1: 300, x3: 620, ratio: 0.66, side: 94 };   // the design's 1240: 84 + 10 + 1146
-  var DOWN = { g: 14, L: 220, fs: 30 };   // under 760px: the gap at the foot, the flow's length, the figures
-  var MIN_FS = 11;   // the smallest figure beside a ribbon, px
+  var INK = "#000", DARK = "#2A2C28";
+  /* the fallback if the "Vote split copy" toggle goes missing */
+  var STORY = {
+    "open": "{total} {word}.",
+    "open lead": "Every vote in the record, in one block.",
+    "answer": "{answer}, {count} times.",
+    "answer one": "{answer}, {count} time.",
+    "answer lead": "{share words}: {share} of the record.",
+    "answer lead plain": "{share} of the record.",
+    "close": "{answers} answers, one record.",
+    "close lead": "Every one of the {total} is {list}.",
+    "counter": "{beat} / {beats}",
+    "scroll": "Scroll ↓"
+  };
+  // seams, gaps between parted ribbons, figure to word, ribbon end to figure; under 760px its own
+  var ST = { s: 2, G: 40, gap: 16, gapE: 24 };
+  var PH = { G: 24, s: 2, fig: 36, top: 73 };
   var INK_FB = { top: 0.17, bottom: 0.87 };   // Outfit 600's digits, as fractions of the size, until measured
   var SVGNS = "http://www.w3.org/2000/svg";
   var NARROW = window.matchMedia("(max-width: 759px)");
-  var SP = null;   // the built split: its nodes, what it draws, the digits' ink and what it last drew
+  var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var SP = null;   // the built story: its nodes, the line it read, the drawing it built and what it last drew
 
-  function splitBox() {
-    var box = el("div", "enc-split");
-    box.setAttribute("data-enc-split", "");
-    var body = el("div", "enc-split__body");
-    var tot = el("div", "enc-split__total");
-    var tlab = el("div", "enc-split__tlab");
-    var tfig = el("span", "enc-split__tfig"), tword = el("span", "enc-split__tword");
-    tlab.appendChild(tfig);
-    tlab.appendChild(tword);
-    var rule = el("span", "enc-split__rule");
-    tot.appendChild(tlab);
-    tot.appendChild(rule);
-    var flow = el("div", "enc-split__flow");
-    var svg = document.createElementNS(SVGNS, "svg");
-    svg.setAttribute("aria-hidden", "true");
-    flow.appendChild(svg);
-    body.appendChild(tot);
-    body.appendChild(flow);
-    box.appendChild(body);
-    SP = { box: box, body: body, tot: tot, tfig: tfig, tword: tword, rule: rule, flow: flow, svg: svg,
-      paths: {}, labels: {}, text: null, last: null, sig: "", ink: SP && SP.ink };
-    pourWhenSeen(SP);
-    if (!SP.ink) inkWhenReady();
-    return box;
-  }
-
-  // "1,911 votes · 1,242 Yes · …": the total and its word, then a band per outcome with votes
+  // "1,913 votes · 1,243 Yes · …": the total and its word, then a band per outcome with votes
   function parseSplit(text) {
     var num = function (v) { return parseInt(v.replace(/[^\d]/g, ""), 10) || 0; }, re = /^([\d,]+)\s+(.+)$/;
-    var parts = text.split("\u00b7").map(function (p) { return p.trim(); }), head = re.exec(parts[0] || "");
+    var parts = text.split("·").map(function (p) { return p.trim(); }), head = re.exec(parts[0] || "");
     var bands = parts.slice(1).map(function (p, i) {
       var m = re.exec(p), w = m && m[2].trim();
       return m && { k: w.toLowerCase(), n: num(m[1]), word: w, fill: FILLS[w.toLowerCase()] || TINTS[3 + i % 2] };
@@ -982,162 +977,435 @@
     return { bands: bands, total: num(head[1]), word: head[2].trim(), sum: bands.reduce(function (a2, b2) { return a2 + b2.n; }, 0) };
   }
 
-  function split() {
-    var src = document.getElementById(LINE);
-    if (!src) return;
-    var text = src.textContent.trim(), at = src.nextElementSibling;
-    if (!SP || SP.box !== at) {
-      if (at && at.hasAttribute("data-enc-split")) at.remove();
-      src.after(splitBox());
-    }
-    if (SP.text !== text) { SP.text = text; SP.last = parseSplit(text); SP.sig = ""; }
-    // a line it cannot read stays on the page as Notion wrote it
-    if (SP.last) src.setAttribute("data-enc-split-src", ""); else src.removeAttribute("data-enc-split-src");
-    layoutSplit();
-  }
-
-  function layoutSplit() {
-    var L = SP && SP.last;
-    if (!L || !document.contains(SP.box)) return;
-    setText(SP.tfig, fmt(L.total));
-    setText(SP.tword, L.word);
-    var down = NARROW.matches, width = SP.box.clientWidth, ink = SP.ink || INK_FB;
-    if (!width) return;
-    var sig = [down, width, ink.top, ink.bottom, L.total].concat(L.bands.map(function (b) { return b.k + ":" + b.n; })).join(",");
-    if (sig === SP.sig) return;
-    SP.sig = sig;
-    SP.box.classList.toggle("is-down", down);
-
-    var nb = L.bands.length, f = function (v) { return v.toFixed(2); }, W, H, T, path, trunk;
-    if (!down) {
-      W = width - G3.side;
-      var k = Math.min(1, W / G3.W), g = G3.g * k, x1 = G3.x1 * k, x3 = G3.x3 * k, xc = (x1 + x3) / 2;
-      T = G3.T * k;
-      H = T + (nb - 1) * g;
-      trunk = (nb - 1) * g / 2;
-      var yl = trunk, yr = 0;
-      L.bands.forEach(function (b) { var t = b.n * T / L.sum; b.a = yl; b.b = yl + t; b.c = yr; b.d = yr + t; yl += t; yr += t + g; });
-      path = function (b) {
-        return "M0 " + f(b.a) + " L" + f(x1) + " " + f(b.a) + " C" + f(xc) + " " + f(b.a) + " " + f(xc) + " " + f(b.c) + " " + f(x3) + " " + f(b.c) +
-          " L" + f(W) + " " + f(b.c) + " L" + f(W) + " " + f(b.d) + " L" + f(x3) + " " + f(b.d) +
-          " C" + f(xc) + " " + f(b.d) + " " + f(xc) + " " + f(b.b) + " " + f(x1) + " " + f(b.b) + " L0 " + f(b.b) + " Z";
-      };
-      SP.tot.style.height = H + "px";
-      SP.tfig.style.fontSize = (56 * Math.max(0.7, k)).toFixed(2) + "px";
-      setStyle(SP.rule, { top: f(trunk) + "px", height: f(T) + "px", left: "", width: "" });
-    } else {
-      W = width;
-      var y1 = DOWN.L * 0.262, y3 = DOWN.L * 0.541, yc = (y1 + y3) / 2, gd = DOWN.g;
-      T = W - (nb - 1) * gd;
-      H = DOWN.L;
-      trunk = (nb - 1) * gd / 2;
-      var xl = trunk, xr = 0;
-      L.bands.forEach(function (b) { var t = b.n * T / L.sum; b.a = xl; b.b = xl + t; b.c = xr; b.d = xr + t; xl += t; xr += t + gd; });
-      path = function (b) {
-        return "M" + f(b.a) + " 0 L" + f(b.a) + " " + f(y1) + " C" + f(b.a) + " " + f(yc) + " " + f(b.c) + " " + f(yc) + " " + f(b.c) + " " + f(y3) +
-          " L" + f(b.c) + " " + f(H) + " L" + f(b.d) + " " + f(H) + " L" + f(b.d) + " " + f(y3) +
-          " C" + f(b.d) + " " + f(yc) + " " + f(b.b) + " " + f(yc) + " " + f(b.b) + " " + f(y1) + " L" + f(b.b) + " 0 Z";
-      };
-      SP.tot.style.height = "";
-      SP.tfig.style.fontSize = "";
-      setStyle(SP.rule, { top: "", height: "", left: f(trunk) + "px", width: f(T) + "px" });
-    }
-    SP.svg.setAttribute("width", f(W));
-    SP.svg.setAttribute("height", f(H));
-    SP.svg.setAttribute("viewBox", "0 0 " + f(W) + " " + f(H));
-    SP.flow.style.width = f(W) + "px";
-    SP.flow.style.height = f(H) + "px";
-
-    // a path and a label per outcome, kept while the outcome is in the split
-    var keep = {};
-    L.bands.forEach(function (b) {
-      keep[b.k] = true;
-      var p = SP.paths[b.k];
-      if (!p) { p = SP.paths[b.k] = document.createElementNS(SVGNS, "path"); }
-      p.setAttribute("d", path(b));
-      p.setAttribute("fill", b.fill);
-      SP.svg.appendChild(p);
-      var lab = SP.labels[b.k];
-      if (!lab) {
-        lab = SP.labels[b.k] = el("div", "enc-split__label");
-        lab.appendChild(el("span", "enc-split__fig"));
-        lab.appendChild(el("span", "enc-split__word"));
-      }
-      setText(lab.firstChild, fmt(b.n));
-      setText(lab.lastChild, b.word);
-      SP.flow.appendChild(lab);
+  function readStoryCopy() {
+    var c = {}, k;
+    for (k in STORY) c[k] = STORY[k];
+    Array.prototype.forEach.call(document.querySelectorAll(".notion-toggle"), function (t) {
+      if (!/^vote split copy$/i.test(textOf(t.querySelector(".notion-toggle__summary")).replace(/^[‣▸▶\s]+/, ""))) return;
+      Array.prototype.forEach.call(t.querySelectorAll(".notion-toggle__content p, .notion-toggle__content .notion-text"), function (p) {
+        var line = textOf(p), i = line.indexOf("·");
+        if (i < 0) return;
+        var key = line.slice(0, i).trim(), v = line.slice(i + 1).trim();
+        if (key && v) c[key] = v;
+      });
     });
-    Object.keys(SP.paths).forEach(function (v) {
-      if (keep[v]) return;
-      SP.paths[v].remove(); SP.labels[v].remove();
-      delete SP.paths[v]; delete SP.labels[v];
-    });
-    if (!down) {
-      // every label placed, then every one measured, then the ones that run over made smaller: measured one by one,
-      // after each one's own writes, each label forced a layout of its own (PageSpeed, 2026-10-26: 131ms on the homepage)
-      var fits = L.bands.map(function (b) { return across(b, SP.labels[b.k], G3.x3 * Math.min(1, W / G3.W) + 24, W, ink); });
-      fits.forEach(function (f) { f.measure(); });
-      fits.forEach(function (f) { f.fit(); });
-    } else under(L.bands, W, H);
+    return c;
   }
+  function textOf(n) { return n ? (n.textContent || "").trim() : ""; }
+  function fillIn(t, vars) { return String(t || "").replace(/\{([^}]+)\}/g, function (m, k) { return vars[k] != null ? vars[k] : m; }); }
 
-  // beside its ribbon: the figure's digits centred on the ribbon, two-thirds as tall as it is thick and never
-  // under MIN_FS, the word on the digits' middle; made smaller only if it would run past the right edge. It places the
-  // label and hands back its measure and its fit, which layoutSplit runs for every label at once
-  function across(b, lab, x, W, ink) {
-    var th = b.d - b.c, cap = ink.bottom - ink.top, mid = (b.c + b.d) / 2;
-    var fs = th > 0 ? Math.max(MIN_FS, G3.ratio * th / cap) : 0, fig = lab.firstChild, word = lab.lastChild;
-    lab.className = "enc-split__label";
-    setStyle(lab, { left: x.toFixed(2) + "px", gap: (th > 40 ? 12 : 8) + "px", opacity: th > 0.5 ? "1" : "0", width: "" });
-    word.style.fontSize = (th > 40 ? 11 : 8.5) + "px";
-    var place = function () {
-      lab.style.top = (mid - fs * (ink.top + ink.bottom) / 2).toFixed(2) + "px";
-      lab.style.height = fs.toFixed(2) + "px";
-      fig.style.fontSize = fs.toFixed(2) + "px";
-      word.style.transform = "translateY(" + (fs * ((ink.top + ink.bottom) / 2 - 0.5)).toFixed(2) + "px)";
-    };
-    place();
-    var room = W - x - 2, over = 0, figW = 0;
-    return {
-      measure: function () { over = lab.scrollWidth - room; figW = fig.offsetWidth; },
-      fit: function () {
-        if (over > 0 && figW > 0) {
-          fs *= Math.max(0.1, (figW - over) / figW);
-          place();
-        }
-      }
-    };
-  }
-
-  // under the ribbons, a phone: each label at its ribbon's left edge, moved right to clear the one before it
-  // and back from the right edge, and the figures made smaller until the row fits
-  function under(bands, W, H) {
-    var labs = bands.map(function (b) { return SP.labels[b.k]; }), fs = DOWN.fs, gap = 12, xs, ws;
-    labs.forEach(function (lab) {
-      lab.className = "enc-split__label is-under";
-      setStyle(lab, { top: (H + 12) + "px", height: "", gap: "", opacity: "1", width: "" });
-      lab.lastChild.style.fontSize = "";
-      lab.lastChild.style.transform = "";
-    });
-    for (var tries = 0; tries < 6; tries++) {
-      labs.forEach(function (lab) { lab.firstChild.style.fontSize = fs + "px"; });
-      ws = labs.map(function (lab) { return lab.offsetWidth; });
-      if (ws.reduce(function (a, w) { return a + w; }, 0) + gap * (labs.length - 1) <= W || fs <= 18) break;
-      fs -= 3;
+  // the beats, worked from the counts
+  var ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen",
+    "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+  var TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+  function say(n) { return n < 20 ? ONES[n] : n < 100 ? TENS[Math.floor(n / 10)] + (n % 10 ? "-" + ONES[n % 10] : "") : fmt(n); }
+  function cap1(t) { return t.charAt(0).toUpperCase() + t.slice(1); }
+  function shareOf(n, sum) { return (100 * n / sum).toFixed(1) + "%"; }
+  // the nearest half, third or quarter within five points, otherwise one in N; "exactly" only when the count divides the record
+  function inWords(n, sum) {
+    var s = n / sum, best = null;
+    for (var d = 2; d <= 4; d++) for (var k = 1; k < d; k++) {
+      var e = Math.abs(k / d - s);
+      if (e < 0.05 && (!best || e < best.e - 1e-9)) best = { k: k, d: d, e: e };
     }
-    xs = bands.map(function (b) { return b.c; });
-    for (var i = 1; i < xs.length; i++) xs[i] = Math.max(xs[i], xs[i - 1] + ws[i - 1] + gap);
-    for (var j = xs.length - 1; j >= 0; j--) {
-      var right = j === xs.length - 1 ? W : xs[j + 1] - gap;
-      xs[j] = Math.max(0, Math.min(xs[j], right - ws[j]));
-    }
-    labs.forEach(function (lab, i2) { lab.style.left = xs[i2].toFixed(2) + "px"; });
-    SP.flow.style.marginBottom = (12 + Math.max.apply(null, labs.map(function (lab) { return lab.offsetHeight; }))) + "px";
+    if (!best && s > 0) { var d2 = Math.round(1 / s); if (d2 >= 5 && d2 <= 99) best = { k: 1, d: d2, e: Math.abs(1 / d2 - s) }; }
+    if (!best) return null;
+    var how = n * best.d === best.k * sum ? "exactly " : best.e < 0.004 ? "about " : s < best.k / best.d ? "nearly " : "more than ";
+    return how + say(best.k) + (best.k > 1 ? " votes" : " vote") + " in " + say(best.d);
+  }
+  function art(w) { return (/^[aeiou]/i.test(w) ? "an " : "a ") + w; }
+  function listOr(a) { return a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " or " + a[a.length - 1]; }
+  function beatsFor(L, C) {
+    var tot = fmt(L.total);
+    return [{ h: fillIn(C["open"], { total: tot, word: L.word }), l: C["open lead"] }].concat(L.bands.map(function (b) {
+      var w = inWords(b.n, L.sum), share = shareOf(b.n, L.sum);
+      return { h: fillIn(C[b.n === 1 ? "answer one" : "answer"], { answer: b.word, count: fmt(b.n) }),
+        l: w ? fillIn(C["answer lead"], { "share words": cap1(w), share: share }) : fillIn(C["answer lead plain"], { share: share }) };
+    }), [{ h: fillIn(C["close"], { answers: cap1(say(L.bands.length)) }),
+      l: fillIn(C["close lead"], { total: tot, list: listOr(L.bands.map(function (b) { return art(b.word); })) }) }]);
   }
 
+  /* The design's geometry: the stack split by seams s, centred on the parted set split by gaps G. A band's left end
+     is a..b; its right end, parted, c..d; at(b, u) is its right end moved u from the stack. */
+  function lay(L, T, G, s, oy) {
+    var m = L.bands.length, top = oy + (m - 1) * (G - s) / 2, a = top, c = oy;
+    var bands = L.bands.map(function (o) { var t = o.n * T / L.sum, b = { o: o, a: a, b: a + t, c: c, d: c + t }; a += t + s; c += t + G; return b; });
+    return { bands: bands, H: oy + T + (m - 1) * G, top: top, len: T + (m - 1) * s };
+  }
+  function at(b, u) { return { c: b.a + u, d: b.b + u }; }
+  function seamAt(b, s) { return Math.round(b.a - s / 2 - 0.5); }
+  function f2(v) { return v.toFixed(2); }
+  function hPath(b, x1, x3, xE, u) {
+    var q = at(b, u), xc = (x1 + x3) / 2, A = b.a, B = b.b, C = q.c, D = q.d;
+    return "M0 " + f2(A) + " L" + f2(x1) + " " + f2(A) + " C" + f2(xc) + " " + f2(A) + " " + f2(xc) + " " + f2(C) + " " + f2(x3) + " " + f2(C) +
+      " L" + f2(xE) + " " + f2(C) + " L" + f2(xE) + " " + f2(D) + " L" + f2(x3) + " " + f2(D) +
+      " C" + f2(xc) + " " + f2(D) + " " + f2(xc) + " " + f2(B) + " " + f2(x1) + " " + f2(B) + " L0 " + f2(B) + " Z";
+  }
+  function vPath(b, y1, y3, yE, u) {
+    var q = at(b, u), yc = (y1 + y3) / 2, A = b.a, B = b.b, C = q.c, D = q.d;
+    return "M" + f2(A) + " 0 L" + f2(A) + " " + f2(y1) + " C" + f2(A) + " " + f2(yc) + " " + f2(C) + " " + f2(yc) + " " + f2(C) + " " + f2(y3) +
+      " L" + f2(C) + " " + f2(yE) + " L" + f2(D) + " " + f2(yE) + " L" + f2(D) + " " + f2(y3) +
+      " C" + f2(D) + " " + f2(yc) + " " + f2(B) + " " + f2(yc) + " " + f2(B) + " " + f2(y1) + " L" + f2(B) + " 0 Z";
+  }
+  // the ink still in the record: one shape per run of untold bands, seams included, so no line shows inside the block
+  function inkD(bs, t, e, swap) {
+    var pt = function (u, v) { return swap ? f2(v) + " " + f2(u) : f2(u) + " " + f2(v); }, d = "", i = 0;
+    while (i < bs.length) {
+      if (t[i] >= e) { i++; continue; }
+      var j = i;
+      while (j + 1 < bs.length && t[j + 1] < e) j++;
+      var p = [pt(e, bs[i].a), pt(e, bs[j].b), pt(t[j], bs[j].b), pt(t[j], bs[j].a)];
+      for (var k = j - 1; k >= i; k--) { var s = Math.max(t[k], t[k + 1]); p.push(pt(s, bs[k + 1].a), pt(s, bs[k].b), pt(t[k], bs[k].b), pt(t[k], bs[k].a)); }
+      d += "M" + p.join(" L") + " Z ";
+      i = j + 1;
+    }
+    return d;
+  }
+
+  /* A beat a screen: the caption changes as its answer starts to leave; the wipe, then the parting. The record
+     parts at its seams, one a beat: seam j, between bands j and j+1, opens on the beat of the first of the two told;
+     a band's far end moves by the open seams above it less half of all open, in gaps, so no ribbon ever runs into the
+     next one out and the parted set stays centred on the record. */
+  function ease(t) { return t * t * (3 - 2 * t); }
+  function beatAt(P, nb) { return P < 0.1 ? 0 : Math.min(nb - 1, Math.floor(P - 0.1) + 1); }
+  function reveal(P, step, m) {
+    var phase = function (sl) { return step ? (P >= sl + 0.1 ? 1 : 0) : clamp01((P - sl - 0.1) / 0.75); };
+    var wipe = function (sl) { return step ? phase(sl) : ease(clamp01(phase(sl) / 0.62)); };
+    var part = function (sl) { return step ? phase(sl) : ease(clamp01((phase(sl) - 0.45) / 0.55)); };
+    var o = [], all = 0, k;
+    for (k = 0; k < m - 1; k++) { o.push(part(k)); all += o[k]; }
+    var out = [], run = 0;
+    for (k = 0; k < m; k++) { out.push({ w: wipe(k), u: run - all / 2 }); if (k < m - 1) run += o[k]; }
+    return out;
+  }
+
+  // a figure's width as it is set (tabular digits, 600, -0.04em), in a hidden span inside the story so the page's
+  // observer does not wake for it; kept once Outfit is in
+  var FIGW = {};
+  function figW(t, fs) {
+    var key = t + "@" + fs;
+    if (FIGW[key]) return FIGW[key];
+    var s = SP.meter;
+    s.style.fontSize = fs + "px";
+    s.textContent = t;
+    var w = s.getBoundingClientRect().width;
+    if (w > 0 && fontReady()) FIGW[key] = w;
+    return w > 0 ? w : 0.6 * fs * t.length;
+  }
+  function fontReady() { return !(document.fonts && document.fonts.check) || document.fonts.check("600 200px Outfit"); }
+
+  function svgEl(tag, attrs) {
+    var e = document.createElementNS(SVGNS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+  function abs(cls, s) { var e = el("span", cls); setStyle(e, s); return e; }
+  function mono(text) { return el("span", "enc-story__mono", text); }
+  function setAttr(node, k, v) { if (node.getAttribute(k) !== v) node.setAttribute(k, v); }
   function setStyle(node, s) {
     for (var k in s) if (node.style[k] !== s[k]) node.style[k] = s[k];
   }
+
+  function storyBox() {
+    var box = el("div", "enc-story");
+    box.setAttribute("data-enc-story", "");
+    var stage = el("div", "enc-story__stage");
+    var head = el("div", "enc-story__head");
+    var label = el("span", "enc-story__label"), count = el("span", "enc-story__count");
+    head.appendChild(label);
+    head.appendChild(count);
+    var beats = el("div", "enc-story__beats");
+    var fig = el("div", "enc-story__box");
+    var hint = el("div", "enc-story__hint"), hintText = el("span");
+    hint.appendChild(hintText);
+    stage.appendChild(head);
+    stage.appendChild(beats);
+    stage.appendChild(fig);
+    stage.appendChild(hint);
+    box.appendChild(stage);
+    var meter = el("span", "enc-story__meter");
+    meter.setAttribute("aria-hidden", "true");
+    box.appendChild(meter);
+    SP = { box: box, stage: stage, label: label, count: count, beats: beats, fig: fig, hint: hintText, meter: meter,
+      text: null, last: null, copy: "", beatEls: [], draw: null, sig: "", ink: SP && SP.ink, print: false, P: -1 };
+    if (!SP.ink) inkWhenReady();
+    if (typeof ResizeObserver === "function") {
+      var ro = new ResizeObserver(function () { if (SP && SP.box === box) layoutStory(); });
+      ro.observe(fig);
+      SP.ro = ro;
+    }
+    return box;
+  }
+
+  function story() {
+    var src = document.getElementById(LINE);
+    if (!src) return;
+    var kick = document.getElementById(KICK), at2 = src.nextElementSibling;
+    // the box goes after the line; the copy toggle that follows it in Notion stays where it is, hidden by home.css
+    if (!SP || SP.box !== at2) {
+      if (at2 && at2.hasAttribute("data-enc-story")) at2.remove();
+      if (SP && SP.ro) SP.ro.disconnect();
+      src.after(storyBox());
+    }
+    var text = src.textContent.trim();
+    if (SP.text !== text) { SP.text = text; SP.last = parseSplit(text); SP.sig = ""; }
+    var C = readStoryCopy(), copy = JSON.stringify(C);
+    if (SP.copy !== copy) { SP.copy = copy; SP.C = C; SP.sig = ""; }
+    // a line it cannot read stays on the page as Notion wrote it, with its kicker
+    [src, kick].forEach(function (n) {
+      if (!n) return;
+      if (SP.last) n.setAttribute("data-enc-story-src", ""); else n.removeAttribute("data-enc-story-src");
+    });
+    if (!SP.last) return;
+    setText(SP.label, kick ? textOf(kick) : "");
+    layoutStory();
+  }
+
+  function layoutStory() {
+    var L = SP && SP.last;
+    if (!L || !document.contains(SP.box)) return;
+    var C = SP.C, beats = beatsFor(L, C);
+    // the beats first: they share one cell, so the tallest sets the room the drawing has
+    while (SP.beatEls.length > beats.length) SP.beatEls.pop().remove();
+    beats.forEach(function (b, j) {
+      var be = SP.beatEls[j];
+      if (!be) {
+        be = SP.beatEls[j] = el("div", "enc-story__beat");
+        be.appendChild(el("h2"));
+        be.appendChild(el("p"));
+        SP.beats.appendChild(be);
+      }
+      setText(be.firstChild, b.h);
+      setText(be.lastChild, b.l);
+    });
+    setText(SP.hint, C["scroll"]);
+    SP.nb = beats.length;
+    setStyle(SP.box, { height: SP.print ? "auto" : ((SP.nb + 0.4) * 100).toFixed(0) + "vh" });
+    var down = NARROW.matches, BW = SP.fig.clientWidth, BH = SP.fig.clientHeight, ink = SP.ink || INK_FB;
+    if (!BW || !BH) return;
+    var sig = [down, BW, BH, ink.top, ink.bottom, L.total, L.word, SP.copy].concat(L.bands.map(function (b) { return b.k + ":" + b.n; })).join(",");
+    if (sig !== SP.sig) {
+      SP.sig = sig;
+      if (SP.draw) SP.draw.node.remove();
+      SP.draw = down ? narrowDraw(L, Math.max(280, BW), BH, ink) : wideDraw(L, BW, BH, ink);
+      var k = Math.max(0.3, Math.min(1, BH / SP.draw.h, BW / SP.draw.w));
+      setStyle(SP.draw.node, { width: SP.draw.w + "px", height: SP.draw.h + "px", transform: "translateY(-50%) scale(" + k.toFixed(4) + ")" });
+      SP.fig.appendChild(SP.draw.node);
+      SP.P = -1;
+    }
+    frame();
+  }
+
+  // full width: the total at the left margin, the ribbons to the right margin, as thick as the stage allows; the
+  // figures in one column at the ribbons' ends, right-aligned on the advance so the digits line up by place
+  function wideDraw(L, BW, BH, ink) {
+    var m = L.bands.length, cap = ink.bottom - ink.top, G = ST.G;
+    var noteW = Math.max.apply(null, L.bands.map(function (b) { return Math.max(b.word.length, shareOf(b.n, L.sum).length) * 7.92; }));
+    var fcOf = function (T, bs) {
+      var near = Infinity;
+      for (var k = 1; k < bs.length; k++) near = Math.min(near, (bs[k - 1].b - bs[k - 1].a + bs[k].b - bs[k].a) / 2 + G);
+      return Math.max(36, Math.min(96, 0.22 * T, (near - 14) / cap));
+    };
+    // how far a band's figure, or its note, reaches past the band: the first and last bands' reach is kept inside
+    var reach = function (b, fc) { var th = b.b - b.a, ih = fc * cap, ext = ih < 26 ? Math.max(ih, 14) : ih; return Math.max(0, (ext - th) / 2); };
+    var padsOf = function (T) { var bs = lay(L, T, G, ST.s, 0).bands, fc = fcOf(T, bs); return [Math.ceil(reach(bs[0], fc)), Math.ceil(reach(bs[m - 1], fc))]; };
+    var T = Math.max(160, Math.min(BH - (m - 1) * G, 0.3 * (BW - 94)));
+    for (var it = 0; it < 4; it++) {
+      var p0 = padsOf(T), T2 = Math.max(160, Math.min(BH - (m - 1) * G - p0[0] - p0[1], 0.3 * (BW - 94)));
+      if (Math.abs(T2 - T) < 0.5) break;
+      T = T2;
+    }
+    var pd = padsOf(T), tfs = Math.round(Math.min(72, Math.max(48, T * 0.187))), TW = tfs + 28, W = BW - TW - 10;
+    var Lt = lay(L, T, G, ST.s, pd[0]), H = Lt.H + pd[1], bs = Lt.bands, fc = fcOf(T, bs);
+    var fwc = Math.max.apply(null, bs.map(function (b) { return figW(fmt(b.o.n), fc); }));
+    var xE = Math.round(W - (ST.gapE + fwc + ST.gap + noteW));
+    var x3 = Math.round(Math.min(0.506 * W, xE - 0.2 * W)), x1 = Math.round(Math.min(0.244 * W, x3 - 0.19 * W));
+    var AX = xE + ST.gapE + fwc, ih = fc * cap;
+
+    var node = el("div", "enc-story__draw is-wide");
+    // the total, upright at the block's left, centred on the record; its measure exactly as long as the record is thick
+    var tot = el("div", "enc-story__total");
+    tot.setAttribute("aria-hidden", "true");
+    setStyle(tot, { width: TW + "px", height: H + "px" });
+    var tlab = abs("enc-story__tlab", { left: "0px", right: "22px", top: f2(Lt.top) + "px", height: f2(Lt.len) + "px" });
+    var tin = el("span", "enc-story__tin"), tfig = el("span", "enc-story__tfig", fmt(L.total));
+    tfig.style.fontSize = tfs + "px";
+    tin.appendChild(tfig);
+    tin.appendChild(mono(L.word));
+    tlab.appendChild(tin);
+    tot.appendChild(tlab);
+    tot.appendChild(abs("enc-story__bar", { right: "6px", top: f2(Lt.top) + "px", width: "1px", height: f2(Lt.len) + "px" }));
+    tot.appendChild(abs("enc-story__bar", { right: "2px", top: f2(Lt.top) + "px", width: "9px", height: "1px" }));
+    tot.appendChild(abs("enc-story__bar", { right: "2px", top: f2(Lt.top + Lt.len - 1) + "px", width: "9px", height: "1px" }));
+    var seams = bs.slice(1).map(function (b) {
+      var t = abs("enc-story__bar enc-story__seam", { right: "4px", top: seamAt(b, ST.s) + "px", width: "5px", height: "1px" });
+      tot.appendChild(t);
+      return t;
+    });
+    var box = el("div", "enc-story__art");
+    box.setAttribute("role", "img");
+    box.setAttribute("aria-label", fmt(L.total) + " " + L.word + ": " + L.bands.map(function (b) { return fmt(b.n) + " " + b.word; }).join(", "));
+    setStyle(box, { width: W + "px", height: H + "px" });
+    var svg = svgEl("svg", { width: W, height: H, viewBox: "0 0 " + W + " " + f2(H), "aria-hidden": "true" });
+    var defs = svgEl("defs", {}), rects = [], paths = [];
+    svg.appendChild(defs);
+    bs.forEach(function (b, i) {
+      var cp = svgEl("clipPath", { id: "enc-story-w" + i }), r = svgEl("rect", { x: 0, y: 0, width: 0, height: f2(H) });
+      cp.appendChild(r);
+      defs.appendChild(cp);
+      rects.push(r);
+      var p = svgEl("path", { fill: b.o.fill, "clip-path": "url(#enc-story-w" + i + ")" });
+      svg.appendChild(p);
+      paths.push(p);
+    });
+    var inkP = svgEl("path", { fill: DARK });
+    svg.appendChild(inkP);
+    box.appendChild(svg);
+    var labs = bs.map(function (b) {
+      var wrap = el("div", "enc-story__wrap");
+      setStyle(wrap, { width: W + "px", height: f2(H) + "px" });
+      var fig = el("span", "enc-story__fig", fmt(b.o.n));
+      setStyle(fig, { right: f2(W - AX) + "px", fontSize: f2(fc) + "px" });
+      var note = el("div", "enc-story__note" + (ih >= 26 ? "" : " is-one"));
+      setStyle(note, { left: f2(AX + ST.gap) + "px", height: (ih >= 26 ? f2(ih) : "14") + "px" });
+      if (ih >= 26) { note.appendChild(mono(b.o.word)); note.appendChild(mono(shareOf(b.o.n, L.sum))); }
+      else note.appendChild(mono(b.o.word + " · " + shareOf(b.o.n, L.sum)));
+      wrap.appendChild(fig);
+      wrap.appendChild(note);
+      box.appendChild(wrap);
+      return { wrap: wrap, fig: fig, note: note };
+    });
+    node.appendChild(tot);
+    node.appendChild(box);
+    return { node: node, w: BW, h: H, draw: function (R) {
+      var wx = R.map(function (r) { return r.w * W; }), tx = wx.map(function (x) { return Math.min(x, x1); });
+      bs.forEach(function (b, i) {
+        var u = R[i].u * (G - ST.s), q = at(b, u), mid = (q.c + q.d) / 2;
+        setAttr(paths[i], "d", hPath(b, x1, x3, xE, u));
+        setAttr(rects[i], "width", f2(wx[i]));
+        setStyle(labs[i].wrap, { clipPath: "inset(0px " + f2(Math.max(0, W - wx[i])) + "px 0px 0px)" });
+        setStyle(labs[i].fig, { top: f2(mid - fc * (ink.top + ink.bottom) / 2) + "px" });
+        setStyle(labs[i].note, { top: f2(ih >= 26 ? mid - ih / 2 : mid - 7) + "px" });
+      });
+      setAttr(inkP, "d", inkD(bs, tx, x1, false) || "M0 0");
+      seams.forEach(function (t, i) { setStyle(t, { opacity: tx[i] > 0 || tx[i + 1] > 0 ? "1" : "0" }); });
+    } };
+  }
+
+  // under 760px: the record across the top, the answers pouring down into columns, the figures under them
+  function narrowDraw(L, Wp, BH, ink) {
+    var m = L.bands.length, Lt = lay(L, Wp - (m - 1) * PH.G, PH.G, PH.s, 0), bs = Lt.bands, BLK = 52, RG = 14, rows = [], put = [];
+    var lw = function (b) { return Math.max(figW(fmt(b.o.n), PH.fig), b.o.word.length * 7.92); };
+    var clear = function (r, a0, a1) { return !(rows[r] || []).some(function (q) { return a0 < q[1] + 28 && a1 > q[0] - 28; }); };
+    var xAt = function (q, a, w) { return a === "l" ? q.c : a === "r" ? q.d - w : (q.c + q.d - w) / 2; };
+    var order = [0].concat(m > 1 ? [m - 1] : []);
+    for (var j0 = 1; j0 < m - 1; j0++) order.push(j0);
+    order.forEach(function (i) {
+      var b = bs[i], q = { c: b.c, d: b.d }, w = lw(b), cands = i === 0 ? ["l"] : i === m - 1 ? ["r"] : ["r", "c", "l"];
+      for (var r = 0; r < 8; r++) {
+        var a = null;
+        for (var ci = 0; ci < cands.length && !a; ci++) if (clear(r, xAt(q, cands[ci], w), xAt(q, cands[ci], w) + w)) a = cands[ci];
+        if (a || r === 7) { var k = a || cands[0]; (rows[r] = rows[r] || []).push([xAt(q, k, w), xAt(q, k, w) + w]); put[i] = { r: r, a: k }; break; }
+      }
+    });
+    var nr = rows.filter(Boolean).length, labH = 16 + nr * BLK + (nr - 1) * RG + 4;
+    var y2 = Math.round(Math.max(150, Math.min(520, BH - PH.top - labH))), y1 = Math.round(0.216 * y2), y3 = Math.round(0.686 * y2), HH = y2 + labH;
+
+    var node = el("div", "enc-story__draw is-narrow");
+    node.setAttribute("role", "img");
+    node.setAttribute("aria-label", fmt(L.total) + " " + L.word + ": " + L.bands.map(function (b) { return fmt(b.n) + " " + b.word; }).join(", "));
+    var fs = 44, ry = 56, shift = fs * ((ink.top + ink.bottom) / 2 - 0.5);
+    var tot = el("div", "enc-story__total");
+    tot.setAttribute("aria-hidden", "true");
+    setStyle(tot, { width: Wp + "px", height: PH.top + "px" });
+    var tlab = abs("enc-story__tlab is-across", { left: f2(Lt.top) + "px", width: f2(Lt.len) + "px", top: "0px", height: fs + "px" });
+    var tfig = el("span", "enc-story__tfig", fmt(L.total)), tw = mono(L.word);
+    tfig.style.fontSize = fs + "px";
+    tw.style.transform = "translateY(" + f2(shift) + "px)";
+    tlab.appendChild(tfig);
+    tlab.appendChild(tw);
+    tot.appendChild(tlab);
+    tot.appendChild(abs("enc-story__bar", { left: f2(Lt.top) + "px", top: ry + "px", width: f2(Lt.len) + "px", height: "1px" }));
+    tot.appendChild(abs("enc-story__bar", { left: f2(Lt.top) + "px", top: (ry - 4) + "px", width: "1px", height: "9px" }));
+    tot.appendChild(abs("enc-story__bar", { left: f2(Lt.top + Lt.len - 1) + "px", top: (ry - 4) + "px", width: "1px", height: "9px" }));
+    var seams = bs.slice(1).map(function (b) {
+      var t = abs("enc-story__bar enc-story__seam", { left: seamAt(b, PH.s) + "px", top: (ry - 2) + "px", width: "1px", height: "5px" });
+      tot.appendChild(t);
+      return t;
+    });
+    var box = el("div", "enc-story__art");
+    setStyle(box, { width: Wp + "px", height: HH + "px" });
+    var svg = svgEl("svg", { width: Wp, height: HH, viewBox: "0 0 " + Wp + " " + HH, "aria-hidden": "true" });
+    var defs = svgEl("defs", {}), rects = [], paths = [];
+    svg.appendChild(defs);
+    bs.forEach(function (b, i) {
+      var cp = svgEl("clipPath", { id: "enc-story-n" + i }), r = svgEl("rect", { x: 0, y: 0, width: Wp, height: 0 });
+      cp.appendChild(r);
+      defs.appendChild(cp);
+      rects.push(r);
+      var p = svgEl("path", { fill: b.o.fill, "clip-path": "url(#enc-story-n" + i + ")" });
+      svg.appendChild(p);
+      paths.push(p);
+    });
+    var inkP = svgEl("path", { fill: DARK });
+    svg.appendChild(inkP);
+    box.appendChild(svg);
+    var labs = bs.map(function (b, i) {
+      var wrap = el("div", "enc-story__wrap");
+      setStyle(wrap, { width: Wp + "px", height: HH + "px" });
+      var a = put[i].a, lab = el("div", "enc-story__under is-" + a);
+      setStyle(lab, { top: (y2 + 16 + put[i].r * (BLK + RG)) + "px" });
+      var fig = el("span", "enc-story__fig", fmt(b.o.n));
+      fig.style.fontSize = PH.fig + "px";
+      lab.appendChild(fig);
+      lab.appendChild(mono(b.o.word));
+      wrap.appendChild(lab);
+      box.appendChild(wrap);
+      return { wrap: wrap, lab: lab, a: a };
+    });
+    node.appendChild(tot);
+    node.appendChild(box);
+    return { node: node, w: Wp, h: PH.top + HH, draw: function (R) {
+      var wy = R.map(function (r) { return r.w * HH; }), ty = wy.map(function (y) { return Math.min(y, y1); });
+      bs.forEach(function (b, i) {
+        var u = R[i].u * (PH.G - PH.s), q = at(b, u), a = labs[i].a;
+        setAttr(paths[i], "d", vPath(b, y1, y3, y2, u));
+        setAttr(rects[i], "height", f2(wy[i]));
+        setStyle(labs[i].wrap, { clipPath: "inset(0px 0px " + f2(Math.max(0, HH - wy[i])) + "px 0px)" });
+        setStyle(labs[i].lab, a === "l" ? { left: f2(q.c) + "px", right: "" } : a === "r" ? { left: "", right: f2(Wp - q.d) + "px" } : { left: f2((q.c + q.d) / 2) + "px", right: "" });
+      });
+      setAttr(inkP, "d", inkD(bs, ty, y1, true) || "M0 0");
+      seams.forEach(function (t, i) { setStyle(t, { opacity: ty[i] > 0 || ty[i + 1] > 0 ? "1" : "0" }); });
+    } };
+  }
+
+  // where the reader is in the track, in screens, and what that beat shows
+  function frame() {
+    if (!SP || !SP.draw || !document.contains(SP.box)) return;
+    var vh = window.innerHeight || 800, nb = SP.nb;
+    var P = SP.print ? nb - 1 : Math.max(0, Math.min(nb - 1, -SP.box.getBoundingClientRect().top / vh));
+    if (Math.abs(P - SP.P) < 0.0005) return;
+    SP.P = P;
+    var i = beatAt(P, nb);
+    SP.draw.draw(reveal(P, REDUCED.matches || SP.print, nb - 2));
+    SP.beatEls.forEach(function (be, j) {
+      be.classList.toggle("is-on", j === i);
+      setAttr(be, "aria-hidden", j === i ? "false" : "true");
+    });
+    var pad2 = function (n) { return (n < 10 ? "0" : "") + n; };
+    setText(SP.count, fillIn(SP.C["counter"], { beat: pad2(i + 1), beats: pad2(nb) }));
+    SP.hint.parentNode.classList.toggle("is-gone", P >= 0.06);
+  }
+  var ticking = 0;
+  window.addEventListener("scroll", function () {
+    if (!SP || ticking) return;
+    ticking = requestAnimationFrame(function () { ticking = 0; frame(); });
+  }, { passive: true });
+  window.addEventListener("resize", function () { if (SP) layoutStory(); });
+  if (NARROW.addEventListener) NARROW.addEventListener("change", function () { if (SP) layoutStory(); });
+  if (REDUCED.addEventListener) REDUCED.addEventListener("change", function () { if (SP) { SP.P = -1; frame(); } });
+  window.addEventListener("beforeprint", function () { if (SP) { SP.print = true; SP.box.classList.add("is-print"); layoutStory(); SP.P = -1; frame(); } });
+  window.addEventListener("afterprint", function () { if (SP) { SP.print = false; SP.box.classList.remove("is-print"); layoutStory(); SP.P = -1; frame(); } });
 
   // the digits' ink, measured once Outfit is in: the figures are centred on it, not on the line box
   function inkWhenReady() {
@@ -1149,33 +1417,16 @@
         if (!m.fontBoundingBoxAscent) return;
         var base = (200 - (m.fontBoundingBoxAscent + m.fontBoundingBoxDescent)) / 2 + m.fontBoundingBoxAscent;
         if (SP) {
+          FIGW = {};
           SP.ink = { top: (base - m.actualBoundingBoxAscent) / 200, bottom: (base + Math.max(0, m.actualBoundingBoxDescent)) / 200 };
-          layoutSplit();
+          SP.sig = "";
+          layoutStory();
         }
       } catch (e) { /* the fallback stands */ }
     };
     if (document.fonts && document.fonts.load) document.fonts.load("600 200px Outfit").then(measure, measure);
     else measure();
   }
-
-  // the pour: the flow is wiped in once, the first time it is on the screen
-  function pourWhenSeen(sp) {
-    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced || document.visibilityState !== "visible" || typeof IntersectionObserver !== "function") return;
-    sp.body.classList.add("is-dry");
-    var io = new IntersectionObserver(function (es) {
-      if (!es.some(function (e) { return e.isIntersecting; })) return;
-      io.disconnect();
-      sp.body.classList.add("is-pour");
-      var open = function () { sp.body.classList.remove("is-dry"); };
-      requestAnimationFrame(function () { requestAnimationFrame(open); });
-      setTimeout(open, 400);
-      setTimeout(function () { sp.body.classList.remove("is-pour"); }, 2100);
-    }, { threshold: 0.3 });
-    io.observe(sp.box);   // the box, not the clipped body: a target's own clip-path counts, and a wiped body is never seen
-  }
-  window.addEventListener("resize", function () { if (SP) layoutSplit(); });
-  if (NARROW.addEventListener) NARROW.addEventListener("change", function () { if (SP) layoutSplit(); });
 
   /* ── nothing matches (design Governance Record Wow, 2026-09-26) ── the record's chains as marks,
      the count, the line and "How we vote" beside "Clear filters". The words are the "Empty state
@@ -1404,7 +1655,7 @@
     // all 1,181 rows showing that took 0.7s on the first build and 1s on the rebuild after Super redraws
     // the page, during which the band was bare ink (the user, 2026-10-22: "sometime i just see an inked
     // page with no disc on it"); after the pager, 0.1s
-    rows(); head(); controls(); pager(); apply(); count(); hideSources(); pillars(); split();
+    rows(); head(); controls(); pager(); apply(); count(); hideSources(); pillars(); story();
     // the glyphs come from galleries that can render after the table, and after Super has stopped
     // mutating, so nothing would wake the observer again (home.js did the same for 37h)
     if (bare && tries++ < 12) { clearTimeout(t); t = setTimeout(build, 300); }
@@ -1412,7 +1663,7 @@
 
   var t = 0;
   new MutationObserver(function (muts) {
-    if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-rec__bar, .enc-count__stage, .enc-split"); })) return;
+    if (muts.every(function (m) { return m.target.closest && m.target.closest(".enc-rec__bar, .enc-count__stage, .enc-story"); })) return;
     clearTimeout(t); tries = 0; t = setTimeout(build, 120);
   }).observe(document.body, { childList: true, subtree: true });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
