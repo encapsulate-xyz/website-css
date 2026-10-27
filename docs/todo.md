@@ -198,17 +198,22 @@ unknown to it. Resubmitted 2026-10-25; indexing requested until the day's quota 
 holds, and the Search Console routine").
 
 - **On Google, checked 2026-10-25:** /networks — cosmos-hub, avalanche, mina, monad, terra, althea; /guides — sui,
-  starknet-braavos, axelar, terra, althea, monad, passage, humans-ai; /terms-of-use.
-- **Requested 2026-10-25, not yet seen on Google:** /guides/starknet-ready-x, /guides/mina (and up to five more of the
-  list below, from a first run whose results could not be told apart).
-- **Still to inspect, and request if not on Google** (about ten a day): /guides/avalanche, /guides/iota, /guides/zilliqa,
-  /guides/supra, /guides/ika, /guides/agoric, /guides/espresso, /guides/lumera, /guides/gitopia, /guides/gravity-bridge,
-  /guides/ixo, /guides/juno, /guides/mellow, /guides/namada, /guides/omniflix, /guides/quicksilver, /guides/sommelier,
+  starknet-braavos, axelar, terra, althea, monad, passage, humans-ai; /terms-of-use. **2026-10-27:** /guides/starknet-ready-x.
+- **Requested 2026-10-27** (twelve, then "Quota Exceeded"): /guides/mina (requested on 2026-10-25 too, still unknown to
+  Google), /guides/avalanche, /guides/iota, /guides/zilliqa, /guides/supra, /guides/ika, /guides/agoric, /guides/espresso,
+  /guides/lumera, /guides/gitopia, /guides/gravity-bridge, /guides/ixo. All but Mina and Gravity Bridge read "Discovered –
+  currently not indexed": Google knew them and had not crawled them. Inspect them again from 2026-10-28.
+- **Still to inspect, and request if not on Google** (about ten a day; Juno is where the quota stopped):
+  /guides/juno, /guides/mellow, /guides/namada, /guides/omniflix, /guides/quicksilver, /guides/sommelier,
   /guides/stargaze, /guides/ux, /guides/eigen-layer-steth, /blog/monad-l1-scaling, /blog/is-aptos-decentralized,
   /blog/berachain-research, /blog/agoric-testnet-17-analysis.
-- **Check:** Sitemaps reads Success (if still "Couldn't fetch" by 2026-10-28, add `https://encapsulate.xyz/sitemap.xml?v=2`
-  as a second entry); the 24 removals read "Removed"; Pages → Indexed holds no bare `/<32 hex>` id that answers 200 (the
-  Forms page and the three governance rows carry noindex since v406, and are in Removals).
+- **Check:** Sitemaps reads Success. On 2026-10-27 both entries read "Couldn't fetch", 0 discovered, no "Last read": the
+  2026-10-25 resubmission, and `https://encapsulate.xyz/sitemap.xml?v=2`, added that day. URL inspection's live test of
+  /sitemap.xml reads "URL is available to Google", so Googlebot can fetch the file. If both still say "Couldn't fetch" by
+  2026-11-03, the next suspect is Vercel (Super's host) answering Google's sitemap fetcher differently from its crawler.
+  Pages → Indexed (updated 2026-10-23) still held 15 bare `/<32 hex>` ids on 2026-10-27: eleven answer 404 (hidden in
+  Super), the Team page's id redirects to /team, and the Forms page and the three governance rows answer 200 with noindex.
+  All four are among the 24 removals, which all read "Temporarily removed" on 2026-10-27.
 - **New form responses** are still served at their ids (noindex, linked from nowhere). Hide them in Super with the rest
   (`backups/super-hidden-2026-10-25.json` says how), or ask the user whether the old Newsletters and Contact Us
   databases, which no form writes to any more, can be emptied.

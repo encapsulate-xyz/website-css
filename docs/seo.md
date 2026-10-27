@@ -173,6 +173,14 @@ child pages and 2,641 of its 2,741 database rows answered 200 at their ids — *
   /governance-record, /lido-dvt-staking…) move to their targets as Google recrawls; the 19 old chains'
   /networks/mainnet/… pages, which 404, drop out on recrawl.
 
+**"Alternate page with proper canonical tag" is intentional** (Google's email of 2026-10-26, checked 2026-10-27). It
+listed two URLs: the homepage with a `?ref=` another site adds to its link (`/?ref=blog.iota.org`), and a holdfast
+claim link with a query on the Crosslink subdomain. Both name their plain page as canonical, which is what the reason
+says. "Duplicate without user-selected canonical" held two more `/?ref=` links, crawled before the homepage carried its
+canonical line (2026-09-28), so they move to the alternate reason on recrawl. Every sitemap page names itself as
+canonical except /team, which names the homepage (it forwards to Who we are), so it will show here too. No fix is
+needed for any of them.
+
 **Driving Search Console from here** (beside "Driving these consoles" above): screenshots work now. The inspect box
 is the page's `input[aria-label*="Inspect any URL"]` (native value setter, `input`, an Enter keydown); the verdict is the
 text after `<url>\nURL Inspection` ("URL is on Google" / "URL is not on Google" + "URL is unknown to Google"); then
