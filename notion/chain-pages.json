@@ -94,7 +94,8 @@
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
    "wallet": {
     "label": "Delegate with Keplr",
-    "url": "https://wallet.keplr.app/chains/cosmos-hub?modal=staking&chain=cosmoshub-4&validator_address=cosmosvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwt0m3udk&step_id=2"
+    "url": "https://www.notion.so/407e800a51388034b403daa14828fc18",
+    "guide": "/guides (Delegate ATOM with Keplr)"
    },
    "work": [
     [

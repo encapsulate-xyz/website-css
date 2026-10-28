@@ -20,7 +20,7 @@ close #done (anchors.js, 2026-10-23 — `docs/paths-and-404.md`, "Section names"
 | The crumb, "Watch out", "{N} screens", the close band, the Discord line | the **"Guide page copy" toggle on /guides**, `key · value` lines — one place for 33 guides. `{n}` is the step count, `{N}` the same spelled ("Eight screens"), `{next}` and `{chain}` the next guide |
 
 **Converted guides so far: Axelar, Sui (ten steps, SuiVision + Slush), Espresso, Monad (below), Terra, Agoric, NEAR, Lumera,
-Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina, Starknet twice and Zilliqa** (2026-10-22: Starknet, nine steps on Voyager's
+Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina, Starknet twice, Zilliqa and Cosmos Hub** (2026-10-22: Starknet, nine steps on Voyager's
 Staking Dashboard (voyager.online) with the **Ready X** extension — Ready's browser wallet, once Argent X; "Ready X" is
 its name in the Chrome Web Store and in Voyager's wallet list, so the guide is "Stake STRK with Ready X" (the team had
 named it "Ready") and the Wallet Set has a Ready X row since that day, its glyph made with `make_glyph.py` from the
@@ -33,6 +33,24 @@ hour, Claim or Restake — and the 7-day withdrawal (`chain-pages.json`). The fi
 unlock the team's wallet was already connected to voyager.online, so a first-time reader's connection request had no
 step; the team added it the same day as step 4, Ready X's "Connect to Voyager" (the site, the account, what the site
 may do), and the row went to Step 9, Time 4, "Nine steps…". The captures are the house sizes (720 × 1576, 2800 × 1576). Old values `backups/stake-strk-with-ready-guide-2026-10-22.json`
+
+**Cosmos Hub (2026-10-28): "Delegate ATOM with Keplr", seven steps on the Keplr Dashboard with the Keplr extension**,
+/guides/cosmos-hub — the user: "review cosmos hub guide and add instrcutions". The team made a new row that morning,
+"Stake ATOM with Keplr" (Status Soon, Step 7, Time 3, its seven captures at the house sizes, the template's sample words in
+step 1 and their own step names: "Press start staking", "Search Encapsulate and select", "Check numbers and press stake",
+"Enter numbers and stake", "Unlock wallet", "Approve the transaction", "Confirm your stake"), beside the empty row made
+from the template on 2026-10-05, "Delegate ATOM with Keplr" (one sample step, no captures). The words are Lumera's,
+Terra's and Agoric's with the ATOM facts (10% commission, 21 days, every block, `cosmosvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwt0m3udk`
+as step 2's press-to-copy), the step names the house ones, steps 5 and 6 linked to keplr.app (step 5 had
+`wallet.keplr.app/`). Two changes from the siblings, for what the captures show: step 1 says "the page shows" (this
+capture has no Staking tab), and step 2 leaves the unstaking period's number out, because Keplr's Stake to shows "21-24
+days" there; step 3's panel says 21 days. Step 6's fee is "a fraction of a cent" (Keplr: 0.001843 ATOM, < $0.01). The row
+was renamed "Delegate ATOM with Keplr", the verb of every Keplr guide but Sommelier's; Time 4; its Lede, description and
+`meta:title` "Cosmos Hub staking guide - Encapsulate"; Live. The empty 10-05 row was archived (in Notion's trash;
+`backups/delegate-atom-with-keplr-placeholder-2026-10-28.json`). The page made in Super with its canonical line, the card
+made (`og_cards.py guides --only cosmos-hub`), and the chain page's "Delegate with Keplr" now opens the guide (it opened
+Keplr's Stake to on our validator). Checked live: built, seven steps linked, every Watch out and the address pressed at
+1440 and 390, `#step-4` lands on Enter an amount as Terra's does. Old values `backups/stake-atom-with-keplr-guide-2026-10-28.json`
 
 **Zilliqa (2026-10-25): "Stake ZIL with Bearby", eight steps on Zilliqa's staking portal (stake.zilliqa.com) with the
 Bearby extension** (bearby.io). Our pool is on the portal's Liquid tab, as Encapsulate with its token encapZIL; steps 6

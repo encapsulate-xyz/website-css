@@ -198,6 +198,8 @@ these are what shows before that read lands, and what a crawler reads. Find them
       WALLET"), properties Name ("Delegate ATOM with Keplr" — the verb its wallet's siblings use), Networks set →
       the mainnet row, Wallet Set, Network Mainnet, **Status Soon**. The template's column and step database arrive
       a few minutes after the page.
+- [ ] **The team may make a new row for the captures rather than fill this one** (Cosmos Hub, 2026-10-28): convert the
+      row that holds the captures, give it this one's Name, and archive the empty one.
 - [ ] It stays Soon with no path in Super until the team adds the captures; then follow "Guides Database — a new
       guide" below (the words, Live, /guides/<slug> with its canonical, the card, refresh /guides) and **switch
       the chain page's green button to the guide** (`chain-pages.json` wallet → the guide's Notion URL,
@@ -259,7 +261,7 @@ these are what shows before that read lands, and what a crawler reads. Find them
 
 ## Converting a guide — the run (the team adds the captures, I write the words)
 
-Done this way for Axelar, Sui, Espresso, Monad, Terra, Agoric, NEAR, Lumera, Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina, Starknet (Ready X and Braavos) and Zilliqa; the
+Done this way for Axelar, Sui, Espresso, Monad, Terra, Agoric, NEAR, Lumera, Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina, Starknet (Ready X and Braavos), Zilliqa and Cosmos Hub; the
 user asked for it written down on 2026-10-08. A guide is converted once its step database holds one capture per
 step; the team names the steps, the words are mine.
 
@@ -290,7 +292,7 @@ step; the team names the steps, the words are mine.
 
       | Flow | Steps | Model guides |
       |---|---|---|
-      | Keplr Dashboard + the Keplr extension | 7 | Terra, Agoric, Lumera, Passage, Sommelier |
+      | Keplr Dashboard + the Keplr extension | 7 | Terra, Agoric, Lumera, Passage, Sommelier, Cosmos Hub |
       | ping.pub + the Keplr extension | 7 | Gravity Bridge, ixo — check the amount's unit (Gravity's form showed ugraviton, a millionth of a GRAV) |
       | Meteor's web wallet | 8 | NEAR — "Stake Now & Start Earning" stakes with Dew Finance; the form opens on Meteor Pool |
       | MonadVision + MetaMask | 11 | Monad |

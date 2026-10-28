@@ -215,12 +215,13 @@ holds, and the Search Console routine").
   been asked for; a request cannot be withdrawn.
 - **Only Live guides are requested** (the user, 2026-10-28: "only request the guides which are live and not the soon
   guides"). The Guides Database's Status on 2026-10-28 — Live: agoric, axelar, espresso, gravity-bridge, iota, ixo,
-  lumera, mina, monad, near, passage, sommelier, starknet-braavos, starknet-ready-x, sui, terra, zilliqa. Soon: althea,
+  lumera, mina, monad, near, passage, sommelier, starknet-braavos, starknet-ready-x, sui, terra, zilliqa, and cosmos-hub
+  (Live and in Super since later that day). Soon: althea,
   avail, avalanche, eigen-layer, eigen-layer-steth, gitopia, humans-ai, ika, supra (and ATOM, which has no page).
   Concluded: juno, mellow, namada, omniflix, quicksilver, stargaze, ux. Read the Status again before a request.
   Already on Google before this rule, from earlier requests or Google's own crawl: Soon althea, avalanche,
   eigen-layer-steth, gitopia, humans-ai, ika, supra; Concluded juno, namada.
-- **Not on Google on 2026-10-28, to request from 2026-10-29:** /guides/sommelier (Live), /blog/monad-l1-scaling,
+- **Not on Google on 2026-10-28, to request from 2026-10-29:** /guides/cosmos-hub (new that day, Live), /guides/sommelier (Live), /blog/monad-l1-scaling,
   /blog/is-aptos-decentralized, /blog/berachain-research, /blog/agoric-testnet-17-analysis. Dropped from the queue as
   Concluded: /guides/omniflix, /guides/quicksilver, /guides/stargaze, /guides/ux.
 - **Sitemaps — fixed, 2026-10-28:** `https://encapsulate.xyz/sitemap.xml?v=2` reads **Success** (last read
