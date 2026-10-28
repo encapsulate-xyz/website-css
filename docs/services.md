@@ -69,7 +69,7 @@ hosts rgp.sui and graph.solana redirect to the new ones.
   pill asks it to glide to its tool's split (`encSnap.glide`). One wheel turn, swipe or arrow key moves one frame; the
   swipe that carries the page in lands on the first or last frame; at either end the band is left whole (it was left
   freely). Until then this was the design's `useUSnap`, ported line for line, gliding a frame in 750ms on an even sine
-  by itself: the engine took its 750ms for a screen, its 10px before a trackpad turns a frame and the freeze below. **A swipe the page may not cancel freezes the page through
+  by itself: the engine took its 750ms for a screen, its 10px before a trackpad turns a frame and the freeze below. **Kept as the site's, not the design's** (the user, 2026-10-28, offered the old 750ms per frame and the free exit back: "keep it consistent, leave it as is"). **A swipe the page may not cancel freezes the page through
   `<body>`, not `<html>`** (v366, 2026-10-21, the user: "when I scroll up after scrolling down across all the
   dashboards, it just shows me an inked screen"): a Mac trackpad swipe that starts outside the band cannot be cancelled,
   so the snap stops it with overflow hidden. Put on `<html>`, that left the body (`overflow-x: hidden`) an overflow of
