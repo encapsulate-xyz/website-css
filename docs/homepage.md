@@ -200,7 +200,7 @@ home.js's one-screen list (`BANDS`), so the page settles on whichever band it co
 figure and unit spanning the claim's rows, Chrome gave part of their height to the empty button row of bands 1 and 2
 (14.5px at 1440, the claim 7px above centre); a flexible row above and below the claim takes it now. Measured at 390,
 800, 1024, 1280×700, 1440 and 2560: each band one screen, the claim and the figure on one centre, no sideways scroll.
-Costs the file names and the user took: three screens of scroll for one section, and three ink bands in a row.
+**No half-built band**: a refresh puts the page back where it was on the first paint, and band 1 showed its claim without its top row and graphic for ~450ms, then again after Super's second draw. A band's content is hidden until home.js marks it built (`data-enc-why`; shown after 3s if that never comes), and a band the second draw put back bare is rebuilt in the observer's own microtask, not 60ms later (`flashcheck.mjs reload …/#why-stake`: one empty frame, then built). Costs the file names and the user took: three screens of scroll for one section, and three ink bands in a row.
 
 **The blog band is "Blog Highlights", its second pass** (2026-10-24, home-dial.css "BLOG RAIL", home.js "Homepage
 blog"). What the file changed: the heading "Latest Blog Posts" became **"Deep dives."** (Notion), the dot pager is gone

@@ -2026,6 +2026,14 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   border-top: 1px solid var(--why-rule) !important;
 }
 
+/* no half-built band: a refresh puts the page back where it was on the first paint, and a band showed its claim
+   without its top row and graphic for ~450ms (measured, 2026-10-28). Each band's content is hidden until home.js has
+   built it (data-enc-why), and shown after 3s if the build never comes (the reveal is home.css's, governance below) */
+#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card:not([data-enc-why]) > .notion-collection-card__content {
+  visibility: hidden;
+  animation: enc-hm-reveal 0s linear 3s forwards;
+}
+
 /* Notion order: Name, Caption left, Caption right, Figure, Unit, Lead — placed on a grid in the
    design's order. Stacked: the figure and its unit, 28, then the claim, its lead and its graphic. */
 #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card__content {

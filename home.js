@@ -1530,6 +1530,7 @@
         wrap.appendChild(i === 0 ? tally(nets) : i === 1 ? meter(now, month) : bars());
         content.appendChild(wrap);
       }
+      if (!card.hasAttribute("data-enc-why")) card.setAttribute("data-enc-why", "");   /* built: home.css shows it */
       if (i === 0 && nets) setText(card.querySelector(CAPTION_RIGHT), nets + " secured");
       if (i === 1) {
         setText(card.querySelector(FIGURE), String(now - START));
@@ -1546,6 +1547,10 @@
       return el && el.closest && el.closest(".enc-why__graphic, .enc-why__top, " + FIGURE + ", " + CAPTION_RIGHT + ", #" + STAT +
         ", #block-d037b468382b4576b931199899b3e0e4, #block-403e800a51388197a723f1b39e7e7b87, .enc-z-name, .enc-z-role");
     })) return;
+    /* a band that has lost its build (Super's second draw puts the cards back bare) is rebuilt here, in the
+       observer's own microtask: home.css hides a band until it is built, and a later tick left it empty ~330ms */
+    var bare = document.querySelector("#" + GALLERY + " .notion-collection-card:not([data-enc-why])");
+    if (bare) { clearTimeout(t); apply(); return; }
     clearTimeout(t); t = setTimeout(apply, 60);
   }).observe(document.body, { childList: true, subtree: true, characterData: true });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", apply);
