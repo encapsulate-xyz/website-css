@@ -103,7 +103,12 @@ to{transform: translateY(0);}
 .enc-blog__cat,.enc-blog__date{font-family: var(--type-mono),monospace;font-weight: 500;font-size: clamp(9px,0.9vw,11px);letter-spacing: 0.14em;text-transform: uppercase;color: #B4B4B4;}
 .enc-blog .enc-blog__title{margin: 0 !important;padding: 0 !important;max-width: min(15ch,64%) !important;font-family: var(--type-display),sans-serif !important;font-weight: 600 !important;font-size: clamp(19px,2.5vw,36px) !important;line-height: 1.06 !important;letter-spacing: -0.035em !important;color: #FAFAF8 !important;text-wrap: pretty !important;}
 .enc-blog__mark{display: block;width: clamp(78px,11vw,132px);height: auto;}
-.enc-why__graphic{grid-area: graphic;display: flex;flex-direction: column;margin-top: 28px;}
+.enc-why__graphic{grid-area: graphic;display: flex;flex-direction: column;width: 100%;margin-top: 28px;}
+.enc-why__top{display: flex;flex: none;flex-wrap: wrap;align-items: center;justify-content: space-between;gap: 8px 16px;font-family: var(--type-mono);font-size: 11px;font-weight: 400;line-height: normal;letter-spacing: 0.12em;text-transform: uppercase;color: #B4B4B4;}
+.enc-why__top::after{content: counter(why-band,decimal-leading-zero) " / 03";}
+.enc-why__label{display: flex;flex-wrap: wrap;align-items: center;gap: 12px;}
+.enc-why__sep{width: 1px;height: 12px;background: rgba(250,250,248,0.4);}
+.enc-why__head{color: #FAFAF8;}
 .enc-why__tally{display: grid;grid-template-columns: repeat(10,minmax(0,1fr));gap: 7px;width: 100%;margin-top: 2px;}
 .enc-why__dot{aspect-ratio: 1;border-radius: 999px;}
 .enc-why__dot[data-open]{border: 1px solid rgba(250,250,248,0.18);opacity: 0.6;}
@@ -113,9 +118,6 @@ to{transform: translateY(0);}
 .enc-why__fill{position: absolute;top: 0;bottom: 0;left: 0;}
 .enc-why__bars{display: flex;align-items: flex-end;gap: 5px;width: 100%;height: 96px;}
 .enc-why__bar{flex: 1;border-radius: 3px 3px 0 0;opacity: 0.9;}
-@media (min-width: 960px){.enc-why__meter{flex: 1 1 auto;height: auto;min-height: 30px;margin-top: 2px;}
-.enc-why__bars{flex: 1 1 auto;height: auto;min-height: 96px;}
-}
 .enc-blog{--blog-edge: max(var(--padding-left,96px),calc(50vw - 864px));padding-left: var(--blog-edge);scroll-padding-inline: var(--blog-edge);}
 .enc-blog__card:first-child{scroll-snap-align: start;}
 @media (max-width: 546px){.enc-blog{--blog-edge: 24px;}

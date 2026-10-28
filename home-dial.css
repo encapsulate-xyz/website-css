@@ -811,17 +811,56 @@
 /*********************************************/
 /* WHY STAKE GRAPHICS — BUILT BY home.js */
 /*********************************************/
-/* Design "Why Stake", 49b (49a's graphics, 2026-10-25). Each graphic sits in
-   its column's "graphic" grid area (home.css §09), above the caption line.
+/* Design "Why Stake", 49c (49a's graphics; 2026-10-28). Each graphic sits in
+   its band's "graphic" grid area (home.css §09), above the caption line, at its
+   own height (49b stretched them to one row; 49c has a band each).
    Pastels on ink, open rings in paper at 18%, the open year in paper at 40%,
-   filled a twelfth for each month of it so far. Side by side (960px and wider)
-   the three share a row and each stretches to it: the year meter and the bars
-   grow to the tallest of the three, so the caption lines sit on one line. */
+   filled a twelfth for each month of it so far. */
 .enc-why__graphic {
   grid-area: graphic;
   display: flex;
   flex-direction: column;
-  margin-top: 28px;   /* the design's 22 under the lead, and the graphic's own 6 */
+  width: 100%;
+  margin-top: 28px;   /* the design's 18 under the lead, and the graphic's own 10 */
+}
+
+/* Each band's top row: the section's kicker and heading, copied from the callout
+   by home.js, and the band's number (a counter of home.css §09's cards). */
+.enc-why__top {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  font-family: var(--type-mono);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #B4B4B4;
+}
+
+.enc-why__top::after {
+  content: counter(why-band, decimal-leading-zero) " / 03";
+}
+
+.enc-why__label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.enc-why__sep {
+  width: 1px;
+  height: 12px;
+  background: rgba(250, 250, 248, 0.4);
+}
+
+.enc-why__head {
+  color: #FAFAF8;
 }
 
 .enc-why__tally {
@@ -879,20 +918,6 @@
   flex: 1;
   border-radius: 3px 3px 0 0;
   opacity: 0.9;
-}
-
-@media (min-width: 960px) {
-  .enc-why__meter {
-    flex: 1 1 auto;
-    height: auto;
-    min-height: 30px;
-    margin-top: 2px;
-  }
-  .enc-why__bars {
-    flex: 1 1 auto;
-    height: auto;
-    min-height: 96px;
-  }
 }
 
 /* ── THE RESPONSIVE AUDIT (2026-09-26) ──

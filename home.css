@@ -474,6 +474,14 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   font-size: clamp(56px, 11vw, 200px) !important;
   line-height: 1 !important;
 }
+/* a background paints only inside its box, and the −0.05em tracking ends the box 0.05em short of
+   the last digit's ink, so the typed sum lost the right edge of its last 0 (the user, 2026-10-28:
+   "why cropped"). The box runs 0.1em further, its margin takes it back, so nothing moves; the
+   rule keeps the text's width (right: 0.1em, below) */
+#block-7c60fb1ac5db40e5b728673e64c2c369 {
+  padding-right: 0.1em !important;
+  margin-right: -0.1em !important;
+}
 #block-3dae800a513880b493f9e17a6928281c [data-enc-z-typed] #block-7c60fb1ac5db40e5b728673e64c2c369 {
   color: transparent !important;
   background-image: linear-gradient(90deg, #FAFAF8 var(--z-x, 0px), transparent var(--z-x, 0px));
@@ -505,7 +513,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   content: "";
   position: absolute;
   left: 0;
-  right: 0;
+  right: 0.1em;
   top: calc(100% + 18px);
   height: 3px;
   background: #FAFAF8;
@@ -1852,34 +1860,43 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 }
 
 /*********************************************/
-/* 09. WHY STAKE — 49b "NO BOXES, ONE LAYER LESS" */
+/* 09. WHY STAKE — 49c "ONE CLAIM PER SCREEN" */
 /*********************************************/
 
-/* From design file "Why Stake", 49b (2026-10-25, the user: "implement 49b"; it replaced 49a's three
-   cards). An ink band, one screen: kicker, heading and lead with a secondary button on the right;
-   under one hairline, the three claims as columns split by hairlines, each its figure (92px) and
-   unit, its name and lead, and a small data graphic over its caption line. No boxes, no body
-   paragraph (the rows' Body was emptied in Notion, backups/why-stake-49b-2026-10-25.json), and
-   nothing reacts to hover: the columns are not controls.
+/* From design file "Why Stake", 49c (2026-10-28, the user: "implement 49c"; it replaced 49b's three
+   columns on one screen). Three ink bands of one screen each, one claim to a band: a top row with
+   the section's kicker and heading in mono and the band's number (01 / 03) at the right; under it
+   the figure at display size on the left, and the claim, its lead and its graphic on the right;
+   See the networks closes the third band. No boxes and no body paragraph, as in 49b, and nothing
+   reacts to hover. Cut with it: the line under the heading ("Everything else on this page is shown
+   rather than claimed…"), deleted in Notion with the old heading, names and leads kept in
+   backups/why-stake-49c-2026-10-28.json.
 
-   NOTION STRUCTURE. One callout (block-3dce800a…): text "Why stake with us",
-   Heading 2, the lead text, a Gray button callout (See the networks), and the
-   Why Stake gallery (block-bd1e4d48…), 3 entries with Name, Figure, Unit, Lead,
-   Body, Caption left, Caption right. Page links off.
+   NOTION STRUCTURE. One callout (block-3dce800a…): text "Why stake with us", the Heading 2
+   "Three things worth checking", a Gray button callout (See the networks), and the Why Stake
+   gallery (block-bd1e4d48…), 3 entries with Name, Figure, Unit, Lead, Body (empty), Caption left
+   and Caption right. Page links off. The names are crossed in Notion: "Lead" holds the unit
+   (property-5b6a5a73) and "Unit" the lead (property-5c5e5772); the comments here say what each holds.
 
-   SHARED ROWS. From 960px the gallery is one grid of five rows — the figure, the name, the lead,
-   the graphic and the caption line — and each card's content is a subgrid of all five, so every
-   row lines up across the three columns. The graphics stretch to the tallest of them (the year
-   meter and the bars grow to the dots' height, or the dots' row to the bars', as the column
-   narrows), so the three caption lines sit on one line. The space under the head grows with the
-   screen, 40 to 220px (22vh). Under 960 the columns stack, split by hairlines, each capped at
-   520px; under 760 the heading is 34px and everything tightens.
+   EACH CARD IS A BAND. The callout is the full-bleed ink ground and has no padding of its own; each
+   card is one band, at least one screen tall, with a hairline over the second and the third. A
+   band's top row is built by home.js ("WHY STAKE GRAPHICS"): Notion and CSS cannot show one block
+   three times, so it copies the callout's kicker and heading into each band, hidden from screen
+   readers, and the two originals stay, visually hidden, as the section's heading. The number is a
+   CSS counter. home.js stops the page on each band's top, as on the other one-screen sections.
 
-   The graphics (dots per network, a year meter, bars per chain) are drawn by
-   home.js ("WHY STAKE GRAPHICS"), which also keeps two derived figures true: the
-   network count in the first column's caption and the years since 2020 in the
-   second column's figure and caption (the user's explicit choice). Styles for the
-   graphics: home-dial.css.
+   THE BUTTON is Notion's callout, placed in the third band by anchor positioning, as Who we are's
+   roles are: the band keeps its room (the content's ::after) and the button is pinned 32px under
+   that band's caption line, at its left edge. Without anchor positioning it follows the band.
+
+   From 960px the figure takes 5fr and the claim 7fr, 72px apart, in a column of at most 1280; the
+   figure is a fifth of the window up to 300px, centred with its unit against the claim. Under 960
+   a band stacks, figure first, at 140px; under 760 the claim is 34px and its lead 16.
+
+   The graphics (dots per network, a year meter, bars per chain) are drawn by home.js, which also
+   keeps two derived figures true: the network count in the first band's caption and the years
+   since 2020 in the second band's figure and caption (the user's explicit choice). Styles for the
+   graphics and the top row: home-dial.css.
 
    Entirely new section: its text takes the design's type. */
 
@@ -1901,18 +1918,16 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   /* the design's CPAD; above 1824 the homepage's centred 1728 column, as every band */
   --why-gutter: max(clamp(20px, 4vw, 48px), calc(50vw - 864px));
   --why-rule: rgba(250, 250, 248, 0.18);
+  /* the figure: 140 stacked; side by side a fifth of the window up to 300 (below) */
+  --why-fig: 140px;
 
-  /* one screen, the content centred in it; a screen too short for it lets the band grow */
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
+  position: relative !important;   /* the button's containing block */
+  display: block !important;
   box-sizing: border-box !important;
   width: 100vw !important;
   max-width: none !important;
-  min-height: 100vh !important;
-  min-height: 100svh !important;
   margin: 0 0 0 calc(50% - 50vw) !important;
-  padding: 88px var(--why-gutter) !important;
+  padding: 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
   box-shadow: none !important;
@@ -1925,9 +1940,8 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 }
 
 #block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) auto !important;
-  column-gap: 40px !important;
+  display: flex !important;
+  flex-direction: column !important;
   width: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -1935,7 +1949,6 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 }
 
 #block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > * {
-  grid-column: 1 !important;
   margin: 0 !important;
 }
 
@@ -1945,58 +1958,32 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   display: none !important;
 }
 
-#block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > .notion-text:first-of-type {
-  grid-row: 1 !important;
-  min-height: 0 !important;
-  padding: 0 !important;
-  margin-bottom: 13px !important;
-  font-family: var(--type-mono) !important;
-  font-size: 11px !important;
-  line-height: 1.3 !important;
-  letter-spacing: 0.14em !important;
-  text-transform: uppercase !important;
-  color: #B4B4B4 !important;
-}
-
+/* the kicker and the heading, for screen readers: each band shows them in its top row */
+#block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > .notion-text:first-of-type,
 #block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > .notion-heading {
-  grid-row: 2 !important;
-  margin-bottom: 13px !important;
-  font-family: var(--type-display) !important;
-  font-weight: 600 !important;
-  font-size: 44px !important;
-  line-height: 1 !important;
-  letter-spacing: -0.042em !important;
-  color: #FAFAF8 !important;
-  max-width: 40ch !important;
-}
-
-#block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > .notion-text:not(:first-of-type) {
-  grid-row: 3 !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
   padding: 0 !important;
-  font-family: var(--type-body) !important;
-  font-size: 16px !important;
-  line-height: 1.6 !important;
-  color: #C9C9C4 !important;
-  max-width: none !important; /* texts run the full width (user rule) */
-  text-wrap: pretty !important;
+  border: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
 }
 
-/* the button: right of the header, level with its foot (main.css §07 sets
-   align-self: flex-start on button callouts, hence the explicit override) */
+/* the button, without anchor positioning: after the third band, on its gutter */
 #block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > .notion-callout {
-  grid-column: 2 !important;
-  grid-row: 1 / 4 !important;
-  align-self: end !important;
-  justify-self: end !important;
+  order: 1 !important;
+  align-self: flex-start !important;
+  margin: 0 var(--why-gutter) 44px !important;
 }
 
-/* the claims, under one rule that sits 22vh (40–220px) under the head */
 #block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > #block-bd1e4d485a0d424394add746d8e3cd35 {
-  grid-column: 1 / -1 !important;
-  grid-row: 4 !important;
-  margin: clamp(40px, 22vh, 220px) 0 0 !important;
-  padding: 32px 0 0 !important;
-  border-top: 1px solid var(--why-rule) !important;
+  padding: 0 !important;
+  border: 0 !important;
 }
 
 #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection__header-wrapper,
@@ -2006,46 +1993,55 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 }
 
 #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-gallery {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 32px !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* Super's card chrome off: no box, and no hover (minima's hover background is !important) */
-#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card,
-#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card:hover {
   display: block !important;
   margin: 0 !important;
   padding: 0 !important;
+  counter-reset: why-band;
+}
+
+/* each card a band: one screen, its top row then its claim, centred in what is left;
+   Super's card chrome off, and no hover (minima's hover background is !important) */
+#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card,
+#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card:hover {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 28px !important;
+  box-sizing: border-box !important;
+  width: auto !important;
+  max-width: none !important;
+  height: auto !important;
+  min-height: 100vh !important;
+  min-height: 100svh !important;
+  margin: 0 !important;
+  padding: 40px var(--why-gutter) 44px !important;
   border: 0 !important;
   border-radius: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
   overflow: visible !important;
+  counter-increment: why-band;
 }
 
-/* Notion order: Name, Body, Caption left, Caption right, Figure, Unit, Lead —
-   placed on a grid in the design's order */
+#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card + .notion-collection-card {
+  border-top: 1px solid var(--why-rule) !important;
+}
+
+/* Notion order: Name, Caption left, Caption right, Figure, Unit, Lead — placed on a grid in the
+   design's order. Stacked: the figure and its unit, 28, then the claim, its lead and its graphic. */
 #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card__content {
   display: grid !important;
-  /* three tracks: the figure's own, then the unit and the right caption share the rest, so the
-     long left caption (spanning two) cannot widen the figure's track and push the unit away */
-  grid-template-columns: auto minmax(0, 1fr) auto !important;
-  grid-template-areas:
-    "fig unit unit"
-    "name name name"
-    "lead lead lead"
-    "graphic graphic graphic"
-    "capl capl capr" !important;
-  column-gap: 0 !important; /* a gap would break the caption's hairline in two */
+  flex: 1 1 auto !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-areas: "fig" "unit" "name" "lead" "graphic" "cap" "cta" !important;
+  column-gap: 72px !important;
   row-gap: 0 !important;
-  align-content: start !important;
-  max-width: 520px !important; /* stacked: the design caps the graphic at 520, and nothing else is wider */
-  margin: 0 !important;
+  align-content: center !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 1280px !important;
+  margin: 0 auto !important;
   padding: 0 !important;
-  overflow: visible !important; /* Super clips the content box too; the figure sits on its top edge */
+  overflow: visible !important; /* Super clips the content box too */
 }
 
 #block-bd1e4d485a0d424394add746d8e3cd35 .notion-property {
@@ -2054,17 +2050,16 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   min-height: 0 !important;
   max-width: none !important;
   white-space: normal !important;
-  /* Super clips every property (overflow: hidden); the 92px figure at line-height 0.86 draws
-     past its line box, so its top and bottom were cut off */
+  /* Super clips every property (overflow: hidden); the figure at line-height 0.86 draws past its
+     line box, so its top and bottom were cut off */
   overflow: visible !important;
 }
 
 #block-bd1e4d485a0d424394add746d8e3cd35 .property-70594a51 { /* Figure */
   grid-area: fig !important;
-  align-self: end !important;
   font-family: var(--type-display) !important;
   font-weight: 600 !important;
-  font-size: 92px !important;
+  font-size: var(--why-fig) !important;
   line-height: 0.86 !important;
   letter-spacing: -0.05em !important;
   font-variant-numeric: tabular-nums !important;
@@ -2072,118 +2067,142 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   white-space: nowrap !important;
 }
 
-#block-bd1e4d485a0d424394add746d8e3cd35 .property-5b6a5a73 { /* Unit, its foot on the figure's */
+#block-bd1e4d485a0d424394add746d8e3cd35 .property-5b6a5a73 { /* the unit (Notion's "Lead") */
   grid-area: unit !important;
-  align-self: end !important;
-  padding: 0 0 0 12px !important;
+  margin-top: 18px !important;
   font-family: var(--type-mono) !important;
-  font-size: 11px !important;
-  line-height: normal !important;
+  font-size: 12px !important;
+  line-height: 16px !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
   color: #B4B4B4 !important;
 }
 
-#block-bd1e4d485a0d424394add746d8e3cd35 .notion-property__title { /* Name */
+#block-bd1e4d485a0d424394add746d8e3cd35 .notion-property__title { /* Name: the claim */
   grid-area: name !important;
-  margin-top: 22px !important;
+  margin-top: 28px !important;
   font-family: var(--type-display) !important;
   font-weight: 600 !important;
-  font-size: 24px !important;
-  line-height: normal !important;
-  letter-spacing: -0.026em !important;
+  font-size: 52px !important;
+  line-height: 1 !important;
+  letter-spacing: -0.042em !important;
   color: #FAFAF8 !important;
 }
 
-#block-bd1e4d485a0d424394add746d8e3cd35 .property-5c5e5772 { /* Lead */
+#block-bd1e4d485a0d424394add746d8e3cd35 .property-5c5e5772 { /* the lead (Notion's "Unit") */
   grid-area: lead !important;
-  margin-top: 8px !important;
+  margin-top: 18px !important;
   font-family: var(--type-body) !important;
-  font-size: 15.5px !important;
+  font-size: 18px !important;
   line-height: 1.6 !important;
   color: #C9C9C4 !important;
-  max-width: none !important; /* the column's width — no forced line breaks (user, 2026-09-15) */
+  max-width: 44ch !important; /* the design's measure */
   text-wrap: pretty !important;
 }
 
+/* the graphic (home.js), 28 under the lead and at most 480 wide — a rule outside this file
+   zeroed its margin (measured, 49b), hence the id */
+#block-bd1e4d485a0d424394add746d8e3cd35 .enc-why__graphic {
+  margin-top: 28px !important;
+  max-width: 480px !important;
+}
+
+/* Caption left and right share one line under the graphic, as wide as it; the left one draws
+   the hairline (two at 18% would draw it darker) */
 #block-bd1e4d485a0d424394add746d8e3cd35 .property-443e5775,
-#block-bd1e4d485a0d424394add746d8e3cd35 .property-6f505657 { /* Caption left / right, under the graphic */
+#block-bd1e4d485a0d424394add746d8e3cd35 .property-6f505657 {
+  grid-area: cap !important;
+  justify-self: stretch !important;
+  max-width: 480px !important;
   margin-top: 11px !important;
   padding-top: 10px !important;
   border-top: 1px solid var(--why-rule) !important;
   font-family: var(--type-mono) !important;
   font-size: 9.5px !important;
+  line-height: normal !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
   color: #B4B4B4 !important;
   white-space: nowrap !important;
 }
 
-/* the graphic (home.js): 28 under the lead, and the whole row tall where the columns share it —
-   a rule outside this file zeroed its margin and kept it at its own height (measured) */
-#block-bd1e4d485a0d424394add746d8e3cd35 .enc-why__graphic {
-  margin-top: 28px !important;
-  align-self: stretch !important;
+#block-bd1e4d485a0d424394add746d8e3cd35 .property-6f505657 {
+  border-top-color: transparent !important;
+  text-align: right !important;
 }
 
-#block-bd1e4d485a0d424394add746d8e3cd35 .property-443e5775 { grid-area: capl !important; }
-#block-bd1e4d485a0d424394add746d8e3cd35 .property-6f505657 { grid-area: capr !important; justify-self: stretch !important; text-align: right !important; }
-
-/* stacked: a hairline over each claim after the first, 32 above it and 32 under */
-#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card + .notion-collection-card {
-  padding-top: 32px !important;
-  border-top: 1px solid var(--why-rule) !important;
-}
-
-/* ── side by side, 960px and wider: three columns on five shared rows ── */
-@media (min-width: 960px) {
-  #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-gallery {
-    display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    grid-template-rows: repeat(5, auto) !important;
-    gap: 0 !important;
+/* See the networks in the third band: 32 under its caption line (the design's 18 and 14) */
+@supports (anchor-name: --a) {
+  #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card:last-child .property-443e5775 {
+    anchor-name: --why-close;
   }
-
-  #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card,
-  #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card:hover {
-    display: contents !important;
-  }
-
-  #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card__content {
-    grid-row: 1 / span 5 !important;
-    grid-template-rows: subgrid !important;
-    max-width: none !important;
-    padding: 0 36px !important;
-  }
-
-  #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card:first-child > .notion-collection-card__content { padding-left: 0 !important; }
-  #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card:last-child > .notion-collection-card__content { padding-right: 0 !important; }
-  #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card + .notion-collection-card > .notion-collection-card__content {
-    border-left: 1px solid var(--why-rule) !important;
-  }
-}
-
-/* ── under 760px: the head stacks, the heading is 34px, the band tightens ── */
-@media (max-width: 759px) {
-  #block-3dce800a513880349091dbe0cd0650a7 {
-    padding-top: 56px !important;
-    padding-bottom: 56px !important;
-  }
-  #block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content {
-    grid-template-columns: minmax(0, 1fr) !important;
-  }
-  #block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > .notion-heading {
-    font-size: 34px !important;
+  #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card:last-child > .notion-collection-card__content::after {
+    content: "";
+    grid-area: cta;
+    height: 48px; /* the button's */
+    margin-top: 32px;
   }
   #block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > .notion-callout {
-    grid-column: 1 !important;
-    grid-row: 4 !important;
-    justify-self: start !important;
-    margin-top: 24px !important;   /* the design's 24 under the head when its row wraps */
+    position: absolute !important;
+    position-anchor: --why-close;
+    top: calc(anchor(bottom) + 32px) !important;
+    left: anchor(left) !important;
+    margin: 0 !important;
+    z-index: 1 !important;
   }
-  #block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > #block-bd1e4d485a0d424394add746d8e3cd35 {
-    grid-row: 5 !important;
-    margin-top: 32px !important;
+}
+
+/* under 520 a button's callout takes the column's width (main.css §07; the link drawn in it keeps
+   its own, as everywhere): here the band's column, not the whole callout it is placed in, whose
+   width would have run the box 20px past the screen's edge */
+@media (max-width: 520px) {
+  #block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > .notion-callout {
+    align-self: stretch !important;
+    width: auto !important;
+  }
+  @supports (anchor-name: --a) {
+    #block-3dce800a513880349091dbe0cd0650a7 > .notion-callout__content > .notion-callout {
+      right: anchor(right) !important;
+    }
+  }
+}
+
+/* ── side by side, 960px and wider: the figure on the left, centred with its unit against the claim ── */
+@media (min-width: 960px) {
+  #block-3dce800a513880349091dbe0cd0650a7 {
+    --why-fig: min(300px, 20vw);
+  }
+  /* a flexible row above and below the claim takes whatever the figure's side needs beyond it:
+     with the claim's rows alone, Chrome gave part of the figure's height to the empty button row
+     and the claim sat 7px above centre (measured at 1440) */
+  #block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card__content {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr) !important;
+    grid-template-rows: 1fr auto auto auto auto auto 1fr !important;
+    grid-template-areas: "fig ." "fig name" "fig lead" "fig graphic" "fig cap" "fig cta" "fig ." !important;
+  }
+  /* the two share the column's rows and are centred in them as one: each keeps the other's
+     height (and the 18 between them) as its margin */
+  #block-bd1e4d485a0d424394add746d8e3cd35 .property-70594a51 {
+    align-self: center !important;
+    margin-bottom: 34px !important;
+  }
+  #block-bd1e4d485a0d424394add746d8e3cd35 .property-5b6a5a73 {
+    grid-area: fig !important;
+    align-self: center !important;
+    margin-top: calc(var(--why-fig) * 0.86 + 18px) !important;
+  }
+  #block-bd1e4d485a0d424394add746d8e3cd35 .notion-property__title {
+    margin-top: 0 !important;
+  }
+}
+
+/* ── under 760px: the claim is 34px and its lead 16 ── */
+@media (max-width: 759px) {
+  #block-bd1e4d485a0d424394add746d8e3cd35 .notion-property__title {
+    font-size: 34px !important;
+  }
+  #block-bd1e4d485a0d424394add746d8e3cd35 .property-5c5e5772 {
+    font-size: 16px !important;
   }
 }
 

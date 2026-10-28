@@ -638,11 +638,13 @@
 (function () {
   var TEAM = "block-3dbe800a513880c5862ae676c8d06994";
   // one-screen sections that settle to the top of the viewport (not paged): Who we are, Services,
-  // the audience split, the networks and Why Stake (2026-10-24). Services is 280vh from 1200px since
+  // the audience split and the networks (2026-10-24). Services is 280vh from 1200px since
   // 42w (2026-10-25) and flat and taller than a screen under it, so the height check below leaves it
   // out; it is a stop only with reduced motion, where it is one screen.
   var SCREENS = [TEAM, "block-3dbe800a5138800d8a72c99cdde9bc3f", "block-3dae800a51388006a57be06b8ebea78e",
-    "block-3dbe800a513880c09163d3ed4ab436fd", "block-3dce800a513880349091dbe0cd0650a7"];
+    "block-3dbe800a513880c09163d3ed4ab436fd"];
+  // and Why Stake's three bands, each a screen of its own (49c, 2026-10-28): its gallery's cards
+  var BANDS = "#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card";
 
   var NEAR = 0.33;       // of a screen: how close a resting page must be to a stop to settle on it
   var EPS = 2;           // px: "on" a stop
@@ -658,11 +660,12 @@
   function decks() {
     var out = [];
     if (window.matchMedia("(min-width: 901px)").matches) {
-      SCREENS.forEach(function (id) {
-        var el = document.getElementById(id);
+      var els = SCREENS.map(function (id) { return document.getElementById(id); })
+        .concat(Array.prototype.slice.call(document.querySelectorAll(BANDS)));
+      els.forEach(function (el) {
         // a section well over a screen tall is no stop: settling would pull a reader out of the
-        // middle of it back to its top (Why Stake, its cards stacked, between 901 and 1024)
-        if (el && el.offsetHeight <= window.innerHeight * 1.25) out.push({ id: id, stops: [Math.round(docTop(el))], h: window.innerHeight });
+        // middle of it back to its top (Why Stake's 49b, its cards stacked, between 901 and 1024)
+        if (el && el.offsetHeight <= window.innerHeight * 1.25) out.push({ id: el.id, stops: [Math.round(docTop(el))], h: window.innerHeight });
       });
     }
     return out;
@@ -1376,13 +1379,21 @@
 
 
 /* ─────────────────────────────────────────────────────────────────────────────────────────────
-   Homepage Why Stake — design "Why Stake", 49b (49a's graphics): WHY STAKE GRAPHICS.
+   Homepage Why Stake — design "Why Stake", 49c (49a's graphics): WHY STAKE GRAPHICS.
 
-   Each claim's column gets a small data graphic, by position in the Notion gallery:
+   Each card of the gallery is one band (home.css §09), and each gets two things from here.
+
+   ITS TOP ROW: the callout's kicker ("Why stake with us") and heading ("Three things worth
+   checking"), copied into each band, since Notion and CSS cannot show one block three times. The
+   words are Notion's, read again on every pass; the copies are hidden from screen readers and the
+   originals stay, visually hidden, as the section's heading. The band's number is a CSS counter.
+   Each card's name is marked as a level-3 heading, as the design's are.
+
+   A SMALL DATA GRAPHIC, by position in the Notion gallery:
      1  one dot per network — the count of cards in the homepage Networks gallery, filled in the
         pastels, on a 10-wide grid with the rest of the row left as open rings
      2  a year meter — one segment per year from 2020 to now, the current year open and filled a
-        twelfth for each month of it so far (49b)
+        twelfth for each month of it so far
      3  one bar per chain — twelve bars of varying height (commission differs by chain)
 
    DERIVED FIGURES (the user's explicit choice, so they never go stale): the first card's
@@ -1397,6 +1408,7 @@
    cannot be read, the homepage gallery's card count is used, and the screen keeps Notion's number. */
 (function () {
   var GALLERY = "block-bd1e4d485a0d424394add746d8e3cd35";
+  var CALLOUT = "block-3dce800a513880349091dbe0cd0650a7";
   var NETWORKS = "block-d07ab52b60ba4788bd8df0c9e74c5ad4";
   var SET_DB = "block-3dde800a51388133b7f1d1ccdda08038";
   var START = 2020;
@@ -1451,6 +1463,17 @@
 
   function setText(el, text) { if (el && el.textContent !== text) el.textContent = text; }
 
+  function topRow() {
+    var t = document.createElement("div"), l = span("enc-why__label");
+    t.className = "enc-why__top";   /* a div: the card's spans are its cover, hidden (home.css §09) */
+    t.setAttribute("aria-hidden", "true");
+    l.appendChild(span("enc-why__kick"));
+    l.appendChild(span("enc-why__sep"));
+    l.appendChild(span("enc-why__head"));
+    t.appendChild(l);
+    return t;
+  }
+
   function setNumber(el, n) {
     if (!el || !(n >= 0)) return;
     var walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), node;
@@ -1481,10 +1504,23 @@
     var nets = fromSet || (netBox ? netBox.querySelectorAll(".notion-collection-card").length : 0);
     var date = new Date(), now = date.getFullYear(), month = date.getMonth();
     var sig = nets + "|" + now + "|" + month;
+    var box = document.getElementById(CALLOUT);
+    var words = box ? box.querySelector(":scope > .notion-callout__content") : null;
+    var kick = words ? words.querySelector(":scope > .notion-text") : null;
+    var head = words ? words.querySelector(":scope > .notion-heading") : null;
 
     Array.prototype.forEach.call(cards, function (card, i) {
       var content = card.querySelector(".notion-collection-card__content");
       if (!content || i > 2) return;
+      var row = card.querySelector(":scope > .enc-why__top");
+      if (!row) { row = topRow(); card.insertBefore(row, card.firstChild); }
+      setText(row.querySelector(".enc-why__kick"), kick ? kick.textContent.trim() : "");
+      setText(row.querySelector(".enc-why__head"), head ? head.textContent.trim() : "");
+      var title = content.querySelector(".notion-property__title");
+      if (title && title.getAttribute("role") !== "heading") {
+        title.setAttribute("role", "heading");
+        title.setAttribute("aria-level", "3");
+      }
       var existing = content.querySelector(":scope > .enc-why__graphic");
       if (!existing || existing.getAttribute("data-sig") !== sig) {
         if (existing) existing.remove();
@@ -1507,7 +1543,7 @@
     if (muts.every(function (m) {
       var el = m.target.nodeType === 1 ? m.target : m.target.parentElement;
       // and the figures' running headings (the delegators and the uptime), rewritten as they scroll
-      return el && el.closest && el.closest(".enc-why__graphic, " + FIGURE + ", " + CAPTION_RIGHT + ", #" + STAT +
+      return el && el.closest && el.closest(".enc-why__graphic, .enc-why__top, " + FIGURE + ", " + CAPTION_RIGHT + ", #" + STAT +
         ", #block-d037b468382b4576b931199899b3e0e4, #block-403e800a51388197a723f1b39e7e7b87, .enc-z-name, .enc-z-role");
     })) return;
     clearTimeout(t); t = setTimeout(apply, 60);

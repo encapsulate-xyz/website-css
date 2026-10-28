@@ -94,7 +94,7 @@ every URL in the sitemap for `notion-divider`, which is quicker than walking Not
 with a divider or an empty paragraph.**
 
 home.css starts with older page CSS, then "HOMEPAGE SECTIONS": the figures, Z (00),
-hero, Audience split 51m (07b), testimonials I (09), Why Stake 49b, governance 37h, Services 42w
+hero, Audience split 51m (07b), testimonials I (09), Why Stake 49c, governance 37h, Services 42w
 (09a), Who we are (09b), blog, networks 21b, Contact 48c (16).
 
 home.js is a set of IIFEs: the dial (institutional form), the figures (Z), homepage decks (snapping), the testimonials (I), networks
@@ -152,6 +152,10 @@ Uptime** (220vh) draws the rule to 99.96% under "Almost always on.", then the tw
 - **The typing is a reveal, not a split**: the heading keeps its one text node; its ink is a gradient clipped to the
   text that ends at `--z-x`, the typed width measured per character with a Range. The delegators and uptime figures are
   their headings' own text rewritten as they run (Notion's again at the end; Why Stake's observer ignores them).
+  **A background paints only inside its box**, and the −0.05em tracking ends the heading's box 0.05em short of the
+  last digit's ink, so the typed sum lost the right edge of its last 0 (the user, 2026-10-28: "why cropped", at
+  $71,089,770, 8px of a 158px 0). The heading has `padding-right: 0.1em` and `margin-right: -0.1em`, so its box
+  runs on and nothing moves, and the rule under it stops `0.1em` short of the box, at the text's width as before.
 - **Traps**: the band callout's own `overflow: hidden` (Super's) stopped the stages sticking. The shared screen rules are
   `:where()`-scoped to two classes so each screen's id rules win, and pathed to the band's columns — the uptime screen's
   two button callouts are `.notion-column > .notion-callout` too. The uptime headline spans an `auto` filler row and the
@@ -175,22 +179,28 @@ field, as the other one-screen sections do not fill a phone, with 28px under the
 it (measured at 1440 on the release before, so not the day's work): Super's notion.css wraps every column list, and the
 disc column's basis was its content's width. `flex-wrap: nowrap` and a basis of 0.
 
-**Why Stake is 49b, "No boxes, one layer less"** (2026-10-25, the user: "implement 49b"): 49a's cards and body paragraph
-went (the rows' Body emptied in Notion, `backups/why-stake-49b-2026-10-25.json`); the claims are three columns split by
-hairlines under one rule, the figure at 92px, on five rows the columns share — the gallery is one grid and each card's
-content a subgrid of it — so the figures, names, leads, graphics and caption lines align across them. Each graphic
-stretches to its row (the meter and the bars to the dots' height, or the dots' row to the bars' as the columns narrow);
-the open year fills a twelfth per month (home.js). The space under the head is 22vh, 40–220px. Stacked under 960, each
-column capped at 520; under 760 the heading is 34px. Our head keeps the lead full width (the user's rule), so the band
-fits 1440×900 where the design's runs to 989px; it is 845px at 1280×720 and 847 at 1024×768, still a stop. A rule outside
-home.css zeroes the graphic's margin and holds it at its own height (cross-origin, not readable from the page), so
-home.css sets both by id.
-
-**Why Stake is one screen above 1024px** (2026-10-24, the user: "make this full height page too Three things worth
-checking."; since 49b at every width, `min-height: 100svh`): the band is one screen with its content centred, as Services was until 42w, and
-home.js settles on its top. Narrower, the cards stack and it runs 1.8 screens (1024×768), so **home.js's one-screen list
-now skips any section over 1.25 screens tall**: settling a reader back to the top of a section they are halfway down is a
-trap. Measured at 1024×768, 1280×720, 1366×768, 1440×900 and 1920×1080, the other four stay at 1.00–1.08.
+**Why Stake is 49c, "One claim per screen"** (2026-10-28, the user: "implement 49c"; it replaced 49b's three columns
+on one screen). Three ink bands, one claim to a band: a top row with the section's kicker and heading in mono and the
+band's number (01 / 03) at the right; the figure at display size on the left (a fifth of the window up to 300px, 140
+stacked) with its unit, centred against the claim (52px, 34 under 760), its lead (18px, 16 under 760, 44ch) and its
+graphic (at most 480 wide, at its own height: 49b's stretching to one row is gone) on the right; See the networks
+closes the third band. Under 960 a band stacks, figure first. **What changed in Notion**
+(`backups/why-stake-49c-2026-10-28.json`): the heading lost its period ("Three things worth checking", the file's top
+row); the line under it, "Everything else on this page is shown rather than claimed. These three are not, so here they
+are plainly.", was deleted (the file cuts it); the names gained one ("No slashing.", "Six years.", "Commission."); the
+leads are the file's three, which join each old lead to the strongest line of its old body. **The Notion property names
+are crossed**: "Lead" holds the unit and "Unit" the lead — write a lead into "Unit".
+**How it is built.** The callout is the full-bleed ink and each gallery card is a band, `min-height: 100svh`, a hairline
+over the second and third. Notion and CSS cannot show one block three times, so home.js copies the callout's kicker and
+heading into each band's top row (aria-hidden, re-read on every pass); the originals stay, visually hidden, as the
+section's heading, and each card's name is marked a level-3 heading. The number is a CSS counter. **The button is
+placed by anchor positioning** (as Who we are's roles): pinned 32px under the third band's caption line, which keeps
+the room for it (its content's `::after`); without anchor positioning it follows the band. **Each band is a stop** in
+home.js's one-screen list (`BANDS`), so the page settles on whichever band it comes to rest near; that list skips any section over 1.25 screens tall (2026-10-24, when 49b's stacked cards ran 1.8 screens at 1024×768: settling a reader back to the top of a section they are halfway down is a trap). **A trap**: with the
+figure and unit spanning the claim's rows, Chrome gave part of their height to the empty button row of bands 1 and 2
+(14.5px at 1440, the claim 7px above centre); a flexible row above and below the claim takes it now. Measured at 390,
+800, 1024, 1280×700, 1440 and 2560: each band one screen, the claim and the figure on one centre, no sideways scroll.
+Costs the file names and the user took: three screens of scroll for one section, and three ink bands in a row.
 
 **The blog band is "Blog Highlights", its second pass** (2026-10-24, home-dial.css "BLOG RAIL", home.js "Homepage
 blog"). What the file changed: the heading "Latest Blog Posts" became **"Deep dives."** (Notion), the dot pager is gone
