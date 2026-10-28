@@ -204,15 +204,20 @@ holds, and the Search Console routine").
 
 - **On Google, checked 2026-10-25:** /networks — cosmos-hub, avalanche, mina, monad, terra, althea; /guides — sui,
   starknet-braavos, axelar, terra, althea, monad, passage, humans-ai; /terms-of-use. **2026-10-27:** /guides/starknet-ready-x.
+  **2026-10-28:** every page requested on 2026-10-27 (the twelve below), and /guides/juno, /guides/namada,
+  /guides/eigen-layer-steth.
 - **Requested 2026-10-27** (twelve, then "Quota Exceeded"): /guides/mina (requested on 2026-10-25 too, still unknown to
   Google), /guides/avalanche, /guides/iota, /guides/zilliqa, /guides/supra, /guides/ika, /guides/agoric, /guides/espresso,
   /guides/lumera, /guides/gitopia, /guides/gravity-bridge, /guides/ixo. All but Mina and Gravity Bridge read "Discovered –
-  currently not indexed": Google knew them and had not crawled them. Inspect them again from 2026-10-28.
-- **Still to inspect, and request if not on Google** (about ten a day; Juno is where the quota stopped):
-  /guides/juno, /guides/mellow, /guides/namada, /guides/omniflix, /guides/quicksilver, /guides/sommelier,
-  /guides/stargaze, /guides/ux, /guides/eigen-layer-steth, /blog/monad-l1-scaling, /blog/is-aptos-decentralized,
-  /blog/berachain-research, /blog/agoric-testnet-17-analysis.
-- **Check:** Sitemaps reads Success. On 2026-10-27 both entries read "Couldn't fetch", 0 discovered, no "Last read": the
+  currently not indexed": Google knew them and had not crawled them. All twelve were on Google on 2026-10-28.
+- **Requested 2026-10-28:** /guides/mellow, then "Quota Exceeded" at the second: the quota is counted over the last day,
+  not the calendar day, so the twelve of 2026-10-27 still held it. Inspect Mellow again from 2026-10-29.
+- **Not on Google on 2026-10-28, to request from 2026-10-29** (all inspected that day; about ten a day):
+  /guides/omniflix, /guides/quicksilver, /guides/sommelier, /guides/stargaze, /guides/ux, /blog/monad-l1-scaling,
+  /blog/is-aptos-decentralized, /blog/berachain-research, /blog/agoric-testnet-17-analysis.
+- **Sitemaps — fixed, 2026-10-28:** `https://encapsulate.xyz/sitemap.xml?v=2` reads **Success** (last read
+  2026-10-27, 114 pages discovered). The plain `/sitemap.xml` entry still shows its "Couldn't fetch" of 2026-10-25,
+  never read again; the `?v=2` entry is the one Google reads. What it said before: on 2026-10-27 both entries read "Couldn't fetch", 0 discovered, no "Last read": the
   2026-10-25 resubmission, and `https://encapsulate.xyz/sitemap.xml?v=2`, added that day. URL inspection's live test of
   /sitemap.xml reads "URL is available to Google", so Googlebot can fetch the file. If both still say "Couldn't fetch" by
   2026-11-03, the next suspect is Vercel (Super's host) answering Google's sitemap fetcher differently from its crawler.

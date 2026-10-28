@@ -190,7 +190,7 @@ The record, by outcome
 
 #### 1,913 votes.
 
-Every vote in the record, in one block.
+Every vote in the record, stacked by answer.
 
 1,913 votes: 1,243 Yes, 78 No, 478 No with veto, 114 Abstain
 
