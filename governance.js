@@ -918,16 +918,24 @@
     }
   }
 
-  /* ── 3b · the homepage's vote split, told as a story (design Vote Split Story, "G3d, told as a story", 2026-10-27) ──
+  /* ── 3b · the homepage's vote split, told as a story (design Vote Split Story, "C · Scrubbed in passing", 2026-10-28) ──
      In the homepage's governance section, between the lede and the six rows, in place of G3 "Pastel ribbons"
-     (2026-10-25): a pinned stage, one screen of scroll a beat and (beats + 0.4) screens in all. It opens on the record
-     in its pastels, stacked by answer beside its total (the design's Opening "Pastel record", the user's choice on
-     2026-10-28); each beat one answer pours out of it as its ribbon, in ballot order from the top; then the record
-     parts at that answer's seam, the ribbons already told lifting by half a gap so the set stays centred on the record.
-     The close holds the whole split, and scrolling back reverses every beat. Each figure is sized to its ribbon (Figures
-     "Sized to ribbon"): two-thirds of it and never under 14px, in proportional digits, every first digit's ink on one
-     left edge where the ribbons straighten and every name at the ribbons' right end. Under 760px the record runs across the top and each answer pours
-     down into its column, its figure under it at 36px; a figure too close to its neighbour drops a row.
+     (2026-10-25). From 2026-10-27 to 10-28 it was the design's A, a pinned stage of six screens; C tells the same six
+     beats at a band's size, by the band's own passage up the screen, with no pin and no extra length ("for a page that
+     cannot give it six screens"). The drawing takes the column's full width at 420px, and the caption (the beat's
+     headline and lead) sits over its right half, its left edge on the line where the ribbons run straight, where the
+     figures start; at least 360px is left it. The story starts once half the drawing is on screen, or at the first
+     scroll where the page opens with more of it showing, so it always opens on the total, and ends as the caption
+     reaches the top of the screen, never in less than 0.45 of a screen. It opens on the record in its pastels, stacked
+     by answer beside its total (Opening "Pastel record", the user's choice on 2026-10-28); each beat one answer pours
+     out of it as its ribbon, in ballot order from the top; then the record parts at that answer's seam, the ribbons
+     already told lifting by half a gap so the set stays centred on the record. The close holds the whole split, and
+     scrolling back reverses every beat. Each figure is sized to its ribbon (Figures "Sized to ribbon", the design's
+     default since 2026-10-28): two-thirds of it and never under 14px, in proportional digits, every first digit's ink
+     on one left edge where the ribbons straighten and every name at the ribbons' right end, shown once its ribbon has
+     poured past that line. Where the drawing is under 680px wide the caption returns to the left edge, over the phone
+     drawing, still 420px: the record runs across the top and each answer pours down into its column, its figure under
+     it at 36px; a figure too close to its neighbour drops a row.
      Its numbers are one line in Notion, "1,913 votes · 1,243 Yes · 78 No · 478 No with veto · 114 Abstain", which
      site-data's count job writes after every governance run: the record's rows plus the 729 votes from before it,
      frozen by outcome on 2026-10-25 (the user: "474 Yes, 212 No and 43 Abstain"; the 212 is 30 No and 182 No with
@@ -938,29 +946,27 @@
      rule (the nearest half, third or quarter within five points, otherwise one in N, "exactly" only when the count
      divides the record), with the number words, the articles and the list, which no Notion block can hold. A line it
      cannot read stays as Notion wrote it. Reduced motion steps it a beat at a time with nothing moving; print shows it
-     whole. The design's "A" pill beside the label names its one telling, so it is left out. */
+     whole. The design's "C" pill beside the label names its telling among the design's three, so it is left out. */
   var LINE = "block-404e800a51388128ba49e43d1ce92374";   // the line, written by site-data's count job
   var KICK = "block-404e800a5138816ab84adfcc33e9bb44";   // "The record, by outcome"
   var FILLS = { "yes": "#DCEEC7", "no": "#F8E8B3", "no with veto": "#F7DCE7", "abstain": "#D2E3F6" };
   /* the fallback if the "Vote split copy" toggle goes missing */
   var STORY = {
     "open": "{total} {word}.",
-    "open lead": "Every vote in the record, stacked by answer.",
+    "open lead": "All of them, stacked by answer.",
     "answer": "{answer}, {count} times.",
     "answer one": "{answer}, {count} time.",
     "answer lead": "{share words}: {share} of the record.",
     "answer lead plain": "{share} of the record.",
     "close": "{answers} answers, one record.",
     "close lead": "Every one of the {total} is {list}.",
-    "counter": "{beat} / {beats}",
-    "scroll": "Scroll ↓"
+    "counter": "{beat} / {beats}"
   };
   // seams, gaps between parted ribbons, figure to word, figure to ribbon, the smallest figure; under 760px its own
   var ST = { s: 2, G: 40, gap: 16, ratio: 0.66, floor: 14 };
   var PH = { G: 24, s: 2, fig: 36, top: 73 };
   var INK_FB = { top: 0.17, bottom: 0.87 };   // Outfit 600's digits, as fractions of the size, until measured
   var SVGNS = "http://www.w3.org/2000/svg";
-  var NARROW = window.matchMedia("(max-width: 759px)");
   var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)");
   var SP = null;   // the built story: its nodes, the line it read, the drawing it built and what it last drew
 
@@ -1115,17 +1121,14 @@
     head.appendChild(count);
     var beats = el("div", "enc-story__beats");
     var fig = el("div", "enc-story__box");
-    var hint = el("div", "enc-story__hint"), hintText = el("span");
-    hint.appendChild(hintText);
     stage.appendChild(head);
     stage.appendChild(beats);
     stage.appendChild(fig);
-    stage.appendChild(hint);
     box.appendChild(stage);
     var meter = el("span", "enc-story__meter");
     meter.setAttribute("aria-hidden", "true");
     box.appendChild(meter);
-    SP = { box: box, stage: stage, label: label, count: count, beats: beats, fig: fig, hint: hintText, meter: meter,
+    SP = { box: box, stage: stage, label: label, count: count, beats: beats, fig: fig, meter: meter,
       text: null, last: null, copy: "", beatEls: [], draw: null, sig: "", ink: SP && SP.ink, print: false, P: -1 };
     if (!SP.ink) inkWhenReady();
     if (typeof ResizeObserver === "function") {
@@ -1170,17 +1173,15 @@
       var be = SP.beatEls[j];
       if (!be) {
         be = SP.beatEls[j] = el("div", "enc-story__beat");
-        be.appendChild(el("h2"));
+        be.appendChild(el("h3"));
         be.appendChild(el("p"));
         SP.beats.appendChild(be);
       }
       setText(be.firstChild, b.h);
       setText(be.lastChild, b.l);
     });
-    setText(SP.hint, C["scroll"]);
     SP.nb = beats.length;
-    setStyle(SP.box, { height: SP.print ? "auto" : ((SP.nb + 0.4) * 100).toFixed(0) + "vh" });
-    var down = NARROW.matches, BW = SP.fig.clientWidth, BH = SP.fig.clientHeight, ink = SP.ink || INK_FB;
+    var BW = SP.fig.clientWidth, BH = SP.fig.clientHeight, down = BW < 680, ink = SP.ink || INK_FB;
     if (!BW || !BH) return;
     var sig = [down, BW, BH, ink.top, ink.bottom, L.total, L.word, SP.copy].concat(L.bands.map(function (b) { return b.k + ":" + b.n; })).join(",");
     if (sig !== SP.sig) {
@@ -1190,6 +1191,8 @@
       var k = Math.max(0.3, Math.min(1, BH / SP.draw.h, BW / SP.draw.w));
       setStyle(SP.draw.node, { width: SP.draw.w + "px", height: SP.draw.h + "px", transform: "translateY(-50%) scale(" + k.toFixed(4) + ")" });
       SP.fig.appendChild(SP.draw.node);
+      // the caption's left edge on the line where the ribbons run straight, leaving it at least 360px; at the left on a phone
+      setStyle(SP.beats, { paddingLeft: (down ? 0 : Math.round(Math.max(0, Math.min(SP.draw.ax * k, BW - 360)))) + "px" });
       SP.P = -1;
     }
     frame();
@@ -1280,13 +1283,15 @@
     });
     node.appendChild(tot);
     node.appendChild(box);
-    return { node: node, w: BW, h: H, draw: function (R) {
+    // ax: where the figures start, from the drawing's left edge — the caption's left edge
+    return { node: node, w: BW, h: H, ax: TW + 10 + x3 + 24, draw: function (R) {
       var wx = R.map(function (r) { return x1 + r.w * (W - x1); });
       bs.forEach(function (b, i) {
         var u = R[i].u * (G - ST.s), q = at(b, u), y = (q.c + q.d) / 2 - labs[i].f * (ink.top + ink.bottom) / 2;
         setAttr(paths[i], "d", hPath(b, x1, x3, xE, u));
         setAttr(rects[i], "width", f2(wx[i]));
-        setStyle(labs[i].wrap, { clipPath: "inset(0px " + f2(Math.max(0, W - wx[i])) + "px 0px 0px)" });
+        // a figure shows once its ribbon has poured past the line where the ribbons run straight
+        setStyle(labs[i].wrap, { display: wx[i] <= x3 ? "none" : "", clipPath: "inset(0px " + f2(Math.max(0, W - wx[i])) + "px 0px 0px)" });
         setStyle(labs[i].fig, { top: f2(y) + "px" });
         setStyle(labs[i].name, { top: f2(y) + "px" });
       });
@@ -1368,17 +1373,20 @@
         var u = R[i].u * (PH.G - PH.s), q = at(b, u), a = labs[i].a;
         setAttr(paths[i], "d", vPath(b, y1, y3, y2, u));
         setAttr(rects[i], "height", f2(wy[i]));
-        setStyle(labs[i].wrap, { clipPath: "inset(0px 0px " + f2(Math.max(0, HH - wy[i])) + "px 0px)" });
+        setStyle(labs[i].wrap, { display: wy[i] <= y2 ? "none" : "", clipPath: "inset(0px 0px " + f2(Math.max(0, HH - wy[i])) + "px 0px)" });
         setStyle(labs[i].lab, a === "l" ? { left: f2(q.c) + "px", right: "" } : a === "r" ? { left: "", right: f2(Wp - q.d) + "px" } : { left: f2((q.c + q.d) / 2) + "px", right: "" });
       });
     } };
   }
 
-  // where the reader is in the track, in screens, and what that beat shows
+  // where the band is on its way up the screen, and what that beat shows: the story starts once half the drawing is on
+  // screen (or at the first scroll, where the page opens with more of it showing, so the opening beat is never skipped)
+  // and ends as the caption reaches the top of the screen, never in less than 0.45 of a screen of scroll
   function frame() {
     if (!SP || !SP.draw || !document.contains(SP.box)) return;
-    var vh = window.innerHeight || 800, nb = SP.nb;
-    var P = SP.print ? nb - 1 : Math.max(0, Math.min(nb - 1, -SP.box.getBoundingClientRect().top / vh));
+    var vh = window.innerHeight || 800, nb = SP.nb, dr = SP.fig.getBoundingClientRect(), off = dr.top - SP.beats.getBoundingClientRect().top;
+    var x0 = Math.min(vh - 0.5 * dr.height, dr.top + (window.scrollY || window.pageYOffset || 0)), x1 = Math.min(0.04 * vh + off, x0 - 0.45 * vh);
+    var P = SP.print ? nb - 1 : (nb - 1) * Math.max(0, Math.min(1, (x0 - dr.top) / (x0 - x1)));
     if (Math.abs(P - SP.P) < 0.0005) return;
     SP.P = P;
     var i = beatAt(P, nb);
@@ -1389,15 +1397,13 @@
     });
     var pad2 = function (n) { return (n < 10 ? "0" : "") + n; };
     setText(SP.count, fillIn(SP.C["counter"], { beat: pad2(i + 1), beats: pad2(nb) }));
-    SP.hint.parentNode.classList.toggle("is-gone", P >= 0.06);
   }
   var ticking = 0;
   window.addEventListener("scroll", function () {
     if (!SP || ticking) return;
     ticking = requestAnimationFrame(function () { ticking = 0; frame(); });
   }, { passive: true });
-  window.addEventListener("resize", function () { if (SP) layoutStory(); });
-  if (NARROW.addEventListener) NARROW.addEventListener("change", function () { if (SP) layoutStory(); });
+  window.addEventListener("resize", function () { if (SP) { layoutStory(); SP.P = -1; frame(); } });
   if (REDUCED.addEventListener) REDUCED.addEventListener("change", function () { if (SP) { SP.P = -1; frame(); } });
   window.addEventListener("beforeprint", function () { if (SP) { SP.print = true; SP.box.classList.add("is-print"); layoutStory(); SP.P = -1; frame(); } });
   window.addEventListener("afterprint", function () { if (SP) { SP.print = false; SP.box.classList.remove("is-print"); layoutStory(); SP.P = -1; frame(); } });

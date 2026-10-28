@@ -364,11 +364,21 @@ is the same.
 a story"; the user chose "Homepage, replacing G3"). Before it, from 2026-10-25, it was G3 "Pastel ribbons" of *Vote Split
 Patterns* (built on /governance first by mistake, v396, and moved here the same day, the user: "g3 isnt for
 /governance, it was the homepage governance section"): one static drawing that poured in once, its figures inside the
-ribbons with an 11px floor (`git show v418:governance.js`, 3b). **The story** is a pinned stage, one screen of scroll a
-beat, (beats + 0.4) screens in all (640vh with four outcomes), between the lede and the six rows, full width
-(`[data-enc-story]`, governance.js 3b, home.css). Its head row is the kicker's words, "The record, by outcome", and the
-counter ("01 / 06"); then the beat's headline (Outfit 600, 34–64px) and lead, crossfading in one grid cell; then the
-drawing, scaled to the room left; "Scroll ↓" until the reader moves. **The design's three settings, as the user chose
+ribbons with an 11px floor (`git show v418:governance.js`, 3b). **Since 2026-10-28 (v423) the story is the design's
+C, "Scrubbed in passing"**: the design was revised that day to lead with C, "for a page that cannot give it six
+screens", and the user sent it again to implement; from 2026-10-27 it had been A, a pinned stage of one screen of scroll
+a beat, 640vh in all (`git show v422:governance.js`). C is a band between the lede and the six rows, full width, with no
+pin and no extra length (`[data-enc-story]`, governance.js 3b, home.css): its head row is the kicker's words, "The record,
+by outcome", and the counter ("01 / 06"); then the caption, the beat's headline (an h3, Outfit 600, 28–40px) and lead
+(17px), crossfading in one grid cell over the drawing's right half, its left edge on the line where the ribbons run
+straight, which is where the figures start (at least 360px left it); then the drawing, 420px tall. The band's own
+passage up the screen tells it: the story starts once half the drawing is on screen (or at the first scroll, if the
+page opens with more of it showing) and ends as the caption reaches the top, never in under 0.45 of a screen. The
+design's costs: a fast scroll sees only the split; on a short screen the opening beats play with the drawing's foot
+below the screen; at the opening beat the caption stands over empty paper. Where the drawing is under 680px wide the
+caption is at the left, over the phone drawing, still 420px. There is no "Scroll ↓" hint any more (its `scroll` line
+went from the copy toggle, `backups/vote-split-copy-scroll-line-2026-10-28.json`), and the opening lead is the
+design's new one, "All of them, stacked by answer." A figure shows once its ribbon has poured past the straight line. **The design's three settings, as the user chose
 them on 2026-10-28** (Figures "Sized to ribbon", Order "Ballot order", Opening "Pastel record"; v419 had the defaults,
 Column and Ink block): it opens on the record in its pastels, stacked by answer beside its total, every seam on the
 measure showing; each beat one answer pours out of it as its ribbon, in ballot order, then the record parts at that
