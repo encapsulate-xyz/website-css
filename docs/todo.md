@@ -217,10 +217,15 @@ holds, and the Search Console routine").
   guides"). The Guides Database's Status on 2026-10-28 — Live: agoric, axelar, espresso, gravity-bridge, iota, ixo,
   lumera, mina, monad, near, passage, sommelier, starknet-braavos, starknet-ready-x, sui, terra, zilliqa, and cosmos-hub
   (Live and in Super since later that day). Soon: althea,
-  avail, avalanche, eigen-layer, eigen-layer-steth, gitopia, humans-ai, ika, supra (and ATOM, which has no page).
-  Concluded: juno, mellow, namada, omniflix, quicksilver, stargaze, ux. Read the Status again before a request.
-  Already on Google before this rule, from earlier requests or Google's own crawl: Soon althea, avalanche,
-  eigen-layer-steth, gitopia, humans-ai, ika, supra; Concluded juno, namada.
+  avail, avalanche, eigen-layer, eigen-layer-steth, gitopia, humans-ai, ika, supra (the empty Soon ATOM row was
+  archived when the Live one was made). Concluded: juno, mellow, namada, omniflix, quicksilver, stargaze, ux. Read the
+  Status again before a request.
+- **The guides that are not Live are noindex, and the 12 Google held are removed (2026-10-28)**, the user: "yes do it …
+  and remove it when they are live". All 16 carry the noindex line in their own head; removals filed for althea, avail,
+  avalanche, eigen-layer, eigen-layer-steth, gitopia, humans-ai, ika, supra, juno, mellow, namada (`docs/seo.md`, "A
+  guide is public only when it is Live"). **Next pass:** the 12 read "Temporarily removed" in Removals, and none of
+  the 16 is in Pages → Indexed. **When one goes Live:** `scripts/guide_index.py`, its head back to the canonical line,
+  cancel its removal, then request indexing.
 - **/guides/cosmos-hub: indexing requested on 2026-10-28**, the day it went Live. Check it is on Google on the
   next pass.
 - **Not on Google on 2026-10-28, to request from 2026-10-29:** /guides/sommelier (Live), /blog/monad-l1-scaling,

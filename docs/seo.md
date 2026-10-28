@@ -193,6 +193,32 @@ Search Console tab was in front). The Pages report's indexed list lags by days, 
 Removals: NEW REQUEST, the URL into the New Request box's own text input (the side drawer is a `role="dialog"` too),
 NEXT, SUBMIT REQUEST; the list's "1–10 of N" is the count to watch, not the rows on the page.
 
+## A guide is public only when it is Live (2026-10-28)
+
+The user, 2026-10-28: request only the guides that are Live, "not the soon guides"; then, on the guides Google already
+held, "yes do it … and remove it when they are live". **A guide page is noindex while its row in the Guides Database is
+not Status Live** (Soon or Concluded): its own Super head is its canonical line and, under it,
+`<meta name="robots" content="noindex">` — the page head, never the site-wide one. Super writes its own
+`index, follow` too; Google takes the stricter of the two (the same as /governance/votes). The page stays on the site,
+in the sitemap and in the /guides picker; only search leaves it out. llms.txt keeps it, as it keeps /governance/votes.
+
+**`python3 scripts/guide_index.py`** reads every row's Status and every guide page's live HTML and prints the guides
+out of step, with the whole head to write (`--all` lists every guide). Run it whenever a Status changes, after
+converting a guide, and in the Search Console routine. When a guide goes **Live**:
+1. write its head back to the canonical line alone (MCP `set_code` with its page id, from `list_pages`; check the hash),
+   and refresh the page (`sync_page`);
+2. **cancel its removal** in Search Console if it has one (Removals → the URL's ⋮ → Cancel request): a temporary removal
+   hides the URL for about six months whatever the page says;
+3. URL inspection → REQUEST INDEXING (or into `docs/todo.md` past the day's quota).
+When a guide stops being Live, the other way: the noindex line, a refresh, and a removal if Google holds it.
+
+**Done 2026-10-28:** the 16 guides not Live got the line — Soon althea, avail, avalanche, eigen-layer,
+eigen-layer-steth, gitopia, humans-ai, ika, supra; Concluded juno, mellow, namada, omniflix, quicksilver, stargaze, ux.
+Their heads before were the canonical line alone. The 12 Google held (checked by URL inspection that day) had a
+temporary removal filed: althea, avail, avalanche, eigen-layer, eigen-layer-steth, gitopia, humans-ai, ika, supra,
+juno, mellow, namada. Omniflix, quicksilver, stargaze and ux were not on Google, so the line alone keeps them out.
+`guide_index.py` then read 0 of 34 out of step.
+
 ## llms.txt — the site for language models (2026-10-25)
 
 The user: "add a very comprehehnsive and complete llms file". The site had none (both addresses 404), and Lighthouse's

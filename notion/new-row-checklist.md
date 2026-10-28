@@ -48,7 +48,8 @@ the steps of the SEO audit of 2026-09-26/28, for Google and for AI search. Keep 
 - [ ] **Structured data** builds: `script#enc-ld-post|chain|guide` in the head once the page has built
       (post.js, chain.js, guide.js); the homepage's Organization and WebSite are in `head/home.html`.
 - [ ] **Not ready, not public**: a draft has no path in Super or is not Live; noindex only in that page's
-      own head, **never** in the site-wide head.
+      own head, **never** in the site-wide head. A guide: noindex while its Status is not Live, and
+      `scripts/guide_index.py` says which are out of step (`docs/seo.md`, "A guide is public only when it is Live").
 - [ ] **A renamed or moved page** 308s from its old path (a `permRedirect` page in Super), and any typed
       link to the old path in Notion is updated. A removed page with a clear successor redirects to it;
       one without simply goes (404).
@@ -321,6 +322,11 @@ step; the team names the steps, the words are mine.
       step's control, otherwise an optional retake to report (IOTA's explorer step, 2026-10-13).
 - [ ] **A guide that was Soon** goes **Live** once its steps are in: the /guides view lists only Live, and the picker's
       counter ("28 chains · 13 guides" on 2026-10-14) counts the live guides by itself — nothing typed to change.
+- [ ] **Take its noindex off** (since 2026-10-28 a guide that is not Live is noindex): `python3 scripts/guide_index.py`
+      prints it with the head to write — the canonical line alone, through MCP `set_code`, then `sync_page`. **Cancel
+      its removal** in Search Console (Removals → ⋮ → Cancel request) if it has one, before requesting indexing; a
+      removal hides it for six months whatever the head says (`docs/seo.md`, "A guide is public only when it is
+      Live").
 - [ ] **Read it back**: every step has a Surface and a Link (`guide_steps.py` again shows them).
 - [ ] **Refresh** the guide and /guides in Super. If the Lede or Step changed, the card shows it: run the content job
       (`gh workflow run content.yml -R encapsulate-xyz/site-data`, its state PR merges itself), check the card, then

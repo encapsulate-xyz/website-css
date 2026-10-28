@@ -146,7 +146,10 @@ User rules that stand on every task:
   - **a new or moved page**: URL inspection → if it is not on Google, REQUEST INDEXING (about ten a day; the rest go
     in `docs/todo.md`, "TODO — Search Console", and are requested on the next days). **A guide only when its row in
     the Guides Database is Status Live** — never a Soon or a Concluded one (the user, 2026-10-28: "only request the
-    guides which are live and not the soon guides"); read the Status at the time, it changes;
+    guides which are live and not the soon guides"); read the Status at the time, it changes. **A guide that is not
+    Live is noindex** in its own head, and when it goes Live the noindex comes off and its removal is cancelled before
+    indexing is requested (the user, 2026-10-28: "remove it when they are live"): `python3 scripts/guide_index.py`
+    prints the guides out of step and their heads (`docs/seo.md`, "A guide is public only when it is Live");
   - **a removed or hidden page** still on Google: Removals → New request, or leave it to the 404/redirect and say so;
   - **the sitemap** reads Success (Sitemaps), and nothing in Pages → Indexed is a page we do not publish — a bare
     `/<32 hex>` id is one (Super serves every Notion page under Home at its id; hide old ones in Super, see the doc).
@@ -215,6 +218,7 @@ User rules that stand on every task:
 | `scripts/llms.py`, `scripts/llms_extract.js`, `llms/` | llms.txt and its five full-text files (llmstxt.org): every sitemap page read as Markdown in headless Chrome, laid out as an index and packed into parts under Super's 250 kB; uploaded to Super → Files, served at encapsulate.xyz/llms.txt. Rebuild with every page change (`docs/seo.md`, "llms.txt", 2026-10-25) | Super → Files |
 | `img/og/` | the one card that cannot live in Notion: the Mina hard-fork post, which is not a Blogs row (set as its image override in Super) | Super's page settings |
 | `scripts/guide_steps.py` | the first step of converting a guide: finds a guide by part of its Name, prints its row and every step (Name, Surface, Link, Body, the capture's file name — which is the step's Link), downloads the captures and writes `backups/<guide>-guide-<date>.json`. The whole run is "Converting a guide — the run" in `notion/new-row-checklist.md` (2026-10-08) | — |
+| `scripts/guide_index.py` | which guide pages may be indexed: a Live row's page has no noindex, any other's has it in its own head; prints those out of step and the head to write (2026-10-28) | — |
 | `scripts/guide_check.js` | the live check of a converted guide, for `livecheck.mjs`: built, title, steps in order, how many carry their surface as a link and which do not (2026-10-08) | — |
 | `scripts/guide_ring.js` | the ring drawn on a guide capture's control (`notion/guide-screenshots.md`, "Annotating"): hugs the control, its own corners; `pbcopy < scripts/guide_ring.js`, then paste it in DevTools with the control picked (2026-10-16) | — |
 | `scripts/guide_press.mjs` | the steps file for `livecheck.mjs --steps` that presses, for real, every Watch out (opens on the first press, text inside its box, clear of the capture) and every address (copies exactly it, clipboard stubbed) on a guide, ending "ok" (2026-10-14) | — |
