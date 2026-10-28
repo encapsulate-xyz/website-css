@@ -144,7 +144,9 @@ User rules that stand on every task:
   what a page serves, open Search Console myself (the user's account, signed in in Chrome; `docs/seo.md`, "What Google
   holds, and the Search Console routine") and:
   - **a new or moved page**: URL inspection → if it is not on Google, REQUEST INDEXING (about ten a day; the rest go
-    in `docs/todo.md`, "TODO — Search Console", and are requested on the next days);
+    in `docs/todo.md`, "TODO — Search Console", and are requested on the next days). **A guide only when its row in
+    the Guides Database is Status Live** — never a Soon or a Concluded one (the user, 2026-10-28: "only request the
+    guides which are live and not the soon guides"); read the Status at the time, it changes;
   - **a removed or hidden page** still on Google: Removals → New request, or leave it to the 404/redirect and say so;
   - **the sitemap** reads Success (Sitemaps), and nothing in Pages → Indexed is a page we do not publish — a bare
     `/<32 hex>` id is one (Super serves every Notion page under Home at its id; hide old ones in Super, see the doc).

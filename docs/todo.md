@@ -211,10 +211,18 @@ holds, and the Search Console routine").
   /guides/lumera, /guides/gitopia, /guides/gravity-bridge, /guides/ixo. All but Mina and Gravity Bridge read "Discovered –
   currently not indexed": Google knew them and had not crawled them. All twelve were on Google on 2026-10-28.
 - **Requested 2026-10-28:** /guides/mellow, then "Quota Exceeded" at the second: the quota is counted over the last day,
-  not the calendar day, so the twelve of 2026-10-27 still held it. Inspect Mellow again from 2026-10-29.
-- **Not on Google on 2026-10-28, to request from 2026-10-29** (all inspected that day; about ten a day):
-  /guides/omniflix, /guides/quicksilver, /guides/sommelier, /guides/stargaze, /guides/ux, /blog/monad-l1-scaling,
-  /blog/is-aptos-decentralized, /blog/berachain-research, /blog/agoric-testnet-17-analysis.
+  not the calendar day, so the twelve of 2026-10-27 still held it. **Mellow is a Concluded guide** and should not have
+  been asked for; a request cannot be withdrawn.
+- **Only Live guides are requested** (the user, 2026-10-28: "only request the guides which are live and not the soon
+  guides"). The Guides Database's Status on 2026-10-28 — Live: agoric, axelar, espresso, gravity-bridge, iota, ixo,
+  lumera, mina, monad, near, passage, sommelier, starknet-braavos, starknet-ready-x, sui, terra, zilliqa. Soon: althea,
+  avail, avalanche, eigen-layer, eigen-layer-steth, gitopia, humans-ai, ika, supra (and ATOM, which has no page).
+  Concluded: juno, mellow, namada, omniflix, quicksilver, stargaze, ux. Read the Status again before a request.
+  Already on Google before this rule, from earlier requests or Google's own crawl: Soon althea, avalanche,
+  eigen-layer-steth, gitopia, humans-ai, ika, supra; Concluded juno, namada.
+- **Not on Google on 2026-10-28, to request from 2026-10-29:** /guides/sommelier (Live), /blog/monad-l1-scaling,
+  /blog/is-aptos-decentralized, /blog/berachain-research, /blog/agoric-testnet-17-analysis. Dropped from the queue as
+  Concluded: /guides/omniflix, /guides/quicksilver, /guides/stargaze, /guides/ux.
 - **Sitemaps — fixed, 2026-10-28:** `https://encapsulate.xyz/sitemap.xml?v=2` reads **Success** (last read
   2026-10-27, 114 pages discovered). The plain `/sitemap.xml` entry still shows its "Couldn't fetch" of 2026-10-25,
   never read again; the `?v=2` entry is the one Google reads. What it said before: on 2026-10-27 both entries read "Couldn't fetch", 0 discovered, no "Last read": the
