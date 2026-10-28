@@ -221,7 +221,9 @@ holds, and the Search Console routine").
   Concluded: juno, mellow, namada, omniflix, quicksilver, stargaze, ux. Read the Status again before a request.
   Already on Google before this rule, from earlier requests or Google's own crawl: Soon althea, avalanche,
   eigen-layer-steth, gitopia, humans-ai, ika, supra; Concluded juno, namada.
-- **Not on Google on 2026-10-28, to request from 2026-10-29:** /guides/cosmos-hub (new that day, Live), /guides/sommelier (Live), /blog/monad-l1-scaling,
+- **/guides/cosmos-hub: indexing requested on 2026-10-28**, the day it went Live. Check it is on Google on the
+  next pass.
+- **Not on Google on 2026-10-28, to request from 2026-10-29:** /guides/sommelier (Live), /blog/monad-l1-scaling,
   /blog/is-aptos-decentralized, /blog/berachain-research, /blog/agoric-testnet-17-analysis. Dropped from the queue as
   Concluded: /guides/omniflix, /guides/quicksilver, /guides/stargaze, /guides/ux.
 - **Sitemaps — fixed, 2026-10-28:** `https://encapsulate.xyz/sitemap.xml?v=2` reads **Success** (last read
