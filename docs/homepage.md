@@ -375,10 +375,11 @@ centred on the block; the close holds the whole split. Scrolling back reverses i
 ribbons' ends (the design's default of its six Figures settings, "Column"; Order "Ballot order", Opening "Ink block"), one
 size, tabular, right-aligned, the name on the figure's cap line and the share on its baseline. Under 760px the record runs
 across the top and each answer pours down into its column, its figure under it at 36px; a figure too close to its
-neighbour drops a row. Reduced motion steps it a beat at a time; print shows it whole. **Read aloud** (and by llms.py) it is the kicker's
-words and the six beats in order, all of them, whichever is on screen: the counter, the hint and the drawing are
-`aria-hidden` (v420; v419 hid every beat but the one on screen, so a screen reader heard the first beat and the
-drawing's loose figures, and llms-full.txt read "01 / 06 … Scroll ↓"). Colours by the line's words: Yes
+neighbour drops a row. Reduced motion steps it a beat at a time; print shows it whole. **Read aloud** it is the design's markup: the beat on screen (the
+others `aria-hidden`), and the drawing as one image labelled with the whole split, "1,913 votes: 1,243 Yes, 78 No, 478
+No with veto, 114 Abstain" (`role="img"`, its figures inside it not read). v420 replaced that with all six beats and the
+drawing hidden, on the mistaken reading that a screen reader heard the figures inside the image; it was llms.py that did,
+so the extractor was taught to read a labelled image as its label, and governance.js went back to v419 (2026-10-28). Colours by the line's words: Yes
 `#DCEEC7`, No `#F8E8B3`, No with veto `#F7DCE7`, Abstain `#D2E3F6`.
 **Its numbers** are the line `404e800a…8128…`, "1,913 votes · 1,243 Yes · 78 No · 478 No with veto · 114 Abstain", which
 **site-data's count job writes** after every governance run with the count band's figure (the homepage carries only the

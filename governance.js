@@ -1114,15 +1114,10 @@
     var label = el("span", "enc-story__label"), count = el("span", "enc-story__count");
     head.appendChild(label);
     head.appendChild(count);
-    // read aloud, the story is its six beats, all of them: the counter, the hint and the drawing (whose figures
-    // the beats already say) are for the eye
-    count.setAttribute("aria-hidden", "true");
     var beats = el("div", "enc-story__beats");
     var fig = el("div", "enc-story__box");
     var hint = el("div", "enc-story__hint"), hintText = el("span");
     hint.appendChild(hintText);
-    hint.setAttribute("aria-hidden", "true");
-    fig.setAttribute("aria-hidden", "true");
     stage.appendChild(head);
     stage.appendChild(beats);
     stage.appendChild(fig);
@@ -1393,7 +1388,10 @@
     SP.P = P;
     var i = beatAt(P, nb);
     SP.draw.draw(reveal(P, REDUCED.matches || SP.print, nb - 2));
-    SP.beatEls.forEach(function (be, j) { be.classList.toggle("is-on", j === i); });
+    SP.beatEls.forEach(function (be, j) {
+      be.classList.toggle("is-on", j === i);
+      setAttr(be, "aria-hidden", j === i ? "false" : "true");
+    });
     var pad2 = function (n) { return (n < 10 ? "0" : "") + n; };
     setText(SP.count, fillIn(SP.C["counter"], { beat: pad2(i + 1), beats: pad2(nb) }));
     SP.hint.parentNode.classList.toggle("is-gone", P >= 0.06);

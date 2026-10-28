@@ -1,10 +1,15 @@
 // The page as Markdown, for llms.txt (scripts/llms.py runs it in every sitemap page through livecheck.mjs).
 // What a reader sees, in reading order: headings, paragraphs, lists, tables, code, quotes and links — not the
 // navbar, the footer, a block the page hides (copy toggles, the galleries a script reads), a marquee's second copy
-// (aria-hidden) or a drawing. A closed toggle's answer is read: its words are on the page, one press away.
+// (aria-hidden) or a drawing. A closed toggle's answer is read: its words are on the page, one press away. A drawing
+// built of HTML and labelled as an image (role="img", aria-label) is read as its label, as a screen reader reads it,
+// not as the figures set inside it (the homepage's vote story, 2026-10-28).
 const SKIP = "script, style, noscript, svg, canvas, video, iframe, img, picture, button, input, select, textarea, " +
   ".super-navbar, .super-footer, .enc-nav, .enc-foot, [aria-hidden='true'], [data-enc-source], template, " +
-  ".enc-ch__crumb, .enc-ch__week, .enc-ch__days";  // a chain page's trail over every section, and its calendar's cells
+  ".enc-ch__crumb, .enc-ch__week, .enc-ch__days, " +  // a chain page's trail over every section, and its calendar's cells
+  ".enc-story__count, .enc-story__hint";  // the vote story's beat counter and its "Scroll" hint
+const LABELLED = "[role='img'][aria-label]";
+const label = (el) => clean(el.getAttribute("aria-label")).trim();
 const root = document.querySelector(".super-content") || document.querySelector("main") || document.body;
 const abs = (h) => { try { const u = new URL(h, location.href); return /^(https?|mailto):/.test(u.protocol) ? u.href : null; } catch (e) { return null; } };
 const clean = (t) => t.replace(/[   ]/g, " ").replace(/[ \t\r\n]+/g, " ");
@@ -25,6 +30,7 @@ const atomic = (el) => /^inline-(block|flex|grid|table)$/.test(getComputedStyle(
 function inline(node) {
   if (node.nodeType === 3) return clean(node.textContent);
   if (node.nodeType !== 1 || node.matches(SKIP) || hidden(node)) return "";
+  if (node.matches(LABELLED)) return " " + label(node) + " ";
   const inner = [...node.childNodes].map(inline).join("");
   if (node.matches("a[href]")) {
     const t = inner.trim(), u = abs(node.getAttribute("href"));
@@ -57,6 +63,7 @@ function list(l, depth) {
 }
 function walk(el) {
   if (el.nodeType !== 1 || el.matches(SKIP) || hidden(el)) return;
+  if (el.matches(LABELLED)) { const t = tidy(label(el)); if (t) push(t); return; }
   const tag = el.tagName.toLowerCase();
   const h = /^h([1-6])$/.exec(tag) || (el.getAttribute("role") === "heading" ? [0, el.getAttribute("aria-level") || 3] : null);
   if (h) { const t = tidy(inline(el)); if (t) push("#".repeat(+h[1]) + " " + t); return; }  // llms.py moves the levels under each page's own heading

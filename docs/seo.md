@@ -216,7 +216,9 @@ table rows.
 content is read** (the homepage's "What you get" lists, the FAQs). Not read: the navbar and footer, any hidden block
 (copy toggles hidden by id, `[data-enc-source]` galleries), `aria-hidden` copies (marquees), drawings, controls, and
 on a chain page the trail over each section and the calendar's day cells (`.enc-ch__crumb`, `.enc-ch__week`,
-`.enc-ch__days`). A block repeating one of the four before it is dropped. Left out of the index: /team (a forward to
+`.enc-ch__days`), and the homepage vote story's counter and hint. **A drawing built of HTML and labelled as an image**
+(`role="img"` with `aria-label`) is read as its label, as a screen reader reads it, not as the figures set inside it
+(2026-10-28: the vote story's figures had come out as "65.0% 4.1% … 114"); an SVG stays unread. A block repeating one of the four before it is dropped. Left out of the index: /team (a forward to
 /#team) and /page-not-found. **/governance/votes is in**, though it is noindex for search: llms.txt is not a search
 index, and the record is the one page with every vote and its reason. Checked on the first build: all 112 sitemap pages
 are in the index, no copy toggle's keys leaked in, and none of the Terra per-validator names appear.
