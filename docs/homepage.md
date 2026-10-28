@@ -368,18 +368,28 @@ ribbons with an 11px floor (`git show v418:governance.js`, 3b). **The story** is
 beat, (beats + 0.4) screens in all (640vh with four outcomes), between the lede and the six rows, full width
 (`[data-enc-story]`, governance.js 3b, home.css). Its head row is the kicker's words, "The record, by outcome", and the
 counter ("01 / 06"); then the beat's headline (Outfit 600, 34–64px) and lead, crossfading in one grid cell; then the
-drawing, scaled to the room left; "Scroll ↓" until the reader moves. It opens on the record as one ink block (#2A2C28)
-beside its total; each beat one answer takes its pastel from the block's left edge and pours out as its ribbon, in
-ballot order, then the record parts at that answer's seam and the ribbons already told lift by half a gap, staying
-centred on the block; the close holds the whole split. Scrolling back reverses it. The figures stand in one column at the
-ribbons' ends (the design's default of its six Figures settings, "Column"; Order "Ballot order", Opening "Ink block"), one
-size, tabular, right-aligned, the name on the figure's cap line and the share on its baseline. Under 760px the record runs
+drawing, scaled to the room left; "Scroll ↓" until the reader moves. **The design's three settings, as the user chose
+them on 2026-10-28** (Figures "Sized to ribbon", Order "Ballot order", Opening "Pastel record"; v419 had the defaults,
+Column and Ink block): it opens on the record in its pastels, stacked by answer beside its total, every seam on the
+measure showing; each beat one answer pours out of it as its ribbon, in ballot order, then the record parts at that
+answer's seam and the ribbons already told lift by half a gap, staying centred on the record; the close holds the whole
+split. Scrolling back reverses it. Each figure is sized to its ribbon, two-thirds of it and never under 14px, in
+proportional digits, every first digit's ink on one left edge where the ribbons straighten (`headEm`, the digit's left
+bearing measured on a canvas) and every name at the ribbons' right end; the drawing grows thinner only when the widest
+figure and its name would not fit beside the curve. The design's own cost: on a short screen No's 78, at the 14px floor,
+stands slightly proud of its ribbon. The opening's lead follows the setting, "Every vote in the record, stacked by
+answer." (the toggle's `open lead`). Under 760px the record runs
 across the top and each answer pours down into its column, its figure under it at 36px; a figure too close to its
 neighbour drops a row. Reduced motion steps it a beat at a time; print shows it whole. **Read aloud** it is the design's markup: the beat on screen (the
 others `aria-hidden`), and the drawing as one image labelled with the whole split, "1,913 votes: 1,243 Yes, 78 No, 478
 No with veto, 114 Abstain" (`role="img"`, its figures inside it not read). v420 replaced that with all six beats and the
 drawing hidden, on the mistaken reading that a screen reader heard the figures inside the image; it was llms.py that did,
-so the extractor was taught to read a labelled image as its label, and governance.js went back to v419 (2026-10-28). Colours by the line's words: Yes
+so the extractor was taught to read a labelled image as its label, and governance.js went back to v419 (2026-10-28).
+**Nothing raw before the build** (2026-10-28, the user: "i can see raw notion for a section when i refresh this page
+https://encapsulate.xyz/#governance"): a refresh puts the page back where it was scrolled on the first paint, before any
+script runs, and for ~130ms the section showed the kicker, the bare line and the six votes as Notion's table. home.css
+hides the three until governance.js has drawn them (`[data-enc-story-src]`, `[data-enc-rows]`), visibility and a 3s
+reveal. `flashcheck.mjs reload` records it. Colours by the line's words: Yes
 `#DCEEC7`, No `#F8E8B3`, No with veto `#F7DCE7`, Abstain `#D2E3F6`.
 **Its numbers** are the line `404e800a…8128…`, "1,913 votes · 1,243 Yes · 78 No · 478 No with veto · 114 Abstain", which
 **site-data's count job writes** after every governance run with the count band's figure (the homepage carries only the

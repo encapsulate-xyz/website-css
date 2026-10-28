@@ -4,9 +4,13 @@
 //
 //   node --experimental-websocket scripts/flashcheck.mjs cold <url> <out-dir> [tags]
 //   node --experimental-websocket scripts/flashcheck.mjs nav <from-url> <to-path> <out-dir> [tags]
+//   node --experimental-websocket scripts/flashcheck.mjs reload <url> <out-dir> [tags]
 //
 // `cold` loads <url> fresh; `nav` loads <from-url>, lets it settle, then goes to <to-path> through
-// Super's own router (`next.router.push`), as a click on one of its links does. Chrome's screencast
+// Super's own router (`next.router.push`), as a click on one of its links does; `reload` loads <url>, lets it settle
+// (its #name landed) and reloads it, as a reader's refresh does: Chrome puts the page back at the place it was
+// scrolled to on the first paint, before any script runs (2026-10-28: /#governance showed the story's raw blocks and
+// the rows' raw table on a refresh, which a cold load, painted from the top, never showed). Chrome's screencast
 // sends a frame each time the page paints, so a flash cannot fall between two screenshots. Each frame
 // is written to <out-dir> as <ms since the start>.jpg, with frames.json beside it; then
 // `scripts/flashsheet.py <out-dir>` lays the distinct frames out on one sheet. [tags] works as in
@@ -21,8 +25,8 @@ import { fileURLToPath } from "node:url";
 const [mode, ...rest] = process.argv.slice(2);
 const nav = mode === "nav";
 const [from, to, out, tag] = nav ? rest : [null, rest[0], rest[1], rest[2]];
-if (!["cold", "nav"].includes(mode) || !to || !out) {
-  console.error("usage: flashcheck.mjs cold <url> <out-dir> [tags] | nav <from-url> <to-path> <out-dir> [tags]");
+if (!["cold", "nav", "reload"].includes(mode) || !to || !out) {
+  console.error("usage: flashcheck.mjs cold|reload <url> <out-dir> [tags] | nav <from-url> <to-path> <out-dir> [tags]");
   process.exit(2);
 }
 const TAGS = (tag || "").split(",").filter(Boolean);
@@ -86,6 +90,12 @@ if (nav) {
   // the mark survives an in-app navigation and is gone after a full reload
   const ok = await evaluate(`(() => { const r = window.next && window.next.router; if (!r || !r.push) return false; window.__flashMark = 1; r.push(${JSON.stringify(to)}); return true; })()`);
   if (!ok) console.error("no router on", from);
+} else if (mode === "reload") {
+  await send("Page.navigate", { url: bust(to) });
+  await sleep(+(process.env.WAIT || 8000));
+  console.log("reloading at scrollY", await evaluate("scrollY"));
+  t0 = Date.now(); recording = true;
+  await send("Page.reload", {});
 } else {
   t0 = Date.now(); recording = true;
   await send("Page.navigate", { url: bust(to) });

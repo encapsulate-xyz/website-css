@@ -144,6 +144,12 @@ load's first frames.
 | Chain pages, a first visit (nothing in localStorage — a reader from a search) | 12 of 28 chains — Supra onward — drawn in one tint and then another (Chain4Energy peach → blue, Passage yellow → green) ~400ms in | the tint is the chain's place in the list, as on /networks; before the list was kept chain.js guessed it from Order, which has a gap (no row holds 16). Until the list is known the field has no tint, and it fades in (280ms, none under reduced motion) when the list comes; a return visit has the list and draws at once (v405) |
 | Every page with a cover field | the field gone for 20–700ms and the label pairs on one line after Super drew the page again | covers.js redoes the cover in the observer's own microtask. The next frame was not soon enough: Super draws the page again inside a frame callback, so that frame painted bare, and a long task held the next one ~200ms (/governance) |
 
+**Found after (2026-10-28): a refresh.** The audit loaded each page fresh from its top and arriving in-app, never
+reloaded where a reader was: Chrome puts a refreshed page back at its scroll position on the first paint, before any
+script runs. On the homepage at /#governance that showed the vote story's kicker and line and the six votes as Notion's
+table for ~130ms; home.css now hides them until governance.js has built. `flashcheck.mjs reload <url>` loads the page,
+lets its #name land and reloads it.
+
 **Left as they are:** /team's landing scrolls through the homepage to Who we are (a landing, not raw); the contact
 heading's line moves as Outfit loads; an unconverted guide is Super's tiles until it is converted. **Checked
 after:** every page builds, the wait mark always clears, an idle page makes 4–7 mutations in 3s, as live does.

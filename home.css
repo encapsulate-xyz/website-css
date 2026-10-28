@@ -2275,12 +2275,26 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   display: none !important;
 }
 
+/* ── no raw Notion before governance.js has built (2026-10-28) ── the user: "i can see raw notion for a section when
+   i refresh this page https://encapsulate.xyz/#governance". A refresh puts the page back where it was scrolled on the
+   first paint, before any script runs, and for ~130ms the section showed the kicker, the bare "1,913 votes · 1,243
+   Yes · …" line and the six votes as Notion's table. The three are hidden from the first frame until governance.js
+   has drawn them (the story marks the kicker and the line, the rows the table) and shown again after 3s if the build
+   never comes, so a failed script, or a line the story cannot read, still leaves them on the page. */
+#block-404e800a5138816ab84adfcc33e9bb44:not([data-enc-story-src]),
+#block-404e800a51388128ba49e43d1ce92374:not([data-enc-story-src]),
+#block-4529386b39be4a9aa44d2dbac56537bd:not([data-enc-rows]) {
+  visibility: hidden;
+  animation: enc-hm-reveal 0s linear 3s forwards;
+}
+@keyframes enc-hm-reveal { to { visibility: visible; } }
+
 /* The vote split, told as a story (design Vote Split Story, "G3d, told as a story", 2026-10-27), in place of G3
    "Pastel ribbons" (2026-10-25): a pinned stage the reader scrolls through, one beat a screen, drawn by
    governance.js (3b) from the line under the kicker, "1,913 votes · 1,243 Yes · …", which site-data's count job
    writes. Its words are the "Vote split copy" toggle under the line (hidden here, by its id). governance.js sets
-   every size the drawing decides; these are the rest. Until it is drawn, and if the line cannot be read, the kicker
-   and the line show as Notion wrote them. */
+   every size the drawing decides; these are the rest. Until it is drawn the kicker and the line are hidden (3s at
+   most, above); if the line cannot be read they show as Notion wrote them. */
 #block-404e800a5138816ab84adfcc33e9bb44 {
   grid-area: skick !important;
   margin: 26px 0 -10px !important;   /* 56 under the lede, 20 over the line (the grid's gap is 30) */
@@ -2402,7 +2416,6 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 .enc-story__tin > *,
 .enc-story__tlab > * { display: block; }
 .enc-story__bar { position: absolute; background: #000; }
-.enc-story__seam { transition: opacity .2s ease; }
 .enc-story__art { position: relative; flex: none; }
 .enc-story__art > svg { display: block; }
 .enc-story__wrap { position: absolute; left: 0; top: 0; }
@@ -2418,6 +2431,8 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   white-space: nowrap;
 }
 .enc-story__fig { position: absolute; }
+/* sized to its ribbon: proportional digits, so the first digits' ink can share one left edge */
+.enc-story__fig.is-sized { font-variant-numeric: proportional-nums; }
 .enc-story__mono {
   display: block;
   font-family: "JetBrains Mono", monospace;
@@ -2427,15 +2442,9 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   color: #000;
   white-space: nowrap;
 }
-/* the name on the figure's cap line, the share on its baseline; on a thin ribbon, one line */
-.enc-story__note {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  line-height: 8px;
-}
-.enc-story__note.is-one { flex-direction: row; align-items: center; }
+/* each name at the ribbons' right end, level with its figure; the tracking after its last letter taken back */
+.enc-story__name { position: absolute; right: 24px; display: flex; align-items: center; }
+.enc-story__name > .enc-story__mono { margin-right: -0.12em; }
 /* under 760px: each figure under its column at 36px, its name under it */
 .enc-story__under {
   position: absolute;
@@ -2452,8 +2461,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 /* reduced motion: a beat at a time, nothing moving */
 @media (prefers-reduced-motion: reduce) {
   .enc-story__beat,
-  .enc-story__hint,
-  .enc-story__seam { transition: none; }
+  .enc-story__hint { transition: none; }
 }
 /* print: the whole split, on one page */
 @media print {

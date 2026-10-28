@@ -921,12 +921,12 @@
   /* ── 3b · the homepage's vote split, told as a story (design Vote Split Story, "G3d, told as a story", 2026-10-27) ──
      In the homepage's governance section, between the lede and the six rows, in place of G3 "Pastel ribbons"
      (2026-10-25): a pinned stage, one screen of scroll a beat and (beats + 0.4) screens in all. It opens on the record
-     as one ink block beside its total; each beat one answer takes its pastel from the block's left edge and pours out
-     as its ribbon, in ballot order from the top, so what is left of the block is always one piece; then the record
-     parts at that answer's seam, the ribbons already told lifting by half a gap so the set stays centred on the block.
-     The close holds the whole split, and scrolling back reverses every beat. The figures stand in one column at the
-     ribbons' ends (the design's default, "Column"): one size, tabular and right-aligned, each with its name on the
-     figure's cap line and its share on its baseline. Under 760px the record runs across the top and each answer pours
+     in its pastels, stacked by answer beside its total (the design's Opening "Pastel record", the user's choice on
+     2026-10-28); each beat one answer pours out of it as its ribbon, in ballot order from the top; then the record
+     parts at that answer's seam, the ribbons already told lifting by half a gap so the set stays centred on the record.
+     The close holds the whole split, and scrolling back reverses every beat. Each figure is sized to its ribbon (Figures
+     "Sized to ribbon"): two-thirds of it and never under 14px, in proportional digits, every first digit's ink on one
+     left edge where the ribbons straighten and every name at the ribbons' right end. Under 760px the record runs across the top and each answer pours
      down into its column, its figure under it at 36px; a figure too close to its neighbour drops a row.
      Its numbers are one line in Notion, "1,913 votes · 1,243 Yes · 78 No · 478 No with veto · 114 Abstain", which
      site-data's count job writes after every governance run: the record's rows plus the 729 votes from before it,
@@ -942,11 +942,10 @@
   var LINE = "block-404e800a51388128ba49e43d1ce92374";   // the line, written by site-data's count job
   var KICK = "block-404e800a5138816ab84adfcc33e9bb44";   // "The record, by outcome"
   var FILLS = { "yes": "#DCEEC7", "no": "#F8E8B3", "no with veto": "#F7DCE7", "abstain": "#D2E3F6" };
-  var INK = "#000", DARK = "#2A2C28";
   /* the fallback if the "Vote split copy" toggle goes missing */
   var STORY = {
     "open": "{total} {word}.",
-    "open lead": "Every vote in the record, in one block.",
+    "open lead": "Every vote in the record, stacked by answer.",
     "answer": "{answer}, {count} times.",
     "answer one": "{answer}, {count} time.",
     "answer lead": "{share words}: {share} of the record.",
@@ -956,8 +955,8 @@
     "counter": "{beat} / {beats}",
     "scroll": "Scroll ↓"
   };
-  // seams, gaps between parted ribbons, figure to word, ribbon end to figure; under 760px its own
-  var ST = { s: 2, G: 40, gap: 16, gapE: 24 };
+  // seams, gaps between parted ribbons, figure to word, figure to ribbon, the smallest figure; under 760px its own
+  var ST = { s: 2, G: 40, gap: 16, ratio: 0.66, floor: 14 };
   var PH = { G: 24, s: 2, fig: 36, top: 73 };
   var INK_FB = { top: 0.17, bottom: 0.87 };   // Outfit 600's digits, as fractions of the size, until measured
   var SVGNS = "http://www.w3.org/2000/svg";
@@ -1047,21 +1046,6 @@
       " L" + f2(C) + " " + f2(yE) + " L" + f2(D) + " " + f2(yE) + " L" + f2(D) + " " + f2(y3) +
       " C" + f2(D) + " " + f2(yc) + " " + f2(B) + " " + f2(yc) + " " + f2(B) + " " + f2(y1) + " L" + f2(B) + " 0 Z";
   }
-  // the ink still in the record: one shape per run of untold bands, seams included, so no line shows inside the block
-  function inkD(bs, t, e, swap) {
-    var pt = function (u, v) { return swap ? f2(v) + " " + f2(u) : f2(u) + " " + f2(v); }, d = "", i = 0;
-    while (i < bs.length) {
-      if (t[i] >= e) { i++; continue; }
-      var j = i;
-      while (j + 1 < bs.length && t[j + 1] < e) j++;
-      var p = [pt(e, bs[i].a), pt(e, bs[j].b), pt(t[j], bs[j].b), pt(t[j], bs[j].a)];
-      for (var k = j - 1; k >= i; k--) { var s = Math.max(t[k], t[k + 1]); p.push(pt(s, bs[k + 1].a), pt(s, bs[k].b), pt(t[k], bs[k].b), pt(t[k], bs[k].a)); }
-      d += "M" + p.join(" L") + " Z ";
-      i = j + 1;
-    }
-    return d;
-  }
-
   /* A beat a screen: the caption changes as its answer starts to leave; the wipe, then the parting. The record
      parts at its seams, one a beat: seam j, between bands j and j+1, opens on the beat of the first of the two told;
      a band's far end moves by the open seams above it less half of all open, in gaps, so no ribbon ever runs into the
@@ -1093,6 +1077,21 @@
     return w > 0 ? w : 0.6 * fs * t.length;
   }
   function fontReady() { return !(document.fonts && document.fonts.check) || document.fonts.check("600 200px Outfit"); }
+  // how far the first digit's ink starts inside its box, in em, as drawn in proportional digits (canvas draws the same
+  // glyph), so figures of every size can start on one edge
+  var HEADEM = {};
+  function headEm(t) {
+    var ch = t.charAt(0);
+    if (HEADEM[ch] != null) return HEADEM[ch];
+    var v = 0;
+    try {
+      var x = document.createElement("canvas").getContext("2d");
+      x.font = "600 200px Outfit";
+      v = -x.measureText(ch).actualBoundingBoxLeft / 200;
+    } catch (e) { v = 0; }
+    if (fontReady()) HEADEM[ch] = v;
+    return v;
+  }
 
   function svgEl(tag, attrs) {
     var e = document.createElementNS(SVGNS, tag);
@@ -1196,34 +1195,40 @@
     frame();
   }
 
-  // full width: the total at the left margin, the ribbons to the right margin, as thick as the stage allows; the
-  // figures in one column at the ribbons' ends, right-aligned on the advance so the digits line up by place
+  // full width: the total at the left margin, the ribbons to the right margin, as thick as the stage allows; each
+  // figure sized to its ribbon, two-thirds of it and never under 14px, in proportional digits, every first digit's ink
+  // on one left edge where the ribbons straighten and every name at the ribbons' right end
   function wideDraw(L, BW, BH, ink) {
     var m = L.bands.length, cap = ink.bottom - ink.top, G = ST.G;
-    var noteW = Math.max.apply(null, L.bands.map(function (b) { return Math.max(b.word.length, shareOf(b.n, L.sum).length) * 7.92; }));
-    var fcOf = function (T, bs) {
-      var near = Infinity;
-      for (var k = 1; k < bs.length; k++) near = Math.min(near, (bs[k - 1].b - bs[k - 1].a + bs[k].b - bs[k].a) / 2 + G);
-      return Math.max(36, Math.min(96, 0.22 * T, (near - 14) / cap));
+    var wordW = Math.max.apply(null, L.bands.map(function (b) { return b.word.length * 7.92; }));
+    var fsOf = function (th) { return Math.max(ST.ratio * th / cap, ST.floor); };
+    var tfsOf = function (T) { return Math.round(Math.min(72, Math.max(48, T * 0.187))); };
+    // how far a band's figure reaches past the band: the first and last bands' reach is kept inside the drawing
+    var reach = function (b) { var th = b.b - b.a; return Math.max(0, (fsOf(th) * cap - th) / 2); };
+    var padsOf = function (T) { var bs = lay(L, T, G, ST.s, 0).bands; return [Math.ceil(reach(bs[0])), Math.ceil(reach(bs[m - 1]))]; };
+    // the widest figure as it is set, with its size and its digits
+    var widest = function (bs) {
+      return bs.reduce(function (a, b) { var f = fsOf(b.b - b.a), t = fmt(b.o.n), w = figW(t, f); return w > a.w ? { w: w, f: f, t: t } : a; }, { w: 0, f: 0, t: "0" });
     };
-    // how far a band's figure, or its note, reaches past the band: the first and last bands' reach is kept inside
-    var reach = function (b, fc) { var th = b.b - b.a, ih = fc * cap, ext = ih < 26 ? Math.max(ih, 14) : ih; return Math.max(0, (ext - th) / 2); };
-    var padsOf = function (T) { var bs = lay(L, T, G, ST.s, 0).bands, fc = fcOf(T, bs); return [Math.ceil(reach(bs[0], fc)), Math.ceil(reach(bs[m - 1], fc))]; };
     var T = Math.max(160, Math.min(BH - (m - 1) * G, 0.3 * (BW - 94)));
     for (var it = 0; it < 4; it++) {
       var p0 = padsOf(T), T2 = Math.max(160, Math.min(BH - (m - 1) * G - p0[0] - p0[1], 0.3 * (BW - 94)));
       if (Math.abs(T2 - T) < 0.5) break;
       T = T2;
     }
-    var pd = padsOf(T), tfs = Math.round(Math.min(72, Math.max(48, T * 0.187))), TW = tfs + 28, W = BW - TW - 10;
-    var Lt = lay(L, T, G, ST.s, pd[0]), H = Lt.H + pd[1], bs = Lt.bands, fc = fcOf(T, bs);
-    var fwc = Math.max.apply(null, bs.map(function (b) { return figW(fmt(b.o.n), fc); }));
-    var xE = Math.round(W - (ST.gapE + fwc + ST.gap + noteW));
-    var x3 = Math.round(Math.min(0.506 * W, xE - 0.2 * W)), x1 = Math.round(Math.min(0.244 * W, x3 - 0.19 * W));
-    var AX = xE + ST.gapE + fwc, ih = fc * cap;
+    // thinner only if the widest figure and its word would not fit beside the curve
+    for (it = 0; it < 3; it++) {
+      var lim = 0.64 * (BW - tfsOf(T) - 38) - 80 - wordW, fw = widest(lay(L, T, G, ST.s, 0).bands).w;
+      if (fw <= lim || T <= 160) break;
+      T = Math.max(160, T * lim / fw);
+    }
+    var pd = padsOf(T), tfs = tfsOf(T), TW = tfs + 28, W = BW - TW - 10;
+    var Lt = lay(L, T, G, ST.s, pd[0]), H = Lt.H + pd[1], bs = Lt.bands, top = widest(bs), xE = W;
+    var x3 = Math.round(Math.max(0.3 * W, Math.min(0.506 * W, W - (24 + top.w + ST.gap + wordW + 40))));
+    var x1 = Math.round(Math.min(0.244 * W, x3 - 0.19 * W));
 
     var node = el("div", "enc-story__draw is-wide");
-    // the total, upright at the block's left, centred on the record; its measure exactly as long as the record is thick
+    // the total, upright at the record's left, centred on it; its measure exactly as long as the record is thick
     var tot = el("div", "enc-story__total");
     tot.setAttribute("aria-hidden", "true");
     setStyle(tot, { width: TW + "px", height: H + "px" });
@@ -1237,10 +1242,9 @@
     tot.appendChild(abs("enc-story__bar", { right: "6px", top: f2(Lt.top) + "px", width: "1px", height: f2(Lt.len) + "px" }));
     tot.appendChild(abs("enc-story__bar", { right: "2px", top: f2(Lt.top) + "px", width: "9px", height: "1px" }));
     tot.appendChild(abs("enc-story__bar", { right: "2px", top: f2(Lt.top + Lt.len - 1) + "px", width: "9px", height: "1px" }));
-    var seams = bs.slice(1).map(function (b) {
-      var t = abs("enc-story__bar enc-story__seam", { right: "4px", top: seamAt(b, ST.s) + "px", width: "5px", height: "1px" });
-      tot.appendChild(t);
-      return t;
+    // the record is whole from the first beat, so its seams all show
+    bs.slice(1).forEach(function (b) {
+      tot.appendChild(abs("enc-story__bar", { right: "4px", top: seamAt(b, ST.s) + "px", width: "5px", height: "1px" }));
     });
     var box = el("div", "enc-story__art");
     box.setAttribute("role", "img");
@@ -1258,37 +1262,34 @@
       svg.appendChild(p);
       paths.push(p);
     });
-    var inkP = svgEl("path", { fill: DARK });
-    svg.appendChild(inkP);
     box.appendChild(svg);
     var labs = bs.map(function (b) {
-      var wrap = el("div", "enc-story__wrap");
+      var wrap = el("div", "enc-story__wrap"), f = fsOf(b.b - b.a), t = fmt(b.o.n);
       setStyle(wrap, { width: W + "px", height: f2(H) + "px" });
-      var fig = el("span", "enc-story__fig", fmt(b.o.n));
-      setStyle(fig, { right: f2(W - AX) + "px", fontSize: f2(fc) + "px" });
-      var note = el("div", "enc-story__note" + (ih >= 26 ? "" : " is-one"));
-      setStyle(note, { left: f2(AX + ST.gap) + "px", height: (ih >= 26 ? f2(ih) : "14") + "px" });
-      if (ih >= 26) { note.appendChild(mono(b.o.word)); note.appendChild(mono(shareOf(b.o.n, L.sum))); }
-      else note.appendChild(mono(b.o.word + " · " + shareOf(b.o.n, L.sum)));
+      var fig = el("span", "enc-story__fig is-sized", t);
+      setStyle(fig, { left: f2(x3 + 24 - headEm(t) * f) + "px", fontSize: f2(f) + "px" });
+      // the name centred on the figure's digits, its tracking after the last letter taken back so its ink ends on the edge
+      var name = el("div", "enc-story__name"), word = mono(b.o.word);
+      word.style.transform = "translateY(" + f2(f * ((ink.top + ink.bottom) / 2 - 0.5)) + "px)";
+      name.appendChild(word);
+      setStyle(name, { height: f2(f) + "px" });
       wrap.appendChild(fig);
-      wrap.appendChild(note);
+      wrap.appendChild(name);
       box.appendChild(wrap);
-      return { wrap: wrap, fig: fig, note: note };
+      return { wrap: wrap, fig: fig, name: name, f: f };
     });
     node.appendChild(tot);
     node.appendChild(box);
     return { node: node, w: BW, h: H, draw: function (R) {
-      var wx = R.map(function (r) { return r.w * W; }), tx = wx.map(function (x) { return Math.min(x, x1); });
+      var wx = R.map(function (r) { return x1 + r.w * (W - x1); });
       bs.forEach(function (b, i) {
-        var u = R[i].u * (G - ST.s), q = at(b, u), mid = (q.c + q.d) / 2;
+        var u = R[i].u * (G - ST.s), q = at(b, u), y = (q.c + q.d) / 2 - labs[i].f * (ink.top + ink.bottom) / 2;
         setAttr(paths[i], "d", hPath(b, x1, x3, xE, u));
         setAttr(rects[i], "width", f2(wx[i]));
         setStyle(labs[i].wrap, { clipPath: "inset(0px " + f2(Math.max(0, W - wx[i])) + "px 0px 0px)" });
-        setStyle(labs[i].fig, { top: f2(mid - fc * (ink.top + ink.bottom) / 2) + "px" });
-        setStyle(labs[i].note, { top: f2(ih >= 26 ? mid - ih / 2 : mid - 7) + "px" });
+        setStyle(labs[i].fig, { top: f2(y) + "px" });
+        setStyle(labs[i].name, { top: f2(y) + "px" });
       });
-      setAttr(inkP, "d", inkD(bs, tx, x1, false) || "M0 0");
-      seams.forEach(function (t, i) { setStyle(t, { opacity: tx[i] > 0 || tx[i + 1] > 0 ? "1" : "0" }); });
     } };
   }
 
@@ -1328,10 +1329,8 @@
     tot.appendChild(abs("enc-story__bar", { left: f2(Lt.top) + "px", top: ry + "px", width: f2(Lt.len) + "px", height: "1px" }));
     tot.appendChild(abs("enc-story__bar", { left: f2(Lt.top) + "px", top: (ry - 4) + "px", width: "1px", height: "9px" }));
     tot.appendChild(abs("enc-story__bar", { left: f2(Lt.top + Lt.len - 1) + "px", top: (ry - 4) + "px", width: "1px", height: "9px" }));
-    var seams = bs.slice(1).map(function (b) {
-      var t = abs("enc-story__bar enc-story__seam", { left: seamAt(b, PH.s) + "px", top: (ry - 2) + "px", width: "1px", height: "5px" });
-      tot.appendChild(t);
-      return t;
+    bs.slice(1).forEach(function (b) {
+      tot.appendChild(abs("enc-story__bar", { left: seamAt(b, PH.s) + "px", top: (ry - 2) + "px", width: "1px", height: "5px" }));
     });
     var box = el("div", "enc-story__art");
     setStyle(box, { width: Wp + "px", height: HH + "px" });
@@ -1347,8 +1346,6 @@
       svg.appendChild(p);
       paths.push(p);
     });
-    var inkP = svgEl("path", { fill: DARK });
-    svg.appendChild(inkP);
     box.appendChild(svg);
     var labs = bs.map(function (b, i) {
       var wrap = el("div", "enc-story__wrap");
@@ -1366,7 +1363,7 @@
     node.appendChild(tot);
     node.appendChild(box);
     return { node: node, w: Wp, h: PH.top + HH, draw: function (R) {
-      var wy = R.map(function (r) { return r.w * HH; }), ty = wy.map(function (y) { return Math.min(y, y1); });
+      var wy = R.map(function (r) { return y1 + r.w * (HH - y1); });
       bs.forEach(function (b, i) {
         var u = R[i].u * (PH.G - PH.s), q = at(b, u), a = labs[i].a;
         setAttr(paths[i], "d", vPath(b, y1, y3, y2, u));
@@ -1374,8 +1371,6 @@
         setStyle(labs[i].wrap, { clipPath: "inset(0px 0px " + f2(Math.max(0, HH - wy[i])) + "px 0px)" });
         setStyle(labs[i].lab, a === "l" ? { left: f2(q.c) + "px", right: "" } : a === "r" ? { left: "", right: f2(Wp - q.d) + "px" } : { left: f2((q.c + q.d) / 2) + "px", right: "" });
       });
-      setAttr(inkP, "d", inkD(bs, ty, y1, true) || "M0 0");
-      seams.forEach(function (t, i) { setStyle(t, { opacity: ty[i] > 0 || ty[i + 1] > 0 ? "1" : "0" }); });
     } };
   }
 
@@ -1418,6 +1413,7 @@
         var base = (200 - (m.fontBoundingBoxAscent + m.fontBoundingBoxDescent)) / 2 + m.fontBoundingBoxAscent;
         if (SP) {
           FIGW = {};
+          HEADEM = {};
           SP.ink = { top: (base - m.actualBoundingBoxAscent) / 200, bottom: (base + Math.max(0, m.actualBoundingBoxDescent)) / 200 };
           SP.sig = "";
           layoutStory();
