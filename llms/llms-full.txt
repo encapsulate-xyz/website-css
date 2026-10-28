@@ -20,7 +20,7 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 
 01 / 04 · Staked
 
-#### $70,721,747
+#### $71,089,770
 
 Under management by
 
@@ -38,7 +38,7 @@ Mainnet validator, in the active set.
 
 02 / 04 · Delegators
 
-#### 14,170
+#### 14,173
 
 delegators
 
@@ -188,9 +188,9 @@ Read, weigh, listen, step back: the same four questions before every vote. The s
 
 The record, by outcome
 
-#### 1,913 votes.
+##### 1,913 votes.
 
-Every vote in the record, stacked by answer.
+All of them, stacked by answer.
 
 1,913 votes: 1,243 Yes, 78 No, 478 No with veto, 114 Abstain
 
@@ -2386,7 +2386,7 @@ Stake ATOM with Encapsulate on Cosmos Hub: 10% commission, 17.7% a year after co
 
 Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.
 
-[Delegate with Keplr](https://wallet.keplr.app/chains/cosmos-hub?modal=staking&chain=cosmoshub-4&validator_address=cosmosvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwt0m3udk&step_id=2)
+[Delegate with Keplr](https://encapsulate.xyz/guides/cosmos-hub)
 
 [Our validator](https://www.mintscan.io/cosmos/validators/cosmosvaloper1p8uxq4ska2psv2k8wknljh568k5qfnwt0m3udk)
 
@@ -3534,7 +3534,7 @@ How long to withdraw
 
 Withdraw today · 28 Oct
 
-In your wallet · 29 Oct
+In your wallet · 30 Oct
 
 Live dates
 
@@ -6438,7 +6438,7 @@ Pick a chain to start.
 
 Encapsulate · Staking guides
 
-28 chains · 17 guides
+28 chains · 18 guides
 
 ## Agoric staking guide
 
@@ -6692,13 +6692,115 @@ Done · 7 of 7
 
 #### Staked with Encapsulate.
 
+Rewards start once your stake is active. Next up: Delegate ATOM with Keplr.
+
+Next: Cosmos Hub
+
+All guides
+
+Axelar’s terms and common questions
+
+Need help? Ask on Discord
+
+## Cosmos Hub staking guide
+
+URL: https://encapsulate.xyz/guides/cosmos-hub
+
+Delegate ATOM with Keplr. Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+Cosmos Hub
+
+### Delegate ATOM with Keplr
+
+Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+Seven screens
+
+Scroll ↓
+
+01
+
+of 7
+
+On wallet.keplr.app
+
+#### Press Start Staking
+
+Open Cosmos Hub in the Keplr Dashboard with your wallet connected. The page shows your ATOM, how much is staked and the rewards you can claim. Press Start Staking under Your Validators.
+
+02
+
+of 7
+
+On wallet.keplr.app
+
+#### Find Encapsulate
+
+Stake to opens on Cosmos Hub's validators, with the APR and the unstaking period at the top. Type encapsulate in the search and pick Encapsulate.
+
+03
+
+of 7
+
+On wallet.keplr.app
+
+#### Check our numbers
+
+Encapsulate's panel shows its APR, our 10% commission, its share of voting power and the 21-day unstaking period. Press Stake.
+
+04
+
+of 7
+
+On wallet.keplr.app
+
+#### Enter an amount
+
+Type how much ATOM to stake; Max fills in your whole available balance. Press Stake.
+
+05
+
+of 7
+
+In the Keplr extension
+
+#### Unlock Keplr
+
+The Keplr extension opens. Type your password and press Unlock.
+
+06
+
+of 7
+
+In the Keplr extension
+
+#### Approve in Keplr
+
+Keplr shows one message, the amount of ATOM to stake to Encapsulate, and a fee of a fraction of a cent. The memo is optional. Press Approve.
+
+07
+
+of 7
+
+On wallet.keplr.app
+
+#### Check the dashboard
+
+Back on the dashboard, Staking Amount shows your stake and Your Validators lists Encapsulate with our 10% commission. Rewards build up with every block and do not compound: Claim sends them to your wallet, and Stake adds more.
+
+Done · 7 of 7
+
+#### Staked with Encapsulate.
+
 Rewards start once your stake is active. Next up: Stake IOTA with IOTA Wallet.
 
 Next: IOTA
 
 All guides
 
-Axelar’s terms and common questions
+Cosmos Hub’s terms and common questions
 
 Need help? Ask on Discord
 

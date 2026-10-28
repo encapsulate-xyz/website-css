@@ -55,6 +55,7 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 - [Avail staking guide](https://encapsulate.xyz/guides/avail): Stake AVAIL with SubWallet. Thirteen steps across the SubWallet extension and its dashboard, one per screen, each with the screen you should be looking at.
 - [Avalanche staking guide](https://encapsulate.xyz/guides/avalanche): Stake AVAX with Core. Twelve steps across the Core extension and its dashboard, one per screen, each with the screen you should be looking at.
 - [Axelar staking guide](https://encapsulate.xyz/guides/axelar): Delegate AXL with Keplr. Seven steps across the extension and the Keplr dashboard, one per screen, each with the screen you should be looking at.
+- [Cosmos Hub staking guide](https://encapsulate.xyz/guides/cosmos-hub): Delegate ATOM with Keplr. Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
 - [EigenCloud staking guide](https://encapsulate.xyz/guides/eigen-layer): Stake EIGEN with MetaMask. Eleven steps across the MetaMask extension and its dashboard, one per screen, each with the screen you should be looking at.
 - [EigenCloud stETH restaking guide](https://encapsulate.xyz/guides/eigen-layer-steth): Restake stETH with MetaMask. Eighteen steps across the MetaMask extension and its dashboard, one per screen, each with the screen you should be looking at.
 - [Espresso staking guide](https://encapsulate.xyz/guides/espresso): Stake ESP with MetaMask. Nine steps across Espresso’s staking dashboard and the MetaMask extension, one per screen, each with the screen you should be looking at.
@@ -134,8 +135,8 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 
 ## Full text
 
-- [llms-full.txt](https://encapsulate.xyz/llms-full.txt): every page of encapsulate.xyz but the blog posts and the vote record, as Markdown (152 kB, 2026-10-28)
-- [llms-blog.txt](https://encapsulate.xyz/llms-blog.txt): every blog post on encapsulate.xyz/blog, part 1 of 2, as Markdown (235 kB, 2026-10-25)
+- [llms-full.txt](https://encapsulate.xyz/llms-full.txt): every page of encapsulate.xyz but the blog posts and the vote record, as Markdown (153 kB, 2026-10-28)
+- [llms-blog.txt](https://encapsulate.xyz/llms-blog.txt): every blog post on encapsulate.xyz/blog, part 1 of 2, as Markdown (235 kB, 2026-10-28)
 - [llms-blog-2.txt](https://encapsulate.xyz/llms-blog-2.txt): every blog post on encapsulate.xyz/blog, part 2 of 2, as Markdown (158 kB, 2026-10-25)
 - [llms-votes.txt](https://encapsulate.xyz/llms-votes.txt): our governance vote record, every vote on encapsulate.xyz/governance/votes, part 1 of 2, as Markdown (247 kB, 2026-10-27)
 - [llms-votes-2.txt](https://encapsulate.xyz/llms-votes-2.txt): our governance vote record, every vote on encapsulate.xyz/governance/votes, part 2 of 2, as Markdown (122 kB, 2026-10-27)

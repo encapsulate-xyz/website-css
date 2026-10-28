@@ -2,7 +2,7 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-10-25. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-10-28. The index of the site is https://encapsulate.xyz/llms.txt.
 
 ## Agoric Testnet Technical Analysis
 
