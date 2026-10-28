@@ -1,0 +1,68 @@
+[
+[
+"why1 → why2",
+"return t(q(\"#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card\", 0))",
+"notch+",
+"return t(q(\"#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card\", 1))"
+],
+[
+"why1 → why2",
+"return t(q(\"#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card\", 0))",
+"swipe+",
+"return t(q(\"#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card\", 1))"
+],
+[
+"why2 → why1",
+"return t(q(\"#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card\", 1))",
+"notch-",
+"return t(q(\"#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card\", 0))"
+],
+[
+"why3 → networks",
+"return t(q(\"#block-bd1e4d485a0d424394add746d8e3cd35 .notion-collection-card\", 2))",
+"key+",
+"return t(document.getElementById(\"block-3dbe800a513880c09163d3ed4ab436fd\"))"
+],
+[
+"audience split → a screen up",
+"return t(document.getElementById(\"block-3dae800a51388006a57be06b8ebea78e\"))",
+"notch-",
+"return t(document.getElementById(\"block-3dae800a51388006a57be06b8ebea78e\")) - vh"
+],
+[
+"networks → leaves whole",
+"return t(document.getElementById(\"block-3dbe800a513880c09163d3ed4ab436fd\"))",
+"notch+",
+"return b(document.getElementById(\"block-3dbe800a513880c09163d3ed4ab436fd\"))"
+],
+[
+"0.4 of a screen above the split → split",
+"return t(document.getElementById(\"block-3dae800a51388006a57be06b8ebea78e\")) - 0.4 * vh",
+"swipe+",
+"return t(document.getElementById(\"block-3dae800a51388006a57be06b8ebea78e\"))"
+],
+[
+"0.75 of a screen above the split, a notch (free)",
+"return t(document.getElementById(\"block-3dae800a51388006a57be06b8ebea78e\")) - 0.75 * vh",
+"notch+",
+"return t(document.getElementById(\"block-3dae800a51388006a57be06b8ebea78e\")) - 0.75 * vh + 100"
+],
+[
+"Who we are → leaves whole",
+"return t(document.getElementById(\"block-3dbe800a513880c5862ae676c8d06994\"))",
+"notch+",
+"return b(document.getElementById(\"block-3dbe800a513880c5862ae676c8d06994\"))"
+],
+[
+"free area",
+"return 2600",
+"swipe+",
+"return 3002"
+],
+[
+"a running swipe from half a screen and 300px above the split",
+"return t(document.getElementById(\"block-3dae800a51388006a57be06b8ebea78e\")) - 0.5 * vh - 300",
+"swipe+",
+"return t(document.getElementById(\"block-3dae800a51388006a57be06b8ebea78e\"))"
+]
+]

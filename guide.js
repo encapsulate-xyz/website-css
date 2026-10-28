@@ -593,7 +593,7 @@
          the top is restored here for the frames where it has already happened; a link to a band
          (#block-…) is left alone. */
       var atTop = (window.scrollY || document.documentElement.scrollTop || 0) < 40;
-      /* the snap is off while the bands go in (guide.css keys it on this attribute): with it on, the
+      /* the snap is off while the bands go in (snap.js reads the bands only under this attribute): with it on, the
          footer — the raw page's one stop — stayed the snapped target and the page re-aligned to it */
       document.documentElement.removeAttribute("data-enc-guide-snap");
       root.insertBefore(wrap, root.firstChild);

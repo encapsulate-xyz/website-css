@@ -36,10 +36,9 @@ fades only as it lands (opacity .12s after .24s); while on, both keep .12s ease-
 pointer through a scroll (the file's `lensAtPointer`): the pointer's last place is kept, and on each
 scroll frame the lens goes to it while it is over the track and closes once the page carries the track
 away (network.js `follow()`).
-**It is a snap stop** (the user, 2026-09-26, v314): one screen tall, and network.js ports the
-record's count-band rules (a gesture towards it from within half a screen lands on it, a rest within
-a third settles onto it; nothing under 701px or with reduced motion). Driven with real wheel events
-in headless Chrome (`livecheck.mjs` `wheel()`) at 1440×900, 1920×1080 and 800×1000.
+**It is a snap stop** (the user, 2026-09-26, v314): one screen tall, a lone band of the site's snap (`snap.js` since
+2026-10-28, `docs/main-css.md`, "Snapping"; network.js carried its own copy of the rules until then): a gesture
+towards it from within half a screen lands on it, one gesture leaves it whole, up to the cover or down to the set.
 
 ## The Networks set (2026-09-16)
 

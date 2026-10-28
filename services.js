@@ -317,8 +317,8 @@
      hairline grid; then the paper slides in from the right to the middle (the page we built), the
      capture rises from the bottom on the seam, and the chain's name arrives on the ink half, the
      tool's on the paper half, with Open in the paper's corner. After the last tool the ask, "Want
-     one for your chain?", over the grid. The band snaps: one wheel turn, swipe or arrow key moves
-     one frame (uStops), gliding there in 750ms on an even sine; a new scroll at either end leaves.
+     one for your chain?", over the grid. The band snaps with the rest of the site (snap.js, 2026-10-28):
+     one wheel turn, swipe or arrow key moves one frame (uStops), and at either end the band is left whole.
      Under 760px, or with reduced motion, it is the design's reel instead: pills, the capture full
      width, the credits, then the ask on its own ink. Both are built; CSS shows one (CINE).
 
@@ -326,7 +326,7 @@
      capture, ink over a light one. The design keys that by tool (Tidemark light, Crux dark,
      Holdfast split down the middle); here each capture's columns are measured once from a 128px
      copy, so a new tool needs no entry — the three come out as the design's table does. */
-  var U_EA = 0.7, U_MS = 750, U_Q = 200, U_TH = 10;
+  var U_EA = 0.7;
   var CINE = "(min-width: 760px) and (prefers-reduced-motion: no-preference)";
   function cineOn() { return !!(window.matchMedia && window.matchMedia(CINE).matches); }
   function clamp01(v) { return Math.max(0, Math.min(1, v)); }
@@ -357,198 +357,26 @@
     return sv;
   }
 
-  /* the snap (the design's useUSnap). A trackpad swipe is a stream of wheel events that coasts on
-     for a second after the fingers lift: it is one swipe until U_Q ms of quiet (timed on the
-     events), it moves a frame once it has travelled U_TH px inside 120ms, and the rest of it,
-     coast included, is swallowed; a second swipe laid over the coast shows as deltas climbing
-     over the fading tail. A browser stops letting the page cancel a swipe it did not cancel from
-     its first event; when such a swipe reaches the band the page is frozen (overflow hidden,
-     gutter kept) until it ends. Anything else that scrolls is caught when it stops.
-     THE FREEZE GOES THROUGH THE ELEMENT THE VIEWPORT TAKES ITS OVERFLOW FROM: the root's, or the
-     body's while the root's is visible, as it is here. The site's body is overflow-x: hidden, so
-     hiding the root's overflow left the body an overflow of its own: the body became a scroll box,
-     the sticky stage stuck to it instead of the screen and sat at the band's top, 5,000px up, and
-     the screen showed the band's bare ink (2026-10-21, a trackpad swipe up into the band). */
+  /* the snap is the site's (snap.js, 2026-10-28): this hands it the run's frames while the run is drawn. It was the
+     design's useUSnap here, gliding a frame in 750ms by itself; the engine took its freeze for a swipe that cannot be
+     cancelled, its 10px before a trackpad turns a frame and its 750ms for a screen, so every page snaps as this one did */
   function uSnap(sec, n) {
-    var TT = n + U_EA, SV = uStops(n), L = SV.length - 1, hist = [], win = [];
-    var anim = 0, ti = -1, gliding = false, rest = window.scrollY, lastT = -1e9, lastDir = 0,
-      lastStep = 0, pass = 0, spent = false, gy = 0, touch = false, tmr = 0, on = false;
-    var locked = false, held = null, ov = "", gut = "", ut = 0;
-    function lock() {
-      if (locked) return;
-      var root = document.documentElement, rs = getComputedStyle(root);
-      held = rs.overflowX === "visible" && rs.overflowY === "visible" && document.body ? document.body : root;
-      ov = held.style.overflowY; gut = root.style.scrollbarGutter;
-      root.style.scrollbarGutter = "stable"; held.style.overflowY = "hidden";
-      locked = true;
-    }
-    function unlock() {
-      clearTimeout(ut);
-      if (!locked) return;
-      held.style.overflowY = ov; document.documentElement.style.scrollbarGutter = gut;
-      locked = false;
-    }
-    function release() {
-      clearTimeout(ut);
-      var chk = function () { if (anim) { ut = setTimeout(chk, 60); return; } unlock(); };
-      ut = setTimeout(chk, U_Q + 40);
-    }
+    var TT = n + U_EA, SV = uStops(n), on = false;
     function geo() {
-      if (!sec.isConnected) { off(); return null; }
-      var top = window.scrollY + sec.getBoundingClientRect().top, span = sec.offsetHeight - window.innerHeight;
-      return span > 0 ? SV.map(function (v) { return Math.round(top + span * v / TT); }) : null;
+      if (!sec.isConnected) return false;
+      if (!on) return null;
+      var top = window.scrollY + sec.getBoundingClientRect().top, h = sec.offsetHeight, span = h - window.innerHeight;
+      return span > 0 ? { stops: SV.map(function (v) { return top + span * v / TT; }), top: top, bottom: top + h } : null;
     }
-    function near(ys, y) {
-      return ys.reduce(function (m, q, i) { return Math.abs(q - y) < Math.abs(ys[m] - y) ? i : m; }, 0);
-    }
-    function to(y) { window.scrollTo({ top: y, behavior: "instant" }); }
-    function halt() { if (anim) cancelAnimationFrame(anim); anim = 0; gliding = false; }
-    function glide(i, ys) {
-      halt();
-      ti = i;
-      lastStep = performance.now();
-      var y0 = window.scrollY, d = ys[i] - y0;
-      if (Math.abs(d) < 2) { if (d) to(ys[i]); rest = ys[i]; return; }
-      gliding = true;
-      var t0 = performance.now();
-      var f = function (now) {
-        var u = Math.min(1, (now - t0) / U_MS), e = (1 - Math.cos(Math.PI * u)) / 2;
-        to(y0 + d * e);
-        if (u < 1) anim = requestAnimationFrame(f);
-        else { anim = 0; rest = ys[i]; setTimeout(function () { if (!anim) gliding = false; }, 90); }
-      };
-      anim = requestAnimationFrame(f);
-    }
-    function nextFrom(ys, y, dir) {
-      var i = near(ys, y);
-      if (Math.abs(ys[i] - y) <= 4) return i + dir;
-      if (dir > 0) {
-        for (var x = 0; x < ys.length; x++) if (ys[x] > y) return x;
-        return L + 1;
-      }
-      var j = -1;
-      ys.forEach(function (q, x) { if (q < y) j = x; });
-      return j;
-    }
-    function onWheel(e) {
-      if (e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
-      var dy = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1);
-      if (Math.abs(dy) < 0.5) return;
-      var ys = geo();
-      if (!ys) return;
-      var t = e.timeStamp > 0 ? e.timeStamp : performance.now(), dir = dy > 0 ? 1 : -1, ad = Math.abs(dy);
-      var y = window.scrollY, a = ys[0], b = ys[L], inBand = y >= a - 2 && y <= b + 2;
-      /* the freeze lifts once the swipe has been quiet U_Q ms, even if it sends nothing more */
-      var stop = function () { if (e.cancelable) e.preventDefault(); else { lock(); release(); } };
-      if (locked) release();
-      var gap = t - lastT;
-      /* a flicker against the swipe's direction is noise, not a new swipe */
-      if (gap <= U_Q && dir !== lastDir && ad < 3) { lastT = t; if (inBand && !pass) stop(); return; }
-      var fresh = gap > U_Q || dir !== lastDir;
-      if (fresh) hist.length = 0;
-      hist.push(ad);
-      if (hist.length > 12) hist.shift();
-      if (!fresh && spent && !gliding && performance.now() - lastStep > U_MS + 120 && hist.length === 12) {
-        var o = 0, r = 0;
-        for (var x = 0; x < 6; x++) { o += hist[x]; r += hist[x + 6]; }
-        if (r > o * 1.5 && r > 36) { fresh = true; hist.splice(0, 6); }
-      }
-      lastT = t; lastDir = dir;
-      if (fresh) { spent = false; pass = 0; win.length = 0; gy = y; }
-      if (pass === dir) return;
-      win.push([t, ad]);
-      while (win.length > 1 && t - win[0][0] > 120) win.shift();
-      var sum = 0;
-      win.forEach(function (w) { sum += w[1]; });
-      var notch = e.deltaMode !== 0 || (e.wheelDelta && Math.abs(e.wheelDelta) >= 120 && e.wheelDelta % 120 === 0);
-      /* arriving from above or below: the swipe that carries the page in lands on the first or
-         last frame, and the rest of it is spent */
-      if (!inBand) {
-        if (!spent && (dir > 0 && y < a - 2 && y + ad >= a - 2 || dir < 0 && y > b + 2 && y - ad <= b + 2)) {
-          stop(); spent = true; glide(dir > 0 ? 0 : L, ys);
-        }
-        return;
-      }
-      if (!spent && (dir > 0 && gy < a - 2 || dir < 0 && gy > b + 2)) { stop(); spent = true; glide(dir > 0 ? 0 : L, ys); return; }
-      if (spent) { stop(); return; }
-      var at = Math.abs(ys[near(ys, y)] - y) <= 4, j = gliding ? ti + dir : nextFrom(ys, y, dir);
-      if ((j < 0 || j > L) && !gliding && at) { pass = dir; unlock(); return; }
-      stop();
-      if (!notch && sum < U_TH) return;
-      spent = true;
-      if (j < 0 || j > L) { if (!gliding) glide(Math.max(0, Math.min(L, j)), ys); return; }
-      glide(j, ys);
-    }
-    function onKey(e) {
-      if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
-      var tg = e.target, k = e.key;
-      if (tg && (tg.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(tg.tagName))) return;
-      if (k === " " && tg && /^(A|BUTTON)$/.test(tg.tagName)) return;
-      var dir = k === "ArrowDown" || k === "PageDown" || (k === " " && !e.shiftKey) ? 1
-        : k === "ArrowUp" || k === "PageUp" || (k === " " && e.shiftKey) ? -1 : 0;
-      if (!dir) return;
-      var ys = geo();
-      if (!ys) return;
-      if (gliding) {
-        e.preventDefault();
-        if (!e.repeat) { var g = Math.max(0, Math.min(L, ti + dir)); if (g !== ti) glide(g, ys); }
-        return;
-      }
-      var y = window.scrollY;
-      if (y < ys[0] - 2 || y > ys[L] + 2) return;
-      var j = nextFrom(ys, y, dir);
-      if (j < 0 || j > L) return;
-      e.preventDefault();
-      glide(j, ys);
-    }
-    /* a swipe moves one frame, the scrollbar the nearest */
-    function settle() {
-      if (gliding) return;
-      var ys = geo();
-      if (!ys) return;
-      var y = window.scrollY, a = ys[0], b = ys[L];
-      if (y < a - 2 || y > b + 2) { rest = y; return; }
-      var i = near(ys, y);
-      if (Math.abs(ys[i] - y) <= 4) { rest = ys[i]; return; }
-      var d = y - rest, j = i;
-      if (touch) {
-        if (Math.abs(d) < 24) j = near(ys, rest);
-        else if (rest < a - 2) j = 0;
-        else if (rest > b + 2) j = L;
-        else j = Math.max(0, Math.min(L, nextFrom(ys, rest, d > 0 ? 1 : -1)));
-      }
-      glide(j, ys);
-    }
-    function onTouch() { touch = true; if (gliding) { halt(); rest = window.scrollY; } }
-    function onMouse() { touch = false; if (gliding) { halt(); rest = window.scrollY; } }
-    function onScroll() { if (gliding) return; clearTimeout(tmr); tmr = setTimeout(settle, 160); }
-    var hasEnd = "onscrollend" in window;
-    function onUp() {
-      if (on) return;
-      on = true;
-      rest = window.scrollY;
-      window.addEventListener("wheel", onWheel, { passive: false });
-      window.addEventListener("keydown", onKey);
-      window.addEventListener("touchstart", onTouch, { passive: true });
-      window.addEventListener("mousedown", onMouse, { passive: true });
-      if (hasEnd) window.addEventListener("scrollend", settle);
-      else window.addEventListener("scroll", onScroll, { passive: true });
-    }
-    function off() {
-      if (!on) return;
-      on = false;
-      halt(); unlock(); clearTimeout(tmr);
-      window.removeEventListener("wheel", onWheel, { passive: false });
-      window.removeEventListener("keydown", onKey);
-      window.removeEventListener("touchstart", onTouch, { passive: true });
-      window.removeEventListener("mousedown", onMouse, { passive: true });
-      if (hasEnd) window.removeEventListener("scrollend", settle);
-      else window.removeEventListener("scroll", onScroll, { passive: true });
-    }
+    (window.encSnapQ = window.encSnapQ || []).push(geo);
+    function flip(v) { if (on !== v) { on = v; if (window.encSnap) window.encSnap.refresh(); } }
     return {
-      on: onUp, off: off,
-      active: function () { return on; },
-      go: function (i) { var ys = geo(); if (ys) glide(Math.max(0, Math.min(L, i)), ys); }
+      on: function () { flip(true); }, off: function () { flip(false); },
+      active: function () { return on && !!window.encSnap; },
+      go: function (i) {
+        var g = geo();
+        if (g && window.encSnap) window.encSnap.glide(g.stops[Math.max(0, Math.min(g.stops.length - 1, i))]);
+      }
     };
   }
 

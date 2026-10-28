@@ -72,23 +72,12 @@ html body:has(.notion-root[data-enc-guide]),
    v339. The bands start at the top. */
 html:has(.notion-root[data-enc-guide]) { scroll-padding-top: 0; }
 
-/* The snap is switched on by guide.js only once the built page stands at its top (`data-enc-guide-snap`
-   on html, 2026-09-30). Keyed on the build alone, the footer — the raw page's one snap stop — was the
-   snapped target when the bands went in above it, so a mandatory snap re-aligned the page to the footer
-   and the restore to the top then ran as a 1.5s smooth scroll: every reload opened at the foot and
-   climbed (the user's report). */
-@media (min-width: 701px) and (prefers-reduced-motion: no-preference) {
-  html[data-enc-guide-snap]:has(.notion-root[data-enc-guide]) {
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
-  }
-  html[data-enc-guide-snap] .enc-gd__band,
-  html[data-enc-guide-snap] body :where(.super-content-wrapper):has(> :where(.super-content) > .notion-root[data-enc-guide]) ~ .super-footer,
-  html[data-enc-guide-snap] body :where(.super-content-wrapper):has(> :where(.super-content) > .notion-root[data-enc-guide]) ~ footer {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-  }
-}
+/* The bands snap with the rest of the site (snap.js, 2026-10-28): one gesture or key, one band, and from the
+   last the page goes on to the footer. It was a CSS mandatory snap here, Chrome's own, which moved a screen in
+   under 200ms (the hardest snap on the site) and pinned any scripted scroll. snap.js reads the bands only once
+   guide.js marks the built page standing at its top (`data-enc-guide-snap` on html, 2026-09-30): keyed on the
+   build alone, the footer, the raw page's one snap stop, was the target when the bands went in above it, and
+   every reload opened at the foot and climbed (the user's report). */
 
 .enc-gd__band {
   position: relative;

@@ -58,12 +58,7 @@ design's 924×540 %-based geometry into divs, and:
   the Brand mark is `svg/mark-a.svg` via jsDelivr.
 Cover copy per page: `notion/page-covers.md`.
 
-**One-screen bands snap the same way** (guides picker, /networks' Network Count band since 2026-09-26;
-the governance record's count band did until 2026-10-21, when it became a 420vh run with no snap): one
-stop rather than a deck — a gesture heading at the panel from within half a screen lands on it, a
-rest within a third of a screen settles onto it, nothing snaps under 701px or with reduced motion.
-The catch rule is testable in Node (`scratchpad/snaptest.js`); the automation tab fires no scroll
-events.
+**One-screen bands snap through snap.js**, with every other snap on the site: "Snapping", below.
 
 **The reconstruction banner is gone** (2026-09-26): the user deleted its snippet from Super's Body code,
 head/site-body.html is empty, and main.css §15b (its styles, hidden by default) was removed in v307.
@@ -135,3 +130,70 @@ full-bleed band, that padding reads as a strip of ground above the ink footer, s
 it: `/guides`, `/security`, `/investments`, and since 2026-09-21 `/networks`, `/brand` and
 `/contact-us` (`.super-content.page__<slug>` and its `.notion-root`). A page that ends in ordinary
 content keeps the padding — it is breathing space, and on the paper ground it reads as such.
+
+## Snapping — one engine for every page (snap.js, 2026-10-28)
+
+The user, 2026-10-28: "the snappiness for all the pages, make sure its smooth and not choppy, also make sure its
+consistent and not like some page snaps harder than others". **Every page that snaps now snaps through `snap.js`** (site
+head), with one set of rules and one glide; no page script or stylesheet snaps on its own, and a new snapping band is a
+selector in its `BANDS` list (or, for a run with frames, a function pushed to `window.encSnapQ`), never a copy of the
+rules.
+
+**What it replaced**, measured in headless Chrome with real wheel events (a trackpad-shaped swipe and a mouse notch,
+recording `scrollY` every frame): home.js, network.js and guides.js each carried a copy of the homepage's rules and
+moved with the browser's smooth scroll (Chrome: about 170ms for 100px, 290 for 300, 500 for a screen; another browser,
+another length); the guides had CSS `y mandatory` with `snap-stop: always` (Chrome animates a CSS snap after a wheel
+in under 200ms: the hardest); the chain pages CSS proximity (the softest); /services glided its run itself in 750ms;
+/governance moved the page with the finger and stopped it dead at each count. On the homepage a notch from a Why Stake
+band moved 100px and slid back (no notch ever reached the next band), and a medium swipe rested 402px between two
+bands. And the three copies each attached a **blocking wheel listener on every page of the site**, snapping or not, so
+every page's scrolling waited for its main thread.
+
+**What snaps.** A **deck**: one-screen bands that follow one another (home: the audience split, Why Stake's three bands
+and the networks are one deck of five; a guide's bands; a chain page's hero and bands). A **lone band**: Who we are,
+/networks' Network Count band, /guides' picker. A **run** that hands over its own stops: /services' frames (the design's
+uStops) and /governance's counts (each hold's middle). A band is one screen when it is no shorter than the screen and
+runs past it by no more than its own bottom padding (a chain band is 722px at 1280×700, its padding). A guide's bands
+count only under `html[data-enc-guide-snap]`, which guide.js sets once the built page stands at its top (the climb of
+2026-09-30, `docs/guides.md`). Nothing snaps under 701px or with reduced motion, and the listeners are attached only
+while the page has something that may snap (on: /, /networks, /guides, a guide, a chain page, /services, /governance;
+off everywhere else).
+
+**The rules, the same everywhere:**
+- inside a deck, a wheel or trackpad gesture, an arrow, Page or space key moves exactly one stop and the rest of the
+  gesture is swallowed; from the last stop the page goes on until the deck's bottom edge is at the top of the screen
+  (it is left whole: the footer, after a guide), from the first a screen up;
+- a gesture heading at a deck from within half a screen lands on its first stop (its last from below), and so does one
+  from where the page left it whole, so one gesture back brings it back. A swipe already running when it comes that
+  close is **taken over at its own speed** and slows into the stop (measured: 16–24px a frame before, 18 after, no
+  stop and start);
+- coming to rest some other way (scrollbar, touch, a key outside a deck): moved less than half a screen off a stop,
+  on to the next (back, under 24px); inside a deck, the stop ahead (one less than half a screen behind counts); outside,
+  onto a deck it was heading at from within a third of a screen. **A page moving away from a deck is never pulled
+  back**, and a jump (a link, `#why-stake`, `/guides/sui#step-4`) stays where it lands;
+- the gesture rules are the homepage's, tuned on a trackpad: a new gesture is a 250ms pause, a change of direction, or
+  — 450ms after a page turned, once the deltas fall below half their peak — a delta 4× the smallest since (≥ 20). A
+  trackpad travels 10px before it turns a page (a notch turns it at once; the Services run's rule); a flicker against
+  the swipe is noise. A wheel over something that scrolls itself, or while the booking drawer or the menu sheet holds
+  the page (`html[data-enc-locked]`, `html[data-enc-sheet]`), is left alone.
+
+**One glide**: a cubic from the page's own speed to rest, `p(u) = from + d(3u² − 2u³) + T·v·u(1 − u)²`, the speed cut
+so it never runs past the stop; **750ms for a screen** (the Services run's design), `750·√(distance/screen)` for less,
+never under 380ms. By requestAnimationFrame, not `behavior: "smooth"`: that one always starts from rest and lasts what
+the browser likes. The homepage's note that a scripted scroll was choppy dates from its full-screen sticky stat deck,
+long gone: measured now, a scripted glide holds 60 frames a second on all seven pages, also at 4× CPU, except
+/governance at 4×, where the browser's smooth scroll drops as many frames (9 over 25ms against 12; its canvas is the
+cost). **A CSS snap cannot sit beside it**: on a guide the mandatory snap pinned a scripted glide where it started
+(`moving: 1` of 44 frames). A swipe the page may not cancel (Chrome lets a page cancel a gesture only if it cancelled its
+first event) is stopped by **freezing the overflow** until it is quiet: through `<body>` while the root's overflow is
+visible, as here (`docs/services.md`, v366).
+
+**Checking it**: `scripts/snap/run.sh <path> <page> [W H]` (home, networks, guides, guide, chain, services, gov) loads the
+live page with this repo's files in place of every tag the heads pin and `dist/snap.js` preloaded (`PRE=` once the live
+head carries it), and runs `scripts/snapprobe.mjs` on `scripts/snap/<page>.json`: each scenario jumps to a start, waits
+for the page to go still, sends a notch, a swipe or a key, and prints where the page rested against where it should, how
+long it moved and in how many movements. On 2026-10-28, 183 runs at 2560×1440, 1920×1080, 1440×900, 1280×700 and
+1024×768 all passed, each one movement. Starts are fractions of a screen: a jump to within a third of a stop settles onto
+it first, and one less than half a screen from the stop the page rested on reads as a step off it (the probe says when).
+Headless wheel events are always cancellable, so the freeze is checked with `dispatchEvent(new WheelEvent("wheel",
+{ cancelable: false }))`. `CPU=4` on livecheck slows the page four times.

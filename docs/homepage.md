@@ -165,8 +165,8 @@ Uptime** (220vh) draws the rule to 99.96% under "Almost always on.", then the tw
   Delegators · one building per network" ran off a 390 screen); the mainnets words take the phone's 20px gutter (the file's column had
   none on its left); wider than 1856px the content keeps 1728px; the two buttons stack under 520px, as every button pair
   on the site does (the file keeps them side by side).
-- Reduced motion shows every screen settled (checked with `REDUCED=1 scripts/livecheck.mjs`, new). The deck snapping no
-  longer pages the band. `svg/stat-field-*.svg` are unused now.
+- Reduced motion shows every screen settled (checked with `REDUCED=1 scripts/livecheck.mjs`, new). Nothing pages the
+  band. `svg/stat-field-*.svg` are unused now.
 
 **The networks band is one screen** (2026-10-24, the user: "make network section fullscreen too and not faded"; design
 21b, home-dial.css "NETWORKS COLUMNS", home.js "Homepage networks"): above 900px the row is `100vh` (it was the file's
@@ -195,8 +195,10 @@ over the second and third. Notion and CSS cannot show one block three times, so 
 heading into each band's top row (aria-hidden, re-read on every pass); the originals stay, visually hidden, as the
 section's heading, and each card's name is marked a level-3 heading. The number is a CSS counter. **The button is
 placed by anchor positioning** (as Who we are's roles): pinned 32px under the third band's caption line, which keeps
-the room for it (its content's `::after`); without anchor positioning it follows the band. **Each band is a stop** in
-home.js's one-screen list (`BANDS`), so the page settles on whichever band it comes to rest near; that list skips any section over 1.25 screens tall (2026-10-24, when 49b's stacked cards ran 1.8 screens at 1024×768: settling a reader back to the top of a section they are halfway down is a trap). **A trap**: with the
+the room for it (its content's `::after`); without anchor positioning it follows the band. **Each band is a stop** of the
+site's snap (`snap.js`, 2026-10-28), in one deck with the audience split before it and the networks after: one gesture,
+one band. A band taller than a screen past its own bottom padding is no stop (49b's stacked cards ran 1.8 screens at
+1024×768: settling a reader back to the top of a section they are halfway down is a trap). **A trap**: with the
 figure and unit spanning the claim's rows, Chrome gave part of their height to the empty button row of bands 1 and 2
 (14.5px at 1440, the claim 7px above centre); a flexible row above and below the claim takes it now. Measured at 390,
 800, 1024, 1280×700, 1440 and 2560: each band one screen, the claim and the figure on one centre, no sideways scroll.
@@ -283,13 +285,14 @@ blog band directly, which keeps its own space above.
 
 **Governance and Services run on paper one after the other**, with no ink between them.
 
-**Snapping — lessons.** Use native `scrollTo({behavior:"smooth"})` (scripted animation was choppy);
-cache stops, invalidate on resize/mutation; trackpad momentum lasts seconds — a new gesture is a
-250ms gap, or after a 450ms MIN_LOCK and decay below half peak, a rise 4× the smallest delta (≥20);
-one-screen sections (the audience split, Who we are; Services only with reduced motion since 42w) are caught on the swipe within half a
-screen, and so is a deck's first panel from above and its last from below (a swipe up out of the
-audience split came to rest 306px down the stats' last panel until 2026-10-15); the settle retries. No CSS scroll-snap on html (fights the script). Gesture logic is testable in Node
-with a stubbed window.
+**Snapping is the site's since 2026-10-28** (`snap.js`, `docs/main-css.md`, "Snapping"). home.js's decks IIFE went
+into it with its gesture rules; what changed for the homepage: the audience split, Why Stake's three bands and the
+networks are **one deck of five screens**, paged a gesture at a time (each was a stop of its own, so a notch slid back
+and a medium swipe rested between bands); every section is left whole; the glide is the site's 750ms cubic, not the
+browser's smooth scroll; nothing snaps under 701px (it was 901) or with reduced motion (Services was a stop there).
+The lessons it keeps: cache the stops, trackpad momentum lasts seconds (a new gesture is a 250ms gap, or after a 450ms
+MIN_LOCK and decay below half peak a rise 4× the smallest delta, ≥ 20), catch on the swipe rather than waiting for a
+rest (momentum wheel events run to the end of the scroll), no CSS scroll-snap on html (it pins a scripted scroll).
 
 **A link to a homepage section lands (home.js, v362, 2026-10-18; since 2026-10-23 anchors.js, on every page — `docs/paths-and-404.md`, "Section names").** /#block-<id> is how the site links its sections — the
 footer's Team (`#block-3dbe…6994`, Who we are) and Institutional staking (`#block-3dbe…1975`), the navbar's institutional

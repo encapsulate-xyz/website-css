@@ -235,14 +235,13 @@ build has to claim the page
 (`[data-enc-guide]`) **before** the index fetch — the observer fires again while it is in flight
 and two builds appended two sets of bands.
 
-Snapping is the design's, moved to the document: Super is the scroller, so
-`scroll-snap-type: y mandatory` is set on `html` for this page and every band is a stop, the
-footer included, off under 701px and with reduced motion. **A step rests at the top** since v348 (the user's
+**Every band is a stop of the site's snap** (`snap.js` since 2026-10-28, `docs/main-css.md`, "Snapping"): one gesture
+or key, one band, and from the last the page goes on to the footer's top; off under 701px and with reduced motion. It
+was the design's `scroll-snap-type: y mandatory` with `snap-stop: always` on `html` until then, Chrome's own snap, a
+screen in under 200ms: the hardest on the site, and it pinned any scripted scroll. **A step rests at the top** since v348 (the user's
 screenshot, 2026-10-02): Super's `html { scroll-padding-top: 62px }` had stood every key and trackpad snap 62px
 down with the band before it showing above — the chain pages' fault of v339, and older than the old page CSS
-(checked with it put back). guide.css sets it to 0 on a built guide. **Test a snap with a real key press**
-(`livecheck.mjs --steps`, `press('ArrowDown')`): a scripted `scrollTo` re-snaps to the band's own top and
-hides the padding.
+(checked with it put back). guide.css sets it to 0 on a built guide; it still matters for every link to a step.
 
 **The page opened at its foot** until 2026-09-23: ten screens are inserted above the reader on
 build, and Chrome's scroll anchoring answered by holding what they were looking at — the footer —
@@ -252,11 +251,11 @@ started there (a `#block-…` link is left alone).
 at the bottom and scroll up"): the snap was keyed on the build, so the footer — the raw page's one snap stop — was
 the snapped target when the bands went in above it, a mandatory snap re-aligned the page to it (not anchoring:
 that was already off), and the restore to the top ran as a 1.5s smooth scroll under the page's own
-`scroll-behavior`. Now guide.js switches the snap on (`html[data-enc-guide-snap]`, which guide.css keys the snap
-rules on) only 120ms after the built page stands at its top, and the restore is `behavior: "instant"`. Reproduced
+`scroll-behavior`. Now guide.js switches the snap on (`html[data-enc-guide-snap]`, which snap.js reads the bands
+under, guide.css until 2026-10-28) only 120ms after the built page stands at its top, and the restore is `behavior: "instant"`. Reproduced
 and proved with a reload in headless Chrome, sampling scrollY every 60ms (`scratchpad/guide-handoff/steps-reload.mjs`):
-0 → 8038 → a 1.5s climb before; 0 throughout after. Headless wheel gestures do not move this page (mandatory snap
-with smooth scrolling), before or after — the snap was checked by computed style instead, identical to v338.
+0 → 8038 → a 1.5s climb before; 0 throughout after. Headless wheel gestures did not move this page under the CSS snap
+(each synthetic event was snapped back); with snap.js they do, and a reload stays at 0 (2026-10-28).
 
 ## A guide links its chain page (handoff 2026-09-30, v338)
 
@@ -313,16 +312,16 @@ only the counter's two numbers are rewritten by the script: **the chains are the
 (`window.encCounts().mainnet`, the Networks set's rows; the picker's own 28 until it answers) and **the guides are the
 gallery's cards**, which its view keeps to the Live rows (2026-10-14, the user: "shouldn't the chain count be = what we
 display in network … guide count should be equal to whatever we have live"; it had read "13 chains · 13 guides", the
-chains that had a guide, and counted guides one per chain). A second IIFE in `guides.js` snaps to it with the Network Count gesture rules but a
-single stop: a gesture heading at the panel from within half a screen lands on it, a rest within a
-third of a screen settles onto it, nothing under 701px or with reduced motion. The catch rule is
-testable in Node (`scratchpad/snaptest.js`) — the automation tab fires no scroll events.
+chains that had a guide, and counted guides one per chain). It is a lone band of the
+site's snap (`snap.js` since 2026-10-28; a second IIFE in guides.js until then): a gesture heading at the panel from
+within half a screen lands on it, one gesture leaves it whole. Once a pick grows it past the screen it is no stop, so
+keepInView's scroll stands (measured 2026-10-28: 1366×768 scrolls 65px and stays, 1024×768 110px).
 
 **Once a chain is picked the band grows past the screen** (the wallet row and the 357px card join
 the sentence: 1,021px at 1440×900 with the old padding). The handoff of 2026-09-26: 64px top padding
 instead of up to 200, and on a pick, if the card's foot is below the fold, guides.js `keepInView()`
 scrolls by just that difference (24px of air; never scrollIntoView, never when it fits). The snap
-does not undo it — it only catches a scroll heading at the band. Measured with real clicks: 1440×900
+does not undo it: the grown band is no stop. Measured with real clicks: 1440×900
 and 1920×1080 fit without a scroll, 1366×768 and 1024×768 scroll 65 and 110px, 390×844 280px; the
 card's foot at 24px above the screen's edge each time.
 

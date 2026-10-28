@@ -41,12 +41,10 @@ body .notion-header:has(~ .notion-root[data-enc-chain]:not([data-enc-chain="no"]
   max-width: none !important;
 }
 
-/* the bands snap, one per screen: the design's `scroll-snap-type: y proximity` on the document,
-   which is the scroller here. Off on a small screen and under reduced motion, as everywhere. */
-@media (min-width: 701px) and (prefers-reduced-motion: no-preference) {
-  html:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])) { scroll-snap-type: y proximity; }
-  .enc-ch__hero, .enc-ch__bandsec { scroll-snap-align: start; }
-}
+/* the bands snap, one per screen, with the rest of the site (snap.js, 2026-10-28): one gesture or key, one band.
+   The design's `scroll-snap-type: y proximity` on the document was the softest snap on the site and caught a
+   band only near its top; it is gone so that every page snaps alike. Off on a small screen and under reduced
+   motion, as everywhere. */
 html:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])) { overflow-anchor: none; }
 /* Super pads every anchor jump and snap rest 62px (`html { scroll-padding-top: 62px }`, for a fixed
    header this site does not have): a band snapped or linked to (#terms from a guide) stood 62px down,

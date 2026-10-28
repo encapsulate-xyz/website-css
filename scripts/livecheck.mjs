@@ -13,6 +13,7 @@
 // `--steps steps.mjs`, which exports `async (ctx) => {}` and gets { at, move, click, press, wheel, pixel, sleep, shot } —
 // `click(x, y)` is a real press and release at that point, `press(key)` a real key (Tab, Escape…),
 // `wheel(x, y, dy)` a real wheel event, `pixel(x, y)` the colour painted at a point ([r, g, b]).
+// `CPU=4` runs the page on a CPU slowed four times (a mid laptop on battery), as a smoothness check wants.
 import { spawn } from "node:child_process";
 import { mkdtempSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -126,6 +127,7 @@ if (process.env.NETLOG) {
 await send("Emulation.setDeviceMetricsOverride", { width: W, height: H, deviceScaleFactor: 1, mobile: W < 700 });
 /* REDUCED=1 loads the page as a reader who asked for reduced motion */
 if (process.env.REDUCED) await send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
+if (process.env.CPU) await send("Emulation.setCPUThrottlingRate", { rate: +process.env.CPU });
 await send("Fetch.enable", { patterns: TAGS.map(t => ({ urlPattern: "*website-css@" + t + "/*" })) });
 await send("Page.enable");
 /* PRELOAD=file.js runs that file in the page before any of the page's own scripts — a logger that

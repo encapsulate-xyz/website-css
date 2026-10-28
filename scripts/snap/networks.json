@@ -1,0 +1,38 @@
+[
+[
+"0.4 of a screen above the band → band",
+"return t(document.getElementById(\"block-3dce800a51388154931ac3c9478a65b5\")) - 0.4 * vh",
+"notch+",
+"return t(document.getElementById(\"block-3dce800a51388154931ac3c9478a65b5\"))"
+],
+[
+"the cover's top, a notch → band (where the band leaves to)",
+"return 0",
+"notch+",
+"return t(document.getElementById(\"block-3dce800a51388154931ac3c9478a65b5\"))"
+],
+[
+"a running swipe from half a screen and 300px above the band",
+"return t(document.getElementById(\"block-3dce800a51388154931ac3c9478a65b5\")) - 0.5 * vh - 300",
+"swipe+",
+"return t(document.getElementById(\"block-3dce800a51388154931ac3c9478a65b5\"))"
+],
+[
+"band → a screen up",
+"return t(document.getElementById(\"block-3dce800a51388154931ac3c9478a65b5\"))",
+"notch-",
+"return Math.max(0, t(document.getElementById(\"block-3dce800a51388154931ac3c9478a65b5\")) - vh)"
+],
+[
+"band → leaves whole",
+"return t(document.getElementById(\"block-3dce800a51388154931ac3c9478a65b5\"))",
+"swipe+",
+"return b(document.getElementById(\"block-3dce800a51388154931ac3c9478a65b5\"))"
+],
+[
+"from where it left whole, back → band",
+"return b(document.getElementById(\"block-3dce800a51388154931ac3c9478a65b5\"))",
+"notch-",
+"return t(document.getElementById(\"block-3dce800a51388154931ac3c9478a65b5\"))"
+]
+]

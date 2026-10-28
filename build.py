@@ -49,7 +49,7 @@ def squeeze(css: str) -> str:
     return ''.join(out).replace('}', '}\n').strip() + '\n'
 
 # the scripts every head links (each is copied to dist/ minified, below)
-JS = ['anchors.js', 'blocks.js', 'blog.js', 'booking.js', 'brand.js', 'chain.js', 'contact.js', 'covers.js', 'filterbar.js', 'footer.js', 'governance.js', 'guide.js', 'guides.js', 'home.js', 'investments.js', 'navbar.js', 'network.js', 'notfound.js', 'post.js', 'security.js', 'services.js']
+JS = ['anchors.js', 'blocks.js', 'blog.js', 'booking.js', 'brand.js', 'chain.js', 'contact.js', 'covers.js', 'filterbar.js', 'footer.js', 'governance.js', 'guide.js', 'guides.js', 'home.js', 'investments.js', 'navbar.js', 'network.js', 'notfound.js', 'post.js', 'security.js', 'services.js', 'snap.js']
 
 os.makedirs('dist', exist_ok=True)
 for name in sys.argv[1:] or ['main.css', 'home.css', 'network.css', 'governance.css', 'blog.css', 'brand.css', 'contact-us.css', 'guides.css', 'investments.css', 'post.css', 'guide.css', 'security.css', 'services.css', 'guides.css', 'chain.css', 'legal.css', 'notfound.css']:

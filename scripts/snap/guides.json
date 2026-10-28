@@ -1,0 +1,20 @@
+[
+[
+"0.4 of a screen above the picker → picker",
+"return t(document.getElementById(\"block-3dde800a5138811e906fc383bd7a0789\")) - 0.4 * vh",
+"notch+",
+"return t(document.getElementById(\"block-3dde800a5138811e906fc383bd7a0789\"))"
+],
+[
+"picker → leaves whole",
+"return t(document.getElementById(\"block-3dde800a5138811e906fc383bd7a0789\"))",
+"notch+",
+"return Math.min(max, b(document.getElementById(\"block-3dde800a5138811e906fc383bd7a0789\")))"
+],
+[
+"picker → a screen up",
+"return t(document.getElementById(\"block-3dde800a5138811e906fc383bd7a0789\"))",
+"key-",
+"return Math.max(0, t(document.getElementById(\"block-3dde800a5138811e906fc383bd7a0789\")) - vh)"
+]
+]

@@ -23,7 +23,7 @@ note goes into its subject's file, not here; only a rule for every task belongs 
 | File | Read it before working on | Its sections |
 |---|---|---|
 | `docs/navbar.md` | the bar, its panels, the compact bar and the panel search (§04 + navbar.js) | The navigation bar |
-| `docs/main-css.md` | the Button and Card Systems, page covers, one-screen bands, the footer and the article blocks | Buttons, cards, covers, bands and the footer; Article blocks — the four generic Notion blocks; A page that ends in a band runs into the footer |
+| `docs/main-css.md` | the Button and Card Systems, page covers, one-screen bands, the footer, the article blocks and snapping (snap.js) | Buttons, cards, covers, bands and the footer; Snapping — one engine for every page; Article blocks — the four generic Notion blocks; A page that ends in a band runs into the footer |
 | `docs/homepage.md` | home.css, home-dial.css, home.js | Homepage |
 | `docs/networks.md` | the Network Count band and its lens, the set, its values | The Network Count band; The Networks set; Done — the Networks set's rates are real |
 | `docs/filter-bar.md` | filterbar.js, main.css §13c, the recipe it follows | The filter bar — one component on three pages; Search and sort on a Notion gallery — the working recipe |
@@ -184,6 +184,7 @@ User rules that stand on every task:
 | `covers.js` | inner-page cover graphics ("fields"), and the covers' label pairs | site Head, **right after site.css and not deferred** — the one script read with the page, so a phone's pairs are settled before the first paint (`docs/audit.md`, "The third pass") |
 | `filterbar.js` | the filter bar (design *Filter Bar Patterns*, G · the command field) — one component for /networks, /governance-record and /blog; styles main.css §13c | site Head, before the page scripts |
 | `anchors.js` | the site's section names — /#testimonials, /security#keys, /guides/&lt;guide&gt;#step-4 — and the landing of any `#name` or `#block-…` on every page; /team → /#team (`docs/paths-and-404.md`, "Section names") | site Head |
+| `snap.js` | **every snap on the site**, one engine (2026-10-28): the homepage's deck and Who we are, /networks' count band, /guides' picker, a guide's and a chain page's bands (its `BANDS` list), and the /services and /governance runs, which hand it their frames through `window.encSnapQ`. One gesture or key, one stop, one 750ms glide from the page's own speed; a deck is left whole. No page script or stylesheet snaps by itself (`docs/main-css.md`, "Snapping") | site Head |
 | `notfound.css`, `notfound.js` | the 404 page (design *404 Page*, D · the finder) — see "The 404 page". notfound.js is linked **async**, the only one | site Head |
 | `blocks.js` | Notion's generic blocks (design *Blog Article Blocks*): the code block's line numbers, prompts, colours, kicker and copy tick — the rest of the four blocks is main.css §12–13. Also the site's one link rule: a link to another site opens in a new tab; and the tweets (Super's tweet block), built once the reader first scrolls, touches, clicks or types, or 10s after load, not with the page (`docs/audit.md`, "The first paint") | site Head |
 | `home.css`, `home-dial.css`, `home.js` | homepage sections, JS-enhanced styles, homepage scripts | homepage Head |

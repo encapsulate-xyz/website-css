@@ -5,9 +5,6 @@
 .notion-root[data-enc-chain]:not([data-enc-chain="no"]) > *:not(.enc-ch){display: none !important;}
 body .notion-header:has(~ .notion-root[data-enc-chain]:not([data-enc-chain="no"])){display: none !important;}
 .notion-root[data-enc-chain]:not([data-enc-chain="no"]),.super-content:has(> .notion-root[data-enc-chain]:not([data-enc-chain="no"])){padding: 0 !important;max-width: none !important;}
-@media (min-width: 701px) and (prefers-reduced-motion: no-preference){html:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])){scroll-snap-type: y proximity;}
-.enc-ch__hero,.enc-ch__bandsec{scroll-snap-align: start;}
-}
 html:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])){overflow-anchor: none;}
 html:has(.notion-root[data-enc-chain]:not([data-enc-chain="no"])){scroll-padding-top: 0;}
 .enc-ch{--ink: #000;--ink7: #3A3D38;--paper: #FAFAF8;--paper2: #F2F2ED;--grey: #6B6F68;--hair: #E2E2DB;--green: #99CC66;--g-ring: #7CAE48;--green-ink: #3F6B27;--dark: #2A2C28;--padx: clamp(20px,4vw,44px);width: 100vw;margin-inline: calc(50% - 50vw);display: flex;flex-direction: column;font-family: "Hanken Grotesk",system-ui,sans-serif;color: var(--ink);background: var(--paper);}

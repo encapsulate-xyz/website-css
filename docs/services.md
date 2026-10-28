@@ -64,16 +64,18 @@ hosts rgp.sui and graph.solana redirect to the new ones.
   to the middle, the capture rises from the bottom on the seam, "The chain" + the chain's name on the ink and
   "The page" + the tool's name on the paper, at min(10vw, 16vh), "Open Tidemark" in the paper's corner. After the
   last tool, the ask over the grid. `uFrame()` is the design's arithmetic, pure (tested in Node).
-- **It snaps** (the design's `useUSnap`, ported line for line as `uSnap()`): frames at 0, .68, 1.14, 1.68, 2.14,
-  2.68, 3.7 of n + .7; one wheel turn, swipe or arrow key moves one frame in a 750ms sine glide; the swipe that
-  carries the page in lands on the first or last frame; a new scroll at either end leaves. A pill goes to its
-  tool's split. Its window listeners are removed when the band leaves the page (`live.stop`). **A swipe the page may not cancel freezes the page through
+- **It snaps** with the rest of the site since 2026-10-28 (`snap.js`, `docs/main-css.md`, "Snapping"): `uSnap()` now
+  only hands the engine the run's frames (0, .68, 1.14, 1.68, 2.14, 2.68, 3.7 of n + .7) while the run is drawn, and a
+  pill asks it to glide to its tool's split (`encSnap.glide`). One wheel turn, swipe or arrow key moves one frame; the
+  swipe that carries the page in lands on the first or last frame; at either end the band is left whole (it was left
+  freely). Until then this was the design's `useUSnap`, ported line for line, gliding a frame in 750ms on an even sine
+  by itself: the engine took its 750ms for a screen, its 10px before a trackpad turns a frame and the freeze below. **A swipe the page may not cancel freezes the page through
   `<body>`, not `<html>`** (v366, 2026-10-21, the user: "when I scroll up after scrolling down across all the
   dashboards, it just shows me an inked screen"): a Mac trackpad swipe that starts outside the band cannot be cancelled,
   so the snap stops it with overflow hidden. Put on `<html>`, that left the body (`overflow-x: hidden`) an overflow of
   its own, the body became a scroll box, the sticky stage stuck to it 5,000px up, and the screen showed bare ink until
   the next wheel event. The freeze now goes on the element the viewport takes its overflow from, and lifts after
-  U_Q ms of quiet even when nothing more arrives. Headless wheel events are always cancelable, so test this path with
+  a quiet spell even when nothing more arrives (in snap.js since 2026-10-28, for every page). Headless wheel events are always cancelable, so test this path with
   `window.dispatchEvent(new WheelEvent("wheel", { deltaY: -60, cancelable: false }))` from just below the band.
 - **The Visit pill**: over the board the mouse pointer becomes a "Visit" pill. **Deviation:** the design keys its
   colour by tool (Tidemark light, Crux dark, Holdfast split down the middle); here each capture's columns are

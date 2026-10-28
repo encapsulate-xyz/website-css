@@ -203,7 +203,6 @@
     listening = true;
     window.addEventListener("scroll", countDraw, { passive: true });
     window.addEventListener("resize", countDraw);
-    window.addEventListener("wheel", countWheel, { passive: false });
     // the block tooltip answers a mouse only; every draw re-tests it, so it holds through a scroll
     window.addEventListener("pointermove", function (e) {
       if (!S || (e.pointerType && e.pointerType !== "mouse")) return;
@@ -241,18 +240,12 @@
   /* One gesture, one count (the user, 2026-10-22: "it stop at 1 and then only scroll past 1 if the person
      scroll again", and the same at 3, 100 and the total). The frames were only held stretches of the run
      — 6% at 1, 12% at 3, 10% at 100, 6% at the total before the band ends — so a swipe a hold happened to
-     swallow seemed to stop, a longer one ran through, and at the total it ran on into the page. Now a
-     wheel or trackpad gesture that starts within a screen and a half of the run is ours from its first
-     event: its deltas move the page as before (the zoom still follows the finger), but on reaching a count
-     it stops at the far end of that count's hold, and the rest of the gesture (a trackpad's momentum) is
-     swallowed. The next gesture moves on: from above the band it stops at 1, past the total it leaves the
-     band. A gesture that starts inside a hold starts from its edge, so it moves the picture at once.
-     Taking the gesture from its first event is what makes it stoppable: Chrome lets a page cancel the rest
-     of a gesture only when it cancelled the first. The new-gesture test is home.js's (a pause, or a fresh
-     rise once the swipe has decayed). Touch, keys and the scrollbar scroll freely; reduced motion has no
-     counts to stop at. */
-  var NEW_GAP = 250, MIN_LOCK = 450;
-  var G = { last: 0, own: false, locked: false, at: 0, peak: 0, min: Infinity, decayed: false, vy: 0, until: 0 };
+     swallow seemed to stop, a longer one ran through, and at the total it ran on into the page. Each hold's
+     middle is now a stop of the site's snap (snap.js, 2026-10-28): a wheel or trackpad gesture, or a key,
+     glides the picture from one count to the next, the zoom between them playing on the way, and the rest
+     of the gesture is swallowed; from above the band it lands at 1, past the total it leaves the band whole.
+     Until then this file took the gesture itself, moved the page with the finger and stopped it dead at
+     the hold's far end — the hardest stop on the site. Reduced motion has no counts to stop at. */
   // the holds in page pixels: before the first move, between the moves, after the last
   function countHolds() {
     var rc = S.band.getBoundingClientRect(), run = rc.height - window.innerHeight;
@@ -262,40 +255,13 @@
     out.push([top + from * run, top + run]);
     return out;
   }
-  function countWheel(e) {
-    if (e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;   // pinch-zoom, sideways
-    var now = performance.now(), abs = Math.abs(e.deltaY), fresh = now - G.last > NEW_GAP, H;
-    G.last = now;
-    if (!fresh && G.locked) {
-      G.peak = Math.max(G.peak, abs);
-      if (abs < G.peak * 0.5) G.decayed = true;
-      fresh = G.decayed && now - G.at > MIN_LOCK && abs > Math.max(G.min * 4, 20);
-      if (G.decayed) G.min = Math.min(G.min, abs);
-      if (!fresh) { e.preventDefault(); return; }
-    }
-    if (fresh) {
-      H = S && S.stage.isConnected && !S.rm ? countHolds() : null;
-      var y0 = now < G.until ? G.vy : window.scrollY, vh = window.innerHeight;
-      G.own = !!H && y0 > H[0][0] - 1.5 * vh && y0 < H[H.length - 1][1] + 1.5 * vh;
-      G.locked = false; G.vy = y0; G.peak = abs; G.min = Infinity; G.decayed = false;
-    }
-    if (!G.own) return;
-    if (!S || !S.stage.isConnected || !(H = H || countHolds())) { G.own = false; return; }
-    e.preventDefault();
-    var dir = e.deltaY > 0 ? 1 : -1, y = G.vy, base = y, stop = null, i;
-    var dy = e.deltaY * (e.deltaMode === 1 ? 40 : e.deltaMode === 2 ? window.innerHeight : 1);
-    for (i = 0; i < H.length; i++) if (y >= H[i][0] - 2 && y <= H[i][1] + 2) base = dir > 0 ? H[i][1] : H[i][0];
-    var go = base + dy;
-    // a stop is a pixel inside its hold: on its very edge the figure read 99 for 100, the scroll rounding short
-    if (dir > 0) { for (i = 0; i < H.length; i++) if (H[i][0] > base + 2) { if (go >= H[i][0]) stop = Math.floor(H[i][1]) - 1; break; } }
-    else { for (i = H.length - 1; i >= 0; i--) if (H[i][1] < base - 2) { if (go <= H[i][1]) stop = Math.ceil(H[i][0]) + 1; break; } }
-    if (stop !== null) { go = stop; G.locked = true; G.at = now; }
-    go = Math.max(0, Math.min(go, document.documentElement.scrollHeight - window.innerHeight));
-    // a mouse wheel's notch is a big step: let the browser ease it, as it would have
-    var smooth = Math.abs(dy) >= 60 && !G.locked;
-    G.vy = go; G.until = smooth ? now + 600 : 0;
-    window.scrollTo({ top: go, behavior: smooth ? "smooth" : "instant" });
-  }
+  (window.encSnapQ = window.encSnapQ || []).push(function () {
+    if (!S || !S.stage.isConnected || S.rm) return null;
+    var H = countHolds();
+    if (!H) return null;
+    var rc = S.band.getBoundingClientRect();
+    return { stops: H.map(function (h) { return (h[0] + h[1]) / 2; }), top: window.scrollY + rc.top, bottom: window.scrollY + rc.bottom };
+  });
 
   // 0 at the top of the band, 1 once it has scrolled its extra screens
   function countProgress() {

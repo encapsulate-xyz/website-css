@@ -1,0 +1,44 @@
+[
+[
+"0.4 of a screen above the run → frame 0",
+"return t(q(\".enc-svc__dash\")) - 0.4 * vh",
+"notch+",
+"return (function(){ const s = q(\".enc-svc__dash\"), n = s.querySelectorAll(\".enc-svc__dboard\").length, TT = n + 0.7, sv = []; for (let k = 0; k < n; k++) sv.push(k === 0 ? 0 : k + 0.14, k + 0.68); sv.push(TT); const i = 0; return t(s) + (s.offsetHeight - vh) * sv[i < 0 ? sv.length + i : i] / TT; })()"
+],
+[
+"frame 0 → 1",
+"return (function(){ const s = q(\".enc-svc__dash\"), n = s.querySelectorAll(\".enc-svc__dboard\").length, TT = n + 0.7, sv = []; for (let k = 0; k < n; k++) sv.push(k === 0 ? 0 : k + 0.14, k + 0.68); sv.push(TT); const i = 0; return t(s) + (s.offsetHeight - vh) * sv[i < 0 ? sv.length + i : i] / TT; })()",
+"notch+",
+"return (function(){ const s = q(\".enc-svc__dash\"), n = s.querySelectorAll(\".enc-svc__dboard\").length, TT = n + 0.7, sv = []; for (let k = 0; k < n; k++) sv.push(k === 0 ? 0 : k + 0.14, k + 0.68); sv.push(TT); const i = 1; return t(s) + (s.offsetHeight - vh) * sv[i < 0 ? sv.length + i : i] / TT; })()"
+],
+[
+"frame 1 → 2",
+"return (function(){ const s = q(\".enc-svc__dash\"), n = s.querySelectorAll(\".enc-svc__dboard\").length, TT = n + 0.7, sv = []; for (let k = 0; k < n; k++) sv.push(k === 0 ? 0 : k + 0.14, k + 0.68); sv.push(TT); const i = 1; return t(s) + (s.offsetHeight - vh) * sv[i < 0 ? sv.length + i : i] / TT; })()",
+"swipe+",
+"return (function(){ const s = q(\".enc-svc__dash\"), n = s.querySelectorAll(\".enc-svc__dboard\").length, TT = n + 0.7, sv = []; for (let k = 0; k < n; k++) sv.push(k === 0 ? 0 : k + 0.14, k + 0.68); sv.push(TT); const i = 2; return t(s) + (s.offsetHeight - vh) * sv[i < 0 ? sv.length + i : i] / TT; })()"
+],
+[
+"frame 2 → 1",
+"return (function(){ const s = q(\".enc-svc__dash\"), n = s.querySelectorAll(\".enc-svc__dboard\").length, TT = n + 0.7, sv = []; for (let k = 0; k < n; k++) sv.push(k === 0 ? 0 : k + 0.14, k + 0.68); sv.push(TT); const i = 2; return t(s) + (s.offsetHeight - vh) * sv[i < 0 ? sv.length + i : i] / TT; })()",
+"key-",
+"return (function(){ const s = q(\".enc-svc__dash\"), n = s.querySelectorAll(\".enc-svc__dboard\").length, TT = n + 0.7, sv = []; for (let k = 0; k < n; k++) sv.push(k === 0 ? 0 : k + 0.14, k + 0.68); sv.push(TT); const i = 1; return t(s) + (s.offsetHeight - vh) * sv[i < 0 ? sv.length + i : i] / TT; })()"
+],
+[
+"last frame → leaves whole",
+"return (function(){ const s = q(\".enc-svc__dash\"), n = s.querySelectorAll(\".enc-svc__dboard\").length, TT = n + 0.7, sv = []; for (let k = 0; k < n; k++) sv.push(k === 0 ? 0 : k + 0.14, k + 0.68); sv.push(TT); const i = -1; return t(s) + (s.offsetHeight - vh) * sv[i < 0 ? sv.length + i : i] / TT; })()",
+"notch+",
+"return b(q(\".enc-svc__dash\"))"
+],
+[
+"from where it left, back → last frame",
+"return b(q(\".enc-svc__dash\"))",
+"notch-",
+"return (function(){ const s = q(\".enc-svc__dash\"), n = s.querySelectorAll(\".enc-svc__dboard\").length, TT = n + 0.7, sv = []; for (let k = 0; k < n; k++) sv.push(k === 0 ? 0 : k + 0.14, k + 0.68); sv.push(TT); const i = -1; return t(s) + (s.offsetHeight - vh) * sv[i < 0 ? sv.length + i : i] / TT; })()"
+],
+[
+"frame 0 → a screen up",
+"return (function(){ const s = q(\".enc-svc__dash\"), n = s.querySelectorAll(\".enc-svc__dboard\").length, TT = n + 0.7, sv = []; for (let k = 0; k < n; k++) sv.push(k === 0 ? 0 : k + 0.14, k + 0.68); sv.push(TT); const i = 0; return t(s) + (s.offsetHeight - vh) * sv[i < 0 ? sv.length + i : i] / TT; })()",
+"notch-",
+"return t(q(\".enc-svc__dash\")) - vh"
+]
+]

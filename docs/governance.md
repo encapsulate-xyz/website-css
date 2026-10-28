@@ -84,6 +84,11 @@ test uses the opened gaps (`S.px`, `S.py`); each block owns half the gap around 
   first. Touch, keys and the scrollbar scroll freely; a flick started further than 1.5 screens away is not ours and
   can still run through. Checked with simulated trackpad swipes (a finger ramp and a momentum tail), flicks three
   times as hard, and mouse notches, down and up, at 1920×985.
+  **Since 2026-10-28 the counts are stops of the site's snap** (`snap.js`, `docs/main-css.md`, "Snapping"), each at its
+  hold's middle: a gesture or key glides the picture from one count to the next (the zoom plays on the way, in the
+  site's 750ms for a screen) instead of following the finger, and after the total the band is left whole. `countWheel`
+  is gone: it stopped the page dead at the hold's far end, the hardest stop on the site, and its blocking wheel
+  listener sat on every page. The freeze catches a flick from any distance now, and keys turn the counts too.
 - **The band is built after the pager** (2026-10-22, the user: "it takes some time to load sometime i just see an inked
   page with no disc on it"). `build()` ran `rows(); count(); …; apply()`, and `count()` measures its header — which
   lays out the whole page, and with all 1,181 rows still showing that took 0.73s on the first build and 1.06s on the
