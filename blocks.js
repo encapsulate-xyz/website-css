@@ -242,7 +242,14 @@
     if (!codeEl) return;
     // a React re-render puts the plain text back; that is the signal to draw it again
     if (codeEl.hasAttribute("data-enc-lines") && codeEl.querySelector(".enc-t-a, .enc-t-b, .enc-t-s, .enc-t-c, .enc-t-p, .enc-code__n, .enc-csv__h")) return;
+    // the code's own text, without the numbers and prompts drawn here: a re-render that dropped the mark but kept them
+    // drew them twice ("1  $  1  $ for block" on the Agoric post, 2026-10-28)
     var src = codeEl.textContent;
+    if (codeEl.querySelector(".enc-code__n, .enc-code__m")) {
+      var bare = codeEl.cloneNode(true);
+      bare.querySelectorAll(".enc-code__n, .enc-code__m").forEach(function (n) { n.remove(); });
+      src = bare.textContent;
+    }
     if (/^\s*super-embed:/.test(src)) return;
     var lang = render(block, pre, codeEl, src);
     kicker(block, lang);
