@@ -1,14 +1,15 @@
 // The page as Markdown, for llms.txt (scripts/llms.py runs it in every sitemap page through livecheck.mjs).
 // What a reader sees, in reading order: headings, paragraphs, lists, tables, code, quotes and links — not the
 // navbar, the footer, a block the page hides (copy toggles, the galleries a script reads), a marquee's second copy
-// (aria-hidden) or a drawing. A closed toggle's answer is read: its words are on the page, one press away. A drawing
-// built of HTML and labelled as an image (role="img", aria-label) is read as its label, as a screen reader reads it,
-// not as the figures set inside it (the homepage's vote story, 2026-10-28).
+// (aria-hidden) or a drawing. A closed toggle's answer is read: its words are on the page, one press away. The vote
+// story's drawing is read as its label, as a screen reader reads it ("1,913 votes: 1,243 Yes, …"), not as the figures
+// set inside it (2026-10-28). Only that one: /security's diagram is labelled too, but its label leaves out words its
+// boxes carry (auditd, Wazuh, Loki, the hardware key), so it is read as before.
 const SKIP = "script, style, noscript, svg, canvas, video, iframe, img, picture, button, input, select, textarea, " +
   ".super-navbar, .super-footer, .enc-nav, .enc-foot, [aria-hidden='true'], [data-enc-source], template, " +
   ".enc-ch__crumb, .enc-ch__week, .enc-ch__days, " +  // a chain page's trail over every section, and its calendar's cells
   ".enc-story__count, .enc-story__hint";  // the vote story's beat counter and its "Scroll" hint
-const LABELLED = "[role='img'][aria-label]";
+const LABELLED = ".enc-story [role='img'][aria-label]";
 const label = (el) => clean(el.getAttribute("aria-label")).trim();
 const root = document.querySelector(".super-content") || document.querySelector("main") || document.body;
 const abs = (h) => { try { const u = new URL(h, location.href); return /^(https?|mailto):/.test(u.protocol) ? u.href : null; } catch (e) { return null; } };

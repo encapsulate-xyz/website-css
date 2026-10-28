@@ -134,7 +134,7 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 
 ## Full text
 
-- [llms-full.txt](https://encapsulate.xyz/llms-full.txt): every page of encapsulate.xyz but the blog posts and the vote record, as Markdown (152 kB, 2026-10-27)
+- [llms-full.txt](https://encapsulate.xyz/llms-full.txt): every page of encapsulate.xyz but the blog posts and the vote record, as Markdown (152 kB, 2026-10-28)
 - [llms-blog.txt](https://encapsulate.xyz/llms-blog.txt): every blog post on encapsulate.xyz/blog, part 1 of 2, as Markdown (235 kB, 2026-10-25)
 - [llms-blog-2.txt](https://encapsulate.xyz/llms-blog-2.txt): every blog post on encapsulate.xyz/blog, part 2 of 2, as Markdown (158 kB, 2026-10-25)
 - [llms-votes.txt](https://encapsulate.xyz/llms-votes.txt): our governance vote record, every vote on encapsulate.xyz/governance/votes, part 1 of 2, as Markdown (247 kB, 2026-10-27)
