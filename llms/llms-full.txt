@@ -98,13 +98,11 @@ What you get
 
 Why stake with us
 
-#### Three things worth checking.
-
-Everything else on this page is shown rather than claimed. These three are not, so here they are plainly.
+#### Three things worth checking
 
 [See the networks](https://encapsulate.xyz/networks)
 
-No slashing
+##### No slashing.
 
 One mark per network
 
@@ -114,9 +112,9 @@ One mark per network
 
 slashes
 
-Across every validator we have ever run.
+Across every validator we have ever run. Slashing takes a cut of your stake, not ours, and we publish the record.
 
-Six years
+##### Six years.
 
 2020
 
@@ -126,9 +124,9 @@ Six years
 
 years
 
-Validating since 2020, through every upgrade since.
+Validating since 2020, and on most of our networks since their testnet, before there was anything to earn.
 
-Commission
+##### Commission.
 
 One bar per chain
 
@@ -138,7 +136,7 @@ Set
 
 per chain
 
-Published on every network page, never changed quietly.
+Set per chain and published on that chain’s page. A raise is announced before it takes effect.
 
 #### Networks
 
@@ -4622,7 +4620,7 @@ How long to withdraw
 
 Withdraw today · 28 Oct
 
-In your wallet · 28 Oct
+In your wallet · 29 Oct
 
 Live dates
 
