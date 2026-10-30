@@ -13,7 +13,11 @@ running the release is the vote or it carries a proposal; rationales — fills o
 rewrites a written one), `networks.yml` (daily: Reward rate + Rate updated and Commission on every mainnet row since 2026-10-24 — Mina
 excepted, blank on purpose — and Unbonding on the Cosmos rows, then the chain page's facts paragraph and
 `meta:description`; on the Cosmos rows the rate from the source the row was researched with — staking-explorer's
-measured APR, `terra2` not `terra`, cosmos.directory for Gravity Bridge, Chain4Energy's minter — and on the 14 others
+measured APR, `terra2` not `terra`, cosmos.directory for Gravity Bridge, Chain4Energy's minter; **where
+staking-explorer has no figure, our own measure** (site-data `jobs/networks/own.mjs`, 2026-10-30, after its domain
+stopped resolving on 2026-10-29 and ten rows kept their 28 Oct figures: the growth per token of our untouched
+delegators' pending rewards since an earlier run, a day to nine days back, after our commission; within half a point
+of staking-explorer's last figure on nine chains, Axelar 11.2–12.0 against 12.6) — and on the 14 others
 each chain's own `rate()` in site-data's `sources/`, EigenCloud's from EigenLayer's hosted Sidecar. **Rate updated is
 the day the rate was last checked and still held** (the user, 2026-10-24): a reading within 0.5 points of the row
 moves only the date; a figure is **written only when two consecutive runs read it within 0.5 points of each other**
