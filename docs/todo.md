@@ -246,9 +246,11 @@ holds, and the Search Console routine").
   cancel its removal, then request indexing.
 - **/guides/cosmos-hub: indexing requested on 2026-10-28**, the day it went Live. Check it is on Google on the
   next pass.
-- **Not on Google on 2026-10-28, to request from 2026-10-29:** /guides/sommelier (Live), /blog/monad-l1-scaling,
-  /blog/is-aptos-decentralized, /blog/berachain-research, /blog/agoric-testnet-17-analysis. Dropped from the queue as
-  Concluded: /guides/omniflix, /guides/quicksilver, /guides/stargaze, /guides/ux.
+- **2026-10-30:** /guides/cosmos-hub and /guides/sommelier are on Google. **Requested:** /blog/monad-l1-scaling,
+  /blog/is-aptos-decentralized, /blog/berachain-research, /blog/agoric-testnet-17-analysis (each "Discovered – currently
+  not indexed"); check them on the next pass. The 7 Concluded guides were hidden that day (404): nothing to file, the
+  removals of juno, mellow and namada read "Temporarily removed". The sitemap (`?v=2`) read Success, last read
+  2026-10-29, 115 pages; its next read drops the seven.
 - **Sitemaps — fixed, 2026-10-28:** `https://encapsulate.xyz/sitemap.xml?v=2` reads **Success** (last read
   2026-10-27, 114 pages discovered). The plain `/sitemap.xml` entry still shows its "Couldn't fetch" of 2026-10-25,
   never read again; the `?v=2` entry is the one Google reads. What it said before: on 2026-10-27 both entries read "Couldn't fetch", 0 discovered, no "Last read": the
