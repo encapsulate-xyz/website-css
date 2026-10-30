@@ -2,7 +2,7 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-10-28. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-10-30. The index of the site is https://encapsulate.xyz/llms.txt.
 
 ## Encapsulate - Validators for networks we believe in
 
@@ -20,7 +20,7 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 
 01 / 04 · Staked
 
-#### $71,089,770
+#### $69,974,131
 
 Under management by
 
@@ -38,7 +38,7 @@ Mainnet validator, in the active set.
 
 02 / 04 · Delegators
 
-#### 14,173
+#### 14,171
 
 delegators
 
@@ -186,20 +186,20 @@ Read, weigh, listen, step back: the same four questions before every vote. The s
 
 The record, by outcome
 
-##### 1,913 votes.
+##### 1,918 votes.
 
 All of them, stacked by answer.
 
-1,913 votes: 1,243 Yes, 78 No, 478 No with veto, 114 Abstain
+1,918 votes: 1,248 Yes, 78 No, 478 No with veto, 114 Abstain
 
 | Proposal | Our vote | Recorded |  |  |
 | --- | --- | --- | --- | --- |
+| Register arc on ITS Hub Axelar · 503 | YES | Oct 28, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/747F16F7DC098EBFF52004247751AE91D313953583C0C658E12710C5B8EE0F3A) | Deployment work the chain's connections depend on; supporting it keeps them working. |
+| Signal support for x/usdcmigration in a future ixo (Impacthub) software upgrade (Noble USDC wind-down) Ixo · 506 | YES | Oct 28, 2026 | [View Tx Hash](https://www.mintscan.io/ixo/tx/4F89D7EB83A870BE626CC551D741ED5608270394F0093F645806AB40A8CEF81F) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. |
+| Registering `USDC.inj` vat-bank asset Agoric · 123 | YES | Oct 28, 2026 | [View Tx Hash](https://www.mintscan.io/agoric/tx/510511C6E6C5E0686C1E9A45B28688DA599A8B25F46BAD49719FB16D2847FF62) | Deployment work the chain's connections depend on; supporting it keeps them working. |
+| Migrate Community Pool USDC.n to USDC.inj via a Community Multisig Cosmos Hub · 1060 | YES | Oct 28, 2026 | [View Tx Hash](https://www.mintscan.io/cosmos/tx/B6CFCC27BCDF45DDA563A03DF4C71718FDB5C2717D47F7BE6884024814867807) | The code and the addresses were published with the proposal, and the change is contained. Yes. |
+| Signal support for x/usdcmigration in a future Agoric software upgrade (Noble USDC wind-down) Agoric · 122 | YES | Oct 27, 2026 | [View Tx Hash](https://www.mintscan.io/agoric/tx/91FB0F7260565C5FA7BB5975FA37975DE39C81CA11CAB6E294DC3D709EE9223B) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. |
 | Phoenix Foundation: Appoint Martin as Emergency Supervisor Terra · 4853 | ABSTAIN | Oct 27, 2026 | [View Tx Hash](https://www.mintscan.io/terra/tx/F3EFCDB073E6EB94AF0FCE74D691BFBA7D11A7C8557E6F9C8F89BF6B236CB0F5) | Not enough in the proposal to judge it either way, so we abstain rather than guess. |
-| Instantiate and register arc with reward pools Axelar · 501 | YES | Oct 24, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/BB7A56F88567371F90452E3E7933E8C5D30E71AD92BEBC179820DEB7ACC729FC) | The code and the addresses were published with the proposal, and the change is contained. Yes. |
-| Interchain Token Service Batch Migration Axelar · 500 | YES | Oct 22, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/691E5D4C442DB91E15D3E2A358BDFD4C2381F7A5D419D9AC092BA29F1D4514DB) | Deployment work the chain's connections depend on; supporting it keeps them working. |
-| Protocol upgrade to version 139 Sui · 139 | YES | Oct 21, 2026 | [View Release](https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.82.3) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. |
-| Gaia v29.0.0 upgrade Cosmos Hub · 1059 | YES | Oct 21, 2026 | [View Tx Hash](https://www.mintscan.io/cosmos/tx/218B5EBDCEBF3516F2F2D1225DA0CCFFFC9726814FB551A5B9EC313786998258) | A scheduled upgrade on a published release. We support it so the validator set moves together and the chain stays live. |
-| Interchain Governance Proposal Axelar · 499 | YES | Oct 14, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/D474032B96A0AC849F523BF7F53A78EB4F47FEEB6C0B0BDD12BD31089E0BED26) | We read it in full and see nothing that works against the chain or its delegators. |
 
 [View voting history](https://encapsulate.xyz/governance)
 
@@ -829,11 +829,11 @@ Published as cast
 
 Scroll ↓
 
-Instantiate and register arc with reward pools“The code and the addresses were published with the proposal, and the change is contained. Yes.”
+Signal support for x/usdcmigration in a future ixo (Impacthub) software upgrade (Noble USDC wind-down)“Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes.”
 
 The record
 
-1,913
+1,918
 
 Six years of votes.
 
@@ -853,18 +853,18 @@ The record · newest first
 
 | Proposal | Our vote | Recorded |  |  |
 | --- | --- | --- | --- | --- |
+| Register arc on ITS Hub Axelar · 503 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/747F16F7DC098EBFF52004247751AE91D313953583C0C658E12710C5B8EE0F3A) | Deployment work the chain's connections depend on; supporting it keeps them working. | Oct 28, 2026 |
+| Signal support for x/usdcmigration in a future ixo (Impacthub) software upgrade (Noble USDC wind-down) Ixo · 506 | YES | [View Tx Hash](https://www.mintscan.io/ixo/tx/4F89D7EB83A870BE626CC551D741ED5608270394F0093F645806AB40A8CEF81F) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. | Oct 28, 2026 |
+| Registering `USDC.inj` vat-bank asset Agoric · 123 | YES | [View Tx Hash](https://www.mintscan.io/agoric/tx/510511C6E6C5E0686C1E9A45B28688DA599A8B25F46BAD49719FB16D2847FF62) | Deployment work the chain's connections depend on; supporting it keeps them working. | Oct 28, 2026 |
+| Migrate Community Pool USDC.n to USDC.inj via a Community Multisig Cosmos Hub · 1060 | YES | [View Tx Hash](https://www.mintscan.io/cosmos/tx/B6CFCC27BCDF45DDA563A03DF4C71718FDB5C2717D47F7BE6884024814867807) | The code and the addresses were published with the proposal, and the change is contained. Yes. | Oct 28, 2026 |
+| Signal support for x/usdcmigration in a future Agoric software upgrade (Noble USDC wind-down) Agoric · 122 | YES | [View Tx Hash](https://www.mintscan.io/agoric/tx/91FB0F7260565C5FA7BB5975FA37975DE39C81CA11CAB6E294DC3D709EE9223B) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. | Oct 27, 2026 |
 | Phoenix Foundation: Appoint Martin as Emergency Supervisor Terra · 4853 | ABSTAIN | [View Tx Hash](https://www.mintscan.io/terra/tx/F3EFCDB073E6EB94AF0FCE74D691BFBA7D11A7C8557E6F9C8F89BF6B236CB0F5) | Not enough in the proposal to judge it either way, so we abstain rather than guess. | Oct 27, 2026 |
 | Instantiate and register arc with reward pools Axelar · 501 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/BB7A56F88567371F90452E3E7933E8C5D30E71AD92BEBC179820DEB7ACC729FC) | The code and the addresses were published with the proposal, and the change is contained. Yes. | Oct 24, 2026 |
 | Interchain Token Service Batch Migration Axelar · 500 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/691E5D4C442DB91E15D3E2A358BDFD4C2381F7A5D419D9AC092BA29F1D4514DB) | Deployment work the chain's connections depend on; supporting it keeps them working. | Oct 22, 2026 |
 | Protocol upgrade to version 139 Sui · 139 | YES | [View Release](https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.82.3) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | Oct 21, 2026 |
 | Gaia v29.0.0 upgrade Cosmos Hub · 1059 | YES | [View Tx Hash](https://www.mintscan.io/cosmos/tx/218B5EBDCEBF3516F2F2D1225DA0CCFFFC9726814FB551A5B9EC313786998258) | A scheduled upgrade on a published release. We support it so the validator set moves together and the chain stays live. | Oct 21, 2026 |
-| Interchain Governance Proposal Axelar · 499 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/D474032B96A0AC849F523BF7F53A78EB4F47FEEB6C0B0BDD12BD31089E0BED26) | We read it in full and see nothing that works against the chain or its delegators. | Oct 14, 2026 |
-| Authorize Coordinator to instantiate VotingVerifier code 64 Axelar · 498 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/24EF6C4921F8DB0BA8B731805156ACA5B32092DC5387C505D3BAE8D0F0D94E2C) | Routine contract housekeeping that keeps existing integrations running. No change to protocol risk. | Oct 9, 2026 |
-| Protocol upgrade to version 138 Sui · 138 | YES | [View Release](https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.81.1) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | Oct 7, 2026 |
-| Protocol upgrade to version 37 IOTA · 37 | YES | [View Release](https://github.com/iotaledger/iota/releases/tag/v1.33.1) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | Oct 7, 2026 |
-| Move the 1,227,121 ATOM recovered after the Neutron exploit to the Neutron recovery multisig Cosmos Hub · 1058 | YES | [View Tx Hash](https://www.mintscan.io/cosmos/tx/2AA2B6A70FE601F38CFDAF327496F14E0704A545CF45A64D720DB853F3BB65CD) | Repair work on an existing route rather than a new commitment, so we support it. | Oct 5, 2026 |
 
-10 of 1,913 shown
+10 of 1,918 shown
 
 ## Investments
 
@@ -1076,7 +1076,7 @@ Lido DVT
 
 Monad
 
-9.1%
+8.4%
 
 NEAR
 
@@ -1088,7 +1088,7 @@ Sui
 
 Axelar
 
-14.1%
+12.6%
 
 Cosmos Hub
 
@@ -1146,7 +1146,7 @@ Althea
 
 Gitopia
 
-41.0%
+40.5%
 
 Gravity Bridge
 
@@ -1174,7 +1174,7 @@ Sommelier
 
 Chain4Energy
 
-7.8%
+7.9%
 
 4.6–5.4%
 
@@ -1292,7 +1292,7 @@ Of every 100 BLD staked
 
 6.4 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 28 Oct 2026
 
 Commission
 
@@ -1312,9 +1312,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 18 Nov
+In your wallet · 20 Nov
 
 Live dates
 
@@ -1460,7 +1460,7 @@ Stake ALTHEA with Encapsulate on Althea: 10% commission, 24.5% a year after comm
 
 Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.
 
-[Delegate with MetaMask](https://encapsulate.xyz/guides/althea)
+[Delegate with MetaMask](https://althea.link/staking)
 
 [Our validator](https://www.mintscan.io/althea/validators/altheavaloper1d2x0t42a6anth3lt38ld5997m6e5ya5fw72axt)
 
@@ -1478,7 +1478,7 @@ Of every 100 ALTHEA staked
 
 24.5 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 28 Oct 2026
 
 Commission
 
@@ -1498,9 +1498,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 18 Nov
+In your wallet · 20 Nov
 
 Live dates
 
@@ -1646,7 +1646,7 @@ Stake AVAIL with Encapsulate on Avail: 20% commission, 7.5% a year after commiss
 
 Delegate in two minutes. Your keys never leave your wallet; rewards accrue every era, about 24 hours.
 
-[Delegate with SubWallet](https://encapsulate.xyz/guides/avail)
+[Delegate with SubWallet](https://staking.availproject.org/#/nominate)
 
 [Our validator](https://avail.subscan.io/validator/5FqQ3hKubNnejLwquQXjouX1ogwdzcL3xCU2ZqFcZs9NKSTN)
 
@@ -1664,7 +1664,7 @@ Of every 100 AVAIL staked
 
 7.5 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 29 Oct 2026
 
 Commission
 
@@ -1684,9 +1684,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 25 Nov
+In your wallet · 27 Nov
 
 Live dates
 
@@ -1830,7 +1830,7 @@ Stake AVAX with Encapsulate on Avalanche: 2% commission, 4.6–5.4% a year after
 
 Delegate in two minutes. Your keys never leave your wallet; rewards arrive in one sum when your staking period ends.
 
-[Delegate with Core](https://encapsulate.xyz/guides/avalanche)
+[Delegate with Core](https://core.app/stake/)
 
 [Our validator](https://avascan.info/staking/validator/NodeID-N3e9W3EngjabGnTZVqyZwunVcbCdrY5Qy)
 
@@ -1848,7 +1848,7 @@ Of every 100 AVAX staked
 
 4.6 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 29 Oct 2026
 
 Commission
 
@@ -1868,9 +1868,9 @@ Staking period
 
 Locked for the period you choose
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-The shortest period ends · 11 Nov
+The shortest period ends · 13 Nov
 
 Live dates · the shortest period, 2 weeks
 
@@ -2008,7 +2008,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/axelar
 
-Stake AXL with Encapsulate on Axelar: 10% commission, 14.1% a year after commission, 7 days unbonding. Non-custodial.
+Stake AXL with Encapsulate on Axelar: 10% commission, 12.6% a year after commission, 7 days unbonding. Non-custodial.
 
 ### Axelar
 
@@ -2024,15 +2024,15 @@ The terms
 
 Reward rate
 
-14.1%
+12.6%
 
 Set by the chain, not by us
 
 Of every 100 AXL staked
 
-14.1 earned in a year
+12.6 earned in a year
 
-After our commission · as of 26 Oct 2026
+After our commission · as of 28 Oct 2026
 
 Commission
 
@@ -2052,9 +2052,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 4 Nov
+In your wallet · 6 Nov
 
 Live dates
 
@@ -2086,23 +2086,23 @@ Horizon
 
 Not compounded — Axelar pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,141
+1,126
 
 Year 1
 
-1,282
+1,252
 
 Year 2
 
-1,423
+1,378
 
 Year 3
 
-1,564
+1,504
 
 Year 4
 
-1,705
+1,630
 
 Year 5
 
@@ -2192,7 +2192,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/chain4energy
 
-Stake C4E with Encapsulate on Chain4Energy: 10% commission, 7.8% a year after commission, 21 days unbonding. Non-custodial.
+Stake C4E with Encapsulate on Chain4Energy: 10% commission, 7.9% a year after commission, 21 days unbonding. Non-custodial.
 
 ### Chain4Energy
 
@@ -2208,15 +2208,15 @@ The terms
 
 Reward rate
 
-7.8%
+7.9%
 
 Set by the chain, not by us
 
 Of every 100 C4E staked
 
-7.8 earned in a year
+7.9 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 29 Oct 2026
 
 Commission
 
@@ -2236,9 +2236,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 18 Nov
+In your wallet · 20 Nov
 
 Live dates
 
@@ -2270,23 +2270,23 @@ Horizon
 
 Not compounded — Chain4Energy pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,078
+1,079
 
 Year 1
 
-1,156
+1,158
 
 Year 2
 
-1,234
+1,237
 
 Year 3
 
-1,312
+1,316
 
 Year 4
 
-1,390
+1,395
 
 Year 5
 
@@ -2402,7 +2402,7 @@ Of every 100 ATOM staked
 
 17.7 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 28 Oct 2026
 
 Commission
 
@@ -2422,9 +2422,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 18 Nov
+In your wallet · 20 Nov
 
 Live dates
 
@@ -2566,7 +2566,7 @@ Stake EIGEN with Encapsulate on EigenCloud: 10% commission, 6.4% a year after co
 
 Delegate in two minutes. Your keys never leave your wallet; rewards are posted weekly, for you to claim.
 
-[Delegate with MetaMask](https://encapsulate.xyz/guides/eigen-layer)
+[Delegate with MetaMask](https://app.eigenlayer.xyz/operator/0xA6c3F159242855ba09D9f445679eD0b244C22062)
 
 [Our validator](https://app.eigenlayer.xyz/operator/0xA6c3F159242855ba09D9f445679eD0b244C22062)
 
@@ -2584,7 +2584,7 @@ Of every 100 EIGEN staked
 
 6.4 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 29 Oct 2026
 
 Commission
 
@@ -2604,9 +2604,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 11 Nov
+In your wallet · 13 Nov
 
 Live dates
 
@@ -2788,9 +2788,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 4 Nov
+In your wallet · 6 Nov
 
 Live dates
 
@@ -2928,7 +2928,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/gitopia
 
-Stake LORE with Encapsulate on Gitopia: 10% commission, 41.0% a year after commission, 21 days unbonding. Non-custodial.
+Stake LORE with Encapsulate on Gitopia: 10% commission, 40.5% a year after commission, 21 days unbonding. Non-custodial.
 
 ### Gitopia
 
@@ -2944,15 +2944,15 @@ The terms
 
 Reward rate
 
-41.0%
+40.5%
 
 Set by the chain, not by us
 
 Of every 100 LORE staked
 
-41 earned in a year
+40.5 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 28 Oct 2026
 
 Commission
 
@@ -2972,9 +2972,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 18 Nov
+In your wallet · 20 Nov
 
 Live dates
 
@@ -3006,23 +3006,23 @@ Horizon
 
 Not compounded — Gitopia pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,410
+1,405
 
 Year 1
 
-1,820
+1,810
 
 Year 2
 
-2,230
+2,215
 
 Year 3
 
-2,640
+2,620
 
 Year 4
 
-3,050
+3,025
 
 Year 5
 
@@ -3138,7 +3138,7 @@ Of every 100 GRAV staked
 
 16.4 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 29 Oct 2026
 
 Commission
 
@@ -3158,9 +3158,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 18 Nov
+In your wallet · 20 Nov
 
 Live dates
 
@@ -3324,7 +3324,7 @@ Of every 100 HEART staked
 
 31.7 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 28 Oct 2026
 
 Commission
 
@@ -3344,9 +3344,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 11 Nov
+In your wallet · 13 Nov
 
 Live dates
 
@@ -3358,7 +3358,7 @@ Since we joined
 
 Launch
 
-40 months
+41 months
 
 Today
 
@@ -3510,7 +3510,7 @@ Of every 100 IKA staked
 
 13.1 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 29 Oct 2026
 
 Commission
 
@@ -3530,9 +3530,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 30 Oct
+In your wallet · 31 Oct
 
 Live dates
 
@@ -3694,7 +3694,7 @@ Of every 100 IOTA staked
 
 11.3 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 29 Oct 2026
 
 Commission
 
@@ -3714,9 +3714,9 @@ None
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 28 Oct
+In your wallet · 30 Oct
 
 Live dates
 
@@ -3878,7 +3878,7 @@ Of every 100 IXO staked
 
 17.9 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 28 Oct 2026
 
 Commission
 
@@ -3898,9 +3898,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 18 Nov
+In your wallet · 20 Nov
 
 Live dates
 
@@ -4084,7 +4084,7 @@ Of every 100 ETH staked
 
 2.3 earned in a year
 
-After Lido’s fee · as of 27 Oct 2026
+After Lido’s fee · as of 29 Oct 2026
 
 Lido’s fee
 
@@ -4104,9 +4104,9 @@ Unbonding
 
 Lido’s withdrawal queue
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 2 Nov
+In your wallet · 4 Nov
 
 Live dates
 
@@ -4268,7 +4268,7 @@ Of every 100 LUME staked
 
 47.3 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 28 Oct 2026
 
 Commission
 
@@ -4288,9 +4288,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 18 Nov
+In your wallet · 20 Nov
 
 Live dates
 
@@ -4468,9 +4468,9 @@ None
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 28 Oct
+In your wallet · 30 Oct
 
 Live dates
 
@@ -4574,7 +4574,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/monad
 
-Stake MON with Encapsulate on Monad: 15% commission, 9.1% a year after commission, 4.5–9 hours unbonding. Non-custodial.
+Stake MON with Encapsulate on Monad: 15% commission, 8.4% a year after commission, 4.5–9 hours unbonding. Non-custodial.
 
 ### Monad
 
@@ -4590,15 +4590,15 @@ The terms
 
 Reward rate
 
-9.1%
+8.4%
 
 Set by the chain, not by us
 
 Of every 100 MON staked
 
-9.1 earned in a year
+8.4 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 29 Oct 2026
 
 Commission
 
@@ -4618,9 +4618,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 29 Oct
+In your wallet · 30 Oct
 
 Live dates
 
@@ -4652,23 +4652,23 @@ Horizon
 
 Not compounded — Monad pays rewards to a claimable balance. After our 15% commission. An estimate at today’s rate, which the chain can change.
 
-1,091
+1,084
 
 Year 1
 
-1,182
+1,168
 
 Year 2
 
-1,273
+1,252
 
 Year 3
 
-1,364
+1,336
 
 Year 4
 
-1,455
+1,420
 
 Year 5
 
@@ -4782,7 +4782,7 @@ Of every 100 NEAR staked
 
 4.7 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 29 Oct 2026
 
 Commission
 
@@ -4802,9 +4802,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 29 Oct
+In your wallet · 31 Oct
 
 Live dates
 
@@ -4966,7 +4966,7 @@ Of every 100 PASG staked
 
 6.7 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 28 Oct 2026
 
 Commission
 
@@ -4986,9 +4986,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 18 Nov
+In your wallet · 20 Nov
 
 Live dates
 
@@ -5172,9 +5172,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 25 Nov
+In your wallet · 27 Nov
 
 Live dates
 
@@ -5330,7 +5330,7 @@ Of every 100 STRK staked
 
 7.5 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 29 Oct 2026
 
 Commission
 
@@ -5350,9 +5350,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 4 Nov
+In your wallet · 6 Nov
 
 Live dates
 
@@ -5514,7 +5514,7 @@ Of every 100 SUI staked
 
 1.3 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 29 Oct 2026
 
 Commission
 
@@ -5534,9 +5534,9 @@ None
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 28 Oct
+In your wallet · 30 Oct
 
 Live dates
 
@@ -5680,7 +5680,7 @@ Stake SUPRA with Encapsulate on Supra: 38.72% commission, 8.0% a year after comm
 
 Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 2 hours.
 
-[Delegate with StarKey](https://encapsulate.xyz/guides/supra)
+[Delegate with StarKey](https://starkey.app/)
 
 [Our validator](https://suprascan.io/address/0x15ac9afcd6a042bd61239305ad13663f2423663d6ea83ce5293561b77766cd3a/f)
 
@@ -5698,7 +5698,7 @@ Of every 100 SUPRA staked
 
 8 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 29 Oct 2026
 
 Commission
 
@@ -5718,9 +5718,9 @@ Up to 48 hours
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 30 Oct
+In your wallet · 1 Nov
 
 Live dates
 
@@ -5882,7 +5882,7 @@ Of every 100 LUNA staked
 
 35.9 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 28 Oct 2026
 
 Commission
 
@@ -5902,9 +5902,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 18 Nov
+In your wallet · 20 Nov
 
 Live dates
 
@@ -6066,7 +6066,7 @@ Of every 100 VARA staked
 
 16.9 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 29 Oct 2026
 
 Commission
 
@@ -6086,9 +6086,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 4 Nov
+In your wallet · 6 Nov
 
 Live dates
 
@@ -6250,7 +6250,7 @@ Of every 100 ZIL staked
 
 8.2 earned in a year
 
-After our commission · as of 27 Oct 2026
+After our commission · as of 29 Oct 2026
 
 Commission
 
@@ -6270,9 +6270,9 @@ About 6 days
 
 How long to withdraw
 
-Withdraw today · 28 Oct
+Withdraw today · 30 Oct
 
-In your wallet · 3 Nov
+In your wallet · 5 Nov
 
 Live dates
 
@@ -6284,7 +6284,7 @@ Since we joined
 
 Launch
 
-15 months
+16 months
 
 Today
 
@@ -7324,24 +7324,6 @@ ixo’s terms and common questions
 
 Need help? Ask on Discord
 
-## Juno staking guide
-
-URL: https://encapsulate.xyz/guides/juno
-
-Delegate JUNO with Keplr. Nine steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
-
-#### 📍Useful Links
-
-[Keplr - Chrome Web Store](https://chromewebstore.google.com/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en&pli=1)
-
-[Get Keplr Wallet | Extension and Mobile App](https://www.keplr.app/get)
-
-#### 🌱 Need Help?
-
-[Ask us on X](https://x.com/encapHQ)
-
-[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
-
 ## Lumera staking guide
 
 URL: https://encapsulate.xyz/guides/lumera
@@ -7443,24 +7425,6 @@ All guides
 Lumera’s terms and common questions
 
 Need help? Ask on Discord
-
-## Mellow staking guide
-
-URL: https://encapsulate.xyz/guides/mellow
-
-Stake MELLOW with MetaMask. Eight steps across the MetaMask extension and its dashboard, one per screen, each with the screen you should be looking at.
-
-#### 📍Useful Links
-
-[app.mellow.finance](https://app.mellow.finance/vaults)
-
-[MetaMask - Chrome Web Store](https://chromewebstore.google.com/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en)
-
-#### 🌱 Need Help?
-
-[Ask us on X](https://x.com/encapHQ)
-
-[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
 
 ## Mina staking guide
 
@@ -7726,24 +7690,6 @@ Monad’s terms and common questions
 
 Need help? Ask on Discord
 
-## Namada staking guide
-
-URL: https://encapsulate.xyz/guides/namada
-
-Stake NAMADA with Namadillo. Eight steps across the Namadillo extension and its dashboard, one per screen, each with the screen you should be looking at.
-
-#### 📍Useful Links
-
-[Namadillo - Namada User Interface](https://namadillo.app/)
-
-[Namada Keychain - Chrome Web Store](https://chromewebstore.google.com/detail/namada-keychain/hnebcbhjpeejiclgbohcijljcnjdofek)
-
-#### 🌱 Need Help?
-
-[Ask us on X](https://x.com/encapHQ)
-
-[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
-
 ## Near staking guide
 
 URL: https://encapsulate.xyz/guides/near
@@ -7856,24 +7802,6 @@ NEAR’s terms and common questions
 
 Need help? Ask on Discord
 
-## OmniFlix staking guide
-
-URL: https://encapsulate.xyz/guides/omniflix
-
-Delegate OMNIFLIX with Keplr. Nine steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
-
-#### 📍Useful Links
-
-[Keplr - Chrome Web Store](https://chromewebstore.google.com/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en&pli=1)
-
-[Get Keplr Wallet | Extension and Mobile App](https://www.keplr.app/get)
-
-#### 🌱 Need Help?
-
-[Ask us on X](https://x.com/encapHQ)
-
-[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
-
 ## Passage staking guide
 
 URL: https://encapsulate.xyz/guides/passage
@@ -7976,22 +7904,6 @@ Passage’s terms and common questions
 
 Need help? Ask on Discord
 
-## Quicksilver staking guide
-
-URL: https://encapsulate.xyz/guides/quicksilver
-
-Delegate QCK with Keplr. Nine steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
-
-#### 📍Useful Links
-
-[Keplr - Chrome Web Store](https://chromewebstore.google.com/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en)
-
-#### 🌱 Need Help?
-
-[Ask us on X](https://x.com/encapHQ)
-
-[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
-
 ## Sommelier staking guide
 
 URL: https://encapsulate.xyz/guides/sommelier
@@ -8093,26 +8005,6 @@ All guides
 Sommelier’s terms and common questions
 
 Need help? Ask on Discord
-
-## Stargaze staking guide
-
-URL: https://encapsulate.xyz/guides/stargaze
-
-Delegate STARS with Keplr. Eight steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
-
-Connect
-
-#### 📍Useful Links
-
-[Keplr Dashboard Stargaze | Keplr Dashboard](https://wallet.keplr.app/chains/stargaze?modal=staking&chain=stargaze-1&step_id=2)
-
-[Keplr - Chrome Web Store](https://chromewebstore.google.com/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en)
-
-#### 🌱 Need Help?
-
-[Ask us on X](https://x.com/encapHQ)
-
-[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
 
 ## Starknet staking guide with Braavos
 
@@ -8607,28 +8499,6 @@ All guides
 Terra’s terms and common questions
 
 Need help? Ask on Discord
-
-## UX staking guide
-
-URL: https://encapsulate.xyz/guides/ux
-
-Delegate UX with Keplr. Nine steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
-
-Connect
-
-#### 📍Useful Links
-
-[Get Keplr Wallet | Extension and Mobile App](https://www.keplr.app/get)
-
-[Keplr - Chrome Web Store](https://chromewebstore.google.com/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en&pli=1)
-
-[Keplr Dashboard UX | Keplr Dashboard](https://wallet.keplr.app/chains/ux)
-
-#### 🌱 Need Help?
-
-[Ask us on X](https://x.com/encapHQ)
-
-[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
 
 ## Zilliqa staking guide
 

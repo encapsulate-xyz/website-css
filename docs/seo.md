@@ -219,6 +219,12 @@ temporary removal filed: althea, avail, avalanche, eigen-layer, eigen-layer-stet
 juno, mellow, namada. Omniflix, quicksilver, stargaze and ux were not on Google, so the line alone keeps them out.
 `guide_index.py` then read 0 of 34 out of step.
 
+**2026-10-30 — the 7 Concluded guides are hidden in Super** (the user: "yes"): juno, mellow, namada, omniflix,
+quicksilver, stargaze and ux answer 404 with noindex and left the sitemap (34 guides → 27); their Notion rows stay, and
+their old `/guides/mainnet/<x>` redirects now end on that 404. Undo one with MCP `update_page {pageId, hidden: false}`,
+ids in `backups/super-hidden-guides-2026-10-30.json`. The removals of juno, mellow and namada stand, and the 404 keeps
+them out once they lapse; the other four were never on Google. `guide_index.py` lists them as rows with no page.
+
 ## llms.txt — the site for language models (2026-10-25)
 
 The user: "add a very comprehehnsive and complete llms file". The site had none (both addresses 404), and Lighthouse's

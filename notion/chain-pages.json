@@ -323,8 +323,10 @@
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every block.",
    "wallet": {
     "label": "Delegate with MetaMask",
-    "url": "https://www.notion.so/2d1e800a5138800daae5e7127e2c5d52",
-    "guide": "/guides (Althea)"
+    "url": "https://althea.link/staking",
+    "guide": "/guides (Althea)",
+    "guide_url": "https://www.notion.so/2d1e800a5138800daae5e7127e2c5d52",
+    "until": "the guide is Soon (its old slides); the wallet's staking page until it is Live, then url = guide_url (2026-10-30)"
    },
    "work": [
     [
@@ -1039,8 +1041,10 @@
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards arrive in one sum when your staking period ends.",
    "wallet": {
     "label": "Delegate with Core",
-    "url": "https://www.notion.so/202e800a5138808291a3c3b62d70d8ba",
-    "guide": "/guides (AVALANCHE)"
+    "url": "https://core.app/stake/",
+    "guide": "/guides (AVALANCHE)",
+    "guide_url": "https://www.notion.so/202e800a5138808291a3c3b62d70d8ba",
+    "until": "the guide is Soon (its old slides); the wallet's staking page until it is Live, then url = guide_url (2026-10-30)"
    },
    "work": [
     [
@@ -1602,8 +1606,10 @@
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 2 hours.",
    "wallet": {
     "label": "Delegate with StarKey",
-    "url": "https://www.notion.so/237e800a513880efad23eeb818007817",
-    "guide": "/guides (Supra)"
+    "url": "https://starkey.app/",
+    "guide": "/guides (Supra)",
+    "guide_url": "https://www.notion.so/237e800a513880efad23eeb818007817",
+    "until": "the guide is Soon (its old slides); the wallet's staking page until it is Live, then url = guide_url (2026-10-30)"
    },
    "work": [
     [
@@ -1842,8 +1848,10 @@
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards accrue every era, about 24 hours.",
    "wallet": {
     "label": "Delegate with SubWallet",
-    "url": "https://www.notion.so/220e800a5138805380ddc663626833a9",
-    "guide": "/guides (Avail)"
+    "url": "https://staking.availproject.org/#/nominate",
+    "guide": "/guides (Avail)",
+    "guide_url": "https://www.notion.so/220e800a5138805380ddc663626833a9",
+    "until": "the guide is Soon (its old slides); the wallet's staking page until it is Live, then url = guide_url (2026-10-30)"
    },
    "work": [
     [
@@ -2237,8 +2245,10 @@
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards are posted weekly, for you to claim.",
    "wallet": {
     "label": "Delegate with MetaMask",
-    "url": "https://www.notion.so/22de800a513880c7adfeee372f41a4e1",
-    "guide": "/guides (Eigen Layer)"
+    "url": "https://app.eigenlayer.xyz/operator/0xA6c3F159242855ba09D9f445679eD0b244C22062",
+    "guide": "/guides (Eigen Layer)",
+    "guide_url": "https://www.notion.so/22de800a513880c7adfeee372f41a4e1",
+    "until": "the guide is Soon (its old slides); the wallet's staking page until it is Live, then url = guide_url (2026-10-30)"
    },
    "work": [
     [

@@ -22,12 +22,12 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 - [Althea staking](https://encapsulate.xyz/networks/althea): Stake ALTHEA with Encapsulate on Althea: 10% commission, 24.5% a year after commission, 21 days unbonding. Non-custodial.
 - [Avail staking](https://encapsulate.xyz/networks/avail): Stake AVAIL with Encapsulate on Avail: 20% commission, 7.5% a year after commission, 28 days unbonding. Non-custodial.
 - [Avalanche staking](https://encapsulate.xyz/networks/avalanche): Stake AVAX with Encapsulate on Avalanche: 2% commission, 4.6–5.4% a year after commission, locked 2 weeks–1 year. Non-custodial.
-- [Axelar staking](https://encapsulate.xyz/networks/axelar): Stake AXL with Encapsulate on Axelar: 10% commission, 14.1% a year after commission, 7 days unbonding. Non-custodial.
-- [Chain4Energy staking](https://encapsulate.xyz/networks/chain4energy): Stake C4E with Encapsulate on Chain4Energy: 10% commission, 7.8% a year after commission, 21 days unbonding. Non-custodial.
+- [Axelar staking](https://encapsulate.xyz/networks/axelar): Stake AXL with Encapsulate on Axelar: 10% commission, 12.6% a year after commission, 7 days unbonding. Non-custodial.
+- [Chain4Energy staking](https://encapsulate.xyz/networks/chain4energy): Stake C4E with Encapsulate on Chain4Energy: 10% commission, 7.9% a year after commission, 21 days unbonding. Non-custodial.
 - [Cosmos Hub staking](https://encapsulate.xyz/networks/cosmos-hub): Stake ATOM with Encapsulate on Cosmos Hub: 10% commission, 17.7% a year after commission, 21 days unbonding. Non-custodial.
 - [EigenCloud staking](https://encapsulate.xyz/networks/eigencloud): Stake EIGEN with Encapsulate on EigenCloud: 10% commission, 6.4% a year after commission, 14 days unbonding. Non-custodial.
 - [Espresso staking](https://encapsulate.xyz/networks/espresso): Stake ESP with Encapsulate on Espresso: 10% commission, 3.3% a year after commission, 7 days unbonding. Non-custodial.
-- [Gitopia staking](https://encapsulate.xyz/networks/gitopia): Stake LORE with Encapsulate on Gitopia: 10% commission, 41.0% a year after commission, 21 days unbonding. Non-custodial.
+- [Gitopia staking](https://encapsulate.xyz/networks/gitopia): Stake LORE with Encapsulate on Gitopia: 10% commission, 40.5% a year after commission, 21 days unbonding. Non-custodial.
 - [Gravity Bridge staking](https://encapsulate.xyz/networks/gravity-bridge): Stake GRAV with Encapsulate on Gravity Bridge: 10% commission, 16.4% a year after commission, 21 days unbonding. Non-custodial.
 - [humans.ai staking](https://encapsulate.xyz/networks/humans-ai): Stake HEART with Encapsulate on humans.ai: 10% commission, 31.7% a year after commission, 14 days unbonding. Non-custodial.
 - [Ika staking](https://encapsulate.xyz/networks/ika): Stake IKA with Encapsulate on Ika: 10% commission, 13.1% a year after commission, 12–36 hours unbonding. Non-custodial.
@@ -36,7 +36,7 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 - [Lido DVT staking](https://encapsulate.xyz/networks/lido-dvt): Stake ETH through Lido DVT with Encapsulate: 500 validators, 10% fee in all, 2.3% a year after fees, 1–5 days to unstake.
 - [Lumera staking](https://encapsulate.xyz/networks/lumera): Stake LUME with Encapsulate on Lumera: 10% commission, 47.3% a year after commission, 21 days unbonding. Non-custodial.
 - [Mina staking](https://encapsulate.xyz/networks/mina): Stake MINA with Encapsulate on Mina: 5% commission, no unbonding. Non-custodial.
-- [Monad staking](https://encapsulate.xyz/networks/monad): Stake MON with Encapsulate on Monad: 15% commission, 9.1% a year after commission, 4.5–9 hours unbonding. Non-custodial.
+- [Monad staking](https://encapsulate.xyz/networks/monad): Stake MON with Encapsulate on Monad: 15% commission, 8.4% a year after commission, 4.5–9 hours unbonding. Non-custodial.
 - [NEAR staking](https://encapsulate.xyz/networks/near): Stake NEAR with Encapsulate on NEAR: 5% commission, 4.7% a year after commission, 22–30 hours unbonding. Non-custodial.
 - [Passage staking](https://encapsulate.xyz/networks/passage): Stake PASG with Encapsulate on Passage: 10% commission, 6.7% a year after commission, 21 days unbonding. Non-custodial.
 - [Sommelier staking](https://encapsulate.xyz/networks/sommelier): Stake SOMM with Encapsulate on Sommelier: 10% commission, 0% a year after commission, 28 days unbonding. Non-custodial.
@@ -65,24 +65,17 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 - [Ika staking guide](https://encapsulate.xyz/guides/ika): Stake IKA with Suiet. Nine steps across the Suiet extension and its dashboard, one per screen, each with the screen you should be looking at.
 - [IOTA staking guide](https://encapsulate.xyz/guides/iota): Stake IOTA with IOTA Wallet. Seven steps across the IOTA Wallet extension and the IOTA explorer, one per screen, each with the screen you should be looking at.
 - [ixo staking guide](https://encapsulate.xyz/guides/ixo): Delegate IXO with Keplr. Seven steps across ping.pub and the Keplr extension, one per screen, each with the screen you should be looking at.
-- [Juno staking guide](https://encapsulate.xyz/guides/juno): Delegate JUNO with Keplr. Nine steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
 - [Lumera staking guide](https://encapsulate.xyz/guides/lumera): Delegate LUME with Keplr. Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
-- [Mellow staking guide](https://encapsulate.xyz/guides/mellow): Stake MELLOW with MetaMask. Eight steps across the MetaMask extension and its dashboard, one per screen, each with the screen you should be looking at.
 - [Mina staking guide](https://encapsulate.xyz/guides/mina): Stake MINA with Auro Wallet. Nine steps in the Auro Wallet extension, one per screen, each with the screen you should be looking at.
 - [Monad staking guide](https://encapsulate.xyz/guides/monad): Stake MON with MetaMask. Eleven steps across MonadVision and the MetaMask extension, one per screen, each with the screen you should be looking at.
-- [Namada staking guide](https://encapsulate.xyz/guides/namada): Stake NAMADA with Namadillo. Eight steps across the Namadillo extension and its dashboard, one per screen, each with the screen you should be looking at.
 - [Near staking guide](https://encapsulate.xyz/guides/near): Stake NEAR with Meteor. Eight steps in Meteor's web wallet, one per screen, each with the screen you should be looking at.
-- [OmniFlix staking guide](https://encapsulate.xyz/guides/omniflix): Delegate OMNIFLIX with Keplr. Nine steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
 - [Passage staking guide](https://encapsulate.xyz/guides/passage): Delegate PASG with Keplr. Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
-- [Quicksilver staking guide](https://encapsulate.xyz/guides/quicksilver): Delegate QCK with Keplr. Nine steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
 - [Sommelier staking guide](https://encapsulate.xyz/guides/sommelier): Stake SOMM with Keplr. Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
-- [Stargaze staking guide](https://encapsulate.xyz/guides/stargaze): Delegate STARS with Keplr. Eight steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
 - [Starknet staking guide with Braavos](https://encapsulate.xyz/guides/starknet-braavos): Stake STRK with Braavos. Nine steps across Voyager’s staking dashboard and the Braavos extension, one per screen, each with the screen you should be looking at.
 - [Starknet staking guide with Ready X](https://encapsulate.xyz/guides/starknet-ready-x): Stake STRK with Ready X. Nine steps across Voyager’s staking dashboard and the Ready X extension, one per screen, each with the screen you should be looking at.
 - [Sui staking guide](https://encapsulate.xyz/guides/sui): Stake SUI with Slush. Ten steps across SuiVision and the Slush extension, one per screen, each with the screen you should be looking at.
 - [Supra staking guide](https://encapsulate.xyz/guides/supra): Stake SUPRA with StarKey. Eleven steps across the StarKey extension and its dashboard, one per screen, each with the screen you should be looking at.
 - [Terra staking guide](https://encapsulate.xyz/guides/terra): Delegate LUNA with Keplr. Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
-- [UX staking guide](https://encapsulate.xyz/guides/ux): Delegate UX with Keplr. Nine steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
 - [Zilliqa staking guide](https://encapsulate.xyz/guides/zilliqa): Stake ZIL with Bearby. Eight steps across Zilliqa’s staking portal and the Bearby extension, one per screen, each with the screen you should be looking at.
 
 ## Blog
@@ -135,7 +128,7 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 
 ## Full text
 
-- [llms-full.txt](https://encapsulate.xyz/llms-full.txt): every page of encapsulate.xyz but the blog posts and the vote record, as Markdown (154 kB, 2026-10-28)
+- [llms-full.txt](https://encapsulate.xyz/llms-full.txt): every page of encapsulate.xyz but the blog posts and the vote record, as Markdown (150 kB, 2026-10-30)
 - [llms-blog.txt](https://encapsulate.xyz/llms-blog.txt): every blog post on encapsulate.xyz/blog, part 1 of 2, as Markdown (235 kB, 2026-10-28)
 - [llms-blog-2.txt](https://encapsulate.xyz/llms-blog-2.txt): every blog post on encapsulate.xyz/blog, part 2 of 2, as Markdown (158 kB, 2026-10-25)
 - [llms-votes.txt](https://encapsulate.xyz/llms-votes.txt): our governance vote record, every vote on encapsulate.xyz/governance/votes, part 1 of 2, as Markdown (247 kB, 2026-10-27)

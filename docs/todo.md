@@ -196,6 +196,24 @@ tab open and its token fresh.
   It has no per-page sitemap switch, so /team stays in the sitemap. Never its colour, font, theme or style tools: the
   design lives in this repo.
 
+## TODO — the nine Soon guides are still the old slides (found 2026-10-30)
+
+The design survey of 2026-10-30 (every page type at 1440 against its design) found one kind of page off the system: a
+guide that is not converted shows its old slide thumbnails, a taped banner and emoji headings. The 7 Concluded ones
+were hidden (`docs/seo.md`); **9 Soon guides remain**: althea, avail, avalanche, eigen-layer, eigen-layer-steth, gitopia,
+humans-ai, ika, supra. None has its captures yet — `guide_steps.py` finds only the old slide database (no Step property)
+— so each waits for the team's captures, then "Converting a guide — the run" (`notion/new-row-checklist.md`).
+
+- **Their chain pages' green buttons** (the cover's and the dock's) opened the old guide. Five now open the wallet's own
+  staking page, as the checklist has it for a guide that is not Live: Althea althea.link/staking, Avail
+  staking.availproject.org/#/nominate, Avalanche core.app/stake/, EigenCloud our operator on app.eigenlayer.xyz,
+  Supra starkey.app. `notion/chain-pages.json` keeps each guide's address as `guide_url`; when the guide goes Live,
+  url = guide_url and `chain_pages.py --buttons "<Name>"`. Old values `backups/chain-buttons-2026-10-30.json`.
+- **Ika, Gitopia and humans.ai still open the old guide**: the staking site each guide uses is down on 2026-10-30 —
+  stakereef.com answers a Cloudflare tunnel error (1033); ping.pub's Gitopia and Humans pages list no validators (its
+  ixo page works); Keplr's dashboard and dteam.tech's explorer carry neither chain. Find a working page that delegates
+  to us (and check it lands on our validator), or convert the guide on a working flow.
+
 ## TODO — Search Console (from 2026-10-25; the routine is CLAUDE.md, "After every task, Search Console")
 
 Google had not read the sitemap since it was submitted on 2026-09-29 ("Couldn't fetch"), so pages added since were

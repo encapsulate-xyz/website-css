@@ -203,7 +203,8 @@ these are what shows before that read lands, and what a crawler reads. Find them
       row that holds the captures, give it this one's Name, and archive the empty one.
 - [ ] It stays Soon with no path in Super until the team adds the captures; then follow "Guides Database — a new
       guide" below (the words, Live, /guides/<slug> with its canonical, the card, refresh /guides) and **switch
-      the chain page's green button to the guide** (`chain-pages.json` wallet → the guide's Notion URL,
+      the chain page's green button to the guide** (`chain-pages.json` wallet → the guide's Notion URL — its `guide_url` where the
+      wallet's staking page stood in for it — and drop `guide_url` and `until`,
       `chain_pages.py --buttons "<Name>"`).
 
 **9. The social card** — after the chain page builds live:
