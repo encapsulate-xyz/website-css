@@ -2339,8 +2339,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
 }
 #block-404e800a51388128ba49e43d1ce92374 { grid-area: split !important; margin: 0 !important; padding: 0 !important; }
 #block-404e800a5138816ab84adfcc33e9bb44[data-enc-story-src],
-#block-404e800a51388128ba49e43d1ce92374[data-enc-story-src],
-#block-406e800a513881c19f5feac5490bdc30 { display: none !important; }
+#block-404e800a51388128ba49e43d1ce92374[data-enc-story-src] { display: none !important; }
 /* once drawn, the band takes the kicker's row and the line's: one row between the lede and the rows */
 #block-e99ac68f4a5848d091bc204578c1ec55:has(> .notion-column > [data-enc-story]) {
   grid-template-areas: "lead cta" "story story" "table table" !important;

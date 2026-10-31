@@ -414,8 +414,8 @@ leaves out has no column. The line and the kicker (`404e800a…816a…`) are hid
 as Notion wrote it, with its kicker.
 **The "Vote split copy" toggle under the line** (`406e800a513881c19f5feac5490bdc30`) held the story's words (its
 captions, the counter, the opening lead, each `key · text` with the counts filled in by governance.js). G3p has no words
-of its own, so nothing reads it since 2026-10-31; it stays in Notion, hidden by its id in home.css, until the user says
-whether to delete it.
+of its own, so nothing read it after 2026-10-31, and it was deleted that day at the user's word, with its rule in
+home.css; its nine lines are in `backups/vote-split-copy-toggle-2026-10-31.json` (Notion's trash holds the block).
 **Left out of the design:** the "G3p" pill and its sizes label ("Upright · figures 36–56px"), which name the design
 among its four, and the reference and G3m–G3o sections. Section name `#by-outcome`: the top of the band (the kicker
 until drawn). Checked 2026-10-31 at 1440, 1024, 900, 800, 760, 390 and 320 (no sideways scroll), the pour by real wheel

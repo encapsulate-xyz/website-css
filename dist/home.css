@@ -292,7 +292,7 @@
 }
 #block-404e800a5138816ab84adfcc33e9bb44{grid-area: skick !important;margin: 26px 0 -10px !important;padding: 0 !important;min-height: 0 !important;font-family: var(--type-mono) !important;font-size: 10.5px !important;font-weight: 400 !important;line-height: 1.3 !important;letter-spacing: 0.12em !important;text-transform: uppercase !important;color: #3A3D38 !important;}
 #block-404e800a51388128ba49e43d1ce92374{grid-area: split !important;margin: 0 !important;padding: 0 !important;}
-#block-404e800a5138816ab84adfcc33e9bb44[data-enc-story-src],#block-404e800a51388128ba49e43d1ce92374[data-enc-story-src],#block-406e800a513881c19f5feac5490bdc30{display: none !important;}
+#block-404e800a5138816ab84adfcc33e9bb44[data-enc-story-src],#block-404e800a51388128ba49e43d1ce92374[data-enc-story-src]{display: none !important;}
 #block-e99ac68f4a5848d091bc204578c1ec55:has(> .notion-column > [data-enc-story]){grid-template-areas: "lead cta" "story story" "table table" !important;}
 .enc-story{grid-area: story;position: relative;min-width: 0;}
 .enc-story__stage{display: flex;flex-direction: column;gap: 24px;padding: 26px 0;}
