@@ -373,64 +373,51 @@ behind it.", which named pillars the section no longer shows; the new one pairs 
 by outcome". Old text in `backups/governance-stray-row-and-home-heading-2026-10-25.json`; the block (and `#governance`)
 is the same.
 
-**The vote split fills the strip's place, told as a story since 2026-10-27** (design *Vote Split Story*, "G3d, told as
-a story"; the user chose "Homepage, replacing G3"). Before it, from 2026-10-25, it was G3 "Pastel ribbons" of *Vote Split
-Patterns* (built on /governance first by mistake, v396, and moved here the same day, the user: "g3 isnt for
-/governance, it was the homepage governance section"): one static drawing that poured in once, its figures inside the
-ribbons with an 11px floor (`git show v418:governance.js`, 3b). **Since 2026-10-28 (v423) the story is the design's
-C, "Scrubbed in passing"**: the design was revised that day to lead with C, "for a page that cannot give it six
-screens", and the user sent it again to implement; from 2026-10-27 it had been A, a pinned stage of one screen of scroll
-a beat, 640vh in all (`git show v422:governance.js`). C is a band between the lede and the six rows, full width, with no
-pin and no extra length (`[data-enc-story]`, governance.js 3b, home.css): its head row is the kicker's words, "The record,
-by outcome", and the counter ("01 / 06"); then the caption, the beat's headline (an h3, Outfit 600, 28–40px) and lead
-(17px), crossfading in one grid cell over the drawing's right half, its left edge on the line where the ribbons run
-straight, which is where the figures start (at least 360px left it); then the drawing, 420px tall. The band's own
-passage up the screen tells it: the story starts once half the drawing is on screen (or at the first scroll, if the
-page opens with more of it showing) and ends as the caption reaches the top, never in under 0.45 of a screen. The
-design's costs: a fast scroll sees only the split; on a short screen the opening beats play with the drawing's foot
-below the screen; at the opening beat the caption stands over empty paper. Where the drawing is under 680px wide the
-caption is at the left, over the phone drawing, still 420px. There is no "Scroll ↓" hint any more (its `scroll` line
-went from the copy toggle, `backups/vote-split-copy-scroll-line-2026-10-28.json`), and the opening lead is the
-design's new one, "All of them, stacked by answer." A figure shows once its ribbon has poured past the straight line. **The design's three settings, as the user chose
-them on 2026-10-28** (Figures "Sized to ribbon", Order "Ballot order", Opening "Pastel record"; v419 had the defaults,
-Column and Ink block): it opens on the record in its pastels, stacked by answer beside its total, every seam on the
-measure showing; each beat one answer pours out of it as its ribbon, in ballot order, then the record parts at that
-answer's seam and the ribbons already told lift by half a gap, staying centred on the record; the close holds the whole
-split. Scrolling back reverses it. Each figure is sized to its ribbon, two-thirds of it and never under 14px, in
-proportional digits, every first digit's ink on one left edge where the ribbons straighten (`headEm`, the digit's left
-bearing measured on a canvas) and every name at the ribbons' right end; the drawing grows thinner only when the widest
-figure and its name would not fit beside the curve. The design's own cost: on a short screen No's 78, at the 14px floor,
-stands slightly proud of its ribbon. The opening's lead follows the setting, "Every vote in the record, stacked by
-answer." (the toggle's `open lead`). Under 760px the record runs
-across the top and each answer pours down into its column, its figure under it at 36px; a figure too close to its
-neighbour drops a row. Reduced motion steps it a beat at a time; print shows it whole. **Read aloud** it is the design's markup: the beat on screen (the
-others `aria-hidden`), and the drawing as one image labelled with the whole split, "1,913 votes: 1,243 Yes, 78 No, 478
-No with veto, 114 Abstain" (`role="img"`, its figures inside it not read). v420 replaced that with all six beats and the
-drawing hidden, on the mistaken reading that a screen reader heard the figures inside the image; it was llms.py that did,
-so the extractor was taught to read a labelled image as its label, and governance.js went back to v419 (2026-10-28).
-**Nothing raw before the build** (2026-10-28, the user: "i can see raw notion for a section when i refresh this page
-https://encapsulate.xyz/#governance"): a refresh puts the page back where it was scrolled on the first paint, before any
-script runs, and for ~130ms the section showed the kicker, the bare line and the six votes as Notion's table. home.css
-hides the three until governance.js has drawn them (`[data-enc-story-src]`, `[data-enc-rows]`), visibility and a 3s
-reveal. `flashcheck.mjs reload` records it. Colours by the line's words: Yes
-`#DCEEC7`, No `#F8E8B3`, No with veto `#F7DCE7`, Abstain `#D2E3F6`.
+**The vote split fills the strip's place, upright since 2026-10-31** (design *Vote Split Figure Patterns*, "G3p ·
+Upright"; the user chose "G3p as designed", over keeping the story's captions). Before it: from 2026-10-25 G3 "Pastel
+ribbons" of *Vote Split Patterns* (built on /governance first by mistake, v396, and moved here the same day, the user:
+"g3 isnt for /governance, it was the homepage governance section"; `git show v418:governance.js`, 3b); from 2026-10-27
+the story of *Vote Split Story*, A, a pinned stage of one screen of scroll a beat (`git show v422:governance.js`); from
+2026-10-28 the same story's C, "Scrubbed in passing", a band with a counter and six captions over the drawing
+(`git show v426:governance.js`, and the notes on it in this file's history). **G3p is G3d turned upright at the
+column's full width**: a band between the lede and the six rows (`[data-enc-story]`, governance.js 3b, home.css), its
+head row the kicker's words, "The record, by outcome", over a 420px drawing: the total, 56px, centred over its measure
+(seams marked, ticks at both ends), the record across the top, each answer pouring down into its column, and the four
+figures on one line under the columns, its name in mono under each. At full width every figure is one size, as large
+as the line allows up to 56px, each ending at least 24px short of the next column, never under 36 (1,248 · 78 · 478 ·
+114 at 56px at 1440, 44.7 at 1024); each starts where its column starts, its first digit's ink on the column's edge
+(`headEm`), and one that would run past the margin ends at it instead (Abstain); a figure that cannot clear its
+neighbour even at 36 drops a row. Under 760px of drawing (so from 900px down, where the section stacks) it is the
+design's phone drawing: the total at 44, the figures at 36 on one line, each centred under its column, the columns
+spread so each ends over its figure and the record narrowed as far as the line needs; under 300px it is scaled down
+(0.89 at 320). **It moves as G3d does, turned with it**: over half a screen of scroll from when half the drawing is on
+screen (or from the first scroll, where the page opens with more of it showing), the record pours straight down as one
+block (to .55), then parts at its seams into the four columns (from .4), and the figures fade in once the columns have
+parted; scrolling back reverses it. Reduced motion, print and a hidden tab show it whole. **Not the design's: a page
+that opens on the band or jumps to it shows it whole** (a refresh, a link to #governance or #by-outcome) until the band
+has gone back below its start, and pours only when the reader scrolls into it by hand (a wheel, a touch, a scrolling
+key within the last 1.2s); the design's scroll alone left it half parted there with no figures (#governance at
+1280×720 landed 44% parted, at 1440×900 97%; 2026-10-31). **Read aloud** the drawing is one image labelled with the
+whole split, "1,918 votes: 1,248 Yes, 78 No, 478 No with veto, 114 Abstain" (`role="img"`, its figures not read; llms.py
+reads it as its label). **Nothing raw before the build** (2026-10-28, the user: "i can see raw notion for a section when
+i refresh this page https://encapsulate.xyz/#governance"): a refresh puts the page back where it was scrolled on the
+first paint, before any script runs, and for ~130ms the section showed the kicker, the bare line and the six votes as
+Notion's table. home.css hides the three until governance.js has drawn them (`[data-enc-story-src]`, `[data-enc-rows]`),
+visibility and a 3s reveal. `flashcheck.mjs reload` records it. Colours by the line's words: Yes `#DCEEC7`, No
+`#F8E8B3`, No with veto `#F7DCE7`, Abstain `#D2E3F6`.
 **Its numbers** are the line `404e800a…8128…`, "1,913 votes · 1,243 Yes · 78 No · 478 No with veto · 114 Abstain", which
 **site-data's count job writes** after every governance run with the count band's figure (the homepage carries only the
 past month's rows, so it cannot count the record itself). **The 729 votes from before the record are frozen by outcome**
 (the user chose "474 Yes, 212 No and 43 Abstain", the record's proportions of the day; the 212 is 30 No and 182 No with
 veto by the same proportions — site-data `BEFORE_SPLIT`), so only votes added to the record move it. An outcome the line
-leaves out has no ribbon and no beat. The line and the kicker (`404e800a…816a…`) are hidden once drawn; a line it cannot
-read stays as Notion wrote it, with its kicker.
-**Its words** are the "Vote split copy" toggle under the line (`406e800a513881c19f5feac5490bdc30`, hidden by its id in
-home.css; fallback `STORY` in governance.js): `open`, `open lead`, `answer`, `answer one`, `answer lead`, `answer lead
-plain`, `close`, `close lead`, `counter`, `scroll`, each `key · text` with `{total}`, `{word}`, `{answer}`, `{count}`,
-`{share}`, `{share words}`, `{answers}`, `{list}`, `{beat}`, `{beats}` filled in from the counts. What fills them is
-worked out in governance.js, as the Why Stake figures are: the share in words by the design's rule (the nearest half,
-third or quarter within five points, otherwise one in N; "exactly" only when the count divides the record, "about" within
-0.4 points, else "nearly" or "more than"), the number words, the articles and the "a, b or c" list. On 1,913 votes:
-"Nearly two votes in three: 65.0% of the record." (Yes), "About one vote in twenty-five" (No), "About one vote in four"
-(No with veto; the design's 1,912 made it "exactly"), "About one vote in seventeen" (Abstain).
-**Left out of the design:** the page header and the note (the design's own), and the "A" pill beside the label, which
-names the design's one telling. Section name `#by-outcome`: the top of the track, where the stage pins on its first beat
-(the kicker until drawn). Checked 2026-10-27 at 320–2560 (audit.mjs: no sideways scroll, no error but React #418), every
-beat at 1440, 1024×700, 800 and 390, reduced motion, and an idle page (0 mutations in 3s).
+leaves out has no column. The line and the kicker (`404e800a…816a…`) are hidden once drawn; a line it cannot read stays
+as Notion wrote it, with its kicker.
+**The "Vote split copy" toggle under the line** (`406e800a513881c19f5feac5490bdc30`) held the story's words (its
+captions, the counter, the opening lead, each `key · text` with the counts filled in by governance.js). G3p has no words
+of its own, so nothing reads it since 2026-10-31; it stays in Notion, hidden by its id in home.css, until the user says
+whether to delete it.
+**Left out of the design:** the "G3p" pill and its sizes label ("Upright · figures 36–56px"), which name the design
+among its four, and the reference and G3m–G3o sections. Section name `#by-outcome`: the top of the band (the kicker
+until drawn). Checked 2026-10-31 at 1440, 1024, 900, 800, 760, 390 and 320 (no sideways scroll), the pour by real wheel
+steps at 1440, the landing on /#governance at four sizes, a refresh there (`flashcheck.mjs reload`), reduced motion, and
+an idle page (the band makes no mutation; the footer's glyphs make two in 3s, as live).

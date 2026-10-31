@@ -884,57 +884,43 @@
     }
   }
 
-  /* ── 3b · the homepage's vote split, told as a story (design Vote Split Story, "C · Scrubbed in passing", 2026-10-28) ──
-     In the homepage's governance section, between the lede and the six rows, in place of G3 "Pastel ribbons"
-     (2026-10-25). From 2026-10-27 to 10-28 it was the design's A, a pinned stage of six screens; C tells the same six
-     beats at a band's size, by the band's own passage up the screen, with no pin and no extra length ("for a page that
-     cannot give it six screens"). The drawing takes the column's full width at 420px, and the caption (the beat's
-     headline and lead) sits over its right half, its left edge on the line where the ribbons run straight, where the
-     figures start; at least 360px is left it. The story starts once half the drawing is on screen, or at the first
-     scroll where the page opens with more of it showing, so it always opens on the total, and ends as the caption
-     reaches the top of the screen, never in less than 0.45 of a screen. It opens on the record in its pastels, stacked
-     by answer beside its total (Opening "Pastel record", the user's choice on 2026-10-28); each beat one answer pours
-     out of it as its ribbon, in ballot order from the top; then the record parts at that answer's seam, the ribbons
-     already told lifting by half a gap so the set stays centred on the record. The close holds the whole split, and
-     scrolling back reverses every beat. Each figure is sized to its ribbon (Figures "Sized to ribbon", the design's
-     default since 2026-10-28): two-thirds of it and never under 14px, in proportional digits, every first digit's ink
-     on one left edge where the ribbons straighten and every name at the ribbons' right end, shown once its ribbon has
-     poured past that line. Where the drawing is under 680px wide the caption returns to the left edge, over the phone
-     drawing, still 420px: the record runs across the top and each answer pours down into its column, its figure under
-     it at 36px; a figure too close to its neighbour drops a row.
+  /* ── 3b · the homepage's vote split, upright (design Vote Split Figure Patterns, "G3p · Upright", 2026-10-31) ──
+     In the homepage's governance section, between the lede and the six rows. G3p is the design's G3d turned upright at
+     the column's full width (the user chose it "as designed" on 2026-10-31, over keeping the story's captions): the
+     total over its measure, the record across the top, each answer pouring down into its column, and the four
+     figures on one line under the columns at one size, as large as the line allows up to 56px — each ends at least
+     24px short of the next column, 36px at the least — each starting where its column starts, its first digit's ink
+     on the column's edge; a figure that would run past the margin ends at it instead. It moves as G3d does, turned
+     with it: over half a screen of scroll from when half the drawing is on screen (or from the first scroll, where the
+     page opens with more of it showing), the record pours straight down as one block, then parts at its seams into
+     the four columns, and the figures fade in once the columns have parted; scrolling back reverses it. Reduced
+     motion, print and a hidden tab show it whole, and so does a page that opens on it or jumps to it (a refresh, a
+     link to #governance; see frame()). Under 760px it is the design's phone drawing: the figures at 36px on
+     one line, each centred under its column, the columns spread so each ends over its figure and the record narrowed
+     as far as the line needs.
+     Before it, from 2026-10-28, the band told the split as a story of six beats, each answer pouring out under its
+     caption, with a counter (design Vote Split Story, "C · Scrubbed in passing"; `git show v426:governance.js`), and
+     before that, from 2026-10-25, it was G3 "Pastel ribbons". The story's words, the "Vote split copy" toggle under
+     the line, are no longer read; the toggle stays in Notion, hidden by its id in home.css.
      Its numbers are one line in Notion, "1,913 votes · 1,243 Yes · 78 No · 478 No with veto · 114 Abstain", which
      site-data's count job writes after every governance run: the record's rows plus the 729 votes from before it,
      frozen by outcome on 2026-10-25 (the user: "474 Yes, 212 No and 43 Abstain"; the 212 is 30 No and 182 No with
      veto, by the same proportions). The homepage carries only the past month's rows, so it cannot count the record
-     itself. The line, and the kicker above it ("The record, by outcome", the stage's label), are the source: hidden
-     once drawn. An outcome the line leaves out has no ribbon and no beat. The beats' words are the "Vote split copy"
-     toggle under the line; what they fill in is worked from the counts here: the share in words follows the design's
-     rule (the nearest half, third or quarter within five points, otherwise one in N, "exactly" only when the count
-     divides the record), with the number words, the articles and the list, which no Notion block can hold. A line it
-     cannot read stays as Notion wrote it. Reduced motion steps it a beat at a time with nothing moving; print shows it
-     whole. The design's "C" pill beside the label names its telling among the design's three, so it is left out. */
+     itself. The line, and the kicker above it ("The record, by outcome", the band's label), are the source: hidden
+     once drawn. An outcome the line leaves out has no column; a line it cannot read stays as Notion wrote it. The
+     design's "G3p" pill and its sizes label name the design among its four, so they are left out. */
   var LINE = "block-404e800a51388128ba49e43d1ce92374";   // the line, written by site-data's count job
   var KICK = "block-404e800a5138816ab84adfcc33e9bb44";   // "The record, by outcome"
   var FILLS = { "yes": "#DCEEC7", "no": "#F8E8B3", "no with veto": "#F7DCE7", "abstain": "#D2E3F6" };
-  /* the fallback if the "Vote split copy" toggle goes missing */
-  var STORY = {
-    "open": "{total} {word}.",
-    "open lead": "All of them, stacked by answer.",
-    "answer": "{answer}, {count} times.",
-    "answer one": "{answer}, {count} time.",
-    "answer lead": "{share words}: {share} of the record.",
-    "answer lead plain": "{share} of the record.",
-    "close": "{answers} answers, one record.",
-    "close lead": "Every one of the {total} is {list}.",
-    "counter": "{beat} / {beats}"
-  };
-  // seams, gaps between parted ribbons, figure to word, figure to ribbon, the smallest figure; under 760px its own
-  var ST = { s: 2, G: 40, gap: 16, ratio: 0.66, floor: 14 };
-  var PH = { G: 24, s: 2, fig: 36, top: 73 };
+  // the record's seams, the gaps between columns, the total's size and the room between figures on the line: at
+  // full width the figures are sized to the line (max, min); under 760px all at 36px, centred under their columns
+  var UP = { s: 2, G: 40, tF: 56, clear: 24, max: 56, min: 36 };
+  var PH = { s: 2, G: 24, tF: 44, clear: 28, fig: 36, line: true };
+  var PASS = 0.5;   // the pour and the parting run over half a screen of scroll
   var INK_FB = { top: 0.17, bottom: 0.87 };   // Outfit 600's digits, as fractions of the size, until measured
   var SVGNS = "http://www.w3.org/2000/svg";
   var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)");
-  var SP = null;   // the built story: its nodes, the line it read, the drawing it built and what it last drew
+  var SP = null;   // the built band: its nodes, the line it read, the drawing it built and where it last drew it
 
   // "1,913 votes · 1,243 Yes · …": the total and its word, then a band per outcome with votes
   function parseSplit(text) {
@@ -947,95 +933,28 @@
     if (!head || !bands.length) return null;
     return { bands: bands, total: num(head[1]), word: head[2].trim(), sum: bands.reduce(function (a2, b2) { return a2 + b2.n; }, 0) };
   }
-
-  function readStoryCopy() {
-    var c = {}, k;
-    for (k in STORY) c[k] = STORY[k];
-    Array.prototype.forEach.call(document.querySelectorAll(".notion-toggle"), function (t) {
-      if (!/^vote split copy$/i.test(textOf(t.querySelector(".notion-toggle__summary")).replace(/^[‣▸▶\s]+/, ""))) return;
-      Array.prototype.forEach.call(t.querySelectorAll(".notion-toggle__content p, .notion-toggle__content .notion-text"), function (p) {
-        var line = textOf(p), i = line.indexOf("·");
-        if (i < 0) return;
-        var key = line.slice(0, i).trim(), v = line.slice(i + 1).trim();
-        if (key && v) c[key] = v;
-      });
-    });
-    return c;
-  }
   function textOf(n) { return n ? (n.textContent || "").trim() : ""; }
-  function fillIn(t, vars) { return String(t || "").replace(/\{([^}]+)\}/g, function (m, k) { return vars[k] != null ? vars[k] : m; }); }
 
-  // the beats, worked from the counts
-  var ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen",
-    "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
-  var TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
-  function say(n) { return n < 20 ? ONES[n] : n < 100 ? TENS[Math.floor(n / 10)] + (n % 10 ? "-" + ONES[n % 10] : "") : fmt(n); }
-  function cap1(t) { return t.charAt(0).toUpperCase() + t.slice(1); }
-  function shareOf(n, sum) { return (100 * n / sum).toFixed(1) + "%"; }
-  // the nearest half, third or quarter within five points, otherwise one in N; "exactly" only when the count divides the record
-  function inWords(n, sum) {
-    var s = n / sum, best = null;
-    for (var d = 2; d <= 4; d++) for (var k = 1; k < d; k++) {
-      var e = Math.abs(k / d - s);
-      if (e < 0.05 && (!best || e < best.e - 1e-9)) best = { k: k, d: d, e: e };
-    }
-    if (!best && s > 0) { var d2 = Math.round(1 / s); if (d2 >= 5 && d2 <= 99) best = { k: 1, d: d2, e: Math.abs(1 / d2 - s) }; }
-    if (!best) return null;
-    var how = n * best.d === best.k * sum ? "exactly " : best.e < 0.004 ? "about " : s < best.k / best.d ? "nearly " : "more than ";
-    return how + say(best.k) + (best.k > 1 ? " votes" : " vote") + " in " + say(best.d);
-  }
-  function art(w) { return (/^[aeiou]/i.test(w) ? "an " : "a ") + w; }
-  function listOr(a) { return a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " or " + a[a.length - 1]; }
-  function beatsFor(L, C) {
-    var tot = fmt(L.total);
-    return [{ h: fillIn(C["open"], { total: tot, word: L.word }), l: C["open lead"] }].concat(L.bands.map(function (b) {
-      var w = inWords(b.n, L.sum), share = shareOf(b.n, L.sum);
-      return { h: fillIn(C[b.n === 1 ? "answer one" : "answer"], { answer: b.word, count: fmt(b.n) }),
-        l: w ? fillIn(C["answer lead"], { "share words": cap1(w), share: share }) : fillIn(C["answer lead plain"], { share: share }) };
-    }), [{ h: fillIn(C["close"], { answers: cap1(say(L.bands.length)) }),
-      l: fillIn(C["close lead"], { total: tot, list: listOr(L.bands.map(function (b) { return art(b.word); })) }) }]);
-  }
-
-  /* The design's geometry: the stack split by seams s, centred on the parted set split by gaps G. A band's left end
-     is a..b; its right end, parted, c..d; at(b, u) is its right end moved u from the stack. */
-  function lay(L, T, G, s, oy) {
-    var m = L.bands.length, top = oy + (m - 1) * (G - s) / 2, a = top, c = oy;
+  /* The design's geometry: the record split by seams s, centred on the parted set split by gaps G. Each band runs
+     a..b along the record and c..d across its column once parted; at(b, p) is its column p of the way there. */
+  function lay(L, T, G, s) {
+    var m = L.bands.length, top = (m - 1) * (G - s) / 2, a = top, c = 0;
     var bands = L.bands.map(function (o) { var t = o.n * T / L.sum, b = { o: o, a: a, b: a + t, c: c, d: c + t }; a += t + s; c += t + G; return b; });
-    return { bands: bands, H: oy + T + (m - 1) * G, top: top, len: T + (m - 1) * s };
+    return { bands: bands, top: top, len: T + (m - 1) * s };
   }
-  function at(b, u) { return { c: b.a + u, d: b.b + u }; }
+  function at(b, p) { return { c: b.a + (b.c - b.a) * p, d: b.b + (b.d - b.b) * p }; }
   function seamAt(b, s) { return Math.round(b.a - s / 2 - 0.5); }
   function f2(v) { return v.toFixed(2); }
-  function hPath(b, x1, x3, xE, u) {
-    var q = at(b, u), xc = (x1 + x3) / 2, A = b.a, B = b.b, C = q.c, D = q.d;
-    return "M0 " + f2(A) + " L" + f2(x1) + " " + f2(A) + " C" + f2(xc) + " " + f2(A) + " " + f2(xc) + " " + f2(C) + " " + f2(x3) + " " + f2(C) +
-      " L" + f2(xE) + " " + f2(C) + " L" + f2(xE) + " " + f2(D) + " L" + f2(x3) + " " + f2(D) +
-      " C" + f2(xc) + " " + f2(D) + " " + f2(xc) + " " + f2(B) + " " + f2(x1) + " " + f2(B) + " L0 " + f2(B) + " Z";
-  }
-  function vPath(b, y1, y3, yE, u) {
-    var q = at(b, u), yc = (y1 + y3) / 2, A = b.a, B = b.b, C = q.c, D = q.d;
+  // a column: straight down from the record to y1, curving to its place by y3, straight on to yE
+  function vPath(b, y1, y3, yE, p) {
+    var q = at(b, p), yc = (y1 + y3) / 2, A = b.a, B = b.b, C = q.c, D = q.d;
     return "M" + f2(A) + " 0 L" + f2(A) + " " + f2(y1) + " C" + f2(A) + " " + f2(yc) + " " + f2(C) + " " + f2(yc) + " " + f2(C) + " " + f2(y3) +
       " L" + f2(C) + " " + f2(yE) + " L" + f2(D) + " " + f2(yE) + " L" + f2(D) + " " + f2(y3) +
       " C" + f2(D) + " " + f2(yc) + " " + f2(B) + " " + f2(yc) + " " + f2(B) + " " + f2(y1) + " L" + f2(B) + " 0 Z";
   }
-  /* A beat a screen: the caption changes as its answer starts to leave; the wipe, then the parting. The record
-     parts at its seams, one a beat: seam j, between bands j and j+1, opens on the beat of the first of the two told;
-     a band's far end moves by the open seams above it less half of all open, in gaps, so no ribbon ever runs into the
-     next one out and the parted set stays centred on the record. */
   function ease(t) { return t * t * (3 - 2 * t); }
-  function beatAt(P, nb) { return P < 0.1 ? 0 : Math.min(nb - 1, Math.floor(P - 0.1) + 1); }
-  function reveal(P, step, m) {
-    var phase = function (sl) { return step ? (P >= sl + 0.1 ? 1 : 0) : clamp01((P - sl - 0.1) / 0.75); };
-    var wipe = function (sl) { return step ? phase(sl) : ease(clamp01(phase(sl) / 0.62)); };
-    var part = function (sl) { return step ? phase(sl) : ease(clamp01((phase(sl) - 0.45) / 0.55)); };
-    var o = [], all = 0, k;
-    for (k = 0; k < m - 1; k++) { o.push(part(k)); all += o[k]; }
-    var out = [], run = 0;
-    for (k = 0; k < m; k++) { out.push({ w: wipe(k), u: run - all / 2 }); if (k < m - 1) run += o[k]; }
-    return out;
-  }
 
-  // a figure's width as it is set (tabular digits, 600, -0.04em), in a hidden span inside the story so the page's
+  // a figure's width as it is set (proportional digits, 600, -0.04em), in a hidden span inside the band so the page's
   // observer does not wake for it; kept once Outfit is in
   var FIGW = {};
   function figW(t, fs) {
@@ -1050,7 +969,7 @@
   }
   function fontReady() { return !(document.fonts && document.fonts.check) || document.fonts.check("600 200px Outfit"); }
   // how far the first digit's ink starts inside its box, in em, as drawn in proportional digits (canvas draws the same
-  // glyph), so figures of every size can start on one edge
+  // glyph), so a figure's ink can start on its column's edge
   var HEADEM = {};
   function headEm(t) {
     var ch = t.charAt(0);
@@ -1082,20 +1001,17 @@
     box.setAttribute("data-enc-story", "");
     var stage = el("div", "enc-story__stage");
     var head = el("div", "enc-story__head");
-    var label = el("span", "enc-story__label"), count = el("span", "enc-story__count");
+    var label = el("span", "enc-story__label");
     head.appendChild(label);
-    head.appendChild(count);
-    var beats = el("div", "enc-story__beats");
     var fig = el("div", "enc-story__box");
     stage.appendChild(head);
-    stage.appendChild(beats);
     stage.appendChild(fig);
     box.appendChild(stage);
     var meter = el("span", "enc-story__meter");
     meter.setAttribute("aria-hidden", "true");
     box.appendChild(meter);
-    SP = { box: box, stage: stage, label: label, count: count, beats: beats, fig: fig, meter: meter,
-      text: null, last: null, copy: "", beatEls: [], draw: null, sig: "", ink: SP && SP.ink, print: false, P: -1 };
+    SP = { box: box, stage: stage, label: label, fig: fig, meter: meter, text: null, last: null, draw: null, sig: "",
+      ink: SP && SP.ink, print: false, v: -1 };
     if (!SP.ink) inkWhenReady();
     if (typeof ResizeObserver === "function") {
       var ro = new ResizeObserver(function () { if (SP && SP.box === box) layoutStory(); });
@@ -1109,7 +1025,7 @@
     var src = document.getElementById(LINE);
     if (!src) return;
     var kick = document.getElementById(KICK), at2 = src.nextElementSibling;
-    // the box goes after the line; the copy toggle that follows it in Notion stays where it is, hidden by home.css
+    // the band goes after the line; the copy toggle that follows it in Notion stays where it is, hidden by home.css
     if (!SP || SP.box !== at2) {
       if (at2 && at2.hasAttribute("data-enc-story")) at2.remove();
       if (SP && SP.ro) SP.ro.disconnect();
@@ -1117,8 +1033,6 @@
     }
     var text = src.textContent.trim();
     if (SP.text !== text) { SP.text = text; SP.last = parseSplit(text); SP.sig = ""; }
-    var C = readStoryCopy(), copy = JSON.stringify(C);
-    if (SP.copy !== copy) { SP.copy = copy; SP.C = C; SP.sig = ""; }
     // a line it cannot read stays on the page as Notion wrote it, with its kicker
     [src, kick].forEach(function (n) {
       if (!n) return;
@@ -1132,168 +1046,89 @@
   function layoutStory() {
     var L = SP && SP.last;
     if (!L || !document.contains(SP.box)) return;
-    var C = SP.C, beats = beatsFor(L, C);
-    // the beats first: they share one cell, so the tallest sets the room the drawing has
-    while (SP.beatEls.length > beats.length) SP.beatEls.pop().remove();
-    beats.forEach(function (b, j) {
-      var be = SP.beatEls[j];
-      if (!be) {
-        be = SP.beatEls[j] = el("div", "enc-story__beat");
-        be.appendChild(el("h3"));
-        be.appendChild(el("p"));
-        SP.beats.appendChild(be);
-      }
-      setText(be.firstChild, b.h);
-      setText(be.lastChild, b.l);
-    });
-    SP.nb = beats.length;
-    var BW = SP.fig.clientWidth, BH = SP.fig.clientHeight, down = BW < 680, ink = SP.ink || INK_FB;
+    var BW = SP.fig.clientWidth, BH = SP.fig.clientHeight, phone = BW < 760, ink = SP.ink || INK_FB;
     if (!BW || !BH) return;
-    var sig = [down, BW, BH, ink.top, ink.bottom, L.total, L.word, SP.copy].concat(L.bands.map(function (b) { return b.k + ":" + b.n; })).join(",");
+    var sig = [phone, BW, BH, ink.top, ink.bottom, L.total, L.word].concat(L.bands.map(function (b) { return b.k + ":" + b.n; })).join(",");
     if (sig !== SP.sig) {
       SP.sig = sig;
       if (SP.draw) SP.draw.node.remove();
-      SP.draw = down ? narrowDraw(L, Math.max(280, BW), BH, ink) : wideDraw(L, BW, BH, ink);
+      SP.draw = upright(L, phone ? Math.max(280, BW) : BW, BH, ink, phone ? PH : UP);
       var k = Math.max(0.3, Math.min(1, BH / SP.draw.h, BW / SP.draw.w));
       setStyle(SP.draw.node, { width: SP.draw.w + "px", height: SP.draw.h + "px", transform: "translateY(-50%) scale(" + k.toFixed(4) + ")" });
       SP.fig.appendChild(SP.draw.node);
-      // the caption's left edge on the line where the ribbons run straight, leaving it at least 360px; at the left on a phone
-      setStyle(SP.beats, { paddingLeft: (down ? 0 : Math.round(Math.max(0, Math.min(SP.draw.ax * k, BW - 360)))) + "px" });
-      SP.P = -1;
+      SP.v = -1;
     }
     frame();
   }
 
-  // full width: the total at the left margin, the ribbons to the right margin, as thick as the stage allows; each
-  // figure sized to its ribbon, two-thirds of it and never under 14px, in proportional digits, every first digit's ink
-  // on one left edge where the ribbons straighten and every name at the ribbons' right end
-  function wideDraw(L, BW, BH, ink) {
-    var m = L.bands.length, cap = ink.bottom - ink.top, G = ST.G;
-    var wordW = Math.max.apply(null, L.bands.map(function (b) { return b.word.length * 7.92; }));
-    var fsOf = function (th) { return Math.max(ST.ratio * th / cap, ST.floor); };
-    var tfsOf = function (T) { return Math.round(Math.min(72, Math.max(48, T * 0.187))); };
-    // how far a band's figure reaches past the band: the first and last bands' reach is kept inside the drawing
-    var reach = function (b) { var th = b.b - b.a; return Math.max(0, (fsOf(th) * cap - th) / 2); };
-    var padsOf = function (T) { var bs = lay(L, T, G, ST.s, 0).bands; return [Math.ceil(reach(bs[0])), Math.ceil(reach(bs[m - 1]))]; };
-    // the widest figure as it is set, with its size and its digits
-    var widest = function (bs) {
-      return bs.reduce(function (a, b) { var f = fsOf(b.b - b.a), t = fmt(b.o.n), w = figW(t, f); return w > a.w ? { w: w, f: f, t: t } : a; }, { w: 0, f: 0, t: "0" });
+  // the size every figure takes at full width: as large as one line allows, each figure ending at least `gap` short of
+  // the next column, between min and max
+  function fitLine(Lt, max, min, gap) {
+    var f = max;
+    Lt.bands.slice(0, -1).forEach(function (b, i) { f = Math.min(f, (Lt.bands[i + 1].c - gap - b.c - 1) / (figW(fmt(b.o.n), 100) / 100)); });
+    return Math.max(min, f);
+  }
+  // the phone's line: each figure and its name centred under its column, the columns' feet spread to their figures,
+  // and the record narrowed only as far as the line needs; a line that cannot fit at all is laid out wider and the
+  // frame scales it down
+  function oneLine(L, Wp, P, lw) {
+    var m = L.bands.length, k = L.bands.map(function (o) { return o.n / L.sum; }), w = L.bands.map(lw), GC = 16, GB = 14;
+    var dOf = function (t, i) { return Math.max((t[i] + t[i + 1]) / 2 + GC, (w[i] + w[i + 1]) / 2 + GB); };
+    var span = function (T) {
+      var t = k.map(function (x) { return x * T; }), s = (Math.max(t[0], w[0]) + Math.max(t[m - 1], w[m - 1])) / 2;
+      for (var i = 0; i < m - 1; i++) s += dOf(t, i);
+      return s;
     };
-    var T = Math.max(160, Math.min(BH - (m - 1) * G, 0.3 * (BW - 94)));
-    for (var it = 0; it < 4; it++) {
-      var p0 = padsOf(T), T2 = Math.max(160, Math.min(BH - (m - 1) * G - p0[0] - p0[1], 0.3 * (BW - 94)));
-      if (Math.abs(T2 - T) < 0.5) break;
-      T = T2;
+    var W = Math.max(Wp, span(0)), T = Wp - (m - 1) * P.G;
+    if (span(T) > W) {
+      var lo = 0, hi = T;
+      for (var it = 0; it < 30; it++) { var mid = (lo + hi) / 2; if (span(mid) <= W) lo = mid; else hi = mid; }
+      T = lo;
     }
-    // thinner only if the widest figure and its word would not fit beside the curve
-    for (it = 0; it < 3; it++) {
-      var lim = 0.64 * (BW - tfsOf(T) - 38) - 80 - wordW, fw = widest(lay(L, T, G, ST.s, 0).bands).w;
-      if (fw <= lim || T <= 160) break;
-      T = Math.max(160, T * lim / fw);
-    }
-    var pd = padsOf(T), tfs = tfsOf(T), TW = tfs + 28, W = BW - TW - 10;
-    var Lt = lay(L, T, G, ST.s, pd[0]), H = Lt.H + pd[1], bs = Lt.bands, top = widest(bs), xE = W;
-    var x3 = Math.round(Math.max(0.3 * W, Math.min(0.506 * W, W - (24 + top.w + ST.gap + wordW + 40))));
-    var x1 = Math.round(Math.min(0.244 * W, x3 - 0.19 * W));
-
-    var node = el("div", "enc-story__draw is-wide");
-    // the total, upright at the record's left, centred on it; its measure exactly as long as the record is thick
-    var tot = el("div", "enc-story__total");
-    tot.setAttribute("aria-hidden", "true");
-    setStyle(tot, { width: TW + "px", height: H + "px" });
-    var tlab = abs("enc-story__tlab", { left: "0px", right: "22px", top: f2(Lt.top) + "px", height: f2(Lt.len) + "px" });
-    var tin = el("span", "enc-story__tin"), tfig = el("span", "enc-story__tfig", fmt(L.total));
-    tfig.style.fontSize = tfs + "px";
-    tin.appendChild(tfig);
-    tin.appendChild(mono(L.word));
-    tlab.appendChild(tin);
-    tot.appendChild(tlab);
-    tot.appendChild(abs("enc-story__bar", { right: "6px", top: f2(Lt.top) + "px", width: "1px", height: f2(Lt.len) + "px" }));
-    tot.appendChild(abs("enc-story__bar", { right: "2px", top: f2(Lt.top) + "px", width: "9px", height: "1px" }));
-    tot.appendChild(abs("enc-story__bar", { right: "2px", top: f2(Lt.top + Lt.len - 1) + "px", width: "9px", height: "1px" }));
-    // the record is whole from the first beat, so its seams all show
-    bs.slice(1).forEach(function (b) {
-      tot.appendChild(abs("enc-story__bar", { right: "4px", top: seamAt(b, ST.s) + "px", width: "5px", height: "1px" }));
-    });
-    var box = el("div", "enc-story__art");
-    box.setAttribute("role", "img");
-    box.setAttribute("aria-label", fmt(L.total) + " " + L.word + ": " + L.bands.map(function (b) { return fmt(b.n) + " " + b.word; }).join(", "));
-    setStyle(box, { width: W + "px", height: H + "px" });
-    var svg = svgEl("svg", { width: W, height: H, viewBox: "0 0 " + W + " " + f2(H), "aria-hidden": "true" });
-    var defs = svgEl("defs", {}), rects = [], paths = [];
-    svg.appendChild(defs);
-    bs.forEach(function (b, i) {
-      var cp = svgEl("clipPath", { id: "enc-story-w" + i }), r = svgEl("rect", { x: 0, y: 0, width: 0, height: f2(H) });
-      cp.appendChild(r);
-      defs.appendChild(cp);
-      rects.push(r);
-      var p = svgEl("path", { fill: b.o.fill, "clip-path": "url(#enc-story-w" + i + ")" });
-      svg.appendChild(p);
-      paths.push(p);
-    });
-    box.appendChild(svg);
-    var labs = bs.map(function (b) {
-      var wrap = el("div", "enc-story__wrap"), f = fsOf(b.b - b.a), t = fmt(b.o.n);
-      setStyle(wrap, { width: W + "px", height: f2(H) + "px" });
-      var fig = el("span", "enc-story__fig is-sized", t);
-      setStyle(fig, { left: f2(x3 + 24 - headEm(t) * f) + "px", fontSize: f2(f) + "px" });
-      // the name centred on the figure's digits, its tracking after the last letter taken back so its ink ends on the edge
-      var name = el("div", "enc-story__name"), word = mono(b.o.word);
-      word.style.transform = "translateY(" + f2(f * ((ink.top + ink.bottom) / 2 - 0.5)) + "px)";
-      name.appendChild(word);
-      setStyle(name, { height: f2(f) + "px" });
-      wrap.appendChild(fig);
-      wrap.appendChild(name);
-      box.appendChild(wrap);
-      return { wrap: wrap, fig: fig, name: name, f: f };
-    });
-    node.appendChild(tot);
-    node.appendChild(box);
-    // ax: where the figures start, from the drawing's left edge — the caption's left edge
-    return { node: node, w: BW, h: H, ax: TW + 10 + x3 + 24, draw: function (R) {
-      var wx = R.map(function (r) { return x1 + r.w * (W - x1); });
-      bs.forEach(function (b, i) {
-        var u = R[i].u * (G - ST.s), q = at(b, u), y = (q.c + q.d) / 2 - labs[i].f * (ink.top + ink.bottom) / 2;
-        setAttr(paths[i], "d", hPath(b, x1, x3, xE, u));
-        setAttr(rects[i], "width", f2(wx[i]));
-        // a figure shows once its ribbon has poured past the line where the ribbons run straight
-        setStyle(labs[i].wrap, { display: wx[i] <= x3 ? "none" : "", clipPath: "inset(0px " + f2(Math.max(0, W - wx[i])) + "px 0px 0px)" });
-        setStyle(labs[i].fig, { top: f2(y) + "px" });
-        setStyle(labs[i].name, { top: f2(y) + "px" });
-      });
-    } };
+    var t = k.map(function (x) { return x * T; }), extra = (W - span(T)) / Math.max(1, m - 1), u = [Math.max(t[0], w[0]) / 2];
+    for (var i = 0; i < m - 1; i++) u.push(u[i] + dOf(t, i) + extra);
+    var len = T + (m - 1) * P.s, top = (W - len) / 2, a = top;
+    var bands = L.bands.map(function (o, j) { var b = { o: o, a: a, b: a + t[j], c: u[j] - t[j] / 2, d: u[j] + t[j] / 2 }; a += t[j] + P.s; return b; });
+    return { W: W, L: { bands: bands, top: top, len: len } };
   }
 
-  // under 760px: the record across the top, the answers pouring down into columns, the figures under them
-  function narrowDraw(L, Wp, BH, ink) {
-    var m = L.bands.length, Lt = lay(L, Wp - (m - 1) * PH.G, PH.G, PH.s, 0), bs = Lt.bands, BLK = 52, RG = 14, rows = [], put = [];
-    var lw = function (b) { return Math.max(figW(fmt(b.o.n), PH.fig), b.o.word.length * 7.92); };
-    var clear = function (r, a0, a1) { return !(rows[r] || []).some(function (q) { return a0 < q[1] + 28 && a1 > q[0] - 28; }); };
-    var xAt = function (q, a, w) { return a === "l" ? q.c : a === "r" ? q.d - w : (q.c + q.d - w) / 2; };
-    var order = [0].concat(m > 1 ? [m - 1] : []);
-    for (var j0 = 1; j0 < m - 1; j0++) order.push(j0);
-    order.forEach(function (i) {
-      var b = bs[i], q = { c: b.c, d: b.d }, w = lw(b), cands = i === 0 ? ["l"] : i === m - 1 ? ["r"] : ["r", "c", "l"];
+  // upright: the total over its measure, the record across the top, each answer pouring down into its column, the
+  // figures under the columns on one line
+  function upright(L, Wp0, BH, ink, P) {
+    var m = L.bands.length, L0 = lay(L, Wp0 - (m - 1) * P.G, P.G, P.s), f0 = P.line ? P.fig : fitLine(L0, P.max, P.min, P.clear);
+    var lw = function (o) { return Math.max(figW(fmt(o.n), f0), o.word.length * 7.92); };
+    var sp = P.line ? oneLine(L, Wp0, P, lw) : null, Wp = sp ? sp.W : Wp0, Lt = sp ? sp.L : L0, bs = Lt.bands;
+    var rows = [], put = [];
+    var clear = function (r, a0, a1) { return !(rows[r] || []).some(function (q) { return a0 < q[1] + P.clear && a1 > q[0] - P.clear; }); };
+    var xAt = function (b, a, w) { return a === "l" ? b.c : a === "r" ? b.d - w : (b.c + b.d - w) / 2; };
+    if (sp) {
+      rows.push(bs.map(function (b) { return [b.c, b.d]; }));
+      bs.forEach(function (b, i) { put[i] = { r: 0, a: "c" }; });
+    } else bs.forEach(function (b, i) {
+      // where its column starts, or ending at the margin where it would run past it; down a row only if the line
+      // cannot hold it even at the smallest size
+      var w = lw(b.o), a = b.c + w <= Wp ? "l" : "r", x = xAt(b, a, w);
       for (var r = 0; r < 8; r++) {
-        var a = null;
-        for (var ci = 0; ci < cands.length && !a; ci++) if (clear(r, xAt(q, cands[ci], w), xAt(q, cands[ci], w) + w)) a = cands[ci];
-        if (a || r === 7) { var k = a || cands[0]; (rows[r] = rows[r] || []).push([xAt(q, k, w), xAt(q, k, w) + w]); put[i] = { r: r, a: k }; break; }
+        if (clear(r, x, x + w) || r === 7) { (rows[r] = rows[r] || []).push([x, x + w]); put[i] = { r: r, a: a }; break; }
       }
     });
-    var nr = rows.filter(Boolean).length, labH = 16 + nr * BLK + (nr - 1) * RG + 4;
-    var y2 = Math.round(Math.max(150, Math.min(520, BH - PH.top - labH))), y1 = Math.round(0.216 * y2), y3 = Math.round(0.686 * y2), HH = y2 + labH;
+    var nr = rows.length, rowH = [];
+    for (var r = 0; r < nr; r++) rowH.push(bs.reduce(function (h, b, i) { return put[i].r === r ? Math.max(h, 0.8 * f0 + 23) : h; }, 0));
+    var rowY = function (r2) { var y = 16; for (var j = 0; j < r2; j++) y += rowH[j] + 14; return y; };
+    var labH = rowY(nr - 1) + rowH[nr - 1] + 4, ry = P.tF + 12, top = ry + 17;
+    var y2 = Math.round(Math.max(120, Math.min(520, BH - top - labH))), y1 = Math.round(0.216 * y2), y3 = Math.round(0.686 * y2), HH = y2 + labH;
 
-    var node = el("div", "enc-story__draw is-narrow");
+    var node = el("div", "enc-story__draw");
     node.setAttribute("role", "img");
     node.setAttribute("aria-label", fmt(L.total) + " " + L.word + ": " + L.bands.map(function (b) { return fmt(b.n) + " " + b.word; }).join(", "));
-    var fs = 44, ry = 56, shift = fs * ((ink.top + ink.bottom) / 2 - 0.5);
+    // the total over the record, centred on it; its measure exactly as long as the record, its seams marked
     var tot = el("div", "enc-story__total");
     tot.setAttribute("aria-hidden", "true");
-    setStyle(tot, { width: Wp + "px", height: PH.top + "px" });
-    var tlab = abs("enc-story__tlab is-across", { left: f2(Lt.top) + "px", width: f2(Lt.len) + "px", top: "0px", height: fs + "px" });
+    setStyle(tot, { width: Wp + "px", height: top + "px" });
+    var tlab = abs("enc-story__tlab", { left: f2(Lt.top) + "px", width: f2(Lt.len) + "px", top: "0px", height: P.tF + "px" });
     var tfig = el("span", "enc-story__tfig", fmt(L.total)), tw = mono(L.word);
-    tfig.style.fontSize = fs + "px";
-    tw.style.transform = "translateY(" + f2(shift) + "px)";
+    tfig.style.fontSize = P.tF + "px";
+    tw.style.transform = "translateY(" + f2(P.tF * ((ink.top + ink.bottom) / 2 - 0.5)) + "px)";
     tlab.appendChild(tfig);
     tlab.appendChild(tw);
     tot.appendChild(tlab);
@@ -1301,80 +1136,87 @@
     tot.appendChild(abs("enc-story__bar", { left: f2(Lt.top) + "px", top: (ry - 4) + "px", width: "1px", height: "9px" }));
     tot.appendChild(abs("enc-story__bar", { left: f2(Lt.top + Lt.len - 1) + "px", top: (ry - 4) + "px", width: "1px", height: "9px" }));
     bs.slice(1).forEach(function (b) {
-      tot.appendChild(abs("enc-story__bar", { left: seamAt(b, PH.s) + "px", top: (ry - 2) + "px", width: "1px", height: "5px" }));
+      tot.appendChild(abs("enc-story__bar", { left: seamAt(b, P.s) + "px", top: (ry - 2) + "px", width: "1px", height: "5px" }));
     });
-    var box = el("div", "enc-story__art");
-    setStyle(box, { width: Wp + "px", height: HH + "px" });
+    // the columns, poured as one block: one wipe down over all four
+    var art = el("div", "enc-story__art");
+    setStyle(art, { width: Wp + "px", height: HH + "px" });
     var svg = svgEl("svg", { width: Wp, height: HH, viewBox: "0 0 " + Wp + " " + HH, "aria-hidden": "true" });
-    var defs = svgEl("defs", {}), rects = [], paths = [];
+    var defs = svgEl("defs", {}), cp = svgEl("clipPath", { id: "enc-story-pour" }), rect = svgEl("rect", { x: 0, y: 0, width: Wp, height: HH });
+    cp.appendChild(rect);
+    defs.appendChild(cp);
     svg.appendChild(defs);
-    bs.forEach(function (b, i) {
-      var cp = svgEl("clipPath", { id: "enc-story-n" + i }), r = svgEl("rect", { x: 0, y: 0, width: Wp, height: 0 });
-      cp.appendChild(r);
-      defs.appendChild(cp);
-      rects.push(r);
-      var p = svgEl("path", { fill: b.o.fill, "clip-path": "url(#enc-story-n" + i + ")" });
+    var paths = bs.map(function (b) {
+      var p = svgEl("path", { fill: b.o.fill, "clip-path": "url(#enc-story-pour)" });
       svg.appendChild(p);
-      paths.push(p);
+      return p;
     });
-    box.appendChild(svg);
-    var labs = bs.map(function (b, i) {
-      var wrap = el("div", "enc-story__wrap");
-      setStyle(wrap, { width: Wp + "px", height: HH + "px" });
-      var a = put[i].a, lab = el("div", "enc-story__under is-" + a);
-      setStyle(lab, { top: (y2 + 16 + put[i].r * (BLK + RG)) + "px" });
-      var fig = el("span", "enc-story__fig", fmt(b.o.n));
-      fig.style.fontSize = PH.fig + "px";
+    art.appendChild(svg);
+    var labs = el("div", "enc-story__labs");
+    setStyle(labs, { width: Wp + "px", height: HH + "px" });
+    bs.forEach(function (b, i) {
+      var a = put[i].a, t = fmt(b.o.n), lab = el("div", "enc-story__under is-" + a);
+      setStyle(lab, a === "l" ? { left: f2(b.c - headEm(t) * f0) + "px" } : a === "r" ? { right: f2(Wp - b.d) + "px" } : { left: f2((b.c + b.d) / 2) + "px" });
+      lab.style.top = f2(y2 + rowY(put[i].r)) + "px";
+      var fig = el("span", "enc-story__fig", t);
+      fig.style.fontSize = f2(f0) + "px";
       lab.appendChild(fig);
       lab.appendChild(mono(b.o.word));
-      wrap.appendChild(lab);
-      box.appendChild(wrap);
-      return { wrap: wrap, lab: lab, a: a };
+      labs.appendChild(lab);
     });
+    art.appendChild(labs);
     node.appendChild(tot);
-    node.appendChild(box);
-    return { node: node, w: Wp, h: PH.top + HH, draw: function (R) {
-      var wy = R.map(function (r) { return y1 + r.w * (HH - y1); });
-      bs.forEach(function (b, i) {
-        var u = R[i].u * (PH.G - PH.s), q = at(b, u), a = labs[i].a;
-        setAttr(paths[i], "d", vPath(b, y1, y3, y2, u));
-        setAttr(rects[i], "height", f2(wy[i]));
-        setStyle(labs[i].wrap, { display: wy[i] <= y2 ? "none" : "", clipPath: "inset(0px 0px " + f2(Math.max(0, HH - wy[i])) + "px 0px)" });
-        setStyle(labs[i].lab, a === "l" ? { left: f2(q.c) + "px", right: "" } : a === "r" ? { left: "", right: f2(Wp - q.d) + "px" } : { left: f2((q.c + q.d) / 2) + "px", right: "" });
-      });
+    node.appendChild(art);
+    // w: how far the record has poured down, p: how far it has parted
+    return { node: node, w: Wp, h: top + HH, f: f0, draw: function (w, p) {
+      setAttr(rect, "height", f2(w >= 1 ? HH : y1 + w * (y2 - y1)));
+      bs.forEach(function (b, i) { setAttr(paths[i], "d", vPath(b, y1, y3, y2, p)); });
+      // the figures fade in once the columns have parted
+      setStyle(labs, { opacity: p > 0.98 ? "1" : "0" });
     } };
   }
 
-  // where the band is on its way up the screen, and what that beat shows: the story starts once half the drawing is on
-  // screen (or at the first scroll, where the page opens with more of it showing, so the opening beat is never skipped)
-  // and ends as the caption reaches the top of the screen, never in less than 0.45 of a screen of scroll
+  // where the band is on its way up the screen: the pour and the parting start once half the drawing is on screen (or
+  // at the first scroll, where the page opens with more of it showing, so the opening is never skipped) and run over
+  // half a screen of scroll: to .55 the record pours down, from .4 it parts.
+  // It pours only when the reader scrolls into it. A page that opens on it or jumps to it — a refresh, a link to
+  // #governance or #by-outcome — shows it whole until it has gone back below its start, as reduced motion does: the
+  // design's scroll alone left it half parted there, without its figures (at 1280×720, #governance lands 44% parted).
+  // Not the design's; added 2026-10-31.
+  var HELD = false, LASTV = 0, GESTURE = 0;
   function frame() {
     if (!SP || !SP.draw || !document.contains(SP.box)) return;
-    var vh = window.innerHeight || 800, nb = SP.nb, dr = SP.fig.getBoundingClientRect(), off = dr.top - SP.beats.getBoundingClientRect().top;
-    var x0 = Math.min(vh - 0.5 * dr.height, dr.top + (window.scrollY || window.pageYOffset || 0)), x1 = Math.min(0.04 * vh + off, x0 - 0.45 * vh);
-    var P = SP.print ? nb - 1 : (nb - 1) * Math.max(0, Math.min(1, (x0 - dr.top) / (x0 - x1)));
-    if (Math.abs(P - SP.P) < 0.0005) return;
-    SP.P = P;
-    var i = beatAt(P, nb);
-    SP.draw.draw(reveal(P, REDUCED.matches || SP.print, nb - 2));
-    SP.beatEls.forEach(function (be, j) {
-      be.classList.toggle("is-on", j === i);
-      setAttr(be, "aria-hidden", j === i ? "false" : "true");
-    });
-    var pad2 = function (n) { return (n < 10 ? "0" : "") + n; };
-    setText(SP.count, fillIn(SP.C["counter"], { beat: pad2(i + 1), beats: pad2(nb) }));
+    var v = 1;
+    if (!(REDUCED.matches || SP.print || document.visibilityState === "hidden")) {
+      var vh = window.innerHeight || 800, r = SP.fig.getBoundingClientRect();
+      var s0 = Math.min(vh - 0.5 * r.height, r.top + (window.scrollY || window.pageYOffset || 0));
+      v = clamp01((s0 - r.top) / Math.max(240, PASS * vh));
+      if (v <= 0) HELD = false;
+      else if (!HELD && LASTV <= 0 && Date.now() - GESTURE > 1200) HELD = true;
+      LASTV = v;
+      if (HELD) v = 1;
+    }
+    if (Math.abs(v - SP.v) < 0.0005) return;
+    SP.v = v;
+    SP.draw.draw(ease(clamp01(v / 0.55)), ease(clamp01((v - 0.4) / 0.6)));
   }
   var ticking = 0;
   window.addEventListener("scroll", function () {
     if (!SP || ticking) return;
     ticking = requestAnimationFrame(function () { ticking = 0; frame(); });
   }, { passive: true });
-  window.addEventListener("resize", function () { if (SP) { layoutStory(); SP.P = -1; frame(); } });
-  if (REDUCED.addEventListener) REDUCED.addEventListener("change", function () { if (SP) { SP.P = -1; frame(); } });
-  window.addEventListener("beforeprint", function () { if (SP) { SP.print = true; SP.box.classList.add("is-print"); layoutStory(); SP.P = -1; frame(); } });
-  window.addEventListener("afterprint", function () { if (SP) { SP.print = false; SP.box.classList.remove("is-print"); layoutStory(); SP.P = -1; frame(); } });
+  // the reader's own scrolling: a wheel, a touch or a scrolling key, which come before the scroll they make
+  var gesture = function (e) {
+    if (e.type !== "keydown" || /^(Arrow(Up|Down)|Page(Up|Down)|Home|End| )$/.test(e.key)) GESTURE = Date.now();
+  };
+  ["wheel", "touchstart", "touchmove", "keydown"].forEach(function (t) { window.addEventListener(t, gesture, { passive: true, capture: true }); });
+  window.addEventListener("resize", function () { if (SP) { layoutStory(); SP.v = -1; frame(); } });
+  if (REDUCED.addEventListener) REDUCED.addEventListener("change", function () { if (SP) { SP.v = -1; frame(); } });
+  document.addEventListener("visibilitychange", function () { if (SP) { SP.v = -1; frame(); } });
+  window.addEventListener("beforeprint", function () { if (SP) { SP.print = true; SP.box.classList.add("is-print"); layoutStory(); SP.v = -1; frame(); } });
+  window.addEventListener("afterprint", function () { if (SP) { SP.print = false; SP.box.classList.remove("is-print"); layoutStory(); SP.v = -1; frame(); } });
 
-  // the digits' ink, measured once Outfit is in: the figures are centred on it, not on the line box
+  // the digits' ink, measured once Outfit is in: the total's word is centred on it, not on the line box
   function inkWhenReady() {
     var measure = function () {
       try {
