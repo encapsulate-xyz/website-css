@@ -2,7 +2,7 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-10-27. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-10-31. The index of the site is https://encapsulate.xyz/llms.txt.
 
 ## Governance Record
 
@@ -10,6 +10,11 @@ URL: https://encapsulate.xyz/governance/votes
 
 | Network | Reference | Proposal | Our vote | Proof | Rationale | Recorded |
 | --- | --- | --- | --- | --- | --- | --- |
+| Axelar | 503 | Register arc on ITS Hub | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/747F16F7DC098EBFF52004247751AE91D313953583C0C658E12710C5B8EE0F3A) | Deployment work the chain's connections depend on; supporting it keeps them working. | October 28, 2026 |
+| Ixo | 506 | Signal support for x/usdcmigration in a future ixo (Impacthub) software upgrade (Noble USDC wind-down) | YES | [View Tx Hash](https://www.mintscan.io/ixo/tx/4F89D7EB83A870BE626CC551D741ED5608270394F0093F645806AB40A8CEF81F) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. | October 28, 2026 |
+| Agoric | 123 | Registering `USDC.inj` vat-bank asset | YES | [View Tx Hash](https://www.mintscan.io/agoric/tx/510511C6E6C5E0686C1E9A45B28688DA599A8B25F46BAD49719FB16D2847FF62) | Deployment work the chain's connections depend on; supporting it keeps them working. | October 28, 2026 |
+| Cosmos Hub | 1060 | Migrate Community Pool USDC.n to USDC.inj via a Community Multisig | YES | [View Tx Hash](https://www.mintscan.io/cosmos/tx/B6CFCC27BCDF45DDA563A03DF4C71718FDB5C2717D47F7BE6884024814867807) | The code and the addresses were published with the proposal, and the change is contained. Yes. | October 28, 2026 |
+| Agoric | 122 | Signal support for x/usdcmigration in a future Agoric software upgrade (Noble USDC wind-down) | YES | [View Tx Hash](https://www.mintscan.io/agoric/tx/91FB0F7260565C5FA7BB5975FA37975DE39C81CA11CAB6E294DC3D709EE9223B) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. | October 27, 2026 |
 | Terra | 4853 | Phoenix Foundation: Appoint Martin as Emergency Supervisor | ABSTAIN | [View Tx Hash](https://www.mintscan.io/terra/tx/F3EFCDB073E6EB94AF0FCE74D691BFBA7D11A7C8557E6F9C8F89BF6B236CB0F5) | Not enough in the proposal to judge it either way, so we abstain rather than guess. | October 27, 2026 |
 | Axelar | 501 | Instantiate and register arc with reward pools | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/BB7A56F88567371F90452E3E7933E8C5D30E71AD92BEBC179820DEB7ACC729FC) | The code and the addresses were published with the proposal, and the change is contained. Yes. | October 24, 2026 |
 | Axelar | 500 | Interchain Token Service Batch Migration | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/691E5D4C442DB91E15D3E2A358BDFD4C2381F7A5D419D9AC092BA29F1D4514DB) | Deployment work the chain's connections depend on; supporting it keeps them working. | October 22, 2026 |
@@ -769,8 +774,3 @@ URL: https://encapsulate.xyz/governance/votes
 | Osmosis | 468 | Revive IBC Client to Dig | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/D93B46A6FB76D4F696017E2491EC0A1940031F77FE419895382A938F25FE9EB9) | Repair work on an existing route rather than a new commitment, so we support it. | March 25, 2023 |
 | Evmos | 136 | Evmos Testnet v12.0.0 Upgrade | YES | [View Tx Hash](https://www.mintscan.io/evmos/txs/0576E45401ADEC48F8940135A960E8FCBF37251B0642D9C2412FC2547D0A5512) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. | March 25, 2023 |
 | Stargaze | 144 | Stargaze Carbon Neutral Proposal | YES | [View Tx Hash](https://www.mintscan.io/stargaze/txs/FCA44B56F50261892F6711A724A3B3481B92695C9737D13670DDFE7E6E94D47F) | It fits the project's direction and carries no cost we can find for delegators. | March 23, 2023 |
-| Stargaze | 144 | Stargaze Carbon Neutral Proposal | YES | [View Tx Hash](https://www.mintscan.io/stargaze/txs/40AD32C5469F68883556D8BDB232A2F93899FCC48B4CF155F10F30AE74420ECB) | It fits the project's direction and carries no cost we can find for delegators. | March 23, 2023 |
-| Stargaze | 143 | Stargaze v9 upgrade | YES | [View Tx Hash](https://www.mintscan.io/stargaze/txs/59697D1C4574E3541A516D99016998490B4DA3CE4A230FA64297B965678545CD) | In favour of the upgrade as it updates the version of many dependencies such as: - SDK v0.45.14 - Wasmd v0.30.0 (authz support) - IBC v4.3.0 - Tendermint v0.34.26. | March 21, 2023 |
-| Osmosis | 467 | Regular Incentive adjustment for 2023-03-20 | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/81F3623FABA6923885E96B433B8682439CE2A0C5DC7C7785773DBFDA617F8A2D) | The work is useful to the chain and the amount asked is proportionate to it. | March 21, 2023 |
-| Osmosis | 466 | Enable icq messages | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/8EDE4F253A19A1FDD559D46D47457A30A95730F19588FAEE9B7021D6721D0AF1) | We read it in full and see nothing that works against the chain or its delegators. | March 21, 2023 |
-| Osmosis | 465 | Enable Superfluid Staking on OSMO/FTM | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/44A494CBB055669DE804BFD754AE0FCE32A7DD7198617CA0333E8B02E691F170) | It fits the project's direction and carries no cost we can find for delegators. | March 21, 2023 |

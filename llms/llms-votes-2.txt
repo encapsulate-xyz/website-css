@@ -2,10 +2,15 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-10-27. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-10-31. The index of the site is https://encapsulate.xyz/llms.txt.
 
 | Network | Reference | Proposal | Our vote | Proof | Rationale | Recorded |
 | --- | --- | --- | --- | --- | --- | --- |
+| Stargaze | 144 | Stargaze Carbon Neutral Proposal | YES | [View Tx Hash](https://www.mintscan.io/stargaze/txs/40AD32C5469F68883556D8BDB232A2F93899FCC48B4CF155F10F30AE74420ECB) | It fits the project's direction and carries no cost we can find for delegators. | March 23, 2023 |
+| Stargaze | 143 | Stargaze v9 upgrade | YES | [View Tx Hash](https://www.mintscan.io/stargaze/txs/59697D1C4574E3541A516D99016998490B4DA3CE4A230FA64297B965678545CD) | In favour of the upgrade as it updates the version of many dependencies such as: - SDK v0.45.14 - Wasmd v0.30.0 (authz support) - IBC v4.3.0 - Tendermint v0.34.26. | March 21, 2023 |
+| Osmosis | 467 | Regular Incentive adjustment for 2023-03-20 | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/81F3623FABA6923885E96B433B8682439CE2A0C5DC7C7785773DBFDA617F8A2D) | The work is useful to the chain and the amount asked is proportionate to it. | March 21, 2023 |
+| Osmosis | 466 | Enable icq messages | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/8EDE4F253A19A1FDD559D46D47457A30A95730F19588FAEE9B7021D6721D0AF1) | We read it in full and see nothing that works against the chain or its delegators. | March 21, 2023 |
+| Osmosis | 465 | Enable Superfluid Staking on OSMO/FTM | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/44A494CBB055669DE804BFD754AE0FCE32A7DD7198617CA0333E8B02E691F170) | It fits the project's direction and carries no cost we can find for delegators. | March 21, 2023 |
 | Osmosis | 464 | Match External Incentives to extended STARS/OSMO pair | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/BC85893F19F2D8D747FD48D9BC67FCB7813F6AD6BA0DD7DCD658D3A2E2BC0135) | The work is useful to the chain and the amount asked is proportionate to it. | March 21, 2023 |
 | Osmosis | 464 | Match External Incentives to extended STARS/OSMO pair | ABSTAIN | [View Tx Hash](https://www.mintscan.io/osmosis/txs/85DC32C88BC9912C847D82BA462D61EDA2D6E319A163E47D20D879B882EA2C48) | The community's call to make. We abstain rather than let our stake decide it. | March 21, 2023 |
 | Osmosis | 464 | Match External Incentives to extended STARS/OSMO pair | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/7D62A403B78A2D403E2F70CDDC9C6290570AFE004603ADDEDD52647CE0E50724) | A reasonable ask for work the chain benefits from, at a size the pool can carry. | March 21, 2023 |
