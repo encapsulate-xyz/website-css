@@ -2,7 +2,7 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-10-28. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-11-05. The index of the site is https://encapsulate.xyz/llms.txt.
 
 ## Agoric Testnet Technical Analysis
 
@@ -4388,13 +4388,11 @@ Written by
 
 S Maheswaran · Content & Socials Manager
 
-Running the Pharos testnet?
+Delegating on Pharos?
 
-Mainnet has not launched yet
+Our address, commission and uptime
 
-Delegate
-
-Coming soon on mainnet
+Delegate PROS
 
 All posts
 

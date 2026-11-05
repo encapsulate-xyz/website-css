@@ -1044,7 +1044,7 @@ Scroll ↓
 
 Encapsulate · where we run
 
-29 mainnets · 21 testnets
+29 mainnets · 20 testnets
 
 ### 29
 
@@ -1052,7 +1052,7 @@ Mainnets secured
 
 A validator of ours in the active set on every one of them.
 
-### 21
+### 20
 
 testnets we help
 
@@ -5274,7 +5274,7 @@ What we run
 
 Node operation
 
-Dedicated hardware in Finland, run by our own team.
+Bare metal, two regions, with a hot standby.
 
 Upgrade handling
 
