@@ -246,6 +246,7 @@ holds, and the Search Console routine").
   guide is public only when it is Live"). **Next pass:** the 12 read "Temporarily removed" in Removals, and none of
   the 16 is in Pages → Indexed. **When one goes Live:** `scripts/guide_index.py`, its head back to the canonical line,
   cancel its removal, then request indexing.
+- **/networks/pharos: indexing requested on 2026-11-05**, the day it went up (it read "not on Google"). Check it is on Google on the next pass.
 - **/guides/cosmos-hub: indexing requested on 2026-10-28**, the day it went Live. Check it is on Google on the
   next pass.
 - **2026-10-30:** /guides/cosmos-hub and /guides/sommelier are on Google. **Requested:** /blog/monad-l1-scaling,
