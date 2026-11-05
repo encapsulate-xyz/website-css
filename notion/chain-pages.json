@@ -1521,6 +1521,87 @@
    }
   },
   {
+   "name": "Pharos",
+   "token": "PROS",
+   "since": "2026-11-05",
+   "unbonding": "14 days",
+   "unbonding_days": 14,
+   "compounding": "Manual",
+   "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about four hours.",
+   "wallet": {
+    "label": "Delegate with MetaMask",
+    "url": "https://stake.pharos.encapsulate.xyz/stake/0x6d565aee07f2d2e8da0fe77e5a62352e9d5fbb4007c4929c64c0268835a1f926",
+    "guide": "/guides (Stake PROS with MetaMask)",
+    "guide_url": "https://www.notion.so/40fe800a513881a99b87cdb54dbe6dfc",
+    "until": "the guide is Soon (no captures yet); our Pharos Staking Hub's page for our validator until it is Live, then url = guide_url (2026-11-05)"
+   },
+   "work": [
+    [
+     "Node operation",
+     "Dedicated hardware in Finland, run by our own team."
+    ],
+    [
+     "Upgrade handling",
+     "Every network upgrade since we joined, on schedule."
+    ],
+    [
+     "Monitoring",
+     "A missed block wakes someone up, at any hour."
+    ],
+    [
+     "Public record",
+     "Our stake and rewards are on-chain for anyone to check."
+    ]
+   ],
+   "faq": [
+    [
+     "Is there a minimum?",
+     "1 PROS, the chain's own minimum."
+    ],
+    [
+     "Do you hold my tokens?",
+     "No. Delegated PROS sits in the chain's staking contract under your address, and only your wallet can undelegate it."
+    ],
+    [
+     "How often are rewards paid?",
+     "Every epoch, about four hours, to a balance you claim or compound."
+    ],
+    [
+     "What happens if you go offline?",
+     "An alert wakes someone up, at any hour. Pharos has no automated slashing today, but a validator that drops out loses its transaction fee rewards, and governance can penalise it."
+    ],
+    [
+     "Can I unstake at any time?",
+     "Yes. Undelegated PROS can be claimed 84 epochs later, about 14 days."
+    ]
+   ],
+   "copy": [],
+   "research": {
+    "since how": "getActiveValidators() at block 22,168,999 does not hold our pool and at 22,169,000 does: that block is the EpochChange of epoch 1968, 2026-11-05 09:07:20 UTC (the set went 34 to 38 there, 42 at epoch 1969). First reward 810.38 PROS at epoch 1969's boundary, block 22,182,165, 13:07:20 UTC. Our pool's stake then: 6,000,100 PROS, 6,000,000 delegated by 0x96C0dd7B…5b0a, 100 our own.",
+    "cadence": "Per epoch, not per block. Epochs are 4 hours (chain.epoch_duration 14,400,000 ms), about 14,300 blocks at 1.01 s a block. At each boundary the staking contract mints a fixed 22,831.05 PROS (5% of the 1,000,000,000 supply snapshot a year over 2,190 epochs) and shares it by stake; ValidatorReward carries each pool's base and fee reward. Delegators claim (claimReward) or compound (compoundRewards), so Compounding is Manual. Emission started at about epoch 1920 (late October 2026): total supply 1,001,118,721 is 49 epochs above the snapshot on 2026-11-05.",
+    "rate": "Gross = 5% × 1,000,000,000 ÷ total staked. Measured against the chain: epoch 1968's 169,058,783 PROS gives 29.57%, and our pool's first payout, 810.30 PROS base on 6,000,100, annualises to 29.57%. The split is the contract's: of 810.38 PROS the delegator's balance took 729.33 (90% pro rata) and the owner 81.05. On 202,459,184 PROS at epoch 1969: 24.69% gross, 22.2% after our 10%. The rate falls as stake joins (120.7M to 202.5M between 4 and 5 November); site-data's networks job keeps it current.",
+    "other wallets": {
+     "url": "https://stake.pharos.encapsulate.xyz/validators",
+     "what": "our own Pharos Staking Hub, neutral and non-custodial: every validator, with MetaMask, Rabby, OKX Wallet or any injected wallet. Pharos publishes no staking page of its own (pharos.xyz/staking is a 404, and staking.pharos.xyz and stake.pharos.xyz do not resolve, 2026-11-05)."
+    },
+    "sources": [
+     "https://docs.pharos.xyz/node-and-validator-guide/validator-accountability.md",
+     "https://docs.pharos.xyz/node-and-validator-guide/node-management.md",
+     "https://rpc.pharos.xyz (staking contract 0x4100000000000000000000000000000000000000: getActiveValidators, EpochChange, ValidatorReward, getDelegatorReward, getCommissionRate)",
+     "https://api.stake.pharos.encapsulate.xyz/v1/mainnet/summary",
+     "https://api.stake.pharos.encapsulate.xyz/v1/mainnet/validators",
+     "https://www.pharosscan.xyz/address/0xEa452Aed0Ea405E2D9B4038a6e1433028ad8991B",
+     "https://github.com/encapsulate-xyz/pharos-ansible (inventory/mainnet.yml)",
+     "https://github.com/encapsulate-xyz/monitor-ansible (roles/prometheus/files/alerts/pharos_alerts.yml)"
+    ],
+    "notes": "Pool id 0x6d565aee07f2d2e8da0fe77e5a62352e9d5fbb4007c4929c64c0268835a1f926, owner 0xEa452Aed0Ea405E2D9B4038a6e1433028ad8991B, commission 10% (contract default; maximum 20%, a change takes 10 epochs), no pool delegation approver. A pool needs 1,000,000 PROS in all to activate and holds at most 50,000,000; a delegation starts at 1 PROS. Unbonding is delegatorWithdrawWindowEpochs 84 × 4 hours = 14 days. Slashing: the docs say there is no automated slashing and that governance may penalise, so Chain slashes is unticked like Monad's, and the offline answer says so. Node operation: the design's \"Bare metal, two regions, with a hot standby\" is NOT used here, nor \"a standby node takes over\": inventory/mainnet.yml has one host, ts.validator.pharos.mainnet (Hetzner, Helsinki; 256 GB of RAM is above Hetzner's cloud sizes, so dedicated). Put the standard line back if a standby is added. Public record: Pharosscan has no validator pages (/validators is a 404) and its blocks show 0x0 as validator, so the standard \"signing and votes on the explorer\" would be false; Our validator links the pool owner's address, which carries the registration and the rewards. Testnet: we run a node on Atlantic (group_vars/testnet.yml, v0.17.0) but no pool of ours is in Atlantic's 19 validators on 2026-11-05. Glyph: the set's existing pharos.png."
+   },
+   "other": {
+    "label": "Our validator",
+    "url": "https://www.pharosscan.xyz/address/0xEa452Aed0Ea405E2D9B4038a6e1433028ad8991B"
+   }
+  },
+  {
    "name": "Starknet",
    "token": "STRK",
    "since": "2025-07-07",
