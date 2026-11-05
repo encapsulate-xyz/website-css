@@ -38,7 +38,7 @@ the steps of the SEO audit of 2026-09-26/28, for Google and for AI search. Keep 
       "<Name>"`), a main page's Super SEO description. The pre-audit crawl found 17 guides sharing 5.
 - [ ] **Social card**: `scripts/og_cards.py posts|chains|guides --only <path>`, then **refresh the page in
       Super twice** — the first build serves Notion's signed file link, which expires; the second serves
-      Super's `assets.super.so` copy. Check `og:image`'s host.
+      Super's own copy (`assets.super.so`, or `superso.b-cdn.net` for new files since 2026-11). Check `og:image`'s host.
 - [ ] **The facts are in the HTML**, not only drawn by a script — AI crawlers (GPTBot, ClaudeBot,
       PerplexityBot) do not run JavaScript. A chain page: `chain_pages.py --facts "<Name>"` after its
       properties are set (and again whenever they change). A post or guide: its words are Notion blocks.
@@ -54,7 +54,7 @@ the steps of the SEO audit of 2026-09-26/28, for Google and for AI search. Keep 
       link to the old path in Notion is updated. A removed page with a clear successor redirects to it;
       one without simply goes (404).
 - [ ] **Check the live HTML** after the refresh: status 200, one canonical and it is its own, the title, the
-      description, `og:image` on assets.super.so, no noindex, in `sitemap.xml`.
+      description, `og:image` on Super's own host, no noindex, in `sitemap.xml`.
 - [ ] **llms.txt**: `python3 scripts/llms.py`, commit `llms/`, and upload the files that changed to Super → Files
       (remove the old one first; `docs/seo.md`, "llms.txt"). A new page joins the index and its full-text file.
 - [ ] **Search Console, every new page** (CLAUDE.md, "After every task, Search Console"; I do it, in the user's signed-in
@@ -107,13 +107,26 @@ the steps of the SEO audit of 2026-09-26/28, for Google and for AI search. Keep 
 
 ## Networks set — a new chain we validate (`3dde800a…33b7f1…`) — the whole run
 
-Done end to end for **Cosmos Hub on 2026-10-05** (mainnet and testnet, after Axelar); the user asked for it to be
-written down as a repeatable process. Go top to bottom; nothing here follows from anything else by itself unless it
-says so. Ask the user only what is theirs: the chain's place in the order ("after Axelar"), whether its testnet goes
-in too, and which logo if the chain has more than one.
+Done end to end for **Cosmos Hub on 2026-10-05** (mainnet and testnet, after Axelar) and **Pharos on 2026-11-05**
+(a testnet row that reached mainnet); the user asked for it to be written down as a repeatable process, and on
+2026-11-05 to follow it for every new network. Go top to bottom; nothing here follows from anything else by itself
+unless it says so. Ask the user only what is theirs: the chain's place in the order, whether its testnet goes in too,
+and which logo if the chain has more than one. **The place has a default: the Order runs by tier, alphabetical inside
+a tier**, so take that and say so in the reply rather than stopping to ask ("after Axelar" was the user's own choice).
+
+**First read the set: is the chain already a testnet row?** Eight chains are testnet-only (Pharos was one). Then this is
+an upgrade, and three things change: its glyph is the row's own Cover (step 1 needs only a fresh upload for the new
+row); the testnet row is **edited, not added**, to the new Order and Tier, and Status "Not launched yet" → "Live on
+both", Role left as it is; and **only the mainnet count moves** (step 5): the testnet count and the distinct-chain words
+("Thirty-six teams") already count it. A write of "Thirty-seven" would be false.
+
+**Confirm from the chain that we are in, before anything else:** our validator in the live set, and since when. "We got
+onboarded" arrives before the docs do. Our own repos say what is deployed: the chain's `-ansible` inventory,
+`monitor-ansible`'s alerts, and any dashboard of ours (Pharos's hub read the set for us).
 
 **1. The glyph** — the chain's own current mark, never a re-drawing.
-- [ ] Find the official vector: the chain's site (its structured data names the logo file — cosmos.network's
+- [ ] Already a testnet row: download its Cover, look at it, and upload that file again for the mainnet row. Otherwise
+      find the official vector: the chain's site (its structured data names the logo file — cosmos.network's
       `"logo": …/images/cosmos-logo.svg`), its brand kit, then `cosmos/chain-registry` `<chain>/images`. A
       wordmark carrying the mark can be cut: take the mark's `<path>` alone into its own SVG (the Cosmos Ø is
       path 5 of the wordmark). The site icon (`/icon.png`) shows what the mark is meant to look like.
@@ -127,9 +140,17 @@ in too, and which logo if the chain has more than one.
       (staking-explorer.com; check the slug answers — `cosmoshub`, not `cosmos`), cross-checked with
       `calculated_apr` and the wallet's own figure. **The row's rate is after our commission**: APR × (1 − rate),
       one decimal.
+- [ ] Another family: work the rate from the contract and **check it against a real payout on our pool**, the reward
+      event and the delegator's balance, which also proves the commission split (Pharos, 2026-11-05: 29.58% by the
+      formula and by the first payout; 729.33 + 81.05 of 810.38). **Use the stake of the epoch running, not the last
+      payout**: right after a batch joins, the last payout overstates the rate by a fifth. A number in our own notes can
+      be out of date: the hub's code still said Pharos's rewards were off, and the chain said they had been on for a week.
 - [ ] Commission (rate, max, max change), unbonding, slashing params, minimum self-delegation, delegators.
 - [ ] **Since** = the validator's signing-info `start_height` → that block's time (the commission's
-      `update_time` is the creation time too). Block time = blocks since then over the seconds since then.
+      `update_time` is the creation time too). Block time = blocks since then over the seconds since then. An EVM chain:
+      bisect the contract's active set with a historical `eth_call` (the public node keeps it), then read the event at
+      that block: Pharos's answer was the round-looking 22,169,000, and it was truly the epoch's first block. A date
+      this month draws no "N months" on the page, which is fine.
 - [ ] Any older validator of ours on the chain (KingSuper on the Hub): its state, and that it is not the one shown.
 
 **3. The rows**
@@ -142,34 +163,49 @@ in too, and which logo if the chain has more than one.
       Commission, Compounding, Unbonding, Unbonding days, Chain slashes, Slashing events, Explorer, Since.
       Leave Status and Role empty (mainnet rows carry neither).
 - [ ] **Testnet row** if we run its testnet: Name, Stage Testnet, the same Order and Tier, Cover, Status
-      ("Live on both" — or "Not launched yet" for a testnet-only chain), Role ("Operating its testnet").
+      ("Live on both" — or "Not launched yet" for a testnet-only chain), Role ("Operating its testnet"). Already there:
+      edit it (the box above). **A free Order number needs no moving**: 16 was empty after Lido and SSV.network became
+      one, and Pharos took it, so no other row was touched.
 
-**4. The chain page** (mainnet rows only)
+**4. The chain page** (mainnet rows only) — create the guide first (step 8): its address goes in `guide_url`.
 - [ ] `notion/chain-pages.json`: a record after its neighbour, in the others' shape — the line, the green
       button, the four "what we run" rows, the five questions from step 2's facts, `research` with "since how",
-      "cadence", the rate, sources and notes, and `other` (our validator on the explorer).
+      "cadence", the rate, sources and notes, and `other` (our validator on the explorer). Keep the file's own format
+      (`json.dumps(d, indent=1, ensure_ascii=False)` + a newline) or the diff is the whole file.
+- [ ] **Do not copy a sibling's words: every record's stock line is a claim about this chain, so check each one.** Against
+      the chain's `-ansible` inventory and its alerts: "Bare metal, two regions, with a hot standby" and "A standby node
+      takes over" (Pharos has one host, so neither was used); "A missed block wakes someone up" (the alert exists, and
+      is critical). Against the explorer: "Our signing and votes are on the explorer" (Pharosscan shows no validators, so
+      the line became "Our stake and rewards are on-chain"). Against the contract: "They stay in your wallet" (delegated
+      PROS sits in the staking contract). Say in the reply which stock lines changed and why. **The Explorer property**
+      with no validator pages: the pool owner's address, noted in `research`. Chain slashes follows the docs (none
+      automated and governance only: unticked, as Monad) and the offline answer carries the nuance.
 - [ ] **The green button** is our guide for that chain once the guide is Live; until then the wallet's own
       staking page with our validator — for a Keplr chain
       `https://wallet.keplr.app/chains/<keplr slug>?modal=staking&chain=<chain id>&validator_address=<valoper>&step_id=2`.
-      Load it in headless Chrome (`scripts/livecheck.mjs`) and check it lands on the chain.
+      Load it in headless Chrome (`scripts/livecheck.mjs`) and check it lands on the chain. Our own dashboard counts
+      (Pharos: `stake.pharos.encapsulate.xyz/stake/<pool id>`). Keep `guide_url` and `until` beside it.
 - [ ] `python3 scripts/chain_pages.py --dry "<Name>"`, then without `--dry`, then `--facts "<Name>"` (the facts
       paragraph and `meta:description`).
-- [ ] **Super**: `createSitePage(input: {siteId, type: "page", notionPage: <row id, no dashes>, path:
-      "networks/<slug>"})`, then — the new page has no head — `createSiteSnippets` with its one canonical line.
-      (On a page that has a head, read it first and `updateSiteSnippet` the whole thing.)
+- [ ] **Super** (the MCP, since 2026-10-27): `create_page` (`path: "networks/<slug>"`, `notionPageUrl`: the row), then
+      `get_code` to see its head is empty, and `set_code` with its one canonical line. (The dashboard's GraphQL is the
+      fallback: `createSitePage`, `createSiteSnippets`. On a page that has a head, read it first and write the whole thing.)
 
 **5. The counts typed as fallbacks** — the live counts come from the set (`encCounts`, read from /services), but
 these are what shows before that read lands, and what a crawler reads. Find them by scanning the served HTML of /,
-/networks and /services for the numbers; on 2026-10-05 they were (block ids):
-- [ ] homepage stat `5a0aab75…` ("28"), Why Stake database (`bd1e4d48…`), the "No slashing" row (`464530ed…`)'s **Caption right**
-      ("28 secured");
-- [ ] /networks eyebrow `3e6e800a…8084ef7b` ("28 mainnets · 21 testnets"), the mainnet count `3dce800a…8471935d`
-      ("28"), the testnet count `3dce800a…75afdf49a2` ("21"), the close's heading `3e7e800a…fd75c9b60` ("Thirty-six
-      teams chose us." — the number of distinct chains, mainnet or testnet);
-- [ ] /services ask `3e4e800a…2f95f47fb4` ("Thirty-six chain teams…");
-- [ ] `navbar.js` CONTENT["/networks"] ("28 mainnets, 21 testnets") and FOOT ("See all 28") → build, release,
-      paste the site head (by hash), refresh every page.
-- Back up each block first; they are single plain runs — write plain text.
+/networks and /services for the numbers (the block id is the last `id="block-…"` before the figure); on 2026-11-05 they
+are (block ids):
+- [ ] homepage stat `5a0aab75-5b8e-46fa-a72c-1be176e0eb9f` ("29"), Why Stake database (`bd1e4d48…`), the "No slashing"
+      row (`464530ed…`, found by a search for its title)'s **Caption right** ("29 secured");
+- [ ] /networks eyebrow `3e6e800a5138814d87b0d0358084ef7b` ("29 mainnets · 21 testnets"), the mainnet count
+      `3dce800a5138818e8123ed8b8471935d` ("29"), the testnet count `3dce800a5138812a995cd075afdf49a2` ("21"), the close's
+      heading `3e7e800a…fd75c9b60` ("Thirty-six teams chose us." — the number of distinct chains, mainnet or testnet);
+- [ ] /services ask `3e4e800a…2f95f47fb4` ("Thirty-six chain teams…"). The other numbers the scan finds on /services
+      (21, 28, 29, 36) are the set's Orders in its hidden gallery, not counts;
+- [ ] `navbar.js` CONTENT["/networks"] ("29 mainnets, 21 testnets") and FOOT ("See all 29", twice) → build, release,
+      paste the site head (by hash), refresh every page. CLAUDE.md's "the 29 chain pages" with them.
+- Back up each block first (`backups/<chain>-counts-<date>.json`); they are single plain runs — write plain text. Assert
+  the old text before each write, so a block that has moved stops the run.
 
 **6. What follows by itself — check it, do not assume it** (`encCounts()` returns a **promise**: await it)
 - [ ] `await encCounts()` on /networks: mainnet, testnet and chains counts, and the chain in `list` at its Order
@@ -178,7 +214,11 @@ these are what shows before that read lands, and what a crawler reads. Find them
       (a canvas PNG) and look for the glyph after its neighbour; the close's drifting rows (`a.enc-set-name`).
 - [ ] **Homepage network section**: `.enc-net__disc` images in order (the chain after its neighbour), the stat,
       "N secured".
-- [ ] The navbar's Networks panel and search, the /services ask tiles, other chain pages' pills.
+- [ ] The navbar's Networks panel and search, the /services ask tiles, other chain pages' pills. The panel opens only
+      on a real hover (`--steps`, `move()` on the button's position from a screenshot); then read the whole document's
+      `textContent`, because `innerText` misses it.
+- `livecheck.mjs <url> v999 <check.js>` checks the page as served (a tag nothing pins swaps nothing). A check or a
+  steps file's `at()` is a function body, so it needs `return`.
 - Two lists are fixed designs and do **not** follow: footer.js ROTATE (ten chains) and covers.js's /networks cover
   field (24 placed marks). Leave them unless the user asks.
 
@@ -186,7 +226,9 @@ these are what shows before that read lands, and what a crawler reads. Find them
 - [ ] `config/chains.json` (a Cosmos chain: set, record — the Governance Record's Network option, created on
       the first vote — registry, prefix, valopers, explorer, proposal, since, rate) and `config/stake.json`
       (family, registry, address, decimals, coingecko, reference). Another family needs its reader in `sources/`
-      first. **Keep the files' own formatting** (2-space JSON) or the diff is the whole file.
+      first; a new EVM contract is a new `kind` in `sources/evm.mjs`, in both `READERS` and `RATES` (Pharos: PR #216,
+      with `config/chains.json` `rates.chains`). A rate reader must fail rather than guess: Pharos's refuses if the
+      supply stopped growing. **Keep the files' own formatting** (2-space JSON) or the diff is the whole file.
 - [ ] Dry-run with the chain in: `NOTION_TOKEN="$(cat ~/.notion-covers-token)" DRY=1 node jobs/networks/values.mjs`,
       `jobs/governance/votes.mjs`, `STAKE_NO_WALK=1 … jobs/homepage/stake.mjs`; read the chain's lines in `out/*.md`
       (values unchanged, the stake read).
@@ -196,9 +238,10 @@ these are what shows before that read lands, and what a crawler reads. Find them
 - [ ] Create it **from the template through the API** — Notion-Version `2025-09-03`, `POST /v1/pages` with
       `parent: {type: "data_source_id", data_source_id: "1f6e800a-5138-8164-8d5d-000b068d57da"}` and
       `template: {type: "template_id", template_id: "1f6e800a-5138-8128-ad09-dc4efb52033d"}` ("Stake TICKER with
-      WALLET"), properties Name ("Delegate ATOM with Keplr" — the verb its wallet's siblings use), Networks set →
-      the mainnet row, Wallet Set, Network Mainnet, **Status Soon**. The template's column and step database arrive
-      a few minutes after the page.
+      WALLET"), properties Name ("Delegate ATOM with Keplr", "Stake PROS with MetaMask" — the verb its wallet's siblings
+      use), Networks set → the mainnet row, Wallet Set (MetaMask is `3dde800a-5138-819c-9b0f-ecbb20d35645`), Network
+      Mainnet, **Status Soon** (a select). The template's column and step database arrive a few minutes after the page.
+      Add it to `docs/todo.md`, "the nine Soon guides".
 - [ ] **The team may make a new row for the captures rather than fill this one** (Cosmos Hub, 2026-10-28): convert the
       row that holds the captures, give it this one's Name, and archive the empty one.
 - [ ] It stays Soon with no path in Super until the team adds the captures; then follow "Guides Database — a new
@@ -209,7 +252,10 @@ these are what shows before that read lands, and what a crawler reads. Find them
 
 **9. The social card** — after the chain page builds live:
 - [ ] `python3 scripts/og_cards.py chains --only <slug>` (sets `meta:image` and `meta:title` "<Name> staking -
-      Encapsulate"), then refresh the page **twice** and check `og:image` is on assets.super.so.
+      Encapsulate"), then refresh the page **twice** and check `og:image` is Super's own copy and answers 200: on
+      `assets.super.so`, or `superso.b-cdn.net`, where new files land since at least 2026-11-05 (the same file does not
+      exist on the other host, so do not rewrite the URL). What is wrong is a signed Notion link. Look at the card: it
+      is the first proof that the page built.
 
 **10. The L1 openings page** (the networks we do not validate yet) — **not done from here**
 - [ ] The page and its research are in `~/IdeaProjects/validator-research` since 2026-10-08. Put a row in the reply's
@@ -217,13 +263,14 @@ these are what shows before that read lands, and what a crawler reads. Find them
       asks the user first (Cosmos Hub stayed on it, as pick 01, at the user's word on 2026-10-05).
 
 **11. Refresh and check live**
-- [ ] Refresh the chain page, /networks, /services and the homepage — and every page after a site-head paste
-      (in-page loop, 3 at a time, a 30 s abort; retry the ones that time out with 90 s).
+- [ ] Refresh the chain page, /networks, /services, /guides and the homepage (`sync_page`) — and every page after a
+      site-head paste (the dashboard's in-page loop, 3 at a time, a 30 s abort; retry the ones that time out with 90 s).
 - [ ] Every sitemap URL serves the new site head; the chain page is in the sitemap, 200, its own canonical,
-      title, description, `og:image` on assets.super.so, robots "index, follow", the facts paragraph in the HTML,
+      title, description, `og:image` on Super's own host, robots "index, follow", the facts paragraph in the HTML,
       `script#enc-ld-chain`.
 - [ ] Search Console → URL inspection → REQUEST INDEXING for the new page (mine, not optional — see "SEO — every new page").
-- [ ] Update the chain page list in `docs/chain-pages.md` and `notion/networks-set-values.md`.
+- [ ] Update `notion/networks-set-values.md` (Per chain) and `docs/networks.md`. Whatever this run met that these steps
+      did not say, write it in here before closing the task.
 
 ## Guides Database — a new guide (`1f6e800a…8181…`)
 
@@ -335,7 +382,7 @@ step; the team names the steps, the words are mine.
 - [ ] **Check live** in headless Chrome: the guide builds, the steps in order, every surface label a link —
       `W=1440 H=900 node --experimental-websocket scripts/livecheck.mjs https://encapsulate.xyz/guides/<slug> v0
       scripts/guide_check.js` must print `linked` equal to the step count and `missing: []`; then the description and
-      `og:image` (on assets.super.so) are the new ones. Then **press everything**, at `W=1440 H=900` and at `W=390 H=844`:
+      `og:image` (on Super's own host) are the new ones. Then **press everything**, at `W=1440 H=900` and at `W=390 H=844`:
       `node --experimental-websocket scripts/livecheck.mjs https://encapsulate.xyz/guides/<slug> v0 --steps
       scripts/guide_press.mjs` presses every Watch out (it must open on the first press, its text inside its box, clear
       of the capture) and every address (it must copy exactly that address), and must end "ok". A Watch out that a

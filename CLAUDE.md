@@ -191,7 +191,7 @@ User rules that stand on every task:
 | `brand.css`, `brand.js` | /brand — four spreads with a sticky rail, the marks slab, the colour band (design *Brand Page*) | page Head + site Head |
 | `blog.css`, `blog.js` | /blog — the index (design J); blog.js builds each card's cover and its band span. Both in the site head since 2026-10-25, so the index is styled from the frame Super swaps it in (`docs/blog.md`) | site Head |
 | `post.css`, `post.js` | /blog/&lt;post&gt; — every post page (design *Blog Post Page*, variant J). A post has no page head of its own, so both are in the site head and scoped by path | site Head |
-| `chain.css`, `chain.js` | /networks/&lt;chain&gt; — the 28 chain pages (design *Chain Page Combined*), built from each Networks set row page. Site head, scoped by `[data-enc-chain]` | site Head |
+| `chain.css`, `chain.js` | /networks/&lt;chain&gt; — the 29 chain pages (design *Chain Page Combined*), built from each Networks set row page. Site head, scoped by `[data-enc-chain]` | site Head |
 | `notion/chain-pages.json`, `scripts/chain_pages.py` | each chain page's words and facts, researched per chain (sources, notes, how "since" was found), and the writer that puts them into the row pages | — |
 | `guide.css`, `guide.js` | /guides/&lt;chain&gt; — every guide page (design *Staking Guide Variation 1d*). A guide has no page head of its own, so both are in the site head and scoped by path | site Head |
 | `network.css`, `network.js` | /networks — the Network Count band (the hollow; network.js draws its tally), the set as the Networks Index, 5m. network.js is in the site head | its page Head + site Head |

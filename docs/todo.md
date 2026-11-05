@@ -203,6 +203,8 @@ guide that is not converted shows its old slide thumbnails, a taped banner and e
 were hidden (`docs/seo.md`); **9 Soon guides remain**: althea, avail, avalanche, eigen-layer, eigen-layer-steth, gitopia,
 humans-ai, ika, supra. None has its captures yet — `guide_steps.py` finds only the old slide database (no Step property)
 — so each waits for the team's captures, then "Converting a guide — the run" (`notion/new-row-checklist.md`).
+A tenth since 2026-11-05: **Stake PROS with MetaMask** (`40fe800a513881a99b87cdb54dbe6dfc`), made from the template with no
+slides, and no path in Super until it is Live. Its chain page's green button opens our Pharos Staking Hub until then.
 
 - **Their chain pages' green buttons** (the cover's and the dock's) opened the old guide. Five now open the wallet's own
   staking page, as the checklist has it for a guide that is not Live: Althea althea.link/staking, Avail

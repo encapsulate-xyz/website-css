@@ -50,6 +50,7 @@ template, the card, the refresh — and the L1 openings page, which is validator
 is ours. **Cosmos Hub went through it on 2026-10-05** (mainnet and
 testnet, Order 6 after Axelar, tier high; 28 mainnets, 21 testnets, 36 chains; v349; site-data PR #25; the guide
 "Delegate ATOM with Keplr" is Soon until its captures exist).
+**Pharos went through it on 2026-11-05**: a chain already in the set as a testnet that reached us on mainnet, so one new row, the testnet row moved to the same Order (16, the free place between Ika and Supra, tier medium, "Live on both"); 29 mainnets, 21 testnets, and still 36 chains, because it was already one of them; v429; site-data PR #216, a new reader for the staking contract; the guide "Stake PROS with MetaMask" is Soon until its captures exist, and the green button goes to our Pharos Staking Hub until then.
 
 `Networks set` (`3dde800a…33b7f1…`) replaces the old `Networks` database: **one row per deployment**,
 28 mainnet + 19 testnet, from design *Networks Set*. Properties: Name, Stage, Reward rate, Role,
