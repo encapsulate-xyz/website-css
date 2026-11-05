@@ -2,10 +2,17 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-10-31. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-11-05. The index of the site is https://encapsulate.xyz/llms.txt.
 
 | Network | Reference | Proposal | Our vote | Proof | Rationale | Recorded |
 | --- | --- | --- | --- | --- | --- | --- |
+| Ixo | 404 | Upload cw721 smart contract | YES | [View Tx Hash](https://www.mintscan.io/ixo/txs/ABA1BCB3957411189177A27ABBABE6543DCA7192D37B8BB459D502783F0BBD76) | Deployment work the chain's connections depend on; supporting it keeps them working. | March 25, 2023 |
+| Ixo | 405 | Upload ixo1155 smart contract | YES | [View Tx Hash](https://www.mintscan.io/ixo/txs/1FD6C10E057F676F0D3539135DFAFCA8C173E23C8F7FE8BCAA1078F5970DD7D5) | The code and the addresses were published with the proposal, and the change is contained. Yes. | March 25, 2023 |
+| Juno | 277 | Protocol Owned Liquidity: wyJUNO/JUNO Staking Swap Pool | YES | [View Tx Hash](https://www.mintscan.io/juno/txs/8ED23939F45DB2A3DCE49B518BB96F029130F09F4E68DD509C69B647B9C3AA83) | In support of wyJUNO/JUNO Staking Swap Pool and work done by WYND DAO. | March 25, 2023 |
+| Osmosis | 469 | Allow USDC as transaction fees | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/6F407B481545DD3DCF12988F20ED94571509C5B08F3BC7B568F9D83ACACBEB23) | A measured parameter change that stays inside the range the chain already runs, and a later vote can undo it. | March 25, 2023 |
+| Osmosis | 468 | Revive IBC Client to Dig | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/D93B46A6FB76D4F696017E2491EC0A1940031F77FE419895382A938F25FE9EB9) | Repair work on an existing route rather than a new commitment, so we support it. | March 25, 2023 |
+| Evmos | 136 | Evmos Testnet v12.0.0 Upgrade | YES | [View Tx Hash](https://www.mintscan.io/evmos/txs/0576E45401ADEC48F8940135A960E8FCBF37251B0642D9C2412FC2547D0A5512) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. | March 25, 2023 |
+| Stargaze | 144 | Stargaze Carbon Neutral Proposal | YES | [View Tx Hash](https://www.mintscan.io/stargaze/txs/FCA44B56F50261892F6711A724A3B3481B92695C9737D13670DDFE7E6E94D47F) | It fits the project's direction and carries no cost we can find for delegators. | March 23, 2023 |
 | Stargaze | 144 | Stargaze Carbon Neutral Proposal | YES | [View Tx Hash](https://www.mintscan.io/stargaze/txs/40AD32C5469F68883556D8BDB232A2F93899FCC48B4CF155F10F30AE74420ECB) | It fits the project's direction and carries no cost we can find for delegators. | March 23, 2023 |
 | Stargaze | 143 | Stargaze v9 upgrade | YES | [View Tx Hash](https://www.mintscan.io/stargaze/txs/59697D1C4574E3541A516D99016998490B4DA3CE4A230FA64297B965678545CD) | In favour of the upgrade as it updates the version of many dependencies such as: - SDK v0.45.14 - Wasmd v0.30.0 (authz support) - IBC v4.3.0 - Tendermint v0.34.26. | March 21, 2023 |
 | Osmosis | 467 | Regular Incentive adjustment for 2023-03-20 | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/81F3623FABA6923885E96B433B8682439CE2A0C5DC7C7785773DBFDA617F8A2D) | The work is useful to the chain and the amount asked is proportionate to it. | March 21, 2023 |

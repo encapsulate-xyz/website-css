@@ -2,7 +2,7 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-10-31. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-11-05. The index of the site is https://encapsulate.xyz/llms.txt.
 
 ## Encapsulate - Validators for networks we believe in
 
@@ -20,7 +20,7 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 
 01 / 04 · Staked
 
-#### $67,710,149
+#### $71,477,593
 
 Under management by
 
@@ -30,7 +30,7 @@ Staked with our validators across every mainnet we run.
 
 03 / 04 · Mainnets
 
-#### 28
+#### 29
 
 mainnets
 
@@ -38,7 +38,7 @@ Mainnet validator, in the active set.
 
 02 / 04 · Delegators
 
-#### 14,176
+#### 14,173
 
 delegators
 
@@ -106,7 +106,7 @@ Why stake with us
 
 One mark per network
 
-28 secured
+29 secured
 
 0
 
@@ -186,16 +186,16 @@ Read, weigh, listen, step back: the same four questions before every vote. The s
 
 The record, by outcome
 
-1,918 votes: 1,248 Yes, 78 No, 478 No with veto, 114 Abstain
+1,925 votes: 1,255 Yes, 78 No, 478 No with veto, 114 Abstain
 
 | Proposal | Our vote | Recorded |  |  |
 | --- | --- | --- | --- | --- |
-| Register arc on ITS Hub Axelar · 503 | YES | Oct 28, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/747F16F7DC098EBFF52004247751AE91D313953583C0C658E12710C5B8EE0F3A) | Deployment work the chain's connections depend on; supporting it keeps them working. |
-| Signal support for x/usdcmigration in a future ixo (Impacthub) software upgrade (Noble USDC wind-down) Ixo · 506 | YES | Oct 28, 2026 | [View Tx Hash](https://www.mintscan.io/ixo/tx/4F89D7EB83A870BE626CC551D741ED5608270394F0093F645806AB40A8CEF81F) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. |
-| Registering `USDC.inj` vat-bank asset Agoric · 123 | YES | Oct 28, 2026 | [View Tx Hash](https://www.mintscan.io/agoric/tx/510511C6E6C5E0686C1E9A45B28688DA599A8B25F46BAD49719FB16D2847FF62) | Deployment work the chain's connections depend on; supporting it keeps them working. |
-| Migrate Community Pool USDC.n to USDC.inj via a Community Multisig Cosmos Hub · 1060 | YES | Oct 28, 2026 | [View Tx Hash](https://www.mintscan.io/cosmos/tx/B6CFCC27BCDF45DDA563A03DF4C71718FDB5C2717D47F7BE6884024814867807) | The code and the addresses were published with the proposal, and the change is contained. Yes. |
-| Signal support for x/usdcmigration in a future Agoric software upgrade (Noble USDC wind-down) Agoric · 122 | YES | Oct 27, 2026 | [View Tx Hash](https://www.mintscan.io/agoric/tx/91FB0F7260565C5FA7BB5975FA37975DE39C81CA11CAB6E294DC3D709EE9223B) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. |
-| Phoenix Foundation: Appoint Martin as Emergency Supervisor Terra · 4853 | ABSTAIN | Oct 27, 2026 | [View Tx Hash](https://www.mintscan.io/terra/tx/F3EFCDB073E6EB94AF0FCE74D691BFBA7D11A7C8557E6F9C8F89BF6B236CB0F5) | Not enough in the proposal to judge it either way, so we abstain rather than guess. |
+| Protocol upgrade to version 141 Sui · 141 | YES | Nov 4, 2026 | [View Release](https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.83.1) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. |
+| Protocol upgrade to version 39 IOTA · 39 | YES | Nov 4, 2026 | [View Release](https://github.com/iotaledger/iota/releases/tag/v1.35.2) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. |
+| Instantiate and register robinhood with reward pools Axelar · 508 | YES | Nov 3, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/94A5F24B490F2BFE40034D84E4F265DFB2CA00A29EE36B9C0EE0A56529B28257) | The code and the addresses were published with the proposal, and the change is contained. Yes. |
+| Restrict CosmWasm Code Uploads to Governance and Whitelisted Addresses Terra · 4854 | YES | Nov 3, 2026 | [View Tx Hash](https://www.mintscan.io/terra/tx/0B79ABCC5820311283FB8A4F2F9A61D27696ED801C314E527E38A7D17654F771) | Deployment work the chain's connections depend on; supporting it keeps them working. |
+| axe: ITS set-trusted-chain on 19 chains Axelar · 506 | YES | Nov 2, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/EB8B568D80615CC3BF6E250951DE40CDB8DC28B07B35C3779E53E6ADAEB9903D) | It fits the project's direction and carries no cost we can find for delegators. |
+| Set governance proposal_cancel_ratio to 1 Axelar · 507 | YES | Nov 2, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/C73A834065192B5162D28B9198CD0010F851DD26349E24F73EE292694ADCCB43) | The case is made in the proposal itself and the risk is contained. Yes. |
 
 [View voting history](https://encapsulate.xyz/governance)
 
@@ -825,11 +825,11 @@ Published as cast
 
 Scroll ↓
 
-Signal support for x/usdcmigration in a future ixo (Impacthub) software upgrade (Noble USDC wind-down)“Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes.”
+Protocol upgrade to version 39“The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch.”
 
 The record
 
-1,918
+1,925
 
 Six years of votes.
 
@@ -849,18 +849,18 @@ The record · newest first
 
 | Proposal | Our vote | Recorded |  |  |
 | --- | --- | --- | --- | --- |
+| Protocol upgrade to version 141 Sui · 141 | YES | [View Release](https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.83.1) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | Nov 4, 2026 |
+| Protocol upgrade to version 39 IOTA · 39 | YES | [View Release](https://github.com/iotaledger/iota/releases/tag/v1.35.2) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | Nov 4, 2026 |
+| Instantiate and register robinhood with reward pools Axelar · 508 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/94A5F24B490F2BFE40034D84E4F265DFB2CA00A29EE36B9C0EE0A56529B28257) | The code and the addresses were published with the proposal, and the change is contained. Yes. | Nov 3, 2026 |
+| Restrict CosmWasm Code Uploads to Governance and Whitelisted Addresses Terra · 4854 | YES | [View Tx Hash](https://www.mintscan.io/terra/tx/0B79ABCC5820311283FB8A4F2F9A61D27696ED801C314E527E38A7D17654F771) | Deployment work the chain's connections depend on; supporting it keeps them working. | Nov 3, 2026 |
+| axe: ITS set-trusted-chain on 19 chains Axelar · 506 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/EB8B568D80615CC3BF6E250951DE40CDB8DC28B07B35C3779E53E6ADAEB9903D) | It fits the project's direction and carries no cost we can find for delegators. | Nov 2, 2026 |
+| Set governance proposal_cancel_ratio to 1 Axelar · 507 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/C73A834065192B5162D28B9198CD0010F851DD26349E24F73EE292694ADCCB43) | The case is made in the proposal itself and the risk is contained. Yes. | Nov 2, 2026 |
+| Migrate Multisig contract to v2.4.4 Axelar · 505 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/E877E7E9FEB71AAF93C8A9A24D2FB1308214E19427FB2F664762B59D5B5DAC60) | Standard release upgrade with a set height. Nothing here shifts risk onto delegators. | Nov 2, 2026 |
 | Register arc on ITS Hub Axelar · 503 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/747F16F7DC098EBFF52004247751AE91D313953583C0C658E12710C5B8EE0F3A) | Deployment work the chain's connections depend on; supporting it keeps them working. | Oct 28, 2026 |
 | Signal support for x/usdcmigration in a future ixo (Impacthub) software upgrade (Noble USDC wind-down) Ixo · 506 | YES | [View Tx Hash](https://www.mintscan.io/ixo/tx/4F89D7EB83A870BE626CC551D741ED5608270394F0093F645806AB40A8CEF81F) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. | Oct 28, 2026 |
 | Registering `USDC.inj` vat-bank asset Agoric · 123 | YES | [View Tx Hash](https://www.mintscan.io/agoric/tx/510511C6E6C5E0686C1E9A45B28688DA599A8B25F46BAD49719FB16D2847FF62) | Deployment work the chain's connections depend on; supporting it keeps them working. | Oct 28, 2026 |
-| Migrate Community Pool USDC.n to USDC.inj via a Community Multisig Cosmos Hub · 1060 | YES | [View Tx Hash](https://www.mintscan.io/cosmos/tx/B6CFCC27BCDF45DDA563A03DF4C71718FDB5C2717D47F7BE6884024814867807) | The code and the addresses were published with the proposal, and the change is contained. Yes. | Oct 28, 2026 |
-| Signal support for x/usdcmigration in a future Agoric software upgrade (Noble USDC wind-down) Agoric · 122 | YES | [View Tx Hash](https://www.mintscan.io/agoric/tx/91FB0F7260565C5FA7BB5975FA37975DE39C81CA11CAB6E294DC3D709EE9223B) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. | Oct 27, 2026 |
-| Phoenix Foundation: Appoint Martin as Emergency Supervisor Terra · 4853 | ABSTAIN | [View Tx Hash](https://www.mintscan.io/terra/tx/F3EFCDB073E6EB94AF0FCE74D691BFBA7D11A7C8557E6F9C8F89BF6B236CB0F5) | Not enough in the proposal to judge it either way, so we abstain rather than guess. | Oct 27, 2026 |
-| Instantiate and register arc with reward pools Axelar · 501 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/BB7A56F88567371F90452E3E7933E8C5D30E71AD92BEBC179820DEB7ACC729FC) | The code and the addresses were published with the proposal, and the change is contained. Yes. | Oct 24, 2026 |
-| Interchain Token Service Batch Migration Axelar · 500 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/691E5D4C442DB91E15D3E2A358BDFD4C2381F7A5D419D9AC092BA29F1D4514DB) | Deployment work the chain's connections depend on; supporting it keeps them working. | Oct 22, 2026 |
-| Protocol upgrade to version 139 Sui · 139 | YES | [View Release](https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.82.3) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | Oct 21, 2026 |
-| Gaia v29.0.0 upgrade Cosmos Hub · 1059 | YES | [View Tx Hash](https://www.mintscan.io/cosmos/tx/218B5EBDCEBF3516F2F2D1225DA0CCFFFC9726814FB551A5B9EC313786998258) | A scheduled upgrade on a published release. We support it so the validator set moves together and the chain stays live. | Oct 21, 2026 |
 
-10 of 1,918 shown
+10 of 1,925 shown
 
 ## Investments
 
@@ -1044,9 +1044,9 @@ Scroll ↓
 
 Encapsulate · where we run
 
-28 mainnets · 21 testnets
+29 mainnets · 21 testnets
 
-### 28
+### 29
 
 Mainnets secured
 
@@ -1084,11 +1084,11 @@ Sui
 
 Axelar
 
-12.6%
+11.2%
 
 Cosmos Hub
 
-17.7%
+17.6%
 
 EigenCloud
 
@@ -1102,11 +1102,11 @@ Mina
 
 Starknet
 
-7.5%
+7.0%
 
 Terra
 
-35.9%
+35.4%
 
 Zilliqa
 
@@ -1114,7 +1114,7 @@ Zilliqa
 
 Avail
 
-7.5%
+8.0%
 
 Espresso
 
@@ -1123,6 +1123,10 @@ Espresso
 Ika
 
 13.1%
+
+Pharos
+
+22.2%
 
 Supra
 
@@ -1134,23 +1138,23 @@ Vara
 
 Agoric
 
-6.4%
+6.7%
 
 Althea
 
-24.5%
+24.0%
 
 Gitopia
 
-40.5%
+41.0%
 
 Gravity Bridge
 
-16.4%
+16.5%
 
 humans.ai
 
-31.7%
+31.4%
 
 ixo
 
@@ -1158,11 +1162,11 @@ ixo
 
 Lumera
 
-47.3%
+47.8%
 
 Passage
 
-6.7%
+6.3%
 
 Sommelier
 
@@ -1170,7 +1174,7 @@ Sommelier
 
 Chain4Energy
 
-7.9%
+5.9%
 
 4.6–5.4%
 
@@ -1220,6 +1224,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -1252,8 +1258,6 @@ Chain4Energy
 
 GenLayer
 
-Pharos
-
 XMTP
 
 Pell
@@ -1264,7 +1268,7 @@ Spicenet
 
 URL: https://encapsulate.xyz/networks/agoric
 
-Stake BLD with Encapsulate on Agoric: 10% commission, 6.4% a year after commission, 21 days unbonding. Non-custodial.
+Stake BLD with Encapsulate on Agoric: 10% commission, 6.7% a year after commission, 21 days unbonding. Non-custodial.
 
 ### Agoric
 
@@ -1280,15 +1284,15 @@ The terms
 
 Reward rate
 
-6.4%
+6.7%
 
 Set by the chain, not by us
 
 Of every 100 BLD staked
 
-6.4 earned in a year
+6.7 earned in a year
 
-After our commission · as of 28 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -1308,9 +1312,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 21 Nov
+In your wallet · 26 Nov
 
 Live dates
 
@@ -1342,23 +1346,23 @@ Horizon
 
 Not compounded — Agoric pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,064
+1,067
 
 Year 1
 
-1,128
+1,134
 
 Year 2
 
-1,192
+1,201
 
 Year 3
 
-1,256
+1,268
 
 Year 4
 
-1,320
+1,335
 
 Year 5
 
@@ -1442,6 +1446,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -1450,7 +1456,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/althea
 
-Stake ALTHEA with Encapsulate on Althea: 10% commission, 24.5% a year after commission, 21 days unbonding. Non-custodial.
+Stake ALTHEA with Encapsulate on Althea: 10% commission, 24.0% a year after commission, 21 days unbonding. Non-custodial.
 
 ### Althea
 
@@ -1466,15 +1472,15 @@ The terms
 
 Reward rate
 
-24.5%
+24.0%
 
 Set by the chain, not by us
 
 Of every 100 ALTHEA staked
 
-24.5 earned in a year
+24 earned in a year
 
-After our commission · as of 28 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -1494,9 +1500,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 21 Nov
+In your wallet · 26 Nov
 
 Live dates
 
@@ -1528,23 +1534,23 @@ Horizon
 
 Not compounded — Althea pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,245
+1,240
 
 Year 1
 
-1,490
+1,480
 
 Year 2
 
-1,735
+1,720
 
 Year 3
 
-1,980
+1,960
 
 Year 4
 
-2,225
+2,200
 
 Year 5
 
@@ -1628,6 +1634,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -1636,7 +1644,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/avail
 
-Stake AVAIL with Encapsulate on Avail: 20% commission, 7.5% a year after commission, 28 days unbonding. Non-custodial.
+Stake AVAIL with Encapsulate on Avail: 20% commission, 8.0% a year after commission, 28 days unbonding. Non-custodial.
 
 ### Avail
 
@@ -1652,15 +1660,15 @@ The terms
 
 Reward rate
 
-7.5%
+8.0%
 
 Set by the chain, not by us
 
 Of every 100 AVAIL staked
 
-7.5 earned in a year
+8 earned in a year
 
-After our commission · as of 30 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -1680,9 +1688,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 28 Nov
+In your wallet · 3 Dec
 
 Live dates
 
@@ -1714,23 +1722,23 @@ Horizon
 
 Not compounded — Avail pays rewards to a claimable balance. After our 20% commission. An estimate at today’s rate, which the chain can change.
 
-1,075
+1,080
 
 Year 1
 
-1,150
+1,160
 
 Year 2
 
-1,225
+1,240
 
 Year 3
 
-1,300
+1,320
 
 Year 4
 
-1,375
+1,400
 
 Year 5
 
@@ -1812,6 +1820,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -1844,7 +1854,7 @@ Of every 100 AVAX staked
 
 4.6 earned in a year
 
-After our commission · as of 30 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -1864,9 +1874,9 @@ Staking period
 
 Locked for the period you choose
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-The shortest period ends · 14 Nov
+The shortest period ends · 19 Nov
 
 Live dates · the shortest period, 2 weeks
 
@@ -1878,7 +1888,7 @@ Since we joined
 
 Launch
 
-38 months
+39 months
 
 Today
 
@@ -1996,6 +2006,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -2004,7 +2016,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/axelar
 
-Stake AXL with Encapsulate on Axelar: 10% commission, 12.6% a year after commission, 7 days unbonding. Non-custodial.
+Stake AXL with Encapsulate on Axelar: 10% commission, 11.2% a year after commission, 7 days unbonding. Non-custodial.
 
 ### Axelar
 
@@ -2020,15 +2032,15 @@ The terms
 
 Reward rate
 
-12.6%
+11.2%
 
 Set by the chain, not by us
 
 Of every 100 AXL staked
 
-12.6 earned in a year
+11.2 earned in a year
 
-After our commission · as of 28 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -2048,9 +2060,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 7 Nov
+In your wallet · 12 Nov
 
 Live dates
 
@@ -2082,23 +2094,23 @@ Horizon
 
 Not compounded — Axelar pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,126
+1,112
 
 Year 1
 
-1,252
+1,224
 
 Year 2
 
-1,378
+1,336
 
 Year 3
 
-1,504
+1,448
 
 Year 4
 
-1,630
+1,560
 
 Year 5
 
@@ -2180,6 +2192,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -2188,7 +2202,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/chain4energy
 
-Stake C4E with Encapsulate on Chain4Energy: 10% commission, 7.9% a year after commission, 21 days unbonding. Non-custodial.
+Stake C4E with Encapsulate on Chain4Energy: 10% commission, 5.9% a year after commission, 21 days unbonding. Non-custodial.
 
 ### Chain4Energy
 
@@ -2204,15 +2218,15 @@ The terms
 
 Reward rate
 
-7.9%
+5.9%
 
 Set by the chain, not by us
 
 Of every 100 C4E staked
 
-7.9 earned in a year
+5.9 earned in a year
 
-After our commission · as of 30 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -2232,9 +2246,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 21 Nov
+In your wallet · 26 Nov
 
 Live dates
 
@@ -2246,7 +2260,7 @@ Since we joined
 
 Launch
 
-46 months
+47 months
 
 Today
 
@@ -2266,23 +2280,23 @@ Horizon
 
 Not compounded — Chain4Energy pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,079
+1,059
 
 Year 1
 
-1,158
+1,118
 
 Year 2
 
-1,237
+1,177
 
 Year 3
 
-1,316
+1,236
 
 Year 4
 
-1,395
+1,295
 
 Year 5
 
@@ -2366,6 +2380,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -2374,7 +2390,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/cosmos-hub
 
-Stake ATOM with Encapsulate on Cosmos Hub: 10% commission, 17.7% a year after commission, 21 days unbonding. Non-custodial.
+Stake ATOM with Encapsulate on Cosmos Hub: 10% commission, 17.6% a year after commission, 21 days unbonding. Non-custodial.
 
 ### Cosmos Hub
 
@@ -2390,15 +2406,15 @@ The terms
 
 Reward rate
 
-17.7%
+17.6%
 
 Set by the chain, not by us
 
 Of every 100 ATOM staked
 
-17.7 earned in a year
+17.6 earned in a year
 
-After our commission · as of 28 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -2418,9 +2434,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 21 Nov
+In your wallet · 26 Nov
 
 Live dates
 
@@ -2431,6 +2447,8 @@ Slashing events
 Since we joined
 
 Launch
+
+1 months
 
 Today
 
@@ -2450,23 +2468,23 @@ Horizon
 
 Not compounded — Cosmos Hub pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,177
+1,176
 
 Year 1
 
-1,354
+1,352
 
 Year 2
 
-1,531
+1,528
 
 Year 3
 
-1,708
+1,704
 
 Year 4
 
-1,885
+1,880
 
 Year 5
 
@@ -2548,6 +2566,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -2580,7 +2600,7 @@ Of every 100 EIGEN staked
 
 6.4 earned in a year
 
-After our commission · as of 30 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -2600,9 +2620,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 14 Nov
+In your wallet · 19 Nov
 
 Live dates
 
@@ -2732,6 +2752,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -2764,7 +2786,7 @@ Of every 100 ESP staked
 
 3.1 earned in a year
 
-After our commission · as of 30 Oct 2026
+After our commission · as of 4 Nov 2026
 
 Commission
 
@@ -2784,9 +2806,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 7 Nov
+In your wallet · 12 Nov
 
 Live dates
 
@@ -2798,7 +2820,7 @@ Since we joined
 
 Launch
 
-4 months
+5 months
 
 Today
 
@@ -2916,6 +2938,8 @@ Avail
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -2924,7 +2948,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/gitopia
 
-Stake LORE with Encapsulate on Gitopia: 10% commission, 40.5% a year after commission, 21 days unbonding. Non-custodial.
+Stake LORE with Encapsulate on Gitopia: 10% commission, 41.0% a year after commission, 21 days unbonding. Non-custodial.
 
 ### Gitopia
 
@@ -2940,15 +2964,15 @@ The terms
 
 Reward rate
 
-40.5%
+41.0%
 
 Set by the chain, not by us
 
 Of every 100 LORE staked
 
-40.5 earned in a year
+41 earned in a year
 
-After our commission · as of 28 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -2968,9 +2992,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 21 Nov
+In your wallet · 26 Nov
 
 Live dates
 
@@ -3002,23 +3026,23 @@ Horizon
 
 Not compounded — Gitopia pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,405
+1,410
 
 Year 1
 
-1,810
+1,820
 
 Year 2
 
-2,215
+2,230
 
 Year 3
 
-2,620
+2,640
 
 Year 4
 
-3,025
+3,050
 
 Year 5
 
@@ -3102,6 +3126,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -3110,7 +3136,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/gravity-bridge
 
-Stake GRAV with Encapsulate on Gravity Bridge: 10% commission, 16.4% a year after commission, 21 days unbonding. Non-custodial.
+Stake GRAV with Encapsulate on Gravity Bridge: 10% commission, 16.5% a year after commission, 21 days unbonding. Non-custodial.
 
 ### Gravity Bridge
 
@@ -3126,15 +3152,15 @@ The terms
 
 Reward rate
 
-16.4%
+16.5%
 
 Set by the chain, not by us
 
 Of every 100 GRAV staked
 
-16.4 earned in a year
+16.5 earned in a year
 
-After our commission · as of 30 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -3154,9 +3180,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 21 Nov
+In your wallet · 26 Nov
 
 Live dates
 
@@ -3188,23 +3214,23 @@ Horizon
 
 Not compounded — Gravity Bridge pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,164
+1,165
 
 Year 1
 
-1,328
+1,330
 
 Year 2
 
-1,492
+1,495
 
 Year 3
 
-1,656
+1,660
 
 Year 4
 
-1,820
+1,825
 
 Year 5
 
@@ -3288,6 +3314,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -3296,7 +3324,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/humans-ai
 
-Stake HEART with Encapsulate on humans.ai: 10% commission, 31.7% a year after commission, 14 days unbonding. Non-custodial.
+Stake HEART with Encapsulate on humans.ai: 10% commission, 31.4% a year after commission, 14 days unbonding. Non-custodial.
 
 ### humans.ai
 
@@ -3312,15 +3340,15 @@ The terms
 
 Reward rate
 
-31.7%
+31.4%
 
 Set by the chain, not by us
 
 Of every 100 HEART staked
 
-31.7 earned in a year
+31.4 earned in a year
 
-After our commission · as of 28 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -3340,9 +3368,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 14 Nov
+In your wallet · 19 Nov
 
 Live dates
 
@@ -3374,23 +3402,23 @@ Horizon
 
 Not compounded — humans.ai pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,317
+1,314
 
 Year 1
 
-1,634
+1,628
 
 Year 2
 
-1,951
+1,942
 
 Year 3
 
-2,268
+2,256
 
 Year 4
 
-2,585
+2,570
 
 Year 5
 
@@ -3474,6 +3502,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -3506,7 +3536,7 @@ Of every 100 IKA staked
 
 13.1 earned in a year
 
-After our commission · as of 30 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -3526,9 +3556,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 1 Nov
+In your wallet · 7 Nov
 
 Live dates
 
@@ -3658,6 +3688,8 @@ Avail
 
 Espresso
 
+Pharos
+
 Supra
 
 Vara
@@ -3690,7 +3722,7 @@ Of every 100 IOTA staked
 
 11.3 earned in a year
 
-After our commission · as of 30 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -3710,9 +3742,9 @@ None
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 31 Oct
+In your wallet · 5 Nov
 
 Live dates
 
@@ -3842,6 +3874,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -3874,7 +3908,7 @@ Of every 100 IXO staked
 
 17.9 earned in a year
 
-After our commission · as of 28 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -3894,9 +3928,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 21 Nov
+In your wallet · 26 Nov
 
 Live dates
 
@@ -4028,6 +4062,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -4080,7 +4116,7 @@ Of every 100 ETH staked
 
 2.3 earned in a year
 
-After Lido’s fee · as of 29 Oct 2026
+After Lido’s fee · as of 5 Nov 2026
 
 Lido’s fee
 
@@ -4100,9 +4136,9 @@ Unbonding
 
 Lido’s withdrawal queue
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 5 Nov
+In your wallet · 10 Nov
 
 Live dates
 
@@ -4232,6 +4268,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -4240,7 +4278,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/lumera
 
-Stake LUME with Encapsulate on Lumera: 10% commission, 47.3% a year after commission, 21 days unbonding. Non-custodial.
+Stake LUME with Encapsulate on Lumera: 10% commission, 47.8% a year after commission, 21 days unbonding. Non-custodial.
 
 ### Lumera
 
@@ -4256,15 +4294,15 @@ The terms
 
 Reward rate
 
-47.3%
+47.8%
 
 Set by the chain, not by us
 
 Of every 100 LUME staked
 
-47.3 earned in a year
+47.8 earned in a year
 
-After our commission · as of 28 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -4284,9 +4322,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 21 Nov
+In your wallet · 26 Nov
 
 Live dates
 
@@ -4318,23 +4356,23 @@ Horizon
 
 Not compounded — Lumera pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,473
+1,478
 
 Year 1
 
-1,946
+1,956
 
 Year 2
 
-2,419
+2,434
 
 Year 3
 
-2,892
+2,912
 
 Year 4
 
-3,365
+3,390
 
 Year 5
 
@@ -4418,6 +4456,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -4464,9 +4504,9 @@ None
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 31 Oct
+In your wallet · 5 Nov
 
 Live dates
 
@@ -4562,6 +4602,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -4594,7 +4636,7 @@ Of every 100 MON staked
 
 7.9 earned in a year
 
-After our commission · as of 30 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -4614,9 +4656,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 31 Oct
+In your wallet · 6 Nov
 
 Live dates
 
@@ -4746,6 +4788,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -4778,7 +4822,7 @@ Of every 100 NEAR staked
 
 4.7 earned in a year
 
-After our commission · as of 30 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -4798,9 +4842,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 1 Nov
+In your wallet · 7 Nov
 
 Live dates
 
@@ -4930,6 +4974,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -4938,7 +4984,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/passage
 
-Stake PASG with Encapsulate on Passage: 10% commission, 6.7% a year after commission, 21 days unbonding. Non-custodial.
+Stake PASG with Encapsulate on Passage: 10% commission, 6.3% a year after commission, 21 days unbonding. Non-custodial.
 
 ### Passage
 
@@ -4954,15 +5000,15 @@ The terms
 
 Reward rate
 
-6.7%
+6.3%
 
 Set by the chain, not by us
 
 Of every 100 PASG staked
 
-6.7 earned in a year
+6.3 earned in a year
 
-After our commission · as of 28 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -4982,9 +5028,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 21 Nov
+In your wallet · 26 Nov
 
 Live dates
 
@@ -5016,23 +5062,23 @@ Horizon
 
 Not compounded — Passage pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,067
+1,063
 
 Year 1
 
-1,134
+1,126
 
 Year 2
 
-1,201
+1,189
 
 Year 3
 
-1,268
+1,252
 
 Year 4
 
-1,335
+1,315
 
 Year 5
 
@@ -5079,6 +5125,192 @@ A standby node takes over. Past 50% missed of 10,000 blocks — about 8 hours �
 Can I unstake at any time?
 
 Yes. Unbonding takes 21 days, with no rewards in that time; then the tokens are free to move.
+
+Also stake with us on
+
+See all networks
+
+Avalanche
+
+Lido DVT
+
+Monad
+
+NEAR
+
+Sui
+
+Axelar
+
+Cosmos Hub
+
+EigenCloud
+
+IOTA
+
+Mina
+
+Starknet
+
+Terra
+
+Zilliqa
+
+Avail
+
+Espresso
+
+Ika
+
+Pharos
+
+Supra
+
+Vara
+
+## Pharos staking
+
+URL: https://encapsulate.xyz/networks/pharos
+
+Stake PROS with Encapsulate on Pharos: 10% commission, 22.2% a year after commission, 14 days unbonding. Non-custodial.
+
+### Pharos
+
+Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about four hours.
+
+[Delegate with MetaMask](https://stake.pharos.encapsulate.xyz/stake/0x6d565aee07f2d2e8da0fe77e5a62352e9d5fbb4007c4929c64c0268835a1f926)
+
+[Our validator](https://www.pharosscan.xyz/address/0xEa452Aed0Ea405E2D9B4038a6e1433028ad8991B)
+
+The terms
+
+#### The terms
+
+Reward rate
+
+22.2%
+
+Set by the chain, not by us
+
+Of every 100 PROS staked
+
+22.2 earned in a year
+
+After our commission · as of 5 Nov 2026
+
+Commission
+
+10%
+
+Our cut of the rewards
+
+Yours · 90
+
+Ours · 10
+
+Of every 100 PROS in rewards
+
+Unbonding
+
+14 days
+
+How long to withdraw
+
+Withdraw today · 5 Nov
+
+In your wallet · 19 Nov
+
+Live dates
+
+Slashing events
+
+0
+
+Since we joined
+
+Launch
+
+Today
+
+Pharos does not slash stake. The line cannot break
+
+Estimate
+
+#### Year on year
+
+Your stake as the base of the column; each year’s rewards laid on top of it, to scale. Slide the horizon to add years.
+
+PROS · type to change
+
+Horizon
+
+5 years
+
+Not compounded — Pharos pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
+
+1,222
+
+Year 1
+
+1,444
+
+Year 2
+
+1,666
+
+Year 3
+
+1,888
+
+Year 4
+
+2,110
+
+Year 5
+
+What we run
+
+#### What we run
+
+Node operation
+
+Dedicated hardware in Finland, run by our own team.
+
+Upgrade handling
+
+Every network upgrade since we joined, on schedule.
+
+Monitoring
+
+A missed block wakes someone up, at any hour.
+
+Public record
+
+Our stake and rewards are on-chain for anyone to check.
+
+Common questions
+
+#### Common questions
+
+Is there a minimum?
+
+1 PROS, the chain's own minimum.
+
+Do you hold my tokens?
+
+No. Delegated PROS sits in the chain's staking contract under your address, and only your wallet can undelegate it.
+
+How often are rewards paid?
+
+Every epoch, about four hours, to a balance you claim or compound.
+
+What happens if you go offline?
+
+An alert wakes someone up, at any hour. Pharos has no automated slashing today, but a validator that drops out loses its transaction fee rewards, and governance can penalise it.
+
+Can I unstake at any time?
+
+Yes. Undelegated PROS can be claimed 84 epochs later, about 14 days.
 
 Also stake with us on
 
@@ -5168,9 +5400,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 28 Nov
+In your wallet · 3 Dec
 
 Live dates
 
@@ -5294,6 +5526,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -5302,7 +5536,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/starknet
 
-Stake STRK with Encapsulate on Starknet: 5% commission, 7.5% a year after commission, 7 days unbonding. Non-custodial.
+Stake STRK with Encapsulate on Starknet: 5% commission, 7.0% a year after commission, 7 days unbonding. Non-custodial.
 
 ### Starknet
 
@@ -5318,15 +5552,15 @@ The terms
 
 Reward rate
 
-7.5%
+7.0%
 
 Set by the chain, not by us
 
 Of every 100 STRK staked
 
-7.5 earned in a year
+7 earned in a year
 
-After our commission · as of 30 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -5346,9 +5580,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 7 Nov
+In your wallet · 12 Nov
 
 Live dates
 
@@ -5380,23 +5614,23 @@ Horizon
 
 Not compounded — Starknet pays rewards to a claimable balance. After our 5% commission. An estimate at today’s rate, which the chain can change.
 
-1,075
+1,070
 
 Year 1
 
-1,150
+1,140
 
 Year 2
 
-1,225
+1,210
 
 Year 3
 
-1,300
+1,280
 
 Year 4
 
-1,375
+1,350
 
 Year 5
 
@@ -5478,6 +5712,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -5510,7 +5746,7 @@ Of every 100 SUI staked
 
 1.3 earned in a year
 
-After our commission · as of 30 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -5530,9 +5766,9 @@ None
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 31 Oct
+In your wallet · 5 Nov
 
 Live dates
 
@@ -5662,6 +5898,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -5694,7 +5932,7 @@ Of every 100 SUPRA staked
 
 8 earned in a year
 
-After our commission · as of 30 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -5714,9 +5952,9 @@ Up to 48 hours
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 2 Nov
+In your wallet · 7 Nov
 
 Live dates
 
@@ -5848,13 +6086,15 @@ Espresso
 
 Ika
 
+Pharos
+
 Vara
 
 ## Terra staking
 
 URL: https://encapsulate.xyz/networks/terra
 
-Stake LUNA with Encapsulate on Terra: 10% commission, 35.9% a year after commission, 21 days unbonding. Non-custodial.
+Stake LUNA with Encapsulate on Terra: 10% commission, 35.4% a year after commission, 21 days unbonding. Non-custodial.
 
 ### Terra
 
@@ -5870,15 +6110,15 @@ The terms
 
 Reward rate
 
-35.9%
+35.4%
 
 Set by the chain, not by us
 
 Of every 100 LUNA staked
 
-35.9 earned in a year
+35.4 earned in a year
 
-After our commission · as of 28 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -5898,9 +6138,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 21 Nov
+In your wallet · 26 Nov
 
 Live dates
 
@@ -5932,23 +6172,23 @@ Horizon
 
 Not compounded — Terra pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,359
+1,354
 
 Year 1
 
-1,718
+1,708
 
 Year 2
 
-2,077
+2,062
 
 Year 3
 
-2,436
+2,416
 
 Year 4
 
-2,795
+2,770
 
 Year 5
 
@@ -6030,6 +6270,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -6062,7 +6304,7 @@ Of every 100 VARA staked
 
 16.9 earned in a year
 
-After our commission · as of 30 Oct 2026
+After our commission · as of 4 Nov 2026
 
 Commission
 
@@ -6082,9 +6324,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 7 Nov
+In your wallet · 12 Nov
 
 Live dates
 
@@ -6216,6 +6458,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 ## Zilliqa staking
@@ -6246,7 +6490,7 @@ Of every 100 ZIL staked
 
 8.2 earned in a year
 
-After our commission · as of 30 Oct 2026
+After our commission · as of 5 Nov 2026
 
 Commission
 
@@ -6266,9 +6510,9 @@ About 6 days
 
 How long to withdraw
 
-Withdraw today · 31 Oct
+Withdraw today · 5 Nov
 
-In your wallet · 6 Nov
+In your wallet · 11 Nov
 
 Live dates
 
@@ -6398,6 +6642,8 @@ Espresso
 
 Ika
 
+Pharos
+
 Supra
 
 Vara
@@ -6432,7 +6678,7 @@ Pick a chain to start.
 
 Encapsulate · Staking guides
 
-28 chains · 18 guides
+29 chains · 18 guides
 
 ## Agoric staking guide
 

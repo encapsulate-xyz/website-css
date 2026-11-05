@@ -2,7 +2,7 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-10-31. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-11-05. The index of the site is https://encapsulate.xyz/llms.txt.
 
 ## Governance Record
 
@@ -10,6 +10,13 @@ URL: https://encapsulate.xyz/governance/votes
 
 | Network | Reference | Proposal | Our vote | Proof | Rationale | Recorded |
 | --- | --- | --- | --- | --- | --- | --- |
+| Sui | 141 | Protocol upgrade to version 141 | YES | [View Release](https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.83.1) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | November 4, 2026 |
+| IOTA | 39 | Protocol upgrade to version 39 | YES | [View Release](https://github.com/iotaledger/iota/releases/tag/v1.35.2) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | November 4, 2026 |
+| Axelar | 508 | Instantiate and register robinhood with reward pools | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/94A5F24B490F2BFE40034D84E4F265DFB2CA00A29EE36B9C0EE0A56529B28257) | The code and the addresses were published with the proposal, and the change is contained. Yes. | November 3, 2026 |
+| Terra | 4854 | Restrict CosmWasm Code Uploads to Governance and Whitelisted Addresses | YES | [View Tx Hash](https://www.mintscan.io/terra/tx/0B79ABCC5820311283FB8A4F2F9A61D27696ED801C314E527E38A7D17654F771) | Deployment work the chain's connections depend on; supporting it keeps them working. | November 3, 2026 |
+| Axelar | 506 | axe: ITS set-trusted-chain on 19 chains | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/EB8B568D80615CC3BF6E250951DE40CDB8DC28B07B35C3779E53E6ADAEB9903D) | It fits the project's direction and carries no cost we can find for delegators. | November 2, 2026 |
+| Axelar | 507 | Set governance proposal_cancel_ratio to 1 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/C73A834065192B5162D28B9198CD0010F851DD26349E24F73EE292694ADCCB43) | The case is made in the proposal itself and the risk is contained. Yes. | November 2, 2026 |
+| Axelar | 505 | Migrate Multisig contract to v2.4.4 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/E877E7E9FEB71AAF93C8A9A24D2FB1308214E19427FB2F664762B59D5B5DAC60) | Standard release upgrade with a set height. Nothing here shifts risk onto delegators. | November 2, 2026 |
 | Axelar | 503 | Register arc on ITS Hub | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/747F16F7DC098EBFF52004247751AE91D313953583C0C658E12710C5B8EE0F3A) | Deployment work the chain's connections depend on; supporting it keeps them working. | October 28, 2026 |
 | Ixo | 506 | Signal support for x/usdcmigration in a future ixo (Impacthub) software upgrade (Noble USDC wind-down) | YES | [View Tx Hash](https://www.mintscan.io/ixo/tx/4F89D7EB83A870BE626CC551D741ED5608270394F0093F645806AB40A8CEF81F) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. | October 28, 2026 |
 | Agoric | 123 | Registering `USDC.inj` vat-bank asset | YES | [View Tx Hash](https://www.mintscan.io/agoric/tx/510511C6E6C5E0686C1E9A45B28688DA599A8B25F46BAD49719FB16D2847FF62) | Deployment work the chain's connections depend on; supporting it keeps them working. | October 28, 2026 |
@@ -767,10 +774,3 @@ URL: https://encapsulate.xyz/governance/votes
 | Evmos | 136 | Evmos Testnet v12.0.0 Upgrade | NO | [View Tx Hash](https://www.mintscan.io/evmos/txs/86B3B52907C98EBA6BDF1308F8F8A59A379911A541732C1044C7AD8256E22C32) | Voting "no" now as team mentioned that they have noticed some minor issues so they have decided to cancel the current v12.0.0 release and include the fix in a subsequent v12.1.0 release. | March 27, 2023 |
 | Evmos | 137 | Evmos Mainnet v12.1.0 Upgrade | YES | [View Tx Hash](https://www.mintscan.io/evmos/txs/7A4D741B90274419372CF564D9942F2D016BFAA5B9765815E78115400B9AD53C) | We have read changelog for this upgrade here: https://github.com/evmos/evmos/releases/v12.1.0 and voting yes. | March 27, 2023 |
 | Juno | 279 | Protocol owned liquidity: seJUNO/JUNO on Wynd DEX | NO | [View Tx Hash](https://www.mintscan.io/juno/txs/1FAB45624C14387637F0E836C6EF39CA627A7D8B7CFD38CF1D5CC23E48ADA4E4) | I think they have already requested protocol liquidity for wyJUNO, we will wait and see how beneficial it is to the ecosystem before voting yes for another. | March 27, 2023 |
-| Ixo | 404 | Upload cw721 smart contract | YES | [View Tx Hash](https://www.mintscan.io/ixo/txs/ABA1BCB3957411189177A27ABBABE6543DCA7192D37B8BB459D502783F0BBD76) | Deployment work the chain's connections depend on; supporting it keeps them working. | March 25, 2023 |
-| Ixo | 405 | Upload ixo1155 smart contract | YES | [View Tx Hash](https://www.mintscan.io/ixo/txs/1FD6C10E057F676F0D3539135DFAFCA8C173E23C8F7FE8BCAA1078F5970DD7D5) | The code and the addresses were published with the proposal, and the change is contained. Yes. | March 25, 2023 |
-| Juno | 277 | Protocol Owned Liquidity: wyJUNO/JUNO Staking Swap Pool | YES | [View Tx Hash](https://www.mintscan.io/juno/txs/8ED23939F45DB2A3DCE49B518BB96F029130F09F4E68DD509C69B647B9C3AA83) | In support of wyJUNO/JUNO Staking Swap Pool and work done by WYND DAO. | March 25, 2023 |
-| Osmosis | 469 | Allow USDC as transaction fees | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/6F407B481545DD3DCF12988F20ED94571509C5B08F3BC7B568F9D83ACACBEB23) | A measured parameter change that stays inside the range the chain already runs, and a later vote can undo it. | March 25, 2023 |
-| Osmosis | 468 | Revive IBC Client to Dig | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/D93B46A6FB76D4F696017E2491EC0A1940031F77FE419895382A938F25FE9EB9) | Repair work on an existing route rather than a new commitment, so we support it. | March 25, 2023 |
-| Evmos | 136 | Evmos Testnet v12.0.0 Upgrade | YES | [View Tx Hash](https://www.mintscan.io/evmos/txs/0576E45401ADEC48F8940135A960E8FCBF37251B0642D9C2412FC2547D0A5512) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. | March 25, 2023 |
-| Stargaze | 144 | Stargaze Carbon Neutral Proposal | YES | [View Tx Hash](https://www.mintscan.io/stargaze/txs/FCA44B56F50261892F6711A724A3B3481B92695C9737D13670DDFE7E6E94D47F) | It fits the project's direction and carries no cost we can find for delegators. | March 23, 2023 |
