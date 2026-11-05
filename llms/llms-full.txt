@@ -5306,7 +5306,7 @@ Every epoch, about four hours, to a balance you claim or compound.
 
 What happens if you go offline?
 
-An alert wakes someone up, at any hour. Pharos has no automated slashing today, but a validator that drops out loses its transaction fee rewards, and governance can penalise it.
+A standby node takes over. Pharos has no automated slashing today, but a validator that drops out loses its transaction fee rewards, and governance can penalise it.
 
 Can I unstake at any time?
 

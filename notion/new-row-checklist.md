@@ -186,7 +186,9 @@ onboarded" arrives before the docs do. Our own repos say what is deployed: the c
       the chain's `-ansible` inventory and its alerts: "Bare metal, two regions, with a hot standby" and "A standby node
       takes over"; "A missed block wakes someone up" (the alert exists, and is critical). **An inventory can miss a
       standby:** Pharos's lists one host and the chain has one, as the user confirmed the same day, so a stock line the
-      repo cannot show goes to the user as a question in the reply, not out of the page. Against the explorer: "Our signing and votes are on the explorer" (Pharosscan shows no validators, so
+      repo cannot show goes to the user as a question in the reply, not out of the page. **After any `chain_pages.py`
+      write, read the sentence back from the served HTML**: a run that timed out on 2026-11-05 printed its traceback
+      into a chained command that still exited 0, and the page kept its old answer. Against the explorer: "Our signing and votes are on the explorer" (Pharosscan shows no validators, so
       the line became "Our stake and rewards are on-chain"). Against the contract: "They stay in your wallet" (delegated
       PROS sits in the staking contract). Say in the reply which stock lines changed and why. **The Explorer property**
       with no validator pages: the pool owner's address, noted in `research`. Chain slashes follows the docs (none
