@@ -167,6 +167,10 @@ onboarded" arrives before the docs do. Our own repos say what is deployed: the c
       edit it (the box above). **A free Order number needs no moving**: 16 was empty after Lido and SSV.network became
       one, and Pharos took it, so no other row was touched.
 
+- [ ] **A post about the chain:** a post's Network points at the mainnet row once we run the mainnet, and the row that
+      was its testnet leaves it with no ticker and no link to stake. Search Blogs for the testnet row's id and the chain's
+      name, move the relation, refresh the post (`/blog/pharos`, 2026-11-05).
+
 **4. The chain page** (mainnet rows only) — create the guide first (step 8): its address goes in `guide_url`.
 - [ ] `notion/chain-pages.json`: a record after its neighbour, in the others' shape — the line, the green
       button, the four "what we run" rows, the five questions from step 2's facts, `research` with "since how",
