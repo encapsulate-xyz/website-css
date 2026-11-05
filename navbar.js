@@ -24,7 +24,7 @@
 (function () {
   var CONTENT = {
     /* href: [ one line under the link, headline of the note, the note ] */
-    "/networks": ["29 mainnets, 21 testnets",
+    "/networks": ["29 mainnets, 20 testnets",
       "Every chain we validate, mainnet and testnet.",
       "Reward rate where the chain publishes one; the role we played where it does not."],
     "/services": ["Dashboards, playbooks, bots, monitoring",

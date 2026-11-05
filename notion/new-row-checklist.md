@@ -69,6 +69,10 @@ the steps of the SEO audit of 2026-09-26/28, for Google and for AI search. Keep 
 - [ ] Remove its page in Super (`removeSitePage`), then put it in Notion's trash — a refetch of a trashed
       page makes it 404, but Super keeps serving its cached copy until then.
 - [ ] A successor exists (a guide for a guide post)? Add a 308 at the old path to it.
+- [ ] **A testnet we stopped running** (Pharos's Atlantic, 2026-11-05): the row goes, because /networks says "Every chain
+      we keep online". A testnet row has no page in Super, so: back it up, check no guide or post relates to it, archive
+      it (Notion's trash, restorable), and write the testnet fallbacks in "the counts typed as fallbacks" below. If the
+      chain's mainnet row stays, the distinct-chain words do not move. If it was testnet-only, they do.
 - [ ] Refresh every page that listed it — /blog, the homepage, **and every post** (each still carries the
       old "More Blog Posts" gallery in its HTML, hidden on screen but read by crawlers).
 - [ ] A post: the /blog cards and the social cards take their tint from the post's place on the index, so
@@ -114,11 +118,13 @@ unless it says so. Ask the user only what is theirs: the chain's place in the or
 and which logo if the chain has more than one. **The place has a default: the Order runs by tier, alphabetical inside
 a tier**, so take that and say so in the reply rather than stopping to ask ("after Axelar" was the user's own choice).
 
-**First read the set: is the chain already a testnet row?** Eight chains are testnet-only (Pharos was one). Then this is
+**First read the set: is the chain already a testnet row?** Testnet-only chains are in it (Pharos was one). Then this is
 an upgrade, and three things change: its glyph is the row's own Cover (step 1 needs only a fresh upload for the new
 row); the testnet row is **edited, not added**, to the new Order and Tier, and Status "Not launched yet" → "Live on
 both", Role left as it is; and **only the mainnet count moves** (step 5): the testnet count and the distinct-chain words
-("Thirty-six teams") already count it. A write of "Thirty-seven" would be false.
+("Thirty-six teams") already count it. A write of "Thirty-seven" would be false. **Ask whether we still run that
+testnet**: the row can outlive the work, and ours on Pharos had (see "Removing a row"). Our pool in the testnet's set is
+proof we run it; its absence is a question for the user, not an answer.
 
 **Confirm from the chain that we are in, before anything else:** our validator in the live set, and since when. "We got
 onboarded" arrives before the docs do. Our own repos say what is deployed: the chain's `-ansible` inventory,
@@ -178,8 +184,9 @@ onboarded" arrives before the docs do. Our own repos say what is deployed: the c
       (`json.dumps(d, indent=1, ensure_ascii=False)` + a newline) or the diff is the whole file.
 - [ ] **Do not copy a sibling's words: every record's stock line is a claim about this chain, so check each one.** Against
       the chain's `-ansible` inventory and its alerts: "Bare metal, two regions, with a hot standby" and "A standby node
-      takes over" (Pharos has one host, so neither was used); "A missed block wakes someone up" (the alert exists, and
-      is critical). Against the explorer: "Our signing and votes are on the explorer" (Pharosscan shows no validators, so
+      takes over"; "A missed block wakes someone up" (the alert exists, and is critical). **An inventory can miss a
+      standby:** Pharos's lists one host and the chain has one, as the user confirmed the same day, so a stock line the
+      repo cannot show goes to the user as a question in the reply, not out of the page. Against the explorer: "Our signing and votes are on the explorer" (Pharosscan shows no validators, so
       the line became "Our stake and rewards are on-chain"). Against the contract: "They stay in your wallet" (delegated
       PROS sits in the staking contract). Say in the reply which stock lines changed and why. **The Explorer property**
       with no validator pages: the pool owner's address, noted in `research`. Chain slashes follows the docs (none
@@ -201,12 +208,12 @@ these are what shows before that read lands, and what a crawler reads. Find them
 are (block ids):
 - [ ] homepage stat `5a0aab75-5b8e-46fa-a72c-1be176e0eb9f` ("29"), Why Stake database (`bd1e4d48…`), the "No slashing"
       row (`464530ed…`, found by a search for its title)'s **Caption right** ("29 secured");
-- [ ] /networks eyebrow `3e6e800a5138814d87b0d0358084ef7b` ("29 mainnets · 21 testnets"), the mainnet count
-      `3dce800a5138818e8123ed8b8471935d` ("29"), the testnet count `3dce800a5138812a995cd075afdf49a2` ("21"), the close's
+- [ ] /networks eyebrow `3e6e800a5138814d87b0d0358084ef7b` ("29 mainnets · 20 testnets"), the mainnet count
+      `3dce800a5138818e8123ed8b8471935d` ("29"), the testnet count `3dce800a5138812a995cd075afdf49a2` ("20"), the close's
       heading `3e7e800a…fd75c9b60` ("Thirty-six teams chose us." — the number of distinct chains, mainnet or testnet);
 - [ ] /services ask `3e4e800a…2f95f47fb4` ("Thirty-six chain teams…"). The other numbers the scan finds on /services
       (21, 28, 29, 36) are the set's Orders in its hidden gallery, not counts;
-- [ ] `navbar.js` CONTENT["/networks"] ("29 mainnets, 21 testnets") and FOOT ("See all 29", twice) → build, release,
+- [ ] `navbar.js` CONTENT["/networks"] ("29 mainnets, 20 testnets") and FOOT ("See all 29", twice) → build, release,
       paste the site head (by hash), refresh every page. CLAUDE.md's "the 29 chain pages" with them.
 - Back up each block first (`backups/<chain>-counts-<date>.json`); they are single plain runs — write plain text. Assert
   the old text before each write, so a block that has moved stops the run.
