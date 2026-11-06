@@ -70,6 +70,7 @@ def val(row, name):
     if t == "select":     return (p["select"] or {}).get("name", "")
     if t == "number":     return p["number"]
     if t == "date":       return (p["date"] or {}).get("start", "")
+    if t == "url":        return p["url"] or ""
     return ""
 
 

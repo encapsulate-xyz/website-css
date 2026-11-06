@@ -191,7 +191,9 @@ onboarded" arrives before the docs do. Our own repos say what is deployed: the c
       into a chained command that still exited 0, and the page kept its old answer. Against the explorer: "Our signing and votes are on the explorer" (Pharosscan shows no validators, so
       the line became "Our stake and rewards are on-chain"). Against the contract: "They stay in your wallet" (delegated
       PROS sits in the staking contract). Say in the reply which stock lines changed and why. **The Explorer property**
-      with no validator pages: the pool owner's address, noted in `research`. Chain slashes follows the docs (none
+      is the floating dock's Our validator link, and the button's own is `other.url`: two fields, so write both, the same
+      address (Pharos's dock kept Pharosscan after the button moved, 2026-11-06). Where no explorer has validator pages,
+      the pool owner's address, noted in `research`. Chain slashes follows the docs (none
       automated and governance only: unticked, as Monad) and the offline answer carries the nuance.
 - [ ] **The green button** is our guide for that chain once the guide is Live; until then the wallet's own
       staking page with our validator — for a Keplr chain
