@@ -2,7 +2,7 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-11-05. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-11-06. The index of the site is https://encapsulate.xyz/llms.txt.
 
 ## Encapsulate - Validators for networks we believe in
 
@@ -20,7 +20,7 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 
 01 / 04 · Staked
 
-#### $71,477,593
+#### $69,758,876
 
 Under management by
 
@@ -38,7 +38,7 @@ Mainnet validator, in the active set.
 
 02 / 04 · Delegators
 
-#### 14,173
+#### 14,171
 
 delegators
 
@@ -1312,9 +1312,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 26 Nov
+In your wallet · 27 Nov
 
 Live dates
 
@@ -1500,9 +1500,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 26 Nov
+In your wallet · 27 Nov
 
 Live dates
 
@@ -1688,9 +1688,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 3 Dec
+In your wallet · 4 Dec
 
 Live dates
 
@@ -1874,9 +1874,9 @@ Staking period
 
 Locked for the period you choose
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-The shortest period ends · 19 Nov
+The shortest period ends · 20 Nov
 
 Live dates · the shortest period, 2 weeks
 
@@ -2060,9 +2060,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 12 Nov
+In your wallet · 13 Nov
 
 Live dates
 
@@ -2246,9 +2246,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 26 Nov
+In your wallet · 27 Nov
 
 Live dates
 
@@ -2434,9 +2434,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 26 Nov
+In your wallet · 27 Nov
 
 Live dates
 
@@ -2620,9 +2620,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 19 Nov
+In your wallet · 20 Nov
 
 Live dates
 
@@ -2806,9 +2806,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 12 Nov
+In your wallet · 13 Nov
 
 Live dates
 
@@ -2992,9 +2992,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 26 Nov
+In your wallet · 27 Nov
 
 Live dates
 
@@ -3180,9 +3180,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 26 Nov
+In your wallet · 27 Nov
 
 Live dates
 
@@ -3368,9 +3368,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 19 Nov
+In your wallet · 20 Nov
 
 Live dates
 
@@ -3556,7 +3556,7 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
 In your wallet · 7 Nov
 
@@ -3742,9 +3742,9 @@ None
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 5 Nov
+In your wallet · 6 Nov
 
 Live dates
 
@@ -3928,9 +3928,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 26 Nov
+In your wallet · 27 Nov
 
 Live dates
 
@@ -4136,9 +4136,9 @@ Unbonding
 
 Lido’s withdrawal queue
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 10 Nov
+In your wallet · 11 Nov
 
 Live dates
 
@@ -4322,9 +4322,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 26 Nov
+In your wallet · 27 Nov
 
 Live dates
 
@@ -4504,9 +4504,9 @@ None
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 5 Nov
+In your wallet · 6 Nov
 
 Live dates
 
@@ -4656,7 +4656,7 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
 In your wallet · 6 Nov
 
@@ -4842,7 +4842,7 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
 In your wallet · 7 Nov
 
@@ -5028,9 +5028,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 26 Nov
+In your wallet · 27 Nov
 
 Live dates
 
@@ -5180,7 +5180,7 @@ Delegate in two minutes. Your keys never leave your wallet; rewards land every e
 
 [Delegate with MetaMask](https://stake.pharos.encapsulate.xyz/stake/0x6d565aee07f2d2e8da0fe77e5a62352e9d5fbb4007c4929c64c0268835a1f926)
 
-[Our validator](https://www.pharosscan.xyz/address/0xEa452Aed0Ea405E2D9B4038a6e1433028ad8991B)
+[Our validator](https://pharos.exploreme.pro/validators/0x6d565aee07f2d2e8da0fe77e5a62352e9d5fbb4007c4929c64c0268835a1f926)
 
 The terms
 
@@ -5216,9 +5216,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 19 Nov
+In your wallet · 20 Nov
 
 Live dates
 
@@ -5400,9 +5400,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 3 Dec
+In your wallet · 4 Dec
 
 Live dates
 
@@ -5580,9 +5580,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 12 Nov
+In your wallet · 13 Nov
 
 Live dates
 
@@ -5766,9 +5766,9 @@ None
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 5 Nov
+In your wallet · 6 Nov
 
 Live dates
 
@@ -5952,9 +5952,9 @@ Up to 48 hours
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 7 Nov
+In your wallet · 8 Nov
 
 Live dates
 
@@ -6138,9 +6138,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 26 Nov
+In your wallet · 27 Nov
 
 Live dates
 
@@ -6324,9 +6324,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 12 Nov
+In your wallet · 13 Nov
 
 Live dates
 
@@ -6510,9 +6510,9 @@ About 6 days
 
 How long to withdraw
 
-Withdraw today · 5 Nov
+Withdraw today · 6 Nov
 
-In your wallet · 11 Nov
+In your wallet · 12 Nov
 
 Live dates
 
