@@ -205,6 +205,9 @@ humans-ai, ika, supra. None has its captures yet — `guide_steps.py` finds only
 — so each waits for the team's captures, then "Converting a guide — the run" (`notion/new-row-checklist.md`).
 A tenth since 2026-11-05: **Stake PROS with MetaMask** (`40fe800a513881a99b87cdb54dbe6dfc`), made from the template with no
 slides, and no path in Super until it is Live. Its chain page's green button opens our Pharos Staking Hub until then.
+Its captures come from that hub (checked 2026-11-06): /get-pros, the six steps at /stake/<our pool> (Connect, Validator,
+Amount, Review, Sign, Done), then /my-stake. Review to Done need a wallet that holds PROS: the one connected in Chrome has 0.
+Faroo's native tab says reward payouts and compounding are awaiting verification, and Pharos's Port has no native staking yet.
 
 - **Their chain pages' green buttons** (the cover's and the dock's) opened the old guide. Five now open the wallet's own
   staking page, as the checklist has it for a guide that is not Live: Althea althea.link/staking, Avail

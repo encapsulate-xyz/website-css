@@ -198,6 +198,10 @@ onboarded" arrives before the docs do. Our own repos say what is deployed: the c
       `https://wallet.keplr.app/chains/<keplr slug>?modal=staking&chain=<chain id>&validator_address=<valoper>&step_id=2`.
       Load it in headless Chrome (`scripts/livecheck.mjs`) and check it lands on the chain. Our own dashboard counts
       (Pharos: `stake.pharos.encapsulate.xyz/stake/<pool id>`). Keep `guide_url` and `until` beside it.
+- [ ] **List every staking route before writing that a chain has none, and open each in a browser.** Search for them, and
+      read the links on what you find: "Pharos publishes no staking page" was written on 2026-11-05 from three guessed
+      addresses, and its page was at port.pharos.xyz/stake, found through a link on Stakely's blog. For each route, the one
+      question is whether a reader can delegate to us there.
 - [ ] `python3 scripts/chain_pages.py --dry "<Name>"`, then without `--dry`, then `--facts "<Name>"` (the facts
       paragraph and `meta:description`).
 - [ ] **Super** (the MCP, since 2026-10-27): `create_page` (`path: "networks/<slug>"`, `notionPageUrl`: the row), then

@@ -1582,7 +1582,7 @@
     "rate": "Gross = 5% × 1,000,000,000 ÷ total staked. Measured against the chain: epoch 1968's 169,058,783 PROS gives 29.58%, and our pool's first payout, 810.30 PROS base on 6,000,100, annualises to 29.58%. The split is the contract's: of 810.38 PROS the delegator's balance took 729.33 (90% pro rata) and the owner 81.05. On 202,459,184 PROS at epoch 1969: 24.70% gross, 22.2% after our 10%. The rate falls as stake joins (120.7M to 202.5M between 4 and 5 November); site-data's networks job keeps it current.",
     "other wallets": {
      "url": "https://stake.pharos.encapsulate.xyz/validators",
-     "what": "our own Pharos Staking Hub, neutral and non-custodial: every validator, with MetaMask, Rabby, OKX Wallet or any injected wallet. Pharos publishes no staking page of its own (pharos.xyz/staking is a 404, and staking.pharos.xyz and stake.pharos.xyz do not resolve, 2026-11-05)."
+     "what": "our own Pharos Staking Hub, neutral and non-custodial: every validator, with MetaMask, Rabby, OKX Wallet or any injected wallet. Checked 2026-11-06 in a browser: Faroo's Native Stake (app.faroo.xyz/native-staking) lists all 44 validators, us included, but says reward payouts and compounding are awaiting verification. Pharos's own Port (port.pharos.xyz/stake) offers no choice of validator: native staking is Coming Soon in Anvita Mate, and liquid staking goes to Faroo's stPROS. Stakely's form (staking.stakely.io/?form=pharos_native) shows no choice of validator, and Nodes.Guru's Stake now button opens Faroo's stPROS."
     },
     "sources": [
      "https://docs.pharos.xyz/node-and-validator-guide/validator-accountability.md",
