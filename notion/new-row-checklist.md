@@ -202,6 +202,10 @@ onboarded" arrives before the docs do. Our own repos say what is deployed: the c
       read the links on what you find: "Pharos publishes no staking page" was written on 2026-11-05 from three guessed
       addresses, and its page was at port.pharos.xyz/stake, found through a link on Stakely's blog. For each route, the one
       question is whether a reader can delegate to us there.
+- [ ] **The Our validator link: look past the chain registry before settling for an address page.** The registry names the
+      chain's main explorer alone, and other validators run explorers that are in no registry: on Pharos the user found
+      ExploreMe's validator page after I had said no explorer had one (2026-11-06). Search the chain's name with
+      "validators", and our pool id or valoper. Say "I found none", never "there is none".
 - [ ] `python3 scripts/chain_pages.py --dry "<Name>"`, then without `--dry`, then `--facts "<Name>"` (the facts
       paragraph and `meta:description`).
 - [ ] **Super** (the MCP, since 2026-10-27): `create_page` (`path: "networks/<slug>"`, `notionPageUrl`: the row), then

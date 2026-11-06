@@ -303,6 +303,10 @@ files are more than a week old at the end of a task.
 
 ## Open items
 
+- **Pharos's Our validator link moves to ExploreMe** (2026-11-06): `https://pharos.exploreme.pro/validators/<pool id>`, in place of
+  Pharosscan's owner-address page, which shows none of the stake. The site was in maintenance when found: once it loads, compare
+  its stake and commission with the chain, set `other.url` in `notion/chain-pages.json`, run `chain_pages.py --buttons "Pharos"`,
+  refresh the page.
 - /services, /investments, /brand, /blog, /guides were still served with site Head v55 at the last
   check (needs Super republish); /networks needs `head/networks.html` (network.css v54).
 - Homepage "View Voting History" and "View All" are purple (primary) beside a primary "Book a call";
