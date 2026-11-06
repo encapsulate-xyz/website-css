@@ -117,7 +117,7 @@ Uptime** (220vh) draws the rule to 99.96% under "Almost always on.", then the tw
   read "01 / 04 · Staked · typed in, then signed", "· one building per network", "· the wheel turns", "· the rule draws",
   and its line under the stake "The scroll types the sum in, a rule draws under it, and we sign it."; both described the
   move rather than the figure and were cut the same day, the user: "yes do that"). Added: "Under management by
-  **Encapsulate**" (the bold word is drawn as `svg/wordmark-reversed.svg`, 160px) and "Staked with our validators across
+  **Encapsulate**" (the bold word is drawn as `svg/wordmark-reversed.svg`, 5.7em wide with a floor of 160px, so its disc is as tall as the sentence's ink; 2026-11-06) and "Staked with our validators across
   every mainnet we run."; "delegators", the caption, and the hidden paragraph
   of building heights; "Mainnet validator, in the active set."; and the uptime screen's H3 "Almost **always on.**", "Uptime",
   the figure "99.96%" (recreated after the H3; it was "99.96 %"), "uptime", "Measured across all validators, all
