@@ -824,9 +824,9 @@
   font-weight: 600;
   font-size: clamp(40px, 5vw, 72px);
   line-height: 0.9;
-  letter-spacing: -0.055em;
+  letter-spacing: -0.03em;
   color: #000000;
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: proportional-nums; /* tabular 0s are jammed: 04, 06, 09 touched at -0.055em (docs/main-css.md, "Outfit's digits") */
 }
 
 .notion-root[data-enc-security] .enc-sec__rules .enc-sec__row .enc-sec__term {

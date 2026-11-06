@@ -26,7 +26,7 @@
    first.
 
    Values are the design's. Left: padding 54/44/48, gap 26; label mono 11px
-   #B4B4B4; figure Outfit 600 clamp(44px, 5.4vw, 84px) / 0.9, -0.05em, paper,
+   #B4B4B4; figure Outfit 600 clamp(40px, 5.4vw, 84px) / 0.9, -0.02em, paper,
    tabular numbers; status mono 11px #B4D98F above the minimum, #C9C9C4 below
    (the kit has no warning colour, so the wording carries that state); track
    4px, green to the value then rgba(250,250,248,.28); thumb 28px #99CC66 with a
@@ -105,10 +105,10 @@
 [data-enc-dial] .enc-dial__figure {
   font-family: "Outfit", sans-serif;
   font-weight: 600;
-  font-size: clamp(44px, 5.4vw, 84px);
+  font-size: clamp(40px, 5.4vw, 84px);
   line-height: 0.9;
-  letter-spacing: -0.05em;
-  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  font-variant-numeric: proportional-nums; /* every sum ends in 00, and tabular 0s overlap: docs/main-css.md, "Outfit's digits" */
   color: #FAFAF8;
 }
 

@@ -131,7 +131,7 @@
 .notion-root[data-enc-security] .enc-sec__rules .enc-sec__row[data-enc-i="4"]{border-top-color: #F7DCE7;}
 .notion-root[data-enc-security] .enc-sec__rules .enc-sec__row[data-enc-on]{visibility: visible;opacity: 1;}
 .notion-root[data-enc-security] .enc-sec__head{display: flex;align-items: baseline;gap: 16px;}
-.notion-root[data-enc-security] .enc-sec__num{font-family: var(--type-display),system-ui,sans-serif;font-weight: 600;font-size: clamp(40px,5vw,72px);line-height: 0.9;letter-spacing: -0.055em;color: #000000;font-variant-numeric: tabular-nums;}
+.notion-root[data-enc-security] .enc-sec__num{font-family: var(--type-display),system-ui,sans-serif;font-weight: 600;font-size: clamp(40px,5vw,72px);line-height: 0.9;letter-spacing: -0.03em;color: #000000;font-variant-numeric: proportional-nums;}
 .notion-root[data-enc-security] .enc-sec__rules .enc-sec__row .enc-sec__term{font-family: var(--type-display),system-ui,sans-serif;font-weight: 600;font-size: clamp(22px,2.4vw,30px);line-height: 1.05;letter-spacing: -0.032em;color: #000000;}
 .notion-root[data-enc-security] .enc-sec__rules .enc-sec__row .enc-sec__verb{display: none;}
 .notion-root[data-enc-security] .enc-sec__rules .enc-sec__row .enc-sec__line{font-family: var(--type-body),system-ui,sans-serif;font-size: 16.5px;line-height: 1.55;color: #3A3D38;text-wrap: pretty;max-width: 56ch;}

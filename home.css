@@ -445,11 +445,13 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   white-space: nowrap;
 }
 
-/* the display figures share a face */
+/* the display figures share a face. The tracking was the design's -0.05em, which ran Outfit's tabular digits together
+   ($69,049,762's 0 and 4 overlapped by 3px; docs/main-css.md, "Outfit's digits"): a figure that runs stays tabular so
+   it does not shake, at -0.01em; the sum holds still and draws Outfit's own digits at -0.02em, below. */
 :where(#block-3dae800a513880b493f9e17a6928281c > .notion-callout__content > .notion-column-list) > .notion-column > .notion-callout h2.notion-heading {
   font-family: var(--z-display) !important;
   font-weight: 600 !important;
-  letter-spacing: -0.05em !important;
+  letter-spacing: -0.01em !important;
   color: #FAFAF8 !important;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -473,9 +475,11 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   position: relative;
   font-size: clamp(56px, 11vw, 200px) !important;
   line-height: 1 !important;
+  letter-spacing: -0.02em !important;
+  font-variant-numeric: proportional-nums;
 }
-/* a background paints only inside its box, and the −0.05em tracking ends the box 0.05em short of
-   the last digit's ink, so the typed sum lost the right edge of its last 0 (the user, 2026-10-28:
+/* a background paints only inside its box, and the tracking ends the box short of the last digit's
+   ink (0.05em when it was −0.05em), so the typed sum lost the right edge of its last 0 (the user, 2026-10-28:
    "why cropped"). The box runs 0.1em further, its margin takes it back, so nothing moves; the
    rule keeps the text's width (right: 0.1em, below) */
 #block-7c60fb1ac5db40e5b728673e64c2c369 {
@@ -798,7 +802,7 @@ The last block identifies the heading callout which says: Others Trust, We Valid
   align-self: last baseline;
   font-size: clamp(44px, 5vw, 92px) !important;
   line-height: 0.9 !important;
-  letter-spacing: -0.05em !important;
+  letter-spacing: -0.01em !important;
 }
 #block-403e800a51388197a723f1b39e7e7b87 { grid-column: 2; }
 #block-403e800a513881bc99ffc1d5e986f7f4 {

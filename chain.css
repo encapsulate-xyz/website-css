@@ -367,11 +367,11 @@ button.enc-ch__disc:focus-visible { outline: 3px solid rgba(0, 0, 0, 0.32); outl
   font-family: "Outfit", sans-serif;
   font-weight: 600;
   font-size: clamp(32px, 4vw, 48px);
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
   line-height: 1;
   color: var(--ink);
   caret-color: var(--ink);
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: proportional-nums; /* 1,000's tabular 0s overlapped: docs/main-css.md, "Outfit's digits" */
   box-shadow: none;
 }
 .enc-ch__unit { white-space: nowrap; flex: none; }

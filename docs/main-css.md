@@ -123,6 +123,27 @@ defines dark token colours but no ink well), a toggle heading (a heading block m
 and an internal link preview's field drawn from the post's chain glyph (every bookmark on the site
 today is external).
 
+## Outfit's digits — tabular ones touch (the user, 2026-11-06: "why 0 and 4 touching eahc other")
+
+Outfit's tabular digits are its own digits in a 0.59em slot. A 0 is 0.66em by right, so it keeps about 0.01em a side, and
+any negative tracking runs it into its neighbour. Measured on every pair of digits, Outfit 600, `outfit-latin.woff2`:
+
+| | Tightest pairs, before tracking | Clear of every pair from |
+|---|---|---|
+| tabular | 00 0.02em, 40 0.03, 04 0.035, 44 0.04, 06 09 60 90 0.05 | -0.01em |
+| proportional | 77 0.03em, 44 0.035, 71 0.04, 97 0.045 | -0.02em |
+
+So at the design's -0.05em tabular 00 overlapped by 0.03em, 04 by 0.015em (3px on the homepage's 190px sum), and even
+proportional 77 overlapped.
+
+- **A figure that holds still is `proportional-nums`, -0.02em** (the sum, the /contact dial, the chain pages' amount); step
+  numbers that can only be 01 to 09 are `proportional-nums`, -0.03em (/services, /security).
+- **A figure that runs on the page stays `tabular-nums`, at -0.01em** (the delegators, the uptime), or its digits shake.
+- A figure's value changes, so check the pairs it can show, not the one on screen. Left alone: single digits, /networks'
+  29 and 20, the mainnets' 29, figures of 22px and under (the overlap is under a pixel), and the rates on /networks and
+  the chain pages (tabular, -0.04em), where no value held 00, 04, 40 or 44 on 2026-11-06. A rate that does will touch.
+  A new display figure follows these two lines, not the tracking of its design file.
+
 ## A page that ends in a band runs into the footer
 
 Super pads the article and the main below the content. Where the last thing on a page is a
