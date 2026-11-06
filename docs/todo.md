@@ -208,6 +208,7 @@ slides, and no path in Super until it is Live. Its chain page's green button ope
 Its captures come from that hub (checked 2026-11-06): /get-pros, the six steps at /stake/<our pool> (Connect, Validator,
 Amount, Review, Sign, Done), then /my-stake. Review to Done need a wallet that holds PROS: the one connected in Chrome has 0.
 Faroo's native tab says reward payouts and compounding are awaiting verification, and Pharos's Port has no native staking yet.
+ExploreMe's `/staking?validator=<our pool>` is the other way, with us selected; its My positions tab needs a wallet to read.
 
 - **Their chain pages' green buttons** (the cover's and the dock's) opened the old guide. Five now open the wallet's own
   staking page, as the checklist has it for a guide that is not Live: Althea althea.link/staking, Avail
@@ -303,10 +304,6 @@ files are more than a week old at the end of a task.
 
 ## Open items
 
-- **Pharos's Our validator link moves to ExploreMe** (2026-11-06): `https://pharos.exploreme.pro/validators/<pool id>`, in place of
-  Pharosscan's owner-address page, which shows none of the stake. The site was in maintenance when found: once it loads, compare
-  its stake and commission with the chain, set `other.url` in `notion/chain-pages.json`, run `chain_pages.py --buttons "Pharos"`,
-  refresh the page.
 - /services, /investments, /brand, /blog, /guides were still served with site Head v55 at the last
   check (needs Super republish); /networks needs `head/networks.html` (network.css v54).
 - Homepage "View Voting History" and "View All" are purple (primary) beside a primary "Book a call";

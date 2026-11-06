@@ -201,7 +201,8 @@ onboarded" arrives before the docs do. Our own repos say what is deployed: the c
 - [ ] **List every staking route before writing that a chain has none, and open each in a browser.** Search for them, and
       read the links on what you find: "Pharos publishes no staking page" was written on 2026-11-05 from three guessed
       addresses, and its page was at port.pharos.xyz/stake, found through a link on Stakely's blog. For each route, the one
-      question is whether a reader can delegate to us there.
+      question is whether a reader can delegate to us there. Press the Stake buttons on the validator pages you find:
+      ExploreMe's opens its own staking page with our validator already chosen.
 - [ ] **The Our validator link: look past the chain registry before settling for an address page.** The registry names the
       chain's main explorer alone, and other validators run explorers that are in no registry: on Pharos the user found
       ExploreMe's validator page after I had said no explorer had one (2026-11-06). Search the chain's name with
