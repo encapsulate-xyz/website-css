@@ -279,9 +279,9 @@ html:has(.notion-root[data-enc-guide]) { scroll-padding-top: 0; }
   font-weight: 600;
   font-size: clamp(40px, 5vw, 76px);
   line-height: 0.84;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.03em;
   color: #000;
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: proportional-nums; /* 04's tabular digits overlapped: docs/main-css.md, "Outfit's digits" */
 }
 .enc-gd__count .enc-gd__mono { color: var(--gd-on); }
 

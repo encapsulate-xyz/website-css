@@ -968,13 +968,28 @@
       var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       var r = v.getBoundingClientRect(), total = v.offsetHeight - window.innerHeight;
       var p = reduce ? 1 : Math.max(0, Math.min(1, -r.top / Math.max(1, total)));
+      /* snapped, the frame stands still under a glide, so a step shows early in it (a tenth of the run past the stop
+         before it): at thirds, the first would wait 460ms after the gesture with nothing on the page moving */
+      var snapped = window.encSnap && window.encSnap.active();
       Array.prototype.forEach.call(v.querySelectorAll("[data-enc-step]"), function (n) {
-        n.toggleAttribute("data-enc-shown", p >= Number(n.getAttribute("data-enc-step")) / 3);
+        var k = Number(n.getAttribute("data-enc-step"));
+        n.toggleAttribute("data-enc-shown", p >= (snapped ? k / 2 - 0.4 : k / 3));
       });
     }
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll);
+
+  /* the Lido band's three stops, so one gesture turns one step of its sum, as one gesture turns every other band on
+     the page (the user, 2026-11-07: "has the same consistent scrolling or not"). At 300vh snap.js does not take it for
+     a one-screen band and it scrolled free. The stops are a screen apart, the last where the frame lets go: from
+     there the next gesture lands on the band after it. docs/main-css.md, "Snapping" */
+  (window.encSnapQ = window.encSnapQ || []).push(function () {
+    var v = document.querySelector(".enc-ch__vals");
+    if (!v) return null;
+    var top = window.scrollY + v.getBoundingClientRect().top, h = v.offsetHeight, run = h - window.innerHeight;
+    return run > 0 ? { stops: [top, top + run / 2, top + run], top: top, bottom: top + h } : null;
+  });
 
   /* ── build ─────────────────────────────────────────────────────────────────────────────── */
   /* Which row this page is. Super names the page after its path — "page-<row id>" at /<row id>,

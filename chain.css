@@ -559,9 +559,9 @@ button.enc-ch__disc:focus-visible { outline: 3px solid rgba(0, 0, 0, 0.32); outl
   font-weight: 600;
   font-size: clamp(56px, 7vw, 112px);
   line-height: 0.9;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.02em;
   color: var(--paper);
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: proportional-nums; /* 500's tabular 0s overlapped: docs/main-css.md, "Outfit's digits" */
 }
 .enc-ch__vcell svg { width: 100%; display: block; fill: var(--paper); }
 .enc-ch__op { display: flex; align-items: center; justify-content: center; padding-bottom: 8px; }

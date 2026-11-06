@@ -53,6 +53,8 @@ Only a page under /networks or a bare row id is looked at, so other pages cost n
   "Signed every day since launch" is not true everywhere — Avalanche's node missed three months),
   and a chain that cannot slash says so ("{chain} does not slash stake. The line cannot break").
 - The Lido band sits **after the hero** (the file shows it first, above its own note).
+- **The Lido band has three stops** (2026-11-07): 300vh with a pinned frame, so it hands them to snap.js through `encSnapQ`
+  (chain.js), a screen apart, one step of the sum to each: `docs/main-css.md`, "Snapping".
 - **The buttons (the user, 2026-09-24):** the green one is **our own guide** for that chain —
   "Delegate with <the guide's wallet>", linked as the guide's Notion page so Super writes
   /guides/<chain> — and the gray one is **"Our validator"**, the row's Explorer. Lido,

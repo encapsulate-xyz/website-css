@@ -136,13 +136,21 @@ any negative tracking runs it into its neighbour. Measured on every pair of digi
 So at the design's -0.05em tabular 00 overlapped by 0.03em, 04 by 0.015em (3px on the homepage's 190px sum), and even
 proportional 77 overlapped.
 
-- **A figure that holds still is `proportional-nums`, -0.02em** (the sum, the /contact dial, the chain pages' amount); step
-  numbers that can only be 01 to 09 are `proportional-nums`, -0.03em (/services, /security).
+- **A figure that holds still is `proportional-nums`, -0.02em** (the sum, the /contact dial, the chain pages' amount, the
+  Lido band's 500, 32 and 16,000); step numbers that are two digits are `proportional-nums`, -0.03em (/services, /security,
+  a guide's step).
 - **A figure that runs on the page stays `tabular-nums`, at -0.01em** (the delegators, the uptime), or its digits shake.
 - A figure's value changes, so check the pairs it can show, not the one on screen. Left alone: single digits, /networks'
   29 and 20, the mainnets' 29, figures of 22px and under (the overlap is under a pixel), and the rates on /networks and
-  the chain pages (tabular, -0.04em), where no value held 00, 04, 40 or 44 on 2026-11-06. A rate that does will touch.
-  A new display figure follows these two lines, not the tracking of its design file.
+  the chain pages (tabular, -0.04em), where no value held 00, 04, 40 or 44 on 2026-11-07. A rate that does will touch.
+  /services' 23 (-0.07em) and /networks' 29 (-0.06em) and 20 (-0.055em) clear by 0.01em or more, a guide's giant ring
+  numeral (proportional, -0.06em) by 0.005em at 04, 06 and 09. The homepage story's counts (proportional, -0.04em) are clear
+  today; 71 or 77 would meet at 56px. The 404's outlined digits interlock on purpose (white fill and a stroke, 0 over the
+  4s) and stay. A new display figure follows these two lines, not the tracking of its design file.
+- **Check by scanning every page, not by reading rules.** The first pass worked from the rules and missed the Lido band and
+  the guides' step, one page and 18. Walk each sitemap page's text in `livecheck.mjs`: every Outfit run of two or more
+  digits at 23px or over, tabular tighter than -0.01em or proportional tighter than -0.02em, and read its values against
+  the table.
 
 ## A page that ends in a band runs into the footer
 
@@ -173,7 +181,13 @@ every page's scrolling waited for its main thread.
 **What snaps.** A **deck**: one-screen bands that follow one another (home: the audience split, Why Stake's three bands
 and the networks are one deck of five; a guide's bands; a chain page's hero and bands). A **lone band**: Who we are,
 /networks' Network Count band, /guides' picker. A **run** that hands over its own stops: /services' frames (the design's
-uStops) and /governance's counts (each hold's middle). A band is one screen when it is no shorter than the screen and
+uStops), /governance's counts (each hold's middle) and the Lido band's three steps (chain.js, 2026-11-07: the user, "has
+the same consistent scrolling or not"; at 300vh it was no one-screen band and scrolled free between two decks, a notch
+moved it 100px and leaving it threw the page past the band after it). Its stops are a screen apart, the last where the
+frame lets go, so the next gesture lands on the next band. A pinned frame does not move under a glide, so what a step
+shows has to come early in it: chain.js reveals at a tenth of the run past the stop before (250ms after the gesture), not
+at the thirds phones still use (460ms of nothing). **A tall band with a pinned frame is a run: hand its stops over when
+it is built.** A band is one screen when it is no shorter than the screen and
 runs past it by no more than its own bottom padding (a chain band is 722px at 1280×700, its padding). A guide's bands
 count only under `html[data-enc-guide-snap]`, which guide.js sets once the built page stands at its top (the climb of
 2026-09-30, `docs/guides.md`). Nothing snaps under 701px or with reduced motion, and the listeners are attached only
@@ -209,12 +223,14 @@ cost). **A CSS snap cannot sit beside it**: on a guide the mandatory snap pinned
 first event) is stopped by **freezing the overflow** until it is quiet: through `<body>` while the root's overflow is
 visible, as here (`docs/services.md`, v366).
 
-**Checking it**: `scripts/snap/run.sh <path> <page> [W H]` (home, networks, guides, guide, chain, services, gov) loads the
-live page with this repo's files in place of every tag the heads pin and `dist/snap.js` preloaded (`PRE=` once the live
-head carries it), and runs `scripts/snapprobe.mjs` on `scripts/snap/<page>.json`: each scenario jumps to a start, waits
+**Checking it**: `scripts/snap/run.sh <path> <page> [W H]` (home, networks, guides, guide, chain, lido, services, gov) loads
+the live page with this repo's files in place of every tag the heads pin and `dist/snap.js` preloaded (`PRE=` now that the
+live head carries it: two engines at once turn nothing), and runs `scripts/snapprobe.mjs` on `scripts/snap/<page>.json`: each scenario jumps to a start, waits
 for the page to go still, sends a notch, a swipe or a key, and prints where the page rested against where it should, how
 long it moved and in how many movements. On 2026-10-28, 183 runs at 2560×1440, 1920×1080, 1440×900, 1280×700 and
 1024×768 all passed, each one movement. Starts are fractions of a screen: a jump to within a third of a stop settles onto
 it first, and one less than half a screen from the stop the page rested on reads as a step off it (the probe says when).
-Headless wheel events are always cancellable, so the freeze is checked with `dispatchEvent(new WheelEvent("wheel",
+The lido scenarios passed 16 of 16 at 2560×1440, 1920×1080, 1440×900 and 1024×768 on 2026-11-07 (9 of 16 before); at
+1280×700 the last one fails as it did before: Lido's terms band is 757px there, 13px over the limit, so under about 709px
+of height that one band is no stop. Headless wheel events are always cancellable, so the freeze is checked with `dispatchEvent(new WheelEvent("wheel",
 { cancelable: false }))`. `CPU=4` on livecheck slows the page four times.

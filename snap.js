@@ -12,8 +12,8 @@
 
    WHAT SNAPS. A deck: one-screen bands that follow one another (the homepage's audience split, Why Stake's three bands
    and the networks; a guide's steps; a chain page's bands); a lone one-screen band (Who we are, /networks' count band,
-   /guides' picker); or a run that hands over its own stops (/services' frames, /governance's counts: `encSnapQ`,
-   below). A band is one screen when it is no shorter than the screen and runs past it by no more than its own bottom
+   /guides' picker); or a run that hands over its own stops (/services' frames, /governance's counts, the Lido band's
+   three steps: `encSnapQ`, below). A band is one screen when it is no shorter than the screen and runs past it by no more than its own bottom
    padding. Nothing snaps under 701px or with reduced motion.
 
    THE RULES, the same on every page:
