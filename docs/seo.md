@@ -72,11 +72,30 @@ on any other page (checked through client-side navigations): **post.js** BlogPos
 lede, the date in local time, the Author, the tag as articleSection) + breadcrumb Home → Blog → post;
 **chain.js** the five questions as FAQPage (Google stopped showing FAQ results in May 2026 but still
 reads them) + Home → Networks → chain; **guide.js** Home → Guides → guide (HowTo results are gone since
-2023). **The site's name** (the user asked why results show "encapsulate.xyz"): Google takes it from the WebSite data
-(name "Encapsulate", present once scripts run), the title and `og:site_name`. Super writes each page's title into its
-own `og:site_name` and has no setting for it, so head/home.html carries `<meta property="og:site_name"
-content="Encapsulate">` (2026-09-29, Super support's advice) — it is served *before* Super's, and parsers take the first.
-Google shows the name once it re-crawls the homepage (indexing requested 2026-09-28).
+2023). **The site's name** (the user asked why results show "encapsulate.xyz", 2026-09-28 and again 2026-11-07: "the title isnt
+still fixed"). Google shows a domain when it is not confident of the name it was given, and no setting overrides it.
+What it weighs, in Google's words, is the WebSite data first, then `og:site_name`, the title, the headings and the
+homepage's other text. The name was still the domain six weeks after the first fix, and a crawl of 2026-11-07 showed why:
+the data had arrived (URL inspection → View crawled page: the WebSite block valid, name "Encapsulate"), but the page
+contradicted it:
+- **two `og:site_name`.** Super writes the page's full title into its own and has no setting for it. The tag we added on
+  2026-09-29 on Super support's advice sits **after** Super's, not before as this note used to say: both reach the head,
+  Super's first. A script in head/home.html now puts "Encapsulate" in both, watching the head because hydration can write
+  Super's back; Google reads a page after its scripts run, so its render shows one name. The raw HTML still shows Super's.
+  Changing the page's SEO title would clear it without a script, at the cost of the result's "Validators for networks we
+  believe in".
+- **the first `<h1>` read "Home"**, the Notion page's title, hidden by main.css but in the HTML (and in the result's
+  snippet, "Home We keep blockchains online"). The page is now titled **Encapsulate** in Notion; nothing reads the old title
+  (footer.js and the breadcrumbs carry their own "Home"; the /page-not-found table's row is its own text).
+- **"Encapsulate" is an ordinary verb**, and Google will not give one name to two global sites. So the WebSite block has
+  `alternateName` ["Encapsulate Validators", "Encapsulate Limited"], Google's own first remedy ("it strongly considers this
+  option"). It may show one of those instead, which is still better than the domain. Never add the domain as an alternate.
+
+The JSON-LD is not in the server HTML: Super turns a head `<script>` into next/script `beforeInteractive`, so it reaches the
+head from `self.__next_s` when scripts run. Google renders it (checked); a crawler that does not run scripts sees none.
+Check any of this with Search Console's Test live URL → View tested page → HTML, and read `CodeMirror.getValue()` on
+`.CodeMirror` (the panel draws only what is on screen; a scrape of the DOM mixes the line numbers in). Google's name takes
+days to weeks after a crawl, and the Rich Results Test does not cover site names. Indexing requested 2026-11-07.
 
 **Search Console and Bing (2026-09-28, done from the automation tab at the user's request).** Google had only
 `https://king.super.site/` (the site's old Super address, now a 404 with noindex, so nothing to move). A **Domain
