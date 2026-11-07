@@ -105,7 +105,8 @@ They also offered a new renderer that writes head code straight into the server 
 tag. The user said yes to a **copy** of the site, prepared and tested by Super (2026-11-07), on the terms that it changes no
 plan or billing, is noindex, and its URL comes to us for our own checks. The main site stays as it is until the user
 switches it. Before that switch, check the copy page by page: chain.js reads `self.__next_f` from `document.scripts`, and
-other scripts lean on how Super draws and swaps a page. Super had not yet said whether the switch can be undone by us.
+other scripts lean on how Super draws and swaps a page. Super set up the copy for early in the week of 2026-11-09 and will
+explain switching back at the handover; it was asked to test the chain pages on it.
 
 **Search Console and Bing (2026-09-28, done from the automation tab at the user's request).** Google had only
 `https://king.super.site/` (the site's old Super address, now a 404 with noindex, so nothing to move). A **Domain
