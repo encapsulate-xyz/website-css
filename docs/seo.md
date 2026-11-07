@@ -78,12 +78,11 @@ What it weighs, in Google's words, is the WebSite data first, then `og:site_name
 homepage's other text. The name was still the domain six weeks after the first fix, and a crawl of 2026-11-07 showed why:
 the data had arrived (URL inspection → View crawled page: the WebSite block valid, name "Encapsulate"), but the page
 contradicted it:
-- **two `og:site_name`.** Super writes the page's full title into its own and has no setting for it. The tag we added on
-  2026-09-29 on Super support's advice sits **after** Super's, not before as this note used to say: both reach the head,
-  Super's first. A script in head/home.html now puts "Encapsulate" in both, watching the head because hydration can write
-  Super's back; Google reads a page after its scripts run, so its render shows one name. The raw HTML still shows Super's.
-  Changing the page's SEO title would clear it without a script, at the cost of the result's "Validators for networks we
-  believe in".
+- **two `og:site_name`.** Super wrote the page's full title into its own, and our tag of 2026-09-29, added on Super support's
+  advice, sat after it (not before, as this note used to say). Super fixed this on 2026-11-07, on both renderers: every page
+  now sends the site name from its dashboard, "Encapsulate", as `og:site_name`, and the title stays in `og:title`. Our tag
+  and the script that covered for it are gone from head/home.html. Checked as Googlebot on all 109 sitemap pages, one tag
+  each, and in Google's Test live URL. So the dashboard's site name is what Google is told: never change it.
 - **the first `<h1>` read "Home"**, the Notion page's title, hidden by main.css but in the HTML (and in the result's
   snippet, "Home We keep blockchains online"). The page is now titled **Encapsulate** in Notion; nothing reads the old title
   (footer.js and the breadcrumbs carry their own "Home"; the /page-not-found table's row is its own text).
@@ -95,13 +94,10 @@ The JSON-LD is not in the server HTML: Super turns a head `<script>` into next/s
 head from `self.__next_s` when scripts run. Google renders it (checked); a crawler that does not run scripts sees none.
 Check any of this with Search Console's Test live URL → View tested page → HTML, and read `CodeMirror.getValue()` on
 `.CodeMirror` (the panel draws only what is on screen; a scrape of the DOM mixes the line numbers in). Google's name takes
-days to weeks after a crawl, and the Rich Results Test does not cover site names. Indexing requested 2026-11-07.
+days to weeks after a crawl, and the Rich Results Test does not cover site names. Indexing requested 2026-11-07, again
+once Super's fix was live.
 
-Super's support took the two tags to engineering as a bug on 2026-11-07 (Michael, in the Intercom thread): the fix is in
-progress for both the current renderer and the new one, no date yet, and they will write there when it is live. No switch
-is needed to get it. Remove the script in head/home.html once Super's own tag is gone.
-
-They also offered a new renderer that writes head code straight into the server HTML, which would make the JSON-LD a real
+Super also offered a new renderer that writes head code straight into the server HTML, which would make the JSON-LD a real
 tag. The user said yes to a **copy** of the site, prepared and tested by Super (2026-11-07), on the terms that it changes no
 plan or billing, is noindex, and its URL comes to us for our own checks. The main site stays as it is until the user
 switches it. Before that switch, check the copy page by page: chain.js reads `self.__next_f` from `document.scripts`, and
