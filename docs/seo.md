@@ -97,6 +97,12 @@ Check any of this with Search Console's Test live URL → View tested page → H
 `.CodeMirror` (the panel draws only what is on screen; a scrape of the DOM mixes the line numbers in). Google's name takes
 days to weeks after a crawl, and the Rich Results Test does not cover site names. Indexing requested 2026-11-07.
 
+Super's support took the two tags to engineering as a bug on 2026-11-07 (Michael, in the Intercom thread) and will answer
+there once it is fixed. They also offered a test of a new renderer that writes head code straight into the server HTML.
+Not accepted for the live site: chain.js reads `self.__next_f` from `document.scripts`, and other scripts lean on how Super
+draws and swaps a page, while the JSON-LD already reaches Google. They were asked about a preview, a way back and what else
+changes; joining is the user's call. Remove the script in head/home.html once Super's own tag is gone.
+
 **Search Console and Bing (2026-09-28, done from the automation tab at the user's request).** Google had only
 `https://king.super.site/` (the site's old Super address, now a 404 with noindex, so nothing to move). A **Domain
 property `encapsulate.xyz`** was added to the user's Google account (aditya.verma.manit@gmail.com) and verified by a
