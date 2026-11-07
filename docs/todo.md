@@ -222,6 +222,8 @@ ExploreMe's `/staking?validator=<our pool>` is the other way, with us selected; 
 
 ## TODO — Search Console (from 2026-10-25; the routine is CLAUDE.md, "After every task, Search Console")
 
+**The site's name:** look at the result for `encapsulate` after 2026-11-28, three weeks from the crawl requested on 2026-11-07. If it still shows `encapsulate.xyz`, the next step is the Search Central Help Community (`docs/seo.md`, "The site's name").
+
 Google had not read the sitemap since it was submitted on 2026-09-29 ("Couldn't fetch"), so pages added since were
 unknown to it. Resubmitted 2026-10-25; indexing requested until the day's quota ran out (`docs/seo.md`, "What Google
 holds, and the Search Console routine").
