@@ -97,11 +97,15 @@ Check any of this with Search Console's Test live URL → View tested page → H
 `.CodeMirror` (the panel draws only what is on screen; a scrape of the DOM mixes the line numbers in). Google's name takes
 days to weeks after a crawl, and the Rich Results Test does not cover site names. Indexing requested 2026-11-07.
 
-Super's support took the two tags to engineering as a bug on 2026-11-07 (Michael, in the Intercom thread) and will answer
-there once it is fixed. They also offered a test of a new renderer that writes head code straight into the server HTML.
-Not accepted for the live site: chain.js reads `self.__next_f` from `document.scripts`, and other scripts lean on how Super
-draws and swaps a page, while the JSON-LD already reaches Google. They were asked about a preview, a way back and what else
-changes; joining is the user's call. Remove the script in head/home.html once Super's own tag is gone.
+Super's support took the two tags to engineering as a bug on 2026-11-07 (Michael, in the Intercom thread): the fix is in
+progress for both the current renderer and the new one, no date yet, and they will write there when it is live. No switch
+is needed to get it. Remove the script in head/home.html once Super's own tag is gone.
+
+They also offered a new renderer that writes head code straight into the server HTML, which would make the JSON-LD a real
+tag. The user said yes to a **copy** of the site, prepared and tested by Super (2026-11-07), on the terms that it changes no
+plan or billing, is noindex, and its URL comes to us for our own checks. The main site stays as it is until the user
+switches it. Before that switch, check the copy page by page: chain.js reads `self.__next_f` from `document.scripts`, and
+other scripts lean on how Super draws and swaps a page. Super had not yet said whether the switch can be undone by us.
 
 **Search Console and Bing (2026-09-28, done from the automation tab at the user's request).** Google had only
 `https://king.super.site/` (the site's old Super address, now a 404 with noindex, so nothing to move). A **Domain
