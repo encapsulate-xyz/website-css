@@ -104,6 +104,34 @@ switches it. Before that switch, check the copy page by page: chain.js reads `se
 other scripts lean on how Super draws and swaps a page. Super set up the copy for early in the week of 2026-11-09 and will
 explain switching back at the handover; it was asked to test the chain pages on it.
 
+**The copy, checked 2026-11-09:** `https://encapsulate-5o.super.site`, the site "Encapsulate (new renderer)" (siteId
+`981d37bd-…`, tier pro) in the user's dashboard. Super posted no URL in the thread, only "let us know if you encounter any
+issues". It is `noindex, nofollow`, its robots.txt is `Disallow: /`, and each page's canonical points at encapsulate.xyz.
+The homepage's JSON-LD is a real `<script type="application/ld+json">` in the raw HTML (Organization and WebSite,
+"Encapsulate"). Its `og:site_name` is the copy's own name, "Encapsulate (new renderer)".
+- **Super adapted eleven of our scripts** (blocks, chain, covers, footer, governance, home, navbar, network, notfound, post,
+  services) and serves them from its CDN (`superso.b-cdn.net/…/uploads/website-css-w5/w5-1/dist/`), each based on the tag
+  the main site serves. The other scripts and site.css still come from our tags. Every change is behind a new-renderer test
+  (`script[src*="/_v5/"]`), so the files behave as ours on the current renderer:
+  - image widths are rounded up to 640/828/1080/1200/1920, because the new image service answers 400 below 640: glyphs
+    drawn at 128 or 256 now fetch 640;
+  - chain.js and post.js read the row from a new `<script data-sp5-page-row>` JSON tag, and fall back to `self.__next_f`;
+  - navbar.js reads the new menu markup (`data-sp5-navbar-*`);
+  - blocks.js waits for head stylesheets too, and gives the tweet shim `createTweet`;
+  - notfound.js has an inline 404 mode.
+  **Before any switch, these changes belong in this repo under our own tags.** Otherwise the site runs on files we don't
+  release.
+- `scripts/audit.mjs` (now `ORIGIN=` takes another host) on both sites, 11 pages × 320–1920: /networks/axelar,
+  /networks/monad, /networks/sui, /, /networks, /governance, /guides, /guides/sui, /blog, /blog/aztec, /services,
+  /security. Same text, height, built marks and chain state at every width, and no sideways scroll on either site (the
+  homepage video's box reaching past the left edge is the same on both). In-app navigation home → /networks → Axelar →
+  Monad → /blog stays in the app, and each chain builds from its own row, with its own address and JSON-LD.
+- New on the copy: React #422 on the homepage, at every width, beside the usual #418; the page still builds in full. One
+  run of /guides/sui at 320 drew 10 captures from expired `file.notion.com` links, and two repeat runs were clean.
+- Weight: /networks 564 KB against 1,179 KB (JS 59 KB against 758), the homepage 660 KB against 1,228 KB; images
+  101 KB against 45 KB, from the 640 floor. First paint in headless Chrome was later (/networks 644–952 ms against
+  360) with the same time to first byte; measure with Lighthouse before a switch.
+
 **Search Console and Bing (2026-09-28, done from the automation tab at the user's request).** Google had only
 `https://king.super.site/` (the site's old Super address, now a 404 with noindex, so nothing to move). A **Domain
 property `encapsulate.xyz`** was added to the user's Google account (aditya.verma.manit@gmail.com) and verified by a

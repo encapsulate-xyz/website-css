@@ -7,7 +7,7 @@
 //   node --experimental-websocket scripts/audit.mjs <path> [--widths 320,390,768,1024,1440]
 //        [--shots 390,1440] [--out dir] [--check extra.js]
 //
-// <path> is a path on https://encapsulate.xyz ("/", "/networks"). --check adds a page-specific
+// <path> is a path on https://encapsulate.xyz ("/", "/networks"), or on $ORIGIN. --check adds a page-specific
 // check (the body of an async function, as livecheck takes) whose result is stored per width.
 // Output: <out>/<slug>.json, and <out>/<slug>/<width>-<n>.png for the widths in --shots.
 // Under 835px the page is loaded as a touch device, so (hover: none) rules apply as on a phone.
@@ -24,7 +24,7 @@ const SHOTS = flag("--shots", "").split(",").filter(Boolean).map(Number);
 const OUT = resolve(flag("--out", join(tmpdir(), "enc-audit")));
 const EXTRA = flag("--check", null);
 const path = argv[0] || "/";
-const ORIGIN = "https://encapsulate.xyz";
+const ORIGIN = process.env.ORIGIN || "https://encapsulate.xyz"; // ORIGIN=https://<copy>.super.site audits a copy of the site
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const slug = (path === "/" ? "home" : path.replace(/^\//, "").replace(/[^a-z0-9]+/gi, "_")).slice(0, 80);
 mkdirSync(join(OUT, slug), { recursive: true });
