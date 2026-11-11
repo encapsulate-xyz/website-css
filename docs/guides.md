@@ -52,7 +52,7 @@ made (`og_cards.py guides --only cosmos-hub`), and the chain page's "Delegate wi
 Keplr's Stake to on our validator). Checked live: built, seven steps linked, every Watch out and the address pressed at
 1440 and 390, `#step-4` lands on Enter an amount as Terra's does. Old values `backups/stake-atom-with-keplr-guide-2026-10-28.json`
 
-**Pharos (2026-11-11): "Stake PROS with MetaMask", nine steps on Faroo's Native Stake page (app.faroo.xyz/native-staking)
+**Pharos (2026-11-11): "Stake PROS with MetaMask", eleven steps (nine at first) on Faroo's Native Stake page (app.faroo.xyz/native-staking)
 with the MetaMask extension**, /guides/pharos. The user: "check pahros guide and adx the isntrcitions". The team made a new
 row that morning, "Stake Pharos with Metamask" (Soon, Step 9, Time 3, nine captures at the house sizes, its own step names,
 the template's sample words in step 1, Links only on steps 1 and 3). Beside it was the empty row made from the template on
@@ -65,9 +65,9 @@ that `docs/todo.md` had planned. Faroo's Native Stake delegates straight to the 
 - rewards come every epoch and don't compound by themselves;
 - unbonding is 14 days.
 
-Step 5's Watch is the pool ID as a press-to-copy. Faroo's search finds only us by it, and by the owner address too
-(checked in headless Chrome). Step 8's Watch repeats Faroo's own note that its reward payouts and compounding are "awaiting
-verification". Steps 5 and 6 link `?q=encapsulate`, the address their captures were taken at.
+Step 7's Watch (5 until the afternoon) is the pool ID as a press-to-copy. Faroo's search finds only us by it, and by the owner address too
+(checked in headless Chrome). Step 10's Watch repeats Faroo's own note that its reward payouts and compounding are "awaiting
+verification". Steps 7 and 8 link `?q=encapsulate`, the address their captures were taken at.
 
 The row was renamed "Stake PROS with MetaMask" (the ticker, as every guide). It got Time 4, its Lede, description and
 `meta:title` "Pharos staking guide - Encapsulate", and went Live. The page was made in Super with its canonical line, and
@@ -80,6 +80,17 @@ same session's run. A real press after the page settles opens it: step 3 settles
 the script presses before snap.js has moved it. The empty 11-05 row was archived at the user's word, once auto mode had refused it on its own (in Notion's trash;
 `backups/pharos-guide-empty-row-2026-11-11.json`). Old values
 `backups/stake-pharos-with-metamask-guide-2026-11-11.json`.
+
+**The network step, added the same afternoon.** The team's wallet already had Pharos, so a first-time reader's network
+request was missing; asked for it, the team added two rows: 5 "Switch to Pharos Mainnet" (Faroo's top bar reads Wrong
+Network, the button is under Your position) and 6, MetaMask's "Add Pharos" (Request from app.faroo.xyz, RPC
+rpc.pharos.xyz, which answers chain ID 1672 and is the endpoint `notion/chain-pages.json` reads Pharos from). Step 6 was
+"Confirm in the wallet", renamed "Add Pharos to MetaMask" beside step 9's "Confirm in MetaMask". Step 5's Watch says
+to go straight on to step 7 when Faroo shows no Wrong Network; step 6's names the two lines to check. The row went to
+Step 11, Time 5, "Eleven steps…"; the content job and `og_cards.py` made the card again. Step 6's capture is
+848 × 1855, not the house 720 × 1576, but the same shape, so the frame shows it whole. `guide_press.mjs` failed most
+Watch outs at 1440 that hour, Monad's untouched guide as much, and passed at 390; a press after the page settles opened
+all ten at both widths.
 
 **Zilliqa (2026-10-25): "Stake ZIL with Bearby", eight steps on Zilliqa's staking portal (stake.zilliqa.com) with the
 Bearby extension** (bearby.io). Our pool is on the portal's Liquid tab, as Encapsulate with its token encapZIL; steps 6
