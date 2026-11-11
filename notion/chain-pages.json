@@ -1530,10 +1530,8 @@
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about four hours.",
    "wallet": {
     "label": "Delegate with MetaMask",
-    "url": "https://stake.pharos.encapsulate.xyz/stake/0x6d565aee07f2d2e8da0fe77e5a62352e9d5fbb4007c4929c64c0268835a1f926",
-    "guide": "/guides (Stake PROS with MetaMask)",
-    "guide_url": "https://www.notion.so/40fe800a513881a99b87cdb54dbe6dfc",
-    "until": "the guide is Soon (no captures yet); our Pharos Staking Hub's page for our validator until it is Live, then url = guide_url (2026-11-05)"
+    "url": "https://www.notion.so/415e800a5138802db353d77e32ddcd84",
+    "guide": "/guides (Pharos)"
    },
    "work": [
     [

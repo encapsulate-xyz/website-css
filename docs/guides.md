@@ -20,7 +20,7 @@ close #done (anchors.js, 2026-10-23 — `docs/paths-and-404.md`, "Section names"
 | The crumb, "Watch out", "{N} screens", the close band, the Discord line | the **"Guide page copy" toggle on /guides**, `key · value` lines — one place for 33 guides. `{n}` is the step count, `{N}` the same spelled ("Eight screens"), `{next}` and `{chain}` the next guide |
 
 **Converted guides so far: Axelar, Sui (ten steps, SuiVision + Slush), Espresso, Monad (below), Terra, Agoric, NEAR, Lumera,
-Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina, Starknet twice, Zilliqa and Cosmos Hub** (2026-10-22: Starknet, nine steps on Voyager's
+Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina, Starknet twice, Zilliqa, Cosmos Hub and Pharos** (2026-10-22: Starknet, nine steps on Voyager's
 Staking Dashboard (voyager.online) with the **Ready X** extension — Ready's browser wallet, once Argent X; "Ready X" is
 its name in the Chrome Web Store and in Voyager's wallet list, so the guide is "Stake STRK with Ready X" (the team had
 named it "Ready") and the Wallet Set has a Ready X row since that day, its glyph made with `make_glyph.py` from the
@@ -51,6 +51,35 @@ was renamed "Delegate ATOM with Keplr", the verb of every Keplr guide but Sommel
 made (`og_cards.py guides --only cosmos-hub`), and the chain page's "Delegate with Keplr" now opens the guide (it opened
 Keplr's Stake to on our validator). Checked live: built, seven steps linked, every Watch out and the address pressed at
 1440 and 390, `#step-4` lands on Enter an amount as Terra's does. Old values `backups/stake-atom-with-keplr-guide-2026-10-28.json`
+
+**Pharos (2026-11-11): "Stake PROS with MetaMask", nine steps on Faroo's Native Stake page (app.faroo.xyz/native-staking)
+with the MetaMask extension**, /guides/pharos. The user: "check pahros guide and adx the isntrcitions". The team made a new
+row that morning, "Stake Pharos with Metamask" (Soon, Step 9, Time 3, nine captures at the house sizes, its own step names,
+the template's sample words in step 1, Links only on steps 1 and 3). Beside it was the empty row made from the template on
+2026-11-05, "Stake PROS with MetaMask" (one sample step, no captures). The team chose Faroo, not our Pharos Staking Hub
+that `docs/todo.md` had planned. Faroo's Native Stake delegates straight to the chain's staking contract: MetaMask's
+"Interacting with 0x41000…00000" is `0x4100000000000000000000000000000000000000`. Faroo's row shows our pool's owner
+(0xEa45…991B = `0xEa452Aed…991B`) and our 10% commission. The words are Espresso's and Monad's, with Pharos's facts:
+- the minimum is 1 PROS;
+- a stake activates at the next epoch, within four hours, which the Delegate window shows as Activation epoch;
+- rewards come every epoch and don't compound by themselves;
+- unbonding is 14 days.
+
+Step 5's Watch is the pool ID as a press-to-copy. Faroo's search finds only us by it, and by the owner address too
+(checked in headless Chrome). Step 8's Watch repeats Faroo's own note that its reward payouts and compounding are "awaiting
+verification". Steps 5 and 6 link `?q=encapsulate`, the address their captures were taken at.
+
+The row was renamed "Stake PROS with MetaMask" (the ticker, as every guide). It got Time 4, its Lede, description and
+`meta:title` "Pharos staking guide - Encapsulate", and went Live. The page was made in Super with its canonical line, and
+the card made (`og_cards.py guides --only <row id>`). The chain page's "Delegate with MetaMask" now opens the guide; it had
+opened our hub's page for our pool. Checked live: built, nine steps linked, `#step-4` lands, every Watch out and the pool ID
+pressed at 1440 and 390.
+
+`guide_press.mjs` reported step 3's Watch out "did not open" at both widths. Espresso's live guide failed every step in the
+same session's run. A real press after the page settles opens it: step 3 settles 24px from where the script scrolls it, and
+the script presses before snap.js has moved it. The empty 11-05 row is still in the database: auto mode refused its archive,
+so it waits for the user (backup `backups/pharos-guide-empty-row-2026-11-11.json`). Old values
+`backups/stake-pharos-with-metamask-guide-2026-11-11.json`.
 
 **Zilliqa (2026-10-25): "Stake ZIL with Bearby", eight steps on Zilliqa's staking portal (stake.zilliqa.com) with the
 Bearby extension** (bearby.io). Our pool is on the portal's Liquid tab, as Encapsulate with its token encapZIL; steps 6

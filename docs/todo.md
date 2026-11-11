@@ -203,12 +203,7 @@ guide that is not converted shows its old slide thumbnails, a taped banner and e
 were hidden (`docs/seo.md`); **9 Soon guides remain**: althea, avail, avalanche, eigen-layer, eigen-layer-steth, gitopia,
 humans-ai, ika, supra. None has its captures yet — `guide_steps.py` finds only the old slide database (no Step property)
 — so each waits for the team's captures, then "Converting a guide — the run" (`notion/new-row-checklist.md`).
-A tenth since 2026-11-05: **Stake PROS with MetaMask** (`40fe800a513881a99b87cdb54dbe6dfc`), made from the template with no
-slides, and no path in Super until it is Live. Its chain page's green button opens our Pharos Staking Hub until then.
-Its captures come from that hub (checked 2026-11-06): /get-pros, the six steps at /stake/<our pool> (Connect, Validator,
-Amount, Review, Sign, Done), then /my-stake. Review to Done need a wallet that holds PROS: the one connected in Chrome has 0.
-Faroo's native tab says reward payouts and compounding are awaiting verification, and Pharos's Port has no native staking yet.
-ExploreMe's `/staking?validator=<our pool>` is the other way, with us selected; its My positions tab needs a wallet to read.
+The tenth, **Stake PROS with MetaMask**, was converted and went Live on 2026-11-11 on Faroo's Native Stake page, with the team's captures (`docs/guides.md`, "Pharos").
 
 - **Their chain pages' green buttons** (the cover's and the dock's) opened the old guide. Five now open the wallet's own
   staking page, as the checklist has it for a guide that is not Live: Althea althea.link/staking, Avail
@@ -253,6 +248,7 @@ holds, and the Search Console routine").
   the 16 is in Pages → Indexed. **When one goes Live:** `scripts/guide_index.py`, its head back to the canonical line,
   cancel its removal, then request indexing.
 - **/networks/pharos: indexing requested on 2026-11-05**, the day it went up (it read "not on Google"). Check it is on Google on the next pass.
+- **/guides/pharos: indexing requested on 2026-11-11**, the day it went Live (it read "URL is unknown to Google"). Check it is on Google on the next pass.
 - **/guides/cosmos-hub: indexing requested on 2026-10-28**, the day it went Live. Check it is on Google on the
   next pass.
 - **2026-10-30:** /guides/cosmos-hub and /guides/sommelier are on Google. **Requested:** /blog/monad-l1-scaling,
