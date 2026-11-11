@@ -1118,7 +1118,7 @@ Avail
 
 Espresso
 
-3.1%
+3.7%
 
 Ika
 
@@ -1126,7 +1126,7 @@ Ika
 
 Pharos
 
-22.2%
+14.3%
 
 Supra
 
@@ -1480,7 +1480,7 @@ Of every 100 ALTHEA staked
 
 24 earned in a year
 
-After our commission · as of 9 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -1668,7 +1668,7 @@ Of every 100 AVAIL staked
 
 8 earned in a year
 
-After our commission · as of 6 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -1854,7 +1854,7 @@ Of every 100 AVAX staked
 
 4.6 earned in a year
 
-After our commission · as of 7 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -2016,7 +2016,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/axelar
 
-Stake AXL with Encapsulate on Axelar: 10% commission, 11.2% a year after commission, 7 days unbonding. Non-custodial.
+Stake AXL with Encapsulate on Axelar: 10% commission, 11.7% a year after commission, 7 days unbonding. Non-custodial.
 
 ### Axelar
 
@@ -2032,15 +2032,15 @@ The terms
 
 Reward rate
 
-11.2%
+11.7%
 
 Set by the chain, not by us
 
 Of every 100 AXL staked
 
-11.2 earned in a year
+11.7 earned in a year
 
-After our commission · as of 8 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -2094,23 +2094,23 @@ Horizon
 
 Not compounded — Axelar pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,112
+1,117
 
 Year 1
 
-1,224
+1,234
 
 Year 2
 
-1,336
+1,351
 
 Year 3
 
-1,448
+1,468
 
 Year 4
 
-1,560
+1,585
 
 Year 5
 
@@ -2226,7 +2226,7 @@ Of every 100 C4E staked
 
 5.9 earned in a year
 
-After our commission · as of 6 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -2414,7 +2414,7 @@ Of every 100 ATOM staked
 
 17.6 earned in a year
 
-After our commission · as of 6 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -2600,7 +2600,7 @@ Of every 100 EIGEN staked
 
 6.4 earned in a year
 
-After our commission · as of 7 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -2786,7 +2786,7 @@ Of every 100 ESP staked
 
 3.1 earned in a year
 
-After our commission · as of 6 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -2972,7 +2972,7 @@ Of every 100 LORE staked
 
 41 earned in a year
 
-After our commission · as of 6 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -3160,7 +3160,7 @@ Of every 100 GRAV staked
 
 16.5 earned in a year
 
-After our commission · as of 8 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -3348,7 +3348,7 @@ Of every 100 HEART staked
 
 31.4 earned in a year
 
-After our commission · as of 7 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -3536,7 +3536,7 @@ Of every 100 IKA staked
 
 13.1 earned in a year
 
-After our commission · as of 6 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -3722,7 +3722,7 @@ Of every 100 IOTA staked
 
 11.3 earned in a year
 
-After our commission · as of 6 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -3908,7 +3908,7 @@ Of every 100 IXO staked
 
 17.9 earned in a year
 
-After our commission · as of 8 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -4302,7 +4302,7 @@ Of every 100 LUME staked
 
 47.8 earned in a year
 
-After our commission · as of 6 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -4636,7 +4636,7 @@ Of every 100 MON staked
 
 7.9 earned in a year
 
-After our commission · as of 8 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -4822,7 +4822,7 @@ Of every 100 NEAR staked
 
 4.7 earned in a year
 
-After our commission · as of 8 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -5008,7 +5008,7 @@ Of every 100 PASG staked
 
 6.3 earned in a year
 
-After our commission · as of 6 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -5172,7 +5172,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/pharos
 
-Stake PROS with Encapsulate on Pharos: 10% commission, 22.2% a year after commission, 14 days unbonding. Non-custodial.
+Stake PROS with Encapsulate on Pharos: 10% commission, 14.3% a year after commission, 14 days unbonding. Non-custodial.
 
 ### Pharos
 
@@ -5188,15 +5188,15 @@ The terms
 
 Reward rate
 
-22.2%
+14.3%
 
 Set by the chain, not by us
 
 Of every 100 PROS staked
 
-22.2 earned in a year
+14.3 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -5248,23 +5248,23 @@ Horizon
 
 Not compounded — Pharos pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,222
+1,143
 
 Year 1
 
-1,444
+1,286
 
 Year 2
 
-1,666
+1,429
 
 Year 3
 
-1,888
+1,572
 
 Year 4
 
-2,110
+1,715
 
 Year 5
 
@@ -5560,7 +5560,7 @@ Of every 100 STRK staked
 
 7 earned in a year
 
-After our commission · as of 8 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -6118,7 +6118,7 @@ Of every 100 LUNA staked
 
 35.4 earned in a year
 
-After our commission · as of 6 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -6490,7 +6490,7 @@ Of every 100 ZIL staked
 
 8.2 earned in a year
 
-After our commission · as of 6 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 

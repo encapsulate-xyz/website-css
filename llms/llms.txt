@@ -22,7 +22,7 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 - [Althea staking](https://encapsulate.xyz/networks/althea): Stake ALTHEA with Encapsulate on Althea: 10% commission, 24.0% a year after commission, 21 days unbonding. Non-custodial.
 - [Avail staking](https://encapsulate.xyz/networks/avail): Stake AVAIL with Encapsulate on Avail: 20% commission, 8.0% a year after commission, 28 days unbonding. Non-custodial.
 - [Avalanche staking](https://encapsulate.xyz/networks/avalanche): Stake AVAX with Encapsulate on Avalanche: 2% commission, 4.6–5.4% a year after commission, locked 2 weeks–1 year. Non-custodial.
-- [Axelar staking](https://encapsulate.xyz/networks/axelar): Stake AXL with Encapsulate on Axelar: 10% commission, 11.2% a year after commission, 7 days unbonding. Non-custodial.
+- [Axelar staking](https://encapsulate.xyz/networks/axelar): Stake AXL with Encapsulate on Axelar: 10% commission, 11.7% a year after commission, 7 days unbonding. Non-custodial.
 - [Chain4Energy staking](https://encapsulate.xyz/networks/chain4energy): Stake C4E with Encapsulate on Chain4Energy: 10% commission, 5.9% a year after commission, 21 days unbonding. Non-custodial.
 - [Cosmos Hub staking](https://encapsulate.xyz/networks/cosmos-hub): Stake ATOM with Encapsulate on Cosmos Hub: 10% commission, 17.6% a year after commission, 21 days unbonding. Non-custodial.
 - [EigenCloud staking](https://encapsulate.xyz/networks/eigencloud): Stake EIGEN with Encapsulate on EigenCloud: 10% commission, 6.4% a year after commission, 14 days unbonding. Non-custodial.
@@ -39,7 +39,7 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 - [Monad staking](https://encapsulate.xyz/networks/monad): Stake MON with Encapsulate on Monad: 15% commission, 7.9% a year after commission, 4.5–9 hours unbonding. Non-custodial.
 - [NEAR staking](https://encapsulate.xyz/networks/near): Stake NEAR with Encapsulate on NEAR: 5% commission, 4.7% a year after commission, 22–30 hours unbonding. Non-custodial.
 - [Passage staking](https://encapsulate.xyz/networks/passage): Stake PASG with Encapsulate on Passage: 10% commission, 6.3% a year after commission, 21 days unbonding. Non-custodial.
-- [Pharos staking](https://encapsulate.xyz/networks/pharos): Stake PROS with Encapsulate on Pharos: 10% commission, 22.2% a year after commission, 14 days unbonding. Non-custodial.
+- [Pharos staking](https://encapsulate.xyz/networks/pharos): Stake PROS with Encapsulate on Pharos: 10% commission, 14.3% a year after commission, 14 days unbonding. Non-custodial.
 - [Sommelier staking](https://encapsulate.xyz/networks/sommelier): Stake SOMM with Encapsulate on Sommelier: 10% commission, 0% a year after commission, 28 days unbonding. Non-custodial.
 - [Starknet staking](https://encapsulate.xyz/networks/starknet): Stake STRK with Encapsulate on Starknet: 5% commission, 7.0% a year after commission, 7 days unbonding. Non-custodial.
 - [Sui staking](https://encapsulate.xyz/networks/sui): Stake SUI with Encapsulate on Sui: 8% commission, 1.3% a year after commission, no unbonding. Non-custodial.
@@ -134,4 +134,4 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 - [llms-blog.txt](https://encapsulate.xyz/llms-blog.txt): every blog post on encapsulate.xyz/blog, part 1 of 2, as Markdown (235 kB, 2026-11-11)
 - [llms-blog-2.txt](https://encapsulate.xyz/llms-blog-2.txt): every blog post on encapsulate.xyz/blog, part 2 of 2, as Markdown (158 kB, 2026-10-25)
 - [llms-votes.txt](https://encapsulate.xyz/llms-votes.txt): our governance vote record, every vote on encapsulate.xyz/governance/votes, part 1 of 2, as Markdown (247 kB, 2026-11-11)
-- [llms-votes-2.txt](https://encapsulate.xyz/llms-votes-2.txt): our governance vote record, every vote on encapsulate.xyz/governance/votes, part 2 of 2, as Markdown (127 kB, 2026-11-11)
+- [llms-votes-2.txt](https://encapsulate.xyz/llms-votes-2.txt): our governance vote record, every vote on encapsulate.xyz/governance/votes, part 2 of 2, as Markdown (128 kB, 2026-11-11)
