@@ -77,8 +77,8 @@ pressed at 1440 and 390.
 
 `guide_press.mjs` reported step 3's Watch out "did not open" at both widths. Espresso's live guide failed every step in the
 same session's run. A real press after the page settles opens it: step 3 settles 24px from where the script scrolls it, and
-the script presses before snap.js has moved it. The empty 11-05 row is still in the database: auto mode refused its archive,
-so it waits for the user (backup `backups/pharos-guide-empty-row-2026-11-11.json`). Old values
+the script presses before snap.js has moved it. The empty 11-05 row was archived at the user's word, once auto mode had refused it on its own (in Notion's trash;
+`backups/pharos-guide-empty-row-2026-11-11.json`). Old values
 `backups/stake-pharos-with-metamask-guide-2026-11-11.json`.
 
 **Zilliqa (2026-10-25): "Stake ZIL with Bearby", eight steps on Zilliqa's staking portal (stake.zilliqa.com) with the
