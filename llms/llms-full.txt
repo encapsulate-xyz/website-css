@@ -1292,7 +1292,7 @@ Of every 100 BLD staked
 
 6.7 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -1480,7 +1480,7 @@ Of every 100 ALTHEA staked
 
 24 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -1668,7 +1668,7 @@ Of every 100 AVAIL staked
 
 8 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -1854,7 +1854,7 @@ Of every 100 AVAX staked
 
 4.6 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -2040,7 +2040,7 @@ Of every 100 AXL staked
 
 11.7 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -2226,7 +2226,7 @@ Of every 100 C4E staked
 
 5.9 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -2414,7 +2414,7 @@ Of every 100 ATOM staked
 
 17.6 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -2600,7 +2600,7 @@ Of every 100 EIGEN staked
 
 6.4 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -2762,7 +2762,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/espresso
 
-Stake ESP with Encapsulate on Espresso: 10% commission, 3.1% a year after commission, 7 days unbonding. Non-custodial.
+Stake ESP with Encapsulate on Espresso: 10% commission, 3.7% a year after commission, 7 days unbonding. Non-custodial.
 
 ### Espresso
 
@@ -2778,15 +2778,15 @@ The terms
 
 Reward rate
 
-3.1%
+3.7%
 
 Set by the chain, not by us
 
 Of every 100 ESP staked
 
-3.1 earned in a year
+3.7 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -2840,23 +2840,23 @@ Horizon
 
 Not compounded — Espresso pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,031
+1,037
 
 Year 1
 
-1,062
+1,074
 
 Year 2
 
-1,093
+1,111
 
 Year 3
 
-1,124
+1,148
 
 Year 4
 
-1,155
+1,185
 
 Year 5
 
@@ -2972,7 +2972,7 @@ Of every 100 LORE staked
 
 41 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -3160,7 +3160,7 @@ Of every 100 GRAV staked
 
 16.5 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -3348,7 +3348,7 @@ Of every 100 HEART staked
 
 31.4 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -3536,7 +3536,7 @@ Of every 100 IKA staked
 
 13.1 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -3722,7 +3722,7 @@ Of every 100 IOTA staked
 
 11.3 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -3908,7 +3908,7 @@ Of every 100 IXO staked
 
 17.9 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -4116,7 +4116,7 @@ Of every 100 ETH staked
 
 2.3 earned in a year
 
-After Lido’s fee · as of 10 Nov 2026
+After Lido’s fee · as of 11 Nov 2026
 
 Lido’s fee
 
@@ -4302,7 +4302,7 @@ Of every 100 LUME staked
 
 47.8 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -4636,7 +4636,7 @@ Of every 100 MON staked
 
 7.9 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -4822,7 +4822,7 @@ Of every 100 NEAR staked
 
 4.7 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -4844,7 +4844,7 @@ How long to withdraw
 
 Withdraw today · 11 Nov
 
-In your wallet · 12 Nov
+In your wallet · 13 Nov
 
 Live dates
 
@@ -5008,7 +5008,7 @@ Of every 100 PASG staked
 
 6.3 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -5560,7 +5560,7 @@ Of every 100 STRK staked
 
 7 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -5746,7 +5746,7 @@ Of every 100 SUI staked
 
 1.3 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -5932,7 +5932,7 @@ Of every 100 SUPRA staked
 
 8 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -6118,7 +6118,7 @@ Of every 100 LUNA staked
 
 35.4 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -6490,7 +6490,7 @@ Of every 100 ZIL staked
 
 8.2 earned in a year
 
-After our commission · as of 10 Nov 2026
+After our commission · as of 11 Nov 2026
 
 Commission
 
@@ -7214,9 +7214,9 @@ Delegate LORE with Keplr. Six steps across the Keplr extension and its dashboard
 
 #### 📍Useful Links
 
-[Ping Dashboard - Cosmos Blockchain Explorer And Web Wallet](https://ping.pub/gitopia)
+Ping Dashboard - Cosmos Blockchain Explorer And Web Wallet
 
-[Keplr - Chrome Web Store](https://chromewebstore.google.com/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en)
+Keplr - Chrome Web Store
 
 #### 🌱 Need Help?
 
@@ -8150,7 +8150,7 @@ Need help? Ask on Discord
 
 URL: https://encapsulate.xyz/guides/pharos
 
-Stake PROS with MetaMask. Nine steps across Faroo’s Native Stake page and the MetaMask extension, one per screen, each with the screen you should be looking at.
+Stake PROS with MetaMask. Eleven steps across Faroo’s Native Stake page and the MetaMask extension, one per screen, each with the screen you should be looking at.
 
 Encapsulate · Guides
 
@@ -8158,15 +8158,15 @@ Pharos
 
 ### Stake PROS with MetaMask
 
-Nine steps across Faroo’s Native Stake page and the MetaMask extension, one per screen, each with the screen you should be looking at.
+Eleven steps across Faroo’s Native Stake page and the MetaMask extension, one per screen, each with the screen you should be looking at.
 
-Nine screens
+Eleven screens
 
 Scroll ↓
 
 01
 
-of 9
+of 11
 
 On app.faroo.xyz
 
@@ -8176,7 +8176,7 @@ Faroo’s Native Stake page delegates PROS straight to a Pharos validator, witho
 
 02
 
-of 9
+of 11
 
 On app.faroo.xyz
 
@@ -8186,7 +8186,7 @@ Faroo asks for a wallet. Choose MetaMask from the list.
 
 03
 
-of 9
+of 11
 
 In the MetaMask extension
 
@@ -8196,7 +8196,7 @@ MetaMask opens. Type your password and press Unlock.
 
 04
 
-of 9
+of 11
 
 In the MetaMask extension
 
@@ -8206,7 +8206,27 @@ MetaMask shows app.faroo.xyz and the account it will connect: pick the one that 
 
 05
 
-of 9
+of 11
+
+On app.faroo.xyz
+
+#### Switch to Pharos Mainnet
+
+Back on Faroo, the top bar shows Wrong Network: MetaMask is on another chain. Under Your position, press Switch to Pharos Mainnet.
+
+06
+
+of 11
+
+In the MetaMask extension
+
+#### Add Pharos to MetaMask
+
+MetaMask asks to add the Pharos network, at app.faroo.xyz’s request. Press Confirm.
+
+07
+
+of 11
 
 On app.faroo.xyz
 
@@ -8214,9 +8234,9 @@ On app.faroo.xyz
 
 Back on Faroo, scroll down to Validators and type encapsulate in the search. Our row shows Open and our 10% commission. Press Stake.
 
-06
+08
 
-of 9
+of 11
 
 On app.faroo.xyz
 
@@ -8224,9 +8244,9 @@ On app.faroo.xyz
 
 The Delegate window opens on Encapsulate. Type how much PROS to stake: the minimum is 1, and your balance shows above the box. Activation epoch says when it starts earning, at the next epoch. Press Confirm.
 
-07
+09
 
-of 9
+of 11
 
 In the MetaMask extension
 
@@ -8234,9 +8254,9 @@ In the MetaMask extension
 
 MetaMask shows the transaction request: the PROS you are staking, the request from app.faroo.xyz on Pharos Mainnet and the network fee. Press Confirm.
 
-08
+10
 
-of 9
+of 11
 
 On app.faroo.xyz
 
@@ -8244,9 +8264,9 @@ On app.faroo.xyz
 
 Back on Faroo, Your position shows your PROS under Pending activation. It joins our stake at the next epoch, within four hours.
 
-09
+11
 
-of 9
+of 11
 
 On app.faroo.xyz
 
@@ -8254,7 +8274,7 @@ On app.faroo.xyz
 
 Once the epoch turns, your PROS moves to Active stake. Rewards come every epoch, about four hours, and show under Claimable reward.
 
-Done · 9 of 9
+Done · 11 of 11
 
 #### Staked with Encapsulate.
 
@@ -8754,7 +8774,7 @@ Stake SUPRA with StarKey. Eleven steps across the StarKey extension and its dash
 
 #### 📍Useful Links
 
-[StarKey Wallet - The official wallet for Supra - Chrome Web Store](https://chromewebstore.google.com/detail/starkey-wallet-the-offici/hcjhpkgbmechpabifbggldplacolbkoh)
+StarKey Wallet - The official wallet for Supra - Chrome Web Store
 
 #### 🌱 Need Help?
 
@@ -8768,101 +8788,103 @@ URL: https://encapsulate.xyz/guides/terra
 
 Delegate LUNA with Keplr. Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
 
-Encapsulate · Guides
-
-Terra
-
-### Delegate LUNA with Keplr
-
-Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
-
-Seven screens
-
-Scroll ↓
-
-01
-
-of 7
-
-On wallet.keplr.app
-
-#### Press Start Staking
+01 · Press Start Staking
 
 Open Terra in the Keplr Dashboard with your wallet connected. The Staking tab shows your LUNA, how much is staked and the rewards you can claim. Press Start Staking under Your Validators.
 
-02
+wallet.keplr.app
 
-of 7
+1
 
 On wallet.keplr.app
 
-#### Find Encapsulate
+Check that the address bar reads wallet.keplr.app. A lookalike site can show the same page.
+
+Oct 2, 2026 9:50 AM
+
+02 · Find Encapsulate
 
 Stake to opens on Terra's validators, with the APR and the 21-day unstaking period at the top. Type encap in the search and pick Encapsulate.
 
-03
+wallet.keplr.app
 
-of 7
+2
 
 On wallet.keplr.app
 
-#### Check our numbers
+Anyone can name a validator Encapsulate. Ours is `terravaloper1yh4u76y405t3ff9lyrzhhe8legjx9k3as5mujs`; this guide's link on the next step opens it directly.
+
+Oct 2, 2026 9:51 AM
+
+03 · Check our numbers
 
 Encapsulate's panel shows its APR, our 10% commission, its share of voting power and the 21-day unstaking period. Press Stake.
 
-04
+wallet.keplr.app
 
-of 7
+3
 
 On wallet.keplr.app
 
-#### Enter an amount
+The panel on the right is the validator you stake with, whatever the list beside it shows: it must name Encapsulate.
+
+Oct 2, 2026 9:51 AM
+
+04 · Enter an amount
 
 Type how much LUNA to stake; Max fills in your whole available balance. Press Stake.
 
-05
+wallet.keplr.app
 
-of 7
-
-In the Keplr extension
-
-#### Unlock Keplr
-
-The Keplr extension opens. Type your password and press Unlock.
-
-06
-
-of 7
-
-In the Keplr extension
-
-#### Approve in Keplr
-
-Keplr shows one message, the amount of LUNA to stake to Encapsulate, and a fee of a fraction of a cent. The memo is optional. Press Approve.
-
-07
-
-of 7
+4
 
 On wallet.keplr.app
 
-#### Check the dashboard
+Max stakes everything. Leave a little LUNA unstaked to pay the fees for claiming rewards and, later, for unstaking.
+
+Oct 2, 2026 9:52 AM
+
+05 · Unlock Keplr
+
+The Keplr extension opens. Type your password and press Unlock.
+
+www.keplr.app
+
+5
+
+In the Keplr extension
+
+Keplr unlocks with your password only. Anything that asks for your recovery phrase here is not Keplr.
+
+Oct 2, 2026 9:52 AM
+
+06 · Approve in Keplr
+
+Keplr shows one message, the amount of LUNA to stake to Encapsulate, and a fee of a fraction of a cent. The memo is optional. Press Approve.
+
+www.keplr.app
+
+6
+
+In the Keplr extension
+
+The message must read Stake … LUNA to Encapsulate. This is the last screen before it is sent.
+
+Oct 2, 2026 9:53 AM
+
+07 · Check the dashboard
 
 Back on the dashboard, Staking Amount shows your stake and Your Validators lists Encapsulate with our 10% commission. Rewards build up with every block and do not compound: Claim sends them to your wallet, and Stake adds more.
 
-Done · 7 of 7
+wallet.keplr.app
 
-#### Staked with Encapsulate.
+7
 
-Rewards start once your stake is active. Next up: Stake ZIL with Bearby.
+On wallet.keplr.app
 
-Next: Zilliqa
+Unstaking takes 21 days, during which the LUNA earns nothing and cannot be moved.
 
-All guides
-
-Terra’s terms and common questions
-
-Need help? Ask on Discord
+Oct 2, 2026 9:54 AM
 
 ## Zilliqa staking guide
 
@@ -8870,111 +8892,115 @@ URL: https://encapsulate.xyz/guides/zilliqa
 
 Stake ZIL with Bearby. Eight steps across Zilliqa’s staking portal and the Bearby extension, one per screen, each with the screen you should be looking at.
 
-Encapsulate · Guides
-
-Zilliqa
-
-### Stake ZIL with Bearby
-
-Eight steps across Zilliqa’s staking portal and the Bearby extension, one per screen, each with the screen you should be looking at.
-
-Eight screens
-
-Scroll ↓
-
-01
-
-of 8
-
-On stake.zilliqa.com
-
-#### Connect your wallet
+01 · Connect your wallet
 
 Zilliqa’s staking portal lists its pools, liquid and non-liquid. Ours is on the Liquid tab, as Encapsulate with its token, encapZIL. Press Connect wallet.
 
-02
+stake.zilliqa.com
 
-of 8
+1
 
 On stake.zilliqa.com
 
-#### Choose Bearby
+Check that the address bar reads stake.zilliqa.com. A lookalike site can copy the portal.
+
+Oct 24, 2026 6:49 PM
+
+02 · Choose Bearby
 
 In Connect a Wallet, choose Bearby Wallet under Installed.
 
-03
+stake.zilliqa.com
 
-of 8
+2
 
-In the Bearby extension
+On stake.zilliqa.com
 
-#### Unlock Bearby
+Oct 24, 2026 6:51 PM
+
+03 · Unlock Bearby
 
 Bearby opens. Pick your wallet, type your password and press Unlock.
 
-04
+bearby.io
 
-of 8
+3
 
 In the Bearby extension
 
-#### Connect to the portal
+Bearby unlocks with your password only. Anything that asks for your recovery phrase here is not Bearby.
+
+Oct 24, 2026 6:51 PM
+
+04 · Connect to the portal
 
 Bearby asks to connect stake.zilliqa.com to your wallet. Check that the account selected is the one that holds your ZIL and press Connect.
 
-05
+bearby.io
 
-of 8
-
-On stake.zilliqa.com
-
-#### Find Encapsulate
-
-Your balance and address now show at the top right, and the pools may have changed order. Pick Encapsulate on the Liquid tab.
-
-06
-
-of 8
-
-On stake.zilliqa.com
-
-#### Enter an amount
-
-Our panel opens on Stake, with our 8% commission and what one encapZIL is worth in ZIL. Type how much ZIL to stake, at least 100, and press Stake. The line under the amount shows the encapZIL you receive.
-
-07
-
-of 8
+4
 
 In the Bearby extension
 
-#### Confirm in Bearby
+Check that the request comes from stake.zilliqa.com.
 
-Bearby shows the transaction from stake.zilliqa.com: the ZIL you stake, sent from your account to our delegation contract, and three fee speeds, with Market picked. Press Confirm.
+Oct 24, 2026 6:52 PM
 
-08
+05 · Find Encapsulate
 
-of 8
+Your balance and address now show at the top right, and the pools may have changed order. Pick Encapsulate on the Liquid tab.
+
+stake.zilliqa.com
+
+5
 
 On stake.zilliqa.com
 
-#### Check your stake
+Our row reads Encapsulate and encapZIL, with an 8% commission. This guide’s link on the next step opens our pool directly.
+
+Oct 24, 2026 6:52 PM
+
+06 · Enter an amount
+
+Our panel opens on Stake, with our 8% commission and what one encapZIL is worth in ZIL. Type how much ZIL to stake, at least 100, and press Stake. The line under the amount shows the encapZIL you receive.
+
+stake.zilliqa.com
+
+6
+
+On stake.zilliqa.com
+
+Leave some ZIL unstaked: the portal puts a transaction’s cost at up to about 12 ZIL.
+
+Oct 24, 2026 6:53 PM
+
+07 · Confirm in Bearby
+
+Bearby shows the transaction from stake.zilliqa.com: the ZIL you stake, sent from your account to our delegation contract, and three fee speeds, with Market picked. Press Confirm.
+
+bearby.io
+
+7
+
+In the Bearby extension
+
+The ZIL must go to our delegation contract, `0x1311059DD836D7000Dc673eA4Cc834fe04e9933C`, which Bearby labels Unknown. This is the last screen where a mistake is still free.
+
+Oct 24, 2026 6:54 PM
+
+08 · Check your stake
 
 Back on the portal, our row and the panel show your encapZIL under Staked, and Last transaction opens it on the explorer. Rewards land every block and compound into encapZIL, which is worth more ZIL as they do: there is nothing to claim.
 
-Done · 8 of 8
+stake.zilliqa.com
 
-#### Staked with Encapsulate.
+8
 
-Rewards start once your stake is active. Next up: Delegate BLD with Keplr.
+On stake.zilliqa.com
 
-Next: Agoric
+Unstaking fixes your ZIL at that moment’s value; you claim it under Claim about 6 days later.
 
-All guides
-
-Zilliqa’s terms and common questions
-
-Need help? Ask on Discord
+Oct 24, 2026 6:54 PM
 
 ## Blog
 
