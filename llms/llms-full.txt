@@ -2,7 +2,7 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-11-06. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-11-11. The index of the site is https://encapsulate.xyz/llms.txt.
 
 ## Encapsulate - Validators for networks we believe in
 
@@ -20,7 +20,7 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 
 01 / 04 · Staked
 
-#### $69,758,876
+#### $65,550,951
 
 Under management by
 
@@ -38,7 +38,7 @@ Mainnet validator, in the active set.
 
 02 / 04 · Delegators
 
-#### 14,171
+#### 14,291
 
 delegators
 
@@ -186,16 +186,16 @@ Read, weigh, listen, step back: the same four questions before every vote. The s
 
 The record, by outcome
 
-1,925 votes: 1,255 Yes, 78 No, 478 No with veto, 114 Abstain
+1,931 votes: 1,261 Yes, 78 No, 478 No with veto, 114 Abstain
 
 | Proposal | Our vote | Recorded |  |  |
 | --- | --- | --- | --- | --- |
-| Protocol upgrade to version 141 Sui · 141 | YES | Nov 4, 2026 | [View Release](https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.83.1) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. |
-| Protocol upgrade to version 39 IOTA · 39 | YES | Nov 4, 2026 | [View Release](https://github.com/iotaledger/iota/releases/tag/v1.35.2) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. |
-| Instantiate and register robinhood with reward pools Axelar · 508 | YES | Nov 3, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/94A5F24B490F2BFE40034D84E4F265DFB2CA00A29EE36B9C0EE0A56529B28257) | The code and the addresses were published with the proposal, and the change is contained. Yes. |
-| Restrict CosmWasm Code Uploads to Governance and Whitelisted Addresses Terra · 4854 | YES | Nov 3, 2026 | [View Tx Hash](https://www.mintscan.io/terra/tx/0B79ABCC5820311283FB8A4F2F9A61D27696ED801C314E527E38A7D17654F771) | Deployment work the chain's connections depend on; supporting it keeps them working. |
-| axe: ITS set-trusted-chain on 19 chains Axelar · 506 | YES | Nov 2, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/EB8B568D80615CC3BF6E250951DE40CDB8DC28B07B35C3779E53E6ADAEB9903D) | It fits the project's direction and carries no cost we can find for delegators. |
-| Set governance proposal_cancel_ratio to 1 Axelar · 507 | YES | Nov 2, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/C73A834065192B5162D28B9198CD0010F851DD26349E24F73EE292694ADCCB43) | The case is made in the proposal itself and the risk is contained. Yes. |
+| Gaia v29.1.0 upgrade Cosmos Hub · 1061 | YES | Nov 10, 2026 | [View Tx Hash](https://www.mintscan.io/cosmos/tx/118CEDB13A3A62A81634DA655B27D90093993E85EAB219E86A201A84CAC3752F) | A scheduled upgrade on a published release. We support it so the validator set moves together and the chain stays live. |
+| Passage v4.1.0 Mainnet Software Upgrade Passage · 25 | YES | Nov 9, 2026 | [View Tx Hash](https://ping.pub/passage/tx/48C63EBA52DE83DCA1553D07FD271375AB5DADB30A6B64A640DF7780EA74291B) | A scheduled upgrade on a published release. We support it so the validator set moves together and the chain stays live. |
+| Upgrade consensus gateways to v6.5.0 Axelar · 512 | YES | Nov 9, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/FEC5FDD9D626B4EA93F9142A923BF844BB1D5CC78EC7A48A17A9A343FC6C683C) | Standard release upgrade with a set height. Nothing here shifts risk onto delegators. |
+| Recover expired IBC client 07-tendermint-65 (Axelar <> Carbon) Axelar · 509 | YES | Nov 6, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/5078A565929B5ED16DF78186C013C11E1E03EC839D5E9DEA0C8CC5346948F697) | Repair work on an existing route rather than a new commitment, so we support it. |
+| Register robinhood on ITS Hub Axelar · 510 | YES | Nov 6, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/051D655A275470FF4E8A19BAC93636262FC49F2C59698E166EA9475268DC9826) | Routine contract housekeeping that keeps existing integrations running. No change to protocol risk. |
+| Phoenix Foundation: community selection of a fifth director and future appointments Terra · 4855 | YES | Nov 6, 2026 | [View Tx Hash](https://www.mintscan.io/terra/tx/7F14F1C7D4D00C45BC7F8664035540005373450F144C6B9B477F5F847CA167BA) | It fits the project's direction and carries no cost we can find for delegators. |
 
 [View voting history](https://encapsulate.xyz/governance)
 
@@ -825,11 +825,11 @@ Published as cast
 
 Scroll ↓
 
-Protocol upgrade to version 39“The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch.”
+Passage v4.1.0 Mainnet Software Upgrade“A scheduled upgrade on a published release. We support it so the validator set moves together and the chain stays live.”
 
 The record
 
-1,925
+1,931
 
 Six years of votes.
 
@@ -849,18 +849,18 @@ The record · newest first
 
 | Proposal | Our vote | Recorded |  |  |
 | --- | --- | --- | --- | --- |
+| Gaia v29.1.0 upgrade Cosmos Hub · 1061 | YES | [View Tx Hash](https://www.mintscan.io/cosmos/tx/118CEDB13A3A62A81634DA655B27D90093993E85EAB219E86A201A84CAC3752F) | A scheduled upgrade on a published release. We support it so the validator set moves together and the chain stays live. | Nov 10, 2026 |
+| Passage v4.1.0 Mainnet Software Upgrade Passage · 25 | YES | [View Tx Hash](https://ping.pub/passage/tx/48C63EBA52DE83DCA1553D07FD271375AB5DADB30A6B64A640DF7780EA74291B) | A scheduled upgrade on a published release. We support it so the validator set moves together and the chain stays live. | Nov 9, 2026 |
+| Upgrade consensus gateways to v6.5.0 Axelar · 512 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/FEC5FDD9D626B4EA93F9142A923BF844BB1D5CC78EC7A48A17A9A343FC6C683C) | Standard release upgrade with a set height. Nothing here shifts risk onto delegators. | Nov 9, 2026 |
+| Recover expired IBC client 07-tendermint-65 (Axelar <> Carbon) Axelar · 509 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/5078A565929B5ED16DF78186C013C11E1E03EC839D5E9DEA0C8CC5346948F697) | Repair work on an existing route rather than a new commitment, so we support it. | Nov 6, 2026 |
+| Register robinhood on ITS Hub Axelar · 510 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/051D655A275470FF4E8A19BAC93636262FC49F2C59698E166EA9475268DC9826) | Routine contract housekeeping that keeps existing integrations running. No change to protocol risk. | Nov 6, 2026 |
+| Phoenix Foundation: community selection of a fifth director and future appointments Terra · 4855 | YES | [View Tx Hash](https://www.mintscan.io/terra/tx/7F14F1C7D4D00C45BC7F8664035540005373450F144C6B9B477F5F847CA167BA) | It fits the project's direction and carries no cost we can find for delegators. | Nov 6, 2026 |
 | Protocol upgrade to version 141 Sui · 141 | YES | [View Release](https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.83.1) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | Nov 4, 2026 |
 | Protocol upgrade to version 39 IOTA · 39 | YES | [View Release](https://github.com/iotaledger/iota/releases/tag/v1.35.2) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | Nov 4, 2026 |
 | Instantiate and register robinhood with reward pools Axelar · 508 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/94A5F24B490F2BFE40034D84E4F265DFB2CA00A29EE36B9C0EE0A56529B28257) | The code and the addresses were published with the proposal, and the change is contained. Yes. | Nov 3, 2026 |
 | Restrict CosmWasm Code Uploads to Governance and Whitelisted Addresses Terra · 4854 | YES | [View Tx Hash](https://www.mintscan.io/terra/tx/0B79ABCC5820311283FB8A4F2F9A61D27696ED801C314E527E38A7D17654F771) | Deployment work the chain's connections depend on; supporting it keeps them working. | Nov 3, 2026 |
-| axe: ITS set-trusted-chain on 19 chains Axelar · 506 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/EB8B568D80615CC3BF6E250951DE40CDB8DC28B07B35C3779E53E6ADAEB9903D) | It fits the project's direction and carries no cost we can find for delegators. | Nov 2, 2026 |
-| Set governance proposal_cancel_ratio to 1 Axelar · 507 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/C73A834065192B5162D28B9198CD0010F851DD26349E24F73EE292694ADCCB43) | The case is made in the proposal itself and the risk is contained. Yes. | Nov 2, 2026 |
-| Migrate Multisig contract to v2.4.4 Axelar · 505 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/E877E7E9FEB71AAF93C8A9A24D2FB1308214E19427FB2F664762B59D5B5DAC60) | Standard release upgrade with a set height. Nothing here shifts risk onto delegators. | Nov 2, 2026 |
-| Register arc on ITS Hub Axelar · 503 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/747F16F7DC098EBFF52004247751AE91D313953583C0C658E12710C5B8EE0F3A) | Deployment work the chain's connections depend on; supporting it keeps them working. | Oct 28, 2026 |
-| Signal support for x/usdcmigration in a future ixo (Impacthub) software upgrade (Noble USDC wind-down) Ixo · 506 | YES | [View Tx Hash](https://www.mintscan.io/ixo/tx/4F89D7EB83A870BE626CC551D741ED5608270394F0093F645806AB40A8CEF81F) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. | Oct 28, 2026 |
-| Registering `USDC.inj` vat-bank asset Agoric · 123 | YES | [View Tx Hash](https://www.mintscan.io/agoric/tx/510511C6E6C5E0686C1E9A45B28688DA599A8B25F46BAD49719FB16D2847FF62) | Deployment work the chain's connections depend on; supporting it keeps them working. | Oct 28, 2026 |
 
-10 of 1,925 shown
+10 of 1,931 shown
 
 ## Investments
 
@@ -1084,7 +1084,7 @@ Sui
 
 Axelar
 
-11.2%
+11.7%
 
 Cosmos Hub
 
@@ -1292,7 +1292,7 @@ Of every 100 BLD staked
 
 6.7 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -1312,9 +1312,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 27 Nov
+In your wallet · 2 Dec
 
 Live dates
 
@@ -1480,7 +1480,7 @@ Of every 100 ALTHEA staked
 
 24 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 9 Nov 2026
 
 Commission
 
@@ -1500,9 +1500,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 27 Nov
+In your wallet · 2 Dec
 
 Live dates
 
@@ -1668,7 +1668,7 @@ Of every 100 AVAIL staked
 
 8 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 6 Nov 2026
 
 Commission
 
@@ -1688,9 +1688,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 4 Dec
+In your wallet · 9 Dec
 
 Live dates
 
@@ -1854,7 +1854,7 @@ Of every 100 AVAX staked
 
 4.6 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 7 Nov 2026
 
 Commission
 
@@ -1874,9 +1874,9 @@ Staking period
 
 Locked for the period you choose
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-The shortest period ends · 20 Nov
+The shortest period ends · 25 Nov
 
 Live dates · the shortest period, 2 weeks
 
@@ -2040,7 +2040,7 @@ Of every 100 AXL staked
 
 11.2 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 8 Nov 2026
 
 Commission
 
@@ -2060,9 +2060,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 13 Nov
+In your wallet · 18 Nov
 
 Live dates
 
@@ -2226,7 +2226,7 @@ Of every 100 C4E staked
 
 5.9 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 6 Nov 2026
 
 Commission
 
@@ -2246,9 +2246,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 27 Nov
+In your wallet · 2 Dec
 
 Live dates
 
@@ -2414,7 +2414,7 @@ Of every 100 ATOM staked
 
 17.6 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 6 Nov 2026
 
 Commission
 
@@ -2434,9 +2434,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 27 Nov
+In your wallet · 2 Dec
 
 Live dates
 
@@ -2600,7 +2600,7 @@ Of every 100 EIGEN staked
 
 6.4 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 7 Nov 2026
 
 Commission
 
@@ -2620,9 +2620,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 20 Nov
+In your wallet · 25 Nov
 
 Live dates
 
@@ -2634,7 +2634,7 @@ Since we joined
 
 Launch
 
-30 months
+31 months
 
 Today
 
@@ -2786,7 +2786,7 @@ Of every 100 ESP staked
 
 3.1 earned in a year
 
-After our commission · as of 4 Nov 2026
+After our commission · as of 6 Nov 2026
 
 Commission
 
@@ -2806,9 +2806,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 13 Nov
+In your wallet · 18 Nov
 
 Live dates
 
@@ -2972,7 +2972,7 @@ Of every 100 LORE staked
 
 41 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 6 Nov 2026
 
 Commission
 
@@ -2992,9 +2992,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 27 Nov
+In your wallet · 2 Dec
 
 Live dates
 
@@ -3160,7 +3160,7 @@ Of every 100 GRAV staked
 
 16.5 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 8 Nov 2026
 
 Commission
 
@@ -3180,9 +3180,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 27 Nov
+In your wallet · 2 Dec
 
 Live dates
 
@@ -3194,7 +3194,7 @@ Since we joined
 
 Launch
 
-58 months
+59 months
 
 Today
 
@@ -3348,7 +3348,7 @@ Of every 100 HEART staked
 
 31.4 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 7 Nov 2026
 
 Commission
 
@@ -3368,9 +3368,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 20 Nov
+In your wallet · 25 Nov
 
 Live dates
 
@@ -3536,7 +3536,7 @@ Of every 100 IKA staked
 
 13.1 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 6 Nov 2026
 
 Commission
 
@@ -3556,9 +3556,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 7 Nov
+In your wallet · 13 Nov
 
 Live dates
 
@@ -3722,7 +3722,7 @@ Of every 100 IOTA staked
 
 11.3 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 6 Nov 2026
 
 Commission
 
@@ -3742,9 +3742,9 @@ None
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 6 Nov
+In your wallet · 11 Nov
 
 Live dates
 
@@ -3756,7 +3756,7 @@ Since we joined
 
 Launch
 
-17 months
+18 months
 
 Today
 
@@ -3908,7 +3908,7 @@ Of every 100 IXO staked
 
 17.9 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 8 Nov 2026
 
 Commission
 
@@ -3928,9 +3928,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 27 Nov
+In your wallet · 2 Dec
 
 Live dates
 
@@ -4116,7 +4116,7 @@ Of every 100 ETH staked
 
 2.3 earned in a year
 
-After Lido’s fee · as of 5 Nov 2026
+After Lido’s fee · as of 10 Nov 2026
 
 Lido’s fee
 
@@ -4136,9 +4136,9 @@ Unbonding
 
 Lido’s withdrawal queue
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 11 Nov
+In your wallet · 16 Nov
 
 Live dates
 
@@ -4302,7 +4302,7 @@ Of every 100 LUME staked
 
 47.8 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 6 Nov 2026
 
 Commission
 
@@ -4322,9 +4322,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 27 Nov
+In your wallet · 2 Dec
 
 Live dates
 
@@ -4504,9 +4504,9 @@ None
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 6 Nov
+In your wallet · 11 Nov
 
 Live dates
 
@@ -4636,7 +4636,7 @@ Of every 100 MON staked
 
 7.9 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 8 Nov 2026
 
 Commission
 
@@ -4656,9 +4656,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 6 Nov
+In your wallet · 12 Nov
 
 Live dates
 
@@ -4822,7 +4822,7 @@ Of every 100 NEAR staked
 
 4.7 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 8 Nov 2026
 
 Commission
 
@@ -4842,9 +4842,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 7 Nov
+In your wallet · 12 Nov
 
 Live dates
 
@@ -5008,7 +5008,7 @@ Of every 100 PASG staked
 
 6.3 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 6 Nov 2026
 
 Commission
 
@@ -5028,9 +5028,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 27 Nov
+In your wallet · 2 Dec
 
 Live dates
 
@@ -5178,7 +5178,7 @@ Stake PROS with Encapsulate on Pharos: 10% commission, 22.2% a year after commis
 
 Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about four hours.
 
-[Delegate with MetaMask](https://stake.pharos.encapsulate.xyz/stake/0x6d565aee07f2d2e8da0fe77e5a62352e9d5fbb4007c4929c64c0268835a1f926)
+[Delegate with MetaMask](https://encapsulate.xyz/guides/pharos)
 
 [Our validator](https://pharos.exploreme.pro/validators/0x6d565aee07f2d2e8da0fe77e5a62352e9d5fbb4007c4929c64c0268835a1f926)
 
@@ -5216,9 +5216,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 20 Nov
+In your wallet · 25 Nov
 
 Live dates
 
@@ -5400,9 +5400,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 4 Dec
+In your wallet · 9 Dec
 
 Live dates
 
@@ -5560,7 +5560,7 @@ Of every 100 STRK staked
 
 7 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 8 Nov 2026
 
 Commission
 
@@ -5580,9 +5580,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 13 Nov
+In your wallet · 18 Nov
 
 Live dates
 
@@ -5594,7 +5594,7 @@ Since we joined
 
 Launch
 
-15 months
+16 months
 
 Today
 
@@ -5746,7 +5746,7 @@ Of every 100 SUI staked
 
 1.3 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -5766,9 +5766,9 @@ None
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 6 Nov
+In your wallet · 11 Nov
 
 Live dates
 
@@ -5780,7 +5780,7 @@ Since we joined
 
 Launch
 
-14 months
+15 months
 
 Today
 
@@ -5932,7 +5932,7 @@ Of every 100 SUPRA staked
 
 8 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 10 Nov 2026
 
 Commission
 
@@ -5952,9 +5952,9 @@ Up to 48 hours
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 8 Nov
+In your wallet · 13 Nov
 
 Live dates
 
@@ -6118,7 +6118,7 @@ Of every 100 LUNA staked
 
 35.4 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 6 Nov 2026
 
 Commission
 
@@ -6138,9 +6138,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 27 Nov
+In your wallet · 2 Dec
 
 Live dates
 
@@ -6304,7 +6304,7 @@ Of every 100 VARA staked
 
 16.9 earned in a year
 
-After our commission · as of 4 Nov 2026
+After our commission · as of 6 Nov 2026
 
 Commission
 
@@ -6324,9 +6324,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 13 Nov
+In your wallet · 18 Nov
 
 Live dates
 
@@ -6490,7 +6490,7 @@ Of every 100 ZIL staked
 
 8.2 earned in a year
 
-After our commission · as of 5 Nov 2026
+After our commission · as of 6 Nov 2026
 
 Commission
 
@@ -6510,9 +6510,9 @@ About 6 days
 
 How long to withdraw
 
-Withdraw today · 6 Nov
+Withdraw today · 11 Nov
 
-In your wallet · 12 Nov
+In your wallet · 17 Nov
 
 Live dates
 
@@ -6678,7 +6678,7 @@ Pick a chain to start.
 
 Encapsulate · Staking guides
 
-29 chains · 18 guides
+29 chains · 19 guides
 
 ## Agoric staking guide
 
@@ -7556,9 +7556,9 @@ Done · 7 of 7
 
 #### Staked with Encapsulate.
 
-Rewards start once your stake is active. Next up: Stake MON with MetaMask.
+Rewards start once your stake is active. Next up: Stake PROS with MetaMask.
 
-Next: Monad
+Next: Pharos
 
 All guides
 
@@ -8143,6 +8143,128 @@ Next: Sommelier
 All guides
 
 Passage’s terms and common questions
+
+Need help? Ask on Discord
+
+## Pharos staking guide
+
+URL: https://encapsulate.xyz/guides/pharos
+
+Stake PROS with MetaMask. Nine steps across Faroo’s Native Stake page and the MetaMask extension, one per screen, each with the screen you should be looking at.
+
+Encapsulate · Guides
+
+Pharos
+
+### Stake PROS with MetaMask
+
+Nine steps across Faroo’s Native Stake page and the MetaMask extension, one per screen, each with the screen you should be looking at.
+
+Nine screens
+
+Scroll ↓
+
+01
+
+of 9
+
+On app.faroo.xyz
+
+#### Press Connect Wallet
+
+Faroo’s Native Stake page delegates PROS straight to a Pharos validator, without minting stPROS. Press Connect Wallet.
+
+02
+
+of 9
+
+On app.faroo.xyz
+
+#### Choose MetaMask
+
+Faroo asks for a wallet. Choose MetaMask from the list.
+
+03
+
+of 9
+
+In the MetaMask extension
+
+#### Unlock MetaMask
+
+MetaMask opens. Type your password and press Unlock.
+
+04
+
+of 9
+
+In the MetaMask extension
+
+#### Connect to Faroo
+
+MetaMask shows app.faroo.xyz and the account it will connect: pick the one that holds your PROS. The site can see your addresses and balances and send you transaction requests; it cannot move funds without your permission. Press Connect.
+
+05
+
+of 9
+
+On app.faroo.xyz
+
+#### Find Encapsulate
+
+Back on Faroo, scroll down to Validators and type encapsulate in the search. Our row shows Open and our 10% commission. Press Stake.
+
+06
+
+of 9
+
+On app.faroo.xyz
+
+#### Enter the amount
+
+The Delegate window opens on Encapsulate. Type how much PROS to stake: the minimum is 1, and your balance shows above the box. Activation epoch says when it starts earning, at the next epoch. Press Confirm.
+
+07
+
+of 9
+
+In the MetaMask extension
+
+#### Confirm in MetaMask
+
+MetaMask shows the transaction request: the PROS you are staking, the request from app.faroo.xyz on Pharos Mainnet and the network fee. Press Confirm.
+
+08
+
+of 9
+
+On app.faroo.xyz
+
+#### Check Pending activation
+
+Back on Faroo, Your position shows your PROS under Pending activation. It joins our stake at the next epoch, within four hours.
+
+09
+
+of 9
+
+On app.faroo.xyz
+
+#### Check your active stake
+
+Once the epoch turns, your PROS moves to Active stake. Rewards come every epoch, about four hours, and show under Claimable reward.
+
+Done · 9 of 9
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Stake MON with MetaMask.
+
+Next: Monad
+
+All guides
+
+Pharos’s terms and common questions
 
 Need help? Ask on Discord
 

@@ -2,7 +2,7 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-11-05. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-11-11. The index of the site is https://encapsulate.xyz/llms.txt.
 
 ## Agoric Testnet Technical Analysis
 
@@ -120,7 +120,7 @@ URL: https://encapsulate.xyz/blog/aleo-node-setup
 
 Run an Aleo node as prover, client or validator — hardware, ports, and monitoring that works.
 
-Operations · December 31, 2023 · 1 min
+Operations · December 31, 2023 · 2 min
 
 ### Aleo Node Setup With Monitoring
 

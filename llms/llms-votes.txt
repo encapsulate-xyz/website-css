@@ -2,7 +2,7 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-11-05. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-11-11. The index of the site is https://encapsulate.xyz/llms.txt.
 
 ## Governance Record
 
@@ -10,6 +10,9 @@ URL: https://encapsulate.xyz/governance/votes
 
 | Network | Reference | Proposal | Our vote | Proof | Rationale | Recorded |
 | --- | --- | --- | --- | --- | --- | --- |
+| Axelar | 509 | Recover expired IBC client 07-tendermint-65 (Axelar <> Carbon) | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/5078A565929B5ED16DF78186C013C11E1E03EC839D5E9DEA0C8CC5346948F697) | Repair work on an existing route rather than a new commitment, so we support it. | November 6, 2026 |
+| Axelar | 510 | Register robinhood on ITS Hub | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/051D655A275470FF4E8A19BAC93636262FC49F2C59698E166EA9475268DC9826) | Routine contract housekeeping that keeps existing integrations running. No change to protocol risk. | November 6, 2026 |
+| Terra | 4855 | Phoenix Foundation: community selection of a fifth director and future appointments | YES | [View Tx Hash](https://www.mintscan.io/terra/tx/7F14F1C7D4D00C45BC7F8664035540005373450F144C6B9B477F5F847CA167BA) | It fits the project's direction and carries no cost we can find for delegators. | November 6, 2026 |
 | Sui | 141 | Protocol upgrade to version 141 | YES | [View Release](https://github.com/MystenLabs/sui/releases/tag/mainnet-v1.83.1) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | November 4, 2026 |
 | IOTA | 39 | Protocol upgrade to version 39 | YES | [View Release](https://github.com/iotaledger/iota/releases/tag/v1.35.2) | The version switches only when two thirds of the stake runs a release that supports it; ours did before the switch. | November 4, 2026 |
 | Axelar | 508 | Instantiate and register robinhood with reward pools | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/94A5F24B490F2BFE40034D84E4F265DFB2CA00A29EE36B9C0EE0A56529B28257) | The code and the addresses were published with the proposal, and the change is contained. Yes. | November 3, 2026 |
@@ -771,6 +774,3 @@ URL: https://encapsulate.xyz/governance/votes
 | Umee | 66 | Raise the stATOM supply cap to 300K stATOM | YES | [View Tx Hash](https://www.mintscan.io/umee/txs/9FBF28E42B9D1DE1540CD10C01200D95C01B5C015D2A26D9962AA47110F7492C) | We read it in full and see nothing that works against the chain or its delegators. | March 29, 2023 |
 | Osmosis | 473 | Allow Kado Router Contracts to be Uploaded | NO | [View Tx Hash](https://www.mintscan.io/osmosis/txs/09E6A34D10808B7F04F195C63166477D52A8A4D8C08D8CB153A3F59E272D42E7) | This proposal gives the address osmo19vxp8vq8qm368dr026qxh8v82satwaf79y235lfv6wmgpwxx8dtskedaku the ability to upload CosmWasm contracts without seeking further governance approval, but we think governance… | March 28, 2023 |
 | Osmosis | 472 | Regular Incentive adjustment for 2023-03-27 | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/E21F324E8F9BF7C09A87F7435E0EE36AC0AC639A5775BA9A81CBCF278F141300) | A reasonable ask for work the chain benefits from, at a size the pool can carry. | March 28, 2023 |
-| Evmos | 136 | Evmos Testnet v12.0.0 Upgrade | NO | [View Tx Hash](https://www.mintscan.io/evmos/txs/86B3B52907C98EBA6BDF1308F8F8A59A379911A541732C1044C7AD8256E22C32) | Voting "no" now as team mentioned that they have noticed some minor issues so they have decided to cancel the current v12.0.0 release and include the fix in a subsequent v12.1.0 release. | March 27, 2023 |
-| Evmos | 137 | Evmos Mainnet v12.1.0 Upgrade | YES | [View Tx Hash](https://www.mintscan.io/evmos/txs/7A4D741B90274419372CF564D9942F2D016BFAA5B9765815E78115400B9AD53C) | We have read changelog for this upgrade here: https://github.com/evmos/evmos/releases/v12.1.0 and voting yes. | March 27, 2023 |
-| Juno | 279 | Protocol owned liquidity: seJUNO/JUNO on Wynd DEX | NO | [View Tx Hash](https://www.mintscan.io/juno/txs/1FAB45624C14387637F0E836C6EF39CA627A7D8B7CFD38CF1D5CC23E48ADA4E4) | I think they have already requested protocol liquidity for wyJUNO, we will wait and see how beneficial it is to the ecosystem before voting yes for another. | March 27, 2023 |

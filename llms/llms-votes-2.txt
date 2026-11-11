@@ -2,10 +2,13 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-11-05. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-11-11. The index of the site is https://encapsulate.xyz/llms.txt.
 
 | Network | Reference | Proposal | Our vote | Proof | Rationale | Recorded |
 | --- | --- | --- | --- | --- | --- | --- |
+| Evmos | 136 | Evmos Testnet v12.0.0 Upgrade | NO | [View Tx Hash](https://www.mintscan.io/evmos/txs/86B3B52907C98EBA6BDF1308F8F8A59A379911A541732C1044C7AD8256E22C32) | Voting "no" now as team mentioned that they have noticed some minor issues so they have decided to cancel the current v12.0.0 release and include the fix in a subsequent v12.1.0 release. | March 27, 2023 |
+| Evmos | 137 | Evmos Mainnet v12.1.0 Upgrade | YES | [View Tx Hash](https://www.mintscan.io/evmos/txs/7A4D741B90274419372CF564D9942F2D016BFAA5B9765815E78115400B9AD53C) | We have read changelog for this upgrade here: https://github.com/evmos/evmos/releases/v12.1.0 and voting yes. | March 27, 2023 |
+| Juno | 279 | Protocol owned liquidity: seJUNO/JUNO on Wynd DEX | NO | [View Tx Hash](https://www.mintscan.io/juno/txs/1FAB45624C14387637F0E836C6EF39CA627A7D8B7CFD38CF1D5CC23E48ADA4E4) | I think they have already requested protocol liquidity for wyJUNO, we will wait and see how beneficial it is to the ecosystem before voting yes for another. | March 27, 2023 |
 | Ixo | 404 | Upload cw721 smart contract | YES | [View Tx Hash](https://www.mintscan.io/ixo/txs/ABA1BCB3957411189177A27ABBABE6543DCA7192D37B8BB459D502783F0BBD76) | Deployment work the chain's connections depend on; supporting it keeps them working. | March 25, 2023 |
 | Ixo | 405 | Upload ixo1155 smart contract | YES | [View Tx Hash](https://www.mintscan.io/ixo/txs/1FD6C10E057F676F0D3539135DFAFCA8C173E23C8F7FE8BCAA1078F5970DD7D5) | The code and the addresses were published with the proposal, and the change is contained. Yes. | March 25, 2023 |
 | Juno | 277 | Protocol Owned Liquidity: wyJUNO/JUNO Staking Swap Pool | YES | [View Tx Hash](https://www.mintscan.io/juno/txs/8ED23939F45DB2A3DCE49B518BB96F029130F09F4E68DD509C69B647B9C3AA83) | In support of wyJUNO/JUNO Staking Swap Pool and work done by WYND DAO. | March 25, 2023 |
