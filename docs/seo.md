@@ -179,6 +179,17 @@ record's tables are untouched; their addresses are in `backups/governance-vote-p
 /governance-record and its database page /governance-record/governance-record stay; the database page has a
 noindex head (2026-09-28). /investments/gravity-bridge (a 404 listed in the sitemap) was removed from Super.
 
+**Cards on X, checked 2026-11-12** (a teammate: the guide links "arent updating seo on twitter"). Fetched as
+`Twitterbot/1.0`, all 28 guides in the sitemap serve `twitter:card` `summary_large_image` with title, description and
+image (`assets.super.so`, 1200 × 630 PNG, 200), the tags about 5 KB into the HTML; robots.txt allows everything but
+/api and /_next, and assets.super.so has none. The Pharos tweet (encapHQ 2120502495479038394, 2026-11-11 13:02 UTC) holds
+our card, read back through api.fxtwitter.com: the "Eleven steps" description and the guide's card image, re-hosted
+on pbs.twimg.com. So nothing on our side stops a card. What X does: **a post shows only the card's image, with the
+domain over it** (X dropped the title and description from link cards in 2023), and **a post keeps the card X read
+when it was posted**: a later change to the page never reaches an old post, and X reuses what it read for a URL for
+about a week. For a fresh read, share the URL with a query string (`?v=2`); the canonical line keeps Google on
+the plain path.
+
 ## What Google holds, and the Search Console routine (2026-10-25)
 
 The user, on Google listing "Encapsulate Test Home" at /encapsulate-home: "why is this getting indexed ?", then
