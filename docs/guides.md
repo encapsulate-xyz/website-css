@@ -20,7 +20,7 @@ close #done (anchors.js, 2026-10-23 — `docs/paths-and-404.md`, "Section names"
 | The crumb, "Watch out", "{N} screens", the close band, the Discord line | the **"Guide page copy" toggle on /guides**, `key · value` lines — one place for 33 guides. `{n}` is the step count, `{N}` the same spelled ("Eight screens"), `{next}` and `{chain}` the next guide |
 
 **Converted guides so far: Axelar, Sui (ten steps, SuiVision + Slush), Espresso, Monad (below), Terra, Agoric, NEAR, Lumera,
-Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina, Starknet twice, Zilliqa, Cosmos Hub and Pharos** (2026-10-22: Starknet, nine steps on Voyager's
+Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina, Starknet twice, Zilliqa, Cosmos Hub, Pharos and Supra** (2026-10-22: Starknet, nine steps on Voyager's
 Staking Dashboard (voyager.online) with the **Ready X** extension — Ready's browser wallet, once Argent X; "Ready X" is
 its name in the Chrome Web Store and in Voyager's wallet list, so the guide is "Stake STRK with Ready X" (the team had
 named it "Ready") and the Wallet Set has a Ready X row since that day, its glyph made with `make_glyph.py` from the
@@ -91,6 +91,48 @@ Step 11, Time 5, "Eleven steps…"; the content job and `og_cards.py` made the c
 848 × 1855, not the house 720 × 1576, but the same shape, so the frame shows it whole. `guide_press.mjs` failed most
 Watch outs at 1440 that hour, Monad's untouched guide as much, and passed at 390; a press after the page settles opened
 all ten at both widths.
+
+**Supra (2026-11-18): "Stake SUPRA with StarKey", eleven steps in the StarKey extension** (starkey.app), /guides/supra.
+The user: "check supra guide and add isntuctions". The row had been Soon since the template (Step 11, Time 6). The team
+had added eleven captures with their own step names. Steps 9 and 10 had no Step number, and no step had a Surface, a Link
+or words.
+
+The captures:
+- **Seven are StarKey's popup at 720 × 1200** (360 × 600). Their file names say "(Slush unlock)", the device IOTA's came
+  from.
+- **The other four are 971 × 1619**, the same shape. They are steps 5, 6, 7 and 11, the screens that name our pool, and
+  they were edited outside StarKey to read "Encapsulate". Their file names are an image tool's ("Encapsulate validator
+  name cleanup", "Centered Encapsulate staking card"). On step 11 the name sits centred where StarKey sets it left.
+- **What StarKey shows is "Encapsulate (fka KingSuper)"**, its own label for our pool. validator-research's tracker row
+  34.1 asks Supra to change it. Until StarKey ships the change, a reader sees the old name. The words say Encapsulate,
+  and step 5's Watch gives the address.
+- **The numbers on the edited four match the chain**: the 38.72% commission (`operator_commission_percentage` 3872,
+  intended) and 0x15ac…cd3a.
+
+The words are IOTA's and Mina's, with Supra's facts:
+- the minimum is 1 SUPRA;
+- the network fee comes on top of the amount (0.912 SUPRA for this stake);
+- the stake starts earning at the next epoch, which the success screen counts down;
+- a reward comes every epoch, about 2 hours, and compounds by itself;
+- unstaking takes up to 48 hours.
+
+Step 5's Watch is the pool address as a press-to-copy. Step 7's Watch says to check the pool on the form, because
+StarKey's last two screens (the warning and the review) don't name it.
+
+The guide has a 360:600 frame of its own (guide.css, `#page-guides-supra`, v434), as IOTA's has. The Lede now says
+"Eleven steps in the StarKey extension…"; it said "and its dashboard", but every capture is the extension. The guide
+went Live, and its noindex came off (the canonical line alone). The removal of 2026-10-28 was cancelled and indexing
+requested. The card was made, and the chain page's "Delegate with StarKey" now opens the guide; it opened starkey.app.
+
+A Soon guide's head shows no chain or wallet mark: guide.js takes them from /guides' gallery, which lists only Live
+guides. They appeared once it went Live.
+
+**`guide_press.mjs` now presses from the snapped step.** It brings each step to the top, waits until the control stops
+moving, and only then presses. The old script centred the control and pressed while snap.js glided back. At 1440 that
+glide moved the page from scrollY 4310 to 3600 and put the address 240px under the fold. The old script failed Supra's
+steps 1, 4 and 5 at 1440 and passed at 390, the same "flaky at 1440" seen on Monad and Pharos. With the new one,
+everything passes: built, eleven steps linked, every Watch out and the address pressed at 1440 and 390. Old values
+`backups/stake-supra-with-starkey-guide-2026-11-18.json`.
 
 **Zilliqa (2026-10-25): "Stake ZIL with Bearby", eight steps on Zilliqa's staking portal (stake.zilliqa.com) with the
 Bearby extension** (bearby.io). Our pool is on the portal's Liquid tab, as Encapsulate with its token encapZIL; steps 6

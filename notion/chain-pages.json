@@ -1685,10 +1685,8 @@
    "lede": "Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 2 hours.",
    "wallet": {
     "label": "Delegate with StarKey",
-    "url": "https://starkey.app/",
-    "guide": "/guides (Supra)",
-    "guide_url": "https://www.notion.so/237e800a513880efad23eeb818007817",
-    "until": "the guide is Soon (its old slides); the wallet's staking page until it is Live, then url = guide_url (2026-10-30)"
+    "url": "https://www.notion.so/237e800a513880efad23eeb818007817",
+    "guide": "/guides (Supra)"
    },
    "work": [
     [
