@@ -2,7 +2,7 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-11-11. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-11-18. The index of the site is https://encapsulate.xyz/llms.txt.
 
 ## Encapsulate - Validators for networks we believe in
 
@@ -20,7 +20,7 @@ Validator infrastructure for new chains, from the first testnet through mainnet.
 
 01 / 04 · Staked
 
-#### $65,550,951
+#### $58,117,784
 
 Under management by
 
@@ -38,7 +38,7 @@ Mainnet validator, in the active set.
 
 02 / 04 · Delegators
 
-#### 14,291
+#### 14,263
 
 delegators
 
@@ -186,16 +186,16 @@ Read, weigh, listen, step back: the same four questions before every vote. The s
 
 The record, by outcome
 
-1,931 votes: 1,261 Yes, 78 No, 478 No with veto, 114 Abstain
+1,932 votes: 1,262 Yes, 78 No, 478 No with veto, 114 Abstain
 
 | Proposal | Our vote | Recorded |  |  |
 | --- | --- | --- | --- | --- |
+| Software Upgrade to v1.23.0 — Aurora Australis Lumera · 15 | YES | Nov 17, 2026 | [View Tx Hash](https://ping.pub/lumera/tx/3D6C08A21DC25F6DF303FDB4EAB2E28827C8E16CDDBD15CDAE8B17E4074B98CB) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. |
 | Gaia v29.1.0 upgrade Cosmos Hub · 1061 | YES | Nov 10, 2026 | [View Tx Hash](https://www.mintscan.io/cosmos/tx/118CEDB13A3A62A81634DA655B27D90093993E85EAB219E86A201A84CAC3752F) | A scheduled upgrade on a published release. We support it so the validator set moves together and the chain stays live. |
 | Passage v4.1.0 Mainnet Software Upgrade Passage · 25 | YES | Nov 9, 2026 | [View Tx Hash](https://ping.pub/passage/tx/48C63EBA52DE83DCA1553D07FD271375AB5DADB30A6B64A640DF7780EA74291B) | A scheduled upgrade on a published release. We support it so the validator set moves together and the chain stays live. |
 | Upgrade consensus gateways to v6.5.0 Axelar · 512 | YES | Nov 9, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/FEC5FDD9D626B4EA93F9142A923BF844BB1D5CC78EC7A48A17A9A343FC6C683C) | Standard release upgrade with a set height. Nothing here shifts risk onto delegators. |
 | Recover expired IBC client 07-tendermint-65 (Axelar <> Carbon) Axelar · 509 | YES | Nov 6, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/5078A565929B5ED16DF78186C013C11E1E03EC839D5E9DEA0C8CC5346948F697) | Repair work on an existing route rather than a new commitment, so we support it. |
 | Register robinhood on ITS Hub Axelar · 510 | YES | Nov 6, 2026 | [View Tx Hash](https://www.mintscan.io/axelar/tx/051D655A275470FF4E8A19BAC93636262FC49F2C59698E166EA9475268DC9826) | Routine contract housekeeping that keeps existing integrations running. No change to protocol risk. |
-| Phoenix Foundation: community selection of a fifth director and future appointments Terra · 4855 | YES | Nov 6, 2026 | [View Tx Hash](https://www.mintscan.io/terra/tx/7F14F1C7D4D00C45BC7F8664035540005373450F144C6B9B477F5F847CA167BA) | It fits the project's direction and carries no cost we can find for delegators. |
 
 [View voting history](https://encapsulate.xyz/governance)
 
@@ -1084,7 +1084,7 @@ Sui
 
 Axelar
 
-11.7%
+13.8%
 
 Cosmos Hub
 
@@ -1114,7 +1114,7 @@ Zilliqa
 
 Avail
 
-8.0%
+8.6%
 
 Espresso
 
@@ -1126,7 +1126,7 @@ Ika
 
 Pharos
 
-14.3%
+13.4%
 
 Supra
 
@@ -1134,7 +1134,7 @@ Supra
 
 Vara
 
-16.9%
+11.4%
 
 Agoric
 
@@ -1146,7 +1146,7 @@ Althea
 
 Gitopia
 
-41.0%
+43.2%
 
 Gravity Bridge
 
@@ -1154,11 +1154,11 @@ Gravity Bridge
 
 humans.ai
 
-31.4%
+33.1%
 
 ixo
 
-17.9%
+18.4%
 
 Lumera
 
@@ -1312,9 +1312,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 2 Dec
+In your wallet · 9 Dec
 
 Live dates
 
@@ -1326,7 +1326,7 @@ Since we joined
 
 Launch
 
-7 months
+8 months
 
 Today
 
@@ -1480,7 +1480,7 @@ Of every 100 ALTHEA staked
 
 24 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 14 Nov 2026
 
 Commission
 
@@ -1500,9 +1500,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 2 Dec
+In your wallet · 9 Dec
 
 Live dates
 
@@ -1688,9 +1688,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 9 Dec
+In your wallet · 16 Dec
 
 Live dates
 
@@ -1702,7 +1702,7 @@ Since we joined
 
 Launch
 
-21 months
+22 months
 
 Today
 
@@ -1854,7 +1854,7 @@ Of every 100 AVAX staked
 
 4.6 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 14 Nov 2026
 
 Commission
 
@@ -1874,9 +1874,9 @@ Staking period
 
 Locked for the period you choose
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-The shortest period ends · 25 Nov
+The shortest period ends · 2 Dec
 
 Live dates · the shortest period, 2 weeks
 
@@ -2016,7 +2016,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/axelar
 
-Stake AXL with Encapsulate on Axelar: 10% commission, 11.7% a year after commission, 7 days unbonding. Non-custodial.
+Stake AXL with Encapsulate on Axelar: 10% commission, 13.3% a year after commission, 7 days unbonding. Non-custodial.
 
 ### Axelar
 
@@ -2032,15 +2032,15 @@ The terms
 
 Reward rate
 
-11.7%
+13.3%
 
 Set by the chain, not by us
 
 Of every 100 AXL staked
 
-11.7 earned in a year
+13.3 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 15 Nov 2026
 
 Commission
 
@@ -2060,9 +2060,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 18 Nov
+In your wallet · 25 Nov
 
 Live dates
 
@@ -2094,23 +2094,23 @@ Horizon
 
 Not compounded — Axelar pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,117
+1,133
 
 Year 1
 
-1,234
+1,266
 
 Year 2
 
-1,351
+1,399
 
 Year 3
 
-1,468
+1,532
 
 Year 4
 
-1,585
+1,665
 
 Year 5
 
@@ -2246,9 +2246,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 2 Dec
+In your wallet · 9 Dec
 
 Live dates
 
@@ -2434,9 +2434,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 2 Dec
+In your wallet · 9 Dec
 
 Live dates
 
@@ -2600,7 +2600,7 @@ Of every 100 EIGEN staked
 
 6.4 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 17 Nov 2026
 
 Commission
 
@@ -2620,9 +2620,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 25 Nov
+In your wallet · 2 Dec
 
 Live dates
 
@@ -2786,7 +2786,7 @@ Of every 100 ESP staked
 
 3.7 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 16 Nov 2026
 
 Commission
 
@@ -2806,9 +2806,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 18 Nov
+In your wallet · 25 Nov
 
 Live dates
 
@@ -2948,7 +2948,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/gitopia
 
-Stake LORE with Encapsulate on Gitopia: 10% commission, 41.0% a year after commission, 21 days unbonding. Non-custodial.
+Stake LORE with Encapsulate on Gitopia: 10% commission, 41.7% a year after commission, 21 days unbonding. Non-custodial.
 
 ### Gitopia
 
@@ -2964,15 +2964,15 @@ The terms
 
 Reward rate
 
-41.0%
+41.7%
 
 Set by the chain, not by us
 
 Of every 100 LORE staked
 
-41 earned in a year
+41.7 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 13 Nov 2026
 
 Commission
 
@@ -2992,9 +2992,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 2 Dec
+In your wallet · 9 Dec
 
 Live dates
 
@@ -3006,7 +3006,7 @@ Since we joined
 
 Launch
 
-41 months
+42 months
 
 Today
 
@@ -3026,23 +3026,23 @@ Horizon
 
 Not compounded — Gitopia pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,410
+1,417
 
 Year 1
 
-1,820
+1,834
 
 Year 2
 
-2,230
+2,251
 
 Year 3
 
-2,640
+2,668
 
 Year 4
 
-3,050
+3,085
 
 Year 5
 
@@ -3160,7 +3160,7 @@ Of every 100 GRAV staked
 
 16.5 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 17 Nov 2026
 
 Commission
 
@@ -3180,9 +3180,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 2 Dec
+In your wallet · 9 Dec
 
 Live dates
 
@@ -3324,7 +3324,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/humans-ai
 
-Stake HEART with Encapsulate on humans.ai: 10% commission, 31.4% a year after commission, 14 days unbonding. Non-custodial.
+Stake HEART with Encapsulate on humans.ai: 10% commission, 32.2% a year after commission, 14 days unbonding. Non-custodial.
 
 ### humans.ai
 
@@ -3340,15 +3340,15 @@ The terms
 
 Reward rate
 
-31.4%
+32.2%
 
 Set by the chain, not by us
 
 Of every 100 HEART staked
 
-31.4 earned in a year
+32.2 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 15 Nov 2026
 
 Commission
 
@@ -3368,9 +3368,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 25 Nov
+In your wallet · 2 Dec
 
 Live dates
 
@@ -3402,23 +3402,23 @@ Horizon
 
 Not compounded — humans.ai pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,314
+1,322
 
 Year 1
 
-1,628
+1,644
 
 Year 2
 
-1,942
+1,966
 
 Year 3
 
-2,256
+2,288
 
 Year 4
 
-2,570
+2,610
 
 Year 5
 
@@ -3536,7 +3536,7 @@ Of every 100 IKA staked
 
 13.1 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 15 Nov 2026
 
 Commission
 
@@ -3556,9 +3556,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 13 Nov
+In your wallet · 20 Nov
 
 Live dates
 
@@ -3722,7 +3722,7 @@ Of every 100 IOTA staked
 
 11.3 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 16 Nov 2026
 
 Commission
 
@@ -3742,9 +3742,9 @@ None
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 11 Nov
+In your wallet · 18 Nov
 
 Live dates
 
@@ -3884,7 +3884,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/ixo
 
-Stake IXO with Encapsulate on ixo: 10% commission, 17.9% a year after commission, 21 days unbonding. Non-custodial.
+Stake IXO with Encapsulate on ixo: 10% commission, 18.4% a year after commission, 21 days unbonding. Non-custodial.
 
 ### ixo
 
@@ -3900,15 +3900,15 @@ The terms
 
 Reward rate
 
-17.9%
+18.4%
 
 Set by the chain, not by us
 
 Of every 100 IXO staked
 
-17.9 earned in a year
+18.4 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 15 Nov 2026
 
 Commission
 
@@ -3928,9 +3928,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 2 Dec
+In your wallet · 9 Dec
 
 Live dates
 
@@ -3962,23 +3962,23 @@ Horizon
 
 Not compounded — ixo pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,179
+1,184
 
 Year 1
 
-1,358
+1,368
 
 Year 2
 
-1,537
+1,552
 
 Year 3
 
-1,716
+1,736
 
 Year 4
 
-1,895
+1,920
 
 Year 5
 
@@ -4116,7 +4116,7 @@ Of every 100 ETH staked
 
 2.3 earned in a year
 
-After Lido’s fee · as of 11 Nov 2026
+After Lido’s fee · as of 17 Nov 2026
 
 Lido’s fee
 
@@ -4136,9 +4136,9 @@ Unbonding
 
 Lido’s withdrawal queue
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 16 Nov
+In your wallet · 23 Nov
 
 Live dates
 
@@ -4302,7 +4302,7 @@ Of every 100 LUME staked
 
 47.8 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 13 Nov 2026
 
 Commission
 
@@ -4322,9 +4322,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 2 Dec
+In your wallet · 9 Dec
 
 Live dates
 
@@ -4336,7 +4336,7 @@ Since we joined
 
 Launch
 
-14 months
+15 months
 
 Today
 
@@ -4504,9 +4504,9 @@ None
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 11 Nov
+In your wallet · 18 Nov
 
 Live dates
 
@@ -4518,7 +4518,7 @@ Since we joined
 
 Launch
 
-25 months
+26 months
 
 Today
 
@@ -4636,7 +4636,7 @@ Of every 100 MON staked
 
 7.9 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 15 Nov 2026
 
 Commission
 
@@ -4656,9 +4656,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 12 Nov
+In your wallet · 19 Nov
 
 Live dates
 
@@ -4822,7 +4822,7 @@ Of every 100 NEAR staked
 
 4.7 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 13 Nov 2026
 
 Commission
 
@@ -4842,9 +4842,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 13 Nov
+In your wallet · 19 Nov
 
 Live dates
 
@@ -5008,7 +5008,7 @@ Of every 100 PASG staked
 
 6.3 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 13 Nov 2026
 
 Commission
 
@@ -5028,9 +5028,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 2 Dec
+In your wallet · 9 Dec
 
 Live dates
 
@@ -5042,7 +5042,7 @@ Since we joined
 
 Launch
 
-50 months
+51 months
 
 Today
 
@@ -5172,7 +5172,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/pharos
 
-Stake PROS with Encapsulate on Pharos: 10% commission, 14.3% a year after commission, 14 days unbonding. Non-custodial.
+Stake PROS with Encapsulate on Pharos: 10% commission, 13.4% a year after commission, 14 days unbonding. Non-custodial.
 
 ### Pharos
 
@@ -5188,15 +5188,15 @@ The terms
 
 Reward rate
 
-14.3%
+13.4%
 
 Set by the chain, not by us
 
 Of every 100 PROS staked
 
-14.3 earned in a year
+13.4 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 15 Nov 2026
 
 Commission
 
@@ -5216,9 +5216,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 25 Nov
+In your wallet · 2 Dec
 
 Live dates
 
@@ -5248,23 +5248,23 @@ Horizon
 
 Not compounded — Pharos pays rewards to a claimable balance. After our 10% commission. An estimate at today’s rate, which the chain can change.
 
-1,143
+1,134
 
 Year 1
 
-1,286
+1,268
 
 Year 2
 
-1,429
+1,402
 
 Year 3
 
-1,572
+1,536
 
 Year 4
 
-1,715
+1,670
 
 Year 5
 
@@ -5400,9 +5400,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 9 Dec
+In your wallet · 16 Dec
 
 Live dates
 
@@ -5580,9 +5580,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 18 Nov
+In your wallet · 25 Nov
 
 Live dates
 
@@ -5746,7 +5746,7 @@ Of every 100 SUI staked
 
 1.3 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 16 Nov 2026
 
 Commission
 
@@ -5766,9 +5766,9 @@ None
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 11 Nov
+In your wallet · 18 Nov
 
 Live dates
 
@@ -5914,7 +5914,7 @@ Stake SUPRA with Encapsulate on Supra: 38.72% commission, 8.0% a year after comm
 
 Delegate in two minutes. Your keys never leave your wallet; rewards land every epoch, about 2 hours.
 
-[Delegate with StarKey](https://starkey.app/)
+[Delegate with StarKey](https://encapsulate.xyz/guides/supra)
 
 [Our validator](https://suprascan.io/address/0x15ac9afcd6a042bd61239305ad13663f2423663d6ea83ce5293561b77766cd3a/f)
 
@@ -5932,7 +5932,7 @@ Of every 100 SUPRA staked
 
 8 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 17 Nov 2026
 
 Commission
 
@@ -5952,9 +5952,9 @@ Up to 48 hours
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 13 Nov
+In your wallet · 20 Nov
 
 Live dates
 
@@ -6118,7 +6118,7 @@ Of every 100 LUNA staked
 
 35.4 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 16 Nov 2026
 
 Commission
 
@@ -6138,9 +6138,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 2 Dec
+In your wallet · 9 Dec
 
 Live dates
 
@@ -6280,7 +6280,7 @@ Vara
 
 URL: https://encapsulate.xyz/networks/vara
 
-Stake VARA with Encapsulate on Vara: 5% commission, 16.9% a year after commission, 7 days unbonding. Non-custodial.
+Stake VARA with Encapsulate on Vara: 5% commission, 11.4% a year after commission, 7 days unbonding. Non-custodial.
 
 ### Vara
 
@@ -6296,15 +6296,15 @@ The terms
 
 Reward rate
 
-16.9%
+11.4%
 
 Set by the chain, not by us
 
 Of every 100 VARA staked
 
-16.9 earned in a year
+11.4 earned in a year
 
-After our commission · as of 6 Nov 2026
+After our commission · as of 14 Nov 2026
 
 Commission
 
@@ -6324,9 +6324,9 @@ Unbonding
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 18 Nov
+In your wallet · 25 Nov
 
 Live dates
 
@@ -6358,23 +6358,23 @@ Horizon
 
 Not compounded — Vara pays rewards to a claimable balance. After our 5% commission. An estimate at today’s rate, which the chain can change.
 
-1,169
+1,114
 
 Year 1
 
-1,338
+1,228
 
 Year 2
 
-1,507
+1,342
 
 Year 3
 
-1,676
+1,456
 
 Year 4
 
-1,845
+1,570
 
 Year 5
 
@@ -6490,7 +6490,7 @@ Of every 100 ZIL staked
 
 8.2 earned in a year
 
-After our commission · as of 11 Nov 2026
+After our commission · as of 16 Nov 2026
 
 Commission
 
@@ -6510,9 +6510,9 @@ About 6 days
 
 How long to withdraw
 
-Withdraw today · 11 Nov
+Withdraw today · 18 Nov
 
-In your wallet · 17 Nov
+In your wallet · 24 Nov
 
 Live dates
 
@@ -6678,7 +6678,7 @@ Pick a chain to start.
 
 Encapsulate · Staking guides
 
-29 chains · 19 guides
+29 chains · 20 guides
 
 ## Agoric staking guide
 
@@ -7214,9 +7214,9 @@ Delegate LORE with Keplr. Six steps across the Keplr extension and its dashboard
 
 #### 📍Useful Links
 
-Ping Dashboard - Cosmos Blockchain Explorer And Web Wallet
+[Ping Dashboard - Cosmos Blockchain Explorer And Web Wallet](https://ping.pub/gitopia)
 
-Keplr - Chrome Web Store
+[Keplr - Chrome Web Store](https://chromewebstore.google.com/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en)
 
 #### 🌱 Need Help?
 
@@ -8770,17 +8770,143 @@ Need help? Ask on Discord
 
 URL: https://encapsulate.xyz/guides/supra
 
-Stake SUPRA with StarKey. Eleven steps across the StarKey extension and its dashboard, one per screen, each with the screen you should be looking at.
+Stake SUPRA with StarKey. Eleven steps in the StarKey extension, one per screen, each with the screen you should be looking at.
 
-#### 📍Useful Links
+Encapsulate · Guides
 
-StarKey Wallet - The official wallet for Supra - Chrome Web Store
+Supra
 
-#### 🌱 Need Help?
+### Stake SUPRA with StarKey
 
-[Ask us on X](https://x.com/encapHQ)
+Eleven steps in the StarKey extension, one per screen, each with the screen you should be looking at.
 
-[Ask us on Discord](https://discord.gg/PQJX5JVS8h)
+Eleven screens
+
+Scroll ↓
+
+01
+
+of 11
+
+In the StarKey extension
+
+#### Unlock StarKey
+
+Open the StarKey extension. Type your password and press Log in.
+
+02
+
+of 11
+
+In the StarKey extension
+
+#### Press Stake Now
+
+The home screen shows your tokens, SUPRA among them, and a banner: Stake SUPRA to Earn 8% APY. Press Stake Now.
+
+03
+
+of 11
+
+In the StarKey extension
+
+#### Press Stake
+
+Stake Portfolio shows the SUPRA you have staked, none yet, and the staking APY. Press Stake.
+
+04
+
+of 11
+
+In the StarKey extension
+
+#### Enter an amount
+
+Type how much SUPRA to stake under Amount; MAX fills in your whole balance. Press Choose a pool.
+
+05
+
+of 11
+
+In the StarKey extension
+
+#### Find Encapsulate
+
+Stake Pools lists Supra's pools, each with its share of all staked SUPRA, its total stake and its commission. Scroll to Encapsulate and press it.
+
+06
+
+of 11
+
+In the StarKey extension
+
+#### Press Confirm
+
+Encapsulate's card is outlined in purple once it is picked, with its total stake and our 38.72% commission. Press Confirm.
+
+07
+
+of 11
+
+In the StarKey extension
+
+#### Press Review
+
+Stake now names Encapsulate as the pool, under your amount, with the network fee: 0.912 SUPRA here. Press Review.
+
+08
+
+of 11
+
+In the StarKey extension
+
+#### Press I Understand
+
+StarKey warns that staked SUPRA cannot be sent or swapped until you withdraw it. Press I Understand.
+
+09
+
+of 11
+
+In the StarKey extension
+
+#### Press Stake
+
+The last screen shows the amount, the 8% APY, a payout every epoch, about 2 hours, and the total cost: your amount and the fee. Press Stake.
+
+10
+
+of 11
+
+In the StarKey extension
+
+#### Press OK
+
+You have staked. StarKey counts down to when your SUPRA starts earning, the next epoch, 3 minutes away here. Press OK.
+
+11
+
+of 11
+
+In the StarKey extension
+
+#### Check your stake
+
+Stake Portfolio shows your staked SUPRA, and Encapsulate under Staking in 1 Pool. New Reward counts down to the next epoch; from then rewards are added to your stake every epoch and compound on their own.
+
+Done · 11 of 11
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Delegate BLD with Keplr.
+
+Next: Agoric
+
+All guides
+
+Supra’s terms and common questions
+
+Need help? Ask on Discord
 
 ## Terra staking guide
 
@@ -8788,103 +8914,101 @@ URL: https://encapsulate.xyz/guides/terra
 
 Delegate LUNA with Keplr. Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
 
-01 · Press Start Staking
+Encapsulate · Guides
+
+Terra
+
+### Delegate LUNA with Keplr
+
+Seven steps across the Keplr extension and its dashboard, one per screen, each with the screen you should be looking at.
+
+Seven screens
+
+Scroll ↓
+
+01
+
+of 7
+
+On wallet.keplr.app
+
+#### Press Start Staking
 
 Open Terra in the Keplr Dashboard with your wallet connected. The Staking tab shows your LUNA, how much is staked and the rewards you can claim. Press Start Staking under Your Validators.
 
-wallet.keplr.app
+02
 
-1
+of 7
 
 On wallet.keplr.app
 
-Check that the address bar reads wallet.keplr.app. A lookalike site can show the same page.
-
-Oct 2, 2026 9:50 AM
-
-02 · Find Encapsulate
+#### Find Encapsulate
 
 Stake to opens on Terra's validators, with the APR and the 21-day unstaking period at the top. Type encap in the search and pick Encapsulate.
 
-wallet.keplr.app
+03
 
-2
+of 7
 
 On wallet.keplr.app
 
-Anyone can name a validator Encapsulate. Ours is `terravaloper1yh4u76y405t3ff9lyrzhhe8legjx9k3as5mujs`; this guide's link on the next step opens it directly.
-
-Oct 2, 2026 9:51 AM
-
-03 · Check our numbers
+#### Check our numbers
 
 Encapsulate's panel shows its APR, our 10% commission, its share of voting power and the 21-day unstaking period. Press Stake.
 
-wallet.keplr.app
+04
 
-3
+of 7
 
 On wallet.keplr.app
 
-The panel on the right is the validator you stake with, whatever the list beside it shows: it must name Encapsulate.
-
-Oct 2, 2026 9:51 AM
-
-04 · Enter an amount
+#### Enter an amount
 
 Type how much LUNA to stake; Max fills in your whole available balance. Press Stake.
 
-wallet.keplr.app
+05
 
-4
+of 7
 
-On wallet.keplr.app
+In the Keplr extension
 
-Max stakes everything. Leave a little LUNA unstaked to pay the fees for claiming rewards and, later, for unstaking.
-
-Oct 2, 2026 9:52 AM
-
-05 · Unlock Keplr
+#### Unlock Keplr
 
 The Keplr extension opens. Type your password and press Unlock.
 
-www.keplr.app
+06
 
-5
+of 7
 
 In the Keplr extension
 
-Keplr unlocks with your password only. Anything that asks for your recovery phrase here is not Keplr.
-
-Oct 2, 2026 9:52 AM
-
-06 · Approve in Keplr
+#### Approve in Keplr
 
 Keplr shows one message, the amount of LUNA to stake to Encapsulate, and a fee of a fraction of a cent. The memo is optional. Press Approve.
 
-www.keplr.app
+07
 
-6
-
-In the Keplr extension
-
-The message must read Stake … LUNA to Encapsulate. This is the last screen before it is sent.
-
-Oct 2, 2026 9:53 AM
-
-07 · Check the dashboard
-
-Back on the dashboard, Staking Amount shows your stake and Your Validators lists Encapsulate with our 10% commission. Rewards build up with every block and do not compound: Claim sends them to your wallet, and Stake adds more.
-
-wallet.keplr.app
-
-7
+of 7
 
 On wallet.keplr.app
 
-Unstaking takes 21 days, during which the LUNA earns nothing and cannot be moved.
+#### Check the dashboard
 
-Oct 2, 2026 9:54 AM
+Back on the dashboard, Staking Amount shows your stake and Your Validators lists Encapsulate with our 10% commission. Rewards build up with every block and do not compound: Claim sends them to your wallet, and Stake adds more.
+
+Done · 7 of 7
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Stake ZIL with Bearby.
+
+Next: Zilliqa
+
+All guides
+
+Terra’s terms and common questions
+
+Need help? Ask on Discord
 
 ## Zilliqa staking guide
 
@@ -8892,115 +9016,111 @@ URL: https://encapsulate.xyz/guides/zilliqa
 
 Stake ZIL with Bearby. Eight steps across Zilliqa’s staking portal and the Bearby extension, one per screen, each with the screen you should be looking at.
 
-01 · Connect your wallet
+Encapsulate · Guides
+
+Zilliqa
+
+### Stake ZIL with Bearby
+
+Eight steps across Zilliqa’s staking portal and the Bearby extension, one per screen, each with the screen you should be looking at.
+
+Eight screens
+
+Scroll ↓
+
+01
+
+of 8
+
+On stake.zilliqa.com
+
+#### Connect your wallet
 
 Zilliqa’s staking portal lists its pools, liquid and non-liquid. Ours is on the Liquid tab, as Encapsulate with its token, encapZIL. Press Connect wallet.
 
-stake.zilliqa.com
+02
 
-1
+of 8
 
 On stake.zilliqa.com
 
-Check that the address bar reads stake.zilliqa.com. A lookalike site can copy the portal.
-
-Oct 24, 2026 6:49 PM
-
-02 · Choose Bearby
+#### Choose Bearby
 
 In Connect a Wallet, choose Bearby Wallet under Installed.
 
-stake.zilliqa.com
+03
 
-2
+of 8
 
-On stake.zilliqa.com
+In the Bearby extension
 
-Oct 24, 2026 6:51 PM
-
-03 · Unlock Bearby
+#### Unlock Bearby
 
 Bearby opens. Pick your wallet, type your password and press Unlock.
 
-bearby.io
+04
 
-3
+of 8
 
 In the Bearby extension
 
-Bearby unlocks with your password only. Anything that asks for your recovery phrase here is not Bearby.
-
-Oct 24, 2026 6:51 PM
-
-04 · Connect to the portal
+#### Connect to the portal
 
 Bearby asks to connect stake.zilliqa.com to your wallet. Check that the account selected is the one that holds your ZIL and press Connect.
 
-bearby.io
+05
 
-4
+of 8
 
-In the Bearby extension
+On stake.zilliqa.com
 
-Check that the request comes from stake.zilliqa.com.
-
-Oct 24, 2026 6:52 PM
-
-05 · Find Encapsulate
+#### Find Encapsulate
 
 Your balance and address now show at the top right, and the pools may have changed order. Pick Encapsulate on the Liquid tab.
 
-stake.zilliqa.com
+06
 
-5
+of 8
 
 On stake.zilliqa.com
 
-Our row reads Encapsulate and encapZIL, with an 8% commission. This guide’s link on the next step opens our pool directly.
-
-Oct 24, 2026 6:52 PM
-
-06 · Enter an amount
+#### Enter an amount
 
 Our panel opens on Stake, with our 8% commission and what one encapZIL is worth in ZIL. Type how much ZIL to stake, at least 100, and press Stake. The line under the amount shows the encapZIL you receive.
 
-stake.zilliqa.com
+07
 
-6
-
-On stake.zilliqa.com
-
-Leave some ZIL unstaked: the portal puts a transaction’s cost at up to about 12 ZIL.
-
-Oct 24, 2026 6:53 PM
-
-07 · Confirm in Bearby
-
-Bearby shows the transaction from stake.zilliqa.com: the ZIL you stake, sent from your account to our delegation contract, and three fee speeds, with Market picked. Press Confirm.
-
-bearby.io
-
-7
+of 8
 
 In the Bearby extension
 
-The ZIL must go to our delegation contract, `0x1311059DD836D7000Dc673eA4Cc834fe04e9933C`, which Bearby labels Unknown. This is the last screen where a mistake is still free.
+#### Confirm in Bearby
 
-Oct 24, 2026 6:54 PM
+Bearby shows the transaction from stake.zilliqa.com: the ZIL you stake, sent from your account to our delegation contract, and three fee speeds, with Market picked. Press Confirm.
 
-08 · Check your stake
+08
 
-Back on the portal, our row and the panel show your encapZIL under Staked, and Last transaction opens it on the explorer. Rewards land every block and compound into encapZIL, which is worth more ZIL as they do: there is nothing to claim.
-
-stake.zilliqa.com
-
-8
+of 8
 
 On stake.zilliqa.com
 
-Unstaking fixes your ZIL at that moment’s value; you claim it under Claim about 6 days later.
+#### Check your stake
 
-Oct 24, 2026 6:54 PM
+Back on the portal, our row and the panel show your encapZIL under Staked, and Last transaction opens it on the explorer. Rewards land every block and compound into encapZIL, which is worth more ZIL as they do: there is nothing to claim.
+
+Done · 8 of 8
+
+#### Staked with Encapsulate.
+
+Rewards start once your stake is active. Next up: Stake SUPRA with StarKey.
+
+Next: Supra
+
+All guides
+
+Zilliqa’s terms and common questions
+
+Need help? Ask on Discord
 
 ## Blog
 
