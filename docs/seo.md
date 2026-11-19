@@ -246,6 +246,13 @@ canonical line (2026-09-28), so they move to the alternate reason on recrawl. Ev
 canonical except /team, which names the homepage (it forwards to Who we are), so it will show here too. No fix is
 needed for any of them.
 
+**"Blocked due to other 4xx issue" is intentional too** (Google's email of 2026-11-19, checked the same day). It held
+one URL, `https://grpc.lumera.mainnet.encapsulate.xyz/`, last crawled 2026-11-16. That is our Lumera node's gRPC endpoint,
+not a page: the domain property counts every subdomain, so Google sees the node endpoints too. A plain GET, as Googlebot
+or anyone, gets `415` with `application/grpc` (its robots.txt the same), which is how a gRPC server turns away a request
+that is not gRPC. It should never be indexed, so nothing to fix and no validation to start. Another node endpoint can turn
+up under this reason or under 404 later; check that it is an endpoint and leave it.
+
 **Driving Search Console from here** (beside "Driving these consoles" above): screenshots work now. The inspect box
 is the page's `input[aria-label*="Inspect any URL"]` (native value setter, `input`, an Enter keydown); the verdict is the
 text after `<url>\nURL Inspection` ("URL is on Google" / "URL is not on Google" + "URL is unknown to Google"); then
