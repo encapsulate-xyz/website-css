@@ -140,9 +140,9 @@ isbtrcutions". The team made a new row the evening before, "Stake Ika with Slush
 captures and their own step names, Links on steps 1 and 3). Beside it was the old row, "Stake IKA with Suiet"
 (`2cbe800a…`, from the template on 2025-12-16, never converted), which Super's /guides/ika page was attached to.
 
-- **The page now serves the new row.** Super's `update_page` re-pointed /guides/ika at `41de800a…`; the old row has no
-  page now and stays Soon (`guide_index.py` lists it among the rows with no page). Archiving it waits for the user, as
-  Pharos's empty row did.
+- **The page now serves the new row.** Super's `update_page` re-pointed /guides/ika at `41de800a…`. The old row was
+  archived the same day at the user's word (in Notion's trash; `backups/ika-guide-suiet-row-2026-11-20.json`, the row,
+  its blocks and its eight template steps).
 - **Inkwell is a front end on Ika's own staking.** It shows up nowhere in a web search, so the team's test stake
   was read on-chain (Sui GraphQL; JSON-RPC is gone from publicnode): one call,
   `0xd69f947d…::system::request_add_stake`, which is `ika_system_package_id_v2` in dwallet-labs'
