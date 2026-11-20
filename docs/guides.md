@@ -149,8 +149,7 @@ captures and their own step names, Links on steps 1 and 3). Beside it was the ol
   `deployed_contracts/mainnet/address.yaml`. The `StakedIka` it made is owned by the staker's own address, and only
   the 10 IKA left the wallet; Inkwell took nothing. Its Self-Managed tab is the one the guide uses (Liquid Staking is
   the other).
-- **The captures:** five dashboard ones at 2800 × 1576, four Slush ones at 720 × 1200 (360 × 600; the Sui guide's
-  Slush captures are taller). The guide got the 360:600 frame (guide.css, `#page-guides-ika`, beside Supra's, v435).
+- **The captures:** five dashboard ones at 2800 × 1576, four Slush ones at 720 × 1200 (360 × 600). The guide got the 360:600 frame (guide.css, `#page-guides-ika`, beside Supra's, v435).
   Step 2's wallet picker (Dynamic's) carries an orange "Sandbox" tag, and every Inkwell screen reads "DEGRADED" at the
   foot: Inkwell's, reported to the user, not in the words. Step 9's ring is on the team's earlier position (Active,
   epoch 144); a reader's new stake shows as Activating, which the words describe.
