@@ -2,7 +2,7 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-11-11. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-11-20. The index of the site is https://encapsulate.xyz/llms.txt.
 
 ## Governance Record
 
@@ -10,6 +10,7 @@ URL: https://encapsulate.xyz/governance/votes
 
 | Network | Reference | Proposal | Our vote | Proof | Rationale | Recorded |
 | --- | --- | --- | --- | --- | --- | --- |
+| Lumera | 15 | Software Upgrade to v1.23.0 — Aurora Australis | YES | [View Tx Hash](https://ping.pub/lumera/tx/3D6C08A21DC25F6DF303FDB4EAB2E28827C8E16CDDBD15CDAE8B17E4074B98CB) | Routine software upgrade. Coordinating on one version at one height is the whole job, so this is a yes. | November 17, 2026 |
 | Cosmos Hub | 1061 | Gaia v29.1.0 upgrade | YES | [View Tx Hash](https://www.mintscan.io/cosmos/tx/118CEDB13A3A62A81634DA655B27D90093993E85EAB219E86A201A84CAC3752F) | A scheduled upgrade on a published release. We support it so the validator set moves together and the chain stays live. | November 10, 2026 |
 | Passage | 25 | Passage v4.1.0 Mainnet Software Upgrade | YES | [View Tx Hash](https://ping.pub/passage/tx/48C63EBA52DE83DCA1553D07FD271375AB5DADB30A6B64A640DF7780EA74291B) | A scheduled upgrade on a published release. We support it so the validator set moves together and the chain stays live. | November 9, 2026 |
 | Axelar | 512 | Upgrade consensus gateways to v6.5.0 | YES | [View Tx Hash](https://www.mintscan.io/axelar/tx/FEC5FDD9D626B4EA93F9142A923BF844BB1D5CC78EC7A48A17A9A343FC6C683C) | Standard release upgrade with a set height. Nothing here shifts risk onto delegators. | November 9, 2026 |
@@ -773,4 +774,3 @@ URL: https://encapsulate.xyz/governance/votes
 | Umee | 67 | Gravity Bridge Shutdown Plan | YES | [View Tx Hash](https://www.mintscan.io/umee/txs/6BE0F86DD63BBCC6D31744FC5012EB5D573AAEED7741030566D20E27D50B023E) | In favour of migrating to Axelar for the bridge as outline here: https://umee.cc/blog/bridgemigration/. | March 31, 2023 |
 | Stargaze | 146 | Make Stargaze the Sponsor of Game of NFTs Phase 2 Hackathon | YES | [View Tx Hash](https://www.mintscan.io/stargaze/txs/A3CBFC11DBC2CB58E2C27B9A5D0596F4AD302B49AD0D3C55A2EC66F95A24F31B) | In favour of making Stargaze the Sponsor of Game of NFTs Phase 2 Hackathon and I think the amount requested is justified too. | March 29, 2023 |
 | Osmosis | 475 | Upload Autonomy Network Limits/Stops Wrapper Contract | ABSTAIN | [View Tx Hash](https://www.mintscan.io/osmosis/txs/0B50D9D4C74E5C0FC391BB0134022391651773A5CF28A07446A019D556BF0BE2) | The community's call to make. We abstain rather than let our stake decide it. | March 29, 2023 |
-| Osmosis | 474 | Upload Autonomy Network Registry Stake Contract V2 | ABSTAIN | [View Tx Hash](https://www.mintscan.io/osmosis/txs/0FD14A4ACB074F2201B99A0983594DFA1CA4A4990B1F9C5883C7EA0478021F21) | Not enough in the proposal to judge it either way, so we abstain rather than guess. | March 29, 2023 |

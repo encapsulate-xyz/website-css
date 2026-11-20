@@ -2,10 +2,11 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-11-11. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-11-20. The index of the site is https://encapsulate.xyz/llms.txt.
 
 | Network | Reference | Proposal | Our vote | Proof | Rationale | Recorded |
 | --- | --- | --- | --- | --- | --- | --- |
+| Osmosis | 474 | Upload Autonomy Network Registry Stake Contract V2 | ABSTAIN | [View Tx Hash](https://www.mintscan.io/osmosis/txs/0FD14A4ACB074F2201B99A0983594DFA1CA4A4990B1F9C5883C7EA0478021F21) | Not enough in the proposal to judge it either way, so we abstain rather than guess. | March 29, 2023 |
 | Umee | 66 | Raise the stATOM supply cap to 300K stATOM | YES | [View Tx Hash](https://www.mintscan.io/umee/txs/9FBF28E42B9D1DE1540CD10C01200D95C01B5C015D2A26D9962AA47110F7492C) | We read it in full and see nothing that works against the chain or its delegators. | March 29, 2023 |
 | Osmosis | 473 | Allow Kado Router Contracts to be Uploaded | NO | [View Tx Hash](https://www.mintscan.io/osmosis/txs/09E6A34D10808B7F04F195C63166477D52A8A4D8C08D8CB153A3F59E272D42E7) | This proposal gives the address osmo19vxp8vq8qm368dr026qxh8v82satwaf79y235lfv6wmgpwxx8dtskedaku the ability to upload CosmWasm contracts without seeking further governance approval, but we think governance… | March 28, 2023 |
 | Osmosis | 472 | Regular Incentive adjustment for 2023-03-27 | YES | [View Tx Hash](https://www.mintscan.io/osmosis/txs/E21F324E8F9BF7C09A87F7435E0EE36AC0AC639A5775BA9A81CBCF278F141300) | A reasonable ask for work the chain benefits from, at a size the pool can carry. | March 28, 2023 |

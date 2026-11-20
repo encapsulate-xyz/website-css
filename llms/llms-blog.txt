@@ -2,7 +2,7 @@
 
 > We run validators on public blockchains, from testnet to mainnet. Stake with us, or book a call if your network is launching.
 
-As Markdown, as it reads on 2026-11-18. The index of the site is https://encapsulate.xyz/llms.txt.
+As Markdown, as it reads on 2026-11-20. The index of the site is https://encapsulate.xyz/llms.txt.
 
 ## Agoric Testnet Technical Analysis
 
@@ -1371,7 +1371,7 @@ Source Code used for this analysis: [celestia-log-analysis](https://github.com/a
 
 celestia-log-analysis
 
-aditya-manit ⋅ a year ago
+aditya-manit ⋅ 2 years ago
 
 #### Introduction:
 
