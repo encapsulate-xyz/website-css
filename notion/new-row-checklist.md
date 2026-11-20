@@ -334,7 +334,7 @@ are (block ids):
 
 ## Converting a guide — the run (the team adds the captures, I write the words)
 
-Done this way for Axelar, Sui, Espresso, Monad, Terra, Agoric, NEAR, Lumera, Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina, Starknet (Ready X and Braavos), Zilliqa, Cosmos Hub, Pharos and Supra; the
+Done this way for Axelar, Sui, Espresso, Monad, Terra, Agoric, NEAR, Lumera, Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina, Starknet (Ready X and Braavos), Zilliqa, Cosmos Hub, Pharos, Supra and Ika; the
 user asked for it written down on 2026-10-08. A guide is converted once its step database holds one capture per
 step; the team names the steps, the words are mine.
 
@@ -378,6 +378,7 @@ step; the team names the steps, the words are mine.
       | Zilliqa's staking portal + the Bearby extension | 8 | Zilliqa — our pool is on the Liquid tab (encapZIL); Bearby labels our delegation contract Unknown |
       | the Auro Wallet extension | 9 | Mina — its popup is 375 × 596, captures 750 × 1192, a 375:596 frame of its own (`#page-guides-mina`); no amount, Mina delegates the whole balance |
       | the StarKey extension | 11 | Supra — its popup is 360 × 600, captures 720 × 1200, IOTA's 360:600 frame (`#page-guides-supra`); StarKey's review screen does not name the pool, so the form is where to check it |
+      | Inkwell Finance's Stake page + Slush | 9 | Ika — the Self-Managed tab; Inkwell calls Ika's own `request_add_stake`, the stake stays in the wallet. Slush's popup came in at 720 × 1200, the 360:600 frame (`#page-guides-ika`); a new stake shows as Activating until the next epoch |
 
 - [ ] **The guide's wallet follows the captures**: its Name ("Stake <TOKEN> with <wallet>"), its Wallet Set and the
       chain page's green button (`notion/chain-pages.json` → `chain_pages.py --buttons "<Name>"`) must name the wallet

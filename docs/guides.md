@@ -20,7 +20,7 @@ close #done (anchors.js, 2026-10-23 — `docs/paths-and-404.md`, "Section names"
 | The crumb, "Watch out", "{N} screens", the close band, the Discord line | the **"Guide page copy" toggle on /guides**, `key · value` lines — one place for 33 guides. `{n}` is the step count, `{N}` the same spelled ("Eight screens"), `{next}` and `{chain}` the next guide |
 
 **Converted guides so far: Axelar, Sui (ten steps, SuiVision + Slush), Espresso, Monad (below), Terra, Agoric, NEAR, Lumera,
-Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina, Starknet twice, Zilliqa, Cosmos Hub, Pharos and Supra** (2026-10-22: Starknet, nine steps on Voyager's
+Passage, Gravity Bridge, ixo, Sommelier, IOTA, Mina, Starknet twice, Zilliqa, Cosmos Hub, Pharos, Supra and Ika** (2026-10-22: Starknet, nine steps on Voyager's
 Staking Dashboard (voyager.online) with the **Ready X** extension — Ready's browser wallet, once Argent X; "Ready X" is
 its name in the Chrome Web Store and in Voyager's wallet list, so the guide is "Stake STRK with Ready X" (the team had
 named it "Ready") and the Wallet Set has a Ready X row since that day, its glyph made with `make_glyph.py` from the
@@ -133,6 +133,37 @@ glide moved the page from scrollY 4310 to 3600 and put the address 240px under t
 steps 1, 4 and 5 at 1440 and passed at 390, the same "flaky at 1440" seen on Monad and Pharos. With the new one,
 everything passes: built, eleven steps linked, every Watch out and the address pressed at 1440 and 390. Old values
 `backups/stake-supra-with-starkey-guide-2026-11-18.json`.
+
+**Ika (2026-11-20): "Stake IKA with Slush", nine steps on Inkwell Finance's Stake page
+(inkwell.finance/stake?mode=self-managed) with the Slush extension**, /guides/ika. The user: "check ika guide" and "add
+isbtrcutions". The team made a new row the evening before, "Stake Ika with Slush" (Soon, no Step, Time or Lede, nine
+captures and their own step names, Links on steps 1 and 3). Beside it was the old row, "Stake IKA with Suiet"
+(`2cbe800a…`, from the template on 2025-12-16, never converted), which Super's /guides/ika page was attached to.
+
+- **The page now serves the new row.** Super's `update_page` re-pointed /guides/ika at `41de800a…`; the old row has no
+  page now and stays Soon (`guide_index.py` lists it among the rows with no page). Archiving it waits for the user, as
+  Pharos's empty row did.
+- **Inkwell is a front end on Ika's own staking.** It shows up nowhere in a web search, so the team's test stake
+  was read on-chain (Sui GraphQL; JSON-RPC is gone from publicnode): one call,
+  `0xd69f947d…::system::request_add_stake`, which is `ika_system_package_id_v2` in dwallet-labs'
+  `deployed_contracts/mainnet/address.yaml`. The `StakedIka` it made is owned by the staker's own address, and only
+  the 10 IKA left the wallet; Inkwell took nothing. Its Self-Managed tab is the one the guide uses (Liquid Staking is
+  the other).
+- **The captures:** five dashboard ones at 2800 × 1576, four Slush ones at 720 × 1200 (360 × 600; the Sui guide's
+  Slush captures are taller). The guide got the 360:600 frame (guide.css, `#page-guides-ika`, beside Supra's, v435).
+  Step 2's wallet picker (Dynamic's) carries an orange "Sandbox" tag, and every Inkwell screen reads "DEGRADED" at the
+  foot: Inkwell's, reported to the user, not in the words. Step 9's ring is on the team's earlier position (Active,
+  epoch 144); a reader's new stake shows as Activating, which the words describe.
+
+The words are Sui's and IOTA's, with Ika's facts: the minimum is 1 IKA; our 10% commission; the stake starts earning
+at the next epoch boundary, or the one after if the next committee is already chosen (Inkwell's own words, and
+`notion/chain-pages.json`'s); rewards every epoch, about 24 hours, compounding; unstaking up to two epochs, 12 to 36
+hours, then a claim. Step 6's Watch is our operator address as a press-to-copy. The row was renamed "Stake IKA with
+Slush" (the ticker), got Step 9, Time 4, its Lede and description and `meta:title` "Ika staking guide - Encapsulate"
+(the old row's), and went Live. Its noindex came off, the removal of 2026-10-28 was cancelled and indexing requested,
+the card was made, and the chain page's button is now "Delegate with Slush" to the guide (it was "Delegate with
+Suiet", to the old row). Checked live: built, nine steps linked, every Watch out and the address pressed at 1440 and
+390. Old values `backups/stake-ika-with-slush-guide-2026-11-20.json`.
 
 **Zilliqa (2026-10-25): "Stake ZIL with Bearby", eight steps on Zilliqa's staking portal (stake.zilliqa.com) with the
 Bearby extension** (bearby.io). Our pool is on the portal's Liquid tab, as Encapsulate with its token encapZIL; steps 6
