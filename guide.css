@@ -509,8 +509,10 @@ html:has(.notion-root[data-enc-guide]) { scroll-padding-top: 0; }
   aspect-ratio: 375 / 596;
 }
 /* StarKey's popup is 360 × 600 too: its captures came in at 720 × 1200, four of them edited at 971 × 1619, the
-   same shape (2026-11-18). The Supra guide takes IOTA's frame. */
-#page-guides-supra .enc-gd__step[data-enc-shot="tall"] .enc-gd__shot {
+   same shape (2026-11-18). The Supra guide takes IOTA's frame, and the Ika guide too: its Slush captures came in at
+   720 × 1200 (2026-11-20). */
+#page-guides-supra .enc-gd__step[data-enc-shot="tall"] .enc-gd__shot,
+#page-guides-ika .enc-gd__step[data-enc-shot="tall"] .enc-gd__shot {
   aspect-ratio: 360 / 600;
 }
 .enc-gd__shot[data-enc-empty] { display: none; }
